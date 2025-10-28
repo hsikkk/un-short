@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.shortblock"
+    namespace = "com.muuu.unshort"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.shortblock"
+        applicationId = "com.muuu.unshort"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

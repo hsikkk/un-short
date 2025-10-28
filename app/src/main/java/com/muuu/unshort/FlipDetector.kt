@@ -1,4 +1,4 @@
-package com.shortblock
+package com.muuu.unshort
 
 import android.content.Context
 import android.hardware.Sensor

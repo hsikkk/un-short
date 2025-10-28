@@ -1,4 +1,4 @@
-package com.shortblock
+package com.muuu.unshort
 
 import android.content.Intent
 import android.net.Uri

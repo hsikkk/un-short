@@ -1,4 +1,4 @@
-package com.shortblock
+package com.muuu.unshort
 
 import android.accessibilityservice.AccessibilityService
 import android.content.Intent
