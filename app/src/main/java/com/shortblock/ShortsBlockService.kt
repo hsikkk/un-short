@@ -168,49 +168,6 @@ class ShortsBlockService : AccessibilityService() {
         )
     }
 
-    private fun pauseVideo() {
-        try {
-            val rootNode = rootInActiveWindow ?: return
-
-            // 방법 1: 클릭 가능한 노드를 재귀적으로 찾아서 클릭
-            val clickableNode = findClickableNode(rootNode)
-            if (clickableNode != null) {
-                val success = clickableNode.performAction(AccessibilityNodeInfo.ACTION_CLICK)
-                Log.d(TAG, "Clicked on clickable node: success=$success")
-                return
-            }
-
-            // 방법 2: 루트 노드 클릭 시도
-            val success = rootNode.performAction(AccessibilityNodeInfo.ACTION_CLICK)
-            if (success) {
-                Log.d(TAG, "Video pause action performed on root")
-            } else {
-                Log.w(TAG, "Video pause action failed")
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to pause video", e)
-        }
-    }
-
-    private fun findClickableNode(node: AccessibilityNodeInfo): AccessibilityNodeInfo? {
-        // 클릭 가능한 노드 찾기
-        if (node.isClickable) {
-            return node
-        }
-
-        // 자식 노드 탐색
-        for (i in 0 until node.childCount) {
-            node.getChild(i)?.let { child ->
-                val clickable = findClickableNode(child)
-                if (clickable != null) {
-                    return clickable
-                }
-            }
-        }
-
-        return null
-    }
-
     private fun requestOverlayPermission() {
         val intent = Intent(
             Settings.ACTION_MANAGE_OVERLAY_PERMISSION,

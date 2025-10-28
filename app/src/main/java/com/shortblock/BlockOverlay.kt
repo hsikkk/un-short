@@ -142,15 +142,6 @@ class BlockOverlay(private val context: Context) {
 
     fun isShowing(): Boolean = overlayView != null
 
-    private fun getStatusBarHeight(): Int {
-        var result = 0
-        val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            result = context.resources.getDimensionPixelSize(resourceId)
-        }
-        return result
-    }
-
     private fun getNavigationBarHeight(): Int {
         var result = 0
         val resourceId = context.resources.getIdentifier("navigation_bar_height", "dimen", "android")
