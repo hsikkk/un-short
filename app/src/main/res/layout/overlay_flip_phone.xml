@@ -7,26 +7,19 @@
     android:clickable="true"
     android:focusable="true">
 
-    <com.google.android.material.card.MaterialCardView
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="0dp"
-        app:strokeWidth="2dp"
-        app:strokeColor="@color/gray_300"
-        app:cardBackgroundColor="@color/white"
+        android:background="@android:color/white"
+        android:elevation="8dp"
+        android:orientation="vertical"
+        android:padding="40dp"
+        android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="40dp"
-            android:gravity="center">
 
             <!-- App branding -->
             <TextView
@@ -140,8 +133,6 @@
                 android:lineSpacingExtra="4dp"
                 android:alpha="0.9" />
 
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
