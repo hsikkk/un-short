@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">un:short</string>
+    <string name="accessibility_service_description">Detects when you open short-form video apps and requires you to flip your phone for 30 seconds</string>
+    <string name="flip_phone_title">잠깐만요! 🤚</string>
+    <string name="flip_phone_message">쇼츠를 보려면\n폰을 뒤집어서 30초 기다려주세요</string>
+    <string name="time_remaining">남은 시간: %d초</string>
+    <string name="flip_detected">폰이 뒤집어졌습니다 ✓</string>
+    <string name="flip_required">폰을 뒤집어주세요</string>
+</resources>
