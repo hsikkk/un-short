@@ -23,12 +23,14 @@ class BlockOverlay(private val context: Context) {
     private var isPhoneFlipped = false
     private var remainingSeconds = 15
     private var onDismissListener: (() -> Unit)? = null
+    private var onCompleteListener: (() -> Unit)? = null
 
     @SuppressLint("InflateParams")
-    fun show(onDismiss: () -> Unit) {
+    fun show(onDismiss: () -> Unit, onComplete: () -> Unit) {
         if (overlayView != null) return
 
         this.onDismissListener = onDismiss
+        this.onCompleteListener = onComplete
 
         // 오버레이 뷰 생성
         overlayView = LayoutInflater.from(context).inflate(R.layout.overlay_flip_phone, null)
@@ -102,7 +104,8 @@ class BlockOverlay(private val context: Context) {
             }
 
             override fun onFinish() {
-                // 15초 완료 - 오버레이 제거
+                // 15초 완료 - 현재 쇼츠는 허용
+                onCompleteListener?.invoke()
                 dismiss()
                 onDismissListener?.invoke()
             }

@@ -12,6 +12,7 @@ class ShortsBlockService : AccessibilityService() {
 
     private var blockOverlay: BlockOverlay? = null
     private val TAG = "ShortsBlockService"
+    private var allowedUntilScroll = false  // 15초 완료 후 스크롤 전까지 허용
 
     // 차단 대상 앱 패키지명
     private val TARGET_APPS = setOf(
@@ -28,23 +29,34 @@ class ShortsBlockService : AccessibilityService() {
         // 차단 대상 앱이 아니면 무시
         if (packageName !in TARGET_APPS) return
 
-        // 쇼츠/릴스 화면인지 감지
+        // 쇼츠/릴스 화면인지 먼저 확인
         val isShorts = isShortsScreen(packageName, event)
 
+        // 스크롤 이벤트 감지 (다음 쇼츠로 이동)
+        if (event.eventType == AccessibilityEvent.TYPE_VIEW_SCROLLED && isShorts) {
+            if (allowedUntilScroll) {
+                Log.d(TAG, "Scroll detected, blocking next shorts")
+                allowedUntilScroll = false
+
+                // 스크롤 후 오버레이 표시
+                if (blockOverlay?.isShowing() != true) {
+                    showBlockOverlay()
+                }
+                return
+            }
+        }
+
         if (isShorts) {
+            // 15초 완료 후 허용 상태면 차단하지 않음
+            if (allowedUntilScroll) {
+                Log.d(TAG, "Allowed to view current shorts")
+                return
+            }
+
             // 쇼츠 화면이고 오버레이가 없으면 표시
             if (blockOverlay?.isShowing() != true) {
                 Log.d(TAG, "Shorts screen detected in $packageName")
-
-                // 1. 300ms 후 화면 터치로 영상 일시정지
-                android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                    pauseVideo()
-
-                    // 2. 100ms 후 오버레이 표시
-                    android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                        showBlockOverlay()
-                    }, 100)
-                }, 300)
+                showBlockOverlay()
             }
         } else {
             // 쇼츠 화면이 아닌데 오버레이가 표시 중이면 제거
@@ -52,6 +64,7 @@ class ShortsBlockService : AccessibilityService() {
                 Log.d(TAG, "Shorts screen closed, dismissing overlay")
                 blockOverlay?.dismiss()
                 blockOverlay = null
+                allowedUntilScroll = false  // 허용 상태 초기화
             }
         }
     }
@@ -141,11 +154,18 @@ class ShortsBlockService : AccessibilityService() {
         }
 
         blockOverlay = BlockOverlay(this)
-        blockOverlay?.show {
-            // 15초 완료 후 오버레이 제거
-            blockOverlay?.dismiss()
-            blockOverlay = null
-        }
+        blockOverlay?.show(
+            onDismiss = {
+                // 오버레이 제거 시
+                blockOverlay?.dismiss()
+                blockOverlay = null
+            },
+            onComplete = {
+                // 15초 완료 - 현재 쇼츠까지는 허용
+                allowedUntilScroll = true
+                Log.d(TAG, "Timer completed, allowing current shorts")
+            }
+        )
     }
 
     private fun pauseVideo() {
