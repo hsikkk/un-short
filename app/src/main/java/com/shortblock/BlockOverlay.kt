@@ -21,7 +21,7 @@ class BlockOverlay(private val context: Context) {
     private lateinit var flipStatusText: TextView
 
     private var isPhoneFlipped = false
-    private var remainingSeconds = 30
+    private var remainingSeconds = 15
     private var onDismissListener: (() -> Unit)? = null
 
     @SuppressLint("InflateParams")
@@ -35,19 +35,41 @@ class BlockOverlay(private val context: Context) {
         timerText = overlayView!!.findViewById(R.id.timerText)
         flipStatusText = overlayView!!.findViewById(R.id.flipStatusText)
 
-        // 윈도우 매니저 파라미터 설정
+        // 윈도우 매니저 파라미터 설정 - 전체 화면 + 네비게이션바까지
+        val displayMetrics = context.resources.displayMetrics
+        val screenHeight = displayMetrics.heightPixels
+        val navigationBarHeight = getNavigationBarHeight()
+
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.MATCH_PARENT,
+            screenHeight + navigationBarHeight,  // 실제 화면 높이 + 네비게이션바
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+            // 모든 터치 완전 차단
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
-                    WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN or
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
+                    WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS,
             PixelFormat.TRANSLUCENT
         )
-        params.gravity = Gravity.CENTER
+        params.gravity = Gravity.TOP or Gravity.START
+        params.y = 0  // 화면 최상단부터 시작
 
         windowManager.addView(overlayView, params)
+
+        // 뷰 자체를 클릭 가능하게 설정 (터치 이벤트 소비)
+        overlayView!!.isClickable = true
+        overlayView!!.isFocusable = true
+
+        // 시스템 UI 숨기기 (알림창 차단)
+        overlayView!!.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_FULLSCREEN or
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                )
+
+        // 초기 타이머 표시
+        timerText.text = remainingSeconds.toString()
 
         // 폰 뒤집기 감지 시작
         flipDetector = FlipDetector(context)
@@ -80,7 +102,7 @@ class BlockOverlay(private val context: Context) {
             }
 
             override fun onFinish() {
-                // 30초 완료 - 오버레이 제거
+                // 15초 완료 - 오버레이 제거
                 dismiss()
                 onDismissListener?.invoke()
             }
@@ -116,4 +138,22 @@ class BlockOverlay(private val context: Context) {
     }
 
     fun isShowing(): Boolean = overlayView != null
+
+    private fun getStatusBarHeight(): Int {
+        var result = 0
+        val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            result = context.resources.getDimensionPixelSize(resourceId)
+        }
+        return result
+    }
+
+    private fun getNavigationBarHeight(): Int {
+        var result = 0
+        val resourceId = context.resources.getIdentifier("navigation_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            result = context.resources.getDimensionPixelSize(resourceId)
+        }
+        return result
+    }
 }

@@ -66,7 +66,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="설정으로 이동" />
+                android:text="접근성 설정" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="16dp"
+                android:background="#E0E0E0" />
+
+            <TextView
+                android:id="@+id/overlayStatusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="오버레이 권한: 필요함"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="다른 앱 위에 그리기 권한이 필요합니다"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/overlayButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="오버레이 권한 설정" />
 
         </LinearLayout>
 

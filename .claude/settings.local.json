@@ -13,7 +13,12 @@
       "Bash(git init:*)",
       "Bash(git remote add:*)",
       "Bash(git add:*)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: un:short Android app prototype\n\nFeatures:\n- Phone flip detection using accelerometer sensor\n- Accessibility Service to detect YouTube Shorts, Instagram Reels, TikTok\n- 30-second timer with flip requirement to unblock\n- Full-screen overlay blocking mechanism\n- Material Design UI with Korean localization\n\nTech stack:\n- Kotlin\n- Accessibility Service API\n- SensorManager for accelerometer\n- WindowManager for system overlay\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: un:short Android app prototype\n\nFeatures:\n- Phone flip detection using accelerometer sensor\n- Accessibility Service to detect YouTube Shorts, Instagram Reels, TikTok\n- 30-second timer with flip requirement to unblock\n- Full-screen overlay blocking mechanism\n- Material Design UI with Korean localization\n\nTech stack:\n- Kotlin\n- Accessibility Service API\n- SensorManager for accelerometer\n- WindowManager for system overlay\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "WebSearch",
+      "Bash(~/Library/Android/sdk/platform-tools/adb -s 172.30.1.13:36029 uninstall com.shortblock)",
+      "Bash(~/Library/Android/sdk/platform-tools/adb:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

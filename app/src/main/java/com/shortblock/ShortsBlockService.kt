@@ -28,13 +28,31 @@ class ShortsBlockService : AccessibilityService() {
         // 차단 대상 앱이 아니면 무시
         if (packageName !in TARGET_APPS) return
 
-        // 이미 오버레이가 표시 중이면 무시
-        if (blockOverlay?.isShowing() == true) return
-
         // 쇼츠/릴스 화면인지 감지
-        if (isShortsScreen(packageName, event)) {
-            Log.d(TAG, "Shorts screen detected in $packageName")
-            showBlockOverlay()
+        val isShorts = isShortsScreen(packageName, event)
+
+        if (isShorts) {
+            // 쇼츠 화면이고 오버레이가 없으면 표시
+            if (blockOverlay?.isShowing() != true) {
+                Log.d(TAG, "Shorts screen detected in $packageName")
+
+                // 1. 300ms 후 화면 터치로 영상 일시정지
+                android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                    pauseVideo()
+
+                    // 2. 100ms 후 오버레이 표시
+                    android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                        showBlockOverlay()
+                    }, 100)
+                }, 300)
+            }
+        } else {
+            // 쇼츠 화면이 아닌데 오버레이가 표시 중이면 제거
+            if (blockOverlay?.isShowing() == true) {
+                Log.d(TAG, "Shorts screen closed, dismissing overlay")
+                blockOverlay?.dismiss()
+                blockOverlay = null
+            }
         }
     }
 
@@ -124,10 +142,53 @@ class ShortsBlockService : AccessibilityService() {
 
         blockOverlay = BlockOverlay(this)
         blockOverlay?.show {
-            // 30초 완료 후 오버레이 제거
+            // 15초 완료 후 오버레이 제거
             blockOverlay?.dismiss()
             blockOverlay = null
         }
+    }
+
+    private fun pauseVideo() {
+        try {
+            val rootNode = rootInActiveWindow ?: return
+
+            // 방법 1: 클릭 가능한 노드를 재귀적으로 찾아서 클릭
+            val clickableNode = findClickableNode(rootNode)
+            if (clickableNode != null) {
+                val success = clickableNode.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                Log.d(TAG, "Clicked on clickable node: success=$success")
+                return
+            }
+
+            // 방법 2: 루트 노드 클릭 시도
+            val success = rootNode.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+            if (success) {
+                Log.d(TAG, "Video pause action performed on root")
+            } else {
+                Log.w(TAG, "Video pause action failed")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to pause video", e)
+        }
+    }
+
+    private fun findClickableNode(node: AccessibilityNodeInfo): AccessibilityNodeInfo? {
+        // 클릭 가능한 노드 찾기
+        if (node.isClickable) {
+            return node
+        }
+
+        // 자식 노드 탐색
+        for (i in 0 until node.childCount) {
+            node.getChild(i)?.let { child ->
+                val clickable = findClickableNode(child)
+                if (clickable != null) {
+                    return clickable
+                }
+            }
+        }
+
+        return null
     }
 
     private fun requestOverlayPermission() {
