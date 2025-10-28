@@ -49,6 +49,11 @@ class ShortsBlockService : AccessibilityService() {
                 // 스크롤 후 오버레이 표시
                 if (blockOverlay?.isShowing() != true) {
                     showBlockOverlay()
+                    // 오버레이 표시 후 justScrolled 플래그 해제 (바로 닫히는 것 방지)
+                    android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                        justScrolled = false
+                        Log.d(TAG, "JustScrolled flag reset after delay")
+                    }, 100) // 100ms 후 플래그 해제
                 }
                 return
             } else if (lastShortsContentHash == 0) {
@@ -68,12 +73,6 @@ class ShortsBlockService : AccessibilityService() {
             if (blockOverlay?.isShowing() != true) {
                 Log.d(TAG, "Shorts screen detected in $packageName")
                 showBlockOverlay()
-            }
-
-            // 오버레이가 표시된 후에는 justScrolled 플래그 해제
-            if (blockOverlay?.isShowing() == true && justScrolled) {
-                justScrolled = false
-                Log.d(TAG, "Overlay shown after scroll, resetting justScrolled flag")
             }
         } else {
             // 방금 스크롤한 경우는 무시 (스크롤 직후 일시적으로 isShorts가 false가 될 수 있음)
