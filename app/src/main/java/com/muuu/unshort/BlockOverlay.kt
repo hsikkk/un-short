@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.PixelFormat
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ class BlockOverlay(private val context: Context) {
     private var overlayView: View? = null
     private var flipDetector: FlipDetector? = null
     private var countDownTimer: CountDownTimer? = null
+    private val TAG = "BlockOverlay"
 
     private lateinit var timerText: TextView
     private lateinit var flipStatusText: TextView
@@ -27,20 +29,27 @@ class BlockOverlay(private val context: Context) {
 
     @SuppressLint("InflateParams")
     fun show(onDismiss: () -> Unit, onComplete: () -> Unit) {
-        if (overlayView != null) return
+        Log.d(TAG, "show() called")
+        if (overlayView != null) {
+            Log.d(TAG, "Overlay already showing, ignoring")
+            return
+        }
 
         this.onDismissListener = onDismiss
         this.onCompleteListener = onComplete
 
         // 오버레이 뷰 생성
+        Log.d(TAG, "Inflating overlay view")
         overlayView = LayoutInflater.from(context).inflate(R.layout.overlay_flip_phone, null)
         timerText = overlayView!!.findViewById(R.id.timerText)
         flipStatusText = overlayView!!.findViewById(R.id.flipStatusText)
+        Log.d(TAG, "Overlay view inflated successfully")
 
         // 윈도우 매니저 파라미터 설정 - 전체 화면 + 네비게이션바까지
         val displayMetrics = context.resources.displayMetrics
         val screenHeight = displayMetrics.heightPixels
         val navigationBarHeight = getNavigationBarHeight()
+        Log.d(TAG, "Screen height: $screenHeight, nav bar height: $navigationBarHeight")
 
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,
@@ -57,7 +66,14 @@ class BlockOverlay(private val context: Context) {
         params.gravity = Gravity.TOP or Gravity.START
         params.y = 0  // 화면 최상단부터 시작
 
-        windowManager.addView(overlayView, params)
+        Log.d(TAG, "Adding view to window manager")
+        try {
+            windowManager.addView(overlayView, params)
+            Log.d(TAG, "View added to window manager successfully")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error adding view to window manager", e)
+            throw e
+        }
 
         // 뷰 자체를 클릭 가능하게 설정 (터치 이벤트 소비)
         overlayView!!.isClickable = true

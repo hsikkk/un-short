@@ -13,6 +13,8 @@ class ShortsBlockService : AccessibilityService() {
     private var blockOverlay: BlockOverlay? = null
     private val TAG = "ShortsBlockService"
     private var allowedUntilScroll = false  // 15초 완료 후 스크롤 전까지 허용
+    private var justScrolled = false  // 방금 스크롤했는지 여부 (오버레이 표시 후 바로 닫히는 것 방지)
+    private var lastShortsContentHash: Int = 0  // 이전 쇼츠 화면의 해시값
 
     // 차단 대상 앱 패키지명
     private val TARGET_APPS = setOf(
@@ -32,17 +34,26 @@ class ShortsBlockService : AccessibilityService() {
         // 쇼츠/릴스 화면인지 먼저 확인
         val isShorts = isShortsScreen(packageName, event)
 
-        // 스크롤 이벤트 감지 (다음 쇼츠로 이동)
-        if (event.eventType == AccessibilityEvent.TYPE_VIEW_SCROLLED && isShorts) {
-            if (allowedUntilScroll) {
-                Log.d(TAG, "Scroll detected, blocking next shorts")
+        // 컨텐츠 변경 감지로 스크롤 판단 (YouTube Shorts는 TYPE_VIEW_SCROLLED를 발생시키지 않음)
+        if (isShorts && allowedUntilScroll) {
+            // 현재 쇼츠 화면의 해시값 계산
+            val currentContentHash = getCurrentShortsContentHash()
+
+            if (currentContentHash != 0 && currentContentHash != lastShortsContentHash) {
+                // 화면 내용이 변경됨 = 다음 쇼츠로 스크롤
+                Log.d(TAG, "Shorts content changed (scroll detected), blocking next shorts")
                 allowedUntilScroll = false
+                justScrolled = true
+                lastShortsContentHash = currentContentHash
 
                 // 스크롤 후 오버레이 표시
                 if (blockOverlay?.isShowing() != true) {
                     showBlockOverlay()
                 }
                 return
+            } else if (lastShortsContentHash == 0) {
+                // 첫 번째 쇼츠 - 해시값 저장
+                lastShortsContentHash = currentContentHash
             }
         }
 
@@ -58,13 +69,26 @@ class ShortsBlockService : AccessibilityService() {
                 Log.d(TAG, "Shorts screen detected in $packageName")
                 showBlockOverlay()
             }
+
+            // 오버레이가 표시된 후에는 justScrolled 플래그 해제
+            if (blockOverlay?.isShowing() == true && justScrolled) {
+                justScrolled = false
+                Log.d(TAG, "Overlay shown after scroll, resetting justScrolled flag")
+            }
         } else {
+            // 방금 스크롤한 경우는 무시 (스크롤 직후 일시적으로 isShorts가 false가 될 수 있음)
+            if (justScrolled) {
+                Log.d(TAG, "Ignoring 'shorts closed' event right after scroll")
+                return
+            }
+
             // 쇼츠 화면이 아닌데 오버레이가 표시 중이면 제거
             if (blockOverlay?.isShowing() == true) {
                 Log.d(TAG, "Shorts screen closed, dismissing overlay")
                 blockOverlay?.dismiss()
                 blockOverlay = null
                 allowedUntilScroll = false  // 허용 상태 초기화
+                lastShortsContentHash = 0  // 해시값 초기화
             }
         }
     }
@@ -145,7 +169,44 @@ class ShortsBlockService : AccessibilityService() {
         return result
     }
 
+    private fun getCurrentShortsContentHash(): Int {
+        val rootNode = rootInActiveWindow ?: return 0
+
+        // RecyclerView 또는 ViewPager에서 현재 보이는 아이템의 해시값 계산
+        // 텍스트와 콘텐츠 설명을 조합하여 고유한 해시값 생성
+        val contentBuilder = StringBuilder()
+
+        fun collectContent(node: AccessibilityNodeInfo, depth: Int = 0) {
+            // 너무 깊이 탐색하지 않도록 제한
+            if (depth > 10) return
+
+            // 텍스트나 콘텐츠 설명이 있으면 추가
+            node.text?.toString()?.let { text ->
+                if (text.isNotEmpty()) {
+                    contentBuilder.append(text).append("|")
+                }
+            }
+            node.contentDescription?.toString()?.let { desc ->
+                if (desc.isNotEmpty()) {
+                    contentBuilder.append(desc).append("|")
+                }
+            }
+
+            // 자식 노드 탐색
+            for (i in 0 until node.childCount) {
+                node.getChild(i)?.let { child ->
+                    collectContent(child, depth + 1)
+                }
+            }
+        }
+
+        collectContent(rootNode)
+        return contentBuilder.toString().hashCode()
+    }
+
     private fun showBlockOverlay() {
+        Log.d(TAG, "showBlockOverlay() called")
+
         // 오버레이 권한 확인
         if (!Settings.canDrawOverlays(this)) {
             Log.w(TAG, "Overlay permission not granted")
@@ -153,19 +214,28 @@ class ShortsBlockService : AccessibilityService() {
             return
         }
 
-        blockOverlay = BlockOverlay(this)
-        blockOverlay?.show(
-            onDismiss = {
-                // 오버레이 제거 시
-                blockOverlay?.dismiss()
-                blockOverlay = null
-            },
-            onComplete = {
-                // 15초 완료 - 현재 쇼츠까지는 허용
-                allowedUntilScroll = true
-                Log.d(TAG, "Timer completed, allowing current shorts")
-            }
-        )
+        Log.d(TAG, "Overlay permission granted, creating BlockOverlay")
+
+        try {
+            blockOverlay = BlockOverlay(this)
+            Log.d(TAG, "BlockOverlay created, calling show()")
+            blockOverlay?.show(
+                onDismiss = {
+                    // 오버레이 제거 시
+                    Log.d(TAG, "Overlay dismissed")
+                    blockOverlay?.dismiss()
+                    blockOverlay = null
+                },
+                onComplete = {
+                    // 15초 완료 - 현재 쇼츠까지는 허용
+                    allowedUntilScroll = true
+                    Log.d(TAG, "Timer completed, allowing current shorts")
+                }
+            )
+            Log.d(TAG, "BlockOverlay show() completed")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error showing overlay", e)
+        }
     }
 
     private fun requestOverlayPermission() {
