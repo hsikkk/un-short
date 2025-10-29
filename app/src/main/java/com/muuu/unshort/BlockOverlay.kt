@@ -9,7 +9,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.TextView
 
 class BlockOverlay(private val context: Context) {
@@ -22,7 +21,8 @@ class BlockOverlay(private val context: Context) {
 
     private lateinit var timerText: TextView
     private lateinit var flipStatusText: TextView
-    private lateinit var skipButton: Button
+    private lateinit var skipButton: TextView
+    private lateinit var flipStatusIndicator: View
 
     private var isPhoneFlipped = false
     private var remainingSeconds = 15
@@ -52,6 +52,7 @@ class BlockOverlay(private val context: Context) {
         timerText = overlayView!!.findViewById(R.id.timerText)
         flipStatusText = overlayView!!.findViewById(R.id.flipStatusText)
         skipButton = overlayView!!.findViewById(R.id.skipButton)
+        flipStatusIndicator = overlayView!!.findViewById(R.id.flipStatusIndicator)
         Log.d(TAG, "Overlay view inflated successfully")
 
         // "안볼래요" 버튼 클릭 리스너 설정
@@ -162,10 +163,18 @@ class BlockOverlay(private val context: Context) {
     private fun updateFlipStatus() {
         if (isPhoneFlipped) {
             flipStatusText.text = context.getString(R.string.flip_detected)
-            flipStatusText.setTextColor(context.getColor(android.R.color.holo_green_dark))
+            // 녹색으로 인디케이터 변경
+            flipStatusIndicator.setBackgroundResource(R.drawable.circle_shape)
+            flipStatusIndicator.backgroundTintList = android.content.res.ColorStateList.valueOf(
+                context.getColor(android.R.color.holo_green_dark)
+            )
         } else {
             flipStatusText.text = context.getString(R.string.flip_required)
-            flipStatusText.setTextColor(context.getColor(android.R.color.holo_red_dark))
+            // 빨간색으로 인디케이터 변경
+            flipStatusIndicator.setBackgroundResource(R.drawable.circle_shape)
+            flipStatusIndicator.backgroundTintList = android.content.res.ColorStateList.valueOf(
+                context.getColor(android.R.color.holo_red_dark)
+            )
         }
     }
 
