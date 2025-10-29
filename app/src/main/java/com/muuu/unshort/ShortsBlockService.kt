@@ -24,6 +24,7 @@ class ShortsBlockService : AccessibilityService() {
     private val handler = android.os.Handler(android.os.Looper.getMainLooper())
     private var foregroundCheckRunnable: Runnable? = null
     private val firstOverlayPerApp = mutableMapOf<String, Boolean>()  // 앱별 첫 오버레이 여부
+    private var pendingOverlayJob: Runnable? = null  // pending 중인 오버레이 표시 job
 
     // 차단 대상 앱 패키지명
     private val TARGET_APPS = setOf(
@@ -48,6 +49,7 @@ class ShortsBlockService : AccessibilityService() {
                 // 차단 대상 앱이 아닌 앱으로 전환 (홈/백 버튼 포함)
                 if (currentForegroundPackage !in TARGET_APPS) {
                     Log.d(TAG, "Foreground changed to $currentForegroundPackage, dismissing overlay")
+                    cancelPendingOverlay()  // pending job 취소
                     blockOverlay?.dismiss()
                     blockOverlay = null
                     leftViaHomeButton = true  // 백그라운드로 나갔음을 표시
@@ -64,6 +66,7 @@ class ShortsBlockService : AccessibilityService() {
             // 차단 대상 앱에서 다른 앱으로 전환 (홈/백 버튼 포함)
             if (packageName !in TARGET_APPS && blockOverlay?.isShowing() == true) {
                 Log.d(TAG, "Left target app to $packageName (home/back/app switch), dismissing overlay")
+                cancelPendingOverlay()  // pending job 취소
                 blockOverlay?.dismiss()
                 blockOverlay = null
                 leftViaHomeButton = true  // 백그라운드로 나갔음을 표시
@@ -162,6 +165,9 @@ class ShortsBlockService : AccessibilityService() {
                 Log.d(TAG, "Ignoring 'shorts closed' event right after scroll")
                 return
             }
+
+            // 쇼츠 화면 벗어남 - pending job 취소
+            cancelPendingOverlay()
 
             // 쇼츠 화면이 아닌데 오버레이가 표시 중이면 제거
             if (blockOverlay?.isShowing() == true) {
@@ -442,36 +448,58 @@ class ShortsBlockService : AccessibilityService() {
             return
         }
 
-        Log.d(TAG, "Overlay permission granted, creating BlockOverlay")
+        Log.d(TAG, "Overlay permission granted, scheduling overlay with delay")
 
-        try {
-            // 오버레이 표시 전에 미디어 일시정지 시도
-            pauseMedia(packageName)
+        // 기존 pending job 취소
+        cancelPendingOverlay()
 
-            blockOverlay = BlockOverlay(this)
-            Log.d(TAG, "BlockOverlay created, calling show()")
-            blockOverlay?.show(
-                onDismiss = {
-                    // 오버레이 제거 시
-                    Log.d(TAG, "Overlay dismissed")
-                    stopForegroundCheck()
-                    blockOverlay?.dismiss()
-                    blockOverlay = null
-                },
-                onComplete = {
-                    // 15초 완료 - 현재 쇼츠까지는 허용
-                    allowedUntilScroll = true
-                    overlayWasShown = false  // 다음 영상은 새 세션으로 시작
-                    stopForegroundCheck()
-                    Log.d(TAG, "Timer completed, allowing current shorts")
-                }
-            )
-            Log.d(TAG, "BlockOverlay show() completed")
+        // 딜레이 후 pauseMedia + 오버레이 표시
+        pendingOverlayJob = Runnable {
+            try {
+                Log.d(TAG, "Executing pending overlay job for $packageName")
 
-            // 주기적으로 포그라운드 앱 체크 시작
-            startForegroundCheck()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error showing overlay", e)
+                // 미디어 일시정지 시도
+                pauseMedia(packageName)
+
+                blockOverlay = BlockOverlay(this)
+                Log.d(TAG, "BlockOverlay created, calling show()")
+                blockOverlay?.show(
+                    onDismiss = {
+                        // 오버레이 제거 시
+                        Log.d(TAG, "Overlay dismissed")
+                        stopForegroundCheck()
+                        blockOverlay?.dismiss()
+                        blockOverlay = null
+                    },
+                    onComplete = {
+                        // 15초 완료 - 현재 쇼츠까지는 허용
+                        allowedUntilScroll = true
+                        overlayWasShown = false  // 다음 영상은 새 세션으로 시작
+                        stopForegroundCheck()
+                        Log.d(TAG, "Timer completed, allowing current shorts")
+                    }
+                )
+                Log.d(TAG, "BlockOverlay show() completed")
+
+                // 주기적으로 포그라운드 앱 체크 시작
+                startForegroundCheck()
+
+                pendingOverlayJob = null
+            } catch (e: Exception) {
+                Log.e(TAG, "Error showing overlay", e)
+                pendingOverlayJob = null
+            }
+        }
+
+        handler.postDelayed(pendingOverlayJob!!, 300)
+        Log.d(TAG, "Overlay job scheduled with 300ms delay")
+    }
+
+    private fun cancelPendingOverlay() {
+        pendingOverlayJob?.let {
+            handler.removeCallbacks(it)
+            Log.d(TAG, "Cancelled pending overlay job")
+            pendingOverlayJob = null
         }
     }
 
@@ -635,6 +663,7 @@ class ShortsBlockService : AccessibilityService() {
 
     override fun onDestroy() {
         super.onDestroy()
+        cancelPendingOverlay()
         stopForegroundCheck()
         blockOverlay?.dismiss()
         blockOverlay = null
