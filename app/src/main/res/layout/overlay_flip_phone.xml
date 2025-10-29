@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="un:short"
-                android:textSize="24sp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-black"
                 android:textColor="@color/primary_dark"
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/flip_phone_title"
-                android:textSize="26sp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@color/gray_900"
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="@string/flip_phone_message"
-                android:textSize="16sp"
+                android:textSize="14dp"
                 android:textAlignment="center"
                 android:textColor="@color/gray_600"
                 android:lineSpacingExtra="4dp" />
@@ -77,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/flip_required"
-                    android:textSize="14sp"
+                    android:textSize="12dp"
                     android:textColor="@color/gray_900"
                     android:fontFamily="sans-serif-medium" />
 
@@ -96,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="30"
-                    android:textSize="88sp"
+                    android:textSize="64dp"
                     android:textStyle="bold"
                     android:fontFamily="sans-serif-black"
                     android:textColor="@color/accent_purple"
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-8dp"
                     android:text="초 남음"
-                    android:textSize="18sp"
+                    android:textSize="14dp"
                     android:fontFamily="sans-serif-medium"
                     android:textColor="@color/gray_500" />
 
@@ -127,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="이 시간 동안 생각해보세요:\n정말 지금 쇼츠를 봐야 할까요?"
-                android:textSize="14sp"
+                android:textSize="12dp"
                 android:textAlignment="center"
                 android:textColor="@color/gray_500"
                 android:lineSpacingExtra="4dp"
