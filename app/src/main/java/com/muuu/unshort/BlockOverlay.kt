@@ -45,26 +45,32 @@ class BlockOverlay(private val context: Context) {
         flipStatusText = overlayView!!.findViewById(R.id.flipStatusText)
         Log.d(TAG, "Overlay view inflated successfully")
 
-        // 윈도우 매니저 파라미터 설정 - 전체 화면 + 네비게이션바까지
+        // 윈도우 매니저 파라미터 설정 - 실제 화면 + 상태바 + 네비게이션바 전체 덮기
         val displayMetrics = context.resources.displayMetrics
         val screenHeight = displayMetrics.heightPixels
+        val statusBarHeight = getStatusBarHeight()
         val navigationBarHeight = getNavigationBarHeight()
-        Log.d(TAG, "Screen height: $screenHeight, nav bar height: $navigationBarHeight")
+        val totalHeight = screenHeight + statusBarHeight + navigationBarHeight
+        Log.d(TAG, "Screen: $screenHeight, Status bar: $statusBarHeight, Nav bar: $navigationBarHeight, Total: $totalHeight")
 
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,
-            screenHeight + navigationBarHeight,  // 실제 화면 높이 + 네비게이션바
+            totalHeight,  // 실제 화면 + 상태바 + 네비게이션바
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            // 모든 터치 완전 차단
+            // 모든 터치 완전 차단 + 홈/알림창 방지
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                     WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
                     WindowManager.LayoutParams.FLAG_FULLSCREEN or
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
-                    WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS,
+                    WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS or
+                    WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or  // 화면 꺼짐 방지
+                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or  // 잠금화면 위에도 표시
+                    WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON,  // 화면 켜기
             PixelFormat.TRANSLUCENT
         )
         params.gravity = Gravity.TOP or Gravity.START
-        params.y = 0  // 화면 최상단부터 시작
+        params.x = 0
+        params.y = 0
 
         Log.d(TAG, "Adding view to window manager")
         try {
@@ -157,6 +163,15 @@ class BlockOverlay(private val context: Context) {
     }
 
     fun isShowing(): Boolean = overlayView != null
+
+    private fun getStatusBarHeight(): Int {
+        var result = 0
+        val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            result = context.resources.getDimensionPixelSize(resourceId)
+        }
+        return result
+    }
 
     private fun getNavigationBarHeight(): Int {
         var result = 0
