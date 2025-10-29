@@ -146,14 +146,6 @@
                             android:layout_height="wrap_content"
                             android:text="• Instagram Reels"
                             android:textSize="14sp"
-                            android:textColor="@color/gray_700"
-                            android:layout_marginBottom="6dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="• TikTok"
-                            android:textSize="14sp"
                             android:textColor="@color/gray_700" />
 
                     </LinearLayout>

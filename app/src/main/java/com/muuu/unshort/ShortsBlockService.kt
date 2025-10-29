@@ -29,8 +29,7 @@ class ShortsBlockService : AccessibilityService() {
     // 차단 대상 앱 패키지명
     private val TARGET_APPS = setOf(
         "com.google.android.youtube",
-        "com.instagram.android",
-        "com.zhiliaoapp.musically" // TikTok
+        "com.instagram.android"
     )
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
@@ -203,7 +202,6 @@ class ShortsBlockService : AccessibilityService() {
         return when (packageName) {
             "com.google.android.youtube" -> detectYouTubeShorts(rootNode)
             "com.instagram.android" -> detectInstagramReels(rootNode)
-            "com.zhiliaoapp.musically" -> detectTikTok(rootNode)
             else -> false
         }
     }
@@ -239,10 +237,86 @@ class ShortsBlockService : AccessibilityService() {
     }
 
     private fun detectTikTok(node: AccessibilityNodeInfo): Boolean {
-        // TikTok은 기본적으로 전체가 쇼츠 형식
-        // 하지만 프로필 페이지, 검색 페이지 등은 제외
-        // 여기서는 단순히 true를 반환 (댓글 화면은 isCommentScreenOpen에서 처리)
+        Log.d(TAG, "detectTikTok called - package: ${node.packageName}")
+
+        // TikTok 메인 피드(For You/Following) 감지
+        // ViewPager로 구성되어 있으므로 이를 탐지
+
+        // 1. ViewPager ID 확인 (메인 피드) - 여러 가능한 ID들
+        val possibleViewPagerIds = listOf(
+            "com.zhiliaoapp.musically:id/viewpager",
+            "com.ss.android.ugc.trill:id/viewpager",
+            "com.zhiliaoapp.musically:id/view_pager",
+            "com.ss.android.ugc.trill:id/view_pager"
+        )
+
+        for (id in possibleViewPagerIds) {
+            val nodes = node.findAccessibilityNodeInfosByViewId(id)
+            if (nodes.isNotEmpty()) {
+                Log.d(TAG, "TikTok: Found ViewPager with ID: $id")
+                return true
+            }
+        }
+
+        // 2. 메인 피드 컨테이너 확인
+        val possibleContainerIds = listOf(
+            "com.zhiliaoapp.musically:id/main_tab_container",
+            "com.ss.android.ugc.trill:id/main_tab_container"
+        )
+
+        for (id in possibleContainerIds) {
+            val nodes = node.findAccessibilityNodeInfosByViewId(id)
+            if (nodes.isNotEmpty()) {
+                Log.d(TAG, "TikTok: Found main tab container: $id")
+                return true
+            }
+        }
+
+        // 3. "For You" 또는 "Following" 또는 한글 텍스트 확인
+        val forYouNodes = findNodesByText(node, "For You")
+        val followingNodes = findNodesByText(node, "Following")
+        val koreanForYou = findNodesByText(node, "추천") // 한국어 "추천"
+        val koreanFollowing = findNodesByText(node, "팔로잉") // 한국어 "팔로잉"
+
+        if (forYouNodes.isNotEmpty() || followingNodes.isNotEmpty() ||
+            koreanForYou.isNotEmpty() || koreanFollowing.isNotEmpty()) {
+            Log.d(TAG, "TikTok: Found main feed tab text")
+            return true
+        }
+
+        // 4. 프로필 페이지나 다른 화면이면 false
+        val profileNodes = findNodesByText(node, "Profile")
+        val profileKorean = findNodesByText(node, "프로필")
+        val discoverNodes = findNodesByText(node, "Discover")
+        val discoverKorean = findNodesByText(node, "검색")
+
+        if (profileNodes.isNotEmpty() || discoverNodes.isNotEmpty() ||
+            profileKorean.isNotEmpty() || discoverKorean.isNotEmpty()) {
+            Log.d(TAG, "TikTok: In Profile or Discover screen, not blocking")
+            return false
+        }
+
+        // 디버깅: 현재 화면의 View ID들 출력 (처음 몇 개만)
+        logViewIds(node, 0, 3)
+
+        // 기본적으로 true 반환 (틱톡은 기본이 피드 화면)
+        Log.d(TAG, "TikTok: Defaulting to true (main feed assumed)")
         return true
+    }
+
+    private fun logViewIds(node: AccessibilityNodeInfo, depth: Int, maxDepth: Int) {
+        if (depth > maxDepth) return
+
+        val viewId = node.viewIdResourceName
+        if (viewId != null && viewId.isNotEmpty()) {
+            Log.d(TAG, "TikTok ViewID [depth=$depth]: $viewId")
+        }
+
+        for (i in 0 until minOf(node.childCount, 5)) { // 처음 5개만
+            node.getChild(i)?.let { child ->
+                logViewIds(child, depth + 1, maxDepth)
+            }
+        }
     }
 
     private fun findNodesByText(node: AccessibilityNodeInfo, text: String): List<AccessibilityNodeInfo> {
@@ -289,7 +363,6 @@ class ShortsBlockService : AccessibilityService() {
         return when {
             packageName.contains("youtube") -> getYouTubeShortsHash(rootNode)
             packageName.contains("instagram") -> getInstagramReelsHash(rootNode)
-            packageName.contains("musically") -> getTikTokHash(rootNode)
             else -> 0
         }
     }
