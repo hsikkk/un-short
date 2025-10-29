@@ -2,26 +2,25 @@ package com.muuu.unshort
 
 import android.animation.ObjectAnimator
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.drawable.GradientDrawable
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import com.google.android.material.card.MaterialCardView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var powerButton: FrameLayout
-    private lateinit var powerButtonBackground: View
+    private lateinit var powerButtonCard: CardView
     private lateinit var powerIcon: ImageView
     private lateinit var statusTitle: TextView
-    private lateinit var statusDescription: TextView
-    private lateinit var toggleCard: MaterialCardView
+    private lateinit var statusDot: View
+    private lateinit var statusLabel: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +41,11 @@ class MainActivity : AppCompatActivity() {
 
         // View 초기화
         powerButton = findViewById(R.id.powerButton)
-        powerButtonBackground = findViewById(R.id.powerButtonBackground)
+        powerButtonCard = powerButton.parent as CardView
         powerIcon = findViewById(R.id.powerIcon)
         statusTitle = findViewById(R.id.statusTitle)
-        statusDescription = findViewById(R.id.statusDescription)
-        toggleCard = findViewById(R.id.toggleCard)
+        statusDot = findViewById(R.id.statusDot)
+        statusLabel = findViewById(R.id.statusLabel)
 
         // 저장된 차단 상태 불러오기
         val isBlocking = prefs.getBoolean("blocking_enabled", true)
@@ -61,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             prefs.edit().putBoolean("blocking_enabled", newState).apply()
 
             // 버튼 애니메이션
-            animateButtonPress(it)
+            animateButtonPress(powerButton.parent as View)
 
             // UI 업데이트
             updateUI(newState)
@@ -70,19 +69,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun animateButtonPress(view: View) {
         // 버튼을 살짝 눌렸다가 원래대로 돌아오는 애니메이션
-        val scaleDown = ObjectAnimator.ofFloat(view, "scaleX", 1f, 0.92f).apply {
-            duration = 100
+        val scaleDown = ObjectAnimator.ofFloat(view, "scaleX", 1f, 0.95f).apply {
+            duration = 150
         }
-        val scaleDownY = ObjectAnimator.ofFloat(view, "scaleY", 1f, 0.92f).apply {
-            duration = 100
+        val scaleDownY = ObjectAnimator.ofFloat(view, "scaleY", 1f, 0.95f).apply {
+            duration = 150
         }
-        val scaleUp = ObjectAnimator.ofFloat(view, "scaleX", 0.92f, 1f).apply {
-            duration = 100
-            startDelay = 100
+        val scaleUp = ObjectAnimator.ofFloat(view, "scaleX", 0.95f, 1f).apply {
+            duration = 150
+            startDelay = 150
         }
-        val scaleUpY = ObjectAnimator.ofFloat(view, "scaleY", 0.92f, 1f).apply {
-            duration = 100
-            startDelay = 100
+        val scaleUpY = ObjectAnimator.ofFloat(view, "scaleY", 0.95f, 1f).apply {
+            duration = 150
+            startDelay = 150
         }
 
         scaleDown.start()
@@ -93,41 +92,43 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateUI(isEnabled: Boolean) {
         if (isEnabled) {
-            // 활성화 상태 - 녹색
+            // 활성화 상태 - 검은색 버튼
             statusTitle.text = "차단 활성화됨"
-            statusDescription.text = "쇼츠 앱을 열면 차단이 작동합니다"
-            toggleCard.strokeColor = ContextCompat.getColor(this, R.color.success)
+            statusTitle.alpha = 0.8f
 
-            // 전원 버튼 - 녹색
-            val drawable = GradientDrawable().apply {
-                shape = GradientDrawable.OVAL
-                setColor(ContextCompat.getColor(this@MainActivity, R.color.success))
-            }
-            powerButtonBackground.background = drawable
+            // CardView 배경 - 검은색
+            powerButtonCard.setCardBackgroundColor(Color.parseColor("#000000"))
+            powerButtonCard.cardElevation = 24f
 
             // 아이콘 색상 - 흰색
             DrawableCompat.setTint(
                 DrawableCompat.wrap(powerIcon.drawable),
-                ContextCompat.getColor(this, R.color.white)
+                Color.WHITE
             )
+
+            // 상태 인디케이터
+            statusDot.setBackgroundResource(R.drawable.status_dot_active)
+            statusLabel.text = "ACTIVE"
+            statusLabel.alpha = 0.4f
         } else {
-            // 비활성화 상태 - 회색
+            // 비활성화 상태 - 흰색 버튼 + 얇은 테두리
             statusTitle.text = "차단 비활성화됨"
-            statusDescription.text = "쇼츠 앱을 자유롭게 사용할 수 있습니다"
-            toggleCard.strokeColor = ContextCompat.getColor(this, R.color.gray_300)
+            statusTitle.alpha = 0.4f
 
-            // 전원 버튼 - 회색
-            val drawable = GradientDrawable().apply {
-                shape = GradientDrawable.OVAL
-                setColor(ContextCompat.getColor(this@MainActivity, R.color.gray_400))
-            }
-            powerButtonBackground.background = drawable
+            // CardView 배경 - 흰색
+            powerButtonCard.setCardBackgroundColor(Color.WHITE)
+            powerButtonCard.cardElevation = 8f
 
-            // 아이콘 색상 - 흰색
+            // 아이콘 색상 - 검은색 30%
             DrawableCompat.setTint(
                 DrawableCompat.wrap(powerIcon.drawable),
-                ContextCompat.getColor(this, R.color.white)
+                Color.parseColor("#4D000000")
             )
+
+            // 상태 인디케이터
+            statusDot.setBackgroundResource(R.drawable.status_dot_inactive)
+            statusLabel.text = "INACTIVE"
+            statusLabel.alpha = 0.3f
         }
     }
 }

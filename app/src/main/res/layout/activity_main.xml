@@ -3,183 +3,133 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_50">
+    android:background="#000000">
 
-    <!-- Header Section -->
+    <!-- Top Section - Black Background -->
     <LinearLayout
-        android:id="@+id/headerSection"
+        android:id="@+id/topSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="32dp"
-        android:background="@color/primary_dark"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:background="#000000"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="un:short"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-black"
-            android:textColor="@color/white"
-            android:layout_gravity="start"
-            android:letterSpacing="0.02" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="쇼츠 중독에서 벗어나세요.\n의도적인 소비를 위한 작은 습관."
-            android:textSize="15sp"
-            android:textColor="@color/gray_300"
-            android:layout_marginTop="8dp"
-            android:lineSpacingExtra="4dp"
-            android:alpha="0.9" />
-
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/headerSection"
-        app:layout_constraintBottom_toBottomOf="parent">
-
+        <!-- Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="32dp"
+            android:paddingTop="16dp">
 
-            <!-- Main Toggle Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/toggleCard"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="un:short"
+                android:textSize="26sp"
+                android:fontFamily="sans-serif-thin"
+                android:textColor="#FFFFFF"
+                android:letterSpacing="-0.02" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="2dp"
-                app:strokeColor="@color/success"
-                app:cardBackgroundColor="@color/white">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="40dp"
-                    android:gravity="center">
-
-                    <!-- Status Title -->
-                    <TextView
-                        android:id="@+id/statusTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="차단 활성화됨"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/gray_900"
-                        android:fontFamily="sans-serif-medium" />
-
-                    <!-- Status Description -->
-                    <TextView
-                        android:id="@+id/statusDescription"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="쇼츠 앱을 열면 차단이 작동합니다"
-                        android:textSize="14sp"
-                        android:textColor="@color/gray_600"
-                        android:textAlignment="center" />
-
-                    <!-- Power Button (Circular) -->
-                    <FrameLayout
-                        android:id="@+id/powerButton"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_marginTop="32dp"
-                        android:background="@android:color/transparent"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <!-- Background Circle -->
-                        <View
-                            android:id="@+id/powerButtonBackground"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/power_button_background" />
-
-                        <!-- Power Icon -->
-                        <ImageView
-                            android:id="@+id/powerIcon"
-                            android:layout_width="64dp"
-                            android:layout_height="64dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_power"
-                            android:contentDescription="Power button" />
-
-                    </FrameLayout>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Target Apps Info Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/gray_200"
-                app:cardBackgroundColor="@color/white">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="24dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="차단 대상 앱"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/gray_900"
-                        android:fontFamily="sans-serif-medium" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="12dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="• YouTube Shorts"
-                            android:textSize="14sp"
-                            android:textColor="@color/gray_700"
-                            android:layout_marginBottom="6dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="• Instagram Reels"
-                            android:textSize="14sp"
-                            android:textColor="@color/gray_700" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+                android:text="쇼츠 콘텐츠에서 벗어나세요.\n의도적인 소비를 위한 작은 습관."
+                android:textSize="12sp"
+                android:fontFamily="sans-serif-thin"
+                android:textColor="#FFFFFF"
+                android:alpha="0.5"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="2dp" />
 
         </LinearLayout>
 
-    </ScrollView>
+    </LinearLayout>
+
+    <!-- Middle Section - White Background -->
+    <LinearLayout
+        android:id="@+id/middleSection"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/topSection"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Power Button with Shadow -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:cardCornerRadius="60dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#000000">
+
+            <FrameLayout
+                android:id="@+id/powerButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true">
+
+                <!-- Power Icon -->
+                <ImageView
+                    android:id="@+id/powerIcon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_power"
+                    android:contentDescription="Power button" />
+
+            </FrameLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Status Text -->
+        <TextView
+            android:id="@+id/statusTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="차단 활성화됨"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif"
+            android:textColor="#000000"
+            android:alpha="0.8"
+            android:letterSpacing="0.01" />
+
+        <!-- Status Indicator -->
+        <LinearLayout
+            android:id="@+id/statusIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Status Dot -->
+            <View
+                android:id="@+id/statusDot"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@drawable/status_dot_active" />
+
+            <!-- Status Label -->
+            <TextView
+                android:id="@+id/statusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="ACTIVE"
+                android:textSize="11sp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="#000000"
+                android:alpha="0.4"
+                android:letterSpacing="0.08" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
