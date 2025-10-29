@@ -1,6 +1,7 @@
 package com.muuu.unshort
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -11,6 +12,13 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class PermissionSetupActivity : AppCompatActivity() {
+
+    override fun attachBaseContext(newBase: android.content.Context) {
+        val configuration = Configuration(newBase.resources.configuration)
+        configuration.fontScale = AppConstants.FONT_SCALE
+        val context = newBase.createConfigurationContext(configuration)
+        super.attachBaseContext(context)
+    }
 
     private lateinit var backButton: ImageView
     private var accessibilityCard: View? = null

@@ -3,6 +3,7 @@ package com.muuu.unshort
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.Settings
@@ -18,6 +19,13 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.ViewCompat
 
 class MainActivity : AppCompatActivity() {
+
+    override fun attachBaseContext(newBase: android.content.Context) {
+        val configuration = Configuration(newBase.resources.configuration)
+        configuration.fontScale = AppConstants.FONT_SCALE
+        val context = newBase.createConfigurationContext(configuration)
+        super.attachBaseContext(context)
+    }
 
     private lateinit var toggleArea: LinearLayout
     private lateinit var permissionWarning: LinearLayout

@@ -1,6 +1,7 @@
 package com.muuu.unshort
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -15,6 +16,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 
 class OnboardingActivity : AppCompatActivity() {
+
+    override fun attachBaseContext(newBase: android.content.Context) {
+        val configuration = Configuration(newBase.resources.configuration)
+        configuration.fontScale = AppConstants.FONT_SCALE
+        val context = newBase.createConfigurationContext(configuration)
+        super.attachBaseContext(context)
+    }
 
     private lateinit var viewPager: ViewPager2
     private lateinit var indicators: List<View>

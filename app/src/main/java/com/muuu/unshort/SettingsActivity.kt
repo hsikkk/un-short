@@ -1,6 +1,7 @@
 package com.muuu.unshort
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class SettingsActivity : AppCompatActivity() {
+
+    override fun attachBaseContext(newBase: android.content.Context) {
+        val configuration = Configuration(newBase.resources.configuration)
+        configuration.fontScale = AppConstants.FONT_SCALE
+        val context = newBase.createConfigurationContext(configuration)
+        super.attachBaseContext(context)
+    }
 
     private lateinit var backButton: ImageView
     private lateinit var waitTimeValue: TextView
