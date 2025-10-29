@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.PixelFormat
 import android.os.CountDownTimer
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -20,8 +22,11 @@ class BlockOverlay(private val context: Context) {
     private val TAG = "BlockOverlay"
 
     private lateinit var timerText: TextView
+    private lateinit var secondsLabel: TextView
     private lateinit var flipStatusText: TextView
     private lateinit var skipButton: TextView
+    private lateinit var watchButton: TextView
+    private lateinit var buttonSpacer: View
     private lateinit var flipStatusIndicator: View
 
     private var isPhoneFlipped = false
@@ -29,9 +34,10 @@ class BlockOverlay(private val context: Context) {
     private var onDismissListener: (() -> Unit)? = null
     private var onCompleteListener: (() -> Unit)? = null
     private var onSkipListener: (() -> Unit)? = null
+    private var onWatchListener: (() -> Unit)? = null
 
     @SuppressLint("InflateParams")
-    fun show(onDismiss: () -> Unit, onComplete: () -> Unit, onSkip: (() -> Unit)? = null) {
+    fun show(onDismiss: () -> Unit, onComplete: () -> Unit, onSkip: (() -> Unit)? = null, onWatch: (() -> Unit)? = null) {
         Log.d(TAG, "show() called")
         if (overlayView != null) {
             Log.d(TAG, "Overlay already showing, ignoring")
@@ -41,6 +47,7 @@ class BlockOverlay(private val context: Context) {
         this.onDismissListener = onDismiss
         this.onCompleteListener = onComplete
         this.onSkipListener = onSkip
+        this.onWatchListener = onWatch
 
         // SharedPreferences에서 설정된 딜레이 시간 읽기 (기본값 30초)
         val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
@@ -50,8 +57,11 @@ class BlockOverlay(private val context: Context) {
         Log.d(TAG, "Inflating overlay view")
         overlayView = LayoutInflater.from(context).inflate(R.layout.overlay_flip_phone, null)
         timerText = overlayView!!.findViewById(R.id.timerText)
+        secondsLabel = overlayView!!.findViewById(R.id.secondsLabel)
         flipStatusText = overlayView!!.findViewById(R.id.flipStatusText)
         skipButton = overlayView!!.findViewById(R.id.skipButton)
+        watchButton = overlayView!!.findViewById(R.id.watchButton)
+        buttonSpacer = overlayView!!.findViewById(R.id.buttonSpacer)
         flipStatusIndicator = overlayView!!.findViewById(R.id.flipStatusIndicator)
         Log.d(TAG, "Overlay view inflated successfully")
 
@@ -62,6 +72,17 @@ class BlockOverlay(private val context: Context) {
             dismiss()
             // 백키 누르기 콜백 호출
             onSkipListener?.invoke()
+            // dismiss 리스너는 마지막에 호출
+            onDismissListener?.invoke()
+        }
+
+        // "볼래요" 버튼 클릭 리스너 설정 (초기에는 숨겨져 있음)
+        watchButton.setOnClickListener {
+            Log.d(TAG, "Watch button clicked, dismissing overlay and resuming media")
+            // 오버레이 닫기
+            dismiss()
+            // 미디어 재생 콜백 호출
+            onWatchListener?.invoke()
             // dismiss 리스너는 마지막에 호출
             onDismissListener?.invoke()
         }
@@ -147,10 +168,9 @@ class BlockOverlay(private val context: Context) {
             }
 
             override fun onFinish() {
-                // 타이머 완료 - 현재 쇼츠는 허용
-                onCompleteListener?.invoke()
-                dismiss()
-                onDismissListener?.invoke()
+                // 타이머 완료 - 버튼 전환
+                Log.d(TAG, "Timer finished, showing watch button")
+                onTimerComplete()
             }
         }.start()
     }
@@ -158,6 +178,55 @@ class BlockOverlay(private val context: Context) {
     private fun pauseCountdown() {
         countDownTimer?.cancel()
         countDownTimer = null
+    }
+
+    private fun onTimerComplete() {
+        // 타이머 텍스트를 "완료"로 변경
+        timerText.text = "✓"
+        timerText.textSize = 72f
+        timerText.setTextColor(context.getColor(android.R.color.holo_green_light))
+
+        // "초" 라벨 숨기기
+        secondsLabel.visibility = View.GONE
+
+        // 햅틱 피드백 제공
+        provideHapticFeedback()
+
+        // 플립 감지 중지
+        flipDetector?.stop()
+
+        // 플립 상태 UI 숨기기
+        flipStatusText.visibility = View.GONE
+        flipStatusIndicator.visibility = View.GONE
+
+        // 두 버튼 모두 표시: 안볼래요 유지하고 볼래요 추가
+        skipButton.visibility = View.VISIBLE  // 안볼래요 버튼 유지
+        buttonSpacer.visibility = View.VISIBLE  // 버튼 사이 간격
+        watchButton.visibility = View.VISIBLE  // 볼래요 버튼 표시
+
+        // 완료 콜백 호출
+        onCompleteListener?.invoke()
+    }
+
+    private fun provideHapticFeedback() {
+        try {
+            val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+            if (vibrator != null && vibrator.hasVibrator()) {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    // Android 8.0 이상: VibrationEffect 사용 (짧고 부드러운 진동)
+                    vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
+                } else {
+                    // Android 8.0 미만: 기본 진동
+                    @Suppress("DEPRECATION")
+                    vibrator.vibrate(50)
+                }
+                Log.d(TAG, "Haptic feedback provided")
+            } else {
+                Log.d(TAG, "Vibrator not available")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error providing haptic feedback", e)
+        }
     }
 
     private fun updateFlipStatus() {

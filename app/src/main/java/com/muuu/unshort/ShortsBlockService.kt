@@ -560,16 +560,23 @@ class ShortsBlockService : AccessibilityService() {
                         blockOverlay = null
                     },
                     onComplete = {
-                        // 15초 완료 - 현재 쇼츠까지는 허용
-                        allowedUntilScroll = true
-                        overlayWasShown = false  // 다음 영상은 새 세션으로 시작
-                        stopForegroundCheck()
-                        Log.d(TAG, "Timer completed, allowing current shorts")
+                        // 타이머 완료 - 버튼 전환만 (오버레이는 유지)
+                        Log.d(TAG, "Timer completed, showing watch button")
+                        // 오버레이는 유지되고 볼래요 버튼만 표시
                     },
                     onSkip = {
                         // "안볼래요" 버튼 클릭 - 백키 누르기
                         Log.d(TAG, "Skip button pressed, performing back action")
                         performGlobalBackAction()
+                    },
+                    onWatch = {
+                        // "볼래요" 버튼 클릭 - 미디어 재생 재개
+                        Log.d(TAG, "Watch button pressed, resuming media")
+                        allowedUntilScroll = true
+                        overlayWasShown = false  // 다음 영상은 새 세션으로 시작
+                        stopForegroundCheck()
+                        // 미디어 재생 (화면 중앙 탭)
+                        resumeMedia()
                     }
                 )
                 Log.d(TAG, "BlockOverlay show() completed")
@@ -709,6 +716,16 @@ class ShortsBlockService : AccessibilityService() {
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error performing back action", e)
+        }
+    }
+
+    private fun resumeMedia() {
+        try {
+            Log.d(TAG, "Resuming media playback")
+            // 화면 중앙을 탭하여 미디어 재생
+            performTapGesture()
+        } catch (e: Exception) {
+            Log.e(TAG, "Error resuming media", e)
         }
     }
 

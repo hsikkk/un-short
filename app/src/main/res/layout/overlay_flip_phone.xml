@@ -84,6 +84,7 @@
 
                 <!-- Seconds label -->
                 <TextView
+                    android:id="@+id/secondsLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-12dp"
@@ -141,12 +142,41 @@
             android:lineSpacingExtra="4dp"
             android:alpha="0.6" />
 
-        <!-- Skip button -->
-        <FrameLayout
+        <!-- Button container -->
+        <LinearLayout
+            android:id="@+id/buttonContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            android:gravity="center">
 
+            <!-- Watch button (hidden initially, shown after timer) - LEFT/PRIMARY -->
+            <TextView
+                android:id="@+id/watchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_watch"
+                android:text="볼래요"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="14dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="sans-serif-medium"
+                android:visibility="gone" />
+
+            <!-- Spacer (hidden initially) -->
+            <View
+                android:id="@+id/buttonSpacer"
+                android:layout_width="16dp"
+                android:layout_height="0dp"
+                android:visibility="gone" />
+
+            <!-- Skip button (always visible) - RIGHT/SECONDARY -->
             <TextView
                 android:id="@+id/skipButton"
                 android:layout_width="wrap_content"
@@ -155,15 +185,16 @@
                 android:text="안볼래요"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:paddingHorizontal="36dp"
+                android:textColor="#1A1A1A"
+                android:paddingHorizontal="32dp"
                 android:paddingVertical="14dp"
                 android:gravity="center"
                 android:clickable="true"
                 android:focusable="true"
-                android:fontFamily="sans-serif-medium" />
+                android:fontFamily="sans-serif-medium"
+                android:visibility="visible" />
 
-        </FrameLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -4,15 +4,21 @@
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <corners android:radius="24dp" />
-            <solid android:color="#E0E0E0" />
+            <solid android:color="#33FFFFFF" />
+            <stroke
+                android:width="2dp"
+                android:color="#FFFFFF" />
         </shape>
     </item>
 
-    <!-- Default state - White background (negative action) -->
+    <!-- Default state - Transparent with border (same as current skip button) -->
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="24dp" />
-            <solid android:color="#FFFFFF" />
+            <solid android:color="#1AFFFFFF" />
+            <stroke
+                android:width="1.5dp"
+                android:color="#80FFFFFF" />
         </shape>
     </item>
 </selector>
