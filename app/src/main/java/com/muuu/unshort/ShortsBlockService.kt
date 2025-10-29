@@ -20,6 +20,9 @@ class ShortsBlockService : AccessibilityService() {
     private var wasInShortsScreen = false  // 이전에 쇼츠 화면에 있었는지 여부
     private var overlayWasShown = false  // 현재 쇼츠에 대해 오버레이가 표시된 적이 있는지
     private var leftViaHomeButton = false  // 홈/백 버튼으로 나갔는지 여부
+    private var lastForegroundPackage: String = ""  // 마지막 포그라운드 앱
+    private val handler = android.os.Handler(android.os.Looper.getMainLooper())
+    private var foregroundCheckRunnable: Runnable? = null
 
     // 차단 대상 앱 패키지명
     private val TARGET_APPS = setOf(
@@ -33,7 +36,27 @@ class ShortsBlockService : AccessibilityService() {
 
         val packageName = event.packageName?.toString() ?: return
 
-        // TYPE_WINDOW_STATE_CHANGED 이벤트로 앱 전환 감지
+        // 오버레이가 표시 중일 때, 포그라운드 앱 변경 감지
+        if (blockOverlay?.isShowing() == true) {
+            // rootInActiveWindow로 현재 포그라운드 앱 확인
+            val currentForegroundPackage = rootInActiveWindow?.packageName?.toString()
+
+            if (currentForegroundPackage != null && currentForegroundPackage != lastForegroundPackage) {
+                lastForegroundPackage = currentForegroundPackage
+
+                // 차단 대상 앱이 아닌 앱으로 전환 (홈/백 버튼 포함)
+                if (currentForegroundPackage !in TARGET_APPS) {
+                    Log.d(TAG, "Foreground changed to $currentForegroundPackage, dismissing overlay")
+                    blockOverlay?.dismiss()
+                    blockOverlay = null
+                    leftViaHomeButton = true  // 백그라운드로 나갔음을 표시
+                    // overlayWasShown, allowedUntilScroll 등은 유지
+                    return
+                }
+            }
+        }
+
+        // TYPE_WINDOW_STATE_CHANGED 이벤트로 앱 전환 감지 (추가 보험)
         if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
             Log.d(TAG, "Window state changed: $packageName")
 
@@ -426,6 +449,7 @@ class ShortsBlockService : AccessibilityService() {
                 onDismiss = {
                     // 오버레이 제거 시
                     Log.d(TAG, "Overlay dismissed")
+                    stopForegroundCheck()
                     blockOverlay?.dismiss()
                     blockOverlay = null
                 },
@@ -433,10 +457,14 @@ class ShortsBlockService : AccessibilityService() {
                     // 15초 완료 - 현재 쇼츠까지는 허용
                     allowedUntilScroll = true
                     overlayWasShown = false  // 다음 영상은 새 세션으로 시작
+                    stopForegroundCheck()
                     Log.d(TAG, "Timer completed, allowing current shorts")
                 }
             )
             Log.d(TAG, "BlockOverlay show() completed")
+
+            // 주기적으로 포그라운드 앱 체크 시작
+            startForegroundCheck()
         } catch (e: Exception) {
             Log.e(TAG, "Error showing overlay", e)
         }
@@ -531,8 +559,47 @@ class ShortsBlockService : AccessibilityService() {
         Log.d(TAG, "Service connected")
     }
 
+    private fun startForegroundCheck() {
+        stopForegroundCheck()  // 기존 체크 중지
+
+        foregroundCheckRunnable = object : Runnable {
+            override fun run() {
+                try {
+                    // 현재 포그라운드 앱 확인
+                    val currentForegroundPackage = rootInActiveWindow?.packageName?.toString()
+
+                    if (currentForegroundPackage != null && currentForegroundPackage !in TARGET_APPS) {
+                        Log.d(TAG, "Foreground check: switched to $currentForegroundPackage, dismissing overlay")
+                        blockOverlay?.dismiss()
+                        blockOverlay = null
+                        leftViaHomeButton = true
+                        stopForegroundCheck()
+                        return
+                    }
+
+                    // 계속 체크
+                    handler.postDelayed(this, 500)  // 500ms마다 체크
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error in foreground check", e)
+                }
+            }
+        }
+
+        handler.post(foregroundCheckRunnable!!)
+        Log.d(TAG, "Started foreground check")
+    }
+
+    private fun stopForegroundCheck() {
+        foregroundCheckRunnable?.let {
+            handler.removeCallbacks(it)
+            foregroundCheckRunnable = null
+            Log.d(TAG, "Stopped foreground check")
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        stopForegroundCheck()
         blockOverlay?.dismiss()
         blockOverlay = null
     }
