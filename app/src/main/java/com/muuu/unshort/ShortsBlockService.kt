@@ -15,6 +15,7 @@ class ShortsBlockService : AccessibilityService() {
     private var allowedUntilScroll = false  // 15초 완료 후 스크롤 전까지 허용
     private var justScrolled = false  // 방금 스크롤했는지 여부 (오버레이 표시 후 바로 닫히는 것 방지)
     private var lastShortsContentHash: Int = 0  // 이전 쇼츠 화면의 해시값
+    private var stableHashCount = 0  // 같은 해시값이 연속으로 나타난 횟수
 
     // 차단 대상 앱 패키지명
     private val TARGET_APPS = setOf(
@@ -31,34 +32,54 @@ class ShortsBlockService : AccessibilityService() {
         // 차단 대상 앱이 아니면 무시
         if (packageName !in TARGET_APPS) return
 
+        // event.source를 사용하여 이벤트가 발생한 실제 뷰의 정보를 가져옴
+        val sourceNode = event.source
+
         // 쇼츠/릴스 화면인지 먼저 확인
-        val isShorts = isShortsScreen(packageName, event)
+        val isShorts = isShortsScreen(packageName, event, sourceNode)
 
         // 컨텐츠 변경 감지로 스크롤 판단 (YouTube Shorts는 TYPE_VIEW_SCROLLED를 발생시키지 않음)
         if (isShorts && allowedUntilScroll) {
             // 현재 쇼츠 화면의 해시값 계산
             val currentContentHash = getCurrentShortsContentHash()
 
-            if (currentContentHash != 0 && currentContentHash != lastShortsContentHash) {
-                // 화면 내용이 변경됨 = 다음 쇼츠로 스크롤
-                Log.d(TAG, "Shorts content changed (scroll detected), blocking next shorts")
-                allowedUntilScroll = false
-                justScrolled = true
-                lastShortsContentHash = currentContentHash
+            if (currentContentHash != 0) {
+                if (currentContentHash == lastShortsContentHash) {
+                    // 같은 해시값 - 같은 영상
+                    stableHashCount++
+                    Log.d(TAG, "Same content hash, stable count: $stableHashCount")
+                } else {
+                    // 해시값이 변경됨
+                    if (lastShortsContentHash == 0) {
+                        // 첫 번째 쇼츠 - 해시값 저장
+                        Log.d(TAG, "First shorts, hash: $currentContentHash")
+                        lastShortsContentHash = currentContentHash
+                        stableHashCount = 1
+                    } else if (stableHashCount >= 2) {
+                        // 이전 해시값이 2회 이상 안정적으로 나타났고, 지금 변경됨 = 실제 스크롤
+                        Log.d(TAG, "Shorts content changed (scroll detected), old hash: $lastShortsContentHash, new hash: $currentContentHash")
+                        allowedUntilScroll = false
+                        justScrolled = true
+                        lastShortsContentHash = currentContentHash
+                        stableHashCount = 1
 
-                // 스크롤 후 오버레이 표시
-                if (blockOverlay?.isShowing() != true) {
-                    showBlockOverlay()
-                    // 오버레이 표시 후 justScrolled 플래그 해제 (바로 닫히는 것 방지)
-                    android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                        justScrolled = false
-                        Log.d(TAG, "JustScrolled flag reset after delay")
-                    }, 100) // 100ms 후 플래그 해제
+                        // 스크롤 후 오버레이 표시
+                        if (blockOverlay?.isShowing() != true) {
+                            showBlockOverlay()
+                            // 오버레이 표시 후 justScrolled 플래그 해제 (바로 닫히는 것 방지)
+                            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                                justScrolled = false
+                                Log.d(TAG, "JustScrolled flag reset after delay")
+                            }, 100) // 100ms 후 플래그 해제
+                        }
+                        return
+                    } else {
+                        // 해시값이 변경되었지만 아직 안정적이지 않음 (UI 변경일 수 있음)
+                        Log.d(TAG, "Hash changed but not stable yet, old: $lastShortsContentHash, new: $currentContentHash, count: $stableHashCount")
+                        lastShortsContentHash = currentContentHash
+                        stableHashCount = 1
+                    }
                 }
-                return
-            } else if (lastShortsContentHash == 0) {
-                // 첫 번째 쇼츠 - 해시값 저장
-                lastShortsContentHash = currentContentHash
             }
         }
 
@@ -88,17 +109,18 @@ class ShortsBlockService : AccessibilityService() {
                 blockOverlay = null
                 allowedUntilScroll = false  // 허용 상태 초기화
                 lastShortsContentHash = 0  // 해시값 초기화
+                stableHashCount = 0  // 안정성 카운터 초기화
             }
         }
     }
 
-    private fun isShortsScreen(packageName: String, event: AccessibilityEvent): Boolean {
+    private fun isShortsScreen(packageName: String, event: AccessibilityEvent, sourceNode: AccessibilityNodeInfo?): Boolean {
         val rootNode = rootInActiveWindow ?: return false
 
         return when (packageName) {
             "com.google.android.youtube" -> detectYouTubeShorts(rootNode)
             "com.instagram.android" -> detectInstagramReels(rootNode)
-            "com.zhiliaoapp.musically" -> true // TikTok은 전체가 쇼츠 형식
+            "com.zhiliaoapp.musically" -> detectTikTok(rootNode)
             else -> false
         }
     }
@@ -131,6 +153,13 @@ class ShortsBlockService : AccessibilityService() {
 
         // 2. Content Description으로 찾기
         return findNodesByContentDescription(node, "Reels").isNotEmpty()
+    }
+
+    private fun detectTikTok(node: AccessibilityNodeInfo): Boolean {
+        // TikTok은 기본적으로 전체가 쇼츠 형식
+        // 하지만 프로필 페이지, 검색 페이지 등은 제외
+        // 여기서는 단순히 true를 반환 (댓글 화면은 isCommentScreenOpen에서 처리)
+        return true
     }
 
     private fun findNodesByText(node: AccessibilityNodeInfo, text: String): List<AccessibilityNodeInfo> {
@@ -171,22 +200,38 @@ class ShortsBlockService : AccessibilityService() {
     private fun getCurrentShortsContentHash(): Int {
         val rootNode = rootInActiveWindow ?: return 0
 
-        // RecyclerView 또는 ViewPager에서 현재 보이는 아이템의 해시값 계산
-        // 텍스트와 콘텐츠 설명을 조합하여 고유한 해시값 생성
+        // 영상 컨텐츠를 나타내는 특정 영역에서만 해시값 계산
+        // YouTube Shorts의 경우 reel_player_page_container 내부만 확인
+        val shortsContainer = rootNode.findAccessibilityNodeInfosByViewId(
+            "com.google.android.youtube:id/reel_player_page_container"
+        ).firstOrNull()
+
+        val targetNode = shortsContainer ?: rootNode
         val contentBuilder = StringBuilder()
 
-        fun collectContent(node: AccessibilityNodeInfo, depth: Int = 0) {
+        // 영상 제목, 채널명 등 주요 정보만 수집 (댓글, 좋아요 수 등은 제외)
+        fun collectVideoContent(node: AccessibilityNodeInfo, depth: Int = 0) {
             // 너무 깊이 탐색하지 않도록 제한
-            if (depth > 10) return
+            if (depth > 8) return
+
+            val viewId = node.viewIdResourceName ?: ""
+
+            // 댓글, 좋아요 관련 뷰는 제외
+            if (viewId.contains("comment") ||
+                viewId.contains("like") ||
+                viewId.contains("engagement") ||
+                viewId.contains("actions")) {
+                return
+            }
 
             // 텍스트나 콘텐츠 설명이 있으면 추가
             node.text?.toString()?.let { text ->
-                if (text.isNotEmpty()) {
+                if (text.isNotEmpty() && text.length > 2) { // 너무 짧은 텍스트는 제외
                     contentBuilder.append(text).append("|")
                 }
             }
             node.contentDescription?.toString()?.let { desc ->
-                if (desc.isNotEmpty()) {
+                if (desc.isNotEmpty() && desc.length > 5) { // 너무 짧은 설명은 제외
                     contentBuilder.append(desc).append("|")
                 }
             }
@@ -194,13 +239,15 @@ class ShortsBlockService : AccessibilityService() {
             // 자식 노드 탐색
             for (i in 0 until node.childCount) {
                 node.getChild(i)?.let { child ->
-                    collectContent(child, depth + 1)
+                    collectVideoContent(child, depth + 1)
                 }
             }
         }
 
-        collectContent(rootNode)
-        return contentBuilder.toString().hashCode()
+        collectVideoContent(targetNode)
+        val hash = contentBuilder.toString().hashCode()
+        Log.d(TAG, "Content hash: $hash (content length: ${contentBuilder.length})")
+        return hash
     }
 
     private fun showBlockOverlay() {
