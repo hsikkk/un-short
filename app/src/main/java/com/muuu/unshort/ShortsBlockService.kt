@@ -2,6 +2,7 @@ package com.muuu.unshort
 
 import android.accessibilityservice.AccessibilityService
 import android.content.Intent
+import android.media.AudioManager
 import android.net.Uri
 import android.provider.Settings
 import android.util.Log
@@ -16,6 +17,9 @@ class ShortsBlockService : AccessibilityService() {
     private var justScrolled = false  // 방금 스크롤했는지 여부 (오버레이 표시 후 바로 닫히는 것 방지)
     private var lastShortsContentHash: Int = 0  // 이전 쇼츠 화면의 해시값
     private var stableHashCount = 0  // 같은 해시값이 연속으로 나타난 횟수
+    private var wasInShortsScreen = false  // 이전에 쇼츠 화면에 있었는지 여부
+    private var overlayWasShown = false  // 현재 쇼츠에 대해 오버레이가 표시된 적이 있는지
+    private var leftViaHomeButton = false  // 홈/백 버튼으로 나갔는지 여부
 
     // 차단 대상 앱 패키지명
     private val TARGET_APPS = setOf(
@@ -29,8 +33,25 @@ class ShortsBlockService : AccessibilityService() {
 
         val packageName = event.packageName?.toString() ?: return
 
+        // TYPE_WINDOW_STATE_CHANGED 이벤트로 앱 전환 감지
+        if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
+            Log.d(TAG, "Window state changed: $packageName")
+
+            // 차단 대상 앱에서 다른 앱으로 전환 (홈/백 버튼 포함)
+            if (packageName !in TARGET_APPS && blockOverlay?.isShowing() == true) {
+                Log.d(TAG, "Left target app to $packageName (home/back/app switch), dismissing overlay")
+                blockOverlay?.dismiss()
+                blockOverlay = null
+                leftViaHomeButton = true  // 백그라운드로 나갔음을 표시
+                // overlayWasShown, allowedUntilScroll 등은 유지
+                return
+            }
+        }
+
         // 차단 대상 앱이 아니면 무시
-        if (packageName !in TARGET_APPS) return
+        if (packageName !in TARGET_APPS) {
+            return
+        }
 
         // event.source를 사용하여 이벤트가 발생한 실제 뷰의 정보를 가져옴
         val sourceNode = event.source
@@ -62,10 +83,12 @@ class ShortsBlockService : AccessibilityService() {
                         justScrolled = true
                         lastShortsContentHash = currentContentHash
                         stableHashCount = 1
+                        overlayWasShown = false  // 새 영상이므로 플래그 초기화
 
                         // 스크롤 후 오버레이 표시
                         if (blockOverlay?.isShowing() != true) {
-                            showBlockOverlay()
+                            showBlockOverlay(shouldPauseMedia = true)
+                            overlayWasShown = true  // 오버레이 표시됨
                             // 오버레이 표시 후 justScrolled 플래그 해제 (바로 닫히는 것 방지)
                             android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
                                 justScrolled = false
@@ -87,15 +110,29 @@ class ShortsBlockService : AccessibilityService() {
             // 15초 완료 후 허용 상태면 차단하지 않음
             if (allowedUntilScroll) {
                 Log.d(TAG, "Allowed to view current shorts")
+                wasInShortsScreen = true
                 return
             }
 
             // 쇼츠 화면이고 오버레이가 없으면 표시
             if (blockOverlay?.isShowing() != true) {
-                Log.d(TAG, "Shorts screen detected in $packageName")
-                showBlockOverlay()
+                // 백그라운드에서 돌아온 경우인지 확인
+                val isReturningFromBackground = leftViaHomeButton
+                if (isReturningFromBackground) {
+                    Log.d(TAG, "Returned to Shorts screen from background (skipping pauseMedia)")
+                    leftViaHomeButton = false  // 플래그 리셋
+                } else {
+                    Log.d(TAG, "Shorts screen detected in $packageName (will pause media)")
+                }
+                showBlockOverlay(shouldPauseMedia = !isReturningFromBackground)
+                overlayWasShown = true
             }
+
+            wasInShortsScreen = true
         } else {
+            // 쇼츠 화면을 벗어남 (앱 내에서 다른 화면으로 이동)
+            wasInShortsScreen = false
+
             // 방금 스크롤한 경우는 무시 (스크롤 직후 일시적으로 isShorts가 false가 될 수 있음)
             if (justScrolled) {
                 Log.d(TAG, "Ignoring 'shorts closed' event right after scroll")
@@ -104,12 +141,20 @@ class ShortsBlockService : AccessibilityService() {
 
             // 쇼츠 화면이 아닌데 오버레이가 표시 중이면 제거
             if (blockOverlay?.isShowing() == true) {
-                Log.d(TAG, "Shorts screen closed, dismissing overlay")
+                Log.d(TAG, "Shorts screen closed (within app navigation), dismissing overlay")
                 blockOverlay?.dismiss()
                 blockOverlay = null
-                allowedUntilScroll = false  // 허용 상태 초기화
-                lastShortsContentHash = 0  // 해시값 초기화
-                stableHashCount = 0  // 안정성 카운터 초기화
+
+                // leftViaHomeButton이 true이면 홈/백 버튼으로 나간 것이므로 상태 유지
+                if (!leftViaHomeButton) {
+                    Log.d(TAG, "Within app navigation - clearing all state")
+                    allowedUntilScroll = false
+                    lastShortsContentHash = 0
+                    stableHashCount = 0
+                    overlayWasShown = false
+                } else {
+                    Log.d(TAG, "Left via home/back button - keeping state for resume")
+                }
             }
         }
     }
@@ -355,8 +400,8 @@ class ShortsBlockService : AccessibilityService() {
         return hash
     }
 
-    private fun showBlockOverlay() {
-        Log.d(TAG, "showBlockOverlay() called")
+    private fun showBlockOverlay(shouldPauseMedia: Boolean = true) {
+        Log.d(TAG, "showBlockOverlay() called, shouldPauseMedia: $shouldPauseMedia")
 
         // 오버레이 권한 확인
         if (!Settings.canDrawOverlays(this)) {
@@ -368,8 +413,12 @@ class ShortsBlockService : AccessibilityService() {
         Log.d(TAG, "Overlay permission granted, creating BlockOverlay")
 
         try {
-            // 오버레이 표시 전에 미디어 일시정지
-            pauseMedia()
+            // 오버레이 표시 전에 미디어 일시정지 (resume 시에는 skip)
+            if (shouldPauseMedia) {
+                pauseMedia()
+            } else {
+                Log.d(TAG, "Skipping pauseMedia (resuming from background)")
+            }
 
             blockOverlay = BlockOverlay(this)
             Log.d(TAG, "BlockOverlay created, calling show()")
@@ -383,6 +432,7 @@ class ShortsBlockService : AccessibilityService() {
                 onComplete = {
                     // 15초 완료 - 현재 쇼츠까지는 허용
                     allowedUntilScroll = true
+                    overlayWasShown = false  // 다음 영상은 새 세션으로 시작
                     Log.d(TAG, "Timer completed, allowing current shorts")
                 }
             )
@@ -392,13 +442,35 @@ class ShortsBlockService : AccessibilityService() {
         }
     }
 
+    private fun isTargetAppPlayingMedia(): Boolean {
+        try {
+            val audioManager = getSystemService(AUDIO_SERVICE) as? AudioManager ?: return false
+
+            // 현재 음악이 재생 중인지 확인
+            val isMusicActive = audioManager.isMusicActive
+
+            if (!isMusicActive) {
+                Log.d(TAG, "No music playing")
+                return false
+            }
+
+            Log.d(TAG, "Music is playing, assuming it's from target app")
+            return true
+        } catch (e: Exception) {
+            Log.e(TAG, "Error checking media state", e)
+            return false
+        }
+    }
+
     private fun pauseMedia() {
         try {
-            // 미디어 일시정지를 위해 Back 버튼 액션을 수행하거나
-            // 화면을 탭하여 영상을 일시정지 시도
-            // AccessibilityService에서는 직접적인 미디어 제어가 제한적이므로
-            // 대신 화면 중앙을 탭하는 제스처를 수행하여 영상을 일시정지
-            val rootNode = rootInActiveWindow ?: return
+            // 차단 대상 앱이 미디어를 재생 중인지 확인
+            if (!isTargetAppPlayingMedia()) {
+                Log.d(TAG, "Target app not playing media, skipping pauseMedia")
+                return
+            }
+
+            Log.d(TAG, "Target app playing media, pausing...")
 
             // 화면 중앙 좌표 계산
             val displayMetrics = resources.displayMetrics
