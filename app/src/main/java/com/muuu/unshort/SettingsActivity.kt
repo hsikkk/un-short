@@ -146,18 +146,33 @@ class SettingsActivity : AppCompatActivity() {
 
         // 옵션 클릭 리스너들
         view.findViewById<LinearLayout>(R.id.option15).setOnClickListener {
+            // 모든 라디오 버튼 해제 후 선택
+            radio15.isChecked = true
+            radio30.isChecked = false
+            radio60.isChecked = false
+
             prefs.edit().putInt("wait_time", 15).apply()
             updateWaitTimeDisplay(15)
             bottomSheetDialog.dismiss()
         }
 
         view.findViewById<LinearLayout>(R.id.option30).setOnClickListener {
+            // 모든 라디오 버튼 해제 후 선택
+            radio15.isChecked = false
+            radio30.isChecked = true
+            radio60.isChecked = false
+
             prefs.edit().putInt("wait_time", 30).apply()
             updateWaitTimeDisplay(30)
             bottomSheetDialog.dismiss()
         }
 
         view.findViewById<LinearLayout>(R.id.option60).setOnClickListener {
+            // 모든 라디오 버튼 해제 후 선택
+            radio15.isChecked = false
+            radio30.isChecked = false
+            radio60.isChecked = true
+
             prefs.edit().putInt("wait_time", 60).apply()
             updateWaitTimeDisplay(60)
             bottomSheetDialog.dismiss()
