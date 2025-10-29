@@ -67,24 +67,32 @@ class BlockOverlay(private val context: Context) {
 
         // "안볼래요" 버튼 클릭 리스너 설정
         skipButton.setOnClickListener {
-            Log.d(TAG, "Skip button clicked, dismissing overlay and pressing back")
+            Log.d(TAG, ">>> Skip button clicked in BlockOverlay")
+            Log.d(TAG, "Calling dismiss() from skip button")
             // 오버레이 닫기
             dismiss()
+            Log.d(TAG, "Calling onSkipListener")
             // 백키 누르기 콜백 호출
             onSkipListener?.invoke()
+            Log.d(TAG, "Calling onDismissListener")
             // dismiss 리스너는 마지막에 호출
             onDismissListener?.invoke()
+            Log.d(TAG, "Skip button handler complete")
         }
 
         // "볼래요" 버튼 클릭 리스너 설정 (초기에는 숨겨져 있음)
         watchButton.setOnClickListener {
-            Log.d(TAG, "Watch button clicked, dismissing overlay and resuming media")
+            Log.d(TAG, ">>> Watch button clicked in BlockOverlay")
+            Log.d(TAG, "Calling dismiss() from watch button")
             // 오버레이 닫기
             dismiss()
+            Log.d(TAG, "Calling onWatchListener")
             // 미디어 재생 콜백 호출
             onWatchListener?.invoke()
+            Log.d(TAG, "Calling onDismissListener")
             // dismiss 리스너는 마지막에 호출
             onDismissListener?.invoke()
+            Log.d(TAG, "Watch button handler complete")
         }
 
         // 윈도우 매니저 파라미터 설정 - 실제 화면 + 상태바 + 네비게이션바 전체 덮기
@@ -257,6 +265,7 @@ class BlockOverlay(private val context: Context) {
     }
 
     fun dismiss() {
+        Log.d(TAG, ">>> dismiss() called")
         countDownTimer?.cancel()
         countDownTimer = null
 
@@ -264,12 +273,18 @@ class BlockOverlay(private val context: Context) {
         flipDetector = null
 
         overlayView?.let {
+            Log.d(TAG, "Removing overlay view from WindowManager")
             windowManager.removeView(it)
             overlayView = null
+            Log.d(TAG, "overlayView set to null")
         }
     }
 
-    fun isShowing(): Boolean = overlayView != null
+    fun isShowing(): Boolean {
+        val showing = overlayView != null
+        Log.d(TAG, "isShowing() = $showing")
+        return showing
+    }
 
     private fun getStatusBarHeight(): Int {
         var result = 0

@@ -52,6 +52,11 @@ class ShortsBlockService : AccessibilityService() {
 
         val packageName = event.packageName?.toString() ?: return
 
+        // 이벤트 로깅 (디버깅용)
+        Log.d(TAG, "=== Event: ${event.eventType}, Package: $packageName ===")
+        Log.d(TAG, "State - allowedUntilScroll: $allowedUntilScroll, overlayWasShown: $overlayWasShown")
+        Log.d(TAG, "State - blockOverlay?.isShowing(): ${blockOverlay?.isShowing()}")
+
         // 오버레이가 표시 중일 때, 포그라운드 앱 변경 감지
         if (blockOverlay?.isShowing() == true) {
             // rootInActiveWindow로 현재 포그라운드 앱 확인
@@ -127,7 +132,7 @@ class ShortsBlockService : AccessibilityService() {
                         overlayWasShown = false  // 새 영상이므로 플래그 초기화
 
                         // 스크롤 후 오버레이 표시
-                        if (blockOverlay?.isShowing() != true) {
+                        if (blockOverlay?.isShowing() != true && !overlayWasShown) {
                             showBlockOverlay(packageName)
                             overlayWasShown = true  // 오버레이 표시됨
                             // 오버레이 표시 후 justScrolled 플래그 해제 (바로 닫히는 것 방지)
@@ -156,7 +161,7 @@ class ShortsBlockService : AccessibilityService() {
             }
 
             // 쇼츠 화면이고 오버레이가 없으면 표시
-            if (blockOverlay?.isShowing() != true) {
+            if (blockOverlay?.isShowing() != true && !overlayWasShown) {
                 // 백그라운드에서 돌아온 경우인지 확인
                 val isReturningFromBackground = leftViaHomeButton
                 if (isReturningFromBackground) {
@@ -398,24 +403,47 @@ class ShortsBlockService : AccessibilityService() {
 
             val viewId = node.viewIdResourceName ?: ""
 
-            // 댓글, 좋아요 관련 뷰는 제외
+            // UI 관련 요소들 제외 (재생 상태에 따라 변하는 것들)
             if (viewId.contains("comment") ||
                 viewId.contains("like") ||
                 viewId.contains("engagement") ||
                 viewId.contains("actions") ||
-                viewId.contains("button")) {
+                viewId.contains("button") ||
+                viewId.contains("progress") ||
+                viewId.contains("time") ||
+                viewId.contains("duration") ||
+                viewId.contains("seek") ||
+                viewId.contains("player_control") ||
+                viewId.contains("pause") ||
+                viewId.contains("play")) {
                 return
             }
 
+            // 핵심 콘텐츠만 포함 (제목, 채널명, 설명)
+            val isContentNode = viewId.contains("title") ||
+                               viewId.contains("channel") ||
+                               viewId.contains("author") ||
+                               viewId.contains("description") ||
+                               viewId.contains("reel_metadata") ||
+                               viewId.contains("video_metadata")
+
             // 텍스트나 콘텐츠 설명이 있으면 추가
             node.text?.toString()?.let { text ->
-                if (text.isNotEmpty() && text.length > 2) { // 너무 짧은 텍스트는 제외
-                    contentBuilder.append(text).append("|")
+                // 숫자만 있거나 너무 짧은 텍스트는 제외
+                if (text.isNotEmpty() && text.length > 2 && !text.all { it.isDigit() || it == ':' || it == '/' }) {
+                    // 재생 시간 패턴 제외 (예: "0:15", "1:30")
+                    if (!text.matches(Regex("\\d+:\\d+"))) {
+                        contentBuilder.append(text).append("|")
+                    }
                 }
             }
-            node.contentDescription?.toString()?.let { desc ->
-                if (desc.isNotEmpty() && desc.length > 5) { // 너무 짧은 설명은 제외
-                    contentBuilder.append(desc).append("|")
+
+            // contentDescription은 주요 노드에서만 수집
+            if (isContentNode) {
+                node.contentDescription?.toString()?.let { desc ->
+                    if (desc.isNotEmpty() && desc.length > 5) {
+                        contentBuilder.append(desc).append("|")
+                    }
                 }
             }
 
@@ -447,24 +475,49 @@ class ShortsBlockService : AccessibilityService() {
 
             val viewId = node.viewIdResourceName ?: ""
 
-            // 댓글, 좋아요, 공유 등 인터랙션 관련 뷰는 제외
+            // UI 관련 요소들 제외 (재생 상태에 따라 변하는 것들)
             if (viewId.contains("comment") ||
                 viewId.contains("like") ||
                 viewId.contains("share") ||
                 viewId.contains("action_bar") ||
-                viewId.contains("button")) {
+                viewId.contains("button") ||
+                viewId.contains("progress") ||
+                viewId.contains("time") ||
+                viewId.contains("duration") ||
+                viewId.contains("seek") ||
+                viewId.contains("player_control") ||
+                viewId.contains("pause") ||
+                viewId.contains("play") ||
+                viewId.contains("heart") ||
+                viewId.contains("save")) {
                 return
             }
 
+            // 핵심 콘텐츠만 포함 (계정명, 설명, 캡션)
+            val isContentNode = viewId.contains("username") ||
+                               viewId.contains("caption") ||
+                               viewId.contains("description") ||
+                               viewId.contains("user_name") ||
+                               viewId.contains("text_content") ||
+                               viewId.contains("primary_text")
+
             // 텍스트나 콘텐츠 설명이 있으면 추가
             node.text?.toString()?.let { text ->
-                if (text.isNotEmpty() && text.length > 2) {
-                    contentBuilder.append(text).append("|")
+                // 숫자만 있거나 너무 짧은 텍스트는 제외
+                if (text.isNotEmpty() && text.length > 2 && !text.all { it.isDigit() || it == ',' || it == '.' }) {
+                    // 숫자 포맷 제외 (예: "1.2K", "345", "10M")
+                    if (!text.matches(Regex("\\d+[KMB]?")) && !text.matches(Regex("\\d+\\.\\d+[KMB]?"))) {
+                        contentBuilder.append(text).append("|")
+                    }
                 }
             }
-            node.contentDescription?.toString()?.let { desc ->
-                if (desc.isNotEmpty() && desc.length > 5) {
-                    contentBuilder.append(desc).append("|")
+
+            // contentDescription은 주요 노드에서만 수집
+            if (isContentNode) {
+                node.contentDescription?.toString()?.let { desc ->
+                    if (desc.isNotEmpty() && desc.length > 5) {
+                        contentBuilder.append(desc).append("|")
+                    }
                 }
             }
 
@@ -529,6 +582,18 @@ class ShortsBlockService : AccessibilityService() {
     private fun showBlockOverlay(packageName: String) {
         Log.d(TAG, "showBlockOverlay() called for $packageName")
 
+        // allowedUntilScroll이 true이면 오버레이 표시하지 않음
+        if (allowedUntilScroll) {
+            Log.d(TAG, "Allowed until scroll - skipping overlay")
+            return
+        }
+
+        // 이미 오버레이가 표시 중이면 무시
+        if (blockOverlay?.isShowing() == true) {
+            Log.d(TAG, "Overlay already showing - skipping")
+            return
+        }
+
         // 오버레이 권한 확인
         if (!Settings.canDrawOverlays(this)) {
             Log.w(TAG, "Overlay permission not granted")
@@ -556,27 +621,33 @@ class ShortsBlockService : AccessibilityService() {
                         // 오버레이 제거 시
                         Log.d(TAG, "Overlay dismissed")
                         stopForegroundCheck()
-                        blockOverlay?.dismiss()
                         blockOverlay = null
                     },
                     onComplete = {
                         // 타이머 완료 - 버튼 전환만 (오버레이는 유지)
                         Log.d(TAG, "Timer completed, showing watch button")
-                        // 오버레이는 유지되고 볼래요 버튼만 표시
+                        // 포그라운드 체크 중지 (사용자 선택 대기)
+                        stopForegroundCheck()
                     },
                     onSkip = {
                         // "안볼래요" 버튼 클릭 - 백키 누르기
                         Log.d(TAG, "Skip button pressed, performing back action")
+                        // 세션 초기화 (쇼츠를 나갔으므로)
+                        overlayWasShown = false
+                        allowedUntilScroll = false
                         performGlobalBackAction()
                     },
                     onWatch = {
                         // "볼래요" 버튼 클릭 - 미디어 재생 재개
                         Log.d(TAG, "Watch button pressed, resuming media")
                         allowedUntilScroll = true
-                        overlayWasShown = false  // 다음 영상은 새 세션으로 시작
+                        overlayWasShown = true  // 이미 표시된 것으로 유지
                         stopForegroundCheck()
-                        // 미디어 재생 (화면 중앙 탭)
-                        resumeMedia()
+
+                        // 짧은 지연 후 미디어 재생 (오버레이 dismiss 애니메이션 완료 후)
+                        handler.postDelayed({
+                            resumeMedia()
+                        }, 100)
                     }
                 )
                 Log.d(TAG, "BlockOverlay show() completed")
@@ -722,7 +793,16 @@ class ShortsBlockService : AccessibilityService() {
     private fun resumeMedia() {
         try {
             Log.d(TAG, "Resuming media playback")
-            // 화면 중앙을 탭하여 미디어 재생
+
+            // 미디어가 이미 재생 중인지 확인
+            val audioManager = getSystemService(AUDIO_SERVICE) as? AudioManager
+            if (audioManager != null && audioManager.isMusicActive) {
+                Log.d(TAG, "Media already playing, skipping tap")
+                return
+            }
+
+            // 미디어가 일시정지 상태면 탭하여 재생
+            Log.d(TAG, "Media paused, sending tap gesture to resume")
             performTapGesture()
         } catch (e: Exception) {
             Log.e(TAG, "Error resuming media", e)
