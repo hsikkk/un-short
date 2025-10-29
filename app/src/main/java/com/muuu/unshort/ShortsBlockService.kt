@@ -23,7 +23,6 @@ class ShortsBlockService : AccessibilityService() {
     private var lastForegroundPackage: String = ""  // 마지막 포그라운드 앱
     private val handler = android.os.Handler(android.os.Looper.getMainLooper())
     private var foregroundCheckRunnable: Runnable? = null
-    private val firstOverlayPerApp = mutableMapOf<String, Boolean>()  // 앱별 첫 오버레이 여부
     private var pendingOverlayJob: Runnable? = null  // pending 중인 오버레이 표시 job
 
     // 차단 대상 앱 패키지명
@@ -104,6 +103,7 @@ class ShortsBlockService : AccessibilityService() {
 
         // 쇼츠/릴스 화면인지 먼저 확인
         val isShorts = isShortsScreen(packageName, event, sourceNode)
+        Log.d(TAG, ">>> isShorts = $isShorts")
 
         // 컨텐츠 변경 감지로 스크롤 판단 (YouTube Shorts는 TYPE_VIEW_SCROLLED를 발생시키지 않음)
         if (isShorts && allowedUntilScroll) {
@@ -153,25 +153,40 @@ class ShortsBlockService : AccessibilityService() {
         }
 
         if (isShorts) {
+            // 쇼츠 화면에 처음 진입했는지 확인 (이전 화면이 쇼츠가 아니었거나, 백그라운드에서 돌아온 경우)
+            if (!wasInShortsScreen) {
+                Log.d(TAG, "Entering Shorts screen (wasInShortsScreen=false)")
+                overlayWasShown = false  // 새로 쇼츠에 진입했으므로 초기화
+            }
+
+            // 백그라운드에서 돌아온 경우
+            if (leftViaHomeButton) {
+                Log.d(TAG, "Returned to Shorts screen from background")
+                leftViaHomeButton = false
+                overlayWasShown = false  // 백그라운드에서 돌아왔으므로 초기화
+            }
+
             // 15초 완료 후 허용 상태면 차단하지 않음
             if (allowedUntilScroll) {
-                Log.d(TAG, "Allowed to view current shorts")
+                Log.d(TAG, "Allowed to view current shorts (allowedUntilScroll=true)")
                 wasInShortsScreen = true
                 return
             }
 
+            Log.d(TAG, "Checking overlay display conditions:")
+            Log.d(TAG, "  - blockOverlay?.isShowing(): ${blockOverlay?.isShowing()}")
+            Log.d(TAG, "  - overlayWasShown: $overlayWasShown")
+            Log.d(TAG, "  - Should show overlay: ${blockOverlay?.isShowing() != true && !overlayWasShown}")
+
             // 쇼츠 화면이고 오버레이가 없으면 표시
             if (blockOverlay?.isShowing() != true && !overlayWasShown) {
-                // 백그라운드에서 돌아온 경우인지 확인
-                val isReturningFromBackground = leftViaHomeButton
-                if (isReturningFromBackground) {
-                    Log.d(TAG, "Returned to Shorts screen from background")
-                    leftViaHomeButton = false  // 플래그 리셋
-                } else {
-                    Log.d(TAG, "Shorts screen detected in $packageName")
-                }
+                Log.d(TAG, "Shorts screen detected in $packageName")
+                Log.d(TAG, ">>> Calling showBlockOverlay()")
                 showBlockOverlay(packageName)
+                Log.d(TAG, ">>> overlayWasShown set to true")
                 overlayWasShown = true
+            } else {
+                Log.d(TAG, "Not showing overlay - already shown or currently showing")
             }
 
             wasInShortsScreen = true
@@ -197,13 +212,6 @@ class ShortsBlockService : AccessibilityService() {
                 // leftViaHomeButton이 true이면 홈/백 버튼으로 나간 것이므로 상태 유지
                 if (!leftViaHomeButton) {
                     Log.d(TAG, "Within app navigation - clearing all state")
-
-                    // 현재 앱의 첫 오버레이 플래그 초기화
-                    val currentPkg = rootInActiveWindow?.packageName?.toString()
-                    if (currentPkg in TARGET_APPS) {
-                        firstOverlayPerApp.remove(currentPkg)
-                        Log.d(TAG, "Reset first overlay flag for $currentPkg")
-                    }
 
                     allowedUntilScroll = false
                     lastShortsContentHash = 0
@@ -662,8 +670,8 @@ class ShortsBlockService : AccessibilityService() {
             }
         }
 
-        handler.postDelayed(pendingOverlayJob!!, 100)
-        Log.d(TAG, "Overlay job scheduled with 100ms delay")
+        handler.postDelayed(pendingOverlayJob!!, 300)
+        Log.d(TAG, "Overlay job scheduled with 300ms delay")
     }
 
     private fun cancelPendingOverlay() {
@@ -715,15 +723,6 @@ class ShortsBlockService : AccessibilityService() {
             // 빈 패키지명이면 무조건 pause 시도
             if (packageName.isEmpty()) {
                 Log.d(TAG, "Empty package name - always attempting pause")
-                performTapGesture()
-                return
-            }
-
-            // 해당 앱의 첫 오버레이는 무조건 pause 시도 (영상 재생 시작 타이밍 문제)
-            val isFirstForApp = firstOverlayPerApp[packageName] != false
-            if (isFirstForApp) {
-                firstOverlayPerApp[packageName] = false
-                Log.d(TAG, "First overlay for $packageName - always attempting pause")
                 performTapGesture()
                 return
             }
