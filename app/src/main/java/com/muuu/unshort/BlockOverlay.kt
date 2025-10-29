@@ -209,6 +209,15 @@ class BlockOverlay(private val context: Context) {
     }
 
     private fun provideHapticFeedback() {
+        // 햅틱 피드백 설정 확인
+        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val isHapticEnabled = prefs.getBoolean("haptic_enabled", true)
+
+        if (!isHapticEnabled) {
+            Log.d(TAG, "Haptic feedback disabled by user")
+            return
+        }
+
         try {
             val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
             if (vibrator != null && vibrator.hasVibrator()) {

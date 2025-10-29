@@ -22,6 +22,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var backButton: ImageView
     private lateinit var waitTimeValue: TextView
     private lateinit var waitTimeItem: LinearLayout
+    private lateinit var hapticSwitch: Switch
     private lateinit var feedbackItem: LinearLayout
     private lateinit var shareItem: LinearLayout
     private lateinit var reviewItem: LinearLayout
@@ -36,6 +37,7 @@ class SettingsActivity : AppCompatActivity() {
         backButton = findViewById(R.id.backButton)
         waitTimeValue = findViewById(R.id.waitTimeValue)
         waitTimeItem = findViewById(R.id.waitTimeItem)
+        hapticSwitch = findViewById(R.id.hapticSwitch)
         feedbackItem = findViewById(R.id.feedbackItem)
         shareItem = findViewById(R.id.shareItem)
         reviewItem = findViewById(R.id.reviewItem)
@@ -51,10 +53,19 @@ class SettingsActivity : AppCompatActivity() {
             versionText.text = "v1.0.0"
         }
 
-        // 저장된 대기 시간 표시
+        // 저장된 설정 표시
         val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
         val waitTime = prefs.getInt("wait_time", 30)
         updateWaitTimeDisplay(waitTime)
+
+        // 햅틱 피드백 설정 초기화
+        val isHapticEnabled = prefs.getBoolean("haptic_enabled", true)
+        hapticSwitch.isChecked = isHapticEnabled
+
+        // 햅틱 스위치 리스너
+        hapticSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("haptic_enabled", isChecked).apply()
+        }
 
         // 뒤로 가기 버튼
         backButton.setOnClickListener {
