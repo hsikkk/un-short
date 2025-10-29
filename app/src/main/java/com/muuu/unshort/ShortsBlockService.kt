@@ -565,6 +565,11 @@ class ShortsBlockService : AccessibilityService() {
                         overlayWasShown = false  // 다음 영상은 새 세션으로 시작
                         stopForegroundCheck()
                         Log.d(TAG, "Timer completed, allowing current shorts")
+                    },
+                    onSkip = {
+                        // "안볼래요" 버튼 클릭 - 백키 누르기
+                        Log.d(TAG, "Skip button pressed, performing back action")
+                        performGlobalBackAction()
                     }
                 )
                 Log.d(TAG, "BlockOverlay show() completed")
@@ -690,6 +695,20 @@ class ShortsBlockService : AccessibilityService() {
                     Log.d(TAG, "Pause gesture cancelled")
                 }
             }, null)
+        }
+    }
+
+    private fun performGlobalBackAction() {
+        try {
+            Log.d(TAG, "Performing global back action")
+            val backPerformed = performGlobalAction(GLOBAL_ACTION_BACK)
+            if (backPerformed) {
+                Log.d(TAG, "Back action completed successfully")
+            } else {
+                Log.w(TAG, "Back action failed")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error performing back action", e)
         }
     }
 

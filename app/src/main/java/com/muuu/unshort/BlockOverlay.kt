@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.TextView
 
 class BlockOverlay(private val context: Context) {
@@ -21,14 +22,16 @@ class BlockOverlay(private val context: Context) {
 
     private lateinit var timerText: TextView
     private lateinit var flipStatusText: TextView
+    private lateinit var skipButton: Button
 
     private var isPhoneFlipped = false
     private var remainingSeconds = 15
     private var onDismissListener: (() -> Unit)? = null
     private var onCompleteListener: (() -> Unit)? = null
+    private var onSkipListener: (() -> Unit)? = null
 
     @SuppressLint("InflateParams")
-    fun show(onDismiss: () -> Unit, onComplete: () -> Unit) {
+    fun show(onDismiss: () -> Unit, onComplete: () -> Unit, onSkip: (() -> Unit)? = null) {
         Log.d(TAG, "show() called")
         if (overlayView != null) {
             Log.d(TAG, "Overlay already showing, ignoring")
@@ -37,6 +40,7 @@ class BlockOverlay(private val context: Context) {
 
         this.onDismissListener = onDismiss
         this.onCompleteListener = onComplete
+        this.onSkipListener = onSkip
 
         // SharedPreferences에서 설정된 딜레이 시간 읽기 (기본값 30초)
         val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
@@ -47,7 +51,19 @@ class BlockOverlay(private val context: Context) {
         overlayView = LayoutInflater.from(context).inflate(R.layout.overlay_flip_phone, null)
         timerText = overlayView!!.findViewById(R.id.timerText)
         flipStatusText = overlayView!!.findViewById(R.id.flipStatusText)
+        skipButton = overlayView!!.findViewById(R.id.skipButton)
         Log.d(TAG, "Overlay view inflated successfully")
+
+        // "안볼래요" 버튼 클릭 리스너 설정
+        skipButton.setOnClickListener {
+            Log.d(TAG, "Skip button clicked, dismissing overlay and pressing back")
+            // 오버레이 닫기
+            dismiss()
+            // 백키 누르기 콜백 호출
+            onSkipListener?.invoke()
+            // dismiss 리스너는 마지막에 호출
+            onDismissListener?.invoke()
+        }
 
         // 윈도우 매니저 파라미터 설정 - 실제 화면 + 상태바 + 네비게이션바 전체 덮기
         val displayMetrics = context.resources.displayMetrics
