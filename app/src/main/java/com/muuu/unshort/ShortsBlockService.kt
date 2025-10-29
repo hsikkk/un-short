@@ -200,7 +200,18 @@ class ShortsBlockService : AccessibilityService() {
     private fun getCurrentShortsContentHash(): Int {
         val rootNode = rootInActiveWindow ?: return 0
 
-        // 영상 컨텐츠를 나타내는 특정 영역에서만 해시값 계산
+        // 패키지명 확인
+        val packageName = rootNode.packageName?.toString() ?: ""
+
+        return when {
+            packageName.contains("youtube") -> getYouTubeShortsHash(rootNode)
+            packageName.contains("instagram") -> getInstagramReelsHash(rootNode)
+            packageName.contains("musically") -> getTikTokHash(rootNode)
+            else -> 0
+        }
+    }
+
+    private fun getYouTubeShortsHash(rootNode: AccessibilityNodeInfo): Int {
         // YouTube Shorts의 경우 reel_player_page_container 내부만 확인
         val shortsContainer = rootNode.findAccessibilityNodeInfosByViewId(
             "com.google.android.youtube:id/reel_player_page_container"
@@ -220,7 +231,8 @@ class ShortsBlockService : AccessibilityService() {
             if (viewId.contains("comment") ||
                 viewId.contains("like") ||
                 viewId.contains("engagement") ||
-                viewId.contains("actions")) {
+                viewId.contains("actions") ||
+                viewId.contains("button")) {
                 return
             }
 
@@ -246,7 +258,100 @@ class ShortsBlockService : AccessibilityService() {
 
         collectVideoContent(targetNode)
         val hash = contentBuilder.toString().hashCode()
-        Log.d(TAG, "Content hash: $hash (content length: ${contentBuilder.length})")
+        Log.d(TAG, "YouTube hash: $hash (content length: ${contentBuilder.length})")
+        return hash
+    }
+
+    private fun getInstagramReelsHash(rootNode: AccessibilityNodeInfo): Int {
+        // Instagram Reels의 경우 clips_viewer_view_pager 내부만 확인
+        val reelsContainer = rootNode.findAccessibilityNodeInfosByViewId(
+            "com.instagram.android:id/clips_viewer_view_pager"
+        ).firstOrNull()
+
+        val targetNode = reelsContainer ?: rootNode
+        val contentBuilder = StringBuilder()
+
+        fun collectVideoContent(node: AccessibilityNodeInfo, depth: Int = 0) {
+            if (depth > 8) return
+
+            val viewId = node.viewIdResourceName ?: ""
+
+            // 댓글, 좋아요, 공유 등 인터랙션 관련 뷰는 제외
+            if (viewId.contains("comment") ||
+                viewId.contains("like") ||
+                viewId.contains("share") ||
+                viewId.contains("action_bar") ||
+                viewId.contains("button")) {
+                return
+            }
+
+            // 텍스트나 콘텐츠 설명이 있으면 추가
+            node.text?.toString()?.let { text ->
+                if (text.isNotEmpty() && text.length > 2) {
+                    contentBuilder.append(text).append("|")
+                }
+            }
+            node.contentDescription?.toString()?.let { desc ->
+                if (desc.isNotEmpty() && desc.length > 5) {
+                    contentBuilder.append(desc).append("|")
+                }
+            }
+
+            // 자식 노드 탐색
+            for (i in 0 until node.childCount) {
+                node.getChild(i)?.let { child ->
+                    collectVideoContent(child, depth + 1)
+                }
+            }
+        }
+
+        collectVideoContent(targetNode)
+        val hash = contentBuilder.toString().hashCode()
+        Log.d(TAG, "Instagram hash: $hash (content length: ${contentBuilder.length})")
+        return hash
+    }
+
+    private fun getTikTokHash(rootNode: AccessibilityNodeInfo): Int {
+        // TikTok의 경우 ViewPager 기반으로 동작
+        val contentBuilder = StringBuilder()
+
+        fun collectVideoContent(node: AccessibilityNodeInfo, depth: Int = 0) {
+            if (depth > 8) return
+
+            val viewId = node.viewIdResourceName ?: ""
+
+            // 댓글, 좋아요, 공유 등 인터랙션 관련 뷰는 제외
+            if (viewId.contains("comment") ||
+                viewId.contains("digg") ||  // TikTok의 좋아요 버튼
+                viewId.contains("share") ||
+                viewId.contains("download") ||
+                viewId.contains("button")) {
+                return
+            }
+
+            // 텍스트나 콘텐츠 설명이 있으면 추가
+            node.text?.toString()?.let { text ->
+                if (text.isNotEmpty() && text.length > 2) {
+                    contentBuilder.append(text).append("|")
+                }
+            }
+            node.contentDescription?.toString()?.let { desc ->
+                if (desc.isNotEmpty() && desc.length > 5) {
+                    contentBuilder.append(desc).append("|")
+                }
+            }
+
+            // 자식 노드 탐색
+            for (i in 0 until node.childCount) {
+                node.getChild(i)?.let { child ->
+                    collectVideoContent(child, depth + 1)
+                }
+            }
+        }
+
+        collectVideoContent(rootNode)
+        val hash = contentBuilder.toString().hashCode()
+        Log.d(TAG, "TikTok hash: $hash (content length: ${contentBuilder.length})")
         return hash
     }
 
