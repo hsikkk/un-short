@@ -62,7 +62,7 @@ class SettingsActivity : AppCompatActivity() {
         feedbackItem.setOnClickListener {
             val intent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:")
-                putExtra(Intent.EXTRA_EMAIL, arrayOf("feedback@unshort.app"))
+                putExtra(Intent.EXTRA_EMAIL, arrayOf("devmuuu@gmail.com"))
                 putExtra(Intent.EXTRA_SUBJECT, "un:short 앱 피드백")
             }
             try {
