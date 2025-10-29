@@ -80,78 +80,104 @@
         app:layout_constraintTop_toBottomOf="@id/topSection"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <!-- Power Button with Shadow -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            app:cardCornerRadius="60dp"
-            app:cardElevation="8dp"
-            app:cardBackgroundColor="#000000">
+        <!-- Toggle Switch Container -->
+        <FrameLayout
+            android:id="@+id/toggleContainer"
+            android:layout_width="180dp"
+            android:layout_height="90dp"
+            android:background="@drawable/toggle_track_background"
+            android:clickable="true"
+            android:focusable="true">
 
-            <FrameLayout
-                android:id="@+id/powerButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:clickable="true"
-                android:focusable="true">
+            <!-- ON Text -->
+            <TextView
+                android:id="@+id/onText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="30dp"
+                android:text="ON"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="#FFFFFF"
+                android:alpha="0.4"
+                android:letterSpacing="0.1" />
 
-                <!-- Power Icon -->
+            <!-- OFF Text -->
+            <TextView
+                android:id="@+id/offText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="30dp"
+                android:text="OFF"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="#000000"
+                android:alpha="0.0"
+                android:letterSpacing="0.1" />
+
+            <!-- Toggle Circle with Icon -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/toggleCircle"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="5dp"
+                app:cardCornerRadius="40dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#FFFFFF">
+
                 <ImageView
                     android:id="@+id/powerIcon"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_power"
-                    android:contentDescription="Power button" />
+                    android:contentDescription="Power toggle" />
 
-            </FrameLayout>
+            </androidx.cardview.widget.CardView>
 
-        </androidx.cardview.widget.CardView>
+        </FrameLayout>
 
         <!-- Status Text -->
         <TextView
             android:id="@+id/statusTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="차단 활성화됨"
-            android:textSize="14sp"
-            android:fontFamily="sans-serif"
+            android:layout_marginTop="32dp"
+            android:text="차단 중"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-medium"
             android:textColor="#000000"
-            android:alpha="0.8"
-            android:letterSpacing="0.01" />
+            android:letterSpacing="-0.02" />
 
-        <!-- Status Indicator -->
-        <LinearLayout
-            android:id="@+id/statusIndicator"
+        <!-- Platform Info -->
+        <TextView
+            android:id="@+id/platformInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_marginTop="8dp"
+            android:text="YouTube Shorts • Instagram Reels"
+            android:textSize="13sp"
+            android:fontFamily="sans-serif"
+            android:textColor="#000000"
+            android:alpha="0.5" />
 
-            <!-- Status Dot -->
-            <View
-                android:id="@+id/statusDot"
-                android:layout_width="6dp"
-                android:layout_height="6dp"
-                android:background="@drawable/status_dot_active" />
-
-            <!-- Status Label -->
-            <TextView
-                android:id="@+id/statusLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:text="ACTIVE"
-                android:textSize="11sp"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="#000000"
-                android:alpha="0.4"
-                android:letterSpacing="0.08" />
-
-        </LinearLayout>
+        <!-- Status Badge -->
+        <TextView
+            android:id="@+id/statusBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="보호 활성"
+            android:textSize="11sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/status_badge_background"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:letterSpacing="0.05" />
 
     </LinearLayout>
 
