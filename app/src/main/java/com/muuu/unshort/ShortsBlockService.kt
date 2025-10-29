@@ -35,6 +35,21 @@ class ShortsBlockService : AccessibilityService() {
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null) return
 
+        // 차단 활성화 상태 확인
+        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        val isBlockingEnabled = prefs.getBoolean("blocking_enabled", true)
+
+        // 차단이 비활성화되어 있으면 아무 작업도 하지 않음
+        if (!isBlockingEnabled) {
+            // 오버레이가 표시 중이면 제거
+            if (blockOverlay?.isShowing() == true) {
+                cancelPendingOverlay()
+                blockOverlay?.dismiss()
+                blockOverlay = null
+            }
+            return
+        }
+
         val packageName = event.packageName?.toString() ?: return
 
         // 오버레이가 표시 중일 때, 포그라운드 앱 변경 감지
