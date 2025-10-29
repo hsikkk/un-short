@@ -446,16 +446,23 @@ class ShortsBlockService : AccessibilityService() {
         try {
             val audioManager = getSystemService(AUDIO_SERVICE) as? AudioManager ?: return false
 
-            // 현재 음악이 재생 중인지 확인
+            // 현재 음악이 재생 중인지 확인 (YouTube, TikTok)
             val isMusicActive = audioManager.isMusicActive
 
-            if (!isMusicActive) {
-                Log.d(TAG, "No music playing")
-                return false
+            // 미디어 모드 확인 (Instagram Reels는 MODE_IN_COMMUNICATION일 수 있음)
+            val mode = audioManager.mode
+            val isInCall = mode == AudioManager.MODE_IN_CALL || mode == AudioManager.MODE_IN_COMMUNICATION
+
+            Log.d(TAG, "Audio state - isMusicActive: $isMusicActive, mode: $mode, isInCall: $isInCall")
+
+            // 음악이 재생 중이거나, 통신 모드(비디오 통화/릴스)인 경우
+            if (isMusicActive || isInCall) {
+                Log.d(TAG, "Media is playing")
+                return true
             }
 
-            Log.d(TAG, "Music is playing, assuming it's from target app")
-            return true
+            Log.d(TAG, "No media playing")
+            return false
         } catch (e: Exception) {
             Log.e(TAG, "Error checking media state", e)
             return false
