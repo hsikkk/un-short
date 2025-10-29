@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_50">
+    android:background="#FFFFFF">
 
     <!-- Top Message -->
     <TextView
@@ -11,10 +11,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="잠시 폰을 내려놓고\n정말 지금 봐야 할지 고민해보세요"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:textColor="@color/gray_900"
-        android:fontFamily="sans-serif-medium"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:fontFamily="sans-serif"
+        android:alpha="0.8"
         android:textAlignment="center"
         android:lineSpacingExtra="6dp"
         android:layout_marginTop="48dp"
@@ -40,9 +40,9 @@
             android:translationY="80dp"
             app:cardCornerRadius="32dp"
             app:cardElevation="12dp"
-            app:cardBackgroundColor="@color/primary_dark"
-            app:strokeWidth="8dp"
-            app:strokeColor="@color/primary_dark">
+            app:cardBackgroundColor="#000000"
+            app:strokeWidth="2dp"
+            app:strokeColor="#000000">
 
             <!-- Phone Screen Content -->
             <FrameLayout
@@ -53,7 +53,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/overlay_background" />
+                    android:background="#F0000000" />
 
                 <!-- Block Screen Preview (centered) -->
                 <com.google.android.material.card.MaterialCardView
@@ -79,22 +79,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="un:short"
-                            android:textSize="12dp"
-                            android:textStyle="bold"
-                            android:fontFamily="sans-serif-black"
-                            android:textColor="@color/primary_dark"
-                            android:letterSpacing="0.02" />
+                            android:textSize="12sp"
+                            android:fontFamily="sans-serif-thin"
+                            android:textColor="#000000"
+                            android:letterSpacing="-0.02" />
 
                         <!-- Main title -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="잠깐만요! 🤚"
-                            android:textSize="14dp"
-                            android:textStyle="bold"
-                            android:fontFamily="sans-serif-medium"
-                            android:textColor="@color/gray_900"
+                            android:text="잠깐만요!"
+                            android:textSize="14sp"
+                            android:fontFamily="sans-serif"
+                            android:textColor="#000000"
+                            android:alpha="0.9"
                             android:textAlignment="center" />
 
                         <!-- Message -->
@@ -103,9 +102,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:text="쇼츠를 보기 전에"
-                            android:textSize="10dp"
+                            android:textSize="10sp"
                             android:textAlignment="center"
-                            android:textColor="@color/gray_600"
+                            android:textColor="#000000"
+                            android:alpha="0.5"
                             android:lineSpacingExtra="2dp" />
 
                         <!-- Flip status badge -->
@@ -113,7 +113,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:background="@color/gray_100"
+                            android:background="#F5F5F5"
                             android:paddingHorizontal="12dp"
                             android:paddingVertical="6dp"
                             android:gravity="center"
@@ -122,16 +122,16 @@
                             <View
                                 android:layout_width="5dp"
                                 android:layout_height="5dp"
-                                android:background="@color/error"
+                                android:background="#EF4444"
                                 android:layout_marginEnd="5dp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="폰을 뒤집어주세요"
-                                android:textSize="9dp"
-                                android:textColor="@color/gray_900"
-                                android:fontFamily="sans-serif-medium" />
+                                android:textSize="9sp"
+                                android:textColor="#000000"
+                                android:fontFamily="sans-serif" />
 
                         </LinearLayout>
 
@@ -147,10 +147,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="30"
-                                android:textSize="40dp"
+                                android:textSize="40sp"
                                 android:textStyle="bold"
                                 android:fontFamily="sans-serif-black"
-                                android:textColor="@color/primary_dark"
+                                android:textColor="#000000"
                                 android:letterSpacing="-0.02" />
 
                             <TextView
@@ -158,9 +158,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="-4dp"
                                 android:text="초 남음"
-                                android:textSize="10dp"
-                                android:fontFamily="sans-serif-medium"
-                                android:textColor="@color/gray_500" />
+                                android:textSize="10sp"
+                                android:fontFamily="sans-serif"
+                                android:textColor="#000000"
+                                android:alpha="0.4" />
 
                         </LinearLayout>
 
@@ -169,8 +170,8 @@
                             android:layout_width="50dp"
                             android:layout_height="2dp"
                             android:layout_marginTop="16dp"
-                            android:background="@color/gray_300"
-                            android:alpha="0.5" />
+                            android:background="#000000"
+                            android:alpha="0.2" />
 
                         <!-- Reflection message -->
                         <TextView
@@ -178,10 +179,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:text="정말 지금 봐야 할까요?"
-                            android:textSize="9dp"
+                            android:textSize="9sp"
                             android:textAlignment="center"
-                            android:textColor="@color/gray_500"
-                            android:alpha="0.9" />
+                            android:textColor="#000000"
+                            android:alpha="0.3" />
 
                     </LinearLayout>
 

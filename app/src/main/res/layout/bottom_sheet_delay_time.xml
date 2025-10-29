@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="대기 시간 선택"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:fontFamily="sans-serif"
+        android:layout_marginBottom="24dp" />
+
+    <!-- 15초 옵션 -->
+    <LinearLayout
+        android:id="@+id/option15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15초"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:fontFamily="sans-serif" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="빠른 차단"
+                android:textSize="13sp"
+                android:textColor="#000000"
+                android:alpha="0.5"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+        <RadioButton
+            android:id="@+id/radio15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:checked="false"
+            android:clickable="false"
+            android:focusable="false" />
+
+    </LinearLayout>
+
+    <!-- 30초 옵션 -->
+    <LinearLayout
+        android:id="@+id/option30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30초"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:fontFamily="sans-serif" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="표준 (권장)"
+                android:textSize="13sp"
+                android:textColor="#000000"
+                android:alpha="0.5"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+        <RadioButton
+            android:id="@+id/radio30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:checked="true"
+            android:clickable="false"
+            android:focusable="false" />
+
+    </LinearLayout>
+
+    <!-- 60초 옵션 -->
+    <LinearLayout
+        android:id="@+id/option60"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="60초"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:fontFamily="sans-serif" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="여유있게"
+                android:textSize="13sp"
+                android:textColor="#000000"
+                android:alpha="0.5"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+        <RadioButton
+            android:id="@+id/radio60"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:checked="false"
+            android:clickable="false"
+            android:focusable="false" />
+
+    </LinearLayout>
+
+</LinearLayout>

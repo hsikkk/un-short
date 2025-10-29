@@ -38,6 +38,10 @@ class BlockOverlay(private val context: Context) {
         this.onDismissListener = onDismiss
         this.onCompleteListener = onComplete
 
+        // SharedPreferences에서 설정된 딜레이 시간 읽기 (기본값 30초)
+        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        remainingSeconds = prefs.getInt("delay_seconds", 30)
+
         // 오버레이 뷰 생성
         Log.d(TAG, "Inflating overlay view")
         overlayView = LayoutInflater.from(context).inflate(R.layout.overlay_flip_phone, null)
@@ -126,7 +130,7 @@ class BlockOverlay(private val context: Context) {
             }
 
             override fun onFinish() {
-                // 15초 완료 - 현재 쇼츠는 허용
+                // 타이머 완료 - 현재 쇼츠는 허용
                 onCompleteListener?.invoke()
                 dismiss()
                 onDismissListener?.invoke()

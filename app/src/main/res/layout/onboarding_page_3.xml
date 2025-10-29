@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_50">
+    android:background="#FFFFFF">
 
     <!-- Top Message (Same as Page 2) -->
     <TextView
@@ -11,10 +11,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="쇼츠 차단을 위해서\n권한을 허용해주세요"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:textColor="@color/gray_900"
-        android:fontFamily="sans-serif-medium"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:fontFamily="sans-serif"
+        android:alpha="0.8"
         android:textAlignment="center"
         android:lineSpacingExtra="6dp"
         android:layout_marginTop="48dp"
@@ -48,11 +48,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="0dp"
             app:strokeWidth="1dp"
-            app:strokeColor="@color/gray_200"
-            app:cardBackgroundColor="@color/white">
+            app:strokeColor="#E0E0E0"
+            app:cardBackgroundColor="#FFFFFF">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,10 +86,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="접근성 서비스"
-                        android:textSize="16dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/gray_900"
-                        android:fontFamily="sans-serif-medium" />
+                        android:textSize="16sp"
+                        android:textColor="#000000"
+                        android:fontFamily="sans-serif" />
 
                 </LinearLayout>
 
@@ -97,19 +96,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="💡 왜 필요한가요?"
-                    android:textSize="12dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/gray_700"
-                    android:fontFamily="sans-serif-medium"
+                    android:text="왜 필요한가요?"
+                    android:textSize="12sp"
+                    android:textColor="#000000"
+                    android:fontFamily="sans-serif"
+                    android:alpha="0.6"
                     android:layout_marginBottom="6dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="YouTube Shorts, Instagram Reels, TikTok 같은 쇼츠 화면이 열렸는지 감지하기 위해 필요합니다."
-                    android:textSize="13dp"
-                    android:textColor="@color/gray_600"
+                    android:textSize="13sp"
+                    android:textColor="#000000"
+                    android:alpha="0.5"
                     android:lineSpacingExtra="2dp"
                     android:layout_marginBottom="12dp" />
 
@@ -119,9 +119,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="아직 설정되지 않았습니다"
-                    android:textSize="12dp"
-                    android:textColor="@color/error"
-                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:textColor="#EF4444"
                     android:layout_marginBottom="10dp" />
 
                 <Button
@@ -140,11 +139,11 @@
             android:id="@+id/onboardingOverlayCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="2dp"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="0dp"
             app:strokeWidth="1dp"
-            app:strokeColor="@color/gray_200"
-            app:cardBackgroundColor="@color/white">
+            app:strokeColor="#E0E0E0"
+            app:cardBackgroundColor="#FFFFFF">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -178,10 +177,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="다른 앱 위에 표시"
-                        android:textSize="16dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/gray_900"
-                        android:fontFamily="sans-serif-medium" />
+                        android:textSize="16sp"
+                        android:textColor="#000000"
+                        android:fontFamily="sans-serif" />
 
                 </LinearLayout>
 
@@ -189,19 +187,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="💡 왜 필요한가요?"
-                    android:textSize="12dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/gray_700"
-                    android:fontFamily="sans-serif-medium"
+                    android:text="왜 필요한가요?"
+                    android:textSize="12sp"
+                    android:textColor="#000000"
+                    android:fontFamily="sans-serif"
+                    android:alpha="0.6"
                     android:layout_marginBottom="6dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="쇼츠 화면 위에 차단 화면을 띄워서 여러분이 한번 더 생각할 수 있도록 도와줍니다."
-                    android:textSize="13dp"
-                    android:textColor="@color/gray_600"
+                    android:textSize="13sp"
+                    android:textColor="#000000"
+                    android:alpha="0.5"
                     android:lineSpacingExtra="2dp"
                     android:layout_marginBottom="12dp" />
 
@@ -211,9 +210,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="아직 설정되지 않았습니다"
-                    android:textSize="12dp"
-                    android:textColor="@color/error"
-                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:textColor="#EF4444"
                     android:layout_marginBottom="10dp" />
 
                 <Button
