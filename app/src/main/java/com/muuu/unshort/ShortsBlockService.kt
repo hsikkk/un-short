@@ -368,6 +368,9 @@ class ShortsBlockService : AccessibilityService() {
         Log.d(TAG, "Overlay permission granted, creating BlockOverlay")
 
         try {
+            // 오버레이 표시 전에 미디어 일시정지
+            pauseMedia()
+
             blockOverlay = BlockOverlay(this)
             Log.d(TAG, "BlockOverlay created, calling show()")
             blockOverlay?.show(
@@ -386,6 +389,48 @@ class ShortsBlockService : AccessibilityService() {
             Log.d(TAG, "BlockOverlay show() completed")
         } catch (e: Exception) {
             Log.e(TAG, "Error showing overlay", e)
+        }
+    }
+
+    private fun pauseMedia() {
+        try {
+            // 미디어 일시정지를 위해 Back 버튼 액션을 수행하거나
+            // 화면을 탭하여 영상을 일시정지 시도
+            // AccessibilityService에서는 직접적인 미디어 제어가 제한적이므로
+            // 대신 화면 중앙을 탭하는 제스처를 수행하여 영상을 일시정지
+            val rootNode = rootInActiveWindow ?: return
+
+            // 화면 중앙 좌표 계산
+            val displayMetrics = resources.displayMetrics
+            val centerX = displayMetrics.widthPixels / 2f
+            val centerY = displayMetrics.heightPixels / 2f
+
+            // 중앙을 클릭하는 제스처 생성 (Android 7.0+)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                val path = android.accessibilityservice.GestureDescription.StrokeDescription(
+                    android.graphics.Path().apply {
+                        moveTo(centerX, centerY)
+                        lineTo(centerX, centerY)
+                    },
+                    0,
+                    100 // 100ms 동안 클릭
+                )
+                val gesture = android.accessibilityservice.GestureDescription.Builder()
+                    .addStroke(path)
+                    .build()
+
+                dispatchGesture(gesture, object : android.accessibilityservice.AccessibilityService.GestureResultCallback() {
+                    override fun onCompleted(gestureDescription: android.accessibilityservice.GestureDescription?) {
+                        Log.d(TAG, "Pause gesture completed")
+                    }
+
+                    override fun onCancelled(gestureDescription: android.accessibilityservice.GestureDescription?) {
+                        Log.d(TAG, "Pause gesture cancelled")
+                    }
+                }, null)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error pausing media", e)
         }
     }
 
