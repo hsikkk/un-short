@@ -77,6 +77,8 @@
         android:orientation="vertical"
         android:background="#FFFFFF"
         android:gravity="center"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         app:layout_constraintTop_toBottomOf="@id/topSection"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -87,7 +89,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:padding="8dp">
 
             <!-- Toggle Switch Container -->
             <FrameLayout
@@ -96,7 +101,9 @@
                 android:layout_height="90dp"
                 android:background="@drawable/toggle_track_background"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                android:clipChildren="false"
+                android:clipToPadding="false">
 
                 <!-- ON Text -->
                 <TextView
