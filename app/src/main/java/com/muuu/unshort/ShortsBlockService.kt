@@ -491,8 +491,8 @@ class ShortsBlockService : AccessibilityService() {
             }
         }
 
-        handler.postDelayed(pendingOverlayJob!!, 300)
-        Log.d(TAG, "Overlay job scheduled with 300ms delay")
+        handler.postDelayed(pendingOverlayJob!!, 100)
+        Log.d(TAG, "Overlay job scheduled with 100ms delay")
     }
 
     private fun cancelPendingOverlay() {
