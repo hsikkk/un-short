@@ -23,6 +23,7 @@ class ShortsBlockService : AccessibilityService() {
     private var lastForegroundPackage: String = ""  // 마지막 포그라운드 앱
     private val handler = android.os.Handler(android.os.Looper.getMainLooper())
     private var foregroundCheckRunnable: Runnable? = null
+    private val firstOverlayPerApp = mutableMapOf<String, Boolean>()  // 앱별 첫 오버레이 여부
 
     // 차단 대상 앱 패키지명
     private val TARGET_APPS = setOf(
@@ -110,7 +111,7 @@ class ShortsBlockService : AccessibilityService() {
 
                         // 스크롤 후 오버레이 표시
                         if (blockOverlay?.isShowing() != true) {
-                            showBlockOverlay(shouldPauseMedia = true)
+                            showBlockOverlay(packageName)
                             overlayWasShown = true  // 오버레이 표시됨
                             // 오버레이 표시 후 justScrolled 플래그 해제 (바로 닫히는 것 방지)
                             android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
@@ -142,12 +143,12 @@ class ShortsBlockService : AccessibilityService() {
                 // 백그라운드에서 돌아온 경우인지 확인
                 val isReturningFromBackground = leftViaHomeButton
                 if (isReturningFromBackground) {
-                    Log.d(TAG, "Returned to Shorts screen from background (skipping pauseMedia)")
+                    Log.d(TAG, "Returned to Shorts screen from background")
                     leftViaHomeButton = false  // 플래그 리셋
                 } else {
-                    Log.d(TAG, "Shorts screen detected in $packageName (will pause media)")
+                    Log.d(TAG, "Shorts screen detected in $packageName")
                 }
-                showBlockOverlay(shouldPauseMedia = !isReturningFromBackground)
+                showBlockOverlay(packageName)
                 overlayWasShown = true
             }
 
@@ -171,6 +172,14 @@ class ShortsBlockService : AccessibilityService() {
                 // leftViaHomeButton이 true이면 홈/백 버튼으로 나간 것이므로 상태 유지
                 if (!leftViaHomeButton) {
                     Log.d(TAG, "Within app navigation - clearing all state")
+
+                    // 현재 앱의 첫 오버레이 플래그 초기화
+                    val currentPkg = rootInActiveWindow?.packageName?.toString()
+                    if (currentPkg in TARGET_APPS) {
+                        firstOverlayPerApp.remove(currentPkg)
+                        Log.d(TAG, "Reset first overlay flag for $currentPkg")
+                    }
+
                     allowedUntilScroll = false
                     lastShortsContentHash = 0
                     stableHashCount = 0
@@ -423,8 +432,8 @@ class ShortsBlockService : AccessibilityService() {
         return hash
     }
 
-    private fun showBlockOverlay(shouldPauseMedia: Boolean = true) {
-        Log.d(TAG, "showBlockOverlay() called, shouldPauseMedia: $shouldPauseMedia")
+    private fun showBlockOverlay(packageName: String) {
+        Log.d(TAG, "showBlockOverlay() called for $packageName")
 
         // 오버레이 권한 확인
         if (!Settings.canDrawOverlays(this)) {
@@ -436,12 +445,8 @@ class ShortsBlockService : AccessibilityService() {
         Log.d(TAG, "Overlay permission granted, creating BlockOverlay")
 
         try {
-            // 오버레이 표시 전에 미디어 일시정지 (resume 시에는 skip)
-            if (shouldPauseMedia) {
-                pauseMedia()
-            } else {
-                Log.d(TAG, "Skipping pauseMedia (resuming from background)")
-            }
+            // 오버레이 표시 전에 미디어 일시정지 시도
+            pauseMedia(packageName)
 
             blockOverlay = BlockOverlay(this)
             Log.d(TAG, "BlockOverlay created, calling show()")
@@ -477,15 +482,21 @@ class ShortsBlockService : AccessibilityService() {
             // 현재 음악이 재생 중인지 확인 (YouTube, TikTok)
             val isMusicActive = audioManager.isMusicActive
 
-            // 미디어 모드 확인 (Instagram Reels는 MODE_IN_COMMUNICATION일 수 있음)
+            // 미디어 모드 확인
             val mode = audioManager.mode
-            val isInCall = mode == AudioManager.MODE_IN_CALL || mode == AudioManager.MODE_IN_COMMUNICATION
 
-            Log.d(TAG, "Audio state - isMusicActive: $isMusicActive, mode: $mode, isInCall: $isInCall")
+            Log.d(TAG, "Audio state - isMusicActive: $isMusicActive, mode: $mode")
 
-            // 음악이 재생 중이거나, 통신 모드(비디오 통화/릴스)인 경우
-            if (isMusicActive || isInCall) {
-                Log.d(TAG, "Media is playing")
+            // 음악이 재생 중이면 확실히 재생 중
+            if (isMusicActive) {
+                Log.d(TAG, "Media is playing (music active)")
+                return true
+            }
+
+            // 음악이 재생 중이 아니지만 모드가 NORMAL이 아니면 재생 중일 가능성
+            // MODE_NORMAL = 0, MODE_IN_CALL = 2, MODE_IN_COMMUNICATION = 3
+            if (mode != AudioManager.MODE_NORMAL) {
+                Log.d(TAG, "Media might be playing (mode: $mode)")
                 return true
             }
 
@@ -493,51 +504,76 @@ class ShortsBlockService : AccessibilityService() {
             return false
         } catch (e: Exception) {
             Log.e(TAG, "Error checking media state", e)
-            return false
+            // 에러 시 안전하게 true 반환 (pause 시도)
+            return true
         }
     }
 
-    private fun pauseMedia() {
+    private fun pauseMedia(packageName: String) {
         try {
-            // 차단 대상 앱이 미디어를 재생 중인지 확인
-            if (!isTargetAppPlayingMedia()) {
-                Log.d(TAG, "Target app not playing media, skipping pauseMedia")
+            Log.d(TAG, "pauseMedia called for $packageName")
+
+            // 빈 패키지명이면 무조건 pause 시도
+            if (packageName.isEmpty()) {
+                Log.d(TAG, "Empty package name - always attempting pause")
+                performTapGesture()
                 return
             }
 
-            Log.d(TAG, "Target app playing media, pausing...")
-
-            // 화면 중앙 좌표 계산
-            val displayMetrics = resources.displayMetrics
-            val centerX = displayMetrics.widthPixels / 2f
-            val centerY = displayMetrics.heightPixels / 2f
-
-            // 중앙을 클릭하는 제스처 생성 (Android 7.0+)
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                val path = android.accessibilityservice.GestureDescription.StrokeDescription(
-                    android.graphics.Path().apply {
-                        moveTo(centerX, centerY)
-                        lineTo(centerX, centerY)
-                    },
-                    0,
-                    100 // 100ms 동안 클릭
-                )
-                val gesture = android.accessibilityservice.GestureDescription.Builder()
-                    .addStroke(path)
-                    .build()
-
-                dispatchGesture(gesture, object : android.accessibilityservice.AccessibilityService.GestureResultCallback() {
-                    override fun onCompleted(gestureDescription: android.accessibilityservice.GestureDescription?) {
-                        Log.d(TAG, "Pause gesture completed")
-                    }
-
-                    override fun onCancelled(gestureDescription: android.accessibilityservice.GestureDescription?) {
-                        Log.d(TAG, "Pause gesture cancelled")
-                    }
-                }, null)
+            // 해당 앱의 첫 오버레이는 무조건 pause 시도 (영상 재생 시작 타이밍 문제)
+            val isFirstForApp = firstOverlayPerApp[packageName] != false
+            if (isFirstForApp) {
+                firstOverlayPerApp[packageName] = false
+                Log.d(TAG, "First overlay for $packageName - always attempting pause")
+                performTapGesture()
+                return
             }
+
+            // 이후부터는 미디어가 실제로 재생 중인지 확인
+            val isPlaying = isTargetAppPlayingMedia()
+            Log.d(TAG, "Media state check - isPlaying: $isPlaying")
+
+            if (!isPlaying) {
+                Log.d(TAG, "Media not playing, skipping tap gesture to avoid resume")
+                return
+            }
+
+            Log.d(TAG, "Media is playing, sending tap gesture to pause")
+            performTapGesture()
         } catch (e: Exception) {
             Log.e(TAG, "Error pausing media", e)
+        }
+    }
+
+    private fun performTapGesture() {
+        // 화면 중앙 좌표 계산
+        val displayMetrics = resources.displayMetrics
+        val centerX = displayMetrics.widthPixels / 2f
+        val centerY = displayMetrics.heightPixels / 2f
+
+        // 중앙을 클릭하는 제스처 생성 (Android 7.0+)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            val path = android.accessibilityservice.GestureDescription.StrokeDescription(
+                android.graphics.Path().apply {
+                    moveTo(centerX, centerY)
+                    lineTo(centerX, centerY)
+                },
+                0,
+                100 // 100ms 동안 클릭
+            )
+            val gesture = android.accessibilityservice.GestureDescription.Builder()
+                .addStroke(path)
+                .build()
+
+            dispatchGesture(gesture, object : android.accessibilityservice.AccessibilityService.GestureResultCallback() {
+                override fun onCompleted(gestureDescription: android.accessibilityservice.GestureDescription?) {
+                    Log.d(TAG, "Pause gesture completed")
+                }
+
+                override fun onCancelled(gestureDescription: android.accessibilityservice.GestureDescription?) {
+                    Log.d(TAG, "Pause gesture cancelled")
+                }
+            }, null)
         }
     }
 
