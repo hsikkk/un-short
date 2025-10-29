@@ -145,8 +145,9 @@ class OnboardingActivity : AppCompatActivity() {
         val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
         prefs.edit().putBoolean("onboarding_completed", true).apply()
 
-        // MainActivity로 이동
+        // MainActivity로 이동 (백스택 완전히 클리어)
         val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
     }
