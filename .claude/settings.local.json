@@ -19,7 +19,8 @@
       "Bash(~/Library/Android/sdk/platform-tools/adb -s 172.30.1.13:36029 uninstall com.shortblock)",
       "Bash(~/Library/Android/sdk/platform-tools/adb:*)",
       "Bash(git commit:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(git log:*)"
     ],
     "deny": [],
     "ask": []
