@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- Header -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#FFFFFF">
+
+        <!-- Back Button -->
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/ic_back"
+            android:tint="#000000"
+            android:padding="12dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="설정"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:fontFamily="sans-serif" />
+
+    </RelativeLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        android:alpha="0.1" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Section: 차단 옵션 관리 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="차단 옵션 관리"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:alpha="0.5"
+                android:fontFamily="sans-serif"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="12dp"
+                android:letterSpacing="0.02" />
+
+            <!-- 대기 시간 관리 -->
+            <LinearLayout
+                android:id="@+id/waitTimeItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="16dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="대기 시간"
+                        android:textSize="16sp"
+                        android:textColor="#000000"
+                        android:fontFamily="sans-serif" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="쇼츠 차단 시 대기 시간 설정"
+                        android:textSize="12sp"
+                        android:textColor="#000000"
+                        android:alpha="0.5"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/waitTimeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30초"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:alpha="0.6" />
+
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="#000000"
+                android:alpha="0.05" />
+
+            <!-- Section: 기타 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="기타"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:alpha="0.5"
+                android:fontFamily="sans-serif"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="12dp"
+                android:letterSpacing="0.02" />
+
+            <!-- 피드백 보내기 -->
+            <LinearLayout
+                android:id="@+id/feedbackItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="16dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="피드백 보내기"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+                    android:fontFamily="sans-serif" />
+
+            </LinearLayout>
+
+            <!-- 앱 공유하기 -->
+            <LinearLayout
+                android:id="@+id/shareItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="16dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="앱 공유하기"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+                    android:fontFamily="sans-serif" />
+
+            </LinearLayout>
+
+            <!-- 리뷰 남기기 -->
+            <LinearLayout
+                android:id="@+id/reviewItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="16dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="리뷰 남기기"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+                    android:fontFamily="sans-serif" />
+
+            </LinearLayout>
+
+            <!-- 버전 정보 -->
+            <LinearLayout
+                android:id="@+id/versionItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="16dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="버전 정보"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+                    android:fontFamily="sans-serif" />
+
+                <TextView
+                    android:id="@+id/versionText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="v1.0.0"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:alpha="0.5" />
+
+            </LinearLayout>
+
+            <!-- Bottom spacing -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="32dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

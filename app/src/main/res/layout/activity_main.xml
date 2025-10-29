@@ -14,13 +14,18 @@
         android:background="#000000"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Header -->
-        <LinearLayout
+        <!-- Header with Settings Icon -->
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="32dp"
-            android:paddingTop="16dp">
+            android:layout_height="wrap_content">
+
+            <!-- Header Content -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="32dp"
+                android:paddingTop="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -42,7 +47,25 @@
                 android:layout_marginTop="8dp"
                 android:lineSpacingExtra="2dp" />
 
-        </LinearLayout>
+            </LinearLayout>
+
+            <!-- Settings Icon -->
+            <ImageView
+                android:id="@+id/settingsButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:src="@drawable/ic_settings"
+                android:tint="#FFFFFF"
+                android:alpha="0.7"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="4dp" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

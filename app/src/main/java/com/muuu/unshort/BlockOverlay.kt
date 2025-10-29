@@ -40,7 +40,7 @@ class BlockOverlay(private val context: Context) {
 
         // SharedPreferences에서 설정된 딜레이 시간 읽기 (기본값 30초)
         val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        remainingSeconds = prefs.getInt("delay_seconds", 30)
+        remainingSeconds = prefs.getInt("wait_time", 30)
 
         // 오버레이 뷰 생성
         Log.d(TAG, "Inflating overlay view")

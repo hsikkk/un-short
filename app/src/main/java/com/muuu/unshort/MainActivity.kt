@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var statusTitle: TextView
     private lateinit var statusDot: View
     private lateinit var statusLabel: TextView
+    private lateinit var settingsButton: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         statusTitle = findViewById(R.id.statusTitle)
         statusDot = findViewById(R.id.statusDot)
         statusLabel = findViewById(R.id.statusLabel)
+        settingsButton = findViewById(R.id.settingsButton)
 
         // 저장된 차단 상태 불러오기
         val isBlocking = prefs.getBoolean("blocking_enabled", true)
@@ -64,6 +66,12 @@ class MainActivity : AppCompatActivity() {
 
             // UI 업데이트
             updateUI(newState)
+        }
+
+        // 설정 버튼 클릭 리스너
+        settingsButton.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
         }
     }
 
