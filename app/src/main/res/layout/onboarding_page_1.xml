@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="40dp"
+    android:background="@color/gray_50">
+
+    <!-- Logo/Icon Area -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="un:short"
+        android:textSize="56sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/primary_dark"
+        android:letterSpacing="0.02"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Main Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="쇼츠 중독에서\n벗어나세요"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="@color/gray_900"
+        android:fontFamily="sans-serif-medium"
+        android:textAlignment="center"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginBottom="40dp" />
+
+    <!-- Visual Element -->
+    <View
+        android:layout_width="120dp"
+        android:layout_height="4dp"
+        android:background="@color/primary_dark"
+        android:layout_marginTop="20dp" />
+
+</LinearLayout>

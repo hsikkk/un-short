@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_50">
+
+    <!-- Top Message -->
+    <TextView
+        android:id="@+id/topMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="잠시 폰을 내려놓고\n정말 지금 봐야 할지 고민해보세요"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/gray_900"
+        android:fontFamily="sans-serif-medium"
+        android:textAlignment="center"
+        android:lineSpacingExtra="6dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginHorizontal="32dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Phone Mockup with Preview (Bottom 80dp cropped) -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="560dp"
+        android:clipChildren="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Phone Frame -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="320dp"
+            android:layout_height="640dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:translationY="80dp"
+            app:cardCornerRadius="32dp"
+            app:cardElevation="12dp"
+            app:cardBackgroundColor="@color/primary_dark"
+            app:strokeWidth="8dp"
+            app:strokeColor="@color/primary_dark">
+
+            <!-- Phone Screen Content -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- Dimmed Background -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/overlay_background" />
+
+                <!-- Block Screen Preview (centered) -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="16dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="8dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <!-- Scaled down preview of block screen -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:gravity="center"
+                        android:background="@android:color/white">
+
+                        <!-- App branding -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="un:short"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-black"
+                            android:textColor="@color/primary_dark"
+                            android:letterSpacing="0.02" />
+
+                        <!-- Main title -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="잠깐만요! 🤚"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-medium"
+                            android:textColor="@color/gray_900"
+                            android:textAlignment="center" />
+
+                        <!-- Message -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="쇼츠를 보기 전에"
+                            android:textSize="11sp"
+                            android:textAlignment="center"
+                            android:textColor="@color/gray_600"
+                            android:lineSpacingExtra="2dp" />
+
+                        <!-- Flip status badge -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:background="@color/gray_100"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="6dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:layout_width="5dp"
+                                android:layout_height="5dp"
+                                android:background="@color/error"
+                                android:layout_marginEnd="5dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="폰을 뒤집어주세요"
+                                android:textSize="10sp"
+                                android:textColor="@color/gray_900"
+                                android:fontFamily="sans-serif-medium" />
+
+                        </LinearLayout>
+
+                        <!-- Timer display -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="18dp"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="30"
+                                android:textSize="48sp"
+                                android:textStyle="bold"
+                                android:fontFamily="sans-serif-black"
+                                android:textColor="@color/primary_dark"
+                                android:letterSpacing="-0.02" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="-4dp"
+                                android:text="초 남음"
+                                android:textSize="11sp"
+                                android:fontFamily="sans-serif-medium"
+                                android:textColor="@color/gray_500" />
+
+                        </LinearLayout>
+
+                        <!-- Divider -->
+                        <View
+                            android:layout_width="50dp"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@color/gray_300"
+                            android:alpha="0.5" />
+
+                        <!-- Reflection message -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="정말 지금 봐야 할까요?"
+                            android:textSize="10sp"
+                            android:textAlignment="center"
+                            android:textColor="@color/gray_500"
+                            android:alpha="0.9" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </FrameLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
