@@ -22,9 +22,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var powerIcon: ImageView
     private lateinit var onText: TextView
     private lateinit var offText: TextView
-    private lateinit var statusTitle: TextView
-    private lateinit var platformInfo: TextView
-    private lateinit var statusBadge: TextView
+    private lateinit var statusDot: View
+    private lateinit var statusLabel: TextView
     private lateinit var settingsButton: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,9 +49,8 @@ class MainActivity : AppCompatActivity() {
         powerIcon = findViewById(R.id.powerIcon)
         onText = findViewById(R.id.onText)
         offText = findViewById(R.id.offText)
-        statusTitle = findViewById(R.id.statusTitle)
-        platformInfo = findViewById(R.id.platformInfo)
-        statusBadge = findViewById(R.id.statusBadge)
+        statusDot = findViewById(R.id.statusDot)
+        statusLabel = findViewById(R.id.statusLabel)
         settingsButton = findViewById(R.id.settingsButton)
 
         // 저장된 차단 상태 불러오기
@@ -133,18 +131,9 @@ class MainActivity : AppCompatActivity() {
                 Color.BLACK
             )
 
-            // 상태 텍스트
-            statusTitle.text = "차단 중"
-            statusTitle.setTextColor(Color.BLACK)
-
-            // 플랫폼 정보
-            platformInfo.text = "YouTube Shorts • Instagram Reels"
-            platformInfo.alpha = 0.5f
-
-            // 상태 배지
-            statusBadge.text = "보호 활성"
-            statusBadge.setTextColor(Color.WHITE)
-            statusBadge.setBackgroundResource(R.drawable.status_badge_background)
+            // Status Indicator
+            statusDot.setBackgroundResource(R.drawable.status_dot_active)
+            statusLabel.text = "ACTIVE"
         } else {
             // OFF 상태
             toggleContainer.setBackgroundResource(R.drawable.toggle_track_inactive)
@@ -159,18 +148,9 @@ class MainActivity : AppCompatActivity() {
                 Color.parseColor("#BDBDBD")
             )
 
-            // 상태 텍스트
-            statusTitle.text = "차단 해제"
-            statusTitle.setTextColor(Color.parseColor("#BDBDBD"))
-
-            // 플랫폼 정보
-            platformInfo.text = "모든 콘텐츠 허용 중"
-            platformInfo.alpha = 0.25f
-
-            // 상태 배지
-            statusBadge.text = "비활성"
-            statusBadge.setTextColor(Color.parseColor("#9E9E9E"))
-            statusBadge.setBackgroundResource(R.drawable.status_badge_inactive)
+            // Status Indicator
+            statusDot.setBackgroundResource(R.drawable.status_dot_inactive)
+            statusLabel.text = "INACTIVE"
         }
     }
 }
