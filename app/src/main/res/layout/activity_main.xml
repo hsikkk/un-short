@@ -76,11 +76,20 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:background="#FFFFFF"
-        android:gravity="center"
         android:clipChildren="false"
         android:clipToPadding="false"
         app:layout_constraintTop_toBottomOf="@id/topSection"
         app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Toggle Content Area -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clipChildren="false"
+            android:clipToPadding="false">
 
         <!-- Toggle Area (shown when permissions granted) -->
         <LinearLayout
@@ -183,6 +192,98 @@
                     android:textColor="#000000"
                     android:alpha="0.5"
                     android:letterSpacing="0.1" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000000"
+            android:alpha="0.08"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp" />
+
+        <!-- Target Apps Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:paddingTop="24dp"
+            android:gravity="top">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="차단 대상"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:alpha="0.4"
+                android:letterSpacing="0.1"
+                android:layout_marginBottom="20dp"
+                android:textAllCaps="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- YouTube Shorts -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="14dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_youtube"
+                        android:layout_marginEnd="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="YouTube Shorts"
+                        android:textSize="15sp"
+                        android:fontFamily="sans-serif-light"
+                        android:textColor="#000000"
+                        android:alpha="0.5" />
+
+                </LinearLayout>
+
+                <!-- Instagram Reels -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_instagram"
+                        android:layout_marginEnd="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Instagram Reels"
+                        android:textSize="15sp"
+                        android:fontFamily="sans-serif-light"
+                        android:textColor="#000000"
+                        android:alpha="0.5" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
