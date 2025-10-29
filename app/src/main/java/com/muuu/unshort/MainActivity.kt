@@ -5,9 +5,11 @@ import android.animation.ValueAnimator
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -17,6 +19,9 @@ import androidx.core.view.ViewCompat
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var toggleArea: LinearLayout
+    private lateinit var permissionWarning: LinearLayout
+    private lateinit var permissionSettingsButton: com.google.android.material.button.MaterialButton
     private lateinit var toggleContainer: FrameLayout
     private lateinit var toggleCircle: CardView
     private lateinit var powerIcon: ImageView
@@ -44,6 +49,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // View 초기화
+        toggleArea = findViewById(R.id.toggleArea)
+        permissionWarning = findViewById(R.id.permissionWarning)
+        permissionSettingsButton = findViewById(R.id.permissionSettingsButton)
         toggleContainer = findViewById(R.id.toggleContainer)
         toggleCircle = findViewById(R.id.toggleCircle)
         powerIcon = findViewById(R.id.powerIcon)
@@ -53,9 +61,17 @@ class MainActivity : AppCompatActivity() {
         statusLabel = findViewById(R.id.statusLabel)
         settingsButton = findViewById(R.id.settingsButton)
 
-        // 저장된 차단 상태 불러오기
-        val isBlocking = prefs.getBoolean("blocking_enabled", true)
-        updateUI(isBlocking)
+        // 권한 설정 버튼 클릭 리스너
+        permissionSettingsButton.setOnClickListener {
+            val intent = Intent(this, PermissionSetupActivity::class.java)
+            startActivity(intent)
+        }
+
+        // 설정 버튼 클릭 리스너
+        settingsButton.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+        }
 
         // 토글 스위치 클릭 리스너
         toggleContainer.setOnClickListener {
@@ -68,12 +84,57 @@ class MainActivity : AppCompatActivity() {
             // UI 업데이트 (애니메이션 포함)
             updateUI(newState, animate = true)
         }
+    }
 
-        // 설정 버튼 클릭 리스너
-        settingsButton.setOnClickListener {
-            val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
+    override fun onResume() {
+        super.onResume()
+        checkPermissionsAndUpdateUI()
+    }
+
+    private fun checkPermissionsAndUpdateUI() {
+        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        val hasPermissions = checkPermissions()
+
+        if (!hasPermissions) {
+            // 권한 없음 - 토글 숨기고 경고 표시
+            toggleArea.visibility = View.GONE
+            permissionWarning.visibility = View.VISIBLE
+
+            // 차단 자동 비활성화
+            prefs.edit().putBoolean("blocking_enabled", false).apply()
+        } else {
+            // 권한 있음 - 토글 표시
+            toggleArea.visibility = View.VISIBLE
+            permissionWarning.visibility = View.GONE
+
+            // 저장된 차단 상태 불러오기
+            val isBlocking = prefs.getBoolean("blocking_enabled", true)
+            updateUI(isBlocking)
         }
+    }
+
+    private fun checkPermissions(): Boolean {
+        val accessibilityEnabled = isAccessibilityServiceEnabled()
+        val overlayEnabled = Settings.canDrawOverlays(this)
+        return accessibilityEnabled && overlayEnabled
+    }
+
+    private fun isAccessibilityServiceEnabled(): Boolean {
+        val accessibilityEnabled = Settings.Secure.getInt(
+            contentResolver,
+            Settings.Secure.ACCESSIBILITY_ENABLED,
+            0
+        )
+
+        if (accessibilityEnabled == 1) {
+            val services = Settings.Secure.getString(
+                contentResolver,
+                Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+            )
+            return services?.contains("${packageName}/${ShortsBlockService::class.java.name}") == true
+        }
+
+        return false
     }
 
     private fun updateUI(isEnabled: Boolean, animate: Boolean = false) {

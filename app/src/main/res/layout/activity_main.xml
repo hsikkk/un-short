@@ -80,93 +80,169 @@
         app:layout_constraintTop_toBottomOf="@id/topSection"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <!-- Toggle Switch Container -->
-        <FrameLayout
-            android:id="@+id/toggleContainer"
-            android:layout_width="180dp"
-            android:layout_height="90dp"
-            android:background="@drawable/toggle_track_background"
-            android:clickable="true"
-            android:focusable="true">
-
-            <!-- ON Text -->
-            <TextView
-                android:id="@+id/onText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="30dp"
-                android:text="ON"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="#FFFFFF"
-                android:alpha="0.4"
-                android:letterSpacing="0.1" />
-
-            <!-- OFF Text -->
-            <TextView
-                android:id="@+id/offText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|end"
-                android:layout_marginEnd="30dp"
-                android:text="OFF"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="#000000"
-                android:alpha="0.0"
-                android:letterSpacing="0.1" />
-
-            <!-- Toggle Circle with Icon -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/toggleCircle"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center_vertical|end"
-                android:layout_marginEnd="5dp"
-                app:cardCornerRadius="40dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="#FFFFFF">
-
-                <ImageView
-                    android:id="@+id/powerIcon"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_power"
-                    android:contentDescription="Power toggle" />
-
-            </androidx.cardview.widget.CardView>
-
-        </FrameLayout>
-
-        <!-- Status Indicator -->
+        <!-- Toggle Area (shown when permissions granted) -->
         <LinearLayout
+            android:id="@+id/toggleArea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="visible">
 
-            <!-- Status Dot -->
-            <View
-                android:id="@+id/statusDot"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:background="@drawable/status_dot_active" />
+            <!-- Toggle Switch Container -->
+            <FrameLayout
+                android:id="@+id/toggleContainer"
+                android:layout_width="180dp"
+                android:layout_height="90dp"
+                android:background="@drawable/toggle_track_background"
+                android:clickable="true"
+                android:focusable="true">
 
-            <!-- Status Label -->
-            <TextView
-                android:id="@+id/statusLabel"
+                <!-- ON Text -->
+                <TextView
+                    android:id="@+id/onText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="30dp"
+                    android:text="ON"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="#FFFFFF"
+                    android:alpha="0.4"
+                    android:letterSpacing="0.1" />
+
+                <!-- OFF Text -->
+                <TextView
+                    android:id="@+id/offText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="30dp"
+                    android:text="OFF"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="#000000"
+                    android:alpha="0.0"
+                    android:letterSpacing="0.1" />
+
+                <!-- Toggle Circle with Icon -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/toggleCircle"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="5dp"
+                    app:cardCornerRadius="40dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="#FFFFFF">
+
+                    <ImageView
+                        android:id="@+id/powerIcon"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_power"
+                        android:contentDescription="Power toggle" />
+
+                </androidx.cardview.widget.CardView>
+
+            </FrameLayout>
+
+            <!-- Status Indicator -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="ACTIVE"
-                android:textSize="13sp"
+                android:layout_marginTop="32dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <!-- Status Dot -->
+                <View
+                    android:id="@+id/statusDot"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/status_dot_active" />
+
+                <!-- Status Label -->
+                <TextView
+                    android:id="@+id/statusLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="ACTIVE"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="#000000"
+                    android:alpha="0.5"
+                    android:letterSpacing="0.1" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Permission Warning (shown when permissions missing) -->
+        <LinearLayout
+            android:id="@+id/permissionWarning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="48dp"
+            android:visibility="gone">
+
+            <!-- Warning Icon -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⚠"
+                android:textSize="72sp"
+                android:textColor="#FFA726"
+                android:alpha="0.9" />
+
+            <!-- Warning Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="권한이 필요합니다"
+                android:textSize="24sp"
                 android:fontFamily="sans-serif-medium"
                 android:textColor="#000000"
-                android:alpha="0.5"
-                android:letterSpacing="0.1" />
+                android:letterSpacing="0.01" />
+
+            <!-- Warning Description -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="차단 기능을 사용하려면\n접근성 및 오버레이 권한이 필요합니다"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#000000"
+                android:alpha="0.6"
+                android:textAlignment="center"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- Settings Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/permissionSettingsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="권한 설정하기"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="#FFFFFF"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:letterSpacing="0.02"
+                app:cornerRadius="24dp"
+                app:backgroundTint="#000000"
+                app:elevation="4dp"
+                app:rippleColor="#40FFFFFF" />
 
         </LinearLayout>
 
