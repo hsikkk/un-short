@@ -22,7 +22,8 @@ class BlockOverlay(private val context: Context) {
     private lateinit var skipButton: TextView
     private lateinit var watchButton: TextView
     private lateinit var startTimerButton: TextView
-    private lateinit var buttonSpacer: View
+    private lateinit var mainMessage: TextView
+    private lateinit var reflectionMessage: TextView
 
     private var onDismissListener: (() -> Unit)? = null
     private var onCompleteListener: (() -> Unit)? = null
@@ -54,7 +55,8 @@ class BlockOverlay(private val context: Context) {
         skipButton = overlayView!!.findViewById(R.id.skipButton)
         watchButton = overlayView!!.findViewById(R.id.watchButton)
         startTimerButton = overlayView!!.findViewById(R.id.startTimerButton)
-        buttonSpacer = overlayView!!.findViewById(R.id.buttonSpacer)
+        mainMessage = overlayView!!.findViewById(R.id.mainMessage)
+        reflectionMessage = overlayView!!.findViewById(R.id.reflectionMessage)
         Log.d(TAG, "Overlay view inflated successfully")
 
         // Check timer completion status
@@ -64,15 +66,21 @@ class BlockOverlay(private val context: Context) {
 
         Log.d(TAG, "Timer completion check - currentSession: $sessionId, completedSession: $completedSessionId, isCompleted: $isTimerCompleted")
 
-        // Show appropriate buttons based on timer status
+        // Show appropriate buttons and messages based on timer status
         if (isTimerCompleted) {
-            // Timer completed, show watch button
+            // Timer completed, show watch button and update messages
             startTimerButton.visibility = View.GONE
             watchButton.visibility = View.VISIBLE
+            skipButton.text = "아니요, 안 볼래요"
+            mainMessage.text = "진짜로 볼 건가요?"
+            reflectionMessage.text = "고민해봤는데도 볼 거예요?"
         } else {
-            // Timer not completed, show timer button
+            // Timer not completed, show timer button and default messages
             startTimerButton.visibility = View.VISIBLE
             watchButton.visibility = View.GONE
+            skipButton.text = "그냥 닫기"
+            mainMessage.text = "이 쇼츠 꼭 봐야겠어요?"
+            reflectionMessage.text = "지금 이 순간, 정말 필요한 건 뭘까요?"
         }
 
         // "안볼래요" 버튼 클릭 리스너 설정
@@ -224,15 +232,21 @@ class BlockOverlay(private val context: Context) {
 
         try {
             if (isTimerCompleted) {
-                // Timer completed, show watch button
+                // Timer completed, show watch button and update messages
                 Log.d(TAG, "Timer completed - showing watch button, hiding timer button")
                 startTimerButton.visibility = View.GONE
                 watchButton.visibility = View.VISIBLE
+                skipButton.text = "아니요, 안 볼래요"
+                mainMessage.text = "진짜로 볼 건가요?"
+                reflectionMessage.text = "고민해봤는데도 볼 거예요?"
             } else {
-                // Timer not completed, show timer button
+                // Timer not completed, show timer button and default messages
                 Log.d(TAG, "Timer not completed - showing timer button, hiding watch button")
                 startTimerButton.visibility = View.VISIBLE
                 watchButton.visibility = View.GONE
+                skipButton.text = "그냥 닫기"
+                mainMessage.text = "이 쇼츠 꼭 봐야겠어요?"
+                reflectionMessage.text = "지금 이 순간, 정말 필요한 건 뭘까요?"
             }
             Log.d(TAG, "updateButtonVisibility completed successfully")
         } catch (e: Exception) {
