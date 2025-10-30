@@ -7,4 +7,21 @@
     <string name="time_remaining">남은 시간: %d초</string>
     <string name="flip_detected">폰이 뒤집어졌습니다 ✓</string>
     <string name="flip_required">폰을 뒤집어주세요</string>
+
+    <!-- BlockOverlay Messages -->
+    <string name="block_message_before_timer">정말 지금 쇼츠를 봐야 할까요?</string>
+    <string name="block_message_after_timer">진짜로 볼 건가요?</string>
+    <string name="block_button_think_again">한 번 더 생각해보기</string>
+    <string name="block_button_close">그냥 닫기</string>
+    <string name="block_button_no">아니요, 안 볼래요</string>
+    <string name="block_button_yes">네, 볼래요</string>
+
+    <!-- Timer Success Screen -->
+    <string name="timer_success_title">해냈어요!</string>
+    <string name="timer_success_message">잠시 멈춰본 당신, 멋져요\n이제 더 현명한 선택을 할 수 있을 거예요</string>
+
+    <!-- Timer Screen -->
+    <string name="timer_instruction_title">잠시 생각해보기</string>
+    <string name="timer_instruction_message_onboarding">폰을 뒤집고 진짜 봐야 하는지\n생각해보세요</string>
+    <string name="timer_instruction_message_full">폰을 뒤집고 진짜 봐야 하는지 생각해보세요\n이 시간이 아깝다면, 영상은 더 아깝지 않을까요?</string>
 </resources>

@@ -94,7 +94,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="잠시 생각해보기"
+                android:text="@string/timer_instruction_title"
                 android:textSize="17sp"
                 android:textColor="#FFFFFF"
                 android:fontFamily="sans-serif"
@@ -105,7 +105,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="폰을 뒤집고 진짜 봐야 하는지 생각해보세요\n이 시간이 아깝다면, 영상은 더 아깝지 않을까요?"
+                android:text="@string/timer_instruction_message_full"
                 android:textSize="14sp"
                 android:textColor="#8A8A8A"
                 android:fontFamily="sans-serif-light"
@@ -242,7 +242,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="해냈어요!"
+            android:text="@string/timer_success_title"
             android:textSize="24sp"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
@@ -253,7 +253,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="잠시 멈춰본 당신, 멋져요\n이제 더 현명한 선택을 할 수 있을 거예요"
+            android:text="@string/timer_success_message"
             android:textSize="16sp"
             android:textColor="#6B6B6B"
             android:gravity="center"

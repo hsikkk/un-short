@@ -100,7 +100,7 @@ class BlockOverlay(private val context: Context) {
             watchParams.topMargin = context.resources.displayMetrics.density.toInt() * 12
             buttonContainer.addView(watchButton, watchParams)
 
-            mainMessage.text = "진짜로 볼 건가요?"
+            mainMessage.text = context.getString(R.string.block_message_after_timer)
         } else {
             // Timer not completed - default order
             startTimerButton.visibility = View.VISIBLE
@@ -127,7 +127,7 @@ class BlockOverlay(private val context: Context) {
             skipParams.topMargin = context.resources.displayMetrics.density.toInt() * 12
             buttonContainer.addView(skipButton, skipParams)
 
-            mainMessage.text = "정말 지금 쇼츠를 봐야 할까요?"
+            mainMessage.text = context.getString(R.string.block_message_before_timer)
         }
 
         // "안볼래요" 버튼 클릭 리스너 설정
@@ -308,7 +308,7 @@ class BlockOverlay(private val context: Context) {
                 watchParams.topMargin = context.resources.displayMetrics.density.toInt() * 12
                 buttonContainer.addView(watchButton, watchParams)
 
-                mainMessage.text = "진짜로 볼 건가요?"
+                mainMessage.text = context.getString(R.string.block_message_after_timer)
             } else {
                 // Timer not completed - default order
                 Log.d(TAG, "Timer not completed - showing timer button, hiding watch button")
@@ -336,7 +336,7 @@ class BlockOverlay(private val context: Context) {
                 skipParams.topMargin = context.resources.displayMetrics.density.toInt() * 12
                 buttonContainer.addView(skipButton, skipParams)
 
-                mainMessage.text = "정말 지금 쇼츠를 봐야 할까요?"
+                mainMessage.text = context.getString(R.string.block_message_before_timer)
             }
             Log.d(TAG, "updateButtonVisibility completed successfully")
         } catch (e: Exception) {
