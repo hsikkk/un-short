@@ -36,14 +36,20 @@
         app:layout_constraintWidth_percent="0.9">
 
         <!-- Phone Frame -->
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/phone_frame_background"
-            android:elevation="8dp"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="20dp">
+            android:elevation="8dp">
+
+            <!-- Timer Screen -->
+            <LinearLayout
+                android:id="@+id/previewTimerScreen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="20dp">
 
                 <!-- Timer Container -->
                 <FrameLayout
@@ -59,8 +65,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:progressDrawable="@drawable/progress_ring_dark"
-                        android:max="30"
-                        android:progress="30"
+                        android:max="3000"
+                        android:progress="3000"
                         android:rotation="-90" />
 
                     <!-- Timer Display -->
@@ -158,7 +164,50 @@
 
                 </LinearLayout>
 
-        </LinearLayout>
+            </LinearLayout>
+
+            <!-- Success Screen (hidden initially) -->
+            <LinearLayout
+                android:id="@+id/previewSuccessScreen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="32dp"
+                android:visibility="gone"
+                android:alpha="0">
+
+                <!-- Success Icon (체크마크) -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="✓"
+                    android:textSize="80sp"
+                    android:textColor="#10B981"
+                    android:layout_marginBottom="24dp" />
+
+                <!-- Success Title -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="해냈어요!"
+                    android:textSize="24sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Success Message -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="잠시 멈춰본 당신, 멋져요"
+                    android:textSize="16sp"
+                    android:textColor="#8A8A8A"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+        </FrameLayout>
 
     </FrameLayout>
 

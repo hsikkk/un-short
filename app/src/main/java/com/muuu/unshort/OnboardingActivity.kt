@@ -1,15 +1,20 @@
 package com.muuu.unshort
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +31,10 @@ class OnboardingActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager2
     private lateinit var indicators: List<View>
+
+    // 애니메이션 관련
+    private var timerAnimator: ValueAnimator? = null
+    private val handler = Handler(Looper.getMainLooper())
 
     // 5번째 페이지의 권한 설정 뷰들
     private var accessibilityCard: View? = null
@@ -68,8 +77,19 @@ class OnboardingActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 updateIndicators(position)
+
+                // 페이지별 애니메이션 시작
+                handler.postDelayed({
+                    startPageAnimation(position)
+                }, 300) // ViewPager transition 완료 후 애니메이션 시작
             }
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timerAnimator?.cancel()
+        handler.removeCallbacksAndMessages(null)
     }
 
     private fun updateIndicators(position: Int) {
@@ -224,5 +244,81 @@ class OnboardingActivity : AppCompatActivity() {
 
         // 초기 상태 업데이트
         updatePermissionUI()
+    }
+
+    private fun startPageAnimation(position: Int) {
+        // 이전 애니메이션 정리
+        timerAnimator?.cancel()
+
+        when (position) {
+            1 -> animatePage2or4(position) // Page 2
+            2 -> animatePage3Timer(position) // Page 3 (Timer)
+            3 -> animatePage2or4(position) // Page 4
+        }
+    }
+
+    private fun animatePage2or4(position: Int) {
+        val viewHolder = (viewPager.getChildAt(0) as? androidx.recyclerview.widget.RecyclerView)
+            ?.findViewHolderForAdapterPosition(position) ?: return
+
+        val message = viewHolder.itemView.findViewById<TextView>(R.id.previewMessage)
+        val buttons = viewHolder.itemView.findViewById<View>(R.id.previewButtons)
+
+        // 페이드인 + 슬라이드업 애니메이션 (더 느리게)
+        message?.let {
+            it.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setDuration(800)
+                .setStartDelay(300)
+                .start()
+        }
+
+        buttons?.let {
+            it.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setDuration(800)
+                .setStartDelay(800)
+                .start()
+        }
+    }
+
+    private fun animatePage3Timer(position: Int) {
+        val viewHolder = (viewPager.getChildAt(0) as? androidx.recyclerview.widget.RecyclerView)
+            ?.findViewHolderForAdapterPosition(position) ?: return
+
+        val timerNumber = viewHolder.itemView.findViewById<TextView>(R.id.previewTimerNumber)
+        val progressRing = viewHolder.itemView.findViewById<ProgressBar>(R.id.previewProgressRing)
+        val timerScreen = viewHolder.itemView.findViewById<View>(R.id.previewTimerScreen)
+        val successScreen = viewHolder.itemView.findViewById<View>(R.id.previewSuccessScreen)
+
+        // 타이머 카운트다운 애니메이션 (30.0 → 0.0) - Float으로 부드럽게
+        timerAnimator = ValueAnimator.ofInt(3000, 0).apply {
+            duration = 10000 // 10초 (3배속)
+            addUpdateListener { animator ->
+                val value = animator.animatedValue as Int
+                timerNumber?.text = (value / 100).toString()
+                progressRing?.setProgress(value)
+            }
+            start()
+        }
+
+        // 타이머 완료 후 성공 화면 표시
+        handler.postDelayed({
+            timerScreen?.animate()
+                ?.alpha(0f)
+                ?.setDuration(300)
+                ?.withEndAction {
+                    timerScreen.visibility = View.GONE
+                    successScreen?.visibility = View.VISIBLE
+                    successScreen?.alpha = 0f
+                    successScreen?.animate()
+                        ?.alpha(1f)
+                        ?.setDuration(600)
+                        ?.start()
+                }
+                ?.start()
+        }, 10000) // 10초 후
     }
 }
