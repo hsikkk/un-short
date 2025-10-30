@@ -331,15 +331,6 @@ class TimerActivity : AppCompatActivity() {
         )
     }
 
-    override fun onUserLeaveHint() {
-        super.onUserLeaveHint()
-        Log.d(TAG, "onUserLeaveHint() - User intentionally left the activity, finishing")
-
-        // 사용자가 의도적으로 앱을 떠남 (홈, 백, Task 전환)
-        // 화면 잠금이나 전화 수신은 이 콜백이 호출되지 않음
-        finish()
-    }
-
     private fun registerForceCloseReceiver() {
         forceCloseReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
