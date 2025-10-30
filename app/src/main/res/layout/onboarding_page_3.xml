@@ -120,7 +120,7 @@
                         android:textSize="17sp"
                         android:textColor="#FFFFFF"
                         android:fontFamily="sans-serif"
-                        android:layout_marginBottom="8dp" />
+                        android:layout_marginBottom="16dp" />
 
                     <!-- Description -->
                     <TextView

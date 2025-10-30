@@ -90,7 +90,7 @@
             android:paddingEnd="40dp">
 
             <!-- Title -->
-            <!-- CSS: font-size: 17px, font-weight: 400, color: #fff (dark mode), margin-bottom: 8dp -->
+            <!-- CSS: font-size: 17px, font-weight: 400, color: #fff (dark mode), margin-bottom: 16dp -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                 android:textSize="17sp"
                 android:textColor="#FFFFFF"
                 android:fontFamily="sans-serif"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="16dp" />
 
             <!-- Description -->
             <!-- CSS: font-size: 14px, color: #8A8A8A (dark mode), line-height: 1.5 -->
