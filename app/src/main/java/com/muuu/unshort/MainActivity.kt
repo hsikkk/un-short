@@ -180,7 +180,7 @@ class MainActivity : AppCompatActivity() {
 
             // Status Indicator
             statusDot.setBackgroundResource(R.drawable.status_dot_active)
-            statusLabel.text = "ACTIVE"
+            statusLabel.text = getString(R.string.status_active)
         } else {
             // OFF 상태
             toggleContainer.setBackgroundResource(R.drawable.toggle_track_inactive)
@@ -197,7 +197,7 @@ class MainActivity : AppCompatActivity() {
 
             // Status Indicator
             statusDot.setBackgroundResource(R.drawable.status_dot_inactive)
-            statusLabel.text = "INACTIVE"
+            statusLabel.text = getString(R.string.status_inactive)
         }
     }
 }

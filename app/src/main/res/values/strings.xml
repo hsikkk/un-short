@@ -24,4 +24,83 @@
     <string name="timer_instruction_title">잠시 생각해보기</string>
     <string name="timer_instruction_message_onboarding">폰을 뒤집고 진짜 봐야 하는지\n생각해보세요</string>
     <string name="timer_instruction_message_full">폰을 뒤집고 진짜 봐야 하는지 생각해보세요\n이 시간이 아깝다면, 영상은 더 아깝지 않을까요?</string>
+
+    <!-- Main Activity -->
+    <string name="main_subtitle">쇼츠 콘텐츠에서 벗어나세요.\n의도적인 소비를 위한 작은 습관.</string>
+    <string name="status_on">ON</string>
+    <string name="status_off">OFF</string>
+    <string name="status_active">ACTIVE</string>
+    <string name="status_inactive">INACTIVE</string>
+    <string name="toggle_description">Power toggle</string>
+    <string name="blocked_apps_title">차단 대상</string>
+    <string name="app_youtube_shorts">YouTube Shorts</string>
+    <string name="app_instagram_reels">Instagram Reels</string>
+    <string name="permission_warning_icon">⚠</string>
+    <string name="permission_warning_title">권한이 필요합니다</string>
+    <string name="permission_warning_message">차단 기능을 사용하려면\n접근성 및 오버레이 권한이 필요합니다</string>
+    <string name="permission_setup_button">권한 설정하기</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_title">설정</string>
+    <string name="settings_section_block_options">차단 옵션 관리</string>
+    <string name="settings_delay_time_title">대기 시간</string>
+    <string name="settings_delay_time_desc">쇼츠 차단 시 대기 시간 설정</string>
+    <string name="settings_delay_time_value">%d초</string>
+    <string name="settings_haptic_title">햅틱 피드백</string>
+    <string name="settings_haptic_desc">타이머 완료 시 진동 알림</string>
+    <string name="settings_section_other">기타</string>
+    <string name="settings_feedback">피드백 보내기</string>
+    <string name="settings_share">앱 공유하기</string>
+    <string name="settings_review">리뷰 남기기</string>
+    <string name="settings_version">버전 정보</string>
+    <string name="settings_version_value">v%s</string>
+    <string name="settings_version_default">v1.0.0</string>
+
+    <!-- Permission Setup Activity -->
+    <string name="permission_back_button">뒤로 가기</string>
+    <string name="permission_title">권한 설정</string>
+    <string name="permission_subtitle">쇼츠 차단을 위해서\n권한을 허용해주세요</string>
+    <string name="permission_done">완료</string>
+
+    <!-- Permission Cards -->
+    <string name="permission_number_1">1</string>
+    <string name="permission_number_2">2</string>
+    <string name="permission_accessibility">접근성 서비스</string>
+    <string name="permission_accessibility_completed">접근성 서비스 ✓</string>
+    <string name="permission_overlay">다른 앱 위에 표시</string>
+    <string name="permission_overlay_completed">다른 앱 위에 표시 ✓</string>
+    <string name="permission_why">왜 필요한가요?</string>
+    <string name="permission_accessibility_reason">쇼츠 화면이 열렸는지 감지하기 위해 필요합니다.</string>
+    <string name="permission_overlay_reason">쇼츠 화면 위에 차단 화면을 띄우기 위해 필요합니다.</string>
+    <string name="permission_not_set">아직 설정되지 않았습니다</string>
+    <string name="permission_completed">설정 완료</string>
+    <string name="permission_go_to_settings">설정하러 가기</string>
+
+    <!-- Timer Activity -->
+    <string name="timer_seconds_unit">seconds</string>
+    <string name="timer_flip_instruction">폰을 뒤집어주세요</string>
+    <string name="timer_breathe_message">깊게 숨을 쉬어보세요</string>
+    <string name="timer_skip_button">안 볼래요</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_page1_title">쇼츠 중독에서\n벗어나세요</string>
+    <string name="onboarding_page2_title">쇼츠를 보고 싶다면\n잠시 생각해보세요</string>
+    <string name="onboarding_page3_title">그래도 보고 싶다면,\n잠깐의 여유를 가져보세요</string>
+    <string name="onboarding_page4_title">마지막으로\n한 번 더 생각해보세요</string>
+    <string name="onboarding_page5_title">쇼츠 차단을 위해서\n권한을 허용해주세요</string>
+    <string name="onboarding_start_button">시작하기</string>
+
+    <!-- Delay Time Bottom Sheet -->
+    <string name="delay_time_title">대기 시간</string>
+    <string name="delay_time_desc">쇼츠 접근 전 대기 시간을 설정하세요</string>
+    <string name="delay_time_15">15초</string>
+    <string name="delay_time_30">30초</string>
+    <string name="delay_time_60">60초</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_email_app_not_found">이메일 앱을 찾을 수 없습니다</string>
+
+    <!-- Share & Feedback -->
+    <string name="feedback_subject">un:short 앱 피드백</string>
+    <string name="share_text">쇼츠 중독에서 벗어나세요!\nun:short 앱으로 의도적인 미디어 소비를 시작하세요.\n\n%s</string>
 </resources>

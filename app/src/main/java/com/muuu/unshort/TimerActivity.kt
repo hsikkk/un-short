@@ -188,7 +188,7 @@ class TimerActivity : AppCompatActivity() {
                         .setDuration(300)
                         .start()
 
-                    flipStatusText.text = "폰을 뒤집어주세요"
+                    flipStatusText.text = getString(R.string.timer_flip_instruction)
                     if (isTimerRunning) {
                         // 타이머 일시정지
                         pauseTimer()

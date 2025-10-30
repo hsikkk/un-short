@@ -27,16 +27,16 @@ class PermissionUIHelper(private val context: Context) {
 
         elements.apply {
             if (isEnabled) {
-                statusText?.text = "접근성 서비스 ✓"
+                statusText?.text = context.getString(R.string.permission_accessibility_completed)
                 statusText?.setTextColor(ContextCompat.getColor(context, R.color.success))
-                descriptionText?.text = "설정 완료"
+                descriptionText?.text = context.getString(R.string.permission_completed)
                 descriptionText?.setTextColor(ContextCompat.getColor(context, R.color.success))
                 settingsButton?.visibility = View.GONE
                 card?.alpha = 0.6f
             } else {
-                statusText?.text = "접근성 서비스"
+                statusText?.text = context.getString(R.string.permission_accessibility)
                 statusText?.setTextColor(ContextCompat.getColor(context, R.color.gray_900))
-                descriptionText?.text = "아직 설정되지 않았습니다"
+                descriptionText?.text = context.getString(R.string.permission_not_set)
                 descriptionText?.setTextColor(ContextCompat.getColor(context, R.color.error))
                 settingsButton?.visibility = View.VISIBLE
                 card?.alpha = 1.0f
@@ -52,16 +52,16 @@ class PermissionUIHelper(private val context: Context) {
 
         elements.apply {
             if (isEnabled) {
-                statusText?.text = "다른 앱 위에 표시 ✓"
+                statusText?.text = context.getString(R.string.permission_overlay_completed)
                 statusText?.setTextColor(ContextCompat.getColor(context, R.color.success))
-                descriptionText?.text = "설정 완료"
+                descriptionText?.text = context.getString(R.string.permission_completed)
                 descriptionText?.setTextColor(ContextCompat.getColor(context, R.color.success))
                 settingsButton?.visibility = View.GONE
                 card?.alpha = 0.6f
             } else {
-                statusText?.text = "다른 앱 위에 표시"
+                statusText?.text = context.getString(R.string.permission_overlay)
                 statusText?.setTextColor(ContextCompat.getColor(context, R.color.gray_900))
-                descriptionText?.text = "아직 설정되지 않았습니다"
+                descriptionText?.text = context.getString(R.string.permission_not_set)
                 descriptionText?.setTextColor(ContextCompat.getColor(context, R.color.error))
                 settingsButton?.visibility = View.VISIBLE
                 card?.alpha = 1.0f

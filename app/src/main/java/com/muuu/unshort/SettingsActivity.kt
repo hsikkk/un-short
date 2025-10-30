@@ -48,9 +48,9 @@ class SettingsActivity : AppCompatActivity() {
         try {
             val pInfo = packageManager.getPackageInfo(packageName, 0)
             val version = pInfo.versionName
-            versionText.text = "v$version"
+            versionText.text = getString(R.string.settings_version_value, version)
         } catch (e: Exception) {
-            versionText.text = "v1.0.0"
+            versionText.text = getString(R.string.settings_version_default)
         }
 
         // 저장된 설정 표시
@@ -82,12 +82,12 @@ class SettingsActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:")
                 putExtra(Intent.EXTRA_EMAIL, arrayOf("devmuuu@gmail.com"))
-                putExtra(Intent.EXTRA_SUBJECT, "un:short 앱 피드백")
+                putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject))
             }
             try {
                 startActivity(intent)
             } catch (e: Exception) {
-                Toast.makeText(this, "이메일 앱을 찾을 수 없습니다", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toast_email_app_not_found), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -95,7 +95,8 @@ class SettingsActivity : AppCompatActivity() {
         shareItem.setOnClickListener {
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, "쇼츠 중독에서 벗어나세요!\nun:short 앱으로 의도적인 미디어 소비를 시작하세요.\n\nhttps://play.google.com/store/apps/details?id=$packageName")
+                val playStoreUrl = "https://play.google.com/store/apps/details?id=$packageName"
+                putExtra(Intent.EXTRA_TEXT, getString(R.string.share_text, playStoreUrl))
             }
             startActivity(Intent.createChooser(shareIntent, "공유하기"))
         }
@@ -122,7 +123,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun updateWaitTimeDisplay(seconds: Int) {
-        waitTimeValue.text = "${seconds}초"
+        waitTimeValue.text = getString(R.string.settings_delay_time_value, seconds)
     }
 
     private fun showWaitTimeBottomSheet() {

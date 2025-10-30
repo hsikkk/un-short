@@ -81,7 +81,7 @@ class BlockOverlay(private val context: Context) {
             buttonContainer.removeAllViews()
 
             // Add skip button first (top position)
-            skipButton.text = "아니요, 안 볼래요"
+            skipButton.text = context.getString(R.string.block_button_no)
             skipButton.setTextColor(0xFF000000.toInt())
             skipButton.setBackgroundResource(R.drawable.btn_timer_skip_white_solid)
             val skipParams = LinearLayout.LayoutParams(
@@ -105,7 +105,7 @@ class BlockOverlay(private val context: Context) {
             // Timer not completed - default order
             startTimerButton.visibility = View.VISIBLE
             watchButton.visibility = View.GONE
-            skipButton.text = "그냥 닫기"
+            skipButton.text = context.getString(R.string.block_button_close)
 
             // Reorder buttons: startTimerButton first, then skipButton
             buttonContainer.removeAllViews()

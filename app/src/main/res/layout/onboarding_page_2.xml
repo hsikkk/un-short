@@ -10,7 +10,7 @@
         android:id="@+id/topMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="쇼츠를 보고 싶다면\n잠시 생각해보세요"
+        android:text="@string/onboarding_page2_title"
         android:textSize="20sp"
         android:textColor="#000000"
         android:fontFamily="sans-serif"

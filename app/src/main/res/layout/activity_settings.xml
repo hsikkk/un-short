@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="설정"
+            android:text="@string/settings_title"
             android:textSize="@dimen/text_subtitle"
             android:textColor="#000000"
             android:fontFamily="sans-serif" />
@@ -58,7 +58,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="차단 옵션 관리"
+                android:text="@string/settings_section_block_options"
                 android:textSize="@dimen/text_caption"
                 android:textColor="#000000"
                 android:alpha="0.5"
@@ -90,7 +90,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="대기 시간"
+                        android:text="@string/settings_delay_time_title"
                         android:textSize="@dimen/text_body"
                         android:textColor="#000000"
                         android:fontFamily="sans-serif" />
@@ -98,7 +98,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="쇼츠 차단 시 대기 시간 설정"
+                        android:text="@string/settings_delay_time_desc"
                         android:textSize="@dimen/text_caption"
                         android:textColor="#000000"
                         android:alpha="0.5"
@@ -139,7 +139,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="햅틱 피드백"
+                        android:text="@string/settings_haptic_title"
                         android:textSize="@dimen/text_body"
                         android:textColor="#000000"
                         android:fontFamily="sans-serif" />
@@ -147,7 +147,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="타이머 완료 시 진동 알림"
+                        android:text="@string/settings_haptic_desc"
                         android:textSize="@dimen/text_caption"
                         android:textColor="#000000"
                         android:alpha="0.5"
@@ -175,7 +175,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="기타"
+                android:text="@string/settings_section_other"
                 android:textSize="@dimen/text_caption"
                 android:textColor="#000000"
                 android:alpha="0.5"
@@ -200,7 +200,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="피드백 보내기"
+                    android:text="@string/settings_feedback"
                     android:textSize="@dimen/text_body"
                     android:textColor="#000000"
                     android:fontFamily="sans-serif" />
@@ -222,7 +222,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="앱 공유하기"
+                    android:text="@string/settings_share"
                     android:textSize="@dimen/text_body"
                     android:textColor="#000000"
                     android:fontFamily="sans-serif" />
@@ -244,7 +244,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="리뷰 남기기"
+                    android:text="@string/settings_review"
                     android:textSize="@dimen/text_body"
                     android:textColor="#000000"
                     android:fontFamily="sans-serif" />
@@ -265,7 +265,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="버전 정보"
+                    android:text="@string/settings_version"
                     android:textSize="@dimen/text_body"
                     android:textColor="#000000"
                     android:fontFamily="sans-serif" />
@@ -274,7 +274,7 @@
                     android:id="@+id/versionText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="v1.0.0"
+                    android:text="@string/settings_version_default"
                     android:textSize="@dimen/text_caption"
                     android:textColor="#000000"
                     android:alpha="0.5" />

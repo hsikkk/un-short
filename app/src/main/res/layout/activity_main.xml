@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="un:short"
+                android:text="@string/app_name"
                 android:textSize="@dimen/text_logo"
                 android:fontFamily="sans-serif-thin"
                 android:textColor="#FFFFFF"
@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="쇼츠 콘텐츠에서 벗어나세요.\n의도적인 소비를 위한 작은 습관."
+                android:text="@string/main_subtitle"
                 android:textSize="@dimen/text_caption"
                 android:fontFamily="sans-serif-thin"
                 android:textColor="#FFFFFF"
@@ -121,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="30dp"
-                    android:text="ON"
+                    android:text="@string/status_on"
                     android:textSize="@dimen/text_body"
                     android:fontFamily="sans-serif-medium"
                     android:textColor="#FFFFFF"
@@ -135,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|end"
                     android:layout_marginEnd="30dp"
-                    android:text="OFF"
+                    android:text="@string/status_off"
                     android:textSize="@dimen/text_body"
                     android:fontFamily="sans-serif-medium"
                     android:textColor="#000000"
@@ -159,7 +159,7 @@
                         android:layout_height="36dp"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_power"
-                        android:contentDescription="Power toggle" />
+                        android:contentDescription="@string/toggle_description" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -186,7 +186,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="ACTIVE"
+                    android:text="@string/status_active"
                     android:textSize="@dimen/text_caption"
                     android:fontFamily="sans-serif-medium"
                     android:textColor="#000000"
@@ -221,7 +221,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="차단 대상"
+                android:text="@string/blocked_apps_title"
                 android:textSize="@dimen/text_subtitle"
                 android:fontFamily="sans-serif"
                 android:textStyle="bold"
@@ -253,7 +253,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="YouTube Shorts"
+                        android:text="@string/app_youtube_shorts"
                         android:textSize="@dimen/text_body"
                         android:fontFamily="sans-serif-light"
                         android:textColor="#000000"
@@ -277,7 +277,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Instagram Reels"
+                        android:text="@string/app_instagram_reels"
                         android:textSize="@dimen/text_body"
                         android:fontFamily="sans-serif-light"
                         android:textColor="#000000"
@@ -310,7 +310,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="⚠"
+            android:text="@string/permission_warning_icon"
             android:textSize="72sp"
             android:textColor="#FFA726"
             android:alpha="0.9" />
@@ -320,7 +320,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="권한이 필요합니다"
+            android:text="@string/permission_warning_title"
             android:textSize="@dimen/text_title"
             android:fontFamily="sans-serif-medium"
             android:textColor="#000000"
@@ -331,7 +331,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="차단 기능을 사용하려면\n접근성 및 오버레이 권한이 필요합니다"
+            android:text="@string/permission_warning_message"
             android:textSize="@dimen/text_body"
             android:fontFamily="sans-serif-light"
             android:textColor="#000000"
@@ -345,7 +345,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="권한 설정하기"
+            android:text="@string/permission_setup_button"
             android:textSize="@dimen/text_body"
             android:fontFamily="sans-serif-medium"
             android:textColor="#FFFFFF"

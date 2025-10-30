@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="대기 시간"
+        android:text="@string/delay_time_title"
         android:textSize="@dimen/text_title"
         android:textColor="@color/primary_dark"
         android:fontFamily="sans-serif-medium"
@@ -24,7 +24,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="쇼츠 접근 전 대기 시간을 설정하세요"
+        android:text="@string/delay_time_desc"
         android:textSize="@dimen/text_caption"
         android:textColor="@color/gray_600"
         android:fontFamily="sans-serif-light"
@@ -50,7 +50,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="15초"
+            android:text="@string/delay_time_15"
             android:textSize="@dimen/text_body"
             android:textColor="@color/primary_dark"
             android:fontFamily="sans-serif" />
@@ -84,7 +84,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="30초"
+            android:text="@string/delay_time_30"
             android:textSize="@dimen/text_body"
             android:textColor="@color/primary_dark"
             android:fontFamily="sans-serif" />
@@ -118,7 +118,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="60초"
+            android:text="@string/delay_time_60"
             android:textSize="@dimen/text_body"
             android:textColor="@color/primary_dark"
             android:fontFamily="sans-serif" />

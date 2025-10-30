@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="un:short"
+        android:text="@string/app_name"
         android:textSize="42sp"
         android:fontFamily="sans-serif-thin"
         android:textColor="#000000"
@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="쇼츠 중독에서\n벗어나세요"
+        android:text="@string/onboarding_page1_title"
         android:textSize="22sp"
         android:textColor="#000000"
         android:fontFamily="sans-serif"

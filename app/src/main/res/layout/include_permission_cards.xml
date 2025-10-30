@@ -34,7 +34,7 @@
                 <TextView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:text="1"
+                    android:text="@string/permission_number_1"
                     android:textSize="14dp"
                     android:textStyle="bold"
                     android:textColor="@color/white"
@@ -48,7 +48,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="접근성 서비스"
+                    android:text="@string/permission_accessibility"
                     android:textSize="16sp"
                     android:textColor="#000000"
                     android:fontFamily="sans-serif" />
@@ -59,7 +59,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="왜 필요한가요?"
+                android:text="@string/permission_why"
                 android:textSize="12sp"
                 android:textColor="#000000"
                 android:fontFamily="sans-serif"
@@ -69,7 +69,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="쇼츠 화면이 열렸는지 감지하기 위해 필요합니다."
+                android:text="@string/permission_accessibility_reason"
                 android:textSize="13sp"
                 android:textColor="#000000"
                 android:alpha="0.5"
@@ -81,7 +81,7 @@
                 android:id="@+id/onboardingServiceDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="아직 설정되지 않았습니다"
+                android:text="@string/permission_not_set"
                 android:textSize="12sp"
                 android:textColor="#EF4444"
                 android:layout_marginBottom="10dp" />
@@ -90,7 +90,7 @@
                 android:id="@+id/onboardingSettingsButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="설정하러 가기"
+                android:text="@string/permission_go_to_settings"
                 style="@style/Widget.App.Button" />
 
         </LinearLayout>
@@ -125,7 +125,7 @@
                 <TextView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:text="2"
+                    android:text="@string/permission_number_2"
                     android:textSize="14dp"
                     android:textStyle="bold"
                     android:textColor="@color/white"
@@ -139,7 +139,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="다른 앱 위에 표시"
+                    android:text="@string/permission_overlay"
                     android:textSize="16sp"
                     android:textColor="#000000"
                     android:fontFamily="sans-serif" />
@@ -150,7 +150,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="왜 필요한가요?"
+                android:text="@string/permission_why"
                 android:textSize="12sp"
                 android:textColor="#000000"
                 android:fontFamily="sans-serif"
@@ -160,7 +160,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="쇼츠 화면 위에 차단 화면을 띄우기 위해 필요합니다."
+                android:text="@string/permission_overlay_reason"
                 android:textSize="13sp"
                 android:textColor="#000000"
                 android:alpha="0.5"
@@ -172,7 +172,7 @@
                 android:id="@+id/onboardingOverlayDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="아직 설정되지 않았습니다"
+                android:text="@string/permission_not_set"
                 android:textSize="12sp"
                 android:textColor="#EF4444"
                 android:layout_marginBottom="10dp" />
@@ -181,7 +181,7 @@
                 android:id="@+id/onboardingOverlayButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="설정하러 가기"
+                android:text="@string/permission_go_to_settings"
                 style="@style/Widget.App.Button" />
 
         </LinearLayout>
