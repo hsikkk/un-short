@@ -10,7 +10,7 @@
         android:id="@+id/topMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="'한 번 더 생각해보기'를 누르면\n타이머가 시작돼요"
+        android:text="그래도 보고 싶다면,\n잠깐의 여유를 가져보세요"
         android:textSize="20sp"
         android:textColor="#000000"
         android:fontFamily="sans-serif"
