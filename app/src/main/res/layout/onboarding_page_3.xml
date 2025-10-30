@@ -25,42 +25,36 @@
 
     <!-- Phone Mockup Container -->
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="48dp"
+        android:clipChildren="true"
         app:layout_constraintTop_toBottomOf="@id/topMessage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.9">
 
         <!-- Phone Frame -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="300dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="8dp"
-            app:cardBackgroundColor="#000000"
-            app:strokeWidth="2dp"
-            app:strokeColor="#333333">
-
-            <!-- Scaled TimerActivity Preview -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="20dp">
+            android:background="@drawable/phone_frame_background"
+            android:elevation="8dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="20dp">
 
                 <!-- Timer Container -->
                 <FrameLayout
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginBottom="24dp">
+                    android:id="@+id/previewTimerContainer"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="32dp">
 
                     <!-- Progress Ring -->
                     <ProgressBar
+                        android:id="@+id/previewProgressRing"
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -79,10 +73,11 @@
 
                         <!-- Timer Number -->
                         <TextView
+                            android:id="@+id/previewTimerNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="30"
-                            android:textSize="42sp"
+                            android:textSize="56sp"
                             android:textColor="#FFFFFF"
                             android:fontFamily="sans-serif-thin"
                             android:includeFontPadding="false" />
@@ -91,9 +86,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="6dp"
                             android:text="seconds"
-                            android:textSize="10sp"
+                            android:textSize="13sp"
                             android:textColor="#8A8A8A"
                             android:fontFamily="sans-serif-light"
                             android:letterSpacing="0.08"
@@ -109,24 +104,24 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:paddingHorizontal="24dp">
+                    android:paddingHorizontal="32dp">
 
                     <!-- Title -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="잠시 생각해보기"
-                        android:textSize="14sp"
+                        android:textSize="17sp"
                         android:textColor="#FFFFFF"
                         android:fontFamily="sans-serif"
-                        android:layout_marginBottom="6dp" />
+                        android:layout_marginBottom="8dp" />
 
                     <!-- Description -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="폰을 뒤집고 진짜 봐야 하는지\n생각해보세요"
-                        android:textSize="11sp"
+                        android:textSize="14sp"
                         android:textColor="#8A8A8A"
                         android:fontFamily="sans-serif-light"
                         android:gravity="center"
@@ -140,16 +135,16 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="10dp"
+                    android:layout_marginTop="28dp"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="12dp"
                     android:background="@drawable/flip_indicator_dark">
 
                     <!-- Phone Icon -->
                     <View
-                        android:layout_width="11dp"
-                        android:layout_height="17dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_width="14dp"
+                        android:layout_height="22dp"
+                        android:layout_marginEnd="10dp"
                         android:background="@drawable/phone_icon_white" />
 
                     <!-- Flip Text -->
@@ -157,15 +152,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="폰을 뒤집어주세요"
-                        android:textSize="10sp"
+                        android:textSize="13sp"
                         android:textColor="#FFFFFF"
                         android:fontFamily="sans-serif-light" />
 
                 </LinearLayout>
 
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
     </FrameLayout>
 
