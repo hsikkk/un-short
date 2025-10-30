@@ -11,6 +11,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.LinearLayout
 import android.widget.TextView
 
 class BlockOverlay(private val context: Context) {
@@ -23,7 +24,7 @@ class BlockOverlay(private val context: Context) {
     private lateinit var watchButton: TextView
     private lateinit var startTimerButton: TextView
     private lateinit var mainMessage: TextView
-    private lateinit var reflectionMessage: TextView
+    private lateinit var buttonContainer: LinearLayout
 
     private var onDismissListener: (() -> Unit)? = null
     private var onCompleteListener: (() -> Unit)? = null
@@ -56,7 +57,7 @@ class BlockOverlay(private val context: Context) {
         watchButton = overlayView!!.findViewById(R.id.watchButton)
         startTimerButton = overlayView!!.findViewById(R.id.startTimerButton)
         mainMessage = overlayView!!.findViewById(R.id.mainMessage)
-        reflectionMessage = overlayView!!.findViewById(R.id.reflectionMessage)
+        buttonContainer = overlayView!!.findViewById(R.id.buttonContainer)
         Log.d(TAG, "Overlay view inflated successfully")
 
         // Check timer completion status
@@ -68,19 +69,63 @@ class BlockOverlay(private val context: Context) {
 
         // Show appropriate buttons and messages based on timer status
         if (isTimerCompleted) {
-            // Timer completed, show watch button and update messages
+            // Timer completed - swap button order
+            // "아니요, 안 볼래요" becomes primary (white, top)
+            // "네, 볼래요" becomes secondary (transparent, bottom)
             startTimerButton.visibility = View.GONE
             watchButton.visibility = View.VISIBLE
+
+            // Reorder buttons: skipButton first, then watchButton
+            buttonContainer.removeAllViews()
+
+            // Add skip button first (top position)
             skipButton.text = "아니요, 안 볼래요"
+            skipButton.setTextColor(0xFF000000.toInt())
+            skipButton.setBackgroundResource(R.drawable.btn_timer_skip_white_solid)
+            val skipParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            buttonContainer.addView(skipButton, skipParams)
+
+            // Add watch button second (bottom position)
+            watchButton.setTextColor(0xFF8A8A8A.toInt())
+            watchButton.setBackgroundResource(android.R.color.transparent)
+            val watchParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            watchParams.topMargin = context.resources.displayMetrics.density.toInt() * 12
+            buttonContainer.addView(watchButton, watchParams)
+
             mainMessage.text = "진짜로 볼 건가요?"
-            reflectionMessage.text = "고민해봤는데도 볼 거예요?"
         } else {
-            // Timer not completed, show timer button and default messages
+            // Timer not completed - default order
             startTimerButton.visibility = View.VISIBLE
             watchButton.visibility = View.GONE
             skipButton.text = "그냥 닫기"
-            mainMessage.text = "이 쇼츠 꼭 봐야겠어요?"
-            reflectionMessage.text = "지금 이 순간, 정말 필요한 건 뭘까요?"
+
+            // Reorder buttons: startTimerButton first, then skipButton
+            buttonContainer.removeAllViews()
+
+            // Add start timer button first
+            val startParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            buttonContainer.addView(startTimerButton, startParams)
+
+            // Add skip button second
+            skipButton.setTextColor(0xFF8A8A8A.toInt())
+            skipButton.setBackgroundResource(android.R.color.transparent)
+            val skipParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            skipParams.topMargin = context.resources.displayMetrics.density.toInt() * 12
+            buttonContainer.addView(skipButton, skipParams)
+
+            mainMessage.text = "정말 지금 쇼츠를 봐야 할까요?"
         }
 
         // "안볼래요" 버튼 클릭 리스너 설정
@@ -232,21 +277,63 @@ class BlockOverlay(private val context: Context) {
 
         try {
             if (isTimerCompleted) {
-                // Timer completed, show watch button and update messages
+                // Timer completed - swap button order
                 Log.d(TAG, "Timer completed - showing watch button, hiding timer button")
                 startTimerButton.visibility = View.GONE
                 watchButton.visibility = View.VISIBLE
+
+                // Reorder buttons: skipButton first, then watchButton
+                buttonContainer.removeAllViews()
+
+                // Add skip button first (top position)
                 skipButton.text = "아니요, 안 볼래요"
+                skipButton.setTextColor(0xFF000000.toInt())
+                skipButton.setBackgroundResource(R.drawable.btn_timer_skip_white_solid)
+                val skipParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                buttonContainer.addView(skipButton, skipParams)
+
+                // Add watch button second (bottom position)
+                watchButton.setTextColor(0xFF8A8A8A.toInt())
+                watchButton.setBackgroundResource(android.R.color.transparent)
+                val watchParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                watchParams.topMargin = context.resources.displayMetrics.density.toInt() * 12
+                buttonContainer.addView(watchButton, watchParams)
+
                 mainMessage.text = "진짜로 볼 건가요?"
-                reflectionMessage.text = "고민해봤는데도 볼 거예요?"
             } else {
-                // Timer not completed, show timer button and default messages
+                // Timer not completed - default order
                 Log.d(TAG, "Timer not completed - showing timer button, hiding watch button")
                 startTimerButton.visibility = View.VISIBLE
                 watchButton.visibility = View.GONE
                 skipButton.text = "그냥 닫기"
-                mainMessage.text = "이 쇼츠 꼭 봐야겠어요?"
-                reflectionMessage.text = "지금 이 순간, 정말 필요한 건 뭘까요?"
+
+                // Reorder buttons: startTimerButton first, then skipButton
+                buttonContainer.removeAllViews()
+
+                // Add start timer button first
+                val startParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                buttonContainer.addView(startTimerButton, startParams)
+
+                // Add skip button second
+                skipButton.setTextColor(0xFF8A8A8A.toInt())
+                skipButton.setBackgroundResource(android.R.color.transparent)
+                val skipParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                skipParams.topMargin = context.resources.displayMetrics.density.toInt() * 12
+                buttonContainer.addView(skipButton, skipParams)
+
+                mainMessage.text = "정말 지금 쇼츠를 봐야 할까요?"
             }
             Log.d(TAG, "updateButtonVisibility completed successfully")
         } catch (e: Exception) {
