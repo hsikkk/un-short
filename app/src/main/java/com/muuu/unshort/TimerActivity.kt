@@ -17,6 +17,9 @@ import android.hardware.SensorManager
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -308,6 +311,9 @@ class TimerActivity : AppCompatActivity() {
                 // Stop flip detector
                 flipDetector.stop()
 
+                // Trigger haptic feedback if enabled
+                triggerHapticFeedback()
+
                 showSuccessScreen()
             }
         }.start()
@@ -319,6 +325,40 @@ class TimerActivity : AppCompatActivity() {
         isTimerRunning = false
         countDownTimer?.cancel()
         Log.d(TAG, "Timer paused with ${remainingMillis}ms remaining")
+    }
+
+    private fun triggerHapticFeedback() {
+        // Check if haptic feedback is enabled in settings
+        val isHapticEnabled = prefs.getBoolean("haptic_enabled", true)
+        if (!isHapticEnabled) {
+            Log.d(TAG, "Haptic feedback disabled in settings")
+            return
+        }
+
+        try {
+            val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+                vibratorManager.defaultVibrator
+            } else {
+                @Suppress("DEPRECATION")
+                getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                // Success vibration pattern: short-long-short
+                val timings = longArrayOf(0, 100, 50, 200, 50, 100)
+                val amplitudes = intArrayOf(0, 128, 0, 255, 0, 128)
+                vibrator.vibrate(VibrationEffect.createWaveform(timings, amplitudes, -1))
+                Log.d(TAG, "Haptic feedback triggered (API 26+)")
+            } else {
+                // Fallback for older devices
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(longArrayOf(0, 100, 50, 200, 50, 100), -1)
+                Log.d(TAG, "Haptic feedback triggered (legacy)")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to trigger haptic feedback", e)
+        }
     }
 
     private fun showSuccessScreen() {
