@@ -29,7 +29,7 @@
         android:textColor="@color/gray_600"
         android:fontFamily="sans-serif-light"
         android:alpha="0.8"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="16dp" />
 
     <!-- 15초 옵션 -->
     <LinearLayout
@@ -37,8 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="14dp"
-        android:paddingBottom="14dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:background="?attr/selectableItemBackground"
@@ -65,22 +65,14 @@
 
     </LinearLayout>
 
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray_200"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp" />
-
     <!-- 30초 옵션 -->
     <LinearLayout
         android:id="@+id/option30"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="14dp"
-        android:paddingBottom="14dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:background="?attr/selectableItemBackground"
@@ -107,22 +99,14 @@
 
     </LinearLayout>
 
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray_200"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp" />
-
     <!-- 60초 옵션 -->
     <LinearLayout
         android:id="@+id/option60"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="14dp"
-        android:paddingBottom="14dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:background="?attr/selectableItemBackground"
