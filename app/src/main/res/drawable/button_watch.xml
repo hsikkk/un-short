@@ -3,22 +3,16 @@
     <!-- Pressed state -->
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <corners android:radius="24dp" />
-            <solid android:color="#33FFFFFF" />
-            <stroke
-                android:width="2dp"
-                android:color="#FFFFFF" />
+            <corners android:radius="12dp" />
+            <solid android:color="#E5E5E5" />
         </shape>
     </item>
 
-    <!-- Default state - Transparent with border (same as current skip button) -->
+    <!-- Default state - White background (primary button) -->
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="24dp" />
-            <solid android:color="#1AFFFFFF" />
-            <stroke
-                android:width="1.5dp"
-                android:color="#80FFFFFF" />
+            <corners android:radius="12dp" />
+            <solid android:color="#FFFFFF" />
         </shape>
     </item>
 </selector>

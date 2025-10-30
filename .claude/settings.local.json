@@ -20,7 +20,9 @@
       "Bash(~/Library/Android/sdk/platform-tools/adb:*)",
       "Bash(git commit:*)",
       "Bash(find:*)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "Bash(adb logcat:*)",
+      "Bash(open:*)"
     ],
     "deny": [],
     "ask": []
