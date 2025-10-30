@@ -158,8 +158,7 @@ class TimerActivity : AppCompatActivity() {
     }
 
     private fun startCountdown() {
-        // Provide haptic feedback
-        provideHapticFeedback()
+        // Haptic feedback removed for flip transitions
 
         countDownTimer = object : CountDownTimer(remainingSeconds * 1000L, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -188,8 +187,7 @@ class TimerActivity : AppCompatActivity() {
         countDownTimer?.cancel()
         countDownTimer = null
 
-        // Provide haptic feedback
-        provideHapticFeedback()
+        // Haptic feedback removed for flip transitions
     }
 
     private fun onTimerComplete() {
