@@ -36,6 +36,7 @@ class TimerActivity : AppCompatActivity() {
 
     private var countDownTimer: CountDownTimer? = null
     private var remainingSeconds = 30
+    private var timerDuration = 30 // 설정에서 읽어올 타이머 시간 (초)
     private lateinit var prefs: SharedPreferences
     private lateinit var currentSessionId: String
 
@@ -50,6 +51,11 @@ class TimerActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate with session_id: $currentSessionId")
 
         prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+
+        // 설정에서 타이머 시간 읽어오기 (기본값: 30초)
+        timerDuration = prefs.getInt("wait_time", 30)
+        remainingSeconds = timerDuration
+        Log.d(TAG, "Timer duration set to: $timerDuration seconds")
 
         initViews()
         startTimer()
@@ -92,13 +98,13 @@ class TimerActivity : AppCompatActivity() {
         }
 
         // Set initial values
-        timerText.text = "30"
-        progressBar.max = 30 * 100 // 100x for ultra smooth animation
-        progressBar.progress = 30 * 100
+        timerText.text = timerDuration.toString()
+        progressBar.max = timerDuration * 100 // 100x for ultra smooth animation
+        progressBar.progress = timerDuration * 100
     }
 
     private fun startTimer() {
-        countDownTimer = object : CountDownTimer(30000, 10) { // Update every 10ms for ultra smooth animation
+        countDownTimer = object : CountDownTimer((timerDuration * 1000).toLong(), 10) { // Update every 10ms for ultra smooth animation
             override fun onTick(millisUntilFinished: Long) {
                 remainingSeconds = (millisUntilFinished / 1000).toInt() + 1
                 val progressValue = ((millisUntilFinished / 10).toInt())
