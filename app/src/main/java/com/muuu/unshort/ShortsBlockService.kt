@@ -893,6 +893,9 @@ class ShortsBlockService : AccessibilityService() {
         super.onServiceConnected()
         Log.d(TAG, "Service connected")
 
+        // Clear stale session data on service start/restart
+        clearStaleSessionData()
+
         // Register broadcast receiver for timer events
         timerReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -1044,5 +1047,28 @@ class ShortsBlockService : AccessibilityService() {
             // Fallback to UUID if hashing fails
             UUID.randomUUID().toString()
         }
+    }
+
+    /**
+     * Clear stale session data on service restart
+     */
+    private fun clearStaleSessionData() {
+        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+
+        // Clear all session-related data
+        prefs.edit().apply {
+            remove(AppConstants.PREF_CURRENT_SESSION_ID)
+            remove(AppConstants.PREF_COMPLETED_SESSION_ID)
+            remove("session_created_time")
+            apply()
+        }
+
+        // Reset in-memory session state
+        currentSessionId = ""
+        allowedUntilScroll = false
+        overlayWasShown = false
+        leftViaHomeButton = false
+
+        Log.d(TAG, "Cleared all session data on service restart")
     }
 }
