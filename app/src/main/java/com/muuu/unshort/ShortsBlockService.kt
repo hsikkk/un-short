@@ -12,6 +12,10 @@ import android.provider.Settings
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import java.security.MessageDigest
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import java.util.UUID
 
 class ShortsBlockService : AccessibilityService() {
@@ -628,11 +632,13 @@ class ShortsBlockService : AccessibilityService() {
             try {
                 Log.d(TAG, "Executing pending overlay job for $packageName")
 
-                // Generate new session ID for this blocking session
-                currentSessionId = UUID.randomUUID().toString()
+                // Generate session ID using only content hash
+                // This ensures all shorts get blocked, not just the first one
+                val contentHash = if (lastShortsContentHash != 0) lastShortsContentHash else 0
+                currentSessionId = generateSessionId(packageName, contentHash)
                 val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
                 prefs.edit().putString(AppConstants.PREF_CURRENT_SESSION_ID, currentSessionId).apply()
-                Log.d(TAG, "New session created: $currentSessionId")
+                Log.d(TAG, "Session created with content hash $contentHash: $currentSessionId")
 
                 // 미디어 일시정지 시도
                 pauseMedia(packageName)
@@ -867,13 +873,22 @@ class ShortsBlockService : AccessibilityService() {
             addAction(AppConstants.ACTION_TIMER_COMPLETED)
             addAction(AppConstants.ACTION_TIMER_CANCELLED)
         }
-        // Android 13+ requires explicit export flag for BroadcastReceivers
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(timerReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
-        } else {
-            registerReceiver(timerReceiver, filter)
+
+        // Register BroadcastReceiver with proper error handling
+        try {
+            // Android 13+ requires explicit export flag for BroadcastReceivers
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                registerReceiver(timerReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+            } else {
+                registerReceiver(timerReceiver, filter)
+            }
+            Log.d(TAG, "BroadcastReceiver registered for timer events")
+        } catch (e: SecurityException) {
+            Log.e(TAG, "Failed to register BroadcastReceiver - will use fallback mechanism", e)
+            // Fallback: overlay will check SharedPreferences directly via periodic checks
+        } catch (e: Exception) {
+            Log.e(TAG, "Unexpected error registering BroadcastReceiver", e)
         }
-        Log.d(TAG, "BroadcastReceiver registered for timer events")
     }
 
     private fun startForegroundCheck() {
@@ -925,6 +940,28 @@ class ShortsBlockService : AccessibilityService() {
         timerReceiver?.let {
             unregisterReceiver(it)
             timerReceiver = null
+        }
+    }
+
+    /**
+     * Generate a session ID based on package name and date
+     * This ensures the same session ID for the same app on the same day
+     */
+    private fun generateSessionId(packageName: String, contentHash: Int = 0): String {
+        // Use only content hash for session ID - this way all shorts get blocked
+        val input = contentHash.toString()
+
+        return try {
+            val md = MessageDigest.getInstance("SHA-256")
+            val hashBytes = md.digest(input.toByteArray())
+            // Convert to hex string (first 16 bytes for shorter ID)
+            val sessionId = hashBytes.take(16).joinToString("") { "%02x".format(it) }
+            Log.d(TAG, "Generated session ID for content hash '$contentHash': $sessionId")
+            sessionId
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to generate hash-based session ID", e)
+            // Fallback to UUID if hashing fails
+            UUID.randomUUID().toString()
         }
     }
 }

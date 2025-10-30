@@ -53,7 +53,7 @@ class TimerActivity : AppCompatActivity() {
         prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
 
         // Check if timer already completed for this session
-        val completedSessionId = prefs.getString("completed_session_id", "")
+        val completedSessionId = prefs.getString(AppConstants.PREF_COMPLETED_SESSION_ID, "")
         if (completedSessionId == currentSessionId) {
             // Timer already completed for this session
             showAlreadyCompleted()
@@ -217,9 +217,10 @@ class TimerActivity : AppCompatActivity() {
         completeButton.visibility = View.VISIBLE
         cancelButton.visibility = View.GONE
 
-        // Save completion state
+        // Save completion state with timestamp
         prefs.edit()
-            .putString("completed_session_id", currentSessionId)
+            .putString(AppConstants.PREF_COMPLETED_SESSION_ID, currentSessionId)
+            .putLong("timer_completed_time", System.currentTimeMillis()) // Save completion timestamp
             .remove("timer_remaining_seconds_$currentSessionId")
             .apply()
 
@@ -310,8 +311,28 @@ class TimerActivity : AppCompatActivity() {
     }
 
     private fun returnToOverlay() {
+        // If timer is completed, ensure broadcast is sent before returning
+        if (timerCompleted) {
+            // Re-send broadcast to ensure overlay updates
+            val intent = Intent(AppConstants.ACTION_TIMER_COMPLETED)
+            intent.putExtra("session_id", currentSessionId)
+            sendBroadcast(intent)
+            Log.d(TAG, "Re-sent timer completion broadcast before returning")
+        }
+
         // Simply finish the activity to return to overlay
         finish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // If timer is already completed, send broadcast to update overlay
+        if (timerCompleted) {
+            val intent = Intent(AppConstants.ACTION_TIMER_COMPLETED)
+            intent.putExtra("session_id", currentSessionId)
+            sendBroadcast(intent)
+            Log.d(TAG, "Timer already completed, sent broadcast in onResume")
+        }
     }
 
     override fun onBackPressed() {
