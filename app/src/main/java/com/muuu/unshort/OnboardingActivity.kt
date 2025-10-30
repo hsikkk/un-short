@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -294,13 +295,14 @@ class OnboardingActivity : AppCompatActivity() {
         val successScreen = viewHolder.itemView.findViewById<View>(R.id.previewSuccessScreen)
 
         // 타이머 카운트다운 애니메이션 (30.0 → 0.0) - Float으로 부드럽게
-        timerAnimator = ValueAnimator.ofInt(3000, 0).apply {
+        timerAnimator = ValueAnimator.ofInt(1000, 0).apply {
             duration = 10000 // 10초 (3배속)
             addUpdateListener { animator ->
                 val value = animator.animatedValue as Int
                 timerNumber?.text = (value / 100).toString()
                 progressRing?.setProgress(value)
             }
+            interpolator = LinearInterpolator()
             start()
         }
 

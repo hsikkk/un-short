@@ -65,8 +65,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:progressDrawable="@drawable/progress_ring_dark"
-                        android:max="3000"
-                        android:progress="3000"
+                        android:max="1000"
+                        android:progress="1000"
                         android:rotation="-90" />
 
                     <!-- Timer Display -->
@@ -82,7 +82,7 @@
                             android:id="@+id/previewTimerNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="30"
+                            android:text="10"
                             android:textSize="56sp"
                             android:textColor="#FFFFFF"
                             android:fontFamily="sans-serif-thin"
