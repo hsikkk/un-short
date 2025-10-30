@@ -289,70 +289,75 @@
 
         </LinearLayout>
 
-        <!-- Permission Warning (shown when permissions missing) -->
-        <LinearLayout
-            android:id="@+id/permissionWarning"
-            android:layout_width="match_parent"
+    </LinearLayout>
+
+    <!-- Permission Warning (shown when permissions missing) - Overlay at root level -->
+    <LinearLayout
+        android:id="@+id/permissionWarning"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="48dp"
+        android:visibility="gone"
+        android:background="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/topSection"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Warning Icon -->
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="48dp"
-            android:visibility="gone">
+            android:text="⚠"
+            android:textSize="72sp"
+            android:textColor="#FFA726"
+            android:alpha="0.9" />
 
-            <!-- Warning Icon -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="⚠"
-                android:textSize="72sp"
-                android:textColor="#FFA726"
-                android:alpha="0.9" />
+        <!-- Warning Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="권한이 필요합니다"
+            android:textSize="@dimen/text_title"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#000000"
+            android:letterSpacing="0.01" />
 
-            <!-- Warning Title -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="권한이 필요합니다"
-                android:textSize="@dimen/text_title"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="#000000"
-                android:letterSpacing="0.01" />
+        <!-- Warning Description -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="차단 기능을 사용하려면\n접근성 및 오버레이 권한이 필요합니다"
+            android:textSize="@dimen/text_body"
+            android:fontFamily="sans-serif-light"
+            android:textColor="#000000"
+            android:alpha="0.6"
+            android:textAlignment="center"
+            android:lineSpacingExtra="4dp" />
 
-            <!-- Warning Description -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="차단 기능을 사용하려면\n접근성 및 오버레이 권한이 필요합니다"
-                android:textSize="@dimen/text_body"
-                android:fontFamily="sans-serif-light"
-                android:textColor="#000000"
-                android:alpha="0.6"
-                android:textAlignment="center"
-                android:lineSpacingExtra="4dp" />
-
-            <!-- Settings Button -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/permissionSettingsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="권한 설정하기"
-                android:textSize="@dimen/text_body"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="#FFFFFF"
-                android:paddingStart="32dp"
-                android:paddingEnd="32dp"
-                android:paddingTop="14dp"
-                android:paddingBottom="14dp"
-                android:letterSpacing="0.02"
-                app:cornerRadius="24dp"
-                app:backgroundTint="#000000"
-                app:elevation="4dp"
-                app:rippleColor="#40FFFFFF" />
-
-        </LinearLayout>
+        <!-- Settings Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/permissionSettingsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="권한 설정하기"
+            android:textSize="@dimen/text_body"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#FFFFFF"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:letterSpacing="0.02"
+            app:cornerRadius="24dp"
+            app:backgroundTint="#000000"
+            app:elevation="4dp"
+            app:rippleColor="#40FFFFFF" />
 
     </LinearLayout>
 
