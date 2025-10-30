@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/white"
-    android:paddingTop="32dp"
-    android:paddingBottom="32dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp"
     android:paddingStart="24dp"
     android:paddingEnd="24dp">
 
@@ -18,7 +18,7 @@
         android:textColor="@color/primary_dark"
         android:fontFamily="sans-serif-medium"
         android:letterSpacing="0.01"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="6dp" />
 
     <!-- Description -->
     <TextView
@@ -29,7 +29,7 @@
         android:textColor="@color/gray_600"
         android:fontFamily="sans-serif-light"
         android:alpha="0.8"
-        android:layout_marginBottom="28dp" />
+        android:layout_marginBottom="20dp" />
 
     <!-- 15초 옵션 -->
     <LinearLayout
@@ -37,10 +37,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="18dp"
-        android:paddingBottom="18dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
@@ -70,8 +70,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray_200"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
 
     <!-- 30초 옵션 -->
     <LinearLayout
@@ -79,10 +79,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="18dp"
-        android:paddingBottom="18dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
@@ -112,8 +112,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray_200"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
 
     <!-- 60초 옵션 -->
     <LinearLayout
@@ -121,10 +121,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="18dp"
-        android:paddingBottom="18dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
