@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!-- Top Message (Same as Page 2) -->
+    <!-- Top Message -->
     <TextView
         android:id="@+id/topMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="쇼츠 차단을 위해서\n권한을 허용해주세요"
+        android:text="'한 번 더 생각해보기'를 누르면\n타이머가 시작돼요"
         android:textSize="20sp"
         android:textColor="#000000"
         android:fontFamily="sans-serif"
@@ -23,224 +23,150 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Permission Cards Container -->
-    <ScrollView
-        android:layout_width="0dp"
+    <!-- Phone Mockup Container -->
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fillViewport="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="40dp"
         app:layout_constraintTop_toBottomOf="@id/topMessage"
-        app:layout_constraintBottom_toTopOf="@id/startButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-    <LinearLayout
-        android:id="@+id/cardsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="32dp"
-        android:paddingBottom="20dp">
-
-        <!-- Step 1: Accessibility Service Card -->
+        <!-- Phone Frame -->
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/onboardingAccessibilityCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="#E0E0E0"
-            app:cardBackgroundColor="#FFFFFF">
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#000000"
+            app:strokeWidth="2dp"
+            app:strokeColor="#333333">
 
+            <!-- Scaled TimerActivity Preview -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:gravity="center"
                 android:padding="20dp">
 
-                <!-- Header -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="12dp">
+                <!-- Timer Container -->
+                <FrameLayout
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginBottom="24dp">
 
-                    <TextView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:text="1"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:background="@drawable/circle_accent_purple"
-                        android:gravity="center"
-                        android:fontFamily="sans-serif-medium"
-                        android:layout_marginEnd="10dp" />
+                    <!-- Progress Ring -->
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:progressDrawable="@drawable/progress_ring_dark"
+                        android:max="30"
+                        android:progress="30"
+                        android:rotation="-90" />
 
-                    <TextView
-                        android:id="@+id/onboardingServiceStatusText"
-                        android:layout_width="0dp"
+                    <!-- Timer Display -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="접근성 서비스"
-                        android:textSize="16sp"
-                        android:textColor="#000000"
-                        android:fontFamily="sans-serif" />
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <!-- Timer Number -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="30"
+                            android:textSize="42sp"
+                            android:textColor="#FFFFFF"
+                            android:fontFamily="sans-serif-thin"
+                            android:includeFontPadding="false" />
+
+                        <!-- Timer Unit -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="seconds"
+                            android:textSize="10sp"
+                            android:textColor="#8A8A8A"
+                            android:fontFamily="sans-serif-light"
+                            android:letterSpacing="0.08"
+                            android:textAllCaps="true" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+                <!-- Instructions -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingHorizontal="24dp">
+
+                    <!-- Title -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="잠시 생각해보기"
+                        android:textSize="14sp"
+                        android:textColor="#FFFFFF"
+                        android:fontFamily="sans-serif"
+                        android:layout_marginBottom="6dp" />
+
+                    <!-- Description -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="폰을 뒤집고 진짜 봐야 하는지\n생각해보세요"
+                        android:textSize="11sp"
+                        android:textColor="#8A8A8A"
+                        android:fontFamily="sans-serif-light"
+                        android:gravity="center"
+                        android:lineSpacingMultiplier="1.5" />
 
                 </LinearLayout>
 
-                <!-- Why needed -->
-                <TextView
+                <!-- Flip Indicator -->
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="왜 필요한가요?"
-                    android:textSize="12sp"
-                    android:textColor="#000000"
-                    android:fontFamily="sans-serif"
-                    android:alpha="0.6"
-                    android:layout_marginBottom="6dp" />
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="10dp"
+                    android:background="@drawable/flip_indicator_dark">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="YouTube Shorts, Instagram Reels, TikTok 같은 쇼츠 화면이 열렸는지 감지하기 위해 필요합니다."
-                    android:textSize="13sp"
-                    android:textColor="#000000"
-                    android:alpha="0.5"
-                    android:lineSpacingExtra="2dp"
-                    android:layout_marginBottom="12dp" />
+                    <!-- Phone Icon -->
+                    <View
+                        android:layout_width="11dp"
+                        android:layout_height="17dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/phone_icon_white" />
 
-                <!-- Status -->
-                <TextView
-                    android:id="@+id/onboardingServiceDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="아직 설정되지 않았습니다"
-                    android:textSize="12sp"
-                    android:textColor="#EF4444"
-                    android:layout_marginBottom="10dp" />
+                    <!-- Flip Text -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="폰을 뒤집어주세요"
+                        android:textSize="10sp"
+                        android:textColor="#FFFFFF"
+                        android:fontFamily="sans-serif-light" />
 
-                <Button
-                    android:id="@+id/onboardingSettingsButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="설정하러 가기"
-                    style="@style/Widget.App.Button" />
+                </LinearLayout>
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Step 2: Overlay Permission Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/onboardingOverlayCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="#E0E0E0"
-            app:cardBackgroundColor="#FFFFFF">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <!-- Header -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="12dp">
-
-                    <TextView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:text="2"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:background="@drawable/circle_accent_purple"
-                        android:gravity="center"
-                        android:fontFamily="sans-serif-medium"
-                        android:layout_marginEnd="10dp" />
-
-                    <TextView
-                        android:id="@+id/onboardingOverlayStatusText"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="다른 앱 위에 표시"
-                        android:textSize="16sp"
-                        android:textColor="#000000"
-                        android:fontFamily="sans-serif" />
-
-                </LinearLayout>
-
-                <!-- Why needed -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="왜 필요한가요?"
-                    android:textSize="12sp"
-                    android:textColor="#000000"
-                    android:fontFamily="sans-serif"
-                    android:alpha="0.6"
-                    android:layout_marginBottom="6dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="쇼츠 화면 위에 차단 화면을 띄워서 여러분이 한번 더 생각할 수 있도록 도와줍니다."
-                    android:textSize="13sp"
-                    android:textColor="#000000"
-                    android:alpha="0.5"
-                    android:lineSpacingExtra="2dp"
-                    android:layout_marginBottom="12dp" />
-
-                <!-- Status -->
-                <TextView
-                    android:id="@+id/onboardingOverlayDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="아직 설정되지 않았습니다"
-                    android:textSize="12sp"
-                    android:textColor="#EF4444"
-                    android:layout_marginBottom="10dp" />
-
-                <Button
-                    android:id="@+id/onboardingOverlayButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="설정하러 가기"
-                    style="@style/Widget.App.Button" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
-
-    </ScrollView>
-
-    <!-- Start Button (Bottom, Initially Hidden) -->
-    <Button
-        android:id="@+id/startButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginBottom="32dp"
-        android:text="시작하기"
-        android:visibility="gone"
-        style="@style/Widget.App.Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

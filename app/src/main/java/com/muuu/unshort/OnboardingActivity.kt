@@ -27,7 +27,7 @@ class OnboardingActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager2
     private lateinit var indicators: List<View>
 
-    // 3번째 페이지의 권한 설정 뷰들
+    // 5번째 페이지의 권한 설정 뷰들
     private var accessibilityCard: View? = null
     private var overlayCard: View? = null
     private var onboardingServiceStatusText: TextView? = null
@@ -41,7 +41,9 @@ class OnboardingActivity : AppCompatActivity() {
     private val layouts = listOf(
         R.layout.onboarding_page_1,
         R.layout.onboarding_page_2,
-        R.layout.onboarding_page_3
+        R.layout.onboarding_page_3,
+        R.layout.onboarding_page_4,
+        R.layout.onboarding_page_5
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +55,9 @@ class OnboardingActivity : AppCompatActivity() {
         indicators = listOf(
             findViewById(R.id.indicator1),
             findViewById(R.id.indicator2),
-            findViewById(R.id.indicator3)
+            findViewById(R.id.indicator3),
+            findViewById(R.id.indicator4),
+            findViewById(R.id.indicator5)
         )
 
         // ViewPager2 어댑터 설정
@@ -171,8 +175,8 @@ class OnboardingActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: OnboardingViewHolder, position: Int) {
-            // 3페이지(권한 설정 페이지)인 경우 버튼 리스너 설정
-            if (position == 2) {
+            // 5페이지(권한 설정 페이지)인 경우 버튼 리스너 설정
+            if (position == 4) {
                 setupPermissionPage(holder.itemView)
             }
         }
