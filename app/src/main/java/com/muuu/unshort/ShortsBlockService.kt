@@ -84,7 +84,16 @@ class ShortsBlockService : AccessibilityService() {
                     blockOverlay?.dismiss()
                     blockOverlay = null
                     leftViaHomeButton = true  // 백그라운드로 나갔음을 표시
-                    // overlayWasShown, allowedUntilScroll 등은 유지
+
+                    // 타이머 완료 플래그 초기화 (쇼츠 앱을 떠나면 리셋)
+                    prefs.edit().remove(AppConstants.PREF_COMPLETED_SESSION_ID).apply()
+                    Log.d(TAG, "Cleared timer completion flag - left shorts app")
+
+                    // 모든 상태 플래그 초기화 (플래그 꼬임 방지)
+                    allowedUntilScroll = false
+                    overlayWasShown = false
+                    Log.d(TAG, "Reset all flags - left shorts app")
+
                     return
                 }
             }
@@ -101,7 +110,16 @@ class ShortsBlockService : AccessibilityService() {
                 blockOverlay?.dismiss()
                 blockOverlay = null
                 leftViaHomeButton = true  // 백그라운드로 나갔음을 표시
-                // overlayWasShown, allowedUntilScroll 등은 유지
+
+                // 타이머 완료 플래그 초기화 (쇼츠 앱을 떠나면 리셋)
+                prefs.edit().remove(AppConstants.PREF_COMPLETED_SESSION_ID).apply()
+                Log.d(TAG, "Cleared timer completion flag - left shorts app")
+
+                // 모든 상태 플래그 초기화 (플래그 꼬임 방지)
+                allowedUntilScroll = false
+                overlayWasShown = false
+                Log.d(TAG, "Reset all flags - left shorts app")
+
                 return
             }
         }
