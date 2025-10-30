@@ -109,8 +109,7 @@ class MainActivity : AppCompatActivity() {
             toggleArea.visibility = View.GONE
             permissionWarning.visibility = View.VISIBLE
 
-            // 차단 자동 비활성화
-            prefs.edit().putBoolean("blocking_enabled", false).apply()
+            // 차단 상태는 유지 (권한 복구 시 이전 상태로 돌아감)
         } else {
             // 권한 있음 - 토글 표시
             toggleArea.visibility = View.VISIBLE
