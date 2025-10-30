@@ -693,6 +693,11 @@ class ShortsBlockService : AccessibilityService() {
                         overlayWasShown = false
                         allowedUntilScroll = false
                         currentSessionId = ""
+
+                        // 타이머 완료 플래그도 초기화 ("안볼래요" 선택 시 다음 쇼츠도 처음부터)
+                        prefs.edit().remove(AppConstants.PREF_COMPLETED_SESSION_ID).apply()
+                        Log.d(TAG, "Cleared timer completion flag - user chose to skip")
+
                         performGlobalBackAction()
                     },
                     onWatch = {
