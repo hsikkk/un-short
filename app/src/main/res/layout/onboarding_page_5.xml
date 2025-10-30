@@ -106,7 +106,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="YouTube Shorts, Instagram Reels, TikTok 같은 쇼츠 화면이 열렸는지 감지하기 위해 필요합니다."
+                    android:text="쇼츠 화면이 열렸는지 감지하기 위해 필요합니다."
                     android:textSize="13sp"
                     android:textColor="#000000"
                     android:alpha="0.5"
@@ -197,7 +197,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="쇼츠 화면 위에 차단 화면을 띄워서 여러분이 한번 더 생각할 수 있도록 도와줍니다."
+                    android:text="쇼츠 화면 위에 차단 화면을 띄우기 위해 필요합니다."
                     android:textSize="13sp"
                     android:textColor="#000000"
                     android:alpha="0.5"
