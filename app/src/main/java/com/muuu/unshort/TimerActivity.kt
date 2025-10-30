@@ -67,10 +67,15 @@ class TimerActivity : AppCompatActivity() {
         successScreen = findViewById(R.id.successScreen)
         continueButton = findViewById(R.id.continueButton)
 
-        // Skip button (always visible)
+        // Skip button (always visible) - "그냥 안볼래요"
         skipButton.setOnClickListener {
-            // Cancel timer
+            // Cancel timer and trigger overlay's skip action (close overlay and return to app)
             countDownTimer?.cancel()
+
+            // Send broadcast to close overlay
+            val intent = android.content.Intent(AppConstants.ACTION_CLOSE_OVERLAY)
+            sendBroadcast(intent)
+
             finish()
         }
 

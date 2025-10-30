@@ -865,6 +865,19 @@ class ShortsBlockService : AccessibilityService() {
                     AppConstants.ACTION_TIMER_CANCELLED -> {
                         Log.d(TAG, "Timer cancelled broadcast received")
                     }
+                    AppConstants.ACTION_CLOSE_OVERLAY -> {
+                        Log.d(TAG, "Close overlay broadcast received - dismissing and returning to app")
+                        // Dismiss overlay
+                        blockOverlay?.dismiss()
+                        blockOverlay = null
+                        currentSessionId = ""
+
+                        // Simulate back key press to return to original app
+                        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                            performGlobalAction(GLOBAL_ACTION_BACK)
+                            Log.d(TAG, "Back key pressed")
+                        }, 100)
+                    }
                 }
             }
         }
@@ -872,6 +885,7 @@ class ShortsBlockService : AccessibilityService() {
         val filter = IntentFilter().apply {
             addAction(AppConstants.ACTION_TIMER_COMPLETED)
             addAction(AppConstants.ACTION_TIMER_CANCELLED)
+            addAction(AppConstants.ACTION_CLOSE_OVERLAY)
         }
 
         // Register BroadcastReceiver with proper error handling
