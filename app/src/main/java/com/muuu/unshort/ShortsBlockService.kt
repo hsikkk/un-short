@@ -33,6 +33,7 @@ class ShortsBlockService : AccessibilityService() {
     private val handler = android.os.Handler(android.os.Looper.getMainLooper())
     private var foregroundCheckRunnable: Runnable? = null
     private var pendingOverlayJob: Runnable? = null  // pending 중인 오버레이 표시 job
+    private var appStartTime: Long = 0  // 앱 시작 시간 (fresh start 감지용)
 
     // Timer-related variables
     private var currentSessionId: String = ""
@@ -195,6 +196,8 @@ class ShortsBlockService : AccessibilityService() {
                 Log.d(TAG, "Returned to Shorts screen from background")
                 leftViaHomeButton = false
                 overlayWasShown = false  // 백그라운드에서 돌아왔으므로 초기화
+                appStartTime = System.currentTimeMillis()  // Fresh start 시간 기록
+                Log.d(TAG, "Recorded app start time for fresh start detection")
             }
 
             // 15초 완료 후 허용 상태면 차단하지 않음
@@ -718,8 +721,16 @@ class ShortsBlockService : AccessibilityService() {
             }
         }
 
-        handler.postDelayed(pendingOverlayJob!!, 300)
-        Log.d(TAG, "Overlay job scheduled with 300ms delay")
+        // Fresh start 후 500ms 이내면 500ms 딜레이, 이후는 300ms
+        val timeSinceStart = System.currentTimeMillis() - appStartTime
+        val delay = if (timeSinceStart < 500) {
+            500L // Fresh start 후 500ms 이내: 500ms 딜레이
+        } else {
+            300L // 일반: 300ms 딜레이
+        }
+
+        handler.postDelayed(pendingOverlayJob!!, delay)
+        Log.d(TAG, "Overlay job scheduled with ${delay}ms delay (timeSinceStart: ${timeSinceStart}ms)")
     }
 
     private fun cancelPendingOverlay() {
@@ -771,6 +782,14 @@ class ShortsBlockService : AccessibilityService() {
             // 빈 패키지명이면 무조건 pause 시도
             if (packageName.isEmpty()) {
                 Log.d(TAG, "Empty package name - always attempting pause")
+                performTapGesture()
+                return
+            }
+
+            // overlayWasShown이 false이면 첫 감지 → 무조건 pause 시도
+            // (앱 열자마자 Shorts가 켜진 경우 대응)
+            if (!overlayWasShown) {
+                Log.d(TAG, "First detection - attempting pause regardless of audio state")
                 performTapGesture()
                 return
             }
