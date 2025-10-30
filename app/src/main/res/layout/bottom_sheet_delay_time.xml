@@ -3,17 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:background="@color/white"
+    android:paddingTop="32dp"
+    android:paddingBottom="32dp"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp">
 
     <!-- Title -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="대기 시간 선택"
-        android:textSize="20sp"
-        android:textColor="#000000"
-        android:fontFamily="sans-serif"
-        android:layout_marginBottom="24dp" />
+        android:text="대기 시간"
+        android:textSize="@dimen/text_title"
+        android:textColor="@color/primary_dark"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0.01"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Description -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="쇼츠 접근 전 대기 시간을 설정하세요"
+        android:textSize="@dimen/text_caption"
+        android:textColor="@color/gray_600"
+        android:fontFamily="sans-serif-light"
+        android:alpha="0.8"
+        android:layout_marginBottom="28dp" />
 
     <!-- 15초 옵션 -->
     <LinearLayout
@@ -21,7 +37,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="20dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
@@ -32,8 +51,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="15초"
-            android:textSize="16sp"
-            android:textColor="#000000"
+            android:textSize="@dimen/text_body"
+            android:textColor="@color/primary_dark"
             android:fontFamily="sans-serif" />
 
         <RadioButton
@@ -41,9 +60,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="false"
-            android:focusable="false" />
+            android:focusable="false"
+            android:buttonTint="@color/primary_dark" />
 
     </LinearLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_200"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp" />
 
     <!-- 30초 옵션 -->
     <LinearLayout
@@ -51,7 +79,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="20dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
@@ -62,8 +93,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="30초"
-            android:textSize="16sp"
-            android:textColor="#000000"
+            android:textSize="@dimen/text_body"
+            android:textColor="@color/primary_dark"
             android:fontFamily="sans-serif" />
 
         <RadioButton
@@ -71,9 +102,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="false"
-            android:focusable="false" />
+            android:focusable="false"
+            android:buttonTint="@color/primary_dark" />
 
     </LinearLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_200"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp" />
 
     <!-- 60초 옵션 -->
     <LinearLayout
@@ -81,7 +121,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="20dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
@@ -92,8 +135,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="60초"
-            android:textSize="16sp"
-            android:textColor="#000000"
+            android:textSize="@dimen/text_body"
+            android:textColor="@color/primary_dark"
             android:fontFamily="sans-serif" />
 
         <RadioButton
@@ -101,7 +144,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="false"
-            android:focusable="false" />
+            android:focusable="false"
+            android:buttonTint="@color/primary_dark" />
 
     </LinearLayout>
 
