@@ -72,9 +72,11 @@ class TimerActivity : AppCompatActivity() {
             // Cancel timer and trigger overlay's skip action (close overlay and return to app)
             countDownTimer?.cancel()
 
-            // Send broadcast to close overlay
+            // Send explicit broadcast to close overlay (필요 for Android 13+)
             val intent = android.content.Intent(AppConstants.ACTION_CLOSE_OVERLAY)
+            intent.setPackage(packageName) // Make it explicit for same-app broadcast
             sendBroadcast(intent)
+            Log.d(TAG, "Skip button clicked - broadcast sent to close overlay")
 
             finish()
         }
