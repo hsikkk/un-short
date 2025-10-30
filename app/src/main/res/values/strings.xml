@@ -2,105 +2,105 @@
 <resources>
     <string name="app_name">un:short</string>
     <string name="accessibility_service_description">Detects when you open short-form video apps and requires you to flip your phone for 30 seconds</string>
-    <string name="flip_phone_title">잠깐만요! 🤚</string>
-    <string name="flip_phone_message">쇼츠를 보려면\n폰을 뒤집어서 30초 기다려주세요</string>
-    <string name="time_remaining">남은 시간: %d초</string>
-    <string name="flip_detected">폰이 뒤집어졌습니다 ✓</string>
-    <string name="flip_required">폰을 뒤집어주세요</string>
+    <string name="flip_phone_title">Wait a moment! 🤚</string>
+    <string name="flip_phone_message">To watch Shorts,\nflip your phone and wait 30 seconds</string>
+    <string name="time_remaining">Time remaining: %d seconds</string>
+    <string name="flip_detected">Phone flipped ✓</string>
+    <string name="flip_required">Please flip your phone</string>
 
     <!-- BlockOverlay Messages -->
-    <string name="block_message_before_timer">정말 지금 쇼츠를 봐야 할까요?</string>
-    <string name="block_message_after_timer">진짜로 볼 건가요?</string>
-    <string name="block_button_think_again">한 번 더 생각해보기</string>
-    <string name="block_button_close">그냥 닫기</string>
-    <string name="block_button_no">아니요, 안 볼래요</string>
-    <string name="block_button_yes">네, 볼래요</string>
+    <string name="block_message_before_timer">Do you really need to watch this now?</string>
+    <string name="block_message_after_timer">Are you sure you want to watch?</string>
+    <string name="block_button_think_again">Think again</string>
+    <string name="block_button_close">Just close</string>
+    <string name="block_button_no">No, I won\'t watch</string>
+    <string name="block_button_yes">Yes, I will watch</string>
 
     <!-- Timer Success Screen -->
-    <string name="timer_success_title">해냈어요!</string>
-    <string name="timer_success_message">잠시 멈춰본 당신, 멋져요\n이제 더 현명한 선택을 할 수 있을 거예요</string>
+    <string name="timer_success_title">You did it!</string>
+    <string name="timer_success_message">Great job taking a pause\nNow you can make a wiser choice</string>
 
     <!-- Timer Screen -->
-    <string name="timer_instruction_title">잠시 생각해보기</string>
-    <string name="timer_instruction_message_onboarding">폰을 뒤집고 진짜 봐야 하는지\n생각해보세요</string>
-    <string name="timer_instruction_message_full">폰을 뒤집고 진짜 봐야 하는지 생각해보세요\n이 시간이 아깝다면, 영상은 더 아깝지 않을까요?</string>
+    <string name="timer_instruction_title">Take a moment</string>
+    <string name="timer_instruction_message_onboarding">Flip your phone and think about\nwhether you really need to watch</string>
+    <string name="timer_instruction_message_full">Flip your phone and think about whether you really need to watch. If this time feels wasteful, wouldn\'t the video be even more wasteful?</string>
 
     <!-- Main Activity -->
-    <string name="main_subtitle">쇼츠 콘텐츠에서 벗어나세요.\n의도적인 소비를 위한 작은 습관.</string>
+    <string name="main_subtitle">Break free from short-form content.\nSmall habits for mindful consumption.</string>
     <string name="status_on">ON</string>
     <string name="status_off">OFF</string>
     <string name="status_active">ACTIVE</string>
     <string name="status_inactive">INACTIVE</string>
     <string name="toggle_description">Power toggle</string>
-    <string name="blocked_apps_title">차단 대상</string>
+    <string name="blocked_apps_title">Blocked Apps</string>
     <string name="app_youtube_shorts">YouTube Shorts</string>
     <string name="app_instagram_reels">Instagram Reels</string>
     <string name="permission_warning_icon">⚠</string>
-    <string name="permission_warning_title">권한이 필요합니다</string>
-    <string name="permission_warning_message">차단 기능을 사용하려면\n접근성 및 오버레이 권한이 필요합니다</string>
-    <string name="permission_setup_button">권한 설정하기</string>
+    <string name="permission_warning_title">Permissions Required</string>
+    <string name="permission_warning_message">To use blocking features,\naccessibility and overlay permissions are required</string>
+    <string name="permission_setup_button">Set up permissions</string>
 
     <!-- Settings Activity -->
-    <string name="settings_title">설정</string>
-    <string name="settings_section_block_options">차단 옵션 관리</string>
-    <string name="settings_delay_time_title">대기 시간</string>
-    <string name="settings_delay_time_desc">쇼츠 차단 시 대기 시간 설정</string>
-    <string name="settings_delay_time_value">%d초</string>
-    <string name="settings_haptic_title">햅틱 피드백</string>
-    <string name="settings_haptic_desc">타이머 완료 시 진동 알림</string>
-    <string name="settings_section_other">기타</string>
-    <string name="settings_feedback">피드백 보내기</string>
-    <string name="settings_share">앱 공유하기</string>
-    <string name="settings_review">리뷰 남기기</string>
-    <string name="settings_version">버전 정보</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_block_options">Block Options</string>
+    <string name="settings_delay_time_title">Delay Time</string>
+    <string name="settings_delay_time_desc">Set wait time before accessing shorts</string>
+    <string name="settings_delay_time_value">%d seconds</string>
+    <string name="settings_haptic_title">Haptic Feedback</string>
+    <string name="settings_haptic_desc">Vibration notification when timer completes</string>
+    <string name="settings_section_other">Other</string>
+    <string name="settings_feedback">Send Feedback</string>
+    <string name="settings_share">Share App</string>
+    <string name="settings_review">Leave a Review</string>
+    <string name="settings_version">Version Info</string>
     <string name="settings_version_value">v%s</string>
     <string name="settings_version_default">v1.0.0</string>
 
     <!-- Permission Setup Activity -->
-    <string name="permission_back_button">뒤로 가기</string>
-    <string name="permission_title">권한 설정</string>
-    <string name="permission_subtitle">쇼츠 차단을 위해서\n권한을 허용해주세요</string>
-    <string name="permission_done">완료</string>
+    <string name="permission_back_button">Back</string>
+    <string name="permission_title">Permission Setup</string>
+    <string name="permission_subtitle">Please allow permissions\nto block shorts</string>
+    <string name="permission_done">Done</string>
 
     <!-- Permission Cards -->
     <string name="permission_number_1">1</string>
     <string name="permission_number_2">2</string>
-    <string name="permission_accessibility">접근성 서비스</string>
-    <string name="permission_accessibility_completed">접근성 서비스 ✓</string>
-    <string name="permission_overlay">다른 앱 위에 표시</string>
-    <string name="permission_overlay_completed">다른 앱 위에 표시 ✓</string>
-    <string name="permission_why">왜 필요한가요?</string>
-    <string name="permission_accessibility_reason">쇼츠 화면이 열렸는지 감지하기 위해 필요합니다.</string>
-    <string name="permission_overlay_reason">쇼츠 화면 위에 차단 화면을 띄우기 위해 필요합니다.</string>
-    <string name="permission_not_set">아직 설정되지 않았습니다</string>
-    <string name="permission_completed">설정 완료</string>
-    <string name="permission_go_to_settings">설정하러 가기</string>
+    <string name="permission_accessibility">Accessibility Service</string>
+    <string name="permission_accessibility_completed">Accessibility Service ✓</string>
+    <string name="permission_overlay">Display over other apps</string>
+    <string name="permission_overlay_completed">Display over other apps ✓</string>
+    <string name="permission_why">Why is this needed?</string>
+    <string name="permission_accessibility_reason">Required to detect when shorts screen is opened.</string>
+    <string name="permission_overlay_reason">Required to display blocking screen over shorts.</string>
+    <string name="permission_not_set">Not set yet</string>
+    <string name="permission_completed">Setup complete</string>
+    <string name="permission_go_to_settings">Go to settings</string>
 
     <!-- Timer Activity -->
     <string name="timer_seconds_unit">seconds</string>
-    <string name="timer_flip_instruction">폰을 뒤집어주세요</string>
-    <string name="timer_breathe_message">깊게 숨을 쉬어보세요</string>
-    <string name="timer_skip_button">안 볼래요</string>
+    <string name="timer_flip_instruction">Flip your phone</string>
+    <string name="timer_breathe_message">Take a deep breath</string>
+    <string name="timer_skip_button">I won\'t watch</string>
 
     <!-- Onboarding -->
-    <string name="onboarding_page1_title">쇼츠 중독에서\n벗어나세요</string>
-    <string name="onboarding_page2_title">쇼츠를 보고 싶다면\n잠시 생각해보세요</string>
-    <string name="onboarding_page3_title">그래도 보고 싶다면,\n잠깐의 여유를 가져보세요</string>
-    <string name="onboarding_page4_title">마지막으로\n한 번 더 생각해보세요</string>
-    <string name="onboarding_page5_title">쇼츠 차단을 위해서\n권한을 허용해주세요</string>
-    <string name="onboarding_start_button">시작하기</string>
+    <string name="onboarding_page1_title">Break free from\nshort-form addiction</string>
+    <string name="onboarding_page2_title">If you want to watch shorts,\ntake a moment to think</string>
+    <string name="onboarding_page3_title">If you still want to watch,\ntake a brief pause</string>
+    <string name="onboarding_page4_title">Finally,\nthink once more</string>
+    <string name="onboarding_page5_title">Please allow permissions\nto block shorts</string>
+    <string name="onboarding_start_button">Get Started</string>
 
     <!-- Delay Time Bottom Sheet -->
-    <string name="delay_time_title">대기 시간</string>
-    <string name="delay_time_desc">쇼츠 접근 전 대기 시간을 설정하세요</string>
-    <string name="delay_time_15">15초</string>
-    <string name="delay_time_30">30초</string>
-    <string name="delay_time_60">60초</string>
+    <string name="delay_time_title">Delay Time</string>
+    <string name="delay_time_desc">Set wait time before accessing shorts</string>
+    <string name="delay_time_15">15 seconds</string>
+    <string name="delay_time_30">30 seconds</string>
+    <string name="delay_time_60">60 seconds</string>
 
     <!-- Toast Messages -->
-    <string name="toast_email_app_not_found">이메일 앱을 찾을 수 없습니다</string>
+    <string name="toast_email_app_not_found">Email app not found</string>
 
     <!-- Share & Feedback -->
-    <string name="feedback_subject">un:short 앱 피드백</string>
-    <string name="share_text">쇼츠 중독에서 벗어나세요!\nun:short 앱으로 의도적인 미디어 소비를 시작하세요.\n\n%s</string>
+    <string name="feedback_subject">un:short app feedback</string>
+    <string name="share_text">Break free from short-form addiction!\nStart mindful media consumption with un:short.\n\n%s</string>
 </resources>

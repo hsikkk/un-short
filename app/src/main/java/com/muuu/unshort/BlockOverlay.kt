@@ -314,7 +314,7 @@ class BlockOverlay(private val context: Context) {
                 Log.d(TAG, "Timer not completed - showing timer button, hiding watch button")
                 startTimerButton.visibility = View.VISIBLE
                 watchButton.visibility = View.GONE
-                skipButton.text = "그냥 닫기"
+                skipButton.text = context.getString(R.string.block_button_close)
 
                 // Reorder buttons: startTimerButton first, then skipButton
                 buttonContainer.removeAllViews()
