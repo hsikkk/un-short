@@ -39,6 +39,13 @@
             android:exported="false"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".TimerActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask" />
+
         <service
             android:name=".ShortsBlockService"
             android:enabled="true"

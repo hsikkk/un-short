@@ -2,10 +2,8 @@ package com.muuu.unshort
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.PixelFormat
-import android.os.CountDownTimer
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -17,28 +15,23 @@ class BlockOverlay(private val context: Context) {
 
     private val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     private var overlayView: View? = null
-    private var flipDetector: FlipDetector? = null
-    private var countDownTimer: CountDownTimer? = null
     private val TAG = "BlockOverlay"
 
-    private lateinit var timerText: TextView
-    private lateinit var secondsLabel: TextView
-    private lateinit var flipStatusText: TextView
     private lateinit var skipButton: TextView
     private lateinit var watchButton: TextView
+    private lateinit var startTimerButton: TextView
     private lateinit var buttonSpacer: View
-    private lateinit var flipStatusIndicator: View
+    private lateinit var appSettingsButton: TextView
 
-    private var isPhoneFlipped = false
-    private var remainingSeconds = 15
     private var onDismissListener: (() -> Unit)? = null
     private var onCompleteListener: (() -> Unit)? = null
     private var onSkipListener: (() -> Unit)? = null
     private var onWatchListener: (() -> Unit)? = null
+    private var currentSessionId: String = ""
 
     @SuppressLint("InflateParams")
-    fun show(onDismiss: () -> Unit, onComplete: () -> Unit, onSkip: (() -> Unit)? = null, onWatch: (() -> Unit)? = null) {
-        Log.d(TAG, "show() called")
+    fun show(onDismiss: () -> Unit, onComplete: () -> Unit, onSkip: (() -> Unit)? = null, onWatch: (() -> Unit)? = null, sessionId: String = "") {
+        Log.d(TAG, "show() called with sessionId: $sessionId")
         if (overlayView != null) {
             Log.d(TAG, "Overlay already showing, ignoring")
             return
@@ -48,22 +41,35 @@ class BlockOverlay(private val context: Context) {
         this.onCompleteListener = onComplete
         this.onSkipListener = onSkip
         this.onWatchListener = onWatch
-
-        // SharedPreferences에서 설정된 딜레이 시간 읽기 (기본값 30초)
-        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        remainingSeconds = prefs.getInt("wait_time", 30)
+        this.currentSessionId = sessionId
 
         // 오버레이 뷰 생성
         Log.d(TAG, "Inflating overlay view")
         overlayView = LayoutInflater.from(context).inflate(R.layout.overlay_flip_phone, null)
-        timerText = overlayView!!.findViewById(R.id.timerText)
-        secondsLabel = overlayView!!.findViewById(R.id.secondsLabel)
-        flipStatusText = overlayView!!.findViewById(R.id.flipStatusText)
         skipButton = overlayView!!.findViewById(R.id.skipButton)
         watchButton = overlayView!!.findViewById(R.id.watchButton)
+        startTimerButton = overlayView!!.findViewById(R.id.startTimerButton)
         buttonSpacer = overlayView!!.findViewById(R.id.buttonSpacer)
-        flipStatusIndicator = overlayView!!.findViewById(R.id.flipStatusIndicator)
+        appSettingsButton = overlayView!!.findViewById(R.id.appSettingsButton)
         Log.d(TAG, "Overlay view inflated successfully")
+
+        // Check timer completion status
+        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val completedSessionId = prefs.getString(AppConstants.PREF_COMPLETED_SESSION_ID, "")
+        val isTimerCompleted = sessionId.isNotEmpty() && sessionId == completedSessionId
+
+        Log.d(TAG, "Timer completion check - currentSession: $sessionId, completedSession: $completedSessionId, isCompleted: $isTimerCompleted")
+
+        // Show appropriate buttons based on timer status
+        if (isTimerCompleted) {
+            // Timer completed, show watch button
+            startTimerButton.visibility = View.GONE
+            watchButton.visibility = View.VISIBLE
+        } else {
+            // Timer not completed, show timer button
+            startTimerButton.visibility = View.VISIBLE
+            watchButton.visibility = View.GONE
+        }
 
         // "안볼래요" 버튼 클릭 리스너 설정
         skipButton.setOnClickListener {
@@ -93,6 +99,35 @@ class BlockOverlay(private val context: Context) {
             // dismiss 리스너는 마지막에 호출
             onDismissListener?.invoke()
             Log.d(TAG, "Watch button handler complete")
+        }
+
+        // "타이머 시작하기" 버튼 클릭 리스너 설정
+        startTimerButton.setOnClickListener {
+            Log.d(TAG, ">>> Start Timer button clicked in BlockOverlay")
+            // TimerActivity로 이동
+            val intent = Intent(context, TimerActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                putExtra("session_id", currentSessionId)
+            }
+            context.startActivity(intent)
+            Log.d(TAG, "Started TimerActivity with session: $currentSessionId")
+            // 오버레이는 유지 (타이머 완료 후 돌아올 예정)
+        }
+
+        // "앱 설정 열기" 버튼 클릭 리스너 설정
+        appSettingsButton.setOnClickListener {
+            Log.d(TAG, ">>> App Settings button clicked in BlockOverlay")
+            // MainActivity로 이동
+            val intent = Intent(context, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+            context.startActivity(intent)
+            Log.d(TAG, "Started MainActivity")
+            // 오버레이 닫기
+            dismiss()
+            // dismiss 리스너 호출
+            onDismissListener?.invoke()
+            Log.d(TAG, "App Settings button handler complete")
         }
 
         // 윈도우 매니저 파라미터 설정 - 실제 화면 + 상태바 + 네비게이션바 전체 덮기
@@ -141,136 +176,11 @@ class BlockOverlay(private val context: Context) {
                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
                         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 )
-
-        // 초기 타이머 표시
-        timerText.text = remainingSeconds.toString()
-
-        // 폰 뒤집기 감지 시작
-        flipDetector = FlipDetector(context)
-        flipDetector?.start(object : FlipDetector.FlipListener {
-            override fun onFlipDetected(isFlipped: Boolean) {
-                isPhoneFlipped = isFlipped
-                updateFlipStatus()
-
-                if (isFlipped && countDownTimer == null) {
-                    startCountdown()
-                } else if (!isFlipped && countDownTimer != null) {
-                    pauseCountdown()
-                }
-            }
-        })
-
-        updateFlipStatus()
     }
 
-    private fun startCountdown() {
-        countDownTimer = object : CountDownTimer(remainingSeconds * 1000L, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                remainingSeconds = (millisUntilFinished / 1000).toInt()
-                timerText.text = remainingSeconds.toString()
-
-                // 폰이 다시 뒤집어지면 일시정지
-                if (!isPhoneFlipped) {
-                    pauseCountdown()
-                }
-            }
-
-            override fun onFinish() {
-                // 타이머 완료 - 버튼 전환
-                Log.d(TAG, "Timer finished, showing watch button")
-                onTimerComplete()
-            }
-        }.start()
-    }
-
-    private fun pauseCountdown() {
-        countDownTimer?.cancel()
-        countDownTimer = null
-    }
-
-    private fun onTimerComplete() {
-        // 타이머 텍스트를 "완료"로 변경
-        timerText.text = "✓"
-        timerText.textSize = 72f
-        timerText.setTextColor(context.getColor(android.R.color.holo_green_light))
-
-        // "초" 라벨 숨기기
-        secondsLabel.visibility = View.GONE
-
-        // 햅틱 피드백 제공
-        provideHapticFeedback()
-
-        // 플립 감지 중지
-        flipDetector?.stop()
-
-        // 플립 상태 UI 숨기기
-        flipStatusText.visibility = View.GONE
-        flipStatusIndicator.visibility = View.GONE
-
-        // 두 버튼 모두 표시: 안볼래요 유지하고 볼래요 추가
-        skipButton.visibility = View.VISIBLE  // 안볼래요 버튼 유지
-        buttonSpacer.visibility = View.VISIBLE  // 버튼 사이 간격
-        watchButton.visibility = View.VISIBLE  // 볼래요 버튼 표시
-
-        // 완료 콜백 호출
-        onCompleteListener?.invoke()
-    }
-
-    private fun provideHapticFeedback() {
-        // 햅틱 피드백 설정 확인
-        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        val isHapticEnabled = prefs.getBoolean("haptic_enabled", true)
-
-        if (!isHapticEnabled) {
-            Log.d(TAG, "Haptic feedback disabled by user")
-            return
-        }
-
-        try {
-            val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-            if (vibrator != null && vibrator.hasVibrator()) {
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    // Android 8.0 이상: VibrationEffect 사용 (짧고 부드러운 진동)
-                    vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
-                } else {
-                    // Android 8.0 미만: 기본 진동
-                    @Suppress("DEPRECATION")
-                    vibrator.vibrate(50)
-                }
-                Log.d(TAG, "Haptic feedback provided")
-            } else {
-                Log.d(TAG, "Vibrator not available")
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error providing haptic feedback", e)
-        }
-    }
-
-    private fun updateFlipStatus() {
-        if (isPhoneFlipped) {
-            flipStatusText.text = context.getString(R.string.flip_detected)
-            // 녹색으로 인디케이터 변경
-            flipStatusIndicator.setBackgroundResource(R.drawable.circle_shape)
-            flipStatusIndicator.backgroundTintList = android.content.res.ColorStateList.valueOf(
-                context.getColor(android.R.color.holo_green_dark)
-            )
-        } else {
-            flipStatusText.text = context.getString(R.string.flip_required)
-            // 빨간색으로 인디케이터 변경
-            flipStatusIndicator.setBackgroundResource(R.drawable.circle_shape)
-            flipStatusIndicator.backgroundTintList = android.content.res.ColorStateList.valueOf(
-                context.getColor(android.R.color.holo_red_dark)
-            )
-        }
-    }
 
     fun dismiss() {
         Log.d(TAG, ">>> dismiss() called")
-        countDownTimer?.cancel()
-        countDownTimer = null
-
-        flipDetector?.stop()
-        flipDetector = null
 
         overlayView?.let {
             Log.d(TAG, "Removing overlay view from WindowManager")
@@ -284,6 +194,26 @@ class BlockOverlay(private val context: Context) {
         val showing = overlayView != null
         Log.d(TAG, "isShowing() = $showing")
         return showing
+    }
+
+    fun updateButtonVisibility() {
+        if (overlayView == null) return
+
+        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val completedSessionId = prefs.getString(AppConstants.PREF_COMPLETED_SESSION_ID, "")
+        val isTimerCompleted = currentSessionId.isNotEmpty() && currentSessionId == completedSessionId
+
+        Log.d(TAG, "updateButtonVisibility - session: $currentSessionId, completed: $completedSessionId, isCompleted: $isTimerCompleted")
+
+        if (isTimerCompleted) {
+            // Timer completed, show watch button
+            startTimerButton.visibility = View.GONE
+            watchButton.visibility = View.VISIBLE
+        } else {
+            // Timer not completed, show timer button
+            startTimerButton.visibility = View.VISIBLE
+            watchButton.visibility = View.GONE
+        }
     }
 
     private fun getStatusBarHeight(): Int {

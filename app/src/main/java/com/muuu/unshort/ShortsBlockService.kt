@@ -1,13 +1,18 @@
 package com.muuu.unshort
 
 import android.accessibilityservice.AccessibilityService
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.media.AudioManager
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import java.util.UUID
 
 class ShortsBlockService : AccessibilityService() {
 
@@ -24,6 +29,10 @@ class ShortsBlockService : AccessibilityService() {
     private val handler = android.os.Handler(android.os.Looper.getMainLooper())
     private var foregroundCheckRunnable: Runnable? = null
     private var pendingOverlayJob: Runnable? = null  // pending 중인 오버레이 표시 job
+
+    // Timer-related variables
+    private var currentSessionId: String = ""
+    private var timerReceiver: BroadcastReceiver? = null
 
     // 차단 대상 앱 패키지명
     private val TARGET_APPS = setOf(
@@ -619,6 +628,12 @@ class ShortsBlockService : AccessibilityService() {
             try {
                 Log.d(TAG, "Executing pending overlay job for $packageName")
 
+                // Generate new session ID for this blocking session
+                currentSessionId = UUID.randomUUID().toString()
+                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                prefs.edit().putString(AppConstants.PREF_CURRENT_SESSION_ID, currentSessionId).apply()
+                Log.d(TAG, "New session created: $currentSessionId")
+
                 // 미디어 일시정지 시도
                 pauseMedia(packageName)
 
@@ -643,6 +658,7 @@ class ShortsBlockService : AccessibilityService() {
                         // 세션 초기화 (쇼츠를 나갔으므로)
                         overlayWasShown = false
                         allowedUntilScroll = false
+                        currentSessionId = ""
                         performGlobalBackAction()
                     },
                     onWatch = {
@@ -656,7 +672,8 @@ class ShortsBlockService : AccessibilityService() {
                         handler.postDelayed({
                             resumeMedia()
                         }, 100)
-                    }
+                    },
+                    sessionId = currentSessionId
                 )
                 Log.d(TAG, "BlockOverlay show() completed")
 
@@ -824,6 +841,39 @@ class ShortsBlockService : AccessibilityService() {
     override fun onServiceConnected() {
         super.onServiceConnected()
         Log.d(TAG, "Service connected")
+
+        // Register broadcast receiver for timer events
+        timerReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                when (intent?.action) {
+                    AppConstants.ACTION_TIMER_COMPLETED -> {
+                        val sessionId = intent.getStringExtra("session_id") ?: ""
+                        Log.d(TAG, "Timer completed broadcast received for session: $sessionId")
+
+                        // Update overlay buttons if it's showing and session matches
+                        if (blockOverlay?.isShowing() == true && sessionId == currentSessionId) {
+                            Log.d(TAG, "Updating overlay buttons for completed timer")
+                            blockOverlay?.updateButtonVisibility()
+                        }
+                    }
+                    AppConstants.ACTION_TIMER_CANCELLED -> {
+                        Log.d(TAG, "Timer cancelled broadcast received")
+                    }
+                }
+            }
+        }
+
+        val filter = IntentFilter().apply {
+            addAction(AppConstants.ACTION_TIMER_COMPLETED)
+            addAction(AppConstants.ACTION_TIMER_CANCELLED)
+        }
+        // Android 13+ requires explicit export flag for BroadcastReceivers
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(timerReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            registerReceiver(timerReceiver, filter)
+        }
+        Log.d(TAG, "BroadcastReceiver registered for timer events")
     }
 
     private fun startForegroundCheck() {
@@ -870,5 +920,11 @@ class ShortsBlockService : AccessibilityService() {
         stopForegroundCheck()
         blockOverlay?.dismiss()
         blockOverlay = null
+
+        // Unregister broadcast receiver
+        timerReceiver?.let {
+            unregisterReceiver(it)
+            timerReceiver = null
+        }
     }
 }
