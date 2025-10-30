@@ -2,7 +2,6 @@ package com.muuu.unshort
 
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
-import android.app.ActivityManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -61,7 +60,6 @@ class TimerActivity : AppCompatActivity() {
     private lateinit var currentSessionId: String
     private lateinit var flipDetector: FlipDetector
     private var forceCloseReceiver: BroadcastReceiver? = null
-    private var isFirstResume = true // 첫 번째 onResume인지 확인
 
     private val TAG = "TimerActivity"
 
@@ -331,70 +329,6 @@ class TimerActivity : AppCompatActivity() {
         successIcon.startAnimation(
             android.view.animation.AnimationUtils.loadAnimation(this, R.anim.scale_in)
         )
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "onResume() - isFirstResume: $isFirstResume")
-
-        // 첫 번째 onResume은 스킵 (onCreate 직후 호출됨)
-        if (isFirstResume) {
-            isFirstResume = false
-            Log.d(TAG, "First resume, skipping shorts app check")
-            return
-        }
-
-        // 두 번째 이후 onResume에서만 쇼츠 앱 확인 (백그라운드에서 돌아올 때)
-        Log.d(TAG, "Checking if shorts apps are still running")
-        if (!isShortsAppRunning()) {
-            Log.d(TAG, "No shorts app running, finishing TimerActivity")
-            finish()
-        } else {
-            Log.d(TAG, "Shorts app is still running")
-        }
-    }
-
-    /**
-     * 쇼츠 앱(YouTube, Instagram)이 실행 중인지 확인
-     * ActivityManager.getRunningTasks() 사용
-     * @return true if any target app is running, false otherwise
-     */
-    private fun isShortsAppRunning(): Boolean {
-        try {
-            val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager
-            if (activityManager == null) {
-                Log.w(TAG, "ActivityManager is null")
-                return true // 안전하게 true 반환 (앱이 실행 중이라고 가정)
-            }
-
-            // TARGET_APPS 정의 (ShortsBlockService와 동일)
-            val targetApps = setOf(
-                "com.google.android.youtube",
-                "com.instagram.android"
-            )
-
-            // 최근 실행 중인 태스크 확인 (최대 20개)
-            @Suppress("DEPRECATION")
-            val runningTasks = activityManager.getRunningTasks(20)
-
-            Log.d(TAG, "Checking ${runningTasks.size} running tasks")
-
-            for (taskInfo in runningTasks) {
-                val packageName = taskInfo.topActivity?.packageName
-                Log.d(TAG, "Task: $packageName")
-
-                if (packageName != null && targetApps.contains(packageName)) {
-                    Log.d(TAG, "Found running shorts app: $packageName")
-                    return true
-                }
-            }
-
-            Log.d(TAG, "No shorts apps found in running tasks")
-            return false
-        } catch (e: Exception) {
-            Log.e(TAG, "Error checking running tasks", e)
-            return true // 에러 시 안전하게 true 반환 (앱이 실행 중이라고 가정)
-        }
     }
 
     private fun registerForceCloseReceiver() {

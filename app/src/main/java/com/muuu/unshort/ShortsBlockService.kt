@@ -1,6 +1,7 @@
 package com.muuu.unshort
 
 import android.accessibilityservice.AccessibilityService
+import android.app.ActivityManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -121,6 +122,13 @@ class ShortsBlockService : AccessibilityService() {
                 Log.d(TAG, "Reset all flags - left shorts app")
 
                 return
+            }
+
+            // 쇼츠 앱 태스크가 완전히 종료되었는지 확인
+            // (최근 태스크에서 쇼츠 앱이 사라진 경우)
+            if (!isShortsAppTaskRunning()) {
+                Log.d(TAG, "Shorts app task removed, sending force close to TimerActivity")
+                sendTimerForceClose()
             }
         }
 
@@ -979,6 +987,38 @@ class ShortsBlockService : AccessibilityService() {
         timerReceiver?.let {
             unregisterReceiver(it)
             timerReceiver = null
+        }
+    }
+
+    /**
+     * 쇼츠 앱 태스크가 실행 중인지 확인
+     * @return true if any target app task is running, false otherwise
+     */
+    private fun isShortsAppTaskRunning(): Boolean {
+        try {
+            val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager
+            if (activityManager == null) {
+                Log.w(TAG, "ActivityManager is null")
+                return true // 안전하게 true 반환
+            }
+
+            // 최근 실행 중인 태스크 확인 (최대 20개)
+            @Suppress("DEPRECATION")
+            val runningTasks = activityManager.getRunningTasks(20)
+
+            for (taskInfo in runningTasks) {
+                val packageName = taskInfo.topActivity?.packageName
+                if (packageName != null && TARGET_APPS.contains(packageName)) {
+                    Log.d(TAG, "Found shorts app task: $packageName")
+                    return true
+                }
+            }
+
+            Log.d(TAG, "No shorts app tasks found")
+            return false
+        } catch (e: Exception) {
+            Log.e(TAG, "Error checking shorts app tasks", e)
+            return true // 에러 시 안전하게 true 반환
         }
     }
 
