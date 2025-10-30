@@ -173,17 +173,26 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:padding="32dp"
+                android:padding="24dp"
                 android:visibility="gone"
                 android:alpha="0">
 
-                <!-- Success Icon (체크마크) -->
+                <!-- Success Icon -->
+                <View
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/success_circle" />
+
+                <!-- Brand -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="✓"
-                    android:textSize="80sp"
-                    android:textColor="#10B981"
+                    android:text="un:short"
+                    android:textSize="16sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.03125"
                     android:layout_marginBottom="24dp" />
 
                 <!-- Success Title -->
@@ -200,10 +209,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="잠시 멈춰본 당신, 멋져요"
+                    android:text="잠시 멈춰본 당신, 멋져요\n이제 더 현명한 선택을 할 수 있을 거예요"
                     android:textSize="16sp"
-                    android:textColor="#8A8A8A"
-                    android:gravity="center" />
+                    android:textColor="#6B6B6B"
+                    android:gravity="center"
+                    android:lineSpacingMultiplier="1.5"
+                    android:layout_marginBottom="32dp" />
 
             </LinearLayout>
 
