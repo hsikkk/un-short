@@ -130,15 +130,15 @@
             android:background="@drawable/flip_indicator_dark">
 
             <!-- Phone Icon -->
-            <!-- CSS: width: 24px, height: 24px, border: 2px solid #000, border-radius: 4px -->
+            <!-- 가로로 긴 직사각형으로 핸드폰 모양 표현 -->
             <View
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="8dp"
+                android:id="@+id/phoneIcon"
+                android:layout_width="14dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/phone_icon_white" />
 
             <!-- Flip Text -->
-            <!-- CSS: font-size: 13px, font-weight: 300, color: #fff (dark mode) -->
             <TextView
                 android:id="@+id/flipText"
                 android:layout_width="wrap_content"

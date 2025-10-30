@@ -1,12 +1,21 @@
 package com.muuu.unshort
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +36,7 @@ class TimerActivity : AppCompatActivity() {
     private lateinit var secondsLabel: TextView
     private lateinit var flipIndicator: View
     private lateinit var flipStatusText: TextView
+    private lateinit var phoneIcon: View
     private lateinit var progressBar: ProgressBar
     private lateinit var skipButton: TextView
     private lateinit var motivationText: TextView
@@ -37,8 +47,13 @@ class TimerActivity : AppCompatActivity() {
     private var countDownTimer: CountDownTimer? = null
     private var remainingSeconds = 30
     private var timerDuration = 30 // 설정에서 읽어올 타이머 시간 (초)
+    private var remainingMillis = 0L // 남은 시간 (밀리초)
+    private var isTimerRunning = false
+    private var isFlipped = false
+    private var currentRotation = 0f // 현재 회전 각도 추적
     private lateinit var prefs: SharedPreferences
     private lateinit var currentSessionId: String
+    private lateinit var flipDetector: FlipDetector
 
     private val TAG = "TimerActivity"
 
@@ -55,10 +70,14 @@ class TimerActivity : AppCompatActivity() {
         // 설정에서 타이머 시간 읽어오기 (기본값: 30초)
         timerDuration = prefs.getInt("wait_time", 30)
         remainingSeconds = timerDuration
+        remainingMillis = (timerDuration * 1000).toLong()
         Log.d(TAG, "Timer duration set to: $timerDuration seconds")
 
         initViews()
-        startTimer()
+        initFlipDetector()
+
+        // 타이머는 폰이 뒤집혔을 때만 시작
+        Log.d(TAG, "Waiting for phone to flip...")
     }
 
     private fun initViews() {
@@ -66,6 +85,7 @@ class TimerActivity : AppCompatActivity() {
         secondsLabel = findViewById(R.id.timerUnit)
         flipIndicator = findViewById(R.id.flipIndicator)
         flipStatusText = findViewById(R.id.flipText)
+        phoneIcon = findViewById(R.id.phoneIcon)
         progressBar = findViewById(R.id.progressRing)
         skipButton = findViewById(R.id.skipButton)
         motivationText = findViewById(R.id.motivationText)
@@ -77,6 +97,7 @@ class TimerActivity : AppCompatActivity() {
         skipButton.setOnClickListener {
             // Cancel timer and trigger overlay's skip action (close overlay and return to app)
             countDownTimer?.cancel()
+            flipDetector.stop()
 
             // Send explicit broadcast to close overlay (필요 for Android 13+)
             val intent = android.content.Intent(AppConstants.ACTION_CLOSE_OVERLAY)
@@ -103,9 +124,150 @@ class TimerActivity : AppCompatActivity() {
         progressBar.progress = timerDuration * 100
     }
 
+    private fun initFlipDetector() {
+        flipDetector = FlipDetector(this)
+        flipDetector.start(object : FlipDetector.FlipListener {
+            override fun onFlipDetected(flipped: Boolean) {
+                isFlipped = flipped
+                Log.d(TAG, "Flip detected: $flipped")
+
+                if (flipped) {
+                    // 폰이 뒤집혔을 때 - 반복 애니메이션 중단하고 180도로 고정
+                    phoneIcon.animate().cancel()
+                    phoneIcon.clearAnimation() // Clear pending callbacks
+                    phoneIcon.animate()
+                        .rotationY(180f)
+                        .setDuration(400)
+                        .start()
+
+                    // Flip 인디케이터 페이드아웃 (공간 유지)
+                    flipIndicator.animate()
+                        .alpha(0f)
+                        .setDuration(300)
+                        .start()
+
+                    if (!isTimerRunning) {
+                        // 타이머가 아직 시작 안 했으면 시작
+                        startTimer()
+                    }
+                } else {
+                    // 폰이 다시 앞면으로 돌아왔을 때 - 반복 애니메이션 재시작
+                    phoneIcon.animate().cancel()
+                    phoneIcon.clearAnimation() // Clear pending callbacks
+                    phoneIcon.rotationY = 0f // Reset rotation immediately
+                    currentRotation = 0f // Reset rotation counter
+
+                    // Use postDelayed to ensure isFlipped state is stable
+                    phoneIcon.postDelayed({
+                        if (!isFlipped) { // Double-check state
+                            Log.d(TAG, "Restarting animation after unflip")
+                            animatePhoneIcon()
+                        }
+                    }, 100) // Small delay to ensure state is stable
+
+                    // Flip 인디케이터 페이드인 (공간 유지)
+                    flipIndicator.animate()
+                        .alpha(1f)
+                        .setDuration(300)
+                        .start()
+
+                    flipStatusText.text = "폰을 뒤집어주세요"
+                    if (isTimerRunning) {
+                        // 타이머 일시정지
+                        pauseTimer()
+                    }
+                }
+            }
+        })
+
+        // Start initial animation after view is ready
+        phoneIcon.post {
+            if (!isFlipped) {
+                Log.d(TAG, "Starting initial animation")
+                animatePhoneIcon()
+            }
+        }
+    }
+
+    private fun animatePhoneIcon() {
+        if (isFlipped) {
+            Log.d(TAG, "Animation cancelled - phone is flipped")
+            return
+        }
+
+        Log.d(TAG, "Starting phone icon animation cycle - rotating to ${currentRotation + 360}deg")
+
+        // 첫 번째 반바퀴: 0 → 180도, 투명 → 흰색
+        val firstHalfRotation = currentRotation + 180f
+        val colorToWhite = ValueAnimator.ofObject(
+            ArgbEvaluator(),
+            Color.TRANSPARENT,
+            Color.WHITE
+        )
+        colorToWhite.duration = 900
+        colorToWhite.interpolator = AccelerateDecelerateInterpolator()
+        colorToWhite.addUpdateListener { animator ->
+            val color = animator.animatedValue as Int
+            val drawable = phoneIcon.background as? GradientDrawable
+            drawable?.setColor(color)
+        }
+        colorToWhite.start()
+
+        phoneIcon.animate()
+            .rotationY(firstHalfRotation)
+            .setDuration(900)
+            .setInterpolator(AccelerateDecelerateInterpolator()) // 처음/끝 느리고 중간 빠르게
+            .withEndAction {
+                if (isFlipped) {
+                    Log.d(TAG, "Animation stopped at 180deg - phone flipped")
+                    colorToWhite.cancel()
+                    return@withEndAction
+                }
+
+                // 두 번째 반바퀴: 180 → 360도, 흰색 → 투명
+                currentRotation += 360f
+                val colorToTransparent = ValueAnimator.ofObject(
+                    ArgbEvaluator(),
+                    Color.WHITE,
+                    Color.TRANSPARENT
+                )
+                colorToTransparent.duration = 900
+                colorToTransparent.interpolator = AccelerateDecelerateInterpolator()
+                colorToTransparent.addUpdateListener { animator ->
+                    val color = animator.animatedValue as Int
+                    val drawable = phoneIcon.background as? GradientDrawable
+                    drawable?.setColor(color)
+                }
+                colorToTransparent.start()
+
+                phoneIcon.animate()
+                    .rotationY(currentRotation)
+                    .setDuration(900)
+                    .setInterpolator(AccelerateDecelerateInterpolator())
+                    .withEndAction {
+                        if (isFlipped) {
+                            Log.d(TAG, "Animation stopped at 360deg - phone flipped")
+                            colorToTransparent.cancel()
+                            return@withEndAction
+                        }
+                        // 계속 반복
+                        Log.d(TAG, "Animation cycle complete, restarting...")
+                        animatePhoneIcon()
+                    }
+                    .start()
+            }
+            .start()
+    }
+
     private fun startTimer() {
-        countDownTimer = object : CountDownTimer((timerDuration * 1000).toLong(), 10) { // Update every 10ms for ultra smooth animation
+        if (isTimerRunning) return
+
+        isTimerRunning = true
+        Log.d(TAG, "Starting timer with ${remainingMillis}ms remaining")
+
+        countDownTimer = object : CountDownTimer(remainingMillis, 10) { // Update every 10ms for ultra smooth animation
             override fun onTick(millisUntilFinished: Long) {
+                remainingMillis = millisUntilFinished
                 remainingSeconds = (millisUntilFinished / 1000).toInt() + 1
                 val progressValue = ((millisUntilFinished / 10).toInt())
 
@@ -114,6 +276,8 @@ class TimerActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
+                isTimerRunning = false
+
                 // Timer completed - show success screen
                 timerText.text = "0"
                 progressBar.progress = 0
@@ -124,9 +288,20 @@ class TimerActivity : AppCompatActivity() {
                     Log.d(TAG, "Timer completed for session: $currentSessionId")
                 }
 
+                // Stop flip detector
+                flipDetector.stop()
+
                 showSuccessScreen()
             }
         }.start()
+    }
+
+    private fun pauseTimer() {
+        if (!isTimerRunning) return
+
+        isTimerRunning = false
+        countDownTimer?.cancel()
+        Log.d(TAG, "Timer paused with ${remainingMillis}ms remaining")
     }
 
     private fun showSuccessScreen() {
@@ -148,5 +323,6 @@ class TimerActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         countDownTimer?.cancel()
+        flipDetector.stop()
     }
 }
