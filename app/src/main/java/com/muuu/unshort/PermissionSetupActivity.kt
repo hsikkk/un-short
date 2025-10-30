@@ -1,10 +1,7 @@
 package com.muuu.unshort
 
-import android.content.Intent
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -30,10 +27,13 @@ class PermissionSetupActivity : AppCompatActivity() {
     private var settingsButton: Button? = null
     private var overlayButton: Button? = null
     private var completeButton: Button? = null
+    private lateinit var permissionUIHelper: PermissionUIHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_permission_setup)
+
+        permissionUIHelper = PermissionUIHelper(this)
 
         // View 초기화
         backButton = findViewById(R.id.backButton)
@@ -57,17 +57,12 @@ class PermissionSetupActivity : AppCompatActivity() {
 
         // 접근성 설정 버튼
         settingsButton?.setOnClickListener {
-            val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
-            startActivity(intent)
+            PermissionUtils.openAccessibilitySettings(this)
         }
 
         // 오버레이 설정 버튼
         overlayButton?.setOnClickListener {
-            val intent = Intent(
-                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:$packageName")
-            )
-            startActivity(intent)
+            PermissionUtils.openOverlaySettings(this)
         }
 
         // 완료 버튼
@@ -85,66 +80,27 @@ class PermissionSetupActivity : AppCompatActivity() {
     }
 
     private fun updatePermissionUI() {
-        val accessibilityEnabled = isAccessibilityServiceEnabled()
-        val overlayEnabled = Settings.canDrawOverlays(this)
-
-        // 접근성 서비스 상태 업데이트
-        if (accessibilityEnabled) {
-            serviceStatusText?.text = "접근성 서비스 ✓"
-            serviceStatusText?.setTextColor(getColor(R.color.success))
-            serviceDescription?.text = "설정 완료"
-            serviceDescription?.setTextColor(getColor(R.color.success))
-            settingsButton?.visibility = View.GONE
-            accessibilityCard?.alpha = 0.6f
-        } else {
-            serviceStatusText?.text = "접근성 서비스"
-            serviceStatusText?.setTextColor(getColor(R.color.gray_900))
-            serviceDescription?.text = "아직 설정되지 않았습니다"
-            serviceDescription?.setTextColor(getColor(R.color.error))
-            settingsButton?.visibility = View.VISIBLE
-            accessibilityCard?.alpha = 1.0f
-        }
-
-        // 오버레이 권한 상태 업데이트
-        if (overlayEnabled) {
-            overlayStatusText?.text = "다른 앱 위에 표시 ✓"
-            overlayStatusText?.setTextColor(getColor(R.color.success))
-            overlayDescription?.text = "설정 완료"
-            overlayDescription?.setTextColor(getColor(R.color.success))
-            overlayButton?.visibility = View.GONE
-            overlayCard?.alpha = 0.6f
-        } else {
-            overlayStatusText?.text = "다른 앱 위에 표시"
-            overlayStatusText?.setTextColor(getColor(R.color.gray_900))
-            overlayDescription?.text = "아직 설정되지 않았습니다"
-            overlayDescription?.setTextColor(getColor(R.color.error))
-            overlayButton?.visibility = View.VISIBLE
-            overlayCard?.alpha = 1.0f
-        }
-
-        // 모든 권한 완료 시 완료 버튼 표시
-        if (accessibilityEnabled && overlayEnabled) {
-            completeButton?.visibility = View.VISIBLE
-        } else {
-            completeButton?.visibility = View.GONE
-        }
-    }
-
-    private fun isAccessibilityServiceEnabled(): Boolean {
-        val accessibilityEnabled = Settings.Secure.getInt(
-            contentResolver,
-            Settings.Secure.ACCESSIBILITY_ENABLED,
-            0
+        // 접근성 서비스 카드 업데이트
+        permissionUIHelper.updateAccessibilityCard(
+            PermissionUIHelper.PermissionUIElements(
+                card = accessibilityCard,
+                statusText = serviceStatusText,
+                descriptionText = serviceDescription,
+                settingsButton = settingsButton
+            )
         )
 
-        if (accessibilityEnabled == 1) {
-            val services = Settings.Secure.getString(
-                contentResolver,
-                Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+        // 오버레이 권한 카드 업데이트
+        permissionUIHelper.updateOverlayCard(
+            PermissionUIHelper.PermissionUIElements(
+                card = overlayCard,
+                statusText = overlayStatusText,
+                descriptionText = overlayDescription,
+                settingsButton = overlayButton
             )
-            return services?.contains("${packageName}/${ShortsBlockService::class.java.name}") == true
-        }
+        )
 
-        return false
+        // 완료 버튼 표시 업데이트
+        permissionUIHelper.updateCompleteButton(completeButton)
     }
 }

@@ -1,12 +1,10 @@
 package com.muuu.unshort
 
-import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -122,27 +120,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkPermissions(): Boolean {
-        val accessibilityEnabled = isAccessibilityServiceEnabled()
-        val overlayEnabled = Settings.canDrawOverlays(this)
-        return accessibilityEnabled && overlayEnabled
-    }
-
-    private fun isAccessibilityServiceEnabled(): Boolean {
-        val accessibilityEnabled = Settings.Secure.getInt(
-            contentResolver,
-            Settings.Secure.ACCESSIBILITY_ENABLED,
-            0
-        )
-
-        if (accessibilityEnabled == 1) {
-            val services = Settings.Secure.getString(
-                contentResolver,
-                Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
-            )
-            return services?.contains("${packageName}/${ShortsBlockService::class.java.name}") == true
-        }
-
-        return false
+        return PermissionUtils.hasAllPermissions(this)
     }
 
     private fun updateUI(isEnabled: Boolean, animate: Boolean = false) {

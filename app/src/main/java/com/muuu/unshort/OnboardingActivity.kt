@@ -4,11 +4,9 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +45,7 @@ class OnboardingActivity : AppCompatActivity() {
     private var onboardingSettingsButton: Button? = null
     private var onboardingOverlayButton: Button? = null
     private var startButton: Button? = null
+    private lateinit var permissionUIHelper: PermissionUIHelper
 
     private val layouts = listOf(
         R.layout.onboarding_page_1,
@@ -60,6 +59,7 @@ class OnboardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
 
+        permissionUIHelper = PermissionUIHelper(this)
         viewPager = findViewById(R.id.viewPager)
 
         indicators = listOf(
@@ -110,67 +110,28 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     private fun updatePermissionUI() {
-        val accessibilityEnabled = isAccessibilityServiceEnabled()
-        val overlayEnabled = Settings.canDrawOverlays(this)
-
-        // 접근성 서비스 상태 업데이트
-        if (accessibilityEnabled) {
-            onboardingServiceStatusText?.text = "접근성 서비스 ✓"
-            onboardingServiceStatusText?.setTextColor(getColor(R.color.success))
-            onboardingServiceDescription?.text = "설정 완료"
-            onboardingServiceDescription?.setTextColor(getColor(R.color.success))
-            onboardingSettingsButton?.visibility = View.GONE
-            accessibilityCard?.alpha = 0.6f
-        } else {
-            onboardingServiceStatusText?.text = "접근성 서비스"
-            onboardingServiceStatusText?.setTextColor(getColor(R.color.gray_900))
-            onboardingServiceDescription?.text = "아직 설정되지 않았습니다"
-            onboardingServiceDescription?.setTextColor(getColor(R.color.error))
-            onboardingSettingsButton?.visibility = View.VISIBLE
-            accessibilityCard?.alpha = 1.0f
-        }
-
-        // 오버레이 권한 상태 업데이트 (순서 상관없이 자유롭게)
-        if (overlayEnabled) {
-            onboardingOverlayStatusText?.text = "다른 앱 위에 표시 ✓"
-            onboardingOverlayStatusText?.setTextColor(getColor(R.color.success))
-            onboardingOverlayDescription?.text = "설정 완료"
-            onboardingOverlayDescription?.setTextColor(getColor(R.color.success))
-            onboardingOverlayButton?.visibility = View.GONE
-            overlayCard?.alpha = 0.6f
-        } else {
-            onboardingOverlayStatusText?.text = "다른 앱 위에 표시"
-            onboardingOverlayStatusText?.setTextColor(getColor(R.color.gray_900))
-            onboardingOverlayDescription?.text = "아직 설정되지 않았습니다"
-            onboardingOverlayDescription?.setTextColor(getColor(R.color.error))
-            onboardingOverlayButton?.visibility = View.VISIBLE
-            overlayCard?.alpha = 1.0f
-        }
-
-        // 모든 권한 완료 시 시작하기 버튼 표시
-        if (accessibilityEnabled && overlayEnabled) {
-            startButton?.visibility = View.VISIBLE
-        } else {
-            startButton?.visibility = View.GONE
-        }
-    }
-
-    private fun isAccessibilityServiceEnabled(): Boolean {
-        val accessibilityEnabled = Settings.Secure.getInt(
-            contentResolver,
-            Settings.Secure.ACCESSIBILITY_ENABLED,
-            0
+        // 접근성 서비스 카드 업데이트
+        permissionUIHelper.updateAccessibilityCard(
+            PermissionUIHelper.PermissionUIElements(
+                card = accessibilityCard,
+                statusText = onboardingServiceStatusText,
+                descriptionText = onboardingServiceDescription,
+                settingsButton = onboardingSettingsButton
+            )
         )
 
-        if (accessibilityEnabled == 1) {
-            val services = Settings.Secure.getString(
-                contentResolver,
-                Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+        // 오버레이 권한 카드 업데이트
+        permissionUIHelper.updateOverlayCard(
+            PermissionUIHelper.PermissionUIElements(
+                card = overlayCard,
+                statusText = onboardingOverlayStatusText,
+                descriptionText = onboardingOverlayDescription,
+                settingsButton = onboardingOverlayButton
             )
-            return services?.contains("${packageName}/${ShortsBlockService::class.java.name}") == true
-        }
+        )
 
-        return false
+        // 시작하기 버튼 표시 업데이트
+        permissionUIHelper.updateCompleteButton(startButton)
     }
 
     private fun finishOnboarding() {
@@ -225,17 +186,12 @@ class OnboardingActivity : AppCompatActivity() {
         // 버튼 리스너 설정
         onboardingSettingsButton?.setOnClickListener {
             Log.d("OnboardingActivity", "Accessibility button clicked")
-            val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
-            startActivity(intent)
+            PermissionUtils.openAccessibilitySettings(this)
         }
 
         onboardingOverlayButton?.setOnClickListener {
             Log.d("OnboardingActivity", "Overlay button clicked")
-            val intent = Intent(
-                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:$packageName")
-            )
-            startActivity(intent)
+            PermissionUtils.openOverlaySettings(this)
         }
 
         startButton?.setOnClickListener {
