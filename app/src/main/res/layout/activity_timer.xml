@@ -188,7 +188,7 @@
             android:id="@+id/skipButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="그냥 안볼래요"
+            android:text="안 볼래요"
             android:textSize="15sp"
             android:textColor="#000000"
             android:fontFamily="sans-serif-medium"
