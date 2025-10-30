@@ -58,6 +58,7 @@ class TimerActivity : AppCompatActivity() {
     private var currentRotation = 0f // 현재 회전 각도 추적
     private lateinit var prefs: SharedPreferences
     private lateinit var currentSessionId: String
+    private var sourcePackageName: String = ""
     private lateinit var flipDetector: FlipDetector
     private var forceCloseReceiver: BroadcastReceiver? = null
 
@@ -71,9 +72,10 @@ class TimerActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         Log.d(TAG, "Screen will stay on during timer")
 
-        // Get session ID from intent
+        // Get session ID and source package from intent
         currentSessionId = intent.getStringExtra("session_id") ?: ""
-        Log.d(TAG, "onCreate with session_id: $currentSessionId")
+        sourcePackageName = intent.getStringExtra("source_package") ?: ""
+        Log.d(TAG, "onCreate with session_id: $currentSessionId, source_package: $sourcePackageName")
 
         prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
 
@@ -110,13 +112,15 @@ class TimerActivity : AppCompatActivity() {
             countDownTimer?.cancel()
             flipDetector.stop()
 
-            // Send explicit broadcast to close overlay (필요 for Android 13+)
+            // Send explicit broadcast to close overlay and return to source app
             val intent = android.content.Intent(AppConstants.ACTION_CLOSE_OVERLAY)
-            intent.setPackage(packageName) // Make it explicit for same-app broadcast
+            intent.setPackage(packageName)
+            intent.putExtra("source_package", sourcePackageName)
             sendBroadcast(intent)
-            Log.d(TAG, "Skip button clicked - broadcast sent to close overlay")
+            Log.d(TAG, "Skip button clicked - broadcast sent to close overlay and return to $sourcePackageName")
 
-            finish()
+            // Launch source app and finish this activity
+            returnToSourceApp()
         }
 
         // Continue button (on success screen)
@@ -126,7 +130,9 @@ class TimerActivity : AppCompatActivity() {
                 prefs.edit().putString(AppConstants.PREF_COMPLETED_SESSION_ID, currentSessionId).apply()
                 Log.d(TAG, "Timer completed for session: $currentSessionId")
             }
-            finish()
+
+            // Launch source app and finish this activity
+            returnToSourceApp()
         }
 
         // Set initial values
@@ -329,6 +335,19 @@ class TimerActivity : AppCompatActivity() {
         successIcon.startAnimation(
             android.view.animation.AnimationUtils.loadAnimation(this, R.anim.scale_in)
         )
+    }
+
+    private fun returnToSourceApp() {
+        Log.d(TAG, "returnToSourceApp called, source: $sourcePackageName")
+
+        // Move this task to back and finish
+        moveTaskToBack(true)
+
+        // Finish this activity and all activities in this task
+        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+            finishAndRemoveTask()
+            Log.d(TAG, "finishAndRemoveTask() called")
+        }, 100)
     }
 
     private fun registerForceCloseReceiver() {

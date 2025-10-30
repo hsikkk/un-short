@@ -31,13 +31,14 @@ class BlockOverlay(private val context: Context) {
     private var onSkipListener: (() -> Unit)? = null
     private var onWatchListener: (() -> Unit)? = null
     private var currentSessionId: String = ""
+    private var sourcePackageName: String = ""
 
     // Handler for periodic timer completion checks
     private var checkHandler: Handler? = null
     private var checkRunnable: Runnable? = null
 
     @SuppressLint("InflateParams")
-    fun show(onDismiss: () -> Unit, onComplete: () -> Unit, onSkip: (() -> Unit)? = null, onWatch: (() -> Unit)? = null, sessionId: String = "") {
+    fun show(onDismiss: () -> Unit, onComplete: () -> Unit, onSkip: (() -> Unit)? = null, onWatch: (() -> Unit)? = null, sessionId: String = "", sourcePackage: String = "") {
         Log.d(TAG, "show() called with sessionId: $sessionId")
         if (overlayView != null) {
             Log.d(TAG, "Overlay already showing, ignoring")
@@ -49,6 +50,7 @@ class BlockOverlay(private val context: Context) {
         this.onSkipListener = onSkip
         this.onWatchListener = onWatch
         this.currentSessionId = sessionId
+        this.sourcePackageName = sourcePackage
 
         // 오버레이 뷰 생성
         Log.d(TAG, "Inflating overlay view")
@@ -165,9 +167,10 @@ class BlockOverlay(private val context: Context) {
             val intent = Intent(context, TimerActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 putExtra("session_id", currentSessionId)
+                putExtra("source_package", sourcePackageName)
             }
             context.startActivity(intent)
-            Log.d(TAG, "Started TimerActivity with session: $currentSessionId")
+            Log.d(TAG, "Started TimerActivity with session: $currentSessionId, source: $sourcePackageName")
             // 오버레이는 유지 (타이머 완료 후 돌아올 예정)
         }
 

@@ -707,7 +707,8 @@ class ShortsBlockService : AccessibilityService() {
                             resumeMedia()
                         }, 100)
                     },
-                    sessionId = currentSessionId
+                    sessionId = currentSessionId,
+                    sourcePackage = packageName
                 )
                 Log.d(TAG, "BlockOverlay show() completed")
 
