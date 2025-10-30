@@ -21,7 +21,6 @@ class BlockOverlay(private val context: Context) {
     private lateinit var watchButton: TextView
     private lateinit var startTimerButton: TextView
     private lateinit var buttonSpacer: View
-    private lateinit var appSettingsButton: TextView
 
     private var onDismissListener: (() -> Unit)? = null
     private var onCompleteListener: (() -> Unit)? = null
@@ -50,7 +49,6 @@ class BlockOverlay(private val context: Context) {
         watchButton = overlayView!!.findViewById(R.id.watchButton)
         startTimerButton = overlayView!!.findViewById(R.id.startTimerButton)
         buttonSpacer = overlayView!!.findViewById(R.id.buttonSpacer)
-        appSettingsButton = overlayView!!.findViewById(R.id.appSettingsButton)
         Log.d(TAG, "Overlay view inflated successfully")
 
         // Check timer completion status
@@ -112,22 +110,6 @@ class BlockOverlay(private val context: Context) {
             context.startActivity(intent)
             Log.d(TAG, "Started TimerActivity with session: $currentSessionId")
             // 오버레이는 유지 (타이머 완료 후 돌아올 예정)
-        }
-
-        // "앱 설정 열기" 버튼 클릭 리스너 설정
-        appSettingsButton.setOnClickListener {
-            Log.d(TAG, ">>> App Settings button clicked in BlockOverlay")
-            // MainActivity로 이동
-            val intent = Intent(context, MainActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            }
-            context.startActivity(intent)
-            Log.d(TAG, "Started MainActivity")
-            // 오버레이 닫기
-            dismiss()
-            // dismiss 리스너 호출
-            onDismissListener?.invoke()
-            Log.d(TAG, "App Settings button handler complete")
         }
 
         // 윈도우 매니저 파라미터 설정 - 실제 화면 + 상태바 + 네비게이션바 전체 덮기
