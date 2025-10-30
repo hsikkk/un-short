@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Progress Ring - Dark Mode from timer.html -->
+<!-- CSS: stroke-bg: #1F1F1F (0.75px), stroke-fill: #fff (0.75px) - ultra thin -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background ring: ultra thin (0.75px) -->
+    <item>
+        <shape android:shape="ring"
+            android:innerRadiusRatio="2.4"
+            android:thicknessRatio="186.67"
+            android:useLevel="false">
+            <solid android:color="#1F1F1F" />
+        </shape>
+    </item>
+    <!-- Progress ring: ultra thin (0.75px) -->
+    <item>
+        <shape android:shape="ring"
+            android:innerRadiusRatio="2.4"
+            android:thicknessRatio="186.67"
+            android:useLevel="true">
+            <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+</layer-list>

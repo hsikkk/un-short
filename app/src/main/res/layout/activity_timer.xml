@@ -1,197 +1,311 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Exact replica of tmp/timer.html
+    All measurements converted from CSS to Android (px → dp at 1:1)
+-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_dark"
-    android:keepScreenOn="true">
+    android:background="#000000">
 
-    <!-- App branding -->
-    <TextView
-        android:id="@+id/brandingText"
-        android:layout_width="wrap_content"
+    <!-- Header -->
+    <!-- CSS: padding: 20px 24px, display: flex, justify-content: space-between -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:text="un:short"
-        android:textSize="28sp"
-        android:fontFamily="sans-serif-black"
-        android:textColor="@color/white"
-        android:letterSpacing="0.05"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <!-- Flip status card -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/flipStatusCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="0dp"
-        app:cardBackgroundColor="#1AFFFFFF"
-        app:layout_constraintTop_toBottomOf="@id/brandingText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        <!-- Brand -->
+        <!-- CSS: font-size: 18px, font-weight: 700, letter-spacing: 0.5px, color: #fff (dark mode) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="un:short"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:letterSpacing="0.03125" />
 
+
+    </LinearLayout>
+
+    <!-- Main Content -->
+    <!-- CSS: flex: 1, display: flex, flex-direction: column, align-items: center, justify-content: center, padding: 0 24px -->
+    <LinearLayout
+        android:id="@+id/mainContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintBottom_toTopOf="@id/motivationText">
+
+        <!-- Timer Container -->
+        <!-- CSS: width: 240px, height: 240px, margin-bottom: 40dp -->
+        <FrameLayout
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_marginBottom="40dp">
+
+            <!-- Progress Ring -->
+            <ProgressBar
+                android:id="@+id/progressRing"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:progressDrawable="@drawable/progress_ring_dark"
+                android:max="30"
+                android:progress="30"
+                android:rotation="-90" />
+
+            <!-- Timer Display -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <!-- Timer Number -->
+                <!-- CSS: font-size: 68px, font-weight: 100, color: #fff (dark mode), line-height: 1 -->
+                <TextView
+                    android:id="@+id/timerNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30"
+                    android:textSize="68sp"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="sans-serif-thin"
+                    android:includeFontPadding="false" />
+
+                <!-- Timer Unit -->
+                <!-- CSS: font-size: 13px, color: #8A8A8A, margin-top: 6dp, letter-spacing: 1px, text-transform: uppercase -->
+                <TextView
+                    android:id="@+id/timerUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="seconds"
+                    android:textSize="13sp"
+                    android:textColor="#8A8A8A"
+                    android:fontFamily="sans-serif-light"
+                    android:letterSpacing="0.08"
+                    android:textAllCaps="true" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <!-- Instructions -->
+        <!-- CSS: text-align: center, padding: 0 40px -->
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp">
+
+            <!-- Title -->
+            <!-- CSS: font-size: 17px, font-weight: 400, color: #fff (dark mode), margin-bottom: 8dp -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="잠시 생각해보기"
+                android:textSize="17sp"
+                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Description -->
+            <!-- CSS: font-size: 14px, color: #8A8A8A (dark mode), line-height: 1.5 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="폰을 뒤집고 진짜 봐야 하는지 생각해보세요\n이 시간이 아깝다면, 영상은 더 아깝지 않을까요?"
+                android:textSize="14sp"
+                android:textColor="#8A8A8A"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.5" />
+
+        </LinearLayout>
+
+        <!-- Flip Indicator -->
+        <!-- CSS: gap: 8px, margin-top: 32px, padding: 12px 20px, background: #F4F4F4, border-radius: 24px -->
+        <LinearLayout
+            android:id="@+id/flipIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="12dp">
+            android:layout_marginTop="32dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:background="@drawable/flip_indicator_dark">
 
+            <!-- Phone Icon -->
+            <!-- CSS: width: 24px, height: 24px, border: 2px solid #000, border-radius: 4px -->
             <View
-                android:id="@+id/flipStatusIndicator"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:background="@drawable/circle_shape"
-                android:backgroundTint="@color/error"
-                android:layout_marginEnd="12dp" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/phone_icon_white" />
 
+            <!-- Flip Text -->
+            <!-- CSS: font-size: 13px, font-weight: 300, color: #fff (dark mode) -->
             <TextView
-                android:id="@+id/flipStatusText"
+                android:id="@+id/flipText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="대기중"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:fontFamily="sans-serif-medium" />
+                android:text="폰을 뒤집어주세요"
+                android:textSize="13sp"
+                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif-light" />
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
-    <!-- Timer container -->
-    <FrameLayout
-        android:id="@+id/timerContainer"
-        android:layout_width="260dp"
-        android:layout_height="260dp"
-        android:layout_marginTop="48dp"
-        app:layout_constraintTop_toBottomOf="@id/flipStatusCard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <!-- Progress bar background -->
-        <ProgressBar
-            android:id="@+id/timerProgressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:progressDrawable="@drawable/circular_progress"
-            android:max="30"
-            android:progress="30"
-            android:rotation="-90" />
-
-        <!-- Timer display card -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            app:cardCornerRadius="100dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="#1A8B5CF6">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <!-- Timer number -->
-                <TextView
-                    android:id="@+id/timerText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="30"
-                    android:textSize="84sp"
-                    android:textStyle="bold"
-                    android:fontFamily="sans-serif-black"
-                    android:textColor="@color/accent_purple"
-                    android:letterSpacing="-0.03" />
-
-                <!-- Seconds label -->
-                <TextView
-                    android:id="@+id/secondsLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-8dp"
-                    android:text="초"
-                    android:textSize="24sp"
-                    android:fontFamily="sans-serif-medium"
-                    android:textColor="@color/accent_purple"
-                    android:alpha="0.8" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-    </FrameLayout>
-
-    <!-- Instruction text -->
+    <!-- Motivational Text -->
+    <!-- CSS: position: fixed, bottom: 80px, left: 24px, right: 24px, font-size: 14px, color: #8A8A8A, font-style: italic, opacity: 0 -->
     <TextView
-        android:id="@+id/instructionText"
-        android:layout_width="wrap_content"
+        android:id="@+id/motivationText"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_marginHorizontal="32dp"
-        android:text="폰을 뒤집어 놓으면\n타이머가 시작됩니다"
-        android:textSize="18sp"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:fontFamily="sans-serif-light"
-        android:lineSpacingExtra="6dp"
-        android:alpha="0.8"
-        app:layout_constraintTop_toBottomOf="@id/timerContainer"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="80dp"
+        android:text="깊게 숨을 쉬어보세요"
+        android:textSize="14sp"
+        android:textColor="#8A8A8A"
+        android:textStyle="italic"
+        android:gravity="center"
+        android:alpha="0"
+        app:layout_constraintBottom_toTopOf="@id/bottomActions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Button container -->
+    <!-- Bottom Actions -->
+    <!-- CSS: padding: 24px -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/bottomActions"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="24dp"
+        android:background="#000000"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Skip Button -->
+        <!-- CSS: padding: 14dp, background: #000, border: 1px solid #2E2E2E, border-radius: 12dp, font-size: 15sp, font-weight: 500, color: #6B6B6B -->
+        <TextView
+            android:id="@+id/skipButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:textSize="15sp"
+            android:textColor="#6B6B6B"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:background="@drawable/btn_timer_skip_dark"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <!-- Success Screen (hidden initially) -->
+    <!-- CSS: position: absolute, background: #000 (dark mode), full screen -->
+    <LinearLayout
+        android:id="@+id/successScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:gravity="center"
-        android:layout_marginBottom="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:background="#000000"
+        android:padding="24dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <!-- Cancel button -->
+        <!-- Success Icon -->
+        <!-- CSS: width: 80px, height: 80px, border: 3px solid #fff, border-radius: 50%, margin-bottom: 24px -->
+        <View
+            android:id="@+id/successIcon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/success_circle" />
+
+        <!-- Brand -->
         <TextView
-            android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_transparent"
-            android:text="포기하기"
+            android:text="un:short"
             android:textSize="16sp"
-            android:textColor="@color/white"
-            android:paddingHorizontal="32dp"
-            android:paddingVertical="14dp"
-            android:gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:fontFamily="sans-serif-medium"
-            android:alpha="0.7" />
-
-        <!-- Complete button (hidden initially) -->
-        <TextView
-            android:id="@+id/completeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_watch"
-            android:text="쇼츠로 돌아가기"
-            android:textSize="16sp"
+            android:textColor="#FFFFFF"
             android:textStyle="bold"
-            android:textColor="@color/white"
-            android:paddingHorizontal="32dp"
-            android:paddingVertical="14dp"
+            android:letterSpacing="0.03125"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Success Title -->
+        <!-- CSS: font-size: 24px, font-weight: 700, margin-bottom: 12px -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="해냈어요!"
+            android:textSize="24sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Success Message -->
+        <!-- CSS: font-size: 16px, color: #6B6B6B, line-height: 1.5, margin-bottom: 32px -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="잠시 멈춰본 당신, 멋져요\n이제 더 현명한 선택을 할 수 있을 거예요"
+            android:textSize="16sp"
+            android:textColor="#6B6B6B"
             android:gravity="center"
-            android:clickable="true"
-            android:focusable="true"
+            android:lineSpacingMultiplier="1.5"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Continue Button -->
+        <!-- CSS: padding: 16px 40px, background: #fff, border-radius: 12px, font-size: 16px, font-weight: 600 -->
+        <TextView
+            android:id="@+id/continueButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="돌아가기"
+            android:textSize="16sp"
+            android:textColor="#000000"
             android:fontFamily="sans-serif-medium"
-            android:visibility="gone" />
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:background="@drawable/btn_success_continue"
+            android:clickable="true"
+            android:focusable="true" />
 
     </LinearLayout>
 

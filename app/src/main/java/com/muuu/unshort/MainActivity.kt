@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
         // 토글 스위치 클릭 리스너
         toggleContainer.setOnClickListener {
             val currentState = prefs.getBoolean("blocking_enabled", true)
