@@ -181,7 +181,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_watch"
-            android:text="돌아가기"
+            android:text="쇼츠로 돌아가기"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@color/white"

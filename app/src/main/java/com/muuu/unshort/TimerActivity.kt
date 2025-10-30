@@ -205,8 +205,13 @@ class TimerActivity : AppCompatActivity() {
         // Stop flip detection
         flipDetector.stop()
 
-        // Update flip status
-        updateFlipStatus()
+        // Update flip status with completion message
+        flipStatusText.text = "완료!"
+        flipStatusIndicator.setBackgroundResource(R.drawable.circle_shape)
+        flipStatusIndicator.backgroundTintList = android.content.res.ColorStateList.valueOf(
+            getColor(android.R.color.holo_green_dark)
+        )
+        instructionText.text = "타이머가 완료되었습니다!\n이제 쇼츠를 볼 수 있습니다."
 
         // Show complete button, hide cancel button
         completeButton.visibility = View.VISIBLE
@@ -301,7 +306,7 @@ class TimerActivity : AppCompatActivity() {
         flipStatusIndicator.backgroundTintList = android.content.res.ColorStateList.valueOf(
             getColor(android.R.color.holo_green_dark)
         )
-        instructionText.text = "이미 타이머를 완료했습니다"
+        instructionText.text = "이미 타이머를 완료했습니다!\n쇼츠로 돌아갈 수 있습니다."
     }
 
     private fun returnToOverlay() {
