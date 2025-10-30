@@ -19,6 +19,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -65,6 +66,10 @@ class TimerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer)
+
+        // 화면 꺼짐 방지
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        Log.d(TAG, "Screen will stay on during timer")
 
         // Get session ID from intent
         currentSessionId = intent.getStringExtra("session_id") ?: ""
@@ -356,6 +361,11 @@ class TimerActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+
+        // 화면 꺼짐 방지 플래그 제거
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        Log.d(TAG, "Cleared keep screen on flag")
+
         countDownTimer?.cancel()
         flipDetector.stop()
 
