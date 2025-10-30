@@ -8,6 +8,7 @@ object AppConstants {
     const val ACTION_TIMER_COMPLETED = "com.muuu.unshort.TIMER_COMPLETED"
     const val ACTION_TIMER_CANCELLED = "com.muuu.unshort.TIMER_CANCELLED"
     const val ACTION_CLOSE_OVERLAY = "com.muuu.unshort.CLOSE_OVERLAY"
+    const val ACTION_TIMER_FORCE_CLOSE = "com.muuu.unshort.TIMER_FORCE_CLOSE"
 
     // SharedPreferences keys for timer
     const val PREF_CURRENT_SESSION_ID = "current_session_id"

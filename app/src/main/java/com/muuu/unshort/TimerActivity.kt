@@ -2,7 +2,10 @@ package com.muuu.unshort
 
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Color
@@ -11,6 +14,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -54,6 +58,7 @@ class TimerActivity : AppCompatActivity() {
     private lateinit var prefs: SharedPreferences
     private lateinit var currentSessionId: String
     private lateinit var flipDetector: FlipDetector
+    private var forceCloseReceiver: BroadcastReceiver? = null
 
     private val TAG = "TimerActivity"
 
@@ -75,6 +80,7 @@ class TimerActivity : AppCompatActivity() {
 
         initViews()
         initFlipDetector()
+        registerForceCloseReceiver()
 
         // 타이머는 폰이 뒤집혔을 때만 시작
         Log.d(TAG, "Waiting for phone to flip...")
@@ -320,9 +326,48 @@ class TimerActivity : AppCompatActivity() {
         )
     }
 
+    private fun registerForceCloseReceiver() {
+        forceCloseReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                when (intent?.action) {
+                    AppConstants.ACTION_TIMER_FORCE_CLOSE -> {
+                        Log.d(TAG, "Received TIMER_FORCE_CLOSE broadcast, closing activity")
+                        finish()
+                    }
+                }
+            }
+        }
+
+        val filter = IntentFilter().apply {
+            addAction(AppConstants.ACTION_TIMER_FORCE_CLOSE)
+        }
+
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                registerReceiver(forceCloseReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+            } else {
+                registerReceiver(forceCloseReceiver, filter)
+            }
+            Log.d(TAG, "Registered force close receiver")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to register force close receiver", e)
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         countDownTimer?.cancel()
         flipDetector.stop()
+
+        // Unregister force close receiver
+        forceCloseReceiver?.let {
+            try {
+                unregisterReceiver(it)
+                forceCloseReceiver = null
+                Log.d(TAG, "Unregistered force close receiver")
+            } catch (e: Exception) {
+                Log.e(TAG, "Error unregistering force close receiver", e)
+            }
+        }
     }
 }

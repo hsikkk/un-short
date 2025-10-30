@@ -230,6 +230,13 @@ class ShortsBlockService : AccessibilityService() {
                     lastShortsContentHash = 0
                     stableHashCount = 0
                     overlayWasShown = false
+
+                    // 우리 앱이 아닌 다른 곳으로 갔으면 TimerActivity 종료
+                    val currentForegroundPackage = rootInActiveWindow?.packageName?.toString()
+                    if (currentForegroundPackage != null && currentForegroundPackage != packageName) {
+                        Log.d(TAG, "Left to external app/home ($currentForegroundPackage), closing TimerActivity")
+                        sendTimerForceClose()
+                    }
                 } else {
                     Log.d(TAG, "Left via home/back button - keeping state for resume")
                 }
@@ -954,6 +961,28 @@ class ShortsBlockService : AccessibilityService() {
         timerReceiver?.let {
             unregisterReceiver(it)
             timerReceiver = null
+        }
+    }
+
+    /**
+     * Send broadcast to force close TimerActivity
+     */
+    private fun sendTimerForceClose() {
+        try {
+            val intent = Intent(AppConstants.ACTION_TIMER_FORCE_CLOSE)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                sendBroadcast(intent)
+            } else {
+                sendBroadcast(intent)
+            }
+            Log.d(TAG, "Sent TIMER_FORCE_CLOSE broadcast")
+
+            // 세션 ID 초기화
+            currentSessionId = ""
+            val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+            prefs.edit().remove(AppConstants.PREF_CURRENT_SESSION_ID).apply()
+        } catch (e: Exception) {
+            Log.e(TAG, "Error sending TIMER_FORCE_CLOSE broadcast", e)
         }
     }
 
