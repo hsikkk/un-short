@@ -82,6 +82,18 @@ class OnboardingActivity : AppCompatActivity() {
             windowInsets
         }
 
+        // WindowInsets 적용 - viewPager에 navigation bar 패딩 추가
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.viewPager)) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(
+                view.paddingLeft,
+                view.paddingTop,
+                view.paddingRight,
+                insets.bottom
+            )
+            windowInsets
+        }
+
         // Check privacy consent first
         if (!hasValidPrivacyConsent()) {
             showPrivacyConsentDialog()

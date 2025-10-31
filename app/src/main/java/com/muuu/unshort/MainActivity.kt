@@ -76,7 +76,24 @@ class MainActivity : AppCompatActivity() {
         // WindowInsets 적용 - middleSection에 navigation bar 패딩 추가
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.middleSection)) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(0, 0, 0, insets.bottom)
+            view.setPadding(
+                view.paddingLeft,
+                view.paddingTop,
+                view.paddingRight,
+                insets.bottom
+            )
+            windowInsets
+        }
+
+        // WindowInsets 적용 - permissionWarning에도 navigation bar 패딩 추가
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.permissionWarning)) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(
+                view.paddingLeft,
+                view.paddingTop,
+                view.paddingRight,
+                view.paddingBottom + insets.bottom
+            )
             windowInsets
         }
 
