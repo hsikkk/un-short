@@ -40,6 +40,7 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
+import com.google.android.gms.ads.nativead.NativeAdView
 
 /**
  * 타이머 Activity - tmp/timer.html 디자인 기반
@@ -518,9 +519,17 @@ class TimerActivity : AppCompatActivity() {
                 ctaView.text = ad.callToAction ?: ""
 
                 // Add to container
-                val nativeAdContainer = findViewById<FrameLayout>(R.id.nativeAdContainer)
+                val nativeAdContainer = findViewById<NativeAdView>(R.id.nativeAd)
                 nativeAdContainer.removeAllViews()
                 nativeAdContainer.addView(adView)
+
+                nativeAdContainer.headlineView = titleView
+                nativeAdContainer.callToActionView = ctaView
+                nativeAdContainer.setOnClickListener {
+                    ctaView.performClick()
+                }
+                nativeAdContainer.setNativeAd(ad)
+
             }
             .withAdListener(object : com.google.android.gms.ads.AdListener() {
                 override fun onAdFailedToLoad(error: com.google.android.gms.ads.LoadAdError) {

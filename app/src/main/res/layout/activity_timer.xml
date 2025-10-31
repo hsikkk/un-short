@@ -13,12 +13,19 @@
     <FrameLayout
         android:id="@+id/nativeAdContainer"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:background="#000000"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
+        app:layout_constraintEnd_toEndOf="parent" >
+    
+        <com.google.android.gms.ads.nativead.NativeAdView
+          android:id="@+id/nativeAd"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"/>
+          
+    </FrameLayout>
+    
     <!-- Main Content -->
     <!-- CSS: flex: 1, display: flex, flex-direction: column, align-items: center, justify-content: center, padding: 0 24px -->
     <LinearLayout
