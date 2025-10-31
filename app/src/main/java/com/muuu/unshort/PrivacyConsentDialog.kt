@@ -27,6 +27,12 @@ class PrivacyConsentDialog(
 
         setContentView(view)
 
+        // Set dialog width to 90% of screen width
+        window?.setLayout(
+            (context.resources.displayMetrics.widthPixels * 0.9).toInt(),
+            android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
         // Prevent dismissal by back button or outside touch
         setCancelable(false)
         setCanceledOnTouchOutside(false)
