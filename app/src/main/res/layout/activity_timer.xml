@@ -13,7 +13,7 @@
     <FrameLayout
         android:id="@+id/nativeAdContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:background="#000000"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
