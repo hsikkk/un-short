@@ -13,6 +13,8 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.muuu.unshort.analytics.AnalyticsEvent
+import com.muuu.unshort.analytics.AnalyticsManager
 
 class BlockOverlay(private val context: Context) {
 
@@ -68,6 +70,12 @@ class BlockOverlay(private val context: Context) {
         val isTimerCompleted = sessionId.isNotEmpty() && sessionId == completedSessionId
 
         Log.d(TAG, "Timer completion check - currentSession: $sessionId, completedSession: $completedSessionId, isCompleted: $isTimerCompleted")
+
+        // Track overlay shown event
+        AnalyticsManager.trackEvent(
+            context,
+            if (isTimerCompleted) AnalyticsEvent.OVERLAY_SHOWN_AFTER_TIMER else AnalyticsEvent.OVERLAY_SHOWN_BEFORE_TIMER
+        )
 
         // Show appropriate buttons and messages based on timer status
         if (isTimerCompleted) {
@@ -133,6 +141,10 @@ class BlockOverlay(private val context: Context) {
         // "안볼래요" 버튼 클릭 리스너 설정
         skipButton.setOnClickListener {
             Log.d(TAG, ">>> Skip button clicked in BlockOverlay")
+
+            // Track skip button click
+            AnalyticsManager.trackEvent(context, AnalyticsEvent.OVERLAY_BUTTON_SKIP)
+
             Log.d(TAG, "Calling dismiss() from skip button")
             // 오버레이 닫기
             dismiss()
@@ -148,6 +160,10 @@ class BlockOverlay(private val context: Context) {
         // "볼래요" 버튼 클릭 리스너 설정 (초기에는 숨겨져 있음)
         watchButton.setOnClickListener {
             Log.d(TAG, ">>> Watch button clicked in BlockOverlay")
+
+            // Track watch button click
+            AnalyticsManager.trackEvent(context, AnalyticsEvent.OVERLAY_BUTTON_WATCH)
+
             Log.d(TAG, "Calling dismiss() from watch button")
             // 오버레이 닫기
             dismiss()
@@ -163,6 +179,10 @@ class BlockOverlay(private val context: Context) {
         // "타이머 시작하기" 버튼 클릭 리스너 설정
         startTimerButton.setOnClickListener {
             Log.d(TAG, ">>> Start Timer button clicked in BlockOverlay")
+
+            // Track start timer button click
+            AnalyticsManager.trackEvent(context, AnalyticsEvent.OVERLAY_BUTTON_START_TIMER)
+
             // TimerActivity로 이동
             val intent = Intent(context, TimerActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP

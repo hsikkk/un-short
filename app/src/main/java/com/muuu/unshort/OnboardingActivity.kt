@@ -23,6 +23,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.muuu.unshort.analytics.AnalyticsEvent
+import com.muuu.unshort.analytics.AnalyticsManager
 
 class OnboardingActivity : AppCompatActivity() {
 
@@ -63,6 +65,9 @@ class OnboardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
+
+        // Track onboarding started
+        AnalyticsManager.trackEvent(this, AnalyticsEvent.ONBOARDING_STARTED)
 
         // Enable edge-to-edge
         enableEdgeToEdge()
@@ -178,6 +183,9 @@ class OnboardingActivity : AppCompatActivity() {
         // SharedPreferences에 온보딩 완료 저장
         val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
         prefs.edit().putBoolean("onboarding_completed", true).apply()
+
+        // Track onboarding completed
+        AnalyticsManager.trackEvent(this, AnalyticsEvent.ONBOARDING_COMPLETED)
 
         // MainActivity로 이동 (백스택 완전히 클리어)
         val intent = Intent(this, MainActivity::class.java)
@@ -365,6 +373,9 @@ class OnboardingActivity : AppCompatActivity() {
                     apply()
                 }
                 Log.d("OnboardingActivity", "Privacy consent given - version ${PrivacyPolicy.CURRENT_VERSION}")
+
+                // Track privacy consent accepted
+                AnalyticsManager.trackEvent(this@OnboardingActivity, AnalyticsEvent.PRIVACY_CONSENT_ACCEPTED)
             },
             onExit = {
                 // User declined - exit app

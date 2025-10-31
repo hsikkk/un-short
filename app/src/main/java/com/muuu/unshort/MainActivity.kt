@@ -18,6 +18,8 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.muuu.unshort.analytics.AnalyticsEvent
+import com.muuu.unshort.analytics.AnalyticsManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -56,6 +58,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.activity_main)
+
+        // Track app launch
+        AnalyticsManager.trackEvent(this, AnalyticsEvent.APP_LAUNCHED)
 
         // Enable edge-to-edge for Android 15+
         enableEdgeToEdge()
@@ -130,6 +135,12 @@ class MainActivity : AppCompatActivity() {
 
             // 상태 저장
             prefs.edit().putBoolean("blocking_enabled", newState).apply()
+
+            // Track blocking state change
+            AnalyticsManager.trackEvent(
+                this,
+                if (newState) AnalyticsEvent.BLOCKING_ENABLED else AnalyticsEvent.BLOCKING_DISABLED
+            )
 
             // UI 업데이트 (애니메이션 포함)
             updateUI(newState, animate = true)

@@ -31,6 +31,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.muuu.unshort.analytics.AnalyticsEvent
+import com.muuu.unshort.analytics.AnalyticsManager
 
 /**
  * 타이머 Activity - tmp/timer.html 디자인 기반
@@ -74,6 +76,9 @@ class TimerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer)
+
+        // Track timer activity opened
+        AnalyticsManager.trackEvent(this, AnalyticsEvent.TIMER_ACTIVITY_OPENED)
 
         // Enable edge-to-edge
         enableEdgeToEdge()
@@ -411,6 +416,9 @@ class TimerActivity : AppCompatActivity() {
     }
 
     private fun showSuccessScreen() {
+        // Track timer completed
+        AnalyticsManager.trackEvent(this, AnalyticsEvent.TIMER_COMPLETED)
+
         mainContent.visibility = View.GONE
         successScreen.visibility = View.VISIBLE
 

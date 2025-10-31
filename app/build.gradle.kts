@@ -21,6 +21,7 @@ android {
             isDebuggable = true
             isMinifyEnabled = false
             isShrinkResources = false
+            buildConfigField("String", "AMPLITUDE_API_KEY", "\"cf5ac490fd69bf2bc05dff32b4c86938\"")
         }
 
         release {
@@ -32,6 +33,7 @@ android {
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("debug")
+            buildConfigField("String", "AMPLITUDE_API_KEY", "\"c0d471f3a72a703e5b79055fad3b6191\"")
 
             // APK 최적화
             ndk {
@@ -69,4 +71,7 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.0")
     implementation("androidx.viewpager2:viewpager2:1.1.0")
+
+    // Amplitude Analytics
+    implementation("com.amplitude:analytics-android:1.16.8")
 }
