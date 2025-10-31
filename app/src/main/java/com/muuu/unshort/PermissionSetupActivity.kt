@@ -1,12 +1,17 @@
 package com.muuu.unshort
 
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
 class PermissionSetupActivity : AppCompatActivity() {
 
@@ -32,6 +37,22 @@ class PermissionSetupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_permission_setup)
+
+        enableEdgeToEdge()
+
+        // Status bar 설정: 검정색 배경에 밝은 아이콘
+        window.statusBarColor = Color.BLACK
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // 어두운 배경에 밝은 아이콘
+        }
+
+        // WindowInsets 적용 - topSection에 status bar 패딩 추가
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.header)) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(0, insets.top, 0, 0)
+            windowInsets
+        }
+
 
         permissionUIHelper = PermissionUIHelper(this)
 
