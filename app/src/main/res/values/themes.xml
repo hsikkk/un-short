@@ -8,9 +8,11 @@
         <item name="colorSecondaryVariant">@color/accent_purple_light</item>
         <item name="colorOnSecondary">@color/white</item>
 
-        <!-- Status Bar -->
-        <item name="android:statusBarColor">@color/primary_dark</item>
+        <!-- Status Bar (Edge-to-edge for Android 15+) -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
 
         <!-- Button Style -->
         <item name="materialButtonStyle">@style/Widget.App.Button</item>

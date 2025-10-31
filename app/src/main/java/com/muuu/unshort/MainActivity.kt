@@ -10,11 +10,13 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,6 +55,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.activity_main)
+
+        // Enable edge-to-edge for Android 15+
+        enableEdgeToEdge()
 
         // View 초기화
         toggleArea = findViewById(R.id.toggleArea)
@@ -264,4 +269,5 @@ class MainActivity : AppCompatActivity() {
         )
         dialog.show()
     }
+
 }

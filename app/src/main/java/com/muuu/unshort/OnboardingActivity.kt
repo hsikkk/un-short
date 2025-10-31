@@ -15,6 +15,7 @@ import android.view.animation.LinearInterpolator
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -58,6 +59,9 @@ class OnboardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
+
+        // Enable edge-to-edge
+        enableEdgeToEdge()
 
         // Check privacy consent first
         if (!hasValidPrivacyConsent()) {
