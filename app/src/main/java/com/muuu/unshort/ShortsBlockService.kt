@@ -206,21 +206,11 @@ class ShortsBlockService : AccessibilityService() {
                     }
                 }
             } else {
-                // 해시 생성 실패 시에도 안전을 위해 플래그 초기화
-                Log.w(TAG, "Hash generation failed (returned 0), resetting flags for safety")
-                allowedUntilScroll = false
-                overlayWasShown = false
-                lastShortsContentHash = 0
-                stableHashCount = 0
-
-                // Clear session data as well
-                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-                prefs.edit().apply {
-                    remove(AppConstants.PREF_COMPLETED_SESSION_ID)
-                    remove(AppConstants.PREF_CURRENT_SESSION_ID)
-                    remove("allowed_until_scroll")  // Clear persisted allowed state
-                    apply()
-                }
+                // 해시 생성 실패 - 현재 상태 유지 (일시적 실패일 가능성)
+                Log.w(TAG, "Hash generation failed (returned 0), keeping current state - allowedUntilScroll=$allowedUntilScroll")
+                // 해시 생성 실패는 대부분 일시적 (앱 로딩 중, 화면 전환 중 등)
+                // 현재 상태를 유지하여 사용자 경험 보호
+                // allowedUntilScroll이 true라면 계속 시청 가능하도록 유지
             }
         }
 
