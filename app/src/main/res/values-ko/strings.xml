@@ -84,6 +84,7 @@
 
     <!-- Onboarding -->
     <string name="onboarding_page1_title">쇼츠 중독에서\n벗어나세요</string>
+    <string name="onboarding_page1_subtitle">의도적인 소비를 위한 작은 습관</string>
     <string name="onboarding_page2_title">쇼츠를 보고 싶다면\n잠시 생각해보세요</string>
     <string name="onboarding_page3_title">그래도 보고 싶다면,\n잠깐의 여유를 가져보세요</string>
     <string name="onboarding_page4_title">마지막으로\n한 번 더 생각해보세요</string>

@@ -84,6 +84,7 @@
 
     <!-- Onboarding -->
     <string name="onboarding_page1_title">Break free from\nshort-form addiction</string>
+    <string name="onboarding_page1_subtitle">Small habits for intentional consumption</string>
     <string name="onboarding_page2_title">If you want to watch shorts,\ntake a moment to think</string>
     <string name="onboarding_page3_title">If you still want to watch,\ntake a brief pause</string>
     <string name="onboarding_page4_title">Finally,\nthink once more</string>

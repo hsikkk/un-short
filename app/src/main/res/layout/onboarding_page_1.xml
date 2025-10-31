@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="40dp"
+    android:padding="48dp"
     android:background="#FFFFFF">
 
     <!-- Logo/Icon Area -->
@@ -12,31 +12,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textSize="42sp"
-        android:fontFamily="@font/spoqa_sans_neo_thin"
-        android:textColor="#000000"
-        android:letterSpacing="-0.02"
-        android:layout_marginBottom="24dp" />
+        android:textSize="48sp"
+        android:fontFamily="@font/spoqa_sans_neo_bold"
+        android:textColor="@color/primary_dark"
+        android:letterSpacing="0.02"
+        android:layout_marginBottom="16dp" />
 
     <!-- Main Title -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/onboarding_page1_title"
-        android:textSize="22sp"
-        android:textColor="#000000"
-        android:fontFamily="@font/spoqa_sans_neo"
-        android:alpha="0.8"
+        android:textSize="24sp"
+        android:textColor="@color/primary_dark"
+        android:fontFamily="@font/spoqa_sans_neo_medium"
         android:textAlignment="center"
-        android:lineSpacingExtra="4dp"
-        android:layout_marginBottom="40dp" />
+        android:lineSpacingExtra="6dp"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/onboarding_page1_subtitle"
+        android:textSize="14sp"
+        android:textColor="@color/gray_600"
+        android:fontFamily="@font/spoqa_sans_neo"
+        android:textAlignment="center"
+        android:lineSpacingExtra="2dp"
+        android:layout_marginBottom="48dp" />
 
     <!-- Visual Element -->
     <View
-        android:layout_width="80dp"
-        android:layout_height="1dp"
-        android:background="#000000"
-        android:alpha="0.2"
-        android:layout_marginTop="20dp" />
+        android:layout_width="60dp"
+        android:layout_height="3dp"
+        android:background="@color/accent_purple_light"
+        android:layout_marginTop="24dp" />
 
 </LinearLayout>
