@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Exclude session data (temporary) -->
+    <exclude domain="sharedpref" path="app_prefs.xml" />
+
+    <!-- Include user settings -->
+    <include domain="sharedpref" path="." />
+</full-backup-content>
