@@ -76,5 +76,5 @@ dependencies {
     implementation("com.amplitude:analytics-android:1.22.4")
 
     // Google AdMob
-    implementation("com.google.android.gms:play-services-ads:23.5.0")
+    implementation("com.google.android.gms:play-services-ads:24.7.0")
 }
