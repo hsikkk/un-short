@@ -52,11 +52,17 @@
         android:layout_marginHorizontal="4dp"
         android:background="#2F333D" />
 
-    <include
-        android:id="@+id/viewCtaBtn"
-        layout="@layout/view_native_text_cta"
-        android:layout_gravity="center_vertical"
+    <TextView
+        android:id="@+id/textCta"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="12dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="#666D7D"
+        android:textSize="12sp"
+        tools:text="설치하기 >" />
 
 </LinearLayout>
