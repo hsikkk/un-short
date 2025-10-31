@@ -10,18 +10,29 @@
         android:id="@+id/onboardingAccessibilityCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="16dp"
         app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:strokeWidth="1dp"
-        app:strokeColor="#E0E0E0"
-        app:cardBackgroundColor="#FFFFFF">
+        app:strokeColor="@color/gray_200"
+        app:cardBackgroundColor="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:orientation="horizontal">
+
+            <!-- Section Color Bar -->
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="@color/accent_purple" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
 
             <!-- Header -->
             <LinearLayout
@@ -48,9 +59,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/permission_accessibility"
-                    android:textSize="16sp"
-                    android:textColor="#000000"
-                    android:fontFamily="@font/spoqa_sans_neo" />
+                    android:textSize="17sp"
+                    android:textColor="@color/primary_dark"
+                    android:fontFamily="@font/spoqa_sans_neo_medium" />
 
             </LinearLayout>
 
@@ -60,8 +71,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/permission_why"
                 android:textSize="12sp"
-                android:textColor="#000000"
-                android:fontFamily="@font/spoqa_sans_neo"
+                android:textColor="@color/gray_900"
+                android:fontFamily="@font/spoqa_sans_neo_medium"
                 android:alpha="0.6"
                 android:layout_marginBottom="6dp" />
 
@@ -70,9 +81,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/permission_accessibility_reason"
                 android:textSize="13sp"
-                android:textColor="#000000"
-                android:alpha="0.5"
-                android:lineSpacingExtra="2dp"
+                android:textColor="@color/gray_700"
+                android:fontFamily="@font/spoqa_sans_neo"
+                android:lineSpacingExtra="4dp"
                 android:layout_marginBottom="12dp" />
 
             <!-- Status -->
@@ -81,9 +92,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/permission_not_set"
-                android:textSize="12sp"
-                android:textColor="#EF4444"
-                android:layout_marginBottom="10dp" />
+                android:textSize="13sp"
+                android:textColor="@color/error"
+                android:fontFamily="@font/spoqa_sans_neo_medium"
+                android:layout_marginBottom="12dp" />
 
             <Button
                 android:id="@+id/onboardingSettingsButton"
@@ -91,6 +103,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/permission_go_to_settings"
                 style="@style/Widget.App.Button" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -104,14 +118,25 @@
         app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
         app:strokeWidth="1dp"
-        app:strokeColor="#E0E0E0"
-        app:cardBackgroundColor="#FFFFFF">
+        app:strokeColor="@color/gray_200"
+        app:cardBackgroundColor="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:orientation="horizontal">
+
+            <!-- Section Color Bar -->
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="@color/accent_blue" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
 
             <!-- Header -->
             <LinearLayout
@@ -138,9 +163,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/permission_overlay"
-                    android:textSize="16sp"
-                    android:textColor="#000000"
-                    android:fontFamily="@font/spoqa_sans_neo" />
+                    android:textSize="17sp"
+                    android:textColor="@color/primary_dark"
+                    android:fontFamily="@font/spoqa_sans_neo_medium" />
 
             </LinearLayout>
 
@@ -150,8 +175,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/permission_why"
                 android:textSize="12sp"
-                android:textColor="#000000"
-                android:fontFamily="@font/spoqa_sans_neo"
+                android:textColor="@color/gray_900"
+                android:fontFamily="@font/spoqa_sans_neo_medium"
                 android:alpha="0.6"
                 android:layout_marginBottom="6dp" />
 
@@ -160,9 +185,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/permission_overlay_reason"
                 android:textSize="13sp"
-                android:textColor="#000000"
-                android:alpha="0.5"
-                android:lineSpacingExtra="2dp"
+                android:textColor="@color/gray_700"
+                android:fontFamily="@font/spoqa_sans_neo"
+                android:lineSpacingExtra="4dp"
                 android:layout_marginBottom="12dp" />
 
             <!-- Status -->
@@ -171,9 +196,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/permission_not_set"
-                android:textSize="12sp"
-                android:textColor="#EF4444"
-                android:layout_marginBottom="10dp" />
+                android:textSize="13sp"
+                android:textColor="@color/error"
+                android:fontFamily="@font/spoqa_sans_neo_medium"
+                android:layout_marginBottom="12dp" />
 
             <Button
                 android:id="@+id/onboardingOverlayButton"
@@ -181,6 +207,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/permission_go_to_settings"
                 style="@style/Widget.App.Button" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
