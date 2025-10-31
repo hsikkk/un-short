@@ -214,20 +214,20 @@
             android:layout_height="0dp"
             android:layout_weight="0.4"
             android:orientation="vertical"
-            android:padding="32dp"
-            android:paddingTop="24dp"
+            android:padding="24dp"
+            android:paddingTop="16dp"
             android:gravity="top">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/blocked_apps_title"
-                android:textSize="@dimen/text_subtitle"
+                android:textSize="16sp"
                 android:fontFamily="@font/spoqa_sans_neo_bold"
                 android:textColor="#000000"
                 android:alpha="0.4"
                 android:letterSpacing="0.1"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="16dp"
                 android:textAllCaps="true" />
 
             <LinearLayout
@@ -241,11 +241,11 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:layout_marginBottom="14dp">
+                    android:layout_marginBottom="12dp">
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:src="@drawable/ic_youtube"
                         android:layout_marginEnd="10dp" />
 
@@ -253,7 +253,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/app_youtube_shorts"
-                        android:textSize="@dimen/text_body"
+                        android:textSize="15sp"
                         android:fontFamily="@font/spoqa_sans_neo_light"
                         android:textColor="#000000"
                         android:alpha="0.5" />
@@ -268,8 +268,8 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:src="@drawable/ic_instagram"
                         android:layout_marginEnd="10dp" />
 
@@ -277,7 +277,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/app_instagram_reels"
-                        android:textSize="@dimen/text_body"
+                        android:textSize="15sp"
                         android:fontFamily="@font/spoqa_sans_neo_light"
                         android:textColor="#000000"
                         android:alpha="0.5" />
