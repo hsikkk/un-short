@@ -290,6 +290,14 @@ class OnboardingActivity : AppCompatActivity() {
         val timerScreen = viewHolder.itemView.findViewById<View>(R.id.previewTimerScreen)
         val successScreen = viewHolder.itemView.findViewById<View>(R.id.previewSuccessScreen)
 
+        // 초기 상태 리셋
+        timerScreen?.visibility = View.VISIBLE
+        timerScreen?.alpha = 1f
+        successScreen?.visibility = View.GONE
+        successScreen?.alpha = 0f
+        timerNumber?.text = "10"
+        progressRing?.progress = 1000
+
         // 타이머 카운트다운 애니메이션 (30.0 → 0.0) - Float으로 부드럽게
         timerAnimator = ValueAnimator.ofInt(1000, 0).apply {
             duration = 10000 // 10초 (3배속)
@@ -314,10 +322,23 @@ class OnboardingActivity : AppCompatActivity() {
                     successScreen?.animate()
                         ?.alpha(1f)
                         ?.setDuration(600)
+                        ?.withEndAction {
+                            // 2초 후 다시 타이머로 복귀 (무한 반복)
+                            handler.postDelayed({
+                                restartTimerAnimation(position)
+                            }, 2000)
+                        }
                         ?.start()
                 }
                 ?.start()
         }, 10000) // 10초 후
+    }
+
+    private fun restartTimerAnimation(position: Int) {
+        // 현재 페이지가 여전히 3페이지인지 확인 (사용자가 스와이프했을 수 있음)
+        if (viewPager.currentItem == position) {
+            animatePage3Timer(position)
+        }
     }
 
     /**
