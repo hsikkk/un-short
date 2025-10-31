@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">un:short</string>
-    <string name="accessibility_service_description">Detects when you open short-form video apps and requires you to flip your phone for 30 seconds</string>
+    <string name="accessibility_service_description">Detects short-form videos and adds a mindful pause with phone flip to help break free from addiction.</string>
     <string name="flip_phone_title">Wait a moment! 🤚</string>
     <string name="flip_phone_message">To watch Shorts,\nflip your phone and wait 30 seconds</string>
     <string name="time_remaining">Time remaining: %d seconds</string>
