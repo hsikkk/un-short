@@ -103,4 +103,35 @@
     <!-- Share & Feedback -->
     <string name="feedback_subject">un:short 앱 피드백</string>
     <string name="share_text">쇼츠 중독에서 벗어나세요!\nun:short 앱으로 의도적인 미디어 소비를 시작하세요.\n\n%s</string>
+
+    <!-- Privacy Consent Dialog -->
+    <string name="privacy_dialog_title">접근성 권한 사용 안내</string>
+
+    <string name="privacy_why_title">왜 접근성 권한이 필요한가요?</string>
+    <string name="privacy_why_content">un:short는 쇼츠 화면 감지를 위해 접근성 서비스를 사용합니다.\n\n이는 YouTube Shorts, Instagram Reels, TikTok을 자동으로 차단하는 핵심 기능입니다.</string>
+
+    <string name="privacy_data_title">수집하는 데이터</string>
+    <string name="privacy_data_collected">✓ 화면 콘텐츠 (쇼츠 감지 목적만)\n✓ 앱 패키지 이름\n✓ 비디오 메타데이터 해시값 (임시)</string>
+    <string name="privacy_data_not_collected">✗ 개인 정보 (이름, 연락처 등)\n✗ 시청 기록\n✗ 계정 정보\n✗ 입력 텍스트</string>
+
+    <string name="privacy_usage_title">데이터 사용 방법</string>
+    <string name="privacy_usage_content">• 쇼츠 화면 감지에만 사용\n• 서버 전송 없음 (100% 오프라인)\n• 비디오 변경 감지용 해시만 임시 저장\n• 앱 종료 시 자동 삭제</string>
+
+    <string name="privacy_storage_title">데이터 보관 정책</string>
+    <string name="privacy_storage_content">• 세션 ID만 기기 내 임시 저장\n• 앱/서비스 재시작 시 즉시 삭제\n• 제3자 공유 절대 없음</string>
+
+    <string name="privacy_faq_title">자주 묻는 질문</string>
+    <string name="privacy_faq_content">Q: 내 시청 기록이 저장되나요?\nA: 아니요. 해시값만 임시 저장됩니다.\n\nQ: 제3자와 데이터를 공유하나요?\nA: 아니요. 완전 오프라인입니다.\n\nQ: 권한을 나중에 취소할 수 있나요?\nA: 네. 설정에서 언제든 비활성화 가능합니다.</string>
+
+    <string name="privacy_btn_agree">동의합니다</string>
+    <string name="privacy_btn_exit">앱 종료</string>
+
+    <string name="privacy_policy_update_title">개인정보 처리방침 업데이트</string>
+    <string name="privacy_policy_update_message">개인정보 처리방침이 업데이트되었습니다.\n\n변경된 내용을 확인하고 동의해주세요.\n\n동의하지 않으면 쇼츠 차단 기능이 비활성화됩니다.</string>
+    <string name="privacy_policy_update_review">확인하기</string>
+    <string name="privacy_policy_update_later">나중에</string>
+
+    <string name="privacy_consent_required_title">동의 필요</string>
+    <string name="privacy_consent_required_message">쇼츠 차단 기능을 사용하려면\n개인정보 처리방침 동의가 필요합니다.</string>
+    <string name="privacy_consent_review_button">정책 확인하기</string>
 </resources>

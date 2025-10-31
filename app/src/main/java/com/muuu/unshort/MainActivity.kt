@@ -95,6 +95,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        // Check privacy consent first
+        if (!hasValidPrivacyConsent()) {
+            showPrivacyUpdateDialog()
+            return
+        }
+
         checkPermissionsAndUpdateUI()
     }
 
@@ -199,5 +206,62 @@ class MainActivity : AppCompatActivity() {
             statusDot.setBackgroundResource(R.drawable.status_dot_inactive)
             statusLabel.text = getString(R.string.status_inactive)
         }
+    }
+
+    /**
+     * Check if user has given valid privacy consent
+     */
+    private fun hasValidPrivacyConsent(): Boolean {
+        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        val savedVersion = prefs.getInt(PrivacyPolicy.PREF_CONSENT_VERSION, 0)
+        return savedVersion >= PrivacyPolicy.CURRENT_VERSION
+    }
+
+    /**
+     * Show privacy policy update dialog for existing users
+     */
+    private fun showPrivacyUpdateDialog() {
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle(R.string.privacy_policy_update_title)
+            .setMessage(R.string.privacy_policy_update_message)
+            .setPositiveButton(R.string.privacy_policy_update_review) { _, _ ->
+                showPrivacyConsentDialog()
+            }
+            .setNegativeButton(R.string.privacy_policy_update_later) { _, _ ->
+                // User declined - disable blocking
+                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                prefs.edit().putBoolean("blocking_enabled", false).apply()
+                updateUI(false, animate = false)
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    /**
+     * Show privacy consent dialog
+     */
+    private fun showPrivacyConsentDialog() {
+        val dialog = PrivacyConsentDialog(
+            context = this,
+            onAgree = {
+                // Save consent
+                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                prefs.edit().apply {
+                    putInt(PrivacyPolicy.PREF_CONSENT_VERSION, PrivacyPolicy.CURRENT_VERSION)
+                    putLong(PrivacyPolicy.PREF_CONSENT_TIMESTAMP, System.currentTimeMillis())
+                    putBoolean("blocking_enabled", true)
+                    apply()
+                }
+                // Refresh UI
+                checkPermissionsAndUpdateUI()
+            },
+            onExit = {
+                // User declined - disable blocking and keep UI disabled
+                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                prefs.edit().putBoolean("blocking_enabled", false).apply()
+                updateUI(false, animate = false)
+            }
+        )
+        dialog.show()
     }
 }

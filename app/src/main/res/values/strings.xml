@@ -103,4 +103,35 @@
     <!-- Share & Feedback -->
     <string name="feedback_subject">un:short app feedback</string>
     <string name="share_text">Break free from short-form addiction!\nStart mindful media consumption with un:short.\n\n%s</string>
+
+    <!-- Privacy Consent Dialog -->
+    <string name="privacy_dialog_title">Accessibility Permission Usage Notice</string>
+
+    <string name="privacy_why_title">Why is accessibility permission needed?</string>
+    <string name="privacy_why_content">un:short uses accessibility service to detect shorts screens.\n\nThis is the core function to automatically block YouTube Shorts, Instagram Reels, and TikTok.</string>
+
+    <string name="privacy_data_title">Data We Collect</string>
+    <string name="privacy_data_collected">✓ Screen content (for shorts detection only)\n✓ App package names\n✓ Video metadata hash (temporary)</string>
+    <string name="privacy_data_not_collected">✗ Personal information (name, contacts, etc.)\n✗ Watch history\n✗ Account information\n✗ Text input</string>
+
+    <string name="privacy_usage_title">How Data is Used</string>
+    <string name="privacy_usage_content">• Used only for shorts screen detection\n• No server transmission (100% offline)\n• Only temporary hashes for video change detection\n• Auto-deleted when app closes</string>
+
+    <string name="privacy_storage_title">Data Storage Policy</string>
+    <string name="privacy_storage_content">• Only session IDs stored temporarily on device\n• Immediately deleted when app/service restarts\n• Never shared with third parties</string>
+
+    <string name="privacy_faq_title">Frequently Asked Questions</string>
+    <string name="privacy_faq_content">Q: Is my watch history saved?\nA: No. Only hash values are temporarily stored.\n\nQ: Do you share data with third parties?\nA: No. Completely offline operation.\n\nQ: Can I revoke permission later?\nA: Yes. You can disable it in settings anytime.</string>
+
+    <string name="privacy_btn_agree">I Agree</string>
+    <string name="privacy_btn_exit">Exit App</string>
+
+    <string name="privacy_policy_update_title">Privacy Policy Updated</string>
+    <string name="privacy_policy_update_message">Our privacy policy has been updated.\n\nPlease review the changes and provide your consent.\n\nWithout consent, shorts blocking feature will be disabled.</string>
+    <string name="privacy_policy_update_review">Review</string>
+    <string name="privacy_policy_update_later">Later</string>
+
+    <string name="privacy_consent_required_title">Consent Required</string>
+    <string name="privacy_consent_required_message">To use shorts blocking feature,\nprivacy policy consent is required.</string>
+    <string name="privacy_consent_review_button">Review Policy</string>
 </resources>

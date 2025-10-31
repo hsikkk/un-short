@@ -48,6 +48,12 @@ class ShortsBlockService : AccessibilityService() {
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null) return
 
+        // Privacy consent check - blocking disabled if not consented
+        if (!hasValidPrivacyConsent()) {
+            Log.w(TAG, "Privacy consent not given - blocking disabled")
+            return
+        }
+
         // 차단 활성화 상태 확인
         val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
         val isBlockingEnabled = prefs.getBoolean("blocking_enabled", true)
@@ -1075,5 +1081,15 @@ class ShortsBlockService : AccessibilityService() {
         leftViaHomeButton = false
 
         Log.d(TAG, "Cleared all session data on service restart")
+    }
+
+    /**
+     * Check if user has given valid privacy consent
+     * @return true if consent version is current, false otherwise
+     */
+    private fun hasValidPrivacyConsent(): Boolean {
+        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        val savedVersion = prefs.getInt(PrivacyPolicy.PREF_CONSENT_VERSION, 0)
+        return savedVersion >= PrivacyPolicy.CURRENT_VERSION
     }
 }

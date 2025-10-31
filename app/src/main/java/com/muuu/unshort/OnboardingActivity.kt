@@ -59,6 +59,11 @@ class OnboardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
 
+        // Check privacy consent first
+        if (!hasValidPrivacyConsent()) {
+            showPrivacyConsentDialog()
+        }
+
         permissionUIHelper = PermissionUIHelper(this)
         viewPager = findViewById(R.id.viewPager)
 
@@ -278,5 +283,40 @@ class OnboardingActivity : AppCompatActivity() {
                 }
                 ?.start()
         }, 10000) // 10초 후
+    }
+
+    /**
+     * Check if user has given valid privacy consent
+     */
+    private fun hasValidPrivacyConsent(): Boolean {
+        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        val savedVersion = prefs.getInt(PrivacyPolicy.PREF_CONSENT_VERSION, 0)
+        return savedVersion >= PrivacyPolicy.CURRENT_VERSION
+    }
+
+    /**
+     * Show privacy consent dialog
+     */
+    private fun showPrivacyConsentDialog() {
+        val dialog = PrivacyConsentDialog(
+            context = this,
+            onAgree = {
+                // Save consent
+                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                prefs.edit().apply {
+                    putInt(PrivacyPolicy.PREF_CONSENT_VERSION, PrivacyPolicy.CURRENT_VERSION)
+                    putLong(PrivacyPolicy.PREF_CONSENT_TIMESTAMP, System.currentTimeMillis())
+                    apply()
+                }
+                Log.d("OnboardingActivity", "Privacy consent given - version ${PrivacyPolicy.CURRENT_VERSION}")
+            },
+            onExit = {
+                // User declined - exit app
+                Log.d("OnboardingActivity", "Privacy consent declined - exiting app")
+                finish()
+                finishAffinity()
+            }
+        )
+        dialog.show()
     }
 }
