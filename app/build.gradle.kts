@@ -73,5 +73,5 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.1.0")
 
     // Amplitude Analytics
-    implementation("com.amplitude:analytics-android:1.16.8")
+    implementation("com.amplitude:analytics-android:1.22.4")
 }

@@ -20,9 +20,12 @@ class UnshortApplication : Application() {
         amplitude = Amplitude(
             Configuration(
                 apiKey = BuildConfig.AMPLITUDE_API_KEY,
-                context = applicationContext
+                context = applicationContext,
+                flushQueueSize = if(BuildConfig.DEBUG) 1 else 20,
+                flushIntervalMillis = 50000,
             )
         )
+
 
         Log.d(TAG, "Amplitude initialized - API Key: ${BuildConfig.AMPLITUDE_API_KEY.take(8)}...")
         Log.d(TAG, "Debug mode: ${BuildConfig.DEBUG}")
