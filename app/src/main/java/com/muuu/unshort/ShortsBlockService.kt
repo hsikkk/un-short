@@ -93,8 +93,12 @@ class ShortsBlockService : AccessibilityService() {
                     leftViaHomeButton = true  // 백그라운드로 나갔음을 표시
 
                     // 타이머 완료 플래그 초기화 (쇼츠 앱을 떠나면 리셋)
-                    prefs.edit().remove(AppConstants.PREF_COMPLETED_SESSION_ID).apply()
-                    Log.d(TAG, "Cleared timer completion flag - left shorts app")
+                    prefs.edit().apply {
+                        remove(AppConstants.PREF_COMPLETED_SESSION_ID)
+                        remove("allowed_until_scroll")  // Clear persisted allowed state
+                        apply()
+                    }
+                    Log.d(TAG, "Cleared timer completion flag and allowed_until_scroll - left shorts app")
 
                     // 모든 상태 플래그 초기화 (플래그 꼬임 방지)
                     allowedUntilScroll = false
@@ -119,8 +123,12 @@ class ShortsBlockService : AccessibilityService() {
                 leftViaHomeButton = true  // 백그라운드로 나갔음을 표시
 
                 // 타이머 완료 플래그 초기화 (쇼츠 앱을 떠나면 리셋)
-                prefs.edit().remove(AppConstants.PREF_COMPLETED_SESSION_ID).apply()
-                Log.d(TAG, "Cleared timer completion flag - left shorts app")
+                prefs.edit().apply {
+                    remove(AppConstants.PREF_COMPLETED_SESSION_ID)
+                    remove("allowed_until_scroll")  // Clear persisted allowed state
+                    apply()
+                }
+                Log.d(TAG, "Cleared timer completion flag and allowed_until_scroll - left shorts app")
 
                 // 모든 상태 플래그 초기화 (플래그 꼬임 방지)
                 allowedUntilScroll = false
@@ -163,6 +171,16 @@ class ShortsBlockService : AccessibilityService() {
                     } else if (stableHashCount >= 2) {
                         // 이전 해시값이 2회 이상 안정적으로 나타났고, 지금 변경됨 = 실제 스크롤
                         Log.d(TAG, "Shorts content changed (scroll detected), old hash: $lastShortsContentHash, new hash: $currentContentHash")
+
+                        // Clear all session data on scroll
+                        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                        prefs.edit().apply {
+                            remove(AppConstants.PREF_COMPLETED_SESSION_ID)
+                            remove(AppConstants.PREF_CURRENT_SESSION_ID)
+                            remove("allowed_until_scroll")  // Clear persisted allowed state
+                            apply()
+                        }
+
                         allowedUntilScroll = false
                         justScrolled = true
                         lastShortsContentHash = currentContentHash
@@ -186,6 +204,22 @@ class ShortsBlockService : AccessibilityService() {
                         lastShortsContentHash = currentContentHash
                         stableHashCount = 1
                     }
+                }
+            } else {
+                // 해시 생성 실패 시에도 안전을 위해 플래그 초기화
+                Log.w(TAG, "Hash generation failed (returned 0), resetting flags for safety")
+                allowedUntilScroll = false
+                overlayWasShown = false
+                lastShortsContentHash = 0
+                stableHashCount = 0
+
+                // Clear session data as well
+                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                prefs.edit().apply {
+                    remove(AppConstants.PREF_COMPLETED_SESSION_ID)
+                    remove(AppConstants.PREF_CURRENT_SESSION_ID)
+                    remove("allowed_until_scroll")  // Clear persisted allowed state
+                    apply()
                 }
             }
         }
@@ -701,8 +735,12 @@ class ShortsBlockService : AccessibilityService() {
                         currentSessionId = ""
 
                         // 타이머 완료 플래그도 초기화 ("안볼래요" 선택 시 다음 쇼츠도 처음부터)
-                        prefs.edit().remove(AppConstants.PREF_COMPLETED_SESSION_ID).apply()
-                        Log.d(TAG, "Cleared timer completion flag - user chose to skip")
+                        prefs.edit().apply {
+                            remove(AppConstants.PREF_COMPLETED_SESSION_ID)
+                            remove("allowed_until_scroll")  // Clear persisted state
+                            apply()
+                        }
+                        Log.d(TAG, "Cleared timer completion flag and allowed_until_scroll - user chose to skip")
 
                         performGlobalBackAction()
                     },
@@ -712,6 +750,10 @@ class ShortsBlockService : AccessibilityService() {
                         allowedUntilScroll = true
                         overlayWasShown = true  // 이미 표시된 것으로 유지
                         stopForegroundCheck()
+
+                        // Persist allowedUntilScroll state
+                        prefs.edit().putBoolean("allowed_until_scroll", true).apply()
+                        Log.d(TAG, "Persisted allowedUntilScroll=true to SharedPreferences")
 
                         // 짧은 지연 후 미디어 재생 (오버레이 dismiss 애니메이션 완료 후)
                         handler.postDelayed({
@@ -904,8 +946,18 @@ class ShortsBlockService : AccessibilityService() {
         super.onServiceConnected()
         Log.d(TAG, "Service connected")
 
+        // Restore persisted state from SharedPreferences
+        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        val persistedAllowedUntilScroll = prefs.getBoolean("allowed_until_scroll", false)
+
         // Clear stale session data on service start/restart
         clearStaleSessionData()
+
+        // Restore allowedUntilScroll if it was persisted
+        if (persistedAllowedUntilScroll) {
+            Log.d(TAG, "Restoring allowedUntilScroll=true from SharedPreferences")
+            allowedUntilScroll = true
+        }
 
         // Register broadcast receiver for timer events
         timerReceiver = object : BroadcastReceiver() {
@@ -1061,26 +1113,41 @@ class ShortsBlockService : AccessibilityService() {
     }
 
     /**
-     * Clear stale session data on service restart
+     * Reset all blocking-related flags and session data
+     * This is the central method for ensuring clean state
      */
-    private fun clearStaleSessionData() {
-        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+    private fun resetAllFlags(reason: String = "unknown") {
+        Log.d(TAG, "Resetting all flags - reason: $reason")
 
-        // Clear all session-related data
+        // Reset in-memory flags
+        allowedUntilScroll = false
+        overlayWasShown = false
+        justScrolled = false
+        wasInShortsScreen = false
+        leftViaHomeButton = false
+        currentSessionId = ""
+        lastShortsContentHash = 0
+        stableHashCount = 0
+
+        // Clear SharedPreferences session data
+        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
         prefs.edit().apply {
             remove(AppConstants.PREF_CURRENT_SESSION_ID)
             remove(AppConstants.PREF_COMPLETED_SESSION_ID)
             remove("session_created_time")
+            remove("allowed_until_scroll") // New: persist allowedUntilScroll state
             apply()
         }
 
-        // Reset in-memory session state
-        currentSessionId = ""
-        allowedUntilScroll = false
-        overlayWasShown = false
-        leftViaHomeButton = false
+        Log.d(TAG, "All flags and session data reset completed")
+    }
 
-        Log.d(TAG, "Cleared all session data on service restart")
+    /**
+     * Clear stale session data on service restart
+     */
+    private fun clearStaleSessionData() {
+        // Use centralized reset method
+        resetAllFlags("service_restart")
     }
 
     /**
