@@ -11,6 +11,9 @@
     <!-- Android 13+ notification permission -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- Android 13+ advertising ID permission (for future ads/analytics) -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+
     <application
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_rules"
