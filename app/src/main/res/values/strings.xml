@@ -82,6 +82,9 @@
     <string name="timer_breathe_message">Take a deep breath</string>
     <string name="timer_skip_button">I won\'t watch</string>
 
+    <!-- Ads -->
+    <string name="ad">AD</string>
+
     <!-- Onboarding -->
     <string name="onboarding_page1_title">Break free from\nshort-form addiction</string>
     <string name="onboarding_page1_subtitle">Small habits for intentional consumption</string>

@@ -37,6 +37,9 @@ import com.muuu.unshort.analytics.AnalyticsManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdOptions
 
 /**
  * 타이머 Activity - tmp/timer.html 디자인 기반
@@ -62,6 +65,7 @@ class TimerActivity : AppCompatActivity() {
     private lateinit var successScreen: View
     private lateinit var continueButton: TextView
     private lateinit var adView: AdView
+    private var nativeAd: NativeAd? = null
 
     private var countDownTimer: CountDownTimer? = null
     private var remainingSeconds = 30
@@ -84,6 +88,9 @@ class TimerActivity : AppCompatActivity() {
 
         // Track timer activity opened
         AnalyticsManager.trackEvent(this, AnalyticsEvent.TIMER_ACTIVITY_OPENED)
+
+        // Load native ad at top
+        loadNativeAd()
 
         // Create and setup banner ad programmatically
         adView = AdView(this).apply {
@@ -108,8 +115,8 @@ class TimerActivity : AppCompatActivity() {
             isAppearanceLightStatusBars = false // 어두운 배경에 밝은 아이콘
         }
 
-        // WindowInsets 적용 - mainContent에 status bar 패딩 추가
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainContent)) { view, windowInsets ->
+        // WindowInsets 적용 - nativeAdContainer에 status bar 패딩 추가
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.nativeAdContainer)) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(
                 view.paddingLeft,
@@ -494,6 +501,39 @@ class TimerActivity : AppCompatActivity() {
         }
     }
 
+    private fun loadNativeAd() {
+        val adLoader = AdLoader.Builder(this, AdConfig.NATIVE_TIMER_TOP)
+            .forNativeAd { ad ->
+                nativeAd = ad
+                Log.d(TAG, "Native ad loaded successfully")
+
+                // Inflate custom native ad layout
+                val adView = layoutInflater.inflate(R.layout.view_native_ad_timer_top, null)
+
+                // Populate ad views
+                val titleView = adView.findViewById<TextView>(R.id.viewTitle)
+                val ctaView = adView.findViewById<TextView>(R.id.textCta)
+
+                titleView.text = ad.headline ?: ""
+                ctaView.text = ad.callToAction ?: ""
+
+                // Add to container
+                val nativeAdContainer = findViewById<FrameLayout>(R.id.nativeAdContainer)
+                nativeAdContainer.removeAllViews()
+                nativeAdContainer.addView(adView)
+            }
+            .withAdListener(object : com.google.android.gms.ads.AdListener() {
+                override fun onAdFailedToLoad(error: com.google.android.gms.ads.LoadAdError) {
+                    Log.e(TAG, "Failed to load native ad: ${error.message}")
+                }
+            })
+            .withNativeAdOptions(NativeAdOptions.Builder().build())
+            .build()
+
+        adLoader.loadAd(AdRequest.Builder().build())
+        Log.d(TAG, "Loading native ad...")
+    }
+
     override fun onDestroy() {
         super.onDestroy()
 
@@ -503,6 +543,9 @@ class TimerActivity : AppCompatActivity() {
 
         countDownTimer?.cancel()
         flipDetector.stop()
+
+        // Destroy native ad
+        nativeAd?.destroy()
 
         // Unregister force close receiver
         forceCloseReceiver?.let {
