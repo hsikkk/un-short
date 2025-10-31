@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -17,6 +18,9 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 
@@ -62,6 +66,21 @@ class OnboardingActivity : AppCompatActivity() {
 
         // Enable edge-to-edge
         enableEdgeToEdge()
+
+        // Status bar 설정: 흰색 배경에 어두운 아이콘
+        window.statusBarColor = Color.TRANSPARENT
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = true // 밝은 배경에 어두운 아이콘
+        }
+
+        // WindowInsets 적용 - indicatorContainer에 status bar 패딩 추가
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.indicatorContainer)) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val layoutParams = view.layoutParams as androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
+            layoutParams.topMargin = insets.top + (20 * resources.displayMetrics.density).toInt()
+            view.layoutParams = layoutParams
+            windowInsets
+        }
 
         // Check privacy consent first
         if (!hasValidPrivacyConsent()) {

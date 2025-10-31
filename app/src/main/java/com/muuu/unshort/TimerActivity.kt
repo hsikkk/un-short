@@ -26,7 +26,11 @@ import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
 /**
  * 타이머 Activity - tmp/timer.html 디자인 기반
@@ -70,6 +74,51 @@ class TimerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer)
+
+        // Enable edge-to-edge
+        enableEdgeToEdge()
+
+        // Status bar 설정: 검정색 배경에 밝은 아이콘
+        window.statusBarColor = Color.BLACK
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // 어두운 배경에 밝은 아이콘
+        }
+
+        // WindowInsets 적용 - mainContent에 status bar 패딩 추가
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainContent)) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(
+                view.paddingLeft,
+                insets.top,
+                view.paddingRight,
+                view.paddingBottom
+            )
+            windowInsets
+        }
+
+        // WindowInsets 적용 - bottomActions에 navigation bar 패딩 추가
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.bottomActions)) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(
+                view.paddingLeft,
+                view.paddingTop,
+                view.paddingRight,
+                view.paddingBottom + insets.bottom
+            )
+            windowInsets
+        }
+
+        // WindowInsets 적용 - successScreen에 패딩 추가
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.successScreen)) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(
+                view.paddingLeft,
+                insets.top + view.paddingTop,
+                view.paddingRight,
+                insets.bottom + view.paddingBottom
+            )
+            windowInsets
+        }
 
         // 화면 꺼짐 방지
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)

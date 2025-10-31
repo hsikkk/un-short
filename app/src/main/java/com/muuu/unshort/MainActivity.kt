@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
 class MainActivity : AppCompatActivity() {
 
@@ -58,6 +59,26 @@ class MainActivity : AppCompatActivity() {
 
         // Enable edge-to-edge for Android 15+
         enableEdgeToEdge()
+
+        // Status bar 설정: 검정색 배경에 밝은 아이콘
+        window.statusBarColor = Color.BLACK
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightStatusBars = false // 어두운 배경에 밝은 아이콘
+        }
+
+        // WindowInsets 적용 - topSection에 status bar 패딩 추가
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.topSection)) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(0, insets.top, 0, 0)
+            windowInsets
+        }
+
+        // WindowInsets 적용 - middleSection에 navigation bar 패딩 추가
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.middleSection)) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(0, 0, 0, insets.bottom)
+            windowInsets
+        }
 
         // View 초기화
         toggleArea = findViewById(R.id.toggleArea)
