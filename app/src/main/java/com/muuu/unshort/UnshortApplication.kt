@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import com.amplitude.android.Amplitude
 import com.amplitude.android.Configuration
+import com.google.android.gms.ads.MobileAds
 
 class UnshortApplication : Application() {
 
@@ -15,6 +16,9 @@ class UnshortApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        // AdMob 초기화
+        MobileAds.initialize(this) {}
 
         // Amplitude 초기화
         amplitude = Amplitude(

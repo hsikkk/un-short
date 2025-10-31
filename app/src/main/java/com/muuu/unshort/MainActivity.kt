@@ -20,6 +20,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var statusDot: View
     private lateinit var statusLabel: TextView
     private lateinit var settingsButton: ImageView
+    private lateinit var adView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +66,20 @@ class MainActivity : AppCompatActivity() {
         // Track app launch
         AnalyticsManager.trackEvent(this, AnalyticsEvent.APP_LAUNCHED)
 
+        // Create and setup banner ad programmatically
+        adView = AdView(this).apply {
+            adUnitId = AdConfig.BANNER_HOME_BOTTOM
+            setAdSize(AdSize.BANNER)
+        }
+
+        // Add AdView to container
+        val adViewContainer = findViewById<FrameLayout>(R.id.adViewContainer)
+        adViewContainer.addView(adView)
+
+        // Load ad
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
+
         // Enable edge-to-edge for Android 15+
         enableEdgeToEdge()
 
@@ -78,8 +96,8 @@ class MainActivity : AppCompatActivity() {
             windowInsets
         }
 
-        // WindowInsets 적용 - middleSection에 navigation bar 패딩 추가
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.middleSection)) { view, windowInsets ->
+        // WindowInsets 적용 - adViewContainer에 navigation bar 패딩 추가
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.adViewContainer)) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(
                 view.paddingLeft,
