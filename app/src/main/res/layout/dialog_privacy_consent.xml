@@ -18,9 +18,8 @@
             android:layout_height="wrap_content"
             android:text="@string/privacy_dialog_title"
             android:textSize="20sp"
-            android:textStyle="bold"
             android:textColor="@color/primary_dark"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
             android:gravity="center"
             android:letterSpacing="0.01"
             android:paddingBottom="24dp" />
@@ -38,9 +37,8 @@
             android:layout_height="wrap_content"
             android:text="@string/privacy_why_title"
             android:textSize="15sp"
-            android:textStyle="bold"
             android:textColor="@color/gray_900"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
             android:layout_marginBottom="8dp" />
 
         <TextView
@@ -65,9 +63,8 @@
             android:layout_height="wrap_content"
             android:text="@string/privacy_data_title"
             android:textSize="15sp"
-            android:textStyle="bold"
             android:textColor="@color/gray_900"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
             android:layout_marginBottom="12dp" />
 
         <!-- Collected Data -->
@@ -110,9 +107,8 @@
             android:layout_height="wrap_content"
             android:text="@string/privacy_usage_title"
             android:textSize="15sp"
-            android:textStyle="bold"
             android:textColor="@color/gray_900"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
             android:layout_marginBottom="8dp" />
 
         <TextView
@@ -137,9 +133,8 @@
             android:layout_height="wrap_content"
             android:text="@string/privacy_storage_title"
             android:textSize="15sp"
-            android:textStyle="bold"
             android:textColor="@color/gray_900"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
             android:layout_marginBottom="8dp" />
 
         <TextView
@@ -164,9 +159,8 @@
             android:layout_height="wrap_content"
             android:text="@string/privacy_faq_title"
             android:textSize="15sp"
-            android:textStyle="bold"
             android:textColor="@color/gray_900"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
             android:layout_marginBottom="12dp" />
 
         <TextView

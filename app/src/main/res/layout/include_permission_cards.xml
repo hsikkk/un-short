@@ -36,11 +36,10 @@
                     android:layout_height="28dp"
                     android:text="@string/permission_number_1"
                     android:textSize="14dp"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
                     android:background="@drawable/circle_accent_purple"
                     android:gravity="center"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/spoqa_sans_neo_bold"
                     android:layout_marginEnd="10dp" />
 
                 <TextView
@@ -51,7 +50,7 @@
                     android:text="@string/permission_accessibility"
                     android:textSize="16sp"
                     android:textColor="#000000"
-                    android:fontFamily="sans-serif" />
+                    android:fontFamily="@font/spoqa_sans_neo" />
 
             </LinearLayout>
 
@@ -62,7 +61,7 @@
                 android:text="@string/permission_why"
                 android:textSize="12sp"
                 android:textColor="#000000"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/spoqa_sans_neo"
                 android:alpha="0.6"
                 android:layout_marginBottom="6dp" />
 
@@ -127,11 +126,10 @@
                     android:layout_height="28dp"
                     android:text="@string/permission_number_2"
                     android:textSize="14dp"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
                     android:background="@drawable/circle_accent_purple"
                     android:gravity="center"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/spoqa_sans_neo_bold"
                     android:layout_marginEnd="10dp" />
 
                 <TextView
@@ -142,7 +140,7 @@
                     android:text="@string/permission_overlay"
                     android:textSize="16sp"
                     android:textColor="#000000"
-                    android:fontFamily="sans-serif" />
+                    android:fontFamily="@font/spoqa_sans_neo" />
 
             </LinearLayout>
 
@@ -153,7 +151,7 @@
                 android:text="@string/permission_why"
                 android:textSize="12sp"
                 android:textColor="#000000"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/spoqa_sans_neo"
                 android:alpha="0.6"
                 android:layout_marginBottom="6dp" />
 

@@ -16,7 +16,7 @@
         android:text="@string/delay_time_title"
         android:textSize="@dimen/text_title"
         android:textColor="@color/primary_dark"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/spoqa_sans_neo_medium"
         android:letterSpacing="0.01"
         android:layout_marginBottom="4dp" />
 
@@ -27,7 +27,7 @@
         android:text="@string/delay_time_desc"
         android:textSize="@dimen/text_caption"
         android:textColor="@color/gray_600"
-        android:fontFamily="sans-serif-light"
+        android:fontFamily="@font/spoqa_sans_neo_light"
         android:alpha="0.8"
         android:layout_marginBottom="12dp" />
 
@@ -53,7 +53,7 @@
             android:text="@string/delay_time_15"
             android:textSize="@dimen/text_body"
             android:textColor="@color/primary_dark"
-            android:fontFamily="sans-serif" />
+            android:fontFamily="@font/spoqa_sans_neo" />
 
         <RadioButton
             android:id="@+id/radio15"
@@ -87,7 +87,7 @@
             android:text="@string/delay_time_30"
             android:textSize="@dimen/text_body"
             android:textColor="@color/primary_dark"
-            android:fontFamily="sans-serif" />
+            android:fontFamily="@font/spoqa_sans_neo" />
 
         <RadioButton
             android:id="@+id/radio30"
@@ -121,7 +121,7 @@
             android:text="@string/delay_time_60"
             android:textSize="@dimen/text_body"
             android:textColor="@color/primary_dark"
-            android:fontFamily="sans-serif" />
+            android:fontFamily="@font/spoqa_sans_neo" />
 
         <RadioButton
             android:id="@+id/radio60"

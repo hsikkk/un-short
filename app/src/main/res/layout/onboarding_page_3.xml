@@ -13,7 +13,7 @@
         android:text="@string/onboarding_page3_title"
         android:textSize="20sp"
         android:textColor="#000000"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/spoqa_sans_neo"
         android:alpha="0.8"
         android:textAlignment="center"
         android:lineSpacingExtra="6dp"
@@ -85,7 +85,7 @@
                             android:text="10"
                             android:textSize="56sp"
                             android:textColor="#FFFFFF"
-                            android:fontFamily="sans-serif-thin"
+                            android:fontFamily="@font/spoqa_sans_neo_thin"
                             android:includeFontPadding="false" />
 
                         <!-- Timer Unit -->
@@ -96,7 +96,7 @@
                             android:text="@string/timer_seconds_unit"
                             android:textSize="13sp"
                             android:textColor="#8A8A8A"
-                            android:fontFamily="sans-serif-light"
+                            android:fontFamily="@font/spoqa_sans_neo_light"
                             android:letterSpacing="0.08"
                             android:textAllCaps="true" />
 
@@ -119,7 +119,7 @@
                         android:text="@string/timer_instruction_title"
                         android:textSize="17sp"
                         android:textColor="#FFFFFF"
-                        android:fontFamily="sans-serif"
+                        android:fontFamily="@font/spoqa_sans_neo"
                         android:layout_marginBottom="16dp" />
 
                     <!-- Description -->
@@ -129,7 +129,7 @@
                         android:text="@string/timer_instruction_message_onboarding"
                         android:textSize="14sp"
                         android:textColor="#8A8A8A"
-                        android:fontFamily="sans-serif-light"
+                        android:fontFamily="@font/spoqa_sans_neo_light"
                         android:gravity="center"
                         android:lineSpacingMultiplier="1.5" />
 
@@ -160,7 +160,7 @@
                         android:text="@string/flip_required"
                         android:textSize="13sp"
                         android:textColor="#FFFFFF"
-                        android:fontFamily="sans-serif-light" />
+                        android:fontFamily="@font/spoqa_sans_neo_light" />
 
                 </LinearLayout>
 
