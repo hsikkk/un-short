@@ -292,13 +292,20 @@
 
     <!-- AdMob Banner Ad Container -->
     <FrameLayout
-        android:id="@+id/adViewContainer"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+      android:id="@+id/adViewContainer"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="#FFFFFF"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent">
+        
+        <FrameLayout
+          android:id="@+id/adView"
+          android:layout_width="match_parent"
+          android:layout_height="50dp"/>
+    
+    </FrameLayout>
 
     <!-- Permission Warning (shown when permissions missing) - Overlay at root level -->
     <LinearLayout

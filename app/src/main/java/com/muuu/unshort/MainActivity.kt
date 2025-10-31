@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Add AdView to container
-        val adViewContainer = findViewById<FrameLayout>(R.id.adViewContainer)
+        val adViewContainer = findViewById<FrameLayout>(R.id.adView)
         adViewContainer.addView(adView)
 
         // Load ad
