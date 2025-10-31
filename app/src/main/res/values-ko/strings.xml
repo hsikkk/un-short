@@ -108,7 +108,7 @@
     <string name="privacy_dialog_title">접근성 권한 사용 안내</string>
 
     <string name="privacy_why_title">왜 접근성 권한이 필요한가요?</string>
-    <string name="privacy_why_content">un:short는 쇼츠 화면 감지를 위해 접근성 서비스를 사용합니다.\n\n이는 YouTube Shorts, Instagram Reels를 자동으로 차단하는 핵심 기능입니다.</string>
+    <string name="privacy_why_content">un:short는 숏폼 콘텐츠 감지를 위해 접근성 서비스를 사용합니다.\n\n이는 쇼츠 화면을 자동으로 차단하는 핵심 기능입니다.</string>
 
     <string name="privacy_data_title">수집하는 데이터</string>
     <string name="privacy_data_collected">✓ 화면 콘텐츠 (쇼츠 감지 목적만)\n✓ 앱 패키지 이름\n✓ 비디오 메타데이터 해시값 (임시)</string>
