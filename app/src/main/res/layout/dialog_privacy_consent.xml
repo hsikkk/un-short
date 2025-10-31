@@ -10,36 +10,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="28dp">
 
         <!-- Title -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/privacy_dialog_title"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textColor="@color/primary_dark"
             android:fontFamily="@font/spoqa_sans_neo_bold"
             android:gravity="center"
-            android:letterSpacing="0.01"
-            android:paddingBottom="24dp" />
+            android:letterSpacing="-0.01"
+            android:paddingBottom="28dp" />
 
         <!-- Divider -->
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_200"
-            android:layout_marginBottom="24dp" />
+            android:layout_height="2dp"
+            android:background="@color/primary_dark"
+            android:layout_marginBottom="28dp" />
 
         <!-- Why Section -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/privacy_why_title"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:textColor="@color/gray_900"
             android:fontFamily="@font/spoqa_sans_neo_bold"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="12dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -47,42 +47,30 @@
             android:text="@string/privacy_why_content"
             android:textSize="14sp"
             android:textColor="@color/gray_700"
-            android:lineSpacingExtra="4dp"
-            android:layout_marginBottom="20dp" />
-
-        <!-- Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_200"
-            android:layout_marginBottom="20dp" />
+            android:fontFamily="@font/spoqa_sans_neo"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="28dp" />
 
         <!-- Data Collection Section -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/privacy_data_title"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:textColor="@color/gray_900"
             android:fontFamily="@font/spoqa_sans_neo_bold"
             android:layout_marginBottom="12dp" />
 
         <!-- Collected Data -->
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="16dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/privacy_data_collected"
-                android:textSize="14sp"
-                android:textColor="@color/gray_600"
-                android:lineSpacingExtra="3dp" />
-
-        </LinearLayout>
+            android:text="@string/privacy_data_collected"
+            android:textSize="14sp"
+            android:textColor="@color/gray_700"
+            android:fontFamily="@font/spoqa_sans_neo"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="12dp" />
 
         <!-- Not Collected Data -->
         <TextView
@@ -90,26 +78,20 @@
             android:layout_height="wrap_content"
             android:text="@string/privacy_data_not_collected"
             android:textSize="14sp"
-            android:textColor="@color/gray_600"
-            android:lineSpacingExtra="3dp"
-            android:layout_marginBottom="20dp" />
-
-        <!-- Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_200"
-            android:layout_marginBottom="20dp" />
+            android:textColor="@color/gray_700"
+            android:fontFamily="@font/spoqa_sans_neo"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="28dp" />
 
         <!-- Usage Section -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/privacy_usage_title"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:textColor="@color/gray_900"
             android:fontFamily="@font/spoqa_sans_neo_bold"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="12dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -117,25 +99,19 @@
             android:text="@string/privacy_usage_content"
             android:textSize="14sp"
             android:textColor="@color/gray_700"
-            android:lineSpacingExtra="3dp"
-            android:layout_marginBottom="20dp" />
-
-        <!-- Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_200"
-            android:layout_marginBottom="20dp" />
+            android:fontFamily="@font/spoqa_sans_neo"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="28dp" />
 
         <!-- Storage Section -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/privacy_storage_title"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:textColor="@color/gray_900"
             android:fontFamily="@font/spoqa_sans_neo_bold"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="12dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -143,22 +119,16 @@
             android:text="@string/privacy_storage_content"
             android:textSize="14sp"
             android:textColor="@color/gray_700"
-            android:lineSpacingExtra="3dp"
-            android:layout_marginBottom="20dp" />
-
-        <!-- Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_200"
-            android:layout_marginBottom="20dp" />
+            android:fontFamily="@font/spoqa_sans_neo"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="28dp" />
 
         <!-- FAQ Section -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/privacy_faq_title"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:textColor="@color/gray_900"
             android:fontFamily="@font/spoqa_sans_neo_bold"
             android:layout_marginBottom="12dp" />
@@ -169,45 +139,50 @@
             android:text="@string/privacy_faq_content"
             android:textSize="14sp"
             android:textColor="@color/gray_700"
-            android:lineSpacingExtra="4dp"
-            android:layout_marginBottom="24dp" />
+            android:fontFamily="@font/spoqa_sans_neo"
+            android:lineSpacingExtra="6dp"
+            android:layout_marginBottom="32dp" />
 
         <!-- Bottom divider -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray_900"
-            android:layout_marginBottom="24dp" />
+            android:background="@color/gray_200"
+            android:layout_marginBottom="28dp" />
 
         <!-- Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="end">
+            android:gravity="center"
+            android:layout_marginTop="4dp">
 
             <Button
                 android:id="@+id/btnExit"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/privacy_btn_exit"
                 android:textColor="@color/gray_600"
-                android:textSize="14sp"
+                android:textSize="15sp"
+                android:fontFamily="@font/spoqa_sans_neo_medium"
                 android:textAllCaps="false"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
+                android:paddingVertical="16dp"
                 android:layout_marginEnd="8dp" />
 
             <Button
                 android:id="@+id/btnAgree"
                 style="@style/Widget.App.Button"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/privacy_btn_agree"
-                android:textSize="14sp"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/spoqa_sans_neo_bold"
+                android:paddingVertical="16dp"
+                android:layout_marginStart="8dp" />
 
         </LinearLayout>
 
