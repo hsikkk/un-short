@@ -180,7 +180,7 @@
         android:orientation="vertical"
         android:padding="24dp"
         android:background="#000000"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/adViewContainer">
 
         <!-- Skip Button -->
         <!-- White button: padding: 14dp, background: #fff, border-radius: 12dp, font-size: 15sp, font-weight: 600, color: #000 -->
@@ -201,6 +201,16 @@
             android:visibility="visible" />
 
     </LinearLayout>
+
+    <!-- AdMob Banner Ad Container -->
+    <FrameLayout
+        android:id="@+id/adViewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Success Screen (hidden initially) -->
     <!-- CSS: position: absolute, background: #000 (dark mode), full screen -->

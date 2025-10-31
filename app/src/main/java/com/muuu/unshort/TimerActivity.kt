@@ -24,6 +24,7 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -33,6 +34,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 
 /**
  * 타이머 Activity - tmp/timer.html 디자인 기반
@@ -57,6 +61,7 @@ class TimerActivity : AppCompatActivity() {
     private lateinit var mainContent: View
     private lateinit var successScreen: View
     private lateinit var continueButton: TextView
+    private lateinit var adView: AdView
 
     private var countDownTimer: CountDownTimer? = null
     private var remainingSeconds = 30
@@ -80,6 +85,20 @@ class TimerActivity : AppCompatActivity() {
         // Track timer activity opened
         AnalyticsManager.trackEvent(this, AnalyticsEvent.TIMER_ACTIVITY_OPENED)
 
+        // Create and setup banner ad programmatically
+        adView = AdView(this).apply {
+            adUnitId = AdConfig.BANNER_TIMER_BOTTOM
+            setAdSize(AdSize.BANNER)
+        }
+
+        // Add AdView to container
+        val adViewContainer = findViewById<FrameLayout>(R.id.adViewContainer)
+        adViewContainer.addView(adView)
+
+        // Load ad
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
+
         // Enable edge-to-edge
         enableEdgeToEdge()
 
@@ -101,14 +120,14 @@ class TimerActivity : AppCompatActivity() {
             windowInsets
         }
 
-        // WindowInsets 적용 - bottomActions에 navigation bar 패딩 추가
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.bottomActions)) { view, windowInsets ->
+        // WindowInsets 적용 - adViewContainer에 navigation bar 패딩 추가
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.adViewContainer)) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(
                 view.paddingLeft,
                 view.paddingTop,
                 view.paddingRight,
-                view.paddingBottom + insets.bottom
+                insets.bottom
             )
             windowInsets
         }
