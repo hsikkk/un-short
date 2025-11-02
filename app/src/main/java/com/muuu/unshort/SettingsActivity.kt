@@ -4,11 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.muuu.unshort.admin.DeviceAdminManager
 
@@ -77,11 +74,11 @@ class SettingsActivity : BaseActivity() {
         // Device Admin 스위치 리스너
         deviceAdminSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                // ON으로 시도 - 다이얼로그 표시
-                showDeviceAdminEnableDialog()
+                // ON으로 시도 - 바로 Device Admin 권한 요청
+                deviceAdminManager.requestActivation(this, REQUEST_CODE_ENABLE_DEVICE_ADMIN)
             } else {
-                // OFF로 시도 - 설정으로 안내
-                showDeviceAdminDisableDialog()
+                // OFF로 시도 - 바로 Device Admin 제거
+                deviceAdminManager.removeAdmin()
             }
         }
 
@@ -212,56 +209,11 @@ class SettingsActivity : BaseActivity() {
         // 리스너 다시 설정
         deviceAdminSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                showDeviceAdminEnableDialog()
+                deviceAdminManager.requestActivation(this, REQUEST_CODE_ENABLE_DEVICE_ADMIN)
             } else {
-                showDeviceAdminDisableDialog()
+                deviceAdminManager.removeAdmin()
             }
         }
-    }
-
-    /**
-     * Device Admin 활성화 다이얼로그 표시
-     */
-    private fun showDeviceAdminEnableDialog() {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.device_admin_dialog_title)
-            .setMessage(R.string.device_admin_dialog_message)
-            .setPositiveButton(R.string.device_admin_dialog_enable) { _, _ ->
-                // Device Admin 권한 요청
-                deviceAdminManager.requestActivation(this, REQUEST_CODE_ENABLE_DEVICE_ADMIN)
-            }
-            .setNegativeButton(R.string.device_admin_dialog_cancel) { _, _ ->
-                // 취소 시 스위치를 다시 OFF로
-                updateDeviceAdminSwitchState()
-            }
-            .setOnCancelListener {
-                // 다이얼로그 외부 터치로 취소 시
-                updateDeviceAdminSwitchState()
-            }
-            .show()
-    }
-
-    /**
-     * Device Admin 비활성화 안내 다이얼로그 표시
-     */
-    private fun showDeviceAdminDisableDialog() {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.device_admin_deactivate_title)
-            .setMessage(R.string.device_admin_deactivate_message)
-            .setPositiveButton(R.string.device_admin_deactivate_button) { _, _ ->
-                // 설정 화면으로 이동
-                val intent = Intent(Settings.ACTION_SECURITY_SETTINGS)
-                startActivity(intent)
-            }
-            .setNegativeButton(android.R.string.cancel) { _, _ ->
-                // 스위치 상태 복원
-                updateDeviceAdminSwitchState()
-            }
-            .setOnCancelListener {
-                // 다이얼로그 외부 터치로 취소 시
-                updateDeviceAdminSwitchState()
-            }
-            .show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

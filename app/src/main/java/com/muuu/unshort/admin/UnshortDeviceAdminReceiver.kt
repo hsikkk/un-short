@@ -4,7 +4,6 @@ import android.app.admin.DeviceAdminReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import android.widget.Toast
 import com.muuu.unshort.R
 
 /**
@@ -18,11 +17,7 @@ class UnshortDeviceAdminReceiver : DeviceAdminReceiver() {
     override fun onEnabled(context: Context, intent: Intent) {
         super.onEnabled(context, intent)
         Log.d(TAG, "Device Admin enabled")
-        Toast.makeText(
-            context,
-            R.string.device_admin_receiver_enabled,
-            Toast.LENGTH_SHORT
-        ).show()
+        // Toast는 Activity에서 처리
     }
 
     override fun onDisableRequested(context: Context, intent: Intent): CharSequence {
@@ -33,11 +28,7 @@ class UnshortDeviceAdminReceiver : DeviceAdminReceiver() {
     override fun onDisabled(context: Context, intent: Intent) {
         super.onDisabled(context, intent)
         Log.d(TAG, "Device Admin disabled")
-        Toast.makeText(
-            context,
-            R.string.device_admin_receiver_disabled,
-            Toast.LENGTH_SHORT
-        ).show()
+        // Toast는 사용자가 설정 화면으로 돌아왔을 때 자동으로 OFF 표시됨
     }
 
     companion object {

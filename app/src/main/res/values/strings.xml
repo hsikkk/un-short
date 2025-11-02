@@ -128,6 +128,7 @@
     <!-- Device Admin (App Uninstall Protection) -->
     <string name="device_admin_title">App Deletion Protection</string>
     <string name="device_admin_desc">Prevent impulsive app uninstallation</string>
+    <string name="device_admin_explanation">Ever deleted the app in a moment of weakness?\n\nun:short prevents impulsive uninstallation when your resolve wavers.</string>
     <string name="device_admin_dialog_title">Enable Deletion Protection?</string>
     <string name="device_admin_dialog_message">This feature adds an extra step before uninstalling un:short.\n\nIt helps you resist impulsive decisions during moments of weakness.\n\nYou can deactivate this anytime in Settings → Security → Device admin apps.</string>
     <string name="device_admin_dialog_enable">Enable</string>

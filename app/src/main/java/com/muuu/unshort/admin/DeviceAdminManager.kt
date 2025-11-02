@@ -5,6 +5,7 @@ import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import com.muuu.unshort.R
 
 /**
  * Manager class for Device Admin operations
@@ -37,9 +38,7 @@ class DeviceAdminManager(private val context: Context) {
             putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, adminComponent)
             putExtra(
                 DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-                "un:short는 Device Admin 권한을 사용해 충동적인 앱 삭제를 방지합니다.\n\n" +
-                "이 기능은 의지가 약해지는 순간에 도움이 됩니다.\n\n" +
-                "언제든지 설정 > 보안 > 기기 관리 앱에서 비활성화할 수 있습니다."
+                context.getString(R.string.device_admin_explanation)
             )
         }
         activity.startActivityForResult(intent, requestCode)
