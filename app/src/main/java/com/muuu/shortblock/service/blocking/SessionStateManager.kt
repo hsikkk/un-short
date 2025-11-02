@@ -119,19 +119,27 @@ class SessionStateManager {
         val scrollData = scrollDataByPackage.getOrPut(packageName) { ScrollData() }
         val current = stateByPackage[packageName] ?: ShortsSessionState.IDLE
 
+        Log.d(TAG, "[$packageName] ContentHash: new=$newHash, old=${scrollData.hash}, stableCount=${scrollData.stableCount}")
+
         if (newHash == scrollData.hash) {
             scrollData.stableCount++
+            Log.d(TAG, "[$packageName] Same hash, stableCount=${scrollData.stableCount}")
             return
         }
 
         val scrollDetected = scrollData.stableCount >= STABLE_THRESHOLD
 
+        Log.d(TAG, "[$packageName] Hash changed! scrollDetected=$scrollDetected (stableCount=${scrollData.stableCount}, threshold=$STABLE_THRESHOLD)")
+
         if (scrollDetected && current == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL) {
             Log.d(TAG, "[$packageName] Scroll detected: ${scrollData.hash} → $newHash")
             previousStateByPackage[packageName] = current
-            val newState = ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION
+            // 스크롤 = 새 영상 = 처음부터 다시 시작
+            val newState = ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
             stateByPackage[packageName] = newState
-            Log.d(TAG, "[$packageName] Scroll event | $current → $newState")
+            Log.d(TAG, "[$packageName] Scroll event | $current → $newState (new video)")
+        } else {
+            Log.d(TAG, "[$packageName] Scroll not triggered: scrollDetected=$scrollDetected, current=$current")
         }
 
         scrollData.hash = newHash

@@ -213,14 +213,24 @@ class ShortsBlockService : AccessibilityService() {
                     cancelPendingOverlay()
                     overlayManager.hideOverlay()
                 } else {
+                    // 쇼츠 화면 내에서 콘텐츠 변화 감지
+                    Log.d(TAG, "Still in shorts, state=$currentState, checking for scroll...")
+
                     // 스크롤 감지 (ALLOWED 상태에서만)
                     if (currentState == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL) {
+                        Log.d(TAG, "ALLOWED state - generating content hash")
                         val hash = hashGenerator.generateContentHash(rootNode, appConfig.hashConfig)
+                        Log.d(TAG, "Generated hash: $hash")
+
                         if (hash != 0) {
+                            Log.d(TAG, "Sending ContentHashChanged event")
                             sessionState.handleEvent(SessionEvent.ContentHashChanged(hash), packageName)
 
                             // 상태가 변경되었으면 스크롤 발생
-                            if (sessionState.getCurrentState(packageName) == ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION) {
+                            val newState = sessionState.getCurrentState(packageName)
+                            Log.d(TAG, "State after hash event: $newState")
+
+                            if (newState == ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION) {
                                 Log.d(TAG, "Scroll detected - clearing session")
                                 prefs.edit().apply {
                                     remove(AppConstants.PREF_COMPLETED_SESSION_ID)
@@ -228,7 +238,11 @@ class ShortsBlockService : AccessibilityService() {
                                     apply()
                                 }
                             }
+                        } else {
+                            Log.w(TAG, "Hash is 0 - skipping")
                         }
+                    } else {
+                        Log.d(TAG, "Not in ALLOWED state ($currentState) - skipping scroll detection")
                     }
                 }
             }

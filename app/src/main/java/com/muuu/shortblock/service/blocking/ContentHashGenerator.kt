@@ -6,10 +6,7 @@ import android.view.accessibility.AccessibilityNodeInfo
 /**
  * 콘텐츠 해시 생성기
  *
- * 책임:
- * - AccessibilityNodeInfo 트리에서 콘텐츠를 추출하여 해시 생성
- * - 스크롤 감지를 위해 안정적인 콘텐츠만 해시에 포함
- * - 동적 요소(좋아요 수, 시간 등)는 필터링하여 제외
+ * 기존 동작하던 로직을 그대로 사용
  */
 class ContentHashGenerator {
 
@@ -17,10 +14,6 @@ class ContentHashGenerator {
 
     /**
      * 주어진 노드에서 콘텐츠 해시 생성
-     *
-     * @param rootNode 분석할 루트 AccessibilityNodeInfo
-     * @param config 해시 생성 설정
-     * @return 콘텐츠 해시값
      */
     fun generateContentHash(
         rootNode: AccessibilityNodeInfo,
@@ -28,97 +21,82 @@ class ContentHashGenerator {
     ): Int {
         // 컨테이너 노드 찾기
         val targetNode = if (config.containerViewId != null) {
-            findNodeByViewId(rootNode, config.containerViewId) ?: rootNode
+            rootNode.findAccessibilityNodeInfosByViewId(config.containerViewId)?.firstOrNull() ?: rootNode
         } else {
             rootNode
         }
 
-        // 콘텐츠 문자열 수집
-        val contentStrings = mutableListOf<String>()
-        collectContentStrings(
+        // StringBuilder로 콘텐츠 수집 (기존 방식)
+        val contentBuilder = StringBuilder()
+
+        collectContent(
             node = targetNode,
             config = config,
             depth = 0,
-            contentStrings = contentStrings
+            contentBuilder = contentBuilder
         )
 
-        // 해시 생성
-        val concatenated = contentStrings.joinToString("|")
-        val hash = concatenated.hashCode()
+        val hash = contentBuilder.toString().hashCode()
+        val contentLength = contentBuilder.length
 
-        Log.d(TAG, "Generated hash: $hash from ${contentStrings.size} strings")
+        Log.d(TAG, "Generated hash: $hash (content length: $contentLength)")
+
         return hash
     }
 
     /**
-     * View ID로 노드 찾기
+     * 재귀적으로 콘텐츠 수집 (기존 로직)
      */
-    private fun findNodeByViewId(
-        node: AccessibilityNodeInfo,
-        viewId: String
-    ): AccessibilityNodeInfo? {
-        if (node.viewIdResourceName == viewId) {
-            return node
-        }
-
-        for (i in 0 until node.childCount) {
-            node.getChild(i)?.let { child ->
-                val found = findNodeByViewId(child, viewId)
-                if (found != null) {
-                    child.recycle()
-                    return found
-                }
-                child.recycle()
-            }
-        }
-
-        return null
-    }
-
-    /**
-     * 재귀적으로 콘텐츠 문자열 수집
-     */
-    private fun collectContentStrings(
+    private fun collectContent(
         node: AccessibilityNodeInfo,
         config: HashConfig,
         depth: Int,
-        contentStrings: MutableList<String>
+        contentBuilder: StringBuilder
     ) {
         // 최대 깊이 제한
         if (depth > config.maxDepth) {
             return
         }
 
-        // 현재 노드의 View ID 체크
-        val viewId = node.viewIdResourceName?.lowercase() ?: ""
+        val viewId = node.viewIdResourceName ?: ""
 
-        // 제외 패턴에 해당하면 스킵
+        // Excluded viewId 패턴 체크 (기존과 동일)
         if (config.excludedViewIdPatterns.any { pattern ->
-                viewId.contains(pattern.lowercase())
+                viewId.contains(pattern, ignoreCase = true)
             }) {
             return
         }
 
-        // 포함 패턴에 해당하거나 패턴이 없으면 텍스트 수집
-        val shouldCollect = config.includedViewIdPatterns.isEmpty() ||
-                config.includedViewIdPatterns.any { pattern ->
-                    viewId.contains(pattern.lowercase())
-                }
+        // 텍스트 수집 (기존 로직)
+        node.text?.toString()?.let { text ->
+            if (text.isNotEmpty() && text.length > 2) {
+                // 순수 숫자/특수문자만 있는 텍스트 제외
+                if (!text.all { it.isDigit() || it == ':' || it == '/' || it == ',' || it == '.' }) {
+                    // Excluded text 패턴 체크
+                    val shouldExclude = config.excludedTextPatterns.any { pattern ->
+                        pattern.matches(text)
+                    }
 
-        if (shouldCollect) {
-            // 텍스트 수집
-            val text = node.text?.toString()
-            if (text != null && text.isNotBlank()) {
-                if (isValidContentText(text, config)) {
-                    contentStrings.add(text.trim())
+                    if (!shouldExclude) {
+                        contentBuilder.append(text).append("|")
+                    }
                 }
             }
+        }
 
-            // ContentDescription 수집
-            val contentDesc = node.contentDescription?.toString()
-            if (contentDesc != null && contentDesc.isNotBlank()) {
-                if (isValidContentText(contentDesc, config)) {
-                    contentStrings.add(contentDesc.trim())
+        // ContentDescription 수집 (주요 노드에서만)
+        val isContentNode = viewId.contains("title", ignoreCase = true) ||
+                           viewId.contains("channel", ignoreCase = true) ||
+                           viewId.contains("author", ignoreCase = true) ||
+                           viewId.contains("description", ignoreCase = true) ||
+                           viewId.contains("metadata", ignoreCase = true) ||
+                           viewId.contains("username", ignoreCase = true) ||
+                           viewId.contains("caption", ignoreCase = true)
+
+        if (isContentNode) {
+            node.contentDescription?.toString()?.let { desc ->
+                if (desc.isNotEmpty() && desc.length > 5) {
+                    contentBuilder.append(desc).append("|")
                 }
             }
         }
@@ -126,36 +104,14 @@ class ContentHashGenerator {
         // 자식 노드 재귀 탐색
         for (i in 0 until node.childCount) {
             node.getChild(i)?.let { child ->
-                collectContentStrings(
+                collectContent(
                     node = child,
                     config = config,
                     depth = depth + 1,
-                    contentStrings = contentStrings
+                    contentBuilder = contentBuilder
                 )
                 child.recycle()
             }
         }
-    }
-
-    /**
-     * 텍스트가 유효한 콘텐츠인지 검증
-     *
-     * - 너무 짧은 텍스트 제외 (3자 미만)
-     * - 제외 패턴에 매칭되는 텍스트 제외
-     */
-    private fun isValidContentText(text: String, config: HashConfig): Boolean {
-        // 너무 짧은 텍스트 제외
-        if (text.length < 3) {
-            return false
-        }
-
-        // 제외 패턴 체크
-        for (pattern in config.excludedTextPatterns) {
-            if (pattern.matches(text)) {
-                return false
-            }
-        }
-
-        return true
     }
 }
