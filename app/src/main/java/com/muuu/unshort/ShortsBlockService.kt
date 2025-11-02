@@ -294,6 +294,18 @@ class ShortsBlockService : AccessibilityService() {
     private fun showBlockOverlay(packageName: String, overlayType: OverlayType) {
         Log.d(TAG, "showBlockOverlay() called for $packageName with type: $overlayType")
 
+        // 이미 pending job이 있으면 스킵 (중복 스케줄 방지)
+        if (pendingOverlayJob != null) {
+            Log.d(TAG, "Overlay job already pending - skipping duplicate schedule")
+            return
+        }
+
+        // 이미 오버레이가 표시 중이면 스킵
+        if (overlayManager.isOverlayVisible()) {
+            Log.d(TAG, "Overlay already visible - skipping")
+            return
+        }
+
         // 오버레이 권한 확인
         if (!Settings.canDrawOverlays(this)) {
             Log.w(TAG, "Overlay permission not granted")
@@ -302,9 +314,6 @@ class ShortsBlockService : AccessibilityService() {
         }
 
         Log.d(TAG, "Overlay permission granted, scheduling overlay with delay")
-
-        // 기존 pending job 취소
-        cancelPendingOverlay()
 
         // 딜레이 후 오버레이 표시
         pendingOverlayJob = Runnable {
