@@ -5,7 +5,102 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <!-- Step 1: Accessibility Service Card -->
+    <!-- Step 1: Accessibility Consent Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/accessibilityConsentCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/gray_200"
+        app:cardBackgroundColor="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Section Color Bar -->
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="@color/accent_purple" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:text="@string/permission_number_1"
+                        android:textSize="14dp"
+                        android:textColor="@color/white"
+                        android:background="@drawable/circle_accent_purple"
+                        android:gravity="center"
+                        android:fontFamily="@font/spoqa_sans_neo_bold"
+                        android:layout_marginEnd="10dp" />
+
+                    <TextView
+                        android:id="@+id/consentTitleText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/permission_consent_title"
+                        android:textSize="17sp"
+                        android:textColor="@color/primary_dark"
+                        android:fontFamily="@font/spoqa_sans_neo_medium" />
+
+                </LinearLayout>
+
+                <!-- Consent Reason -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/permission_consent_reason"
+                    android:textSize="13sp"
+                    android:textColor="@color/gray_700"
+                    android:fontFamily="@font/spoqa_sans_neo"
+                    android:lineSpacingExtra="4dp"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Status -->
+                <TextView
+                    android:id="@+id/consentStatusText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/permission_not_set"
+                    android:textSize="13sp"
+                    android:textColor="@color/error"
+                    android:fontFamily="@font/spoqa_sans_neo_medium"
+                    android:layout_marginBottom="12dp" />
+
+                <Button
+                    android:id="@+id/consentButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/permission_consent_button"
+                    style="@style/Widget.App.Button" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Step 2: Accessibility Service Card -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/onboardingAccessibilityCard"
         android:layout_width="match_parent"
@@ -45,7 +140,7 @@
                 <TextView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:text="@string/permission_number_1"
+                    android:text="@string/permission_number_2"
                     android:textSize="14dp"
                     android:textColor="@color/white"
                     android:background="@drawable/circle_accent_purple"
@@ -85,6 +180,36 @@
                 android:fontFamily="@font/spoqa_sans_neo"
                 android:lineSpacingExtra="4dp"
                 android:layout_marginBottom="12dp" />
+
+            <!-- Manufacturer-specific Guide -->
+            <LinearLayout
+                android:id="@+id/manufacturerGuideContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/gray_50"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/permission_accessibility_guide_label"
+                    android:textSize="11sp"
+                    android:textColor="@color/gray_600"
+                    android:fontFamily="@font/spoqa_sans_neo_medium"
+                    android:layout_marginBottom="6dp" />
+
+                <TextView
+                    android:id="@+id/manufacturerGuideText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_800"
+                    android:fontFamily="@font/spoqa_sans_neo"
+                    android:lineSpacingExtra="2dp" />
+
+            </LinearLayout>
 
             <!-- Status -->
             <TextView
@@ -149,7 +274,7 @@
                 <TextView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:text="@string/permission_number_2"
+                    android:text="@string/permission_number_3"
                     android:textSize="14dp"
                     android:textColor="@color/white"
                     android:background="@drawable/circle_accent_purple"

@@ -65,7 +65,17 @@
     <!-- Permission Cards -->
     <string name="permission_number_1">1</string>
     <string name="permission_number_2">2</string>
-    <string name="permission_accessibility">Accessibility Service</string>
+    <string name="permission_number_3">3</string>
+
+    <!-- Accessibility Consent Card -->
+    <string name="permission_consent_title">Accessibility Permission Consent</string>
+    <string name="permission_consent_title_completed">Accessibility Permission Consent ✓</string>
+    <string name="permission_consent_reason">We need your consent to use accessibility service.\n\nWe only use it to detect short-form videos and never access your personal information.</string>
+    <string name="permission_consent_button">I Agree</string>
+    <string name="permission_consent_completed">Consent given</string>
+
+    <!-- Accessibility Setup Card -->
+    <string name="permission_accessibility">Accessibility Service Setup</string>
     <string name="permission_accessibility_completed">Accessibility Service ✓</string>
     <string name="permission_overlay">Display over other apps</string>
     <string name="permission_overlay_completed">Display over other apps ✓</string>
@@ -75,6 +85,23 @@
     <string name="permission_not_set">Not set yet</string>
     <string name="permission_completed">Setup complete</string>
     <string name="permission_go_to_settings">Go to settings</string>
+    <string name="permission_consent_required">Please agree to consent first</string>
+
+    <!-- Manufacturer-specific Accessibility Guides -->
+    <string name="permission_accessibility_guide_label">Tip:</string>
+    <string name="permission_accessibility_guide_samsung">Tap [Installed apps] → Find "un:short"</string>
+    <string name="permission_accessibility_guide_lg">Tap [Advanced settings] → Find "un:short"</string>
+    <string name="permission_accessibility_guide_xiaomi">Tap [Downloaded services] → Find "un:short"</string>
+    <string name="permission_accessibility_guide_huawei">Tap [Downloaded services] → Find "un:short"</string>
+    <string name="permission_accessibility_guide_oppo">Tap [Installed services] → Find "un:short"</string>
+    <string name="permission_accessibility_guide_vivo">Tap [Installed services] → Find "un:short"</string>
+    <string name="permission_accessibility_guide_default">Find "un:short" and turn it on</string>
+
+    <!-- Accessibility Consent Dialog -->
+    <string name="accessibility_consent_dialog_title">Accessibility Permission Notice</string>
+    <string name="accessibility_consent_dialog_message">un:short needs accessibility permission to detect short-form videos.\n\nWe only use it to identify shorts screens and never access your personal information.</string>
+    <string name="accessibility_consent_agree">Agree and Go to Settings</string>
+    <string name="accessibility_consent_cancel">Cancel</string>
 
     <!-- Timer Activity -->
     <string name="timer_seconds_unit">seconds</string>

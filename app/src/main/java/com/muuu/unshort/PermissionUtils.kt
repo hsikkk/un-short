@@ -3,12 +3,57 @@ package com.muuu.unshort
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 
 /**
  * 권한 체크 및 설정 관련 유틸리티
  */
 object PermissionUtils {
+
+    /**
+     * 제조사 타입
+     */
+    enum class Manufacturer {
+        SAMSUNG,
+        LG,
+        XIAOMI,
+        HUAWEI,
+        OPPO,
+        VIVO,
+        OTHER
+    }
+
+    /**
+     * 현재 기기의 제조사 확인
+     */
+    fun getManufacturer(): Manufacturer {
+        val manufacturer = Build.MANUFACTURER.lowercase()
+        return when {
+            manufacturer.contains("samsung") -> Manufacturer.SAMSUNG
+            manufacturer.contains("lg") -> Manufacturer.LG
+            manufacturer.contains("xiaomi") -> Manufacturer.XIAOMI
+            manufacturer.contains("huawei") || manufacturer.contains("honor") -> Manufacturer.HUAWEI
+            manufacturer.contains("oppo") || manufacturer.contains("realme") -> Manufacturer.OPPO
+            manufacturer.contains("vivo") -> Manufacturer.VIVO
+            else -> Manufacturer.OTHER
+        }
+    }
+
+    /**
+     * 제조사별 접근성 설정 경로 안내 문구 가져오기
+     */
+    fun getAccessibilityGuide(context: Context): String {
+        return when (getManufacturer()) {
+            Manufacturer.SAMSUNG -> context.getString(R.string.permission_accessibility_guide_samsung)
+            Manufacturer.LG -> context.getString(R.string.permission_accessibility_guide_lg)
+            Manufacturer.XIAOMI -> context.getString(R.string.permission_accessibility_guide_xiaomi)
+            Manufacturer.HUAWEI -> context.getString(R.string.permission_accessibility_guide_huawei)
+            Manufacturer.OPPO -> context.getString(R.string.permission_accessibility_guide_oppo)
+            Manufacturer.VIVO -> context.getString(R.string.permission_accessibility_guide_vivo)
+            Manufacturer.OTHER -> context.getString(R.string.permission_accessibility_guide_default)
+        }
+    }
 
     /**
      * 접근성 서비스 활성화 여부 확인

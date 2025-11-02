@@ -10,6 +10,10 @@ import android.widget.TextView
 class PermissionSetupActivity : BaseActivity() {
 
     private lateinit var backButton: ImageView
+    private var consentCard: View? = null
+    private var consentTitleText: TextView? = null
+    private var consentStatusText: TextView? = null
+    private var consentButton: Button? = null
     private var accessibilityCard: View? = null
     private var overlayCard: View? = null
     private var serviceStatusText: TextView? = null
@@ -19,6 +23,7 @@ class PermissionSetupActivity : BaseActivity() {
     private var settingsButton: Button? = null
     private var overlayButton: Button? = null
     private var completeButton: Button? = null
+    private var manufacturerGuideText: TextView? = null
     private lateinit var permissionUIHelper: PermissionUIHelper
     private var fromOnboarding = false
 
@@ -33,6 +38,10 @@ class PermissionSetupActivity : BaseActivity() {
 
         // View 초기화
         backButton = findViewById(R.id.backButton)
+        consentCard = findViewById(R.id.accessibilityConsentCard)
+        consentTitleText = findViewById(R.id.consentTitleText)
+        consentStatusText = findViewById(R.id.consentStatusText)
+        consentButton = findViewById(R.id.consentButton)
         accessibilityCard = findViewById(R.id.onboardingAccessibilityCard)
         overlayCard = findViewById(R.id.onboardingOverlayCard)
         serviceStatusText = findViewById(R.id.onboardingServiceStatusText)
@@ -42,6 +51,10 @@ class PermissionSetupActivity : BaseActivity() {
         settingsButton = findViewById(R.id.onboardingSettingsButton)
         overlayButton = findViewById(R.id.onboardingOverlayButton)
         completeButton = findViewById(R.id.startButton)
+        manufacturerGuideText = findViewById(R.id.manufacturerGuideText)
+
+        // 제조사별 안내 문구 설정
+        manufacturerGuideText?.text = PermissionUtils.getAccessibilityGuide(this)
 
         // 완료 버튼 텍스트 변경
         completeButton?.text = "완료"
@@ -56,9 +69,16 @@ class PermissionSetupActivity : BaseActivity() {
             }
         }
 
+        // 접근성 동의 버튼 - 다이얼로그 표시
+        consentButton?.setOnClickListener {
+            showPrivacyConsentDialog()
+        }
+
         // 접근성 설정 버튼
         settingsButton?.setOnClickListener {
-            PermissionUtils.openAccessibilitySettings(this)
+            if (permissionUIHelper.isAccessibilityConsentGiven()) {
+                PermissionUtils.openAccessibilitySettings(this)
+            }
         }
 
         // 오버레이 설정 버튼
@@ -98,6 +118,16 @@ class PermissionSetupActivity : BaseActivity() {
     }
 
     private fun updatePermissionUI() {
+        // 접근성 동의 카드 업데이트
+        permissionUIHelper.updateConsentCard(
+            PermissionUIHelper.PermissionUIElements(
+                card = consentCard,
+                statusText = consentTitleText,
+                descriptionText = consentStatusText,
+                settingsButton = consentButton
+            )
+        )
+
         // 접근성 서비스 카드 업데이트
         permissionUIHelper.updateAccessibilityCard(
             PermissionUIHelper.PermissionUIElements(
@@ -120,5 +150,24 @@ class PermissionSetupActivity : BaseActivity() {
 
         // 완료 버튼 표시 업데이트
         permissionUIHelper.updateCompleteButton(completeButton)
+    }
+
+    /**
+     * 개인정보 처리 방침 동의 다이얼로그 표시
+     */
+    private fun showPrivacyConsentDialog() {
+        val dialog = PrivacyConsentDialog(
+            context = this,
+            onAgree = {
+                // 동의 저장 및 UI 업데이트
+                permissionUIHelper.saveAccessibilityConsent()
+                updatePermissionUI()
+            },
+            onExit = {
+                // 동의 거부 시 아무 것도 하지 않음
+            },
+            exitButtonText = "Disagree"
+        )
+        dialog.show()
     }
 }

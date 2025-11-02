@@ -15,7 +15,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class PrivacyConsentDialog(
     context: Context,
     private val onAgree: () -> Unit,
-    private val onExit: () -> Unit
+    private val onExit: () -> Unit,
+    private val exitButtonText: String? = null
 ) : Dialog(context) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,9 +35,17 @@ class PrivacyConsentDialog(
             (displayMetrics.heightPixels * 0.8).toInt()
         )
 
-        // Prevent dismissal by back button or outside touch
-        setCancelable(false)
+        // Enable dimmed background
+        window?.setDimAmount(0.5f)
+
+        // Allow dismissal by back button
+        setCancelable(true)
         setCanceledOnTouchOutside(false)
+
+        // Call onExit when dismissed by back button
+        setOnCancelListener {
+            onExit()
+        }
 
         // Setup buttons
         view.findViewById<Button>(R.id.btnAgree).setOnClickListener {
@@ -44,7 +53,12 @@ class PrivacyConsentDialog(
             dismiss()
         }
 
-        view.findViewById<Button>(R.id.btnExit).setOnClickListener {
+        val exitButton = view.findViewById<Button>(R.id.btnExit)
+        // 커스텀 버튼 텍스트가 제공되면 사용
+        exitButtonText?.let {
+            exitButton.text = it
+        }
+        exitButton.setOnClickListener {
             onExit()
             dismiss()
         }
