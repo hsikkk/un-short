@@ -254,6 +254,7 @@ class OnboardingActivity : AppCompatActivity() {
     private fun startPageAnimation(position: Int) {
         // 이전 애니메이션 정리
         timerAnimator?.cancel()
+        handler.removeCallbacksAndMessages(null) // 모든 Handler 콜백 제거
 
         when (position) {
             1 -> animatePage2or4(position) // Page 2
@@ -269,24 +270,32 @@ class OnboardingActivity : AppCompatActivity() {
         val message = viewHolder.itemView.findViewById<TextView>(R.id.previewMessage)
         val buttons = viewHolder.itemView.findViewById<View>(R.id.previewButtons)
 
-        // 페이드인 + 슬라이드업 애니메이션 (더 느리게)
-        message?.let {
-            it.animate()
-                .alpha(1f)
-                .translationY(0f)
-                .setDuration(800)
-                .setStartDelay(300)
-                .start()
+        // 이전 애니메이션 취소 및 초기 상태 설정
+        message?.apply {
+            animate().cancel()
+            alpha = 0f
+            translationY = 50f
+        }
+        buttons?.apply {
+            animate().cancel()
+            alpha = 0f
+            translationY = 50f
         }
 
-        buttons?.let {
-            it.animate()
-                .alpha(1f)
-                .translationY(0f)
-                .setDuration(800)
-                .setStartDelay(800)
-                .start()
-        }
+        // 페이드인 + 슬라이드업 애니메이션 (더 느리게)
+        message?.animate()
+            ?.alpha(1f)
+            ?.translationY(0f)
+            ?.setDuration(800)
+            ?.setStartDelay(50)
+            ?.start()
+
+        buttons?.animate()
+            ?.alpha(1f)
+            ?.translationY(0f)
+            ?.setDuration(800)
+            ?.setStartDelay(700)
+            ?.start()
     }
 
     private fun animatePage3Timer(position: Int) {
@@ -306,9 +315,11 @@ class OnboardingActivity : AppCompatActivity() {
         timerNumber?.text = "10"
         progressRing?.progress = 1000
 
+        val timerDuration = 5000L
+
         // 타이머 카운트다운 애니메이션 (30.0 → 0.0) - Float으로 부드럽게
         timerAnimator = ValueAnimator.ofInt(1000, 0).apply {
-            duration = 10000 // 10초 (3배속)
+            duration = timerDuration
             addUpdateListener { animator ->
                 val value = animator.animatedValue as Int
                 timerNumber?.text = (value / 100).toString()
@@ -320,10 +331,16 @@ class OnboardingActivity : AppCompatActivity() {
 
         // 타이머 완료 후 성공 화면 표시
         handler.postDelayed({
+            // 현재 페이지가 여전히 3페이지인지 확인
+            if (viewPager.currentItem != position) return@postDelayed
+
             timerScreen?.animate()
                 ?.alpha(0f)
                 ?.setDuration(300)
                 ?.withEndAction {
+                    // 애니메이션 완료 시점에도 페이지 확인
+                    if (viewPager.currentItem != position) return@withEndAction
+
                     timerScreen.visibility = View.GONE
                     successScreen?.visibility = View.VISIBLE
                     successScreen?.alpha = 0f
@@ -339,7 +356,7 @@ class OnboardingActivity : AppCompatActivity() {
                         ?.start()
                 }
                 ?.start()
-        }, 10000) // 10초 후
+        }, timerDuration)
     }
 
     private fun restartTimerAnimation(position: Int) {
