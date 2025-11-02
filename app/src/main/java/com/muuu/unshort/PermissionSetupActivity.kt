@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 
 class PermissionSetupActivity : BaseActivity() {
 
@@ -19,7 +20,6 @@ class PermissionSetupActivity : BaseActivity() {
     private var settingsButton: Button? = null
     private var overlayButton: Button? = null
     private var completeButton: Button? = null
-    private var manufacturerGuideText: TextView? = null
     private lateinit var permissionUIHelper: PermissionUIHelper
     private var fromOnboarding = false
 
@@ -43,10 +43,6 @@ class PermissionSetupActivity : BaseActivity() {
         settingsButton = findViewById(R.id.onboardingSettingsButton)
         overlayButton = findViewById(R.id.onboardingOverlayButton)
         completeButton = findViewById(R.id.startButton)
-        manufacturerGuideText = findViewById(R.id.manufacturerGuideText)
-
-        // 제조사별 안내 문구 설정
-        manufacturerGuideText?.text = PermissionUtils.getAccessibilityGuide(this)
 
         // 완료 버튼 텍스트 변경
         completeButton?.text = "완료"
@@ -128,7 +124,7 @@ class PermissionSetupActivity : BaseActivity() {
     }
 
     /**
-     * 접근성 권한 동의 다이얼로그 표시 → 동의 → 설정 이동
+     * 접근성 권한 동의 다이얼로그 표시 → 동의 → 설정 이동 + 토스트
      */
     private fun showAccessibilityConsentDialog() {
         val dialog = PrivacyConsentDialog(
@@ -136,6 +132,11 @@ class PermissionSetupActivity : BaseActivity() {
             onAgree = {
                 // 동의 저장
                 permissionUIHelper.saveAccessibilityConsent()
+                // 제조사별 추가 안내가 필요한 경우에만 토스트 표시
+                if (PermissionUtils.needsAccessibilityGuide()) {
+                    val guideText = PermissionUtils.getAccessibilityGuide(this)
+                    Toast.makeText(this, guideText, Toast.LENGTH_LONG).show()
+                }
                 // 시스템 설정으로 이동
                 PermissionUtils.openAccessibilitySettings(this)
             },

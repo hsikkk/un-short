@@ -41,6 +41,22 @@ object PermissionUtils {
     }
 
     /**
+     * 제조사별 추가 안내가 필요한지 확인
+     * 기본 Android나 일부 제조사는 앱이 바로 보이므로 안내 불필요
+     */
+    fun needsAccessibilityGuide(): Boolean {
+        return when (getManufacturer()) {
+            Manufacturer.SAMSUNG,
+            Manufacturer.LG,
+            Manufacturer.XIAOMI,
+            Manufacturer.HUAWEI,
+            Manufacturer.OPPO,
+            Manufacturer.VIVO -> true
+            Manufacturer.OTHER -> false // 기본 Android는 바로 보임
+        }
+    }
+
+    /**
      * 제조사별 접근성 설정 경로 안내 문구 가져오기
      */
     fun getAccessibilityGuide(context: Context): String {
