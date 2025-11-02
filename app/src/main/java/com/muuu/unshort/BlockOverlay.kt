@@ -202,7 +202,12 @@ class BlockOverlay(private val context: Context) {
             }
             context.startActivity(intent)
             Log.d(TAG, "Started TimerActivity with session: $currentSessionId, source: $sourcePackageName")
-            // 오버레이는 유지 (타이머 완료 후 돌아올 예정)
+
+            // 오버레이 dismiss (TimerActivity가 보이도록)
+            dismiss()
+            Log.d(TAG, "Overlay dismissed to show TimerActivity")
+
+            // onDismissListener는 호출하지 않음 (타이머로 이동한 것이므로 정상 플로우)
         }
 
         // 윈도우 매니저 파라미터 설정 - 실제 화면 + 상태바 + 네비게이션바 전체 덮기
