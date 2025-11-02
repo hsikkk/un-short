@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.widget.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.muuu.unshort.admin.DeviceAdminManager
+import com.muuu.unshort.prefs.PreferencesManager
 
 class SettingsActivity : BaseActivity() {
 
@@ -26,6 +27,7 @@ class SettingsActivity : BaseActivity() {
     private lateinit var versionText: TextView
 
     private lateinit var deviceAdminManager: DeviceAdminManager
+    private lateinit var prefsManager: PreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +48,9 @@ class SettingsActivity : BaseActivity() {
         versionItem = findViewById(R.id.versionItem)
         versionText = findViewById(R.id.versionText)
 
-        // DeviceAdminManager 초기화
+        // Managers 초기화
         deviceAdminManager = DeviceAdminManager(this)
+        prefsManager = PreferencesManager(this)
 
         // 버전 정보 설정
         try {
@@ -59,35 +62,30 @@ class SettingsActivity : BaseActivity() {
         }
 
         // 저장된 설정 표시
-        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-        val waitTime = prefs.getInt("wait_time", 30)
-        updateWaitTimeDisplay(waitTime)
+        updateWaitTimeDisplay(prefsManager.waitTime)
 
         // 햅틱 피드백 설정 초기화
-        val isHapticEnabled = prefs.getBoolean("haptic_enabled", true)
-        hapticSwitch.isChecked = isHapticEnabled
+        hapticSwitch.isChecked = prefsManager.isHapticEnabled
 
         // 햅틱 스위치 리스너
         hapticSwitch.setOnCheckedChangeListener { _, isChecked ->
-            prefs.edit().putBoolean("haptic_enabled", isChecked).apply()
+            prefsManager.isHapticEnabled = isChecked
         }
 
         // 스크롤한 쇼츠만 차단 설정 초기화
-        val isBlockScrolledOnly = prefs.getBoolean("block_scrolled_only", false)
-        allowFirstSwitch.isChecked = isBlockScrolledOnly
+        allowFirstSwitch.isChecked = prefsManager.isBlockScrolledOnly
 
         // 스크롤한 쇼츠만 차단 스위치 리스너
         allowFirstSwitch.setOnCheckedChangeListener { _, isChecked ->
-            prefs.edit().putBoolean("block_scrolled_only", isChecked).apply()
+            prefsManager.isBlockScrolledOnly = isChecked
         }
 
         // 충동적 해제 방지 설정 초기화
-        val isPreventDisable = prefs.getBoolean("prevent_impulsive_disable", false)
-        preventDisableSwitch.isChecked = isPreventDisable
+        preventDisableSwitch.isChecked = prefsManager.isPreventImpulsiveDisable
 
         // 충동적 해제 방지 스위치 리스너
         preventDisableSwitch.setOnCheckedChangeListener { _, isChecked ->
-            prefs.edit().putBoolean("prevent_impulsive_disable", isChecked).apply()
+            prefsManager.isPreventImpulsiveDisable = isChecked
         }
 
         // Device Admin 스위치 초기 상태 설정 (리스너도 함께 설정됨)
@@ -156,8 +154,7 @@ class SettingsActivity : BaseActivity() {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_delay_time, null)
 
-        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-        val currentWaitTime = prefs.getInt("wait_time", 30)
+        val currentWaitTime = prefsManager.waitTime
 
         // 라디오 버튼 찾기
         val radio15 = view.findViewById<RadioButton>(R.id.radio15)
@@ -178,7 +175,7 @@ class SettingsActivity : BaseActivity() {
             radio30.isChecked = false
             radio60.isChecked = false
 
-            prefs.edit().putInt("wait_time", 15).apply()
+            prefsManager.waitTime = 15
             updateWaitTimeDisplay(15)
             bottomSheetDialog.dismiss()
         }
@@ -189,7 +186,7 @@ class SettingsActivity : BaseActivity() {
             radio30.isChecked = true
             radio60.isChecked = false
 
-            prefs.edit().putInt("wait_time", 30).apply()
+            prefsManager.waitTime = 30
             updateWaitTimeDisplay(30)
             bottomSheetDialog.dismiss()
         }
@@ -200,7 +197,7 @@ class SettingsActivity : BaseActivity() {
             radio30.isChecked = false
             radio60.isChecked = true
 
-            prefs.edit().putInt("wait_time", 60).apply()
+            prefsManager.waitTime = 60
             updateWaitTimeDisplay(60)
             bottomSheetDialog.dismiss()
         }

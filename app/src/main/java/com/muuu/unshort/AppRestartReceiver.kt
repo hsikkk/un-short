@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import com.muuu.unshort.prefs.PreferencesManager
 
 /**
  * BroadcastReceiver for handling app updates and device boot
@@ -32,11 +33,10 @@ class AppRestartReceiver : BroadcastReceiver() {
     }
 
     private fun handleAppRestart(context: Context) {
-        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val prefsManager = PreferencesManager(context)
 
         // Check if onboarding is completed
-        val onboardingCompleted = prefs.getBoolean("onboarding_completed", false)
-        if (!onboardingCompleted) {
+        if (!prefsManager.isOnboardingCompleted) {
             Log.d(TAG, "Onboarding not completed, skipping service restart")
             return
         }
@@ -51,12 +51,8 @@ class AppRestartReceiver : BroadcastReceiver() {
             // We just need to ensure our app state is ready
 
             // Clear any stale session data
-            prefs.edit().apply {
-                remove("current_session_id")
-                remove("timer_completed")
-                remove("session_created_time")
-                apply()
-            }
+            prefsManager.clearCurrentSessionId()
+            // Note: timer_completed and session_created_time are legacy keys, safe to ignore
             Log.d(TAG, "Cleared stale session data")
         } else {
             Log.d(TAG, "Missing permissions - Accessibility: $hasAccessibilityPermission, Overlay: $hasOverlayPermission")

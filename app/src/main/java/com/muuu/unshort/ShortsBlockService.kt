@@ -67,10 +67,10 @@ class ShortsBlockService : AccessibilityService() {
                 restoreVolume(currentPackage)
                 sessionState.handleEvent(SessionEvent.SkipConfirmed, currentPackage)
 
-                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                val prefs = getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
                 prefs.edit().apply {
                     remove(AppConstants.PREF_COMPLETED_SESSION_ID)
-                    remove("allowed_until_scroll")
+                    remove(AppConstants.PREF_ALLOWED_UNTIL_SCROLL)
                     apply()
                 }
 
@@ -82,8 +82,8 @@ class ShortsBlockService : AccessibilityService() {
                 sessionState.handleEvent(SessionEvent.WatchConfirmed, currentPackage)
                 stopForegroundCheck()
 
-                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-                prefs.edit().putBoolean("allowed_until_scroll", true).apply()
+                val prefs = getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
+                prefs.edit().putBoolean(AppConstants.PREF_ALLOWED_UNTIL_SCROLL, true).apply()
 
                 handler.postDelayed({
                     restoreVolume(currentPackage)
@@ -97,8 +97,8 @@ class ShortsBlockService : AccessibilityService() {
         clearStaleSessionData()
 
         // Persisted allowed state 복원
-        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-        val persistedAllowedUntilScroll = prefs.getBoolean("allowed_until_scroll", false)
+        val prefs = getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
+        val persistedAllowedUntilScroll = prefs.getBoolean(AppConstants.PREF_ALLOWED_UNTIL_SCROLL, false)
         if (persistedAllowedUntilScroll) {
             Log.d(TAG, "Restoring allowed state from SharedPreferences")
             sessionState.handleEvent(SessionEvent.TimerCompleted, packageName)  // 복원
@@ -109,8 +109,8 @@ class ShortsBlockService : AccessibilityService() {
         if (event == null) return
 
         // 차단 활성화 상태 확인
-        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-        val isBlockingEnabled = prefs.getBoolean("blocking_enabled", true)
+        val prefs = getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
+        val isBlockingEnabled = prefs.getBoolean(AppConstants.PREF_BLOCKING_ENABLED, true)
 
         if (!isBlockingEnabled) {
             // 차단 비활성화 시 오버레이 제거
@@ -242,7 +242,7 @@ class ShortsBlockService : AccessibilityService() {
                                 Log.d(TAG, "Scroll detected - clearing session")
                                 prefs.edit().apply {
                                     remove(AppConstants.PREF_COMPLETED_SESSION_ID)
-                                    remove("allowed_until_scroll")
+                                    remove(AppConstants.PREF_ALLOWED_UNTIL_SCROLL)
                                     apply()
                                 }
                             }
@@ -291,7 +291,7 @@ class ShortsBlockService : AccessibilityService() {
         // SharedPreferences 클리어
         prefs.edit().apply {
             remove(AppConstants.PREF_COMPLETED_SESSION_ID)
-            remove("allowed_until_scroll")
+            remove(AppConstants.PREF_ALLOWED_UNTIL_SCROLL)
             apply()
         }
         Log.d(TAG, "Cleared all state - left shorts app")
@@ -337,7 +337,7 @@ class ShortsBlockService : AccessibilityService() {
 
                 // 세션 ID 생성
                 val sessionId = java.util.UUID.randomUUID().toString()
-                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                val prefs = getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
                 prefs.edit().putString(AppConstants.PREF_CURRENT_SESSION_ID, sessionId).apply()
                 Log.d(TAG, "Session created: $sessionId")
 
@@ -598,7 +598,7 @@ class ShortsBlockService : AccessibilityService() {
             remove(AppConstants.PREF_CURRENT_SESSION_ID)
             remove(AppConstants.PREF_COMPLETED_SESSION_ID)
             remove("session_created_time")
-            remove("allowed_until_scroll")
+            remove(AppConstants.PREF_ALLOWED_UNTIL_SCROLL)
             apply()
         }
 

@@ -16,6 +16,7 @@ import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.ad.view.MuuuBannerAdView
 import com.muuu.ad.core.adunit.MuuuBannerAdUnit
 import com.muuu.ad.core.model.MuuuBannerSize
+import com.muuu.unshort.prefs.PreferencesManager
 
 class MainActivity : BaseActivity() {
 
@@ -33,15 +34,16 @@ class MainActivity : BaseActivity() {
     private lateinit var statusLabel: TextView
     private lateinit var settingsButton: ImageView
     private lateinit var bannerAdView: MuuuBannerAdView
+    private lateinit var prefsManager: PreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 온보딩 체크
-        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-        val onboardingCompleted = prefs.getBoolean("onboarding_completed", false)
+        // Managers 초기화
+        prefsManager = PreferencesManager(this)
 
-        if (!onboardingCompleted) {
+        // 온보딩 체크
+        if (!prefsManager.isOnboardingCompleted) {
             // 온보딩 화면으로 이동
             val intent = Intent(this, OnboardingActivity::class.java)
             startActivity(intent)
@@ -100,19 +102,17 @@ class MainActivity : BaseActivity() {
 
         // 토글 스위치 클릭 리스너
         toggleContainer.setOnClickListener {
-            val currentState = prefs.getBoolean("blocking_enabled", true)
+            val currentState = prefsManager.isBlockingEnabled
             val newState = !currentState
 
             // If turning OFF, check if confirmation is required
             if (currentState && !newState) {
-                val preventImpulsive = prefs.getBoolean("prevent_impulsive_disable", false)
-
-                if (preventImpulsive) {
+                if (prefsManager.isPreventImpulsiveDisable) {
                     // Show confirmation dialog
                     showDisableConfirmDialog()
                 } else {
                     // Proceed immediately without confirmation
-                    prefs.edit().putBoolean("blocking_enabled", false).apply()
+                    prefsManager.isBlockingEnabled = false
 
                     // Track blocking state change
                     AnalyticsManager.trackEvent(
@@ -126,7 +126,7 @@ class MainActivity : BaseActivity() {
             } else {
                 // Turning ON - proceed immediately
                 // 상태 저장
-                prefs.edit().putBoolean("blocking_enabled", newState).apply()
+                prefsManager.isBlockingEnabled = true
 
                 // Track blocking state change
                 AnalyticsManager.trackEvent(
@@ -146,7 +146,6 @@ class MainActivity : BaseActivity() {
     }
 
     private fun checkPermissionsAndUpdateUI() {
-        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
         val hasPermissions = checkPermissions()
 
         if (!hasPermissions) {
@@ -161,8 +160,7 @@ class MainActivity : BaseActivity() {
             permissionWarning.visibility = View.GONE
 
             // 저장된 차단 상태 불러오기
-            val isBlocking = prefs.getBoolean("blocking_enabled", true)
-            updateUI(isBlocking)
+            updateUI(prefsManager.isBlockingEnabled)
         }
     }
 
@@ -253,8 +251,7 @@ class MainActivity : BaseActivity() {
             context = this,
             onConfirm = {
                 // User confirmed - proceed with disabling
-                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-                prefs.edit().putBoolean("blocking_enabled", false).apply()
+                prefsManager.isBlockingEnabled = false
 
                 // Track blocking state change
                 AnalyticsManager.trackEvent(

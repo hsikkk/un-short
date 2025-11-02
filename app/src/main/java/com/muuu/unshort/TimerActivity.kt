@@ -109,10 +109,10 @@ class TimerActivity : BaseActivity() {
         sourcePackageName = intent.getStringExtra("source_package") ?: ""
         Log.d(TAG, "onCreate with session_id: $currentSessionId, source_package: $sourcePackageName")
 
-        prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        prefs = getSharedPreferences(AppConstants.PREF_NAME, Context.MODE_PRIVATE)
 
         // 설정에서 타이머 시간 읽어오기 (기본값: 30초)
-        timerDuration = prefs.getInt("wait_time", 30)
+        timerDuration = prefs.getInt(AppConstants.PREF_WAIT_TIME, 30)
         remainingSeconds = timerDuration
         remainingMillis = (timerDuration * 1000).toLong()
         Log.d(TAG, "Timer duration set to: $timerDuration seconds")
@@ -365,7 +365,7 @@ class TimerActivity : BaseActivity() {
 
     private fun triggerHapticFeedback() {
         // Check if haptic feedback is enabled in settings
-        val isHapticEnabled = prefs.getBoolean("haptic_enabled", true)
+        val isHapticEnabled = prefs.getBoolean(AppConstants.PREF_HAPTIC_ENABLED, true)
         if (!isHapticEnabled) {
             Log.d(TAG, "Haptic feedback disabled in settings")
             return

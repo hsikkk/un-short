@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.widget.Button
 import android.widget.ProgressBar
+import com.muuu.unshort.prefs.PreferencesManager
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -98,8 +99,8 @@ class OnboardingActivity : BaseActivity() {
 
     private fun finishOnboarding() {
         // SharedPreferences에 온보딩 완료 저장
-        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-        prefs.edit().putBoolean("onboarding_completed", true).apply()
+        val prefsManager = PreferencesManager(this)
+        prefsManager.isOnboardingCompleted = true
 
         // Track onboarding completed
         AnalyticsManager.trackEvent(this, AnalyticsEvent.ONBOARDING_COMPLETED)

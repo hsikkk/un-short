@@ -16,7 +16,9 @@
       "WebSearch",
       "Bash(/Users/muuu/Development/shortblock/app/src/main/java/com/muuu/unshort/ShortsBlockService.kt)",
       "Bash(adb install:*)",
-      "Bash(adb shell am:*)"
+      "Bash(adb shell am:*)",
+      "Bash(adb devices:*)",
+      "Bash(adb:*)"
     ],
     "deny": [],
     "ask": []

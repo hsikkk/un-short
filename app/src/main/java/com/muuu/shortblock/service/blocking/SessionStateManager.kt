@@ -58,8 +58,8 @@ class SessionStateManager(private val context: Context) {
         packageName: String
     ): ShortsSessionState {
         // Check if "block scrolled shorts only" feature is enabled
-        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        val blockScrolledOnly = prefs.getBoolean("block_scrolled_only", false)
+        val prefsManager = com.muuu.unshort.prefs.PreferencesManager(context)
+        val blockScrolledOnly = prefsManager.isBlockScrolledOnly
 
         // If coming from IDLE and feature is enabled → Allow first shorts
         if (blockScrolledOnly && current == ShortsSessionState.IDLE) {
