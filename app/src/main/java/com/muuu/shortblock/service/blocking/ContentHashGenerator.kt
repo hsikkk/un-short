@@ -67,11 +67,11 @@ class ContentHashGenerator {
             return
         }
 
-        // 텍스트 수집 (기존 로직)
+        // 텍스트 수집 (앱별 검증 함수 사용)
         node.text?.toString()?.let { text ->
-            if (text.isNotEmpty() && text.length > 2) {
-                // 순수 숫자/특수문자만 있는 텍스트 제외
-                if (!text.all { it.isDigit() || it == ':' || it == '/' || it == ',' || it == '.' }) {
+            if (text.isNotEmpty()) {
+                // 앱별 텍스트 검증
+                if (config.textValidator(text)) {
                     // Excluded text 패턴 체크
                     val shouldExclude = config.excludedTextPatterns.any { pattern ->
                         pattern.matches(text)

@@ -29,7 +29,8 @@ data class HashConfig(
     val includedViewIdPatterns: List<String>,
     val excludedViewIdPatterns: List<String>,
     val excludedTextPatterns: List<Regex>,
-    val maxDepth: Int = 8
+    val maxDepth: Int = 8,
+    val textValidator: (String) -> Boolean  // 앱별 텍스트 검증 함수
 )
 
 /**
@@ -87,11 +88,13 @@ object AppBlockingRegistry {
                 "player_control"
             ),
             excludedTextPatterns = listOf(
-                Regex("^\\d+$"),                    // 순수 숫자
-                Regex("\\d+:\\d+"),                 // 시간 패턴 (0:15, 1:30 등)
-                Regex("^[\\d\\s,.:]+$")             // 숫자, 공백, 구두점만
+                Regex("\\d+:\\d+")  // 시간 패턴만 (0:15, 1:30 등)
             ),
-            maxDepth = 8
+            maxDepth = 8,
+            textValidator = { text ->
+                // YouTube: 콜론/슬래시만 있는 텍스트 제외
+                text.length > 2 && !text.all { it.isDigit() || it == ':' || it == '/' }
+            }
         )
     )
 
@@ -133,11 +136,14 @@ object AppBlockingRegistry {
                 "save"
             ),
             excludedTextPatterns = listOf(
-                Regex("^\\d+[KMB]?$"),              // 1K, 10M, 100B 등
-                Regex("^\\d+\\.\\d+[KMB]?$"),      // 1.2K, 3.5M 등
-                Regex("^[\\d\\s,.:]+$")             // 숫자, 공백, 구두점만
+                Regex("^\\d+[KMB]?$"),          // 1K, 10M, 100B 등
+                Regex("^\\d+\\.\\d+[KMB]?$")    // 1.2K, 3.5M 등
             ),
-            maxDepth = 8
+            maxDepth = 8,
+            textValidator = { text ->
+                // Instagram: 콤마/마침표만 있는 텍스트 제외
+                text.length > 2 && !text.all { it.isDigit() || it == ',' || it == '.' }
+            }
         )
     )
 
