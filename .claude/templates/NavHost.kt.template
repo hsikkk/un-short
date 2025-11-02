@@ -1,0 +1,58 @@
+package {{package_name}}.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+// Import your feature routes here
+// Example:
+// import {{package_name}}.feature.home.HomeRoute
+// import {{package_name}}.feature.settings.SettingsRoute
+
+/**
+ * Top-level destinations in the app
+ */
+enum class TopLevelDestination(val route: String) {
+    Home("home"),
+    // Add more destinations as needed
+    // Settings("settings"),
+    // Profile("profile")
+}
+
+@Composable
+fun {{app_name}}NavHost(
+    navController: NavHostController = rememberNavController(),
+    modifier: Modifier = Modifier,
+    startDestination: String = TopLevelDestination.Home.route,
+    onDestinationChanged: (TopLevelDestination?) -> Unit = {}
+) {
+    NavHost(
+        navController = navController,
+        startDestination = startDestination,
+        modifier = modifier
+    ) {
+        composable(TopLevelDestination.Home.route) {
+            onDestinationChanged(TopLevelDestination.Home)
+            // Replace with your actual HomeRoute
+            // HomeRoute(
+            //     onNavigateToSettings = {
+            //         navController.navigate(TopLevelDestination.Settings.route) {
+            //             launchSingleTop = true
+            //         }
+            //     }
+            // )
+        }
+        
+        // Add more destinations as needed
+        // composable(TopLevelDestination.Settings.route) {
+        //     onDestinationChanged(TopLevelDestination.Settings)
+        //     SettingsRoute(
+        //         onNavigateBack = {
+        //             navController.popBackStack()
+        //         }
+        //     )
+        // }
+    }
+}

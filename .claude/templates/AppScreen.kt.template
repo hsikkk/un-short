@@ -1,0 +1,37 @@
+package {{package_name}}.ui
+
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
+import {{package_name}}.navigation.{{app_name}}NavHost
+import {{package_name}}.navigation.TopLevelDestination
+
+@Composable
+fun {{app_name}}App() {
+    val navController = rememberNavController()
+    var currentDestination by remember { mutableStateOf<TopLevelDestination?>(null) }
+    
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        contentWindowInsets = WindowInsets.navigationBars
+    ) { paddingValues ->
+        {{app_name}}NavHost(
+            navController = navController,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            onDestinationChanged = { destination ->
+                currentDestination = destination
+            }
+        )
+    }
+}

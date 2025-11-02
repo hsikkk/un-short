@@ -1,0 +1,9 @@
+package {PACKAGE_NAME}.{FEATURE_NAME}.ui.contract
+
+sealed interface {FEATURE_NAME_PASCAL}Intent {
+    data object Initialize : {FEATURE_NAME_PASCAL}Intent
+    data object GoBack : {FEATURE_NAME_PASCAL}Intent
+    
+    // Add your feature-specific intents here
+    // data class OnItemClick(val itemId: Long) : {FEATURE_NAME_PASCAL}Intent
+}

@@ -48,14 +48,14 @@ class ShortsBlockService : AccessibilityService() {
         overlayManager = OverlayManager(
             context = this,
             onTimerCompleted = {
-                // 타이머 완료 → 허용 상태로 전이
-                sessionState.onTimerCompleted()
+                // 타이머 완료 → 확인 필요 상태로 전이
+                sessionState.handleEvent(SessionEvent.TimerCompleted)
                 stopForegroundCheck()
             },
             onSkip = {
                 // "안볼래요" 버튼 - 뒤로 가기
                 Log.d(TAG, "Skip button pressed - performing back action")
-                sessionState.reset()
+                sessionState.handleEvent(SessionEvent.SkipConfirmed)
 
                 val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
                 prefs.edit().apply {
@@ -69,7 +69,7 @@ class ShortsBlockService : AccessibilityService() {
             onWatch = {
                 // "볼래요" 버튼 - 시청 허용 상태로 전이
                 Log.d(TAG, "Watch button pressed - allowing watch")
-                sessionState.onWatchConfirmed()
+                sessionState.handleEvent(SessionEvent.WatchConfirmed)
                 stopForegroundCheck()
 
                 val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
@@ -90,7 +90,7 @@ class ShortsBlockService : AccessibilityService() {
         val persistedAllowedUntilScroll = prefs.getBoolean("allowed_until_scroll", false)
         if (persistedAllowedUntilScroll) {
             Log.d(TAG, "Restoring allowed state from SharedPreferences")
-            sessionState.onTimerCompleted()  // 복원
+            sessionState.handleEvent(SessionEvent.TimerCompleted)  // 복원
         }
     }
 
@@ -180,7 +180,7 @@ class ShortsBlockService : AccessibilityService() {
             // IDLE/IN_APP 상태
             ShortsSessionState.IDLE, ShortsSessionState.IN_APP_NOT_SHORTS -> {
                 if (isInShortsScreen) {
-                    sessionState.onEnterShorts()
+                    sessionState.handleEvent(SessionEvent.EnterShorts)
                     appStartTime = System.currentTimeMillis()
                 }
             }
@@ -190,8 +190,22 @@ class ShortsBlockService : AccessibilityService() {
             ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION,
             ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL -> {
                 if (!isInShortsScreen) {
-                    // 쇼츠 이탈
-                    sessionState.onExitShorts()
+                    // 쇼츠 이탈 - 어디로 갔는지 확인
+                    val foregroundPkg = rootInActiveWindow?.packageName?.toString()
+
+                    when {
+                        // 같은 차단 대상 앱 내 다른 화면
+                        foregroundPkg == packageName -> {
+                            Log.d(TAG, "Exited shorts within same app")
+                            sessionState.handleEvent(SessionEvent.ExitShorts)
+                        }
+                        // 다른 앱 = Background 전환
+                        else -> {
+                            Log.d(TAG, "Exited shorts to other app/home - entering background")
+                            sessionState.handleEvent(SessionEvent.EnterBackground)
+                        }
+                    }
+
                     cancelPendingOverlay()
                     overlayManager.hideOverlay()
                 } else {
@@ -199,9 +213,11 @@ class ShortsBlockService : AccessibilityService() {
                     if (currentState == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL) {
                         val hash = hashGenerator.generateContentHash(rootNode, appConfig.hashConfig)
                         if (hash != 0) {
-                            val scrollDetected = sessionState.onContentHashChanged(hash)
-                            if (scrollDetected) {
-                                Log.d(TAG, "Scroll detected")
+                            sessionState.handleEvent(SessionEvent.ContentHashChanged(hash))
+
+                            // 상태가 변경되었으면 스크롤 발생
+                            if (sessionState.getCurrentState() == ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION) {
+                                Log.d(TAG, "Scroll detected - clearing session")
                                 prefs.edit().apply {
                                     remove(AppConstants.PREF_COMPLETED_SESSION_ID)
                                     remove("allowed_until_scroll")
@@ -218,7 +234,7 @@ class ShortsBlockService : AccessibilityService() {
             ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION,
             ShortsSessionState.BACKGROUND_ALLOWED_UNTIL_SCROLL -> {
                 if (isInShortsScreen) {
-                    sessionState.onReturnToShorts()
+                    sessionState.handleEvent(SessionEvent.ReturnToShorts)
                 }
             }
         }
@@ -243,7 +259,7 @@ class ShortsBlockService : AccessibilityService() {
     private fun handleLeavingTargetApp(prefs: android.content.SharedPreferences) {
         cancelPendingOverlay()
         overlayManager.hideOverlay()
-        sessionState.onExitTargetApp()
+        sessionState.handleEvent(SessionEvent.Reset)
 
         // SharedPreferences 클리어
         prefs.edit().apply {
@@ -283,8 +299,14 @@ class ShortsBlockService : AccessibilityService() {
                 prefs.edit().putString(AppConstants.PREF_CURRENT_SESSION_ID, sessionId).apply()
                 Log.d(TAG, "Session created: $sessionId")
 
-                // 미디어 일시정지
-                pauseMedia(packageName)
+                // 미디어 일시정지 (백그라운드에서 복귀한 게 아닐 때만)
+                val prevState = sessionState.getPreviousState()
+                if (!prevState.isBackground) {
+                    Log.d(TAG, "First entry (from $prevState) - attempting pauseMedia")
+                    pauseMedia(packageName)
+                } else {
+                    Log.d(TAG, "Returned from background ($prevState) - skipping pauseMedia")
+                }
 
                 // 오버레이 표시 (타입은 파라미터로 전달됨)
                 overlayManager.showOverlay(packageName, sessionId, overlayType)
@@ -338,13 +360,13 @@ class ShortsBlockService : AccessibilityService() {
                             // 우리 앱 (TimerActivity 등) - Background 상태로 전이
                             currentForegroundPackage == packageName -> {
                                 Log.d(TAG, "Switched to our app ($currentForegroundPackage) - entering background")
-                                sessionState.onEnterBackground()
+                                sessionState.handleEvent(SessionEvent.EnterBackground)
                                 overlayManager.hideOverlay()
                             }
                             // 다른 앱 - Background 상태로 전이
                             else -> {
                                 Log.d(TAG, "Switched to other app ($currentForegroundPackage) - entering background")
-                                sessionState.onEnterBackground()
+                                sessionState.handleEvent(SessionEvent.EnterBackground)
                                 overlayManager.hideOverlay()
                                 stopForegroundCheck()
                                 return
@@ -540,7 +562,7 @@ class ShortsBlockService : AccessibilityService() {
     private fun clearStaleSessionData() {
         Log.d(TAG, "Clearing stale session data on service restart")
 
-        sessionState.reset()
+        sessionState.handleEvent(SessionEvent.Reset)
         appStartTime = 0
 
         val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)

@@ -1,0 +1,32 @@
+package {{package_name}}
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import {{package_name}}.core.designsystem.theme.{{app_name}}Theme
+import {{package_name}}.ui.{{app_name}}App
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class MainActivity : ComponentActivity() {
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
+        super.onCreate(savedInstanceState)
+        
+        // Keep splash screen visible while loading
+        splashScreen.setKeepOnScreenCondition {
+            false // Implement your loading logic here
+        }
+        
+        enableEdgeToEdge()
+        
+        setContent {
+            {{app_name}}Theme {
+                {{app_name}}App()
+            }
+        }
+    }
+}

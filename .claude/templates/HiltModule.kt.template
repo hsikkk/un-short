@@ -1,0 +1,37 @@
+package {{package_name}}.di
+
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+/**
+ * Hilt module for providing application-wide dependencies.
+ */
+@Module
+@InstallIn(SingletonComponent::class)
+object AppModule {
+    
+    // Add your dependency providers here
+    // Example:
+    // @Provides
+    // @Singleton
+    // fun provideApiService(): ApiService {
+    //     return Retrofit.Builder()
+    //         .baseUrl("https://api.example.com/")
+    //         .addConverterFactory(GsonConverterFactory.create())
+    //         .build()
+    //         .create(ApiService::class.java)
+    // }
+    
+    // @Provides
+    // @Singleton
+    // fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
+    //     return Room.databaseBuilder(
+    //         context,
+    //         AppDatabase::class.java,
+    //         "app_database"
+    //     ).build()
+    // }
+}

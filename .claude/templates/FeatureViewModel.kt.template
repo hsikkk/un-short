@@ -1,0 +1,44 @@
+package {PACKAGE_NAME}.{FEATURE_NAME}.ui
+
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import {PACKAGE_NAME}.{FEATURE_NAME}.ui.contract.{FEATURE_NAME_PASCAL}Intent
+import {PACKAGE_NAME}.{FEATURE_NAME}.ui.contract.{FEATURE_NAME_PASCAL}SideEffect
+import {PACKAGE_NAME}.{FEATURE_NAME}.ui.contract.{FEATURE_NAME_PASCAL}State
+import org.orbitmvi.orbit.Container
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import org.orbitmvi.orbit.syntax.simple.reduce
+import org.orbitmvi.orbit.viewmodel.container
+import javax.inject.Inject
+
+@HiltViewModel
+class {FEATURE_NAME_PASCAL}ViewModel @Inject constructor(
+    // Add your use cases and dependencies here
+) : ViewModel(), ContainerHost<{FEATURE_NAME_PASCAL}State, {FEATURE_NAME_PASCAL}SideEffect> {
+
+    override val container: Container<{FEATURE_NAME_PASCAL}State, {FEATURE_NAME_PASCAL}SideEffect> =
+        container({FEATURE_NAME_PASCAL}State.Loading)
+
+    fun onIntent(intent: {FEATURE_NAME_PASCAL}Intent) {
+        when (intent) {
+            {FEATURE_NAME_PASCAL}Intent.Initialize -> handleInitialize()
+            {FEATURE_NAME_PASCAL}Intent.GoBack -> handleGoBack()
+            // Handle other intents
+        }
+    }
+
+    private fun handleInitialize() = intent {
+        // Initialize your feature data
+        reduce {
+            {FEATURE_NAME_PASCAL}State.Success(
+                // Add your success state data
+            )
+        }
+    }
+
+    private fun handleGoBack() = intent {
+        postSideEffect({FEATURE_NAME_PASCAL}SideEffect.GoBack)
+    }
+}

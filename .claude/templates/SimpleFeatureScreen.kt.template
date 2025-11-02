@@ -1,0 +1,121 @@
+package {{package_name}}.feature.{{feature_name}}
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+
+/**
+ * Route composable for {{feature_name}} feature.
+ * This is the entry point that connects navigation with the screen.
+ */
+@Composable
+fun {{feature_name_pascal}}Route(
+    onNavigateBack: () -> Unit = {},
+    // Add more navigation callbacks as needed
+    viewModel: {{feature_name_pascal}}ViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    
+    {{feature_name_pascal}}Screen(
+        uiState = uiState,
+        onNavigateBack = onNavigateBack,
+        // Pass ViewModel actions as callbacks
+        onAction = viewModel::handleAction
+    )
+}
+
+/**
+ * Main screen composable for {{feature_name}} feature.
+ * This contains the UI implementation.
+ */
+@Composable
+internal fun {{feature_name_pascal}}Screen(
+    uiState: {{feature_name_pascal}}UiState,
+    onNavigateBack: () -> Unit,
+    onAction: ({{feature_name_pascal}}Action) -> Unit
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("{{feature_title}}") },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Navigate back"
+                        )
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            contentAlignment = Alignment.Center
+        ) {
+            when {
+                uiState.isLoading -> {
+                    CircularProgressIndicator()
+                }
+                uiState.error != null -> {
+                    ErrorContent(
+                        message = uiState.error,
+                        onRetry = { onAction({{feature_name_pascal}}Action.Retry) }
+                    )
+                }
+                else -> {
+                    // Main content
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "{{feature_name}} Screen",
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                        
+                        Spacer(modifier = Modifier.height(16.dp))
+                        
+                        // Add your UI components here
+                        Button(
+                            onClick = { onAction({{feature_name_pascal}}Action.SampleAction) }
+                        ) {
+                            Text("Sample Action")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ErrorContent(
+    message: String,
+    onRetry: () -> Unit
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = message,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.error
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = onRetry) {
+            Text("Retry")
+        }
+    }
+}

@@ -1,0 +1,196 @@
+# Android Template Orchestration Configuration
+# Version: 2.0.0
+# Purpose: Define Android-specific project structure and agent workflow configuration
+
+project:
+  name: "Android Clean Architecture Template Orchestration"
+  version: "2.0.0"
+  description: "Android-specialized workflow system for Jetpack Compose and MVI development"
+  platform: "android"
+  architecture: "clean_architecture"
+  ui_framework: "jetpack_compose"
+  pattern: "mvi_orbit"
+  
+paths:
+  templates: ".claude/orchestration/templates/"
+  workflows: ".claude/orchestration/workflows/"
+  checklists: ".claude/orchestration/checklists/"
+  tasks: ".claude/orchestration/tasks/"
+  agents: ".claude/orchestration/agents/"
+  android_templates: "templates/"  # Main template files
+  sub_agents: ".claude/agents/"         # Sub-agent definitions
+  
+workflow:
+  android_chain:
+    - elon           # Android product vision and Play Store strategy
+    - market-researcher  # Mobile market validation and competitor analysis
+    - tech-lead     # Clean Architecture and multi-module design
+    - designer      # Material3 Design System and Jetpack Compose UI
+    - android-developer # Compose + MVI implementation
+  
+  parallel_allowed:
+    - [market-researcher, designer]  # Mobile market + early design concepts
+    - [multiple-android-developers]  # Multiple devs on different feature modules
+    
+  android_specific:
+    build_verification: true    # Verify build.gradle.kts and dependencies
+    architecture_validation: true  # Ensure Clean Architecture compliance
+    compose_optimization: true     # Optimize for Jetpack Compose
+    performance_gates: true        # Android performance benchmarks
+    
+android_quality_gates:
+  prd_to_tech:
+    required:
+      - android_product_vision_defined
+      - play_store_requirements_specified
+      - mobile_success_metrics_quantified
+      - android_user_personas_complete
+      - permission_model_considered
+      
+  tech_to_design:
+    required:
+      - clean_architecture_documented
+      - module_structure_defined
+      - android_api_specifications_complete
+      - performance_requirements_for_mobile_set
+      - dependency_versions_specified
+      
+  design_to_dev:
+    required:
+      - all_compose_screens_designed
+      - material3_design_system_complete
+      - compose_components_documented
+      - accessibility_guidelines_defined
+      - animation_specifications_provided
+      
+  dev_to_release:
+    required:
+      - all_android_tests_passing
+      - compose_ui_tests_complete
+      - code_coverage_85_percent
+      - gradle_build_successful
+      - proguard_rules_optimized
+      - play_store_metadata_ready
+
+android_document_structure:
+  android_prd:
+    location: "Docs/Product/"
+    template: "android-prd-template.md"
+    sections:
+      elon: ["android_executive_summary", "mobile_product_vision", "play_store_strategy"]
+      market_researcher: ["mobile_market_analysis", "competitor_app_analysis", "user_validation"]
+      
+  clean_architecture_spec:
+    location: "Docs/Technical/"
+    template: "android-tech-spec-template.md"
+    owner: "tech-lead"
+    modules: ["app", "core", "feature"]
+    
+  compose_design_spec:
+    location: "Docs/Design/"
+    template: "compose-design-spec-template.md"
+    owner: "designer"
+    components: ["design_system", "compose_components", "material3_theme"]
+    
+  android_story:
+    location: "Docs/Stories/"
+    template: "android-story-template.md"
+    owner: "android-developer"
+    pattern: "mvi_orbit"
+    
+  project_context:
+    location: "./"
+    filename: "project-context.md"
+    update_trigger:
+      - agent_task_completion
+      - blocker_identified
+      - decision_made
+      - scope_change
+
+agent_configuration:
+  language:
+    user_interface: "korean"  # Response language to user
+    documentation: "english"   # Internal documentation language
+    
+  behavior:
+    load_resources: "runtime"  # Load templates/tasks at runtime
+    pre_load: false           # Don't pre-load resources
+    auto_update_context: true # Auto-update project-context.md
+    suggest_next_agent: true  # Suggest next agent in chain
+    
+  activation:
+    read_context_first: true
+    check_templates: true
+    validate_prerequisites: true
+
+monitoring:
+  metrics:
+    track_handoff_time: true
+    track_rework_rate: true
+    track_completion_rate: true
+    
+  logging:
+    debug_log: ".ai/orchestration-log.md"
+    error_log: ".ai/orchestration-errors.md"
+
+android_templates:
+  always_available:
+    - android-prd-template.md
+    - android-tech-spec-template.md
+    - compose-design-spec-template.md
+    - android-story-template.md
+    - android-project-context-template.md
+    
+  build_templates:
+    - libs.versions.toml.template
+    - gradle.properties.template
+    - app-build.gradle.kts.template
+    - feature-ui-build.gradle.kts.template
+    - feature-navigation-build.gradle.kts.template
+    
+  code_templates:
+    - FeatureScreen.kt.template
+    - FeatureViewModel.kt.template
+    - FeatureNavigation.kt.template
+    - contract/*.kt.template
+    
+android_tasks:
+  init_android_project:
+    description: "Initialize Android Clean Architecture project"
+    steps:
+      - create_android_module_structure
+      - copy_build_templates
+      - setup_gradle_configuration
+      - initialize_android_context
+      - verify_build_environment
+      
+  execute_android_workflow:
+    description: "Execute Android-specific agent workflow"
+    steps:
+      - validate_android_prerequisites
+      - activate_android_agent
+      - monitor_build_health
+      - validate_architecture_compliance
+      - trigger_agent_handoff
+      
+  build_verification:
+    description: "Verify Android build configuration"
+    steps:
+      - check_gradle_compatibility
+      - validate_dependency_versions
+      - verify_kotlin_compilation
+      - test_compose_setup
+      
+android_environment:
+  required_versions:
+    min_api_level: 24
+    target_api_level: 35
+    compile_api_level: 35
+    agp_version: "8.7.2"
+    kotlin_version: "2.0.21"
+    compose_bom: "2024.09.03"
+    
+  development_tools:
+    ide: "Android Studio 2024.3.2+"
+    jdk: "JDK 21"
+    gradle: "8.10+"

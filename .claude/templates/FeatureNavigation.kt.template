@@ -1,0 +1,19 @@
+package {PACKAGE_NAME}.{FEATURE_NAME}.navigation
+
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import {PACKAGE_NAME}.{FEATURE_NAME}.ui.{FEATURE_NAME_PASCAL}Route
+import {PACKAGE_NAME}.navigation.composable
+
+fun NavGraphBuilder.{FEATURE_NAME}(
+    navController: NavController,
+) {
+    composable({FEATURE_NAME_PASCAL}Directions.main) {
+        {FEATURE_NAME_PASCAL}Route(
+            goBack = { navController.popBackStack() },
+            // Add additional navigation callbacks
+        )
+    }
+    
+    // Add additional screens for this feature
+}

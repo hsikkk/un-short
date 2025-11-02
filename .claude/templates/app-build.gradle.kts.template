@@ -1,0 +1,72 @@
+plugins {
+    id("app.application")
+}
+
+android {
+    namespace = "{PACKAGE_NAME}.{APP_NAME}"
+
+    defaultConfig {
+        applicationId = "{PACKAGE_NAME}.{APP_NAME}"
+        
+        targetSdk = 35
+        
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
+
+    buildTypes {
+        debug {
+            isDebuggable = true
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-DEBUG"
+        }
+        
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            
+            signingConfig = signingConfigs.getByName("debug")
+        }
+    }
+    
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/gradle/incremental.annotation.processors"
+        }
+    }
+    
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
+}
+
+dependencies {
+    implementation(project(":core:di"))
+    implementation(project(":core:designsystem"))
+    implementation(project(":core:navigation"))
+    
+    // Testing dependencies
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.ui.test.junit4)
+    debugImplementation(libs.ui.tooling)
+    debugImplementation(libs.ui.test.manifest)
+    
+    // Add your feature dependencies here:
+    // implementation(project(":feature:{FEATURE_NAME}:navigation"))
+}

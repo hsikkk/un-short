@@ -1,0 +1,26 @@
+# Project-wide Gradle settings
+org.gradle.jvmargs=-Xmx4g -Dfile.encoding=UTF-8 -Dkotlin.daemon.jvm.options=-Xmx2g
+org.gradle.caching=true
+org.gradle.parallel=true
+org.gradle.configuration-cache=true
+org.gradle.configuration-cache.problems=warn
+
+# Android & Kotlin settings
+android.useAndroidX=true
+android.enableJetifier=false
+android.nonTransitiveRClass=true
+android.nonFinalResIds=false
+kotlin.code.style=official
+
+# Compose & Kotlin Compiler settings
+kotlin.experimental.tryK2=true
+kotlin.daemon.jvmargs=-Xmx2g
+
+# Application configuration
+app.minSdkVersion=24
+app.targetSdkVersion=35
+app.compileSdkVersion=35
+
+# Performance optimizations
+org.gradle.vfs.watch=true
+org.gradle.jvmargs=-XX:MaxMetaspaceSize=1g

@@ -1,0 +1,132 @@
+package {{package_name}}.navigation
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+
+/**
+ * Tab destinations for bottom navigation
+ */
+enum class TabDestination(
+    val route: String,
+    val icon: ImageVector,
+    val label: String
+) {
+    Home(
+        route = "home",
+        icon = Icons.Default.Home,
+        label = "Home"
+    ),
+    Search(
+        route = "search", 
+        icon = Icons.Default.Search,
+        label = "Search"
+    ),
+    Profile(
+        route = "profile",
+        icon = Icons.Default.Person,
+        label = "Profile"
+    )
+    // Add more tabs as needed
+}
+
+/**
+ * Main app with tab-based navigation
+ */
+@Composable
+fun {{app_name}}TabNavigation() {
+    val navController = rememberNavController()
+    
+    Scaffold(
+        bottomBar = {
+            {{app_name}}BottomBar(navController = navController)
+        }
+    ) { paddingValues ->
+        TabNavHost(
+            navController = navController,
+            modifier = Modifier.padding(paddingValues)
+        )
+    }
+}
+
+/**
+ * Bottom navigation bar
+ */
+@Composable
+private fun {{app_name}}BottomBar(
+    navController: NavHostController
+) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+    
+    NavigationBar {
+        TabDestination.values().forEach { destination ->
+            NavigationBarItem(
+                icon = {
+                    Icon(
+                        imageVector = destination.icon,
+                        contentDescription = destination.label
+                    )
+                },
+                label = { Text(destination.label) },
+                selected = currentDestination?.hierarchy?.any { 
+                    it.route == destination.route 
+                } == true,
+                onClick = {
+                    navController.navigate(destination.route) {
+                        // Pop up to the start destination of the graph to
+                        // avoid building up a large stack of destinations
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        // Avoid multiple copies of the same destination
+                        launchSingleTop = true
+                        // Restore state when reselecting a previously selected item
+                        restoreState = true
+                    }
+                }
+            )
+        }
+    }
+}
+
+/**
+ * Navigation host for tab destinations
+ */
+@Composable
+private fun TabNavHost(
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
+    NavHost(
+        navController = navController,
+        startDestination = TabDestination.Home.route,
+        modifier = modifier
+    ) {
+        composable(TabDestination.Home.route) {
+            // Replace with your actual HomeRoute
+            // HomeRoute()
+        }
+        
+        composable(TabDestination.Search.route) {
+            // Replace with your actual SearchRoute
+            // SearchRoute()
+        }
+        
+        composable(TabDestination.Profile.route) {
+            // Replace with your actual ProfileRoute
+            // ProfileRoute()
+        }
+    }
+}

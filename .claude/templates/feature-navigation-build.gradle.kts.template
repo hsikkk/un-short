@@ -1,0 +1,15 @@
+plugins {
+    id("feature.navigation")
+}
+
+android {
+    namespace = "{PACKAGE_NAME}.{FEATURE_NAME}.navigation"
+}
+
+dependencies {
+    implementation(project(":core:navigation"))
+    implementation(project(":feature:{FEATURE_NAME}:ui"))
+    
+    // Testing dependencies
+    testImplementation(libs.junit)
+}

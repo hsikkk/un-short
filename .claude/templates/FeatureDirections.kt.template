@@ -1,0 +1,17 @@
+package {PACKAGE_NAME}.{FEATURE_NAME}.navigation
+
+import {PACKAGE_NAME}.navigation.NavigationCommand
+
+object {FEATURE_NAME_PASCAL}Directions {
+    val main = object : NavigationCommand {
+        override val destination: String = "{FEATURE_NAME}_main"
+    }
+    
+    // Add additional navigation destinations for this feature
+    // val detail = object : NavigationCommand {
+    //     override val destination: String = "{FEATURE_NAME}_detail/{itemId}"
+    //     override val queryArguments = listOf(
+    //         navArgument("itemId") { type = NavType.LongType }
+    //     )
+    // }
+}

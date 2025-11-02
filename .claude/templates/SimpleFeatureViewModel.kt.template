@@ -1,0 +1,100 @@
+package {{package_name}}.feature.{{feature_name}}
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+/**
+ * ViewModel for {{feature_name}} feature.
+ * Manages UI state and handles user actions.
+ */
+@HiltViewModel
+class {{feature_name_pascal}}ViewModel @Inject constructor(
+    // Add your dependencies here
+    // private val repository: {{feature_name_pascal}}Repository
+) : ViewModel() {
+    
+    private val _uiState = MutableStateFlow({{feature_name_pascal}}UiState())
+    val uiState: StateFlow<{{feature_name_pascal}}UiState> = _uiState.asStateFlow()
+    
+    init {
+        loadInitialData()
+    }
+    
+    private fun loadInitialData() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            
+            try {
+                // Load your initial data here
+                // val data = repository.getData()
+                
+                _uiState.update { 
+                    it.copy(
+                        isLoading = false,
+                        // Update with your data
+                        // data = data
+                    )
+                }
+            } catch (e: Exception) {
+                _uiState.update { 
+                    it.copy(
+                        isLoading = false,
+                        error = e.message ?: "An error occurred"
+                    )
+                }
+            }
+        }
+    }
+    
+    fun handleAction(action: {{feature_name_pascal}}Action) {
+        when (action) {
+            {{feature_name_pascal}}Action.Retry -> {
+                loadInitialData()
+            }
+            {{feature_name_pascal}}Action.SampleAction -> {
+                // Handle sample action
+                performSampleAction()
+            }
+            // Add more actions as needed
+        }
+    }
+    
+    private fun performSampleAction() {
+        viewModelScope.launch {
+            // Implement your action logic here
+            _uiState.update { 
+                it.copy(
+                    // Update state as needed
+                )
+            }
+        }
+    }
+}
+
+/**
+ * UI state for {{feature_name}} feature.
+ */
+data class {{feature_name_pascal}}UiState(
+    val isLoading: Boolean = false,
+    val error: String? = null,
+    // Add your state properties here
+    // val data: List<Item> = emptyList(),
+    // val selectedItem: Item? = null,
+)
+
+/**
+ * User actions for {{feature_name}} feature.
+ */
+sealed class {{feature_name_pascal}}Action {
+    data object Retry : {{feature_name_pascal}}Action()
+    data object SampleAction : {{feature_name_pascal}}Action()
+    // Add more actions as needed
+    // data class SelectItem(val item: Item) : {{feature_name_pascal}}Action()
+}

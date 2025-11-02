@@ -1,0 +1,118 @@
+package {PACKAGE_NAME}.{FEATURE_NAME}.ui
+
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import {PACKAGE_NAME}.{FEATURE_NAME}.ui.contract.{FEATURE_NAME_PASCAL}Intent
+import {PACKAGE_NAME}.{FEATURE_NAME}.ui.contract.{FEATURE_NAME_PASCAL}SideEffect
+import {PACKAGE_NAME}.{FEATURE_NAME}.ui.contract.{FEATURE_NAME_PASCAL}State
+import {PACKAGE_NAME}.designsystem.theme.{APP_NAME_PASCAL}Theme
+import org.orbitmvi.orbit.compose.collectSideEffect
+
+@Composable
+fun {FEATURE_NAME_PASCAL}Route(
+    goBack: () -> Unit,
+    // Add additional navigation callbacks here
+) {
+    val viewModel: {FEATURE_NAME_PASCAL}ViewModel = hiltViewModel()
+
+    val uiState by viewModel.container.stateFlow.collectAsStateWithLifecycle()
+
+    var isFirstView by rememberSaveable { mutableStateOf(true) }
+
+    LaunchedEffect(Unit) {
+        if (isFirstView) {
+            viewModel.onIntent({FEATURE_NAME_PASCAL}Intent.Initialize)
+            isFirstView = false
+        }
+    }
+
+    viewModel.collectSideEffect {
+        when (it) {
+            {FEATURE_NAME_PASCAL}SideEffect.GoBack -> goBack()
+            // Handle other side effects
+        }
+    }
+
+    {FEATURE_NAME_PASCAL}Screen(
+        uiState = uiState,
+        goBack = { viewModel.onIntent({FEATURE_NAME_PASCAL}Intent.GoBack) },
+        // Add other intent handlers
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun {FEATURE_NAME_PASCAL}Screen(
+    uiState: {FEATURE_NAME_PASCAL}State,
+    goBack: () -> Unit,
+    // Add other event handlers
+) {
+    BackHandler {
+        goBack()
+    }
+
+    Scaffold(
+        topBar = { AppBar() }
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(it)
+                .fillMaxSize(),
+        ) {
+            when (uiState) {
+                {FEATURE_NAME_PASCAL}State.Loading -> {
+                    // Loading state UI
+                }
+                is {FEATURE_NAME_PASCAL}State.Success -> {
+                    // Success state UI
+                }
+                is {FEATURE_NAME_PASCAL}State.Error -> {
+                    // Error state UI
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AppBar() {
+    TopAppBar(
+        title = {
+            Text(text = "{FEATURE_TITLE}", color = Color.White)
+        },
+        colors = TopAppBarDefaults.smallTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+        )
+    )
+}
+
+@Preview(name = "{FEATURE_NAME} screen")
+@Composable
+private fun {FEATURE_NAME_PASCAL}Preview() {
+    {APP_NAME_PASCAL}Theme {
+        {FEATURE_NAME_PASCAL}Screen(
+            uiState = {FEATURE_NAME_PASCAL}State.Loading,
+            goBack = {},
+        )
+    }
+}

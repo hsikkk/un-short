@@ -1,0 +1,9 @@
+package {PACKAGE_NAME}.{FEATURE_NAME}.ui.contract
+
+sealed interface {FEATURE_NAME_PASCAL}SideEffect {
+    data object GoBack : {FEATURE_NAME_PASCAL}SideEffect
+    
+    // Add your feature-specific side effects here
+    // data class ShowSnackbar(val message: String) : {FEATURE_NAME_PASCAL}SideEffect
+    // data class NavigateToDetail(val itemId: Long) : {FEATURE_NAME_PASCAL}SideEffect
+}

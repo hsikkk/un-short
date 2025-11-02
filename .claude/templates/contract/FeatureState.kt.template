@@ -1,0 +1,13 @@
+package {PACKAGE_NAME}.{FEATURE_NAME}.ui.contract
+
+sealed interface {FEATURE_NAME_PASCAL}State {
+    data object Loading : {FEATURE_NAME_PASCAL}State
+    
+    data class Success(
+        // Add your success state properties here
+    ) : {FEATURE_NAME_PASCAL}State
+    
+    data class Error(
+        val message: String
+    ) : {FEATURE_NAME_PASCAL}State
+}
