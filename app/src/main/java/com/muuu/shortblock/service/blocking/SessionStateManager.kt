@@ -6,182 +6,163 @@ import com.muuu.unshort.OverlayType
 /**
  * 세션 상태 관리자 (Event-Driven State Machine)
  *
- * 책임:
- * - 세션 이벤트 처리
- * - 상태 전이 로직
- * - 오버레이 타입 결정
- * - 스크롤 감지
+ * 앱별로 독립적인 상태 관리
  */
 class SessionStateManager {
 
     private val TAG = "SessionStateManager"
 
-    // 현재 상태 및 이전 상태
-    private var currentState: ShortsSessionState = ShortsSessionState.IDLE
-    private var previousState: ShortsSessionState = ShortsSessionState.IDLE
+    // 앱별 상태 저장
+    private val stateByPackage = mutableMapOf<String, ShortsSessionState>()
+    private val previousStateByPackage = mutableMapOf<String, ShortsSessionState>()
 
-    // 스크롤 감지를 위한 상태
-    private var lastContentHash: Int = 0
-    private var stableHashCount: Int = 0
+    // 앱별 스크롤 감지 데이터
+    private data class ScrollData(var hash: Int = 0, var stableCount: Int = 0)
+    private val scrollDataByPackage = mutableMapOf<String, ScrollData>()
     private val STABLE_THRESHOLD = 2
 
     /**
-     * 이벤트 처리 - 모든 상태 전이는 이벤트를 통해 발생
+     * 이벤트 처리
      */
-    fun handleEvent(event: SessionEvent) {
-        previousState = currentState
+    fun handleEvent(event: SessionEvent, packageName: String) {
+        val current = stateByPackage[packageName] ?: ShortsSessionState.IDLE
+        previousStateByPackage[packageName] = current
 
-        currentState = when (event) {
-            is SessionEvent.EnterShorts -> transitionOnEnterShorts()
-            is SessionEvent.ExitShorts -> transitionOnExitShorts()
-            is SessionEvent.EnterBackground -> transitionOnEnterBackground()
-            is SessionEvent.ReturnToShorts -> transitionOnReturnToShorts()
-            is SessionEvent.TimerCompleted -> transitionOnTimerCompleted()
-            is SessionEvent.WatchConfirmed -> transitionOnWatchConfirmed()
-            is SessionEvent.SkipConfirmed -> transitionOnSkipConfirmed()
+        val newState = when (event) {
+            is SessionEvent.EnterShorts -> transitionOnEnterShorts(current)
+            is SessionEvent.ExitShorts -> transitionOnExitShorts(packageName)
+            is SessionEvent.EnterBackground -> transitionOnEnterBackground(current)
+            is SessionEvent.ReturnToShorts -> transitionOnReturnToShorts(current)
+            is SessionEvent.TimerCompleted -> transitionOnTimerCompleted(current)
+            is SessionEvent.WatchConfirmed -> transitionOnWatchConfirmed(current)
+            is SessionEvent.SkipConfirmed -> transitionOnSkipConfirmed(packageName)
             is SessionEvent.ContentHashChanged -> {
-                handleContentHashChanged(event.hash)
-                return  // 스크롤 감지는 내부에서 처리
+                handleContentHashChanged(event.hash, packageName)
+                return
             }
-            is SessionEvent.Reset -> transitionOnReset()
+            is SessionEvent.Reset -> transitionOnReset(packageName)
         }
 
-        if (previousState != currentState) {
-            Log.d(TAG, "Event: ${event::class.simpleName} | $previousState → $currentState")
+        stateByPackage[packageName] = newState
+
+        if (current != newState) {
+            Log.d(TAG, "[$packageName] ${event::class.simpleName} | $current → $newState")
         }
     }
 
-    // ========== State Transition Methods ==========
+    // ========== Transition Methods ==========
 
-    private fun transitionOnEnterShorts() = ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
+    private fun transitionOnEnterShorts(current: ShortsSessionState) =
+        ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
 
-    private fun transitionOnExitShorts(): ShortsSessionState {
-        lastContentHash = 0
-        stableHashCount = 0
-        return ShortsSessionState.IN_APP_NOT_SHORTS
+    private fun transitionOnExitShorts(packageName: String): ShortsSessionState {
+        scrollDataByPackage[packageName] = ScrollData()
+        return ShortsSessionState.IDLE
     }
 
-    private fun transitionOnEnterBackground() = when (currentState) {
+    private fun transitionOnEnterBackground(current: ShortsSessionState) = when (current) {
         ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER ->
             ShortsSessionState.BACKGROUND_BLOCKED_NEED_TIMER
         ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION ->
             ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION
         ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL ->
             ShortsSessionState.BACKGROUND_ALLOWED_UNTIL_SCROLL
-        else -> currentState
+        else -> current
     }
 
-    private fun transitionOnReturnToShorts() = when (currentState) {
+    private fun transitionOnReturnToShorts(current: ShortsSessionState) = when (current) {
         ShortsSessionState.BACKGROUND_BLOCKED_NEED_TIMER ->
             ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
         ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION ->
             ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION
         ShortsSessionState.BACKGROUND_ALLOWED_UNTIL_SCROLL ->
             ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
-        ShortsSessionState.IDLE, ShortsSessionState.IN_APP_NOT_SHORTS ->
+        ShortsSessionState.IDLE ->
             ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
-        else -> currentState
+        else -> current
     }
 
-    private fun transitionOnTimerCompleted() = when (currentState) {
+    private fun transitionOnTimerCompleted(current: ShortsSessionState) = when (current) {
         ShortsSessionState.BACKGROUND_BLOCKED_NEED_TIMER ->
             ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION
         ShortsSessionState.IDLE ->
             ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION
         else -> {
-            Log.w(TAG, "Timer completed in unexpected state: $currentState")
+            Log.w(TAG, "Timer completed in unexpected state: $current")
             ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION
         }
     }
 
-    private fun transitionOnWatchConfirmed() = when (currentState) {
+    private fun transitionOnWatchConfirmed(current: ShortsSessionState) = when (current) {
         ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION ->
             ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
         else -> {
-            Log.w(TAG, "Watch confirmed in unexpected state: $currentState")
-            currentState
+            Log.w(TAG, "Watch confirmed in unexpected state: $current")
+            current
         }
     }
 
-    private fun transitionOnSkipConfirmed(): ShortsSessionState {
-        // "안볼래요" 클릭 - 앱 이탈 예정이므로 IDLE로
-        lastContentHash = 0
-        stableHashCount = 0
+    private fun transitionOnSkipConfirmed(packageName: String): ShortsSessionState {
+        scrollDataByPackage[packageName] = ScrollData()
         return ShortsSessionState.IDLE
     }
 
-    private fun transitionOnReset(): ShortsSessionState {
-        lastContentHash = 0
-        stableHashCount = 0
+    private fun transitionOnReset(packageName: String): ShortsSessionState {
+        scrollDataByPackage[packageName] = ScrollData()
         return ShortsSessionState.IDLE
     }
 
     /**
-     * 콘텐츠 해시 변경 처리 (스크롤 감지)
+     * 콘텐츠 해시 변경 처리
      */
-    private fun handleContentHashChanged(newHash: Int) {
-        if (newHash == lastContentHash) {
-            stableHashCount++
+    private fun handleContentHashChanged(newHash: Int, packageName: String) {
+        val scrollData = scrollDataByPackage.getOrPut(packageName) { ScrollData() }
+        val current = stateByPackage[packageName] ?: ShortsSessionState.IDLE
+
+        if (newHash == scrollData.hash) {
+            scrollData.stableCount++
             return
         }
 
-        val scrollDetected = stableHashCount >= STABLE_THRESHOLD
+        val scrollDetected = scrollData.stableCount >= STABLE_THRESHOLD
 
-        if (scrollDetected) {
-            Log.d(TAG, "Scroll detected: hash $lastContentHash → $newHash")
-            previousState = currentState
-
-            // 스크롤 시 상태 전이
-            currentState = when (currentState) {
-                ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL ->
-                    ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION
-                else -> currentState
-            }
-
-            if (previousState != currentState) {
-                Log.d(TAG, "Scroll event | $previousState → $currentState")
-            }
+        if (scrollDetected && current == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL) {
+            Log.d(TAG, "[$packageName] Scroll detected: ${scrollData.hash} → $newHash")
+            previousStateByPackage[packageName] = current
+            val newState = ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION
+            stateByPackage[packageName] = newState
+            Log.d(TAG, "[$packageName] Scroll event | $current → $newState")
         }
 
-        lastContentHash = newHash
-        stableHashCount = 0
+        scrollData.hash = newHash
+        scrollData.stableCount = 0
     }
 
     // ========== Query Methods ==========
 
-    /**
-     * 오버레이 타입 결정
-     */
-    fun getOverlayType(): OverlayType? {
-        return when (currentState) {
+    fun getOverlayType(packageName: String): OverlayType? {
+        return when (stateByPackage[packageName] ?: ShortsSessionState.IDLE) {
             ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER -> OverlayType.INITIAL
             ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION -> OverlayType.CONFIRMATION
             else -> null
         }
     }
 
-    /**
-     * 현재 상태 반환
-     */
-    fun getCurrentState(): ShortsSessionState = currentState
-
-    /**
-     * 이전 상태 반환
-     */
-    fun getPreviousState(): ShortsSessionState = previousState
-
-    /**
-     * 오버레이 표시가 필요한 상태인지 확인
-     */
-    fun needsOverlay(): Boolean {
-        return currentState == ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER ||
-               currentState == ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION
+    fun getCurrentState(packageName: String): ShortsSessionState {
+        return stateByPackage[packageName] ?: ShortsSessionState.IDLE
     }
 
-    /**
-     * 시청 허용 상태인지 확인
-     */
-    fun isAllowed(): Boolean {
-        return currentState == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
+    fun getPreviousState(packageName: String): ShortsSessionState {
+        return previousStateByPackage[packageName] ?: ShortsSessionState.IDLE
+    }
+
+    fun needsOverlay(packageName: String): Boolean {
+        val state = stateByPackage[packageName] ?: ShortsSessionState.IDLE
+        return state == ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER ||
+               state == ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION
+    }
+
+    fun isAllowed(packageName: String): Boolean {
+        return stateByPackage[packageName] == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
     }
 }

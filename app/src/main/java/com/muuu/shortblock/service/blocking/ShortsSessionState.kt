@@ -9,14 +9,9 @@ enum class ShortsSessionState(
     val isBackground: Boolean
 ) {
     /**
-     * 차단 대상 앱이 아님
+     * 쇼츠 화면 아님 (앱 외부 또는 앱 내 non-shorts)
      */
     IDLE(false),
-
-    /**
-     * 차단 대상 앱이지만 쇼츠 화면이 아님
-     */
-    IN_APP_NOT_SHORTS(false),
 
     /**
      * 쇼츠 화면 - 타이머 진행 필요
