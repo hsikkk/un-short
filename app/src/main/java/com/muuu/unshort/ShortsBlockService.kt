@@ -430,25 +430,29 @@ class ShortsBlockService : AccessibilityService() {
         try {
             Log.d(TAG, "pauseMedia called for $packageName")
 
-            // 첫 오버레이 표시 시 무조건 pause
             val state = sessionState.getCurrentState(packageName)
+            val prevState = sessionState.getPreviousState(packageName)
+
+            // Background 복귀면 스킵 (이미 일시정지 상태)
+            if (prevState.isBackground) {
+                Log.d(TAG, "From background ($prevState) - skipping pause")
+                return
+            }
+
+            // 첫 진입(NEED_TIMER)일 때만 pause 시도
             if (state == ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER) {
-                Log.d(TAG, "First overlay (NEED_TIMER) - attempting pause")
-                performTapGesture()
-                return
+                val isPlaying = isTargetAppPlayingMedia()
+                Log.d(TAG, "NEED_TIMER state, playing=$isPlaying")
+
+                if (isPlaying) {
+                    Log.d(TAG, "Media playing - pausing")
+                    performTapGesture()
+                } else {
+                    Log.d(TAG, "Media already paused - skipping tap")
+                }
+            } else {
+                Log.d(TAG, "Not NEED_TIMER state ($state) - skipping pause")
             }
-
-            // 미디어 재생 중인지 확인
-            val isPlaying = isTargetAppPlayingMedia()
-            Log.d(TAG, "Media state check - isPlaying: $isPlaying")
-
-            if (!isPlaying) {
-                Log.d(TAG, "Media not playing, skipping tap gesture")
-                return
-            }
-
-            Log.d(TAG, "Media is playing, sending tap gesture to pause")
-            performTapGesture()
         } catch (e: Exception) {
             Log.e(TAG, "Error pausing media", e)
         }
