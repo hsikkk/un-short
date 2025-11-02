@@ -36,26 +36,20 @@
     </LinearLayout>
 
     <!-- Content (scrollable) -->
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingHorizontal="24dp">
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="32dp"
+        android:fillViewport="false">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:requiresFadingEdge="vertical"
-            android:fadingEdgeLength="32dp"
-            android:background="@color/gray_50"
-            android:fillViewport="false">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingVertical="24dp"
-                android:paddingHorizontal="16dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="20dp">
 
         <!-- Why Section -->
         <TextView
@@ -171,8 +165,6 @@
         </LinearLayout>
 
     </ScrollView>
-
-    </FrameLayout>
 
     <!-- Footer (sticky) -->
     <LinearLayout
