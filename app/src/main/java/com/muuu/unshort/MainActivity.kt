@@ -103,9 +103,26 @@ class MainActivity : BaseActivity() {
             val currentState = prefs.getBoolean("blocking_enabled", true)
             val newState = !currentState
 
-            // If turning OFF, show confirmation dialog
+            // If turning OFF, check if confirmation is required
             if (currentState && !newState) {
-                showDisableConfirmDialog()
+                val preventImpulsive = prefs.getBoolean("prevent_impulsive_disable", false)
+
+                if (preventImpulsive) {
+                    // Show confirmation dialog
+                    showDisableConfirmDialog()
+                } else {
+                    // Proceed immediately without confirmation
+                    prefs.edit().putBoolean("blocking_enabled", false).apply()
+
+                    // Track blocking state change
+                    AnalyticsManager.trackEvent(
+                        this,
+                        AnalyticsEvent.BLOCKING_DISABLED
+                    )
+
+                    // UI 업데이트 (애니메이션 포함)
+                    updateUI(false, animate = true)
+                }
             } else {
                 // Turning ON - proceed immediately
                 // 상태 저장

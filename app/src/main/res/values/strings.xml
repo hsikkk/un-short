@@ -50,6 +50,8 @@
     <string name="settings_haptic_desc">Vibration notification when timer completes</string>
     <string name="settings_block_scrolled_title">Block Scrolled Shorts Only</string>
     <string name="settings_block_scrolled_desc">Block only when scrolling to next shorts</string>
+    <string name="settings_prevent_disable_title">Prevent Impulsive Disable</string>
+    <string name="settings_prevent_disable_desc">Prevent unintended disable</string>
     <string name="settings_section_additional">Additional Features</string>
     <string name="settings_section_other">Other</string>
     <string name="settings_feedback">Send Feedback</string>

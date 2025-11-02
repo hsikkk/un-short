@@ -16,6 +16,7 @@ class SettingsActivity : BaseActivity() {
     private lateinit var waitTimeItem: LinearLayout
     private lateinit var hapticSwitch: Switch
     private lateinit var allowFirstSwitch: Switch
+    private lateinit var preventDisableSwitch: Switch
     private lateinit var deviceAdminSwitch: Switch
     private lateinit var deviceAdminItem: LinearLayout
     private lateinit var feedbackItem: LinearLayout
@@ -36,6 +37,7 @@ class SettingsActivity : BaseActivity() {
         waitTimeItem = findViewById(R.id.waitTimeItem)
         hapticSwitch = findViewById(R.id.hapticSwitch)
         allowFirstSwitch = findViewById(R.id.allowFirstSwitch)
+        preventDisableSwitch = findViewById(R.id.preventDisableSwitch)
         deviceAdminSwitch = findViewById(R.id.deviceAdminSwitch)
         deviceAdminItem = findViewById(R.id.deviceAdminItem)
         feedbackItem = findViewById(R.id.feedbackItem)
@@ -77,6 +79,15 @@ class SettingsActivity : BaseActivity() {
         // 스크롤한 쇼츠만 차단 스위치 리스너
         allowFirstSwitch.setOnCheckedChangeListener { _, isChecked ->
             prefs.edit().putBoolean("block_scrolled_only", isChecked).apply()
+        }
+
+        // 충동적 해제 방지 설정 초기화
+        val isPreventDisable = prefs.getBoolean("prevent_impulsive_disable", false)
+        preventDisableSwitch.isChecked = isPreventDisable
+
+        // 충동적 해제 방지 스위치 리스너
+        preventDisableSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("prevent_impulsive_disable", isChecked).apply()
         }
 
         // Device Admin 스위치 초기 상태 설정
