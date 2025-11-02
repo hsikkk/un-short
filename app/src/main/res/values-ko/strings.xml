@@ -168,6 +168,11 @@
     <string name="disable_dialog_phrase">쇼츠 차단을 해제합니다</string>
     <string name="disable_dialog_input_hint">여기에 입력하세요</string>
     <string name="disable_dialog_cancel">취소</string>
-    <string name="disable_dialog_confirm">차단 해제</string>
+    <string name="disable_dialog_confirm">확인</string>
+
+    <!-- Device Admin Disable Dialog -->
+    <string name="device_admin_disable_title">삭제 방지를 해제하시겠어요?</string>
+    <string name="device_admin_disable_message">충동적으로 해제할 수 있습니다. 정말 해제하시겠어요?</string>
+    <string name="device_admin_disable_phrase">삭제 방지를 해제합니다</string>
 
 </resources>

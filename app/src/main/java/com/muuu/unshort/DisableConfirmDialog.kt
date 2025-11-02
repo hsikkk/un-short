@@ -12,16 +12,20 @@ import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
 
 /**
- * Confirmation dialog for disabling shorts blocking feature
+ * Confirmation dialog for disabling features
  * Requires user to type exact phrase to confirm the action
+ * Can be used for blocking disable, device admin disable, etc.
  */
 class DisableConfirmDialog(
     context: Context,
+    private val titleResId: Int = R.string.disable_dialog_title,
+    private val messageResId: Int = R.string.disable_dialog_message,
+    private val requiredPhraseResId: Int = R.string.disable_dialog_phrase,
     private val onConfirm: () -> Unit,
     private val onCancel: () -> Unit
 ) : Dialog(context) {
 
-    private val requiredPhrase = context.getString(R.string.disable_dialog_phrase)
+    private val requiredPhrase = context.getString(requiredPhraseResId)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,13 +56,17 @@ class DisableConfirmDialog(
         }
 
         // Setup views
+        val dialogTitle = view.findViewById<TextView>(R.id.dialogTitle)
         val warningMessage = view.findViewById<TextView>(R.id.warningMessage)
+        val phraseToType = view.findViewById<TextView>(R.id.phraseToType)
         val confirmInput = view.findViewById<TextInputEditText>(R.id.confirmInput)
         val btnCancel = view.findViewById<Button>(R.id.btnCancel)
         val btnConfirm = view.findViewById<Button>(R.id.btnConfirm)
 
-        // Set warning message (simple)
-        warningMessage.text = context.getString(R.string.disable_dialog_message)
+        // Set dynamic texts
+        dialogTitle.setText(titleResId)
+        warningMessage.setText(messageResId)
+        phraseToType.setText(requiredPhraseResId)
 
         // Initially disable confirm button with visual feedback
         btnConfirm.isEnabled = false

@@ -99,8 +99,8 @@ class SettingsActivity : BaseActivity() {
                 // ON으로 시도 - 바로 Device Admin 권한 요청
                 deviceAdminManager.requestActivation(this, REQUEST_CODE_ENABLE_DEVICE_ADMIN)
             } else {
-                // OFF로 시도 - 바로 Device Admin 제거
-                deviceAdminManager.removeAdmin()
+                // OFF로 시도 - 확인 다이얼로그 표시
+                showDeviceAdminDisableDialog()
             }
         }
 
@@ -259,6 +259,24 @@ class SettingsActivity : BaseActivity() {
         super.onResume()
         // 설정 화면에서 돌아왔을 때 Device Admin 상태 업데이트
         updateDeviceAdminSwitchState()
+    }
+
+    private fun showDeviceAdminDisableDialog() {
+        val dialog = DisableConfirmDialog(
+            context = this,
+            titleResId = R.string.device_admin_disable_title,
+            messageResId = R.string.device_admin_disable_message,
+            requiredPhraseResId = R.string.device_admin_disable_phrase,
+            onConfirm = {
+                // User confirmed - proceed with disabling
+                deviceAdminManager.removeAdmin()
+            },
+            onCancel = {
+                // User cancelled - restore switch state
+                updateDeviceAdminSwitchState()
+            }
+        )
+        dialog.show()
     }
 
     companion object {
