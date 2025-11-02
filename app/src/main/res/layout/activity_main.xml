@@ -370,7 +370,6 @@
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
             android:letterSpacing="0.02"
-            app:cornerRadius="24dp"
             app:backgroundTint="#000000"
             app:elevation="4dp"
             app:rippleColor="#40FFFFFF" />
