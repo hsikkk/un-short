@@ -34,6 +34,9 @@ class ShortsBlockService : AccessibilityService() {
     // 현재 처리 중인 패키지
     private var currentPackage: String = ""
 
+    // 앱별 볼륨 저장
+    private val savedVolumeByPackage = mutableMapOf<String, Int>()
+
     // 포그라운드 앱 추적
     private var lastForegroundPackage: String = ""
     private val handler = android.os.Handler(android.os.Looper.getMainLooper())
@@ -58,6 +61,7 @@ class ShortsBlockService : AccessibilityService() {
             onSkip = {
                 // "안볼래요" 버튼 - 뒤로 가기
                 Log.d(TAG, "Skip button pressed - performing back action")
+                restoreVolume(currentPackage)
                 sessionState.handleEvent(SessionEvent.SkipConfirmed, currentPackage)
 
                 val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
@@ -79,6 +83,7 @@ class ShortsBlockService : AccessibilityService() {
                 prefs.edit().putBoolean("allowed_until_scroll", true).apply()
 
                 handler.postDelayed({
+                    restoreVolume(currentPackage)
                     resumeMedia()
                 }, 100)
             }
@@ -277,6 +282,7 @@ class ShortsBlockService : AccessibilityService() {
     private fun handleLeavingTargetApp(prefs: android.content.SharedPreferences) {
         cancelPendingOverlay()
         overlayManager.hideOverlay(packageName)
+        restoreVolume(packageName)
         sessionState.handleEvent(SessionEvent.Reset, packageName)
 
         // SharedPreferences 클리어
@@ -315,6 +321,12 @@ class ShortsBlockService : AccessibilityService() {
 
         Log.d(TAG, "Overlay permission granted, scheduling overlay with delay")
 
+        val prevState = sessionState.getPreviousState(packageName)
+
+        if (!prevState.isBackground) {
+            saveAndMuteVolume(packageName)
+        }
+
         // 딜레이 후 오버레이 표시
         pendingOverlayJob = Runnable {
             try {
@@ -326,13 +338,11 @@ class ShortsBlockService : AccessibilityService() {
                 prefs.edit().putString(AppConstants.PREF_CURRENT_SESSION_ID, sessionId).apply()
                 Log.d(TAG, "Session created: $sessionId")
 
-                // 미디어 일시정지 (백그라운드에서 복귀한 게 아닐 때만)
-                val prevState = sessionState.getPreviousState(packageName)
                 if (!prevState.isBackground) {
-                    Log.d(TAG, "First entry (from $prevState) - attempting pauseMedia")
+                    Log.d(TAG, "First entry (from $prevState) - muting volume and attempting pauseMedia")
                     pauseMedia(packageName)
                 } else {
-                    Log.d(TAG, "Returned from background ($prevState) - skipping pauseMedia")
+                    Log.d(TAG, "Returned from background ($prevState) - skipping volume/pauseMedia")
                 }
 
                 // 오버레이 표시 (타입은 파라미터로 전달됨)
@@ -608,12 +618,52 @@ class ShortsBlockService : AccessibilityService() {
         Log.d(TAG, "Stale session data cleared")
     }
 
+    /**
+     * 볼륨 저장 및 음소거
+     */
+    private fun saveAndMuteVolume(packageName: String) {
+        try {
+            val audioManager = getSystemService(AUDIO_SERVICE) as? AudioManager
+            audioManager?.let {
+                val currentVolume = it.getStreamVolume(AudioManager.STREAM_MUSIC)
+                savedVolumeByPackage[packageName] = currentVolume
+                it.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0)
+                Log.d(TAG, "[$packageName] Volume saved ($currentVolume) and muted")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "[$packageName] Error muting volume", e)
+        }
+    }
+
+    /**
+     * 볼륨 복원
+     */
+    private fun restoreVolume(packageName: String) {
+        savedVolumeByPackage[packageName]?.let { savedVolume ->
+            try {
+                val audioManager = getSystemService(AUDIO_SERVICE) as? AudioManager
+                audioManager?.setStreamVolume(AudioManager.STREAM_MUSIC, savedVolume, 0)
+                Log.d(TAG, "[$packageName] Volume restored to $savedVolume")
+            } catch (e: Exception) {
+                Log.e(TAG, "[$packageName] Error restoring volume", e)
+            }
+            savedVolumeByPackage.remove(packageName)
+        }
+    }
+
     override fun onInterrupt() {
         Log.d(TAG, "Service interrupted")
     }
 
     override fun onDestroy() {
         super.onDestroy()
+
+        // 모든 저장된 볼륨 복원
+        savedVolumeByPackage.keys.toList().forEach { pkg ->
+            restoreVolume(pkg)
+        }
+        savedVolumeByPackage.clear()
+
         cancelPendingOverlay()
         stopForegroundCheck()
         overlayManager.cleanup()
