@@ -1,12 +1,16 @@
 package com.muuu.unshort
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.muuu.unshort.admin.DeviceAdminManager
 
 class SettingsActivity : BaseActivity() {
 
@@ -14,11 +18,15 @@ class SettingsActivity : BaseActivity() {
     private lateinit var waitTimeValue: TextView
     private lateinit var waitTimeItem: LinearLayout
     private lateinit var hapticSwitch: Switch
+    private lateinit var deviceAdminSwitch: Switch
+    private lateinit var deviceAdminItem: LinearLayout
     private lateinit var feedbackItem: LinearLayout
     private lateinit var shareItem: LinearLayout
     private lateinit var reviewItem: LinearLayout
     private lateinit var versionItem: LinearLayout
     private lateinit var versionText: TextView
+
+    private lateinit var deviceAdminManager: DeviceAdminManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +37,16 @@ class SettingsActivity : BaseActivity() {
         waitTimeValue = findViewById(R.id.waitTimeValue)
         waitTimeItem = findViewById(R.id.waitTimeItem)
         hapticSwitch = findViewById(R.id.hapticSwitch)
+        deviceAdminSwitch = findViewById(R.id.deviceAdminSwitch)
+        deviceAdminItem = findViewById(R.id.deviceAdminItem)
         feedbackItem = findViewById(R.id.feedbackItem)
         shareItem = findViewById(R.id.shareItem)
         reviewItem = findViewById(R.id.reviewItem)
         versionItem = findViewById(R.id.versionItem)
         versionText = findViewById(R.id.versionText)
+
+        // DeviceAdminManager 초기화
+        deviceAdminManager = DeviceAdminManager(this)
 
         // 버전 정보 설정
         try {
@@ -56,6 +69,20 @@ class SettingsActivity : BaseActivity() {
         // 햅틱 스위치 리스너
         hapticSwitch.setOnCheckedChangeListener { _, isChecked ->
             prefs.edit().putBoolean("haptic_enabled", isChecked).apply()
+        }
+
+        // Device Admin 스위치 초기 상태 설정
+        updateDeviceAdminSwitchState()
+
+        // Device Admin 스위치 리스너
+        deviceAdminSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // ON으로 시도 - 다이얼로그 표시
+                showDeviceAdminEnableDialog()
+            } else {
+                // OFF로 시도 - 설정으로 안내
+                showDeviceAdminDisableDialog()
+            }
         }
 
         // 뒤로 가기 버튼
@@ -172,5 +199,95 @@ class SettingsActivity : BaseActivity() {
 
         bottomSheetDialog.setContentView(view)
         bottomSheetDialog.show()
+    }
+
+    /**
+     * Device Admin 스위치 상태 업데이트
+     */
+    private fun updateDeviceAdminSwitchState() {
+        val isActive = deviceAdminManager.isDeviceAdminActive()
+        // 리스너를 일시적으로 제거하고 상태 업데이트
+        deviceAdminSwitch.setOnCheckedChangeListener(null)
+        deviceAdminSwitch.isChecked = isActive
+        // 리스너 다시 설정
+        deviceAdminSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                showDeviceAdminEnableDialog()
+            } else {
+                showDeviceAdminDisableDialog()
+            }
+        }
+    }
+
+    /**
+     * Device Admin 활성화 다이얼로그 표시
+     */
+    private fun showDeviceAdminEnableDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.device_admin_dialog_title)
+            .setMessage(R.string.device_admin_dialog_message)
+            .setPositiveButton(R.string.device_admin_dialog_enable) { _, _ ->
+                // Device Admin 권한 요청
+                deviceAdminManager.requestActivation(this, REQUEST_CODE_ENABLE_DEVICE_ADMIN)
+            }
+            .setNegativeButton(R.string.device_admin_dialog_cancel) { _, _ ->
+                // 취소 시 스위치를 다시 OFF로
+                updateDeviceAdminSwitchState()
+            }
+            .setOnCancelListener {
+                // 다이얼로그 외부 터치로 취소 시
+                updateDeviceAdminSwitchState()
+            }
+            .show()
+    }
+
+    /**
+     * Device Admin 비활성화 안내 다이얼로그 표시
+     */
+    private fun showDeviceAdminDisableDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.device_admin_deactivate_title)
+            .setMessage(R.string.device_admin_deactivate_message)
+            .setPositiveButton(R.string.device_admin_deactivate_button) { _, _ ->
+                // 설정 화면으로 이동
+                val intent = Intent(Settings.ACTION_SECURITY_SETTINGS)
+                startActivity(intent)
+            }
+            .setNegativeButton(android.R.string.cancel) { _, _ ->
+                // 스위치 상태 복원
+                updateDeviceAdminSwitchState()
+            }
+            .setOnCancelListener {
+                // 다이얼로그 외부 터치로 취소 시
+                updateDeviceAdminSwitchState()
+            }
+            .show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_ENABLE_DEVICE_ADMIN) {
+            // Device Admin 활성화 결과 처리
+            updateDeviceAdminSwitchState()
+
+            if (resultCode == Activity.RESULT_OK) {
+                // 활성화 성공
+                Toast.makeText(this, R.string.toast_device_admin_enabled, Toast.LENGTH_SHORT).show()
+            } else {
+                // 활성화 취소
+                Toast.makeText(this, R.string.toast_device_admin_cancelled, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 설정 화면에서 돌아왔을 때 Device Admin 상태 업데이트
+        updateDeviceAdminSwitchState()
+    }
+
+    companion object {
+        private const val REQUEST_CODE_ENABLE_DEVICE_ADMIN = 1001
     }
 }

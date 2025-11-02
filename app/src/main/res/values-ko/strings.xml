@@ -48,6 +48,7 @@
     <string name="settings_delay_time_value">%d초</string>
     <string name="settings_haptic_title">햅틱 피드백</string>
     <string name="settings_haptic_desc">타이머 완료 시 진동 알림</string>
+    <string name="settings_section_additional">부가 기능</string>
     <string name="settings_section_other">기타</string>
     <string name="settings_feedback">피드백 보내기</string>
     <string name="settings_share">앱 공유하기</string>
@@ -112,10 +113,26 @@
 
     <!-- Toast Messages -->
     <string name="toast_email_app_not_found">이메일 앱을 찾을 수 없습니다</string>
+    <string name="toast_device_admin_enabled">앱 삭제 방지 기능이 활성화되었습니다</string>
+    <string name="toast_device_admin_cancelled">앱 삭제 방지 기능이 취소되었습니다</string>
 
     <!-- Share & Feedback -->
     <string name="feedback_subject">un:short 앱 피드백</string>
     <string name="share_text">쇼츠 중독에서 벗어나세요!\nun:short 앱으로 의도적인 미디어 소비를 시작하세요.\n\n%s</string>
+
+    <!-- Device Admin (App Uninstall Protection) -->
+    <string name="device_admin_title">앱 삭제 방지</string>
+    <string name="device_admin_desc">충동적인 앱 삭제 방지</string>
+    <string name="device_admin_dialog_title">삭제 방지 기능을 활성화할까요?</string>
+    <string name="device_admin_dialog_message">이 기능은 un:short를 삭제하기 전에 추가 단계를 거치게 합니다.\n\n의지가 약해지는 순간에 충동적인 결정을 막아줍니다.\n\n언제든지 설정 → 보안 → 기기 관리 앱에서 비활성화할 수 있습니다.</string>
+    <string name="device_admin_dialog_enable">활성화</string>
+    <string name="device_admin_dialog_cancel">나중에</string>
+    <string name="device_admin_deactivate_title">보호 기능을 비활성화할까요?</string>
+    <string name="device_admin_deactivate_message">이 기능을 비활성화하려면:\n\n설정 → 보안 → 기기 관리 앱 → un:short\n\n순서로 이동한 후 [비활성화]를 누르세요</string>
+    <string name="device_admin_deactivate_button">설정으로 이동</string>
+    <string name="device_admin_receiver_enabled">un:short 앱 삭제 방지 기능이 활성화되었습니다</string>
+    <string name="device_admin_receiver_disable_warning">앱 삭제 방지 기능을 비활성화하면 충동적으로 un:short를 삭제할 수 있습니다. 계속하시겠습니까?</string>
+    <string name="device_admin_receiver_disabled">un:short 앱 삭제 방지 기능이 비활성화되었습니다</string>
 
     <!-- Privacy Consent Dialog -->
     <string name="privacy_dialog_title_simple">접근성 권한 사용 안내</string>
