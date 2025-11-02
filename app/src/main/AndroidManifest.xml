@@ -62,7 +62,7 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:taskAffinity="com.muuu.unshort.timer"
-            android:excludeFromRecents="false" />
+            android:excludeFromRecents="true" />
 
         <service
             android:name=".ShortsBlockService"
