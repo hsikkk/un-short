@@ -1,10 +1,7 @@
 package com.muuu.unshort
 
 import android.accessibilityservice.AccessibilityService
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
@@ -12,38 +9,89 @@ import android.provider.Settings
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
-import java.security.MessageDigest
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import java.util.UUID
+import com.muuu.shortblock.service.blocking.*
 
+/**
+ * 쇼츠 차단 AccessibilityService
+ *
+ * 책임:
+ * - AccessibilityEvent 수신 및 라우팅
+ * - 차단 활성화 상태 확인
+ * - 포그라운드 앱 변경 감지
+ * - 미디어 컨트롤 (일시정지/재생)
+ * - 글로벌 액션 수행 (뒤로 가기)
+ */
 class ShortsBlockService : AccessibilityService() {
 
-    private var blockOverlay: BlockOverlay? = null
     private val TAG = "ShortsBlockService"
-    private var allowedUntilScroll = false  // 15초 완료 후 스크롤 전까지 허용
-    private var justScrolled = false  // 방금 스크롤했는지 여부 (오버레이 표시 후 바로 닫히는 것 방지)
-    private var lastShortsContentHash: Int = 0  // 이전 쇼츠 화면의 해시값
-    private var stableHashCount = 0  // 같은 해시값이 연속으로 나타난 횟수
-    private var wasInShortsScreen = false  // 이전에 쇼츠 화면에 있었는지 여부
-    private var overlayWasShown = false  // 현재 쇼츠에 대해 오버레이가 표시된 적이 있는지
-    private var leftViaHomeButton = false  // 홈/백 버튼으로 나갔는지 여부
-    private var lastForegroundPackage: String = ""  // 마지막 포그라운드 앱
+
+    // 새로운 컴포넌트들
+    private val detectionEngine = ShortsDetectionEngine()
+    private val hashGenerator = ContentHashGenerator()
+    private val scrollManager = ScrollDetectionManager()
+    private lateinit var overlayManager: OverlayManager
+
+    // 포그라운드 앱 추적
+    private var lastForegroundPackage: String = ""
     private val handler = android.os.Handler(android.os.Looper.getMainLooper())
     private var foregroundCheckRunnable: Runnable? = null
-    private var pendingOverlayJob: Runnable? = null  // pending 중인 오버레이 표시 job
-    private var appStartTime: Long = 0  // 앱 시작 시간 (fresh start 감지용)
+    private var pendingOverlayJob: Runnable? = null
 
-    // Timer-related variables
-    private var currentSessionId: String = ""
-    private var timerReceiver: BroadcastReceiver? = null
+    // Fresh start 감지용
+    private var appStartTime: Long = 0
 
-    // 차단 대상 앱 패키지명
-    private val TARGET_APPS = setOf(
-        "com.google.android.youtube",
-        "com.instagram.android"
-    )
+    override fun onServiceConnected() {
+        super.onServiceConnected()
+        Log.d(TAG, "Service connected")
+
+        // OverlayManager 초기화
+        overlayManager = OverlayManager(
+            context = this,
+            onTimerCompleted = {
+                scrollManager.onTimerCompleted()
+                stopForegroundCheck()
+            },
+            onSkip = {
+                // "안볼래요" 버튼 - 뒤로 가기
+                Log.d(TAG, "Skip button pressed - performing back action")
+                scrollManager.clearSession()
+
+                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                prefs.edit().apply {
+                    remove(AppConstants.PREF_COMPLETED_SESSION_ID)
+                    remove("allowed_until_scroll")
+                    apply()
+                }
+
+                performGlobalBackAction()
+            },
+            onWatch = {
+                // "볼래요" 버튼 - 미디어 재생 재개
+                Log.d(TAG, "Watch button pressed - resuming media")
+                scrollManager.onTimerCompleted()
+                stopForegroundCheck()
+
+                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                prefs.edit().putBoolean("allowed_until_scroll", true).apply()
+
+                handler.postDelayed({
+                    resumeMedia()
+                }, 100)
+            }
+        )
+        overlayManager.initialize()
+
+        // 서비스 재시작 시 이전 세션 데이터 클리어
+        clearStaleSessionData()
+
+        // Persisted allowed state 복원
+        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        val persistedAllowedUntilScroll = prefs.getBoolean("allowed_until_scroll", false)
+        if (persistedAllowedUntilScroll) {
+            Log.d(TAG, "Restoring allowed state from SharedPreferences")
+            scrollManager.onTimerCompleted()  // 복원
+        }
+    }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null) return
@@ -52,490 +100,171 @@ class ShortsBlockService : AccessibilityService() {
         val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
         val isBlockingEnabled = prefs.getBoolean("blocking_enabled", true)
 
-        // 차단이 비활성화되어 있으면 아무 작업도 하지 않음
         if (!isBlockingEnabled) {
-            // 오버레이가 표시 중이면 제거
-            if (blockOverlay?.isShowing() == true) {
+            // 차단 비활성화 시 오버레이 제거
+            if (overlayManager.isOverlayVisible()) {
                 cancelPendingOverlay()
-                blockOverlay?.dismiss()
-                blockOverlay = null
+                overlayManager.hideOverlay()
             }
             return
         }
 
         val packageName = event.packageName?.toString() ?: return
 
-        // 이벤트 로깅 (디버깅용)
+        // 이벤트 로깅
         Log.d(TAG, "=== Event: ${event.eventType}, Package: $packageName ===")
-        Log.d(TAG, "State - allowedUntilScroll: $allowedUntilScroll, overlayWasShown: $overlayWasShown")
-        Log.d(TAG, "State - blockOverlay?.isShowing(): ${blockOverlay?.isShowing()}")
+        Log.d(TAG, "State - allowedUntilScroll: ${scrollManager.isAllowedUntilScroll()}, overlayShown: ${scrollManager.isOverlayShown()}")
 
-        // 오버레이가 표시 중일 때, 포그라운드 앱 변경 감지
-        if (blockOverlay?.isShowing() == true) {
-            // rootInActiveWindow로 현재 포그라운드 앱 확인
+        // 오버레이 표시 중 포그라운드 앱 변경 감지
+        if (overlayManager.isOverlayVisible()) {
             val currentForegroundPackage = rootInActiveWindow?.packageName?.toString()
 
             if (currentForegroundPackage != null && currentForegroundPackage != lastForegroundPackage) {
                 lastForegroundPackage = currentForegroundPackage
 
-                // 차단 대상 앱이 아닌 앱으로 전환 (홈/백 버튼 포함)
-                if (currentForegroundPackage !in TARGET_APPS) {
+                // 차단 대상 앱이 아닌 앱으로 전환
+                if (currentForegroundPackage !in AppBlockingRegistry.TARGET_PACKAGES) {
                     Log.d(TAG, "Foreground changed to $currentForegroundPackage, dismissing overlay")
-                    cancelPendingOverlay()  // pending job 취소
-                    blockOverlay?.dismiss()
-                    blockOverlay = null
-                    leftViaHomeButton = true  // 백그라운드로 나갔음을 표시
-
-                    // 타이머 완료 플래그 초기화 (쇼츠 앱을 떠나면 리셋)
-                    prefs.edit().apply {
-                        remove(AppConstants.PREF_COMPLETED_SESSION_ID)
-                        remove("allowed_until_scroll")  // Clear persisted allowed state
-                        apply()
-                    }
-                    Log.d(TAG, "Cleared timer completion flag and allowed_until_scroll - left shorts app")
-
-                    // 모든 상태 플래그 초기화 (플래그 꼬임 방지)
-                    allowedUntilScroll = false
-                    overlayWasShown = false
-                    Log.d(TAG, "Reset all flags - left shorts app")
-
+                    handleLeavingTargetApp(prefs)
                     return
                 }
             }
         }
 
-        // TYPE_WINDOW_STATE_CHANGED 이벤트로 앱 전환 감지 (추가 보험)
+        // TYPE_WINDOW_STATE_CHANGED 이벤트로 앱 전환 감지
         if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
             Log.d(TAG, "Window state changed: $packageName")
 
-            // 차단 대상 앱에서 다른 앱으로 전환 (홈/백 버튼 포함)
-            if (packageName !in TARGET_APPS && blockOverlay?.isShowing() == true) {
-                Log.d(TAG, "Left target app to $packageName (home/back/app switch), dismissing overlay")
-                cancelPendingOverlay()  // pending job 취소
-                blockOverlay?.dismiss()
-                blockOverlay = null
-                leftViaHomeButton = true  // 백그라운드로 나갔음을 표시
-
-                // 타이머 완료 플래그 초기화 (쇼츠 앱을 떠나면 리셋)
-                prefs.edit().apply {
-                    remove(AppConstants.PREF_COMPLETED_SESSION_ID)
-                    remove("allowed_until_scroll")  // Clear persisted allowed state
-                    apply()
-                }
-                Log.d(TAG, "Cleared timer completion flag and allowed_until_scroll - left shorts app")
-
-                // 모든 상태 플래그 초기화 (플래그 꼬임 방지)
-                allowedUntilScroll = false
-                overlayWasShown = false
-                Log.d(TAG, "Reset all flags - left shorts app")
-
+            if (packageName !in AppBlockingRegistry.TARGET_PACKAGES && overlayManager.isOverlayVisible()) {
+                Log.d(TAG, "Left target app to $packageName, dismissing overlay")
+                handleLeavingTargetApp(prefs)
                 return
             }
         }
 
         // 차단 대상 앱이 아니면 무시
-        if (packageName !in TARGET_APPS) {
+        if (packageName !in AppBlockingRegistry.TARGET_PACKAGES) {
             return
         }
 
-        // event.source를 사용하여 이벤트가 발생한 실제 뷰의 정보를 가져옴
-        val sourceNode = event.source
+        // 앱 설정 가져오기
+        val appConfig = AppBlockingRegistry.getConfigByPackageName(packageName) ?: return
+        val rootNode = rootInActiveWindow ?: return
 
-        // 쇼츠/릴스 화면인지 먼저 확인
-        val isShorts = isShortsScreen(packageName, event, sourceNode)
-        Log.d(TAG, ">>> isShorts = $isShorts")
+        // 쇼츠 화면 감지
+        val isInShortsScreen = detectionEngine.detectShortsScreen(rootNode, appConfig)
+        Log.d(TAG, ">>> isShorts = $isInShortsScreen")
 
-        // 컨텐츠 변경 감지로 스크롤 판단 (YouTube Shorts는 TYPE_VIEW_SCROLLED를 발생시키지 않음)
-        if (isShorts && allowedUntilScroll) {
-            // 현재 쇼츠 화면의 해시값 계산
-            val currentContentHash = getCurrentShortsContentHash()
+        // 콘텐츠 해시 기반 스크롤 감지
+        if (isInShortsScreen && scrollManager.isAllowedUntilScroll()) {
+            val currentContentHash = hashGenerator.generateContentHash(rootNode, appConfig.hashConfig)
 
             if (currentContentHash != 0) {
-                if (currentContentHash == lastShortsContentHash) {
-                    // 같은 해시값 - 같은 영상
-                    stableHashCount++
-                    Log.d(TAG, "Same content hash, stable count: $stableHashCount")
-                } else {
-                    // 해시값이 변경됨
-                    if (lastShortsContentHash == 0) {
-                        // 첫 번째 쇼츠 - 해시값 저장
-                        Log.d(TAG, "First shorts, hash: $currentContentHash")
-                        lastShortsContentHash = currentContentHash
-                        stableHashCount = 1
-                    } else if (stableHashCount >= 2) {
-                        // 이전 해시값이 2회 이상 안정적으로 나타났고, 지금 변경됨 = 실제 스크롤
-                        Log.d(TAG, "Shorts content changed (scroll detected), old hash: $lastShortsContentHash, new hash: $currentContentHash")
+                val scrollDetected = scrollManager.onContentHashChanged(currentContentHash)
 
-                        // Clear all session data on scroll
-                        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-                        prefs.edit().apply {
-                            remove(AppConstants.PREF_COMPLETED_SESSION_ID)
-                            remove(AppConstants.PREF_CURRENT_SESSION_ID)
-                            remove("allowed_until_scroll")  // Clear persisted allowed state
-                            apply()
-                        }
+                if (scrollDetected) {
+                    Log.d(TAG, "Scroll detected - clearing session and showing overlay")
 
-                        allowedUntilScroll = false
-                        justScrolled = true
-                        lastShortsContentHash = currentContentHash
-                        stableHashCount = 1
-                        overlayWasShown = false  // 새 영상이므로 플래그 초기화
-
-                        // 스크롤 후 오버레이 표시
-                        if (blockOverlay?.isShowing() != true && !overlayWasShown) {
-                            showBlockOverlay(packageName)
-                            overlayWasShown = true  // 오버레이 표시됨
-                            // 오버레이 표시 후 justScrolled 플래그 해제 (바로 닫히는 것 방지)
-                            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                                justScrolled = false
-                                Log.d(TAG, "JustScrolled flag reset after delay")
-                            }, 100) // 100ms 후 플래그 해제
-                        }
-                        return
-                    } else {
-                        // 해시값이 변경되었지만 아직 안정적이지 않음 (UI 변경일 수 있음)
-                        Log.d(TAG, "Hash changed but not stable yet, old: $lastShortsContentHash, new: $currentContentHash, count: $stableHashCount")
-                        lastShortsContentHash = currentContentHash
-                        stableHashCount = 1
+                    // 세션 데이터 클리어
+                    prefs.edit().apply {
+                        remove(AppConstants.PREF_COMPLETED_SESSION_ID)
+                        remove(AppConstants.PREF_CURRENT_SESSION_ID)
+                        remove("allowed_until_scroll")
+                        apply()
                     }
+
+                    // 오버레이 표시
+                    if (!overlayManager.isOverlayVisible() && scrollManager.shouldShowOverlay(isInShortsScreen)) {
+                        showBlockOverlay(packageName)
+                        scrollManager.markOverlayShown()
+                    }
+                    return
                 }
             } else {
-                // 해시 생성 실패 - 현재 상태 유지 (일시적 실패일 가능성)
-                Log.w(TAG, "Hash generation failed (returned 0), keeping current state - allowedUntilScroll=$allowedUntilScroll")
-                // 해시 생성 실패는 대부분 일시적 (앱 로딩 중, 화면 전환 중 등)
-                // 현재 상태를 유지하여 사용자 경험 보호
-                // allowedUntilScroll이 true라면 계속 시청 가능하도록 유지
+                Log.w(TAG, "Hash generation failed - keeping current state")
             }
         }
 
-        if (isShorts) {
-            // 쇼츠 화면에 처음 진입했는지 확인 (이전 화면이 쇼츠가 아니었거나, 백그라운드에서 돌아온 경우)
-            if (!wasInShortsScreen) {
-                Log.d(TAG, "Entering Shorts screen (wasInShortsScreen=false)")
-                overlayWasShown = false  // 새로 쇼츠에 진입했으므로 초기화
+        if (isInShortsScreen) {
+            // 쇼츠 화면 진입 감지
+            val justEntered = scrollManager.checkShortsScreenEntry(isInShortsScreen)
+            if (justEntered) {
+                Log.d(TAG, "Just entered shorts screen")
+                appStartTime = System.currentTimeMillis()
             }
 
-            // 백그라운드에서 돌아온 경우
-            if (leftViaHomeButton) {
-                Log.d(TAG, "Returned to Shorts screen from background")
-                leftViaHomeButton = false
-                overlayWasShown = false  // 백그라운드에서 돌아왔으므로 초기화
-                appStartTime = System.currentTimeMillis()  // Fresh start 시간 기록
-                Log.d(TAG, "Recorded app start time for fresh start detection")
-            }
-
-            // 15초 완료 후 허용 상태면 차단하지 않음
-            if (allowedUntilScroll) {
-                Log.d(TAG, "Allowed to view current shorts (allowedUntilScroll=true)")
-                wasInShortsScreen = true
+            // 허용 상태면 차단하지 않음
+            if (scrollManager.isAllowedUntilScroll()) {
+                Log.d(TAG, "Allowed to view current shorts")
                 return
             }
 
             Log.d(TAG, "Checking overlay display conditions:")
-            Log.d(TAG, "  - blockOverlay?.isShowing(): ${blockOverlay?.isShowing()}")
-            Log.d(TAG, "  - overlayWasShown: $overlayWasShown")
-            Log.d(TAG, "  - Should show overlay: ${blockOverlay?.isShowing() != true && !overlayWasShown}")
+            Log.d(TAG, "  - overlayVisible: ${overlayManager.isOverlayVisible()}")
+            Log.d(TAG, "  - should show: ${scrollManager.shouldShowOverlay(isInShortsScreen)}")
 
-            // 쇼츠 화면이고 오버레이가 없으면 표시
-            if (blockOverlay?.isShowing() != true && !overlayWasShown) {
+            // 오버레이 표시 조건 확인
+            if (scrollManager.shouldShowOverlay(isInShortsScreen)) {
                 Log.d(TAG, "Shorts screen detected in $packageName")
-                Log.d(TAG, ">>> Calling showBlockOverlay()")
                 showBlockOverlay(packageName)
-                Log.d(TAG, ">>> overlayWasShown set to true")
-                overlayWasShown = true
+                scrollManager.markOverlayShown()
             } else {
-                Log.d(TAG, "Not showing overlay - already shown or currently showing")
+                Log.d(TAG, "Not showing overlay - conditions not met")
             }
-
-            wasInShortsScreen = true
         } else {
-            // 쇼츠 화면을 벗어남 (앱 내에서 다른 화면으로 이동)
-            wasInShortsScreen = false
+            // 쇼츠 화면 이탈
+            val justExited = scrollManager.checkShortsScreenExit(isInShortsScreen)
+            if (justExited) {
+                Log.d(TAG, "Just exited shorts screen")
+                cancelPendingOverlay()
 
-            // 방금 스크롤한 경우는 무시 (스크롤 직후 일시적으로 isShorts가 false가 될 수 있음)
-            if (justScrolled) {
-                Log.d(TAG, "Ignoring 'shorts closed' event right after scroll")
-                return
-            }
+                if (overlayManager.isOverlayVisible()) {
+                    Log.d(TAG, "Dismissing overlay - left shorts screen")
+                    overlayManager.hideOverlay()
+                    scrollManager.onExitShortsScreen()
 
-            // 쇼츠 화면 벗어남 - pending job 취소
-            cancelPendingOverlay()
-
-            // 쇼츠 화면이 아닌데 오버레이가 표시 중이면 제거
-            if (blockOverlay?.isShowing() == true) {
-                Log.d(TAG, "Shorts screen closed (within app navigation), dismissing overlay")
-                blockOverlay?.dismiss()
-                blockOverlay = null
-
-                // leftViaHomeButton이 true이면 홈/백 버튼으로 나간 것이므로 상태 유지
-                if (!leftViaHomeButton) {
-                    Log.d(TAG, "Within app navigation - clearing all state")
-
-                    allowedUntilScroll = false
-                    lastShortsContentHash = 0
-                    stableHashCount = 0
-                    overlayWasShown = false
-
-                    // 우리 앱이 아닌 다른 곳으로 갔으면 TimerActivity 종료
+                    // 외부 앱으로 전환되었으면 TimerActivity 종료
                     val currentForegroundPackage = rootInActiveWindow?.packageName?.toString()
                     if (currentForegroundPackage != null && currentForegroundPackage != packageName) {
-                        Log.d(TAG, "Left to external app/home ($currentForegroundPackage), closing TimerActivity")
+                        Log.d(TAG, "Left to external app ($currentForegroundPackage), closing TimerActivity")
                         sendTimerForceClose()
                     }
-                } else {
-                    Log.d(TAG, "Left via home/back button - keeping state for resume")
                 }
             }
         }
     }
 
-    private fun isShortsScreen(packageName: String, event: AccessibilityEvent, sourceNode: AccessibilityNodeInfo?): Boolean {
-        val rootNode = rootInActiveWindow ?: return false
+    /**
+     * 차단 대상 앱을 벗어났을 때 처리
+     */
+    private fun handleLeavingTargetApp(prefs: android.content.SharedPreferences) {
+        cancelPendingOverlay()
+        overlayManager.hideOverlay()
+        scrollManager.clearSession()
 
-        return when (packageName) {
-            "com.google.android.youtube" -> detectYouTubeShorts(rootNode)
-            "com.instagram.android" -> detectInstagramReels(rootNode)
-            else -> false
+        // SharedPreferences 클리어
+        prefs.edit().apply {
+            remove(AppConstants.PREF_COMPLETED_SESSION_ID)
+            remove("allowed_until_scroll")
+            apply()
         }
+        Log.d(TAG, "Cleared all state - left shorts app")
     }
 
-    private fun detectYouTubeShorts(node: AccessibilityNodeInfo): Boolean {
-        // YouTube Shorts 감지
-        // 1. shorts_player 같은 View ID 찾기
-        val shortsNodes = node.findAccessibilityNodeInfosByViewId(
-            "com.google.android.youtube:id/reel_player_page_container"
-        )
-        if (shortsNodes.isNotEmpty()) return true
-
-        // 2. "Shorts" 텍스트 찾기
-        val textNodes = findNodesByText(node, "Shorts")
-        if (textNodes.isNotEmpty()) {
-            // Shorts 탭이 선택되어 있는지 확인
-            return textNodes.any { it.parent?.isSelected == true || it.isSelected }
-        }
-
-        return false
-    }
-
-    private fun detectInstagramReels(node: AccessibilityNodeInfo): Boolean {
-        // Instagram Reels 감지
-        // 1. reels_viewer 같은 View ID
-        val reelsNodes = node.findAccessibilityNodeInfosByViewId(
-            "com.instagram.android:id/clips_viewer_view_pager"
-        )
-        if (reelsNodes.isNotEmpty()) return true
-
-        // 2. Content Description으로 찾기
-        return findNodesByContentDescription(node, "Reels").isNotEmpty()
-    }
-
-    private fun findNodesByText(node: AccessibilityNodeInfo, text: String): List<AccessibilityNodeInfo> {
-        val result = mutableListOf<AccessibilityNodeInfo>()
-
-        if (node.text?.toString()?.contains(text, ignoreCase = true) == true) {
-            result.add(node)
-        }
-
-        for (i in 0 until node.childCount) {
-            node.getChild(i)?.let { child ->
-                result.addAll(findNodesByText(child, text))
-            }
-        }
-
-        return result
-    }
-
-    private fun findNodesByContentDescription(
-        node: AccessibilityNodeInfo,
-        description: String
-    ): List<AccessibilityNodeInfo> {
-        val result = mutableListOf<AccessibilityNodeInfo>()
-
-        if (node.contentDescription?.toString()?.contains(description, ignoreCase = true) == true) {
-            result.add(node)
-        }
-
-        for (i in 0 until node.childCount) {
-            node.getChild(i)?.let { child ->
-                result.addAll(findNodesByContentDescription(child, description))
-            }
-        }
-
-        return result
-    }
-
-    private fun getCurrentShortsContentHash(): Int {
-        val rootNode = rootInActiveWindow ?: return 0
-
-        // 패키지명 확인
-        val packageName = rootNode.packageName?.toString() ?: ""
-
-        return when {
-            packageName.contains("youtube") -> getYouTubeShortsHash(rootNode)
-            packageName.contains("instagram") -> getInstagramReelsHash(rootNode)
-            else -> 0
-        }
-    }
-
-    private fun getYouTubeShortsHash(rootNode: AccessibilityNodeInfo): Int {
-        // YouTube Shorts의 경우 reel_player_page_container 내부만 확인
-        val shortsContainer = rootNode.findAccessibilityNodeInfosByViewId(
-            "com.google.android.youtube:id/reel_player_page_container"
-        ).firstOrNull()
-
-        val targetNode = shortsContainer ?: rootNode
-        val contentBuilder = StringBuilder()
-
-        // 영상 제목, 채널명 등 주요 정보만 수집 (댓글, 좋아요 수 등은 제외)
-        fun collectVideoContent(node: AccessibilityNodeInfo, depth: Int = 0) {
-            // 너무 깊이 탐색하지 않도록 제한
-            if (depth > 8) return
-
-            val viewId = node.viewIdResourceName ?: ""
-
-            // UI 관련 요소들 제외 (재생 상태에 따라 변하는 것들)
-            if (viewId.contains("comment") ||
-                viewId.contains("like") ||
-                viewId.contains("engagement") ||
-                viewId.contains("actions") ||
-                viewId.contains("button") ||
-                viewId.contains("progress") ||
-                viewId.contains("time") ||
-                viewId.contains("duration") ||
-                viewId.contains("seek") ||
-                viewId.contains("player_control") ||
-                viewId.contains("pause") ||
-                viewId.contains("play")) {
-                return
-            }
-
-            // 핵심 콘텐츠만 포함 (제목, 채널명, 설명)
-            val isContentNode = viewId.contains("title") ||
-                               viewId.contains("channel") ||
-                               viewId.contains("author") ||
-                               viewId.contains("description") ||
-                               viewId.contains("reel_metadata") ||
-                               viewId.contains("video_metadata")
-
-            // 텍스트나 콘텐츠 설명이 있으면 추가
-            node.text?.toString()?.let { text ->
-                // 숫자만 있거나 너무 짧은 텍스트는 제외
-                if (text.isNotEmpty() && text.length > 2 && !text.all { it.isDigit() || it == ':' || it == '/' }) {
-                    // 재생 시간 패턴 제외 (예: "0:15", "1:30")
-                    if (!text.matches(Regex("\\d+:\\d+"))) {
-                        contentBuilder.append(text).append("|")
-                    }
-                }
-            }
-
-            // contentDescription은 주요 노드에서만 수집
-            if (isContentNode) {
-                node.contentDescription?.toString()?.let { desc ->
-                    if (desc.isNotEmpty() && desc.length > 5) {
-                        contentBuilder.append(desc).append("|")
-                    }
-                }
-            }
-
-            // 자식 노드 탐색
-            for (i in 0 until node.childCount) {
-                node.getChild(i)?.let { child ->
-                    collectVideoContent(child, depth + 1)
-                }
-            }
-        }
-
-        collectVideoContent(targetNode)
-        val hash = contentBuilder.toString().hashCode()
-        Log.d(TAG, "YouTube hash: $hash (content length: ${contentBuilder.length})")
-        return hash
-    }
-
-    private fun getInstagramReelsHash(rootNode: AccessibilityNodeInfo): Int {
-        // Instagram Reels의 경우 clips_viewer_view_pager 내부만 확인
-        val reelsContainer = rootNode.findAccessibilityNodeInfosByViewId(
-            "com.instagram.android:id/clips_viewer_view_pager"
-        ).firstOrNull()
-
-        val targetNode = reelsContainer ?: rootNode
-        val contentBuilder = StringBuilder()
-
-        fun collectVideoContent(node: AccessibilityNodeInfo, depth: Int = 0) {
-            if (depth > 8) return
-
-            val viewId = node.viewIdResourceName ?: ""
-
-            // UI 관련 요소들 제외 (재생 상태에 따라 변하는 것들)
-            if (viewId.contains("comment") ||
-                viewId.contains("like") ||
-                viewId.contains("share") ||
-                viewId.contains("action_bar") ||
-                viewId.contains("button") ||
-                viewId.contains("progress") ||
-                viewId.contains("time") ||
-                viewId.contains("duration") ||
-                viewId.contains("seek") ||
-                viewId.contains("player_control") ||
-                viewId.contains("pause") ||
-                viewId.contains("play") ||
-                viewId.contains("heart") ||
-                viewId.contains("save")) {
-                return
-            }
-
-            // 핵심 콘텐츠만 포함 (계정명, 설명, 캡션)
-            val isContentNode = viewId.contains("username") ||
-                               viewId.contains("caption") ||
-                               viewId.contains("description") ||
-                               viewId.contains("user_name") ||
-                               viewId.contains("text_content") ||
-                               viewId.contains("primary_text")
-
-            // 텍스트나 콘텐츠 설명이 있으면 추가
-            node.text?.toString()?.let { text ->
-                // 숫자만 있거나 너무 짧은 텍스트는 제외
-                if (text.isNotEmpty() && text.length > 2 && !text.all { it.isDigit() || it == ',' || it == '.' }) {
-                    // 숫자 포맷 제외 (예: "1.2K", "345", "10M")
-                    if (!text.matches(Regex("\\d+[KMB]?")) && !text.matches(Regex("\\d+\\.\\d+[KMB]?"))) {
-                        contentBuilder.append(text).append("|")
-                    }
-                }
-            }
-
-            // contentDescription은 주요 노드에서만 수집
-            if (isContentNode) {
-                node.contentDescription?.toString()?.let { desc ->
-                    if (desc.isNotEmpty() && desc.length > 5) {
-                        contentBuilder.append(desc).append("|")
-                    }
-                }
-            }
-
-            // 자식 노드 탐색
-            for (i in 0 until node.childCount) {
-                node.getChild(i)?.let { child ->
-                    collectVideoContent(child, depth + 1)
-                }
-            }
-        }
-
-        collectVideoContent(targetNode)
-        val hash = contentBuilder.toString().hashCode()
-        Log.d(TAG, "Instagram hash: $hash (content length: ${contentBuilder.length})")
-        return hash
-    }
-
+    /**
+     * 오버레이 표시
+     */
     private fun showBlockOverlay(packageName: String) {
         Log.d(TAG, "showBlockOverlay() called for $packageName")
 
-        // allowedUntilScroll이 true이면 오버레이 표시하지 않음
-        if (allowedUntilScroll) {
+        // 허용 상태면 오버레이 표시하지 않음
+        if (scrollManager.isAllowedUntilScroll()) {
             Log.d(TAG, "Allowed until scroll - skipping overlay")
             return
         }
 
         // 이미 오버레이가 표시 중이면 무시
-        if (blockOverlay?.isShowing() == true) {
+        if (overlayManager.isOverlayVisible()) {
             Log.d(TAG, "Overlay already showing - skipping")
             return
         }
@@ -552,77 +281,24 @@ class ShortsBlockService : AccessibilityService() {
         // 기존 pending job 취소
         cancelPendingOverlay()
 
-        // 딜레이 후 pauseMedia + 오버레이 표시
+        // 딜레이 후 오버레이 표시
         pendingOverlayJob = Runnable {
             try {
                 Log.d(TAG, "Executing pending overlay job for $packageName")
 
-                // Generate session ID using only content hash
-                // This ensures all shorts get blocked, not just the first one
-                val contentHash = if (lastShortsContentHash != 0) lastShortsContentHash else 0
-                currentSessionId = generateSessionId(packageName, contentHash)
+                // 세션 ID 생성
+                val sessionId = java.util.UUID.randomUUID().toString()
                 val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-                prefs.edit().putString(AppConstants.PREF_CURRENT_SESSION_ID, currentSessionId).apply()
-                Log.d(TAG, "Session created with content hash $contentHash: $currentSessionId")
+                prefs.edit().putString(AppConstants.PREF_CURRENT_SESSION_ID, sessionId).apply()
+                Log.d(TAG, "Session created: $sessionId")
 
-                // 미디어 일시정지 시도
+                // 미디어 일시정지
                 pauseMedia(packageName)
 
-                blockOverlay = BlockOverlay(this)
-                Log.d(TAG, "BlockOverlay created, calling show()")
-                blockOverlay?.show(
-                    onDismiss = {
-                        // 오버레이 제거 시
-                        Log.d(TAG, "Overlay dismissed")
-                        stopForegroundCheck()
-                        blockOverlay = null
-                    },
-                    onComplete = {
-                        // 타이머 완료 - 버튼 전환만 (오버레이는 유지)
-                        Log.d(TAG, "Timer completed, showing watch button")
-                        // 포그라운드 체크 중지 (사용자 선택 대기)
-                        stopForegroundCheck()
-                    },
-                    onSkip = {
-                        // "안볼래요" 버튼 클릭 - 백키 누르기
-                        Log.d(TAG, "Skip button pressed, performing back action")
-                        // 세션 초기화 (쇼츠를 나갔으므로)
-                        overlayWasShown = false
-                        allowedUntilScroll = false
-                        currentSessionId = ""
+                // 오버레이 표시
+                overlayManager.showOverlay(packageName, sessionId)
 
-                        // 타이머 완료 플래그도 초기화 ("안볼래요" 선택 시 다음 쇼츠도 처음부터)
-                        prefs.edit().apply {
-                            remove(AppConstants.PREF_COMPLETED_SESSION_ID)
-                            remove("allowed_until_scroll")  // Clear persisted state
-                            apply()
-                        }
-                        Log.d(TAG, "Cleared timer completion flag and allowed_until_scroll - user chose to skip")
-
-                        performGlobalBackAction()
-                    },
-                    onWatch = {
-                        // "볼래요" 버튼 클릭 - 미디어 재생 재개
-                        Log.d(TAG, "Watch button pressed, resuming media")
-                        allowedUntilScroll = true
-                        overlayWasShown = true  // 이미 표시된 것으로 유지
-                        stopForegroundCheck()
-
-                        // Persist allowedUntilScroll state
-                        prefs.edit().putBoolean("allowed_until_scroll", true).apply()
-                        Log.d(TAG, "Persisted allowedUntilScroll=true to SharedPreferences")
-
-                        // 짧은 지연 후 미디어 재생 (오버레이 dismiss 애니메이션 완료 후)
-                        handler.postDelayed({
-                            resumeMedia()
-                        }, 100)
-                    },
-                    sessionId = currentSessionId,
-                    sourcePackage = packageName
-                )
-                Log.d(TAG, "BlockOverlay show() completed")
-
-                // 주기적으로 포그라운드 앱 체크 시작
+                // 포그라운드 체크 시작
                 startForegroundCheck()
 
                 pendingOverlayJob = null
@@ -634,16 +310,15 @@ class ShortsBlockService : AccessibilityService() {
 
         // Fresh start 후 500ms 이내면 500ms 딜레이, 이후는 300ms
         val timeSinceStart = System.currentTimeMillis() - appStartTime
-        val delay = if (timeSinceStart < 500) {
-            500L // Fresh start 후 500ms 이내: 500ms 딜레이
-        } else {
-            300L // 일반: 300ms 딜레이
-        }
+        val delay = if (timeSinceStart < 500) 500L else 300L
 
         handler.postDelayed(pendingOverlayJob!!, delay)
-        Log.d(TAG, "Overlay job scheduled with ${delay}ms delay (timeSinceStart: ${timeSinceStart}ms)")
+        Log.d(TAG, "Overlay job scheduled with ${delay}ms delay")
     }
 
+    /**
+     * Pending 오버레이 취소
+     */
     private fun cancelPendingOverlay() {
         pendingOverlayJob?.let {
             handler.removeCallbacks(it)
@@ -652,65 +327,67 @@ class ShortsBlockService : AccessibilityService() {
         }
     }
 
-    private fun isTargetAppPlayingMedia(): Boolean {
-        try {
-            val audioManager = getSystemService(AUDIO_SERVICE) as? AudioManager ?: return false
+    /**
+     * 포그라운드 체크 시작
+     */
+    private fun startForegroundCheck() {
+        stopForegroundCheck()
 
-            // 현재 음악이 재생 중인지 확인 (YouTube, TikTok)
-            val isMusicActive = audioManager.isMusicActive
+        foregroundCheckRunnable = object : Runnable {
+            override fun run() {
+                try {
+                    val currentForegroundPackage = rootInActiveWindow?.packageName?.toString()
 
-            // 미디어 모드 확인
-            val mode = audioManager.mode
+                    if (currentForegroundPackage != null && currentForegroundPackage !in AppBlockingRegistry.TARGET_PACKAGES) {
+                        Log.d(TAG, "Foreground check: switched to $currentForegroundPackage, dismissing overlay")
+                        overlayManager.hideOverlay()
+                        scrollManager.clearSession()
+                        stopForegroundCheck()
+                        return
+                    }
 
-            Log.d(TAG, "Audio state - isMusicActive: $isMusicActive, mode: $mode")
-
-            // 음악이 재생 중이면 확실히 재생 중
-            if (isMusicActive) {
-                Log.d(TAG, "Media is playing (music active)")
-                return true
+                    handler.postDelayed(this, 500)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error in foreground check", e)
+                }
             }
+        }
 
-            // 음악이 재생 중이 아니지만 모드가 NORMAL이 아니면 재생 중일 가능성
-            // MODE_NORMAL = 0, MODE_IN_CALL = 2, MODE_IN_COMMUNICATION = 3
-            if (mode != AudioManager.MODE_NORMAL) {
-                Log.d(TAG, "Media might be playing (mode: $mode)")
-                return true
-            }
+        handler.post(foregroundCheckRunnable!!)
+        Log.d(TAG, "Started foreground check")
+    }
 
-            Log.d(TAG, "No media playing")
-            return false
-        } catch (e: Exception) {
-            Log.e(TAG, "Error checking media state", e)
-            // 에러 시 안전하게 true 반환 (pause 시도)
-            return true
+    /**
+     * 포그라운드 체크 중지
+     */
+    private fun stopForegroundCheck() {
+        foregroundCheckRunnable?.let {
+            handler.removeCallbacks(it)
+            foregroundCheckRunnable = null
+            Log.d(TAG, "Stopped foreground check")
         }
     }
 
+    /**
+     * 미디어 일시정지
+     */
     private fun pauseMedia(packageName: String) {
         try {
             Log.d(TAG, "pauseMedia called for $packageName")
 
-            // 빈 패키지명이면 무조건 pause 시도
-            if (packageName.isEmpty()) {
-                Log.d(TAG, "Empty package name - always attempting pause")
+            // 첫 감지 시 무조건 pause
+            if (!scrollManager.isOverlayShown()) {
+                Log.d(TAG, "First detection - attempting pause")
                 performTapGesture()
                 return
             }
 
-            // overlayWasShown이 false이면 첫 감지 → 무조건 pause 시도
-            // (앱 열자마자 Shorts가 켜진 경우 대응)
-            if (!overlayWasShown) {
-                Log.d(TAG, "First detection - attempting pause regardless of audio state")
-                performTapGesture()
-                return
-            }
-
-            // 이후부터는 미디어가 실제로 재생 중인지 확인
+            // 미디어 재생 중인지 확인
             val isPlaying = isTargetAppPlayingMedia()
             Log.d(TAG, "Media state check - isPlaying: $isPlaying")
 
             if (!isPlaying) {
-                Log.d(TAG, "Media not playing, skipping tap gesture to avoid resume")
+                Log.d(TAG, "Media not playing, skipping tap gesture")
                 return
             }
 
@@ -721,52 +398,38 @@ class ShortsBlockService : AccessibilityService() {
         }
     }
 
-    private fun performTapGesture() {
-        // 화면 중앙 좌표 계산
-        val displayMetrics = resources.displayMetrics
-        val centerX = displayMetrics.widthPixels / 2f
-        val centerY = displayMetrics.heightPixels / 2f
-
-        // 중앙을 클릭하는 제스처 생성 (Android 7.0+)
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            val path = android.accessibilityservice.GestureDescription.StrokeDescription(
-                android.graphics.Path().apply {
-                    moveTo(centerX, centerY)
-                    lineTo(centerX, centerY)
-                },
-                0,
-                100 // 100ms 동안 클릭
-            )
-            val gesture = android.accessibilityservice.GestureDescription.Builder()
-                .addStroke(path)
-                .build()
-
-            dispatchGesture(gesture, object : android.accessibilityservice.AccessibilityService.GestureResultCallback() {
-                override fun onCompleted(gestureDescription: android.accessibilityservice.GestureDescription?) {
-                    Log.d(TAG, "Pause gesture completed")
-                }
-
-                override fun onCancelled(gestureDescription: android.accessibilityservice.GestureDescription?) {
-                    Log.d(TAG, "Pause gesture cancelled")
-                }
-            }, null)
-        }
-    }
-
-    private fun performGlobalBackAction() {
+    /**
+     * 미디어 재생 중인지 확인
+     */
+    private fun isTargetAppPlayingMedia(): Boolean {
         try {
-            Log.d(TAG, "Performing global back action")
-            val backPerformed = performGlobalAction(GLOBAL_ACTION_BACK)
-            if (backPerformed) {
-                Log.d(TAG, "Back action completed successfully")
-            } else {
-                Log.w(TAG, "Back action failed")
+            val audioManager = getSystemService(AUDIO_SERVICE) as? AudioManager ?: return false
+            val isMusicActive = audioManager.isMusicActive
+            val mode = audioManager.mode
+
+            Log.d(TAG, "Audio state - isMusicActive: $isMusicActive, mode: $mode")
+
+            if (isMusicActive) {
+                Log.d(TAG, "Media is playing (music active)")
+                return true
             }
+
+            if (mode != AudioManager.MODE_NORMAL) {
+                Log.d(TAG, "Media might be playing (mode: $mode)")
+                return true
+            }
+
+            Log.d(TAG, "No media playing")
+            return false
         } catch (e: Exception) {
-            Log.e(TAG, "Error performing back action", e)
+            Log.e(TAG, "Error checking media state", e)
+            return true  // 에러 시 안전하게 true 반환
         }
     }
 
+    /**
+     * 미디어 재생 재개
+     */
     private fun resumeMedia() {
         try {
             Log.d(TAG, "Resuming media playback")
@@ -786,6 +449,59 @@ class ShortsBlockService : AccessibilityService() {
         }
     }
 
+    /**
+     * 화면 중앙 탭 제스처 수행
+     */
+    private fun performTapGesture() {
+        val displayMetrics = resources.displayMetrics
+        val centerX = displayMetrics.widthPixels / 2f
+        val centerY = displayMetrics.heightPixels / 2f
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            val path = android.accessibilityservice.GestureDescription.StrokeDescription(
+                android.graphics.Path().apply {
+                    moveTo(centerX, centerY)
+                    lineTo(centerX, centerY)
+                },
+                0,
+                100
+            )
+            val gesture = android.accessibilityservice.GestureDescription.Builder()
+                .addStroke(path)
+                .build()
+
+            dispatchGesture(gesture, object : GestureResultCallback() {
+                override fun onCompleted(gestureDescription: android.accessibilityservice.GestureDescription?) {
+                    Log.d(TAG, "Tap gesture completed")
+                }
+
+                override fun onCancelled(gestureDescription: android.accessibilityservice.GestureDescription?) {
+                    Log.d(TAG, "Tap gesture cancelled")
+                }
+            }, null)
+        }
+    }
+
+    /**
+     * 뒤로 가기 액션 수행
+     */
+    private fun performGlobalBackAction() {
+        try {
+            Log.d(TAG, "Performing global back action")
+            val backPerformed = performGlobalAction(GLOBAL_ACTION_BACK)
+            if (backPerformed) {
+                Log.d(TAG, "Back action completed successfully")
+            } else {
+                Log.w(TAG, "Back action failed")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error performing back action", e)
+        }
+    }
+
+    /**
+     * 오버레이 권한 요청
+     */
     private fun requestOverlayPermission() {
         val intent = Intent(
             Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
@@ -795,151 +511,15 @@ class ShortsBlockService : AccessibilityService() {
         startActivity(intent)
     }
 
-    override fun onInterrupt() {
-        Log.d(TAG, "Service interrupted")
-    }
-
-    override fun onServiceConnected() {
-        super.onServiceConnected()
-        Log.d(TAG, "Service connected")
-
-        // Restore persisted state from SharedPreferences
-        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-        val persistedAllowedUntilScroll = prefs.getBoolean("allowed_until_scroll", false)
-
-        // Clear stale session data on service start/restart
-        clearStaleSessionData()
-
-        // Restore allowedUntilScroll if it was persisted
-        if (persistedAllowedUntilScroll) {
-            Log.d(TAG, "Restoring allowedUntilScroll=true from SharedPreferences")
-            allowedUntilScroll = true
-        }
-
-        // Register broadcast receiver for timer events
-        timerReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                when (intent?.action) {
-                    AppConstants.ACTION_TIMER_COMPLETED -> {
-                        val sessionId = intent.getStringExtra("session_id") ?: ""
-                        Log.d(TAG, "Timer completed broadcast received for session: $sessionId")
-
-                        // Update overlay buttons if it's showing and session matches
-                        if (blockOverlay?.isShowing() == true && sessionId == currentSessionId) {
-                            Log.d(TAG, "Updating overlay buttons for completed timer")
-                            blockOverlay?.updateButtonVisibility()
-                        }
-                    }
-                    AppConstants.ACTION_TIMER_CANCELLED -> {
-                        Log.d(TAG, "Timer cancelled broadcast received")
-                    }
-                    AppConstants.ACTION_CLOSE_OVERLAY -> {
-                        Log.d(TAG, "Close overlay broadcast received - dismissing and returning to app")
-                        // Dismiss overlay
-                        blockOverlay?.dismiss()
-                        blockOverlay = null
-                        currentSessionId = ""
-
-                        // Simulate back key press to return to original app
-                        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-                            performGlobalAction(GLOBAL_ACTION_BACK)
-                            Log.d(TAG, "Back key pressed")
-                        }, 100)
-                    }
-                }
-            }
-        }
-
-        val filter = IntentFilter().apply {
-            addAction(AppConstants.ACTION_TIMER_COMPLETED)
-            addAction(AppConstants.ACTION_TIMER_CANCELLED)
-            addAction(AppConstants.ACTION_CLOSE_OVERLAY)
-        }
-
-        // Register BroadcastReceiver with proper error handling
-        try {
-            // Android 13+ requires explicit export flag for BroadcastReceivers
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                registerReceiver(timerReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
-            } else {
-                registerReceiver(timerReceiver, filter)
-            }
-            Log.d(TAG, "BroadcastReceiver registered for timer events")
-        } catch (e: SecurityException) {
-            Log.e(TAG, "Failed to register BroadcastReceiver - will use fallback mechanism", e)
-            // Fallback: overlay will check SharedPreferences directly via periodic checks
-        } catch (e: Exception) {
-            Log.e(TAG, "Unexpected error registering BroadcastReceiver", e)
-        }
-    }
-
-    private fun startForegroundCheck() {
-        stopForegroundCheck()  // 기존 체크 중지
-
-        foregroundCheckRunnable = object : Runnable {
-            override fun run() {
-                try {
-                    // 현재 포그라운드 앱 확인
-                    val currentForegroundPackage = rootInActiveWindow?.packageName?.toString()
-
-                    if (currentForegroundPackage != null && currentForegroundPackage !in TARGET_APPS) {
-                        Log.d(TAG, "Foreground check: switched to $currentForegroundPackage, dismissing overlay")
-                        blockOverlay?.dismiss()
-                        blockOverlay = null
-                        leftViaHomeButton = true
-                        stopForegroundCheck()
-                        return
-                    }
-
-                    // 계속 체크
-                    handler.postDelayed(this, 500)  // 500ms마다 체크
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error in foreground check", e)
-                }
-            }
-        }
-
-        handler.post(foregroundCheckRunnable!!)
-        Log.d(TAG, "Started foreground check")
-    }
-
-    private fun stopForegroundCheck() {
-        foregroundCheckRunnable?.let {
-            handler.removeCallbacks(it)
-            foregroundCheckRunnable = null
-            Log.d(TAG, "Stopped foreground check")
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        cancelPendingOverlay()
-        stopForegroundCheck()
-        blockOverlay?.dismiss()
-        blockOverlay = null
-
-        // Unregister broadcast receiver
-        timerReceiver?.let {
-            unregisterReceiver(it)
-            timerReceiver = null
-        }
-    }
-
     /**
-     * Send broadcast to force close TimerActivity
+     * TimerActivity 강제 종료 브로드캐스트 전송
      */
     private fun sendTimerForceClose() {
         try {
             val intent = Intent(AppConstants.ACTION_TIMER_FORCE_CLOSE)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                sendBroadcast(intent)
-            } else {
-                sendBroadcast(intent)
-            }
+            sendBroadcast(intent)
             Log.d(TAG, "Sent TIMER_FORCE_CLOSE broadcast")
 
-            // 세션 ID 초기화
-            currentSessionId = ""
             val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
             prefs.edit().remove(AppConstants.PREF_CURRENT_SESSION_ID).apply()
         } catch (e: Exception) {
@@ -948,44 +528,14 @@ class ShortsBlockService : AccessibilityService() {
     }
 
     /**
-     * Generate a session ID based on package name and date
-     * This ensures the same session ID for the same app on the same day
-     */
-    private fun generateSessionId(packageName: String, contentHash: Int = 0): String {
-        // Use only content hash for session ID - this way all shorts get blocked
-        val input = contentHash.toString()
-
-        return try {
-            val md = MessageDigest.getInstance("SHA-256")
-            val hashBytes = md.digest(input.toByteArray())
-            // Convert to hex string (first 16 bytes for shorter ID)
-            val sessionId = hashBytes.take(16).joinToString("") { "%02x".format(it) }
-            Log.d(TAG, "Generated session ID for content hash '$contentHash': $sessionId")
-            sessionId
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to generate hash-based session ID", e)
-            // Fallback to UUID if hashing fails
-            UUID.randomUUID().toString()
-        }
-    }
-
-    /**
-     * Clear stale session data on service restart
+     * 오래된 세션 데이터 클리어
      */
     private fun clearStaleSessionData() {
         Log.d(TAG, "Clearing stale session data on service restart")
 
-        // Reset in-memory flags
-        allowedUntilScroll = false
-        overlayWasShown = false
-        justScrolled = false
-        wasInShortsScreen = false
-        leftViaHomeButton = false
-        currentSessionId = ""
-        lastShortsContentHash = 0
-        stableHashCount = 0
+        scrollManager.clearSession()
+        appStartTime = 0
 
-        // Clear SharedPreferences session data
         val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
         prefs.edit().apply {
             remove(AppConstants.PREF_CURRENT_SESSION_ID)
@@ -998,4 +548,15 @@ class ShortsBlockService : AccessibilityService() {
         Log.d(TAG, "Stale session data cleared")
     }
 
+    override fun onInterrupt() {
+        Log.d(TAG, "Service interrupted")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cancelPendingOverlay()
+        stopForegroundCheck()
+        overlayManager.cleanup()
+        Log.d(TAG, "Service destroyed")
+    }
 }
