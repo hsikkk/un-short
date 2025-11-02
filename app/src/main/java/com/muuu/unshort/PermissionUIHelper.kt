@@ -12,32 +12,12 @@ import androidx.core.content.ContextCompat
  */
 class PermissionUIHelper(private val context: Context) {
 
-    companion object {
-        private const val PREF_KEY_ACCESSIBILITY_CONSENT = "accessibility_consent_agreed"
-    }
-
     data class PermissionUIElements(
         val card: View?,
         val statusText: TextView?,
         val descriptionText: TextView?,
         val settingsButton: Button?
     )
-
-    /**
-     * 접근성 동의 여부 확인
-     */
-    fun isAccessibilityConsentGiven(): Boolean {
-        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        return prefs.getBoolean(PREF_KEY_ACCESSIBILITY_CONSENT, false)
-    }
-
-    /**
-     * 접근성 동의 저장
-     */
-    fun saveAccessibilityConsent() {
-        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        prefs.edit().putBoolean(PREF_KEY_ACCESSIBILITY_CONSENT, true).apply()
-    }
 
     /**
      * 접근성 서비스 카드 UI 업데이트

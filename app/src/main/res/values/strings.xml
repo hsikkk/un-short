@@ -65,14 +65,6 @@
     <!-- Permission Cards -->
     <string name="permission_number_1">1</string>
     <string name="permission_number_2">2</string>
-    <string name="permission_number_3">3</string>
-
-    <!-- Accessibility Consent Card -->
-    <string name="permission_consent_title">Accessibility Permission Consent</string>
-    <string name="permission_consent_title_completed">Accessibility Permission Consent ✓</string>
-    <string name="permission_consent_reason">We need your consent to use accessibility service.\n\nWe only use it to detect short-form videos and never access your personal information.</string>
-    <string name="permission_consent_button">I Agree</string>
-    <string name="permission_consent_completed">Consent given</string>
 
     <!-- Accessibility Setup Card -->
     <string name="permission_accessibility">Accessibility Service Setup</string>

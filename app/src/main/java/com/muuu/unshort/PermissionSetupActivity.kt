@@ -130,8 +130,6 @@ class PermissionSetupActivity : BaseActivity() {
         val dialog = PrivacyConsentDialog(
             context = this,
             onAgree = {
-                // 동의 저장
-                permissionUIHelper.saveAccessibilityConsent()
                 // 제조사별 추가 안내가 필요한 경우에만 토스트 표시
                 if (PermissionUtils.needsAccessibilityGuide()) {
                     val guideText = PermissionUtils.getAccessibilityGuide(this)
