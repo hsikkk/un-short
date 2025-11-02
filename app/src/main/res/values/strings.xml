@@ -89,13 +89,13 @@
 
     <!-- Manufacturer-specific Accessibility Guides -->
     <string name="permission_accessibility_guide_label">Tip:</string>
-    <string name="permission_accessibility_guide_samsung">Tap [Installed apps] → Find "un:short"</string>
-    <string name="permission_accessibility_guide_lg">Tap [Advanced settings] → Find "un:short"</string>
-    <string name="permission_accessibility_guide_xiaomi">Tap [Downloaded services] → Find "un:short"</string>
-    <string name="permission_accessibility_guide_huawei">Tap [Downloaded services] → Find "un:short"</string>
-    <string name="permission_accessibility_guide_oppo">Tap [Installed services] → Find "un:short"</string>
-    <string name="permission_accessibility_guide_vivo">Tap [Installed services] → Find "un:short"</string>
-    <string name="permission_accessibility_guide_default">Find "un:short" and turn it on</string>
+    <string name="permission_accessibility_guide_samsung">💡 Look for [Installed apps] → un:short</string>
+    <string name="permission_accessibility_guide_lg">💡 Look for [Advanced settings] → un:short</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 Look for [Downloaded services] → un:short</string>
+    <string name="permission_accessibility_guide_huawei">💡 Look for [Downloaded services] → un:short</string>
+    <string name="permission_accessibility_guide_oppo">💡 Look for [Installed services] → un:short</string>
+    <string name="permission_accessibility_guide_vivo">💡 Look for [Installed services] → un:short</string>
+    <string name="permission_accessibility_guide_default">💡 Find un:short and turn it on</string>
 
     <!-- Accessibility Consent Dialog -->
     <string name="accessibility_consent_dialog_title">Accessibility Permission Notice</string>
