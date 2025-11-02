@@ -90,19 +90,8 @@ class SettingsActivity : BaseActivity() {
             prefs.edit().putBoolean("prevent_impulsive_disable", isChecked).apply()
         }
 
-        // Device Admin 스위치 초기 상태 설정
+        // Device Admin 스위치 초기 상태 설정 (리스너도 함께 설정됨)
         updateDeviceAdminSwitchState()
-
-        // Device Admin 스위치 리스너
-        deviceAdminSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                // ON으로 시도 - 바로 Device Admin 권한 요청
-                deviceAdminManager.requestActivation(this, REQUEST_CODE_ENABLE_DEVICE_ADMIN)
-            } else {
-                // OFF로 시도 - 확인 다이얼로그 표시
-                showDeviceAdminDisableDialog()
-            }
-        }
 
         // 뒤로 가기 버튼
         backButton.setOnClickListener {
@@ -233,7 +222,8 @@ class SettingsActivity : BaseActivity() {
             if (isChecked) {
                 deviceAdminManager.requestActivation(this, REQUEST_CODE_ENABLE_DEVICE_ADMIN)
             } else {
-                deviceAdminManager.removeAdmin()
+                // OFF로 시도 - 확인 다이얼로그 표시
+                showDeviceAdminDisableDialog()
             }
         }
     }
