@@ -1,27 +1,14 @@
 package com.muuu.unshort
 
 import android.content.Intent
-import android.content.res.Configuration
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
-class SettingsActivity : AppCompatActivity() {
-
-    override fun attachBaseContext(newBase: android.content.Context) {
-        val configuration = Configuration(newBase.resources.configuration)
-        configuration.fontScale = AppConstants.FONT_SCALE
-        val context = newBase.createConfigurationContext(configuration)
-        super.attachBaseContext(context)
-    }
+class SettingsActivity : BaseActivity() {
 
     private lateinit var backButton: ImageView
     private lateinit var waitTimeValue: TextView
@@ -36,20 +23,6 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-
-        // Status bar 설정: 검정색 배경에 밝은 아이콘
-        window.statusBarColor = Color.BLACK
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false // 어두운 배경에 밝은 아이콘
-        }
-
-        // WindowInsets 적용 - topSection에 status bar 패딩 추가
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.header)) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(0, insets.top, 0, 0)
-            windowInsets
-        }
-
 
         // View 초기화
         backButton = findViewById(R.id.backButton)

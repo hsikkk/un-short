@@ -1,26 +1,12 @@
 package com.muuu.unshort
 
-import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 
-class PermissionSetupActivity : AppCompatActivity() {
-
-    override fun attachBaseContext(newBase: android.content.Context) {
-        val configuration = Configuration(newBase.resources.configuration)
-        configuration.fontScale = AppConstants.FONT_SCALE
-        val context = newBase.createConfigurationContext(configuration)
-        super.attachBaseContext(context)
-    }
+class PermissionSetupActivity : BaseActivity() {
 
     private lateinit var backButton: ImageView
     private var accessibilityCard: View? = null
@@ -37,30 +23,6 @@ class PermissionSetupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_permission_setup)
-
-        enableEdgeToEdge()
-
-        // Status bar 설정: 검정색 배경에 밝은 아이콘
-        window.statusBarColor = Color.BLACK
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false // 어두운 배경에 밝은 아이콘
-        }
-
-        // WindowInsets 적용 - header에 status bar 패딩 추가
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.header)) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(0, insets.top, 0, 0)
-            windowInsets
-        }
-
-        // WindowInsets 적용 - startButton에 navigation bar 패딩 추가
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.startButton)) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val params = view.layoutParams as androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
-            params.bottomMargin = (32 * resources.displayMetrics.density).toInt() + insets.bottom
-            view.layoutParams = params
-            windowInsets
-        }
 
         permissionUIHelper = PermissionUIHelper(this)
 

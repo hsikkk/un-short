@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.hardware.Sensor
@@ -27,11 +26,6 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.ad.view.MuuuBannerAdView
@@ -45,14 +39,7 @@ import com.muuu.ad.core.model.nativetemplate.MuuuNativeAdTemplate
 /**
  * 타이머 Activity - tmp/timer.html 디자인 기반
  */
-class TimerActivity : AppCompatActivity() {
-
-    override fun attachBaseContext(newBase: android.content.Context) {
-        val configuration = Configuration(newBase.resources.configuration)
-        configuration.fontScale = AppConstants.FONT_SCALE
-        val context = newBase.createConfigurationContext(configuration)
-        super.attachBaseContext(context)
-    }
+class TimerActivity : BaseActivity() {
 
     private lateinit var timerText: TextView
     private lateinit var secondsLabel: TextView
@@ -110,51 +97,6 @@ class TimerActivity : AppCompatActivity() {
 
         // Load ad
         bannerAdView.loadAd()
-
-        // Enable edge-to-edge
-        enableEdgeToEdge()
-
-        // Status bar 설정: 검정색 배경에 밝은 아이콘
-        window.statusBarColor = Color.BLACK
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false // 어두운 배경에 밝은 아이콘
-        }
-
-        // WindowInsets 적용 - nativeAdContainer에 status bar 패딩 추가
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.nativeAdContainer)) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(
-                view.paddingLeft,
-                insets.top,
-                view.paddingRight,
-                view.paddingBottom
-            )
-            windowInsets
-        }
-
-        // WindowInsets 적용 - adViewContainer에 navigation bar 패딩 추가
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.adViewContainer)) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(
-                view.paddingLeft,
-                view.paddingTop,
-                view.paddingRight,
-                insets.bottom
-            )
-            windowInsets
-        }
-
-        // WindowInsets 적용 - successScreen에 패딩 추가
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.successScreen)) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(
-                view.paddingLeft,
-                insets.top + view.paddingTop,
-                view.paddingRight,
-                insets.bottom + view.paddingBottom
-            )
-            windowInsets
-        }
 
         // 화면 꺼짐 방지
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)

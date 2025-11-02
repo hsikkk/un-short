@@ -2,7 +2,6 @@ package com.muuu.unshort
 
 import android.animation.ValueAnimator
 import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -10,28 +9,15 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.ad.view.MuuuBannerAdView
 import com.muuu.ad.core.adunit.MuuuBannerAdUnit
 import com.muuu.ad.core.model.MuuuBannerSize
 
-class MainActivity : AppCompatActivity() {
-
-    override fun attachBaseContext(newBase: android.content.Context) {
-        val configuration = Configuration(newBase.resources.configuration)
-        configuration.fontScale = AppConstants.FONT_SCALE
-        val context = newBase.createConfigurationContext(configuration)
-        super.attachBaseContext(context)
-    }
+class MainActivity : BaseActivity() {
 
     private lateinit var toggleArea: LinearLayout
     private lateinit var permissionWarning: LinearLayout
@@ -83,34 +69,6 @@ class MainActivity : AppCompatActivity() {
 
         // Load ad
         bannerAdView.loadAd()
-
-        // Enable edge-to-edge for Android 15+
-        enableEdgeToEdge()
-
-        // Status bar 설정: 검정색 배경에 밝은 아이콘
-        window.statusBarColor = Color.BLACK
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false // 어두운 배경에 밝은 아이콘
-        }
-
-        // WindowInsets 적용 - topSection에 status bar 패딩 추가
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.topSection)) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(0, insets.top, 0, 0)
-            windowInsets
-        }
-
-        // WindowInsets 적용 - adViewContainer에 navigation bar 패딩 추가
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.adViewContainer)) { view, windowInsets ->
-            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(
-                view.paddingLeft,
-                view.paddingTop,
-                view.paddingRight,
-                insets.bottom
-            )
-            windowInsets
-        }
 
         // View 초기화
         toggleArea = findViewById(R.id.toggleArea)
