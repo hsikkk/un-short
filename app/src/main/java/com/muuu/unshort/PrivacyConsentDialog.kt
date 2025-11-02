@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.Window
 import android.widget.Button
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -14,9 +15,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
  */
 class PrivacyConsentDialog(
     context: Context,
-    private val onAgree: () -> Unit,
+    private val onAgree: (() -> Unit)? = null,
     private val onExit: () -> Unit,
-    private val exitButtonText: String? = null
+    private val exitButtonText: String? = null,
+    private val readOnlyMode: Boolean = false
 ) : Dialog(context) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,16 +50,26 @@ class PrivacyConsentDialog(
         }
 
         // Setup buttons
-        view.findViewById<Button>(R.id.btnAgree).setOnClickListener {
-            onAgree()
-            dismiss()
+        val agreeButton = view.findViewById<Button>(R.id.btnAgree)
+        val exitButton = view.findViewById<Button>(R.id.btnExit)
+
+        if (readOnlyMode) {
+            // 읽기 전용 모드: Agree 버튼 숨김
+            agreeButton.visibility = View.GONE
+            exitButton.text = "Close"
+        } else {
+            // 일반 모드: 동의/거부 버튼 표시
+            agreeButton.setOnClickListener {
+                onAgree?.invoke()
+                dismiss()
+            }
+
+            // 커스텀 버튼 텍스트가 제공되면 사용
+            exitButtonText?.let {
+                exitButton.text = it
+            }
         }
 
-        val exitButton = view.findViewById<Button>(R.id.btnExit)
-        // 커스텀 버튼 텍스트가 제공되면 사용
-        exitButtonText?.let {
-            exitButton.text = it
-        }
         exitButton.setOnClickListener {
             onExit()
             dismiss()

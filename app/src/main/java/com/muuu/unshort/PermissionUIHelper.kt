@@ -40,35 +40,9 @@ class PermissionUIHelper(private val context: Context) {
     }
 
     /**
-     * 접근성 동의 카드 UI 업데이트
-     */
-    fun updateConsentCard(elements: PermissionUIElements) {
-        val isConsented = isAccessibilityConsentGiven()
-
-        elements.apply {
-            if (isConsented) {
-                statusText?.text = context.getString(R.string.permission_consent_title_completed)
-                statusText?.setTextColor(ContextCompat.getColor(context, R.color.success))
-                descriptionText?.text = context.getString(R.string.permission_consent_completed)
-                descriptionText?.setTextColor(ContextCompat.getColor(context, R.color.success))
-                settingsButton?.visibility = View.GONE
-                card?.alpha = 0.6f
-            } else {
-                statusText?.text = context.getString(R.string.permission_consent_title)
-                statusText?.setTextColor(ContextCompat.getColor(context, R.color.gray_900))
-                descriptionText?.text = context.getString(R.string.permission_not_set)
-                descriptionText?.setTextColor(ContextCompat.getColor(context, R.color.error))
-                settingsButton?.visibility = View.VISIBLE
-                card?.alpha = 1.0f
-            }
-        }
-    }
-
-    /**
      * 접근성 서비스 카드 UI 업데이트
      */
     fun updateAccessibilityCard(elements: PermissionUIElements) {
-        val isConsented = isAccessibilityConsentGiven()
         val isEnabled = PermissionUtils.isAccessibilityServiceEnabled(context)
 
         elements.apply {
@@ -79,25 +53,14 @@ class PermissionUIHelper(private val context: Context) {
                 descriptionText?.text = context.getString(R.string.permission_completed)
                 descriptionText?.setTextColor(ContextCompat.getColor(context, R.color.success))
                 settingsButton?.visibility = View.GONE
-                settingsButton?.isEnabled = false
                 card?.alpha = 0.6f
-            } else if (!isConsented) {
-                // 동의 전 - 비활성화
-                statusText?.text = context.getString(R.string.permission_accessibility)
-                statusText?.setTextColor(ContextCompat.getColor(context, R.color.gray_600))
-                descriptionText?.text = context.getString(R.string.permission_consent_required)
-                descriptionText?.setTextColor(ContextCompat.getColor(context, R.color.gray_600))
-                settingsButton?.visibility = View.VISIBLE
-                settingsButton?.isEnabled = false
-                card?.alpha = 0.4f
             } else {
-                // 동의 후, 설정 전 - 활성화
+                // 설정 전
                 statusText?.text = context.getString(R.string.permission_accessibility)
                 statusText?.setTextColor(ContextCompat.getColor(context, R.color.gray_900))
                 descriptionText?.text = context.getString(R.string.permission_not_set)
                 descriptionText?.setTextColor(ContextCompat.getColor(context, R.color.error))
                 settingsButton?.visibility = View.VISIBLE
-                settingsButton?.isEnabled = true
                 card?.alpha = 1.0f
             }
         }

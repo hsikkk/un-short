@@ -10,10 +10,6 @@ import android.widget.TextView
 class PermissionSetupActivity : BaseActivity() {
 
     private lateinit var backButton: ImageView
-    private var consentCard: View? = null
-    private var consentTitleText: TextView? = null
-    private var consentStatusText: TextView? = null
-    private var consentButton: Button? = null
     private var accessibilityCard: View? = null
     private var overlayCard: View? = null
     private var serviceStatusText: TextView? = null
@@ -38,10 +34,6 @@ class PermissionSetupActivity : BaseActivity() {
 
         // View 초기화
         backButton = findViewById(R.id.backButton)
-        consentCard = findViewById(R.id.accessibilityConsentCard)
-        consentTitleText = findViewById(R.id.consentTitleText)
-        consentStatusText = findViewById(R.id.consentStatusText)
-        consentButton = findViewById(R.id.consentButton)
         accessibilityCard = findViewById(R.id.onboardingAccessibilityCard)
         overlayCard = findViewById(R.id.onboardingOverlayCard)
         serviceStatusText = findViewById(R.id.onboardingServiceStatusText)
@@ -69,16 +61,9 @@ class PermissionSetupActivity : BaseActivity() {
             }
         }
 
-        // 접근성 동의 버튼 - 다이얼로그 표시
-        consentButton?.setOnClickListener {
-            showPrivacyConsentDialog()
-        }
-
-        // 접근성 설정 버튼
+        // 접근성 Enable Permission 버튼 - 다이얼로그 → 동의 → 설정 이동
         settingsButton?.setOnClickListener {
-            if (permissionUIHelper.isAccessibilityConsentGiven()) {
-                PermissionUtils.openAccessibilitySettings(this)
-            }
+            showAccessibilityConsentDialog()
         }
 
         // 오버레이 설정 버튼
@@ -118,16 +103,6 @@ class PermissionSetupActivity : BaseActivity() {
     }
 
     private fun updatePermissionUI() {
-        // 접근성 동의 카드 업데이트
-        permissionUIHelper.updateConsentCard(
-            PermissionUIHelper.PermissionUIElements(
-                card = consentCard,
-                statusText = consentTitleText,
-                descriptionText = consentStatusText,
-                settingsButton = consentButton
-            )
-        )
-
         // 접근성 서비스 카드 업데이트
         permissionUIHelper.updateAccessibilityCard(
             PermissionUIHelper.PermissionUIElements(
@@ -153,15 +128,16 @@ class PermissionSetupActivity : BaseActivity() {
     }
 
     /**
-     * 개인정보 처리 방침 동의 다이얼로그 표시
+     * 접근성 권한 동의 다이얼로그 표시 → 동의 → 설정 이동
      */
-    private fun showPrivacyConsentDialog() {
+    private fun showAccessibilityConsentDialog() {
         val dialog = PrivacyConsentDialog(
             context = this,
             onAgree = {
-                // 동의 저장 및 UI 업데이트
+                // 동의 저장
                 permissionUIHelper.saveAccessibilityConsent()
-                updatePermissionUI()
+                // 시스템 설정으로 이동
+                PermissionUtils.openAccessibilitySettings(this)
             },
             onExit = {
                 // 동의 거부 시 아무 것도 하지 않음

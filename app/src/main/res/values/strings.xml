@@ -85,7 +85,7 @@
     <string name="permission_not_set">Not set yet</string>
     <string name="permission_completed">Setup complete</string>
     <string name="permission_go_to_settings">Go to settings</string>
-    <string name="permission_consent_required">Please agree to consent first</string>
+    <string name="permission_enable_permission">Enable Permission</string>
 
     <!-- Manufacturer-specific Accessibility Guides -->
     <string name="permission_accessibility_guide_label">Tip:</string>
@@ -156,7 +156,7 @@
     <string name="privacy_faq_title">Frequently Asked Questions</string>
     <string name="privacy_faq_content">Q: Is my watch history saved?\nA: No. Only hash values are temporarily stored.\n\nQ: Do you share data with third parties?\nA: No. Completely offline operation.\n\nQ: Can I revoke permission later?\nA: Yes. You can disable it in settings anytime.</string>
 
-    <string name="privacy_btn_agree">I Agree</string>
+    <string name="privacy_btn_agree">Agree &amp; Go to Settings</string>
     <string name="privacy_btn_exit">Exit App</string>
 
     <string name="privacy_policy_update_title">Privacy Policy Updated</string>

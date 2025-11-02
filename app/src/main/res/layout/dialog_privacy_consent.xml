@@ -154,35 +154,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
+            android:orientation="vertical"
             android:layout_marginTop="4dp">
+
+            <Button
+                android:id="@+id/btnAgree"
+                style="@style/Widget.App.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy_btn_agree"
+                android:textSize="15sp"
+                android:fontFamily="@font/spoqa_sans_neo_bold"
+                android:paddingVertical="16dp"
+                android:layout_marginBottom="8dp" />
 
             <Button
                 android:id="@+id/btnExit"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="@string/privacy_btn_exit"
                 android:textColor="@color/gray_600"
                 android:textSize="15sp"
                 android:fontFamily="@font/spoqa_sans_neo_medium"
                 android:textAllCaps="false"
-                android:paddingVertical="16dp"
-                android:layout_marginEnd="8dp" />
-
-            <Button
-                android:id="@+id/btnAgree"
-                style="@style/Widget.App.Button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/privacy_btn_agree"
-                android:textSize="15sp"
-                android:fontFamily="@font/spoqa_sans_neo_bold"
-                android:paddingVertical="16dp"
-                android:layout_marginStart="8dp" />
+                android:paddingVertical="14dp" />
 
         </LinearLayout>
 
