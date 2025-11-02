@@ -242,13 +242,6 @@
 
             </LinearLayout>
 
-            <!-- Divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E0E0E0"
-                android:layout_marginHorizontal="24dp" />
-
             <!-- 충동적 해제 방지 -->
             <LinearLayout
                 android:id="@+id/preventDisableItem"
@@ -294,13 +287,6 @@
                     android:checked="false" />
 
             </LinearLayout>
-
-            <!-- Divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E0E0E0"
-                android:layout_marginHorizontal="24dp" />
 
             <!-- 앱 삭제 방지 -->
             <LinearLayout
