@@ -141,7 +141,7 @@ class PermissionSetupActivity : BaseActivity() {
             onExit = {
                 // 동의 거부 시 아무 것도 하지 않음
             },
-            exitButtonText = "Disagree"
+            exitButtonTextResId = R.string.privacy_btn_disagree
         )
         dialog.show()
     }

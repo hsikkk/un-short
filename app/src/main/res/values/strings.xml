@@ -161,5 +161,14 @@
 
     <string name="privacy_btn_agree">Agree &amp; Go to Settings</string>
     <string name="privacy_btn_exit">Exit App</string>
+    <string name="privacy_btn_disagree">Disagree</string>
+
+    <!-- Disable Confirmation Dialog -->
+    <string name="disable_dialog_title">Really disable?</string>
+    <string name="disable_dialog_message">To disable, enter the phrase below:</string>
+    <string name="disable_dialog_phrase">disable shorts blocking</string>
+    <string name="disable_dialog_input_hint">Enter here</string>
+    <string name="disable_dialog_cancel">Cancel</string>
+    <string name="disable_dialog_confirm">Disable Blocking</string>
 
 </resources>

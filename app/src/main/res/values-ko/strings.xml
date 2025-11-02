@@ -156,5 +156,14 @@
 
     <string name="privacy_btn_agree">동의하고 설정으로 이동</string>
     <string name="privacy_btn_exit">앱 종료</string>
+    <string name="privacy_btn_disagree">동의하지 않음</string>
+
+    <!-- Disable Confirmation Dialog -->
+    <string name="disable_dialog_title">정말 해제하시겠어요?</string>
+    <string name="disable_dialog_message">해제하려면 아래 문구를 입력해주세요</string>
+    <string name="disable_dialog_phrase">쇼츠 차단을 해제합니다</string>
+    <string name="disable_dialog_input_hint">여기에 입력하세요</string>
+    <string name="disable_dialog_cancel">취소</string>
+    <string name="disable_dialog_confirm">차단 해제</string>
 
 </resources>

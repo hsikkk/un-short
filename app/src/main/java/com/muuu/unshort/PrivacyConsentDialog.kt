@@ -17,7 +17,7 @@ class PrivacyConsentDialog(
     context: Context,
     private val onAgree: (() -> Unit)? = null,
     private val onExit: () -> Unit,
-    private val exitButtonText: String? = null
+    private val exitButtonTextResId: Int? = null
 ) : Dialog(context) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,9 +57,9 @@ class PrivacyConsentDialog(
             dismiss()
         }
 
-        // 커스텀 버튼 텍스트가 제공되면 사용
-        exitButtonText?.let {
-            exitButton.text = it
+        // 커스텀 버튼 텍스트 리소스 ID가 제공되면 사용
+        exitButtonTextResId?.let {
+            exitButton.setText(it)
         }
 
         exitButton.setOnClickListener {

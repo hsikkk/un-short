@@ -21,7 +21,7 @@ class DisableConfirmDialog(
     private val onCancel: () -> Unit
 ) : Dialog(context) {
 
-    private val requiredPhrase = "쇼츠 차단을 해제합니다"
+    private val requiredPhrase = context.getString(R.string.disable_dialog_phrase)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +58,7 @@ class DisableConfirmDialog(
         val btnConfirm = view.findViewById<Button>(R.id.btnConfirm)
 
         // Set warning message (simple)
-        warningMessage.text = "해제하려면 아래 문구를 입력해주세요"
+        warningMessage.text = context.getString(R.string.disable_dialog_message)
 
         // Initially disable confirm button with visual feedback
         btnConfirm.isEnabled = false
