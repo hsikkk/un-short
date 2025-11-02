@@ -580,23 +580,7 @@ class ShortsBlockService : AccessibilityService() {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }
-
-    /**
-     * TimerActivity 강제 종료 브로드캐스트 전송
-     */
-    private fun sendTimerForceClose() {
-        try {
-            val intent = Intent(AppConstants.ACTION_TIMER_FORCE_CLOSE)
-            sendBroadcast(intent)
-            Log.d(TAG, "Sent TIMER_FORCE_CLOSE broadcast")
-
-            val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-            prefs.edit().remove(AppConstants.PREF_CURRENT_SESSION_ID).apply()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error sending TIMER_FORCE_CLOSE broadcast", e)
-        }
-    }
-
+    
     /**
      * 오래된 세션 데이터 클리어
      */
