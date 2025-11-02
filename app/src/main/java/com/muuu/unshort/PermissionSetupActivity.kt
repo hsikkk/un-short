@@ -1,5 +1,6 @@
 package com.muuu.unshort
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -19,12 +20,16 @@ class PermissionSetupActivity : BaseActivity() {
     private var overlayButton: Button? = null
     private var completeButton: Button? = null
     private lateinit var permissionUIHelper: PermissionUIHelper
+    private var fromOnboarding = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_permission_setup)
 
         permissionUIHelper = PermissionUIHelper(this)
+
+        // 온보딩에서 진입했는지 확인
+        fromOnboarding = intent.getBooleanExtra("from_onboarding", false)
 
         // View 초기화
         backButton = findViewById(R.id.backButton)
@@ -41,9 +46,14 @@ class PermissionSetupActivity : BaseActivity() {
         // 완료 버튼 텍스트 변경
         completeButton?.text = "완료"
 
-        // 뒤로 가기 버튼
-        backButton.setOnClickListener {
-            finish()
+        // 온보딩에서 진입한 경우 뒤로가기 버튼 숨김
+        if (fromOnboarding) {
+            backButton.visibility = View.GONE
+        } else {
+            // 뒤로 가기 버튼
+            backButton.setOnClickListener {
+                finish()
+            }
         }
 
         // 접근성 설정 버튼
@@ -58,7 +68,15 @@ class PermissionSetupActivity : BaseActivity() {
 
         // 완료 버튼
         completeButton?.setOnClickListener {
-            finish()
+            if (fromOnboarding) {
+                // 온보딩에서 진입한 경우 MainActivity로 이동
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            } else {
+                finish()
+            }
         }
 
         // 초기 권한 상태 업데이트
@@ -68,6 +86,15 @@ class PermissionSetupActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         updatePermissionUI()
+    }
+
+    override fun onBackPressed() {
+        if (fromOnboarding) {
+            // 온보딩에서 진입한 경우 뒤로가기 무시
+            // 사용자가 권한 설정을 건너뛰려면 완료 버튼을 사용해야 함
+        } else {
+            super.onBackPressed()
+        }
     }
 
     private fun updatePermissionUI() {

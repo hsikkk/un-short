@@ -108,8 +108,9 @@ class OnboardingActivity : BaseActivity() {
         // Track onboarding completed
         AnalyticsManager.trackEvent(this, AnalyticsEvent.ONBOARDING_COMPLETED)
 
-        // MainActivity로 이동 (백스택 완전히 클리어)
-        val intent = Intent(this, MainActivity::class.java)
+        // 권한 설정 화면으로 이동 (백스택 완전히 클리어)
+        val intent = Intent(this, PermissionSetupActivity::class.java)
+        intent.putExtra("from_onboarding", true)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
