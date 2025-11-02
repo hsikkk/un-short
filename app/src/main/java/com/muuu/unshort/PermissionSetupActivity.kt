@@ -46,13 +46,21 @@ class PermissionSetupActivity : AppCompatActivity() {
             isAppearanceLightStatusBars = false // 어두운 배경에 밝은 아이콘
         }
 
-        // WindowInsets 적용 - topSection에 status bar 패딩 추가
+        // WindowInsets 적용 - header에 status bar 패딩 추가
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.header)) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(0, insets.top, 0, 0)
             windowInsets
         }
 
+        // WindowInsets 적용 - startButton에 navigation bar 패딩 추가
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.startButton)) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val params = view.layoutParams as androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
+            params.bottomMargin = (32 * resources.displayMetrics.density).toInt() + insets.bottom
+            view.layoutParams = params
+            windowInsets
+        }
 
         permissionUIHelper = PermissionUIHelper(this)
 
