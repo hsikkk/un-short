@@ -19,6 +19,8 @@ import com.muuu.ad.core.model.MuuuBannerSize
 
 class MainActivity : BaseActivity() {
 
+    override fun isLightStatusBar(): Boolean = false // 검정 배경에 밝은 아이콘
+
     private lateinit var toggleArea: LinearLayout
     private lateinit var permissionWarning: LinearLayout
     private lateinit var permissionSettingsButton: com.google.android.material.button.MaterialButton

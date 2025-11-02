@@ -3,7 +3,6 @@ package com.muuu.unshort
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -21,9 +20,6 @@ import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
 
 class OnboardingActivity : BaseActivity() {
-
-    override fun getStatusBarColor(): Int = Color.TRANSPARENT
-    override fun isLightStatusBar(): Boolean = true
 
     private lateinit var viewPager: ViewPager2
     private lateinit var indicators: List<View>

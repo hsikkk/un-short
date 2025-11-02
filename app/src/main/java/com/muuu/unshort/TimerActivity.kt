@@ -41,6 +41,8 @@ import com.muuu.ad.core.model.nativetemplate.MuuuNativeAdTemplate
  */
 class TimerActivity : BaseActivity() {
 
+    override fun isLightStatusBar(): Boolean = false // 검정 배경에 밝은 아이콘
+
     private lateinit var timerText: TextView
     private lateinit var secondsLabel: TextView
     private lateinit var flipIndicator: View

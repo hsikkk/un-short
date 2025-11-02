@@ -15,13 +15,11 @@ import androidx.core.view.WindowInsetsControllerCompat
  *
  * All Activities should extend this class to get automatic:
  * - Edge-to-edge display support
- * - Status bar color and appearance configuration
  * - System bars (status bar + navigation bar) padding on root layout
  * - Font scale normalization
  *
  * Override methods:
- * - getStatusBarColor(): Customize status bar color (default: Black)
- * - isLightStatusBar(): Customize status bar icons (default: false/light icons)
+ * - isLightStatusBar(): Customize status bar icons (default: true/dark icons for white backgrounds)
  */
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -35,30 +33,23 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setupStatusBar()
     }
 
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
+        setupStatusBarIcons()
         applySystemBarsInsets()
     }
 
     /**
-     * Override to customize status bar color
-     * Default: Black
-     */
-    protected open fun getStatusBarColor(): Int = Color.BLACK
-
-    /**
      * Override to customize status bar icons appearance
+     * true = dark icons (for light backgrounds) - DEFAULT
      * false = light icons (for dark backgrounds)
-     * true = dark icons (for light backgrounds)
-     * Default: false (light icons)
+     * Default: true (dark icons for white appbar)
      */
-    protected open fun isLightStatusBar(): Boolean = false
+    protected open fun isLightStatusBar(): Boolean = true
 
-    private fun setupStatusBar() {
-        window.statusBarColor = getStatusBarColor()
+    private fun setupStatusBarIcons() {
         WindowInsetsControllerCompat(window, window.decorView).apply {
             isAppearanceLightStatusBars = isLightStatusBar()
         }
