@@ -103,17 +103,23 @@ class MainActivity : BaseActivity() {
             val currentState = prefs.getBoolean("blocking_enabled", true)
             val newState = !currentState
 
-            // 상태 저장
-            prefs.edit().putBoolean("blocking_enabled", newState).apply()
+            // If turning OFF, show confirmation dialog
+            if (currentState && !newState) {
+                showDisableConfirmDialog()
+            } else {
+                // Turning ON - proceed immediately
+                // 상태 저장
+                prefs.edit().putBoolean("blocking_enabled", newState).apply()
 
-            // Track blocking state change
-            AnalyticsManager.trackEvent(
-                this,
-                if (newState) AnalyticsEvent.BLOCKING_ENABLED else AnalyticsEvent.BLOCKING_DISABLED
-            )
+                // Track blocking state change
+                AnalyticsManager.trackEvent(
+                    this,
+                    AnalyticsEvent.BLOCKING_ENABLED
+                )
 
-            // UI 업데이트 (애니메이션 포함)
-            updateUI(newState, animate = true)
+                // UI 업데이트 (애니메이션 포함)
+                updateUI(newState, animate = true)
+            }
         }
     }
 
@@ -223,6 +229,30 @@ class MainActivity : BaseActivity() {
             statusDot.setBackgroundResource(R.drawable.status_dot_inactive)
             statusLabel.text = getString(R.string.status_inactive)
         }
+    }
+
+    private fun showDisableConfirmDialog() {
+        val dialog = DisableConfirmDialog(
+            context = this,
+            onConfirm = {
+                // User confirmed - proceed with disabling
+                val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+                prefs.edit().putBoolean("blocking_enabled", false).apply()
+
+                // Track blocking state change
+                AnalyticsManager.trackEvent(
+                    this,
+                    AnalyticsEvent.BLOCKING_DISABLED
+                )
+
+                // UI 업데이트 (애니메이션 포함)
+                updateUI(false, animate = true)
+            },
+            onCancel = {
+                // User cancelled - do nothing, toggle stays in current position
+            }
+        )
+        dialog.show()
     }
 
 }

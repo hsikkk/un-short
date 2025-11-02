@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="16dp">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/dialogTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="정말 해제하시겠어요?"
+            android:textSize="20sp"
+            android:textColor="@color/primary_dark"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
+            android:letterSpacing="-0.01"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Warning Message with phrase embedded -->
+        <TextView
+            android:id="@+id/warningMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/gray_700"
+            android:fontFamily="@font/spoqa_sans_neo"
+            android:lineSpacingExtra="2dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Phrase to copy (in a box) -->
+        <TextView
+            android:id="@+id/phraseToType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="쇼츠 차단을 해제합니다"
+            android:textSize="15sp"
+            android:textColor="@color/gray_900"
+            android:fontFamily="@font/spoqa_sans_neo_medium"
+            android:padding="12dp"
+            android:background="@drawable/phrase_box_background"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Input field -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="여기에 입력하세요"
+            app:boxStrokeColor="@color/accent_purple"
+            app:hintTextColor="@color/gray_500"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirmInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:fontFamily="@font/spoqa_sans_neo"
+                android:textColor="@color/gray_900"
+                android:inputType="text"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_200"
+        android:layout_marginTop="8dp" />
+
+    <!-- Footer Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="20dp">
+
+        <!-- Cancel Button -->
+        <Button
+            android:id="@+id/btnCancel"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="취소"
+            android:textColor="@color/gray_700"
+            android:textSize="14sp"
+            android:fontFamily="@font/spoqa_sans_neo_medium"
+            android:textAllCaps="false"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:minHeight="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Confirm Button (initially disabled) -->
+        <Button
+            android:id="@+id/btnConfirm"
+            style="@style/Widget.App.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="차단 해제"
+            android:textSize="14sp"
+            android:fontFamily="@font/spoqa_sans_neo_medium"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:minHeight="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:enabled="false"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
