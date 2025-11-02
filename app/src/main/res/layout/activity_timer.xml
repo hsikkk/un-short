@@ -17,13 +17,13 @@
         android:background="#000000"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" >
+        app:layout_constraintEnd_toEndOf="parent">
+        
+        <FrameLayout
+            android:id="@+id/nativeAd"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
     
-        <com.google.android.gms.ads.nativead.NativeAdView
-          android:id="@+id/nativeAd"
-          android:layout_width="match_parent"
-          android:layout_height="40dp"/>
-          
     </FrameLayout>
     
     <!-- Main Content -->
@@ -228,12 +228,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-
+        
         <FrameLayout
           android:id="@+id/adView"
           android:layout_width="match_parent"
           android:layout_height="50dp"/>
-        
     </FrameLayout>
 
     <!-- Success Screen (hidden initially) -->

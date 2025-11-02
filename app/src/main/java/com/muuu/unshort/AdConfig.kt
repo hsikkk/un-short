@@ -1,7 +1,7 @@
 package com.muuu.unshort
 
 /**
- * AdMob 광고 단위 ID 관리
+ * Muuu Ad SDK 광고 단위 ID 관리
  *
  * 테스트 ID: Google에서 제공하는 테스트용 광고 단위 ID
  * 실제 배포 시에는 실제 광고 단위 ID로 변경 필요

@@ -34,13 +34,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.AdLoader
-import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.gms.ads.nativead.NativeAdOptions
-import com.google.android.gms.ads.nativead.NativeAdView
+import com.muuu.ad.view.MuuuBannerAdView
+import com.muuu.ad.view.MuuuNativeAdView
+import com.muuu.ad.core.adunit.MuuuBannerAdUnit
+import com.muuu.ad.core.adunit.MuuuNativeAdUnit
+import com.muuu.ad.core.model.MuuuBannerSize
+import com.muuu.ad.core.model.MuuuNativeAdBinder
+import com.muuu.ad.core.model.nativetemplate.MuuuNativeAdTemplate
 
 /**
  * 타이머 Activity - tmp/timer.html 디자인 기반
@@ -65,8 +65,8 @@ class TimerActivity : AppCompatActivity() {
     private lateinit var mainContent: View
     private lateinit var successScreen: View
     private lateinit var continueButton: TextView
-    private lateinit var adView: AdView
-    private var nativeAd: NativeAd? = null
+    private lateinit var bannerAdView: MuuuBannerAdView
+    private lateinit var nativeAdView: MuuuNativeAdView
 
     private var countDownTimer: CountDownTimer? = null
     private var remainingSeconds = 30
@@ -90,22 +90,26 @@ class TimerActivity : AppCompatActivity() {
         // Track timer activity opened
         AnalyticsManager.trackEvent(this, AnalyticsEvent.TIMER_ACTIVITY_OPENED)
 
-        // Load native ad at top
-        loadNativeAd()
+        // Setup native ad at top
+        setupNativeAd()
 
-        // Create and setup banner ad programmatically
-        adView = AdView(this).apply {
-            adUnitId = AdConfig.BANNER_TIMER_BOTTOM
-            setAdSize(AdSize.BANNER)
-        }
+        // Create Muuu banner ad unit
+        val bannerAdUnit = MuuuBannerAdUnit(
+            key = AdConfig.BANNER_TIMER_BOTTOM,
+            placement = "timer_screen_bottom",
+            bannerSize = MuuuBannerSize.Banner,
+            refreshInterval = 4
+        )
 
-        // Add AdView to container
-        val adViewContainer = findViewById<FrameLayout>(R.id.adViewContainer)
-        adViewContainer.addView(adView)
+        // Create and setup Muuu banner ad view
+        bannerAdView = MuuuBannerAdView(this, bannerAdUnit)
+
+        // Add MuuuBannerAdView to container
+        val adViewContainer = findViewById<FrameLayout>(R.id.adView)
+        adViewContainer.addView(bannerAdView)
 
         // Load ad
-        val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
+        bannerAdView.loadAd()
 
         // Enable edge-to-edge
         enableEdgeToEdge()
@@ -502,45 +506,35 @@ class TimerActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadNativeAd() {
-        val adLoader = AdLoader.Builder(this, AdConfig.NATIVE_TIMER_TOP)
-            .forNativeAd { ad ->
-                nativeAd = ad
-                Log.d(TAG, "Native ad loaded successfully")
+    private fun setupNativeAd() {
+        // Create Muuu native ad unit
+        val nativeAdUnit = MuuuNativeAdUnit(
+            key = AdConfig.NATIVE_TIMER_TOP,
+            placement = "timer_screen_top",
+            refreshInterval = 7
+        )
 
-                // Inflate custom native ad layout
-                val adView = layoutInflater.inflate(R.layout.view_native_ad_timer_top, null)
+        // Create and setup Muuu native ad view
+        nativeAdView = MuuuNativeAdView(this, nativeAdUnit)
 
-                // Populate ad views
-                val titleView = adView.findViewById<TextView>(R.id.viewTitle)
-                val ctaView = adView.findViewById<TextView>(R.id.textCta)
+        nativeAdView.setAdBinder(MuuuNativeAdBinder.fromTemplate(
+            this@TimerActivity,
+            MuuuNativeAdTemplate.Line(
+                backgroundColor = getColor(R.color.primary_dark),
+                  contentColor = getColor(R.color.white),
+                  adMarkLabelBackgroundColor = getColor(R.color.gray_700),
+                  adMarkLabelTextColor = getColor(R.color.white)
+            )
+        ))
 
-                titleView.text = ad.headline ?: ""
-                ctaView.text = ad.callToAction ?: ""
+        // Add to container
+        val nativeAdContainer = findViewById<FrameLayout>(R.id.nativeAd)
+        nativeAdContainer.removeAllViews()
+        nativeAdContainer.addView(nativeAdView)
 
-                // Add to container
-                val nativeAdContainer = findViewById<NativeAdView>(R.id.nativeAd)
-                nativeAdContainer.removeAllViews()
-                nativeAdContainer.addView(adView)
-
-                nativeAdContainer.headlineView = titleView
-                nativeAdContainer.callToActionView = ctaView
-                nativeAdContainer.setOnClickListener {
-                    ctaView.performClick()
-                }
-                nativeAdContainer.setNativeAd(ad)
-
-            }
-            .withAdListener(object : com.google.android.gms.ads.AdListener() {
-                override fun onAdFailedToLoad(error: com.google.android.gms.ads.LoadAdError) {
-                    Log.e(TAG, "Failed to load native ad: ${error.message}")
-                }
-            })
-            .withNativeAdOptions(NativeAdOptions.Builder().build())
-            .build()
-
-        adLoader.loadAd(AdRequest.Builder().build())
-        Log.d(TAG, "Loading native ad...")
+        // Load ad
+        nativeAdView.loadAd()
+        Log.d(TAG, "Loading Muuu native ad...")
     }
 
     override fun onDestroy() {
@@ -553,8 +547,8 @@ class TimerActivity : AppCompatActivity() {
         countDownTimer?.cancel()
         flipDetector.stop()
 
-        // Destroy native ad
-        nativeAd?.destroy()
+        // Destroy ads (Muuu Ad SDK handles lifecycle automatically)
+        // No manual destroy needed for MuuuBannerAdView and MuuuNativeAdView
 
         // Unregister force close receiver
         forceCloseReceiver?.let {

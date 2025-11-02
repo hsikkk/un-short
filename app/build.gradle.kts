@@ -75,6 +75,6 @@ dependencies {
     // Amplitude Analytics
     implementation("com.amplitude:analytics-android:1.22.4")
 
-    // Google AdMob
-    implementation("com.google.android.gms:play-services-ads:24.7.0")
+    // Muuu Ad SDK
+    implementation("com.muuu:ad:0.1.0")
 }

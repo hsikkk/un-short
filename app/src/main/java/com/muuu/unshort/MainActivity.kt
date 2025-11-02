@@ -20,9 +20,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
+import com.muuu.ad.view.MuuuBannerAdView
+import com.muuu.ad.core.adunit.MuuuBannerAdUnit
+import com.muuu.ad.core.model.MuuuBannerSize
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var statusDot: View
     private lateinit var statusLabel: TextView
     private lateinit var settingsButton: ImageView
-    private lateinit var adView: AdView
+    private lateinit var bannerAdView: MuuuBannerAdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,19 +66,23 @@ class MainActivity : AppCompatActivity() {
         // Track app launch
         AnalyticsManager.trackEvent(this, AnalyticsEvent.APP_LAUNCHED)
 
-        // Create and setup banner ad programmatically
-        adView = AdView(this).apply {
-            adUnitId = AdConfig.BANNER_HOME_BOTTOM
-            setAdSize(AdSize.BANNER)
-        }
+        // Create Muuu banner ad unit
+        val bannerAdUnit = MuuuBannerAdUnit(
+            key = AdConfig.BANNER_HOME_BOTTOM,
+            placement = "main_screen_bottom",
+            bannerSize = MuuuBannerSize.Banner,
+            refreshInterval = 7
+        )
 
-        // Add AdView to container
+        // Create and setup Muuu banner ad view
+        bannerAdView = MuuuBannerAdView(this, bannerAdUnit)
+
+        // Add MuuuBannerAdView to container
         val adViewContainer = findViewById<FrameLayout>(R.id.adView)
-        adViewContainer.addView(adView)
+        adViewContainer.addView(bannerAdView)
 
         // Load ad
-        val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
+        bannerAdView.loadAd()
 
         // Enable edge-to-edge for Android 15+
         enableEdgeToEdge()

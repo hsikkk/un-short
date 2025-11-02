@@ -4,7 +4,7 @@ import android.app.Application
 import android.util.Log
 import com.amplitude.android.Amplitude
 import com.amplitude.android.Configuration
-import com.google.android.gms.ads.MobileAds
+import com.muuu.ad.MuuuAdManagner
 
 class UnshortApplication : Application() {
 
@@ -17,8 +17,11 @@ class UnshortApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // AdMob 초기화
-        MobileAds.initialize(this) {}
+        // Muuu Ad SDK 초기화
+        MuuuAdManagner.init(
+            application = this,
+            debugLogEnabled = BuildConfig.DEBUG
+        )
 
         // Amplitude 초기화
         amplitude = Amplitude(
@@ -30,7 +33,7 @@ class UnshortApplication : Application() {
             )
         )
 
-
+        Log.d(TAG, "Muuu Ad SDK initialized with debug mode: ${BuildConfig.DEBUG}")
         Log.d(TAG, "Amplitude initialized - API Key: ${BuildConfig.AMPLITUDE_API_KEY.take(8)}...")
         Log.d(TAG, "Debug mode: ${BuildConfig.DEBUG}")
     }
