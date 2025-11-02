@@ -75,6 +75,17 @@
     <string name="permission_not_set">아직 설정되지 않았습니다</string>
     <string name="permission_completed">설정 완료</string>
     <string name="permission_go_to_settings">설정하러 가기</string>
+    <string name="permission_enable_permission">권한 활성화</string>
+
+    <!-- Manufacturer-specific Accessibility Guides -->
+    <string name="permission_accessibility_guide_label">팁:</string>
+    <string name="permission_accessibility_guide_samsung">💡 [설치된 앱]에서 un:short를 찾으세요</string>
+    <string name="permission_accessibility_guide_lg">💡 [고급 설정]에서 un:short를 찾으세요</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 [다운로드한 서비스]에서 un:short를 찾으세요</string>
+    <string name="permission_accessibility_guide_huawei">💡 [다운로드한 서비스]에서 un:short를 찾으세요</string>
+    <string name="permission_accessibility_guide_oppo">💡 [설치된 서비스]에서 un:short를 찾으세요</string>
+    <string name="permission_accessibility_guide_vivo">💡 [설치된 서비스]에서 un:short를 찾으세요</string>
+    <string name="permission_accessibility_guide_default">💡 un:short를 찾아서 활성화하세요</string>
 
     <!-- Timer Activity -->
     <string name="timer_seconds_unit">seconds</string>
@@ -109,6 +120,7 @@
 
     <!-- Privacy Consent Dialog -->
     <string name="privacy_dialog_title">접근성 권한 사용 안내</string>
+    <string name="privacy_dialog_title_simple">접근성 권한 사용 안내</string>
 
     <string name="privacy_why_title">왜 접근성 권한이 필요한가요?</string>
     <string name="privacy_why_content">un:short는 숏폼 콘텐츠 감지를 위해 접근성 서비스를 사용합니다.\n\n이는 쇼츠 화면을 자동으로 차단하는 핵심 기능입니다.</string>
@@ -126,7 +138,7 @@
     <string name="privacy_faq_title">자주 묻는 질문</string>
     <string name="privacy_faq_content">Q: 내 시청 기록이 저장되나요?\nA: 아니요. 해시값만 임시 저장됩니다.\n\nQ: 제3자와 데이터를 공유하나요?\nA: 아니요. 완전 오프라인입니다.\n\nQ: 권한을 나중에 취소할 수 있나요?\nA: 네. 설정에서 언제든 비활성화 가능합니다.</string>
 
-    <string name="privacy_btn_agree">동의합니다</string>
+    <string name="privacy_btn_agree">동의하고 설정으로 이동</string>
     <string name="privacy_btn_exit">앱 종료</string>
 
     <string name="privacy_policy_update_title">개인정보 처리방침 업데이트</string>
