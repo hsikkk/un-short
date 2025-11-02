@@ -35,16 +35,24 @@ class BlockOverlay(private val context: Context) {
     private var currentSessionId: String = ""
     private var sourcePackageName: String = ""
 
-    // Handler for periodic timer completion checks
-    private var checkHandler: Handler? = null
-    private var checkRunnable: Runnable? = null
+    // Periodic check는 더 이상 사용하지 않음 (overlayType 파라미터로 대체)
 
     @SuppressLint("InflateParams")
-    fun show(onDismiss: () -> Unit, onComplete: () -> Unit, onSkip: (() -> Unit)? = null, onWatch: (() -> Unit)? = null, sessionId: String = "", sourcePackage: String = "") {
-        Log.d(TAG, "show() called with sessionId: $sessionId")
+    fun show(
+        onDismiss: () -> Unit,
+        onComplete: () -> Unit,
+        onSkip: (() -> Unit)? = null,
+        onWatch: (() -> Unit)? = null,
+        sessionId: String = "",
+        sourcePackage: String = "",
+        overlayType: OverlayType = OverlayType.INITIAL
+    ) {
+        Log.d(TAG, "show() called with sessionId: $sessionId, overlayType: $overlayType")
+
+        // 기존 오버레이가 있으면 먼저 제거 (타입 변경 시 재생성)
         if (overlayView != null) {
-            Log.d(TAG, "Overlay already showing, ignoring")
-            return
+            Log.d(TAG, "Overlay already exists - dismissing to recreate with new type")
+            dismiss()
         }
 
         this.onDismissListener = onDismiss
@@ -64,12 +72,10 @@ class BlockOverlay(private val context: Context) {
         buttonContainer = overlayView!!.findViewById(R.id.buttonContainer)
         Log.d(TAG, "Overlay view inflated successfully")
 
-        // Check timer completion status
-        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        val completedSessionId = prefs.getString(AppConstants.PREF_COMPLETED_SESSION_ID, "")
-        val isTimerCompleted = sessionId.isNotEmpty() && sessionId == completedSessionId
+        // 오버레이 타입에 따라 UI 결정
+        val isTimerCompleted = overlayType == OverlayType.CONFIRMATION
 
-        Log.d(TAG, "Timer completion check - currentSession: $sessionId, completedSession: $completedSessionId, isCompleted: $isTimerCompleted")
+        Log.d(TAG, "Overlay type determines UI - isTimerCompleted: $isTimerCompleted")
 
         // Track overlay shown event
         AnalyticsManager.trackEvent(
@@ -79,11 +85,13 @@ class BlockOverlay(private val context: Context) {
 
         // Show appropriate buttons and messages based on timer status
         if (isTimerCompleted) {
+            Log.d(TAG, ">>> UI: Timer completed mode - showing CONFIRMATION buttons")
             // Timer completed - swap button order
             // "아니요, 안 볼래요" becomes primary (white, top)
             // "네, 볼래요" becomes secondary (transparent, bottom)
             startTimerButton.visibility = View.GONE
             watchButton.visibility = View.VISIBLE
+            Log.d(TAG, ">>> UI: startTimerButton GONE, watchButton VISIBLE")
 
             // Reorder buttons: skipButton first, then watchButton
             buttonContainer.removeAllViews()
@@ -109,11 +117,14 @@ class BlockOverlay(private val context: Context) {
             buttonContainer.addView(watchButton, watchParams)
 
             mainMessage.text = context.getString(R.string.block_message_after_timer)
+            Log.d(TAG, ">>> UI: CONFIRMATION mode complete - skipButton/watchButton visible, startTimer GONE")
         } else {
+            Log.d(TAG, ">>> UI: INITIAL mode - showing start timer button")
             // Timer not completed - default order
             startTimerButton.visibility = View.VISIBLE
             watchButton.visibility = View.GONE
             skipButton.text = context.getString(R.string.block_button_close)
+            Log.d(TAG, ">>> UI: startTimerButton VISIBLE, watchButton GONE")
 
             // Reorder buttons: startTimerButton first, then skipButton
             buttonContainer.removeAllViews()
@@ -241,24 +252,15 @@ class BlockOverlay(private val context: Context) {
                         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 )
 
-        // Start periodic check for timer completion (fallback mechanism)
-        startPeriodicCheck()
+        // Periodic check 제거 - overlayType 파라미터로 UI 결정
+        // (periodic check가 UI를 덮어씌우는 문제 해결)
 
-        // Add window focus listener for immediate check when returning
-        overlayView!!.viewTreeObserver.addOnWindowFocusChangeListener { hasFocus ->
-            if (hasFocus) {
-                Log.d(TAG, "Window gained focus, checking timer completion state")
-                updateButtonVisibility()
-            }
-        }
+        // Window focus listener 제거 - overlayType으로 UI 결정됨
     }
 
 
     fun dismiss() {
         Log.d(TAG, ">>> dismiss() called")
-
-        // Stop periodic checks
-        stopPeriodicCheck()
 
         overlayView?.let {
             Log.d(TAG, "Removing overlay view from WindowManager")
@@ -274,95 +276,8 @@ class BlockOverlay(private val context: Context) {
         return showing
     }
 
-    fun updateButtonVisibility() {
-        Log.d(TAG, "updateButtonVisibility() called")
-
-        if (overlayView == null) {
-            Log.d(TAG, "updateButtonVisibility - overlayView is null, returning")
-            return
-        }
-
-        // Ensure button references are valid
-        if (!::startTimerButton.isInitialized || !::watchButton.isInitialized) {
-            Log.d(TAG, "updateButtonVisibility - buttons not initialized, returning")
-            return
-        }
-
-        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        val completedSessionId = prefs.getString(AppConstants.PREF_COMPLETED_SESSION_ID, "")
-
-        // Timer is considered completed if session matches exactly
-        // Since session ID is now hash-based (package + date), same app on same day will have same session
-        val isTimerCompleted = currentSessionId.isNotEmpty() && currentSessionId == completedSessionId
-
-        Log.d(TAG, "updateButtonVisibility - currentSession: '$currentSessionId', completedSession: '$completedSessionId'")
-        Log.d(TAG, "updateButtonVisibility - isCompleted: $isTimerCompleted")
-
-        try {
-            if (isTimerCompleted) {
-                // Timer completed - swap button order
-                Log.d(TAG, "Timer completed - showing watch button, hiding timer button")
-                startTimerButton.visibility = View.GONE
-                watchButton.visibility = View.VISIBLE
-
-                // Reorder buttons: skipButton first, then watchButton
-                buttonContainer.removeAllViews()
-
-                // Add skip button first (top position)
-                skipButton.text = context.getString(R.string.block_button_no)
-                skipButton.setTextColor(0xFF000000.toInt())
-                skipButton.setBackgroundResource(R.drawable.btn_timer_skip_white_solid)
-                val skipParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                buttonContainer.addView(skipButton, skipParams)
-
-                // Add watch button second (bottom position)
-                watchButton.setTextColor(0xFF8A8A8A.toInt())
-                watchButton.setBackgroundResource(android.R.color.transparent)
-                val watchParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                watchParams.topMargin = context.resources.displayMetrics.density.toInt() * 12
-                buttonContainer.addView(watchButton, watchParams)
-
-                mainMessage.text = context.getString(R.string.block_message_after_timer)
-            } else {
-                // Timer not completed - default order
-                Log.d(TAG, "Timer not completed - showing timer button, hiding watch button")
-                startTimerButton.visibility = View.VISIBLE
-                watchButton.visibility = View.GONE
-                skipButton.text = context.getString(R.string.block_button_close)
-
-                // Reorder buttons: startTimerButton first, then skipButton
-                buttonContainer.removeAllViews()
-
-                // Add start timer button first
-                val startParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                buttonContainer.addView(startTimerButton, startParams)
-
-                // Add skip button second
-                skipButton.setTextColor(0xFF8A8A8A.toInt())
-                skipButton.setBackgroundResource(android.R.color.transparent)
-                val skipParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                skipParams.topMargin = context.resources.displayMetrics.density.toInt() * 12
-                buttonContainer.addView(skipButton, skipParams)
-
-                mainMessage.text = context.getString(R.string.block_message_before_timer)
-            }
-            Log.d(TAG, "updateButtonVisibility completed successfully")
-        } catch (e: Exception) {
-            Log.e(TAG, "Error updating button visibility", e)
-        }
-    }
+    // updateButtonVisibility, startPeriodicCheck, stopPeriodicCheck 제거
+    // overlayType 파라미터로 UI가 한 번 설정되면 변경하지 않음
 
     private fun getStatusBarHeight(): Int {
         var result = 0
@@ -380,38 +295,5 @@ class BlockOverlay(private val context: Context) {
             result = context.resources.getDimensionPixelSize(resourceId)
         }
         return result
-    }
-
-    private fun startPeriodicCheck() {
-        // Stop any existing check first
-        stopPeriodicCheck()
-
-        Log.d(TAG, "Starting periodic check for session: $currentSessionId")
-
-        checkHandler = Handler(Looper.getMainLooper())
-        checkRunnable = object : Runnable {
-            override fun run() {
-                if (overlayView != null) {
-                    Log.d(TAG, "Periodic check running for session: $currentSessionId")
-                    // Check timer completion state every second
-                    updateButtonVisibility()
-                    checkHandler?.postDelayed(this, 1000) // Check every second
-                } else {
-                    Log.d(TAG, "Periodic check: overlayView is null, stopping check")
-                }
-            }
-        }
-        // Start checking immediately
-        checkHandler?.post(checkRunnable!!)
-        Log.d(TAG, "Started periodic timer completion check for session: $currentSessionId")
-    }
-
-    private fun stopPeriodicCheck() {
-        checkRunnable?.let {
-            checkHandler?.removeCallbacks(it)
-        }
-        checkHandler = null
-        checkRunnable = null
-        Log.d(TAG, "Stopped periodic timer completion check")
     }
 }

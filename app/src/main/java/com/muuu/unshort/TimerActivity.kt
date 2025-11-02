@@ -335,6 +335,13 @@ class TimerActivity : BaseActivity() {
                 if (currentSessionId.isNotEmpty()) {
                     prefs.edit().putString(AppConstants.PREF_COMPLETED_SESSION_ID, currentSessionId).apply()
                     Log.d(TAG, "Timer completed for session: $currentSessionId")
+
+                    // Send broadcast to notify OverlayManager
+                    val intent = Intent(AppConstants.ACTION_TIMER_COMPLETED)
+                    intent.setPackage(packageName)  // 명시적으로 패키지 지정
+                    intent.putExtra("session_id", currentSessionId)
+                    sendBroadcast(intent)
+                    Log.d(TAG, "Timer completed broadcast sent for session: $currentSessionId to package: $packageName")
                 }
 
                 // Stop flip detector
