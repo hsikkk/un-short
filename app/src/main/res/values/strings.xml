@@ -48,6 +48,8 @@
     <string name="settings_delay_time_value">%d seconds</string>
     <string name="settings_haptic_title">Haptic Feedback</string>
     <string name="settings_haptic_desc">Vibration notification when timer completes</string>
+    <string name="settings_block_scrolled_title">Block Scrolled Shorts Only</string>
+    <string name="settings_block_scrolled_desc">Block only when scrolling to next shorts</string>
     <string name="settings_section_additional">Additional Features</string>
     <string name="settings_section_other">Other</string>
     <string name="settings_feedback">Send Feedback</string>

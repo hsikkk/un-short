@@ -1,5 +1,6 @@
 package com.muuu.shortblock.service.blocking
 
+import android.content.Context
 import android.util.Log
 import com.muuu.unshort.OverlayType
 
@@ -8,7 +9,7 @@ import com.muuu.unshort.OverlayType
  *
  * 앱별로 독립적인 상태 관리
  */
-class SessionStateManager {
+class SessionStateManager(private val context: Context) {
 
     private val TAG = "SessionStateManager"
 
@@ -29,7 +30,7 @@ class SessionStateManager {
         previousStateByPackage[packageName] = current
 
         val newState = when (event) {
-            is SessionEvent.EnterShorts -> transitionOnEnterShorts(current)
+            is SessionEvent.EnterShorts -> transitionOnEnterShorts(current, packageName)
             is SessionEvent.ExitShorts -> transitionOnExitShorts(packageName)
             is SessionEvent.EnterBackground -> transitionOnEnterBackground(current)
             is SessionEvent.ReturnToShorts -> transitionOnReturnToShorts(current)
@@ -52,8 +53,25 @@ class SessionStateManager {
 
     // ========== Transition Methods ==========
 
-    private fun transitionOnEnterShorts(current: ShortsSessionState) =
-        ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
+    private fun transitionOnEnterShorts(
+        current: ShortsSessionState,
+        packageName: String
+    ): ShortsSessionState {
+        // Check if "allow first shorts" feature is enabled
+        val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val allowFirstShorts = prefs.getBoolean("allow_first_shorts", false)
+
+        // If coming from IDLE and feature is enabled → Allow first shorts
+        if (allowFirstShorts && current == ShortsSessionState.IDLE) {
+            // Initialize ScrollData for scroll detection
+            scrollDataByPackage[packageName] = ScrollData()
+            Log.d(TAG, "[$packageName] First shorts allowed - ScrollData initialized")
+            return ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
+        }
+
+        // Default behavior: block and need timer
+        return ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
+    }
 
     private fun transitionOnExitShorts(packageName: String): ShortsSessionState {
         scrollDataByPackage[packageName] = ScrollData()

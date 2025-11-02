@@ -15,6 +15,7 @@ class SettingsActivity : BaseActivity() {
     private lateinit var waitTimeValue: TextView
     private lateinit var waitTimeItem: LinearLayout
     private lateinit var hapticSwitch: Switch
+    private lateinit var allowFirstSwitch: Switch
     private lateinit var deviceAdminSwitch: Switch
     private lateinit var deviceAdminItem: LinearLayout
     private lateinit var feedbackItem: LinearLayout
@@ -34,6 +35,7 @@ class SettingsActivity : BaseActivity() {
         waitTimeValue = findViewById(R.id.waitTimeValue)
         waitTimeItem = findViewById(R.id.waitTimeItem)
         hapticSwitch = findViewById(R.id.hapticSwitch)
+        allowFirstSwitch = findViewById(R.id.allowFirstSwitch)
         deviceAdminSwitch = findViewById(R.id.deviceAdminSwitch)
         deviceAdminItem = findViewById(R.id.deviceAdminItem)
         feedbackItem = findViewById(R.id.feedbackItem)
@@ -66,6 +68,15 @@ class SettingsActivity : BaseActivity() {
         // 햅틱 스위치 리스너
         hapticSwitch.setOnCheckedChangeListener { _, isChecked ->
             prefs.edit().putBoolean("haptic_enabled", isChecked).apply()
+        }
+
+        // 첫 쇼츠 허용 설정 초기화
+        val isAllowFirstEnabled = prefs.getBoolean("allow_first_shorts", false)
+        allowFirstSwitch.isChecked = isAllowFirstEnabled
+
+        // 첫 쇼츠 허용 스위치 리스너
+        allowFirstSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("allow_first_shorts", isChecked).apply()
         }
 
         // Device Admin 스위치 초기 상태 설정

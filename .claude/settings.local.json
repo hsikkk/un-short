@@ -15,7 +15,8 @@
       "Bash(git log:*)",
       "WebSearch",
       "Bash(/Users/muuu/Development/shortblock/app/src/main/java/com/muuu/unshort/ShortsBlockService.kt)",
-      "Bash(adb install:*)"
+      "Bash(adb install:*)",
+      "Bash(adb shell am:*)"
     ],
     "deny": [],
     "ask": []

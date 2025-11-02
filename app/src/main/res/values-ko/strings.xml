@@ -48,6 +48,8 @@
     <string name="settings_delay_time_value">%d초</string>
     <string name="settings_haptic_title">햅틱 피드백</string>
     <string name="settings_haptic_desc">타이머 완료 시 진동 알림</string>
+    <string name="settings_block_scrolled_title">스크롤한 쇼츠만 차단</string>
+    <string name="settings_block_scrolled_desc">스크롤하여 다음 쇼츠로 넘어갈 때 차단합니다</string>
     <string name="settings_section_additional">부가 기능</string>
     <string name="settings_section_other">기타</string>
     <string name="settings_feedback">피드백 보내기</string>

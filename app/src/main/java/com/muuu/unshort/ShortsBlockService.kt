@@ -28,7 +28,7 @@ class ShortsBlockService : AccessibilityService() {
     // 새로운 컴포넌트들
     private val detectionEngine = ShortsDetectionEngine()
     private val hashGenerator = ContentHashGenerator()
-    private val sessionState = SessionStateManager()
+    private lateinit var sessionState: SessionStateManager
     private lateinit var overlayManager: OverlayManager
 
     // 현재 처리 중인 패키지
@@ -49,6 +49,9 @@ class ShortsBlockService : AccessibilityService() {
     override fun onServiceConnected() {
         super.onServiceConnected()
         Log.d(TAG, "Service connected")
+
+        // SessionStateManager 초기화
+        sessionState = SessionStateManager(this)
 
         // OverlayManager 초기화
         overlayManager = OverlayManager(
