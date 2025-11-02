@@ -57,12 +57,12 @@ class SessionStateManager(private val context: Context) {
         current: ShortsSessionState,
         packageName: String
     ): ShortsSessionState {
-        // Check if "allow first shorts" feature is enabled
+        // Check if "block scrolled shorts only" feature is enabled
         val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        val allowFirstShorts = prefs.getBoolean("allow_first_shorts", false)
+        val blockScrolledOnly = prefs.getBoolean("block_scrolled_only", false)
 
         // If coming from IDLE and feature is enabled → Allow first shorts
-        if (allowFirstShorts && current == ShortsSessionState.IDLE) {
+        if (blockScrolledOnly && current == ShortsSessionState.IDLE) {
             // Initialize ScrollData for scroll detection
             scrollDataByPackage[packageName] = ScrollData()
             Log.d(TAG, "[$packageName] First shorts allowed - ScrollData initialized")

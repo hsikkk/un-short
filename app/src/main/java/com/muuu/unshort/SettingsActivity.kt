@@ -70,13 +70,13 @@ class SettingsActivity : BaseActivity() {
             prefs.edit().putBoolean("haptic_enabled", isChecked).apply()
         }
 
-        // 첫 쇼츠 허용 설정 초기화
-        val isAllowFirstEnabled = prefs.getBoolean("allow_first_shorts", false)
-        allowFirstSwitch.isChecked = isAllowFirstEnabled
+        // 스크롤한 쇼츠만 차단 설정 초기화
+        val isBlockScrolledOnly = prefs.getBoolean("block_scrolled_only", false)
+        allowFirstSwitch.isChecked = isBlockScrolledOnly
 
-        // 첫 쇼츠 허용 스위치 리스너
+        // 스크롤한 쇼츠만 차단 스위치 리스너
         allowFirstSwitch.setOnCheckedChangeListener { _, isChecked ->
-            prefs.edit().putBoolean("allow_first_shorts", isChecked).apply()
+            prefs.edit().putBoolean("block_scrolled_only", isChecked).apply()
         }
 
         // Device Admin 스위치 초기 상태 설정
