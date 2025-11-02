@@ -139,6 +139,7 @@
 
     <!-- Privacy Consent Dialog -->
     <string name="privacy_dialog_title">Accessibility Permission Usage Notice</string>
+    <string name="privacy_dialog_title_simple">What We Access</string>
 
     <string name="privacy_why_title">Why is accessibility permission needed?</string>
     <string name="privacy_why_content">un:short uses accessibility service to detect short-form video content.\n\nThis is the core function to automatically block shorts when detected.</string>
