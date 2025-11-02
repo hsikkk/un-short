@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.muuu.shortblock.service.blocking.*
+import com.muuu.unshort.prefs.PreferencesManager
 
 /**
  * 쇼츠 차단 AccessibilityService
@@ -30,6 +31,7 @@ class ShortsBlockService : AccessibilityService() {
     private val hashGenerator = ContentHashGenerator()
     private lateinit var sessionState: SessionStateManager
     private lateinit var overlayManager: OverlayManager
+    private lateinit var prefsManager: PreferencesManager
 
     // 현재 처리 중인 패키지
     private var currentPackage: String = ""
@@ -50,7 +52,8 @@ class ShortsBlockService : AccessibilityService() {
         super.onServiceConnected()
         Log.d(TAG, "Service connected")
 
-        // SessionStateManager 초기화
+        // Managers 초기화
+        prefsManager = PreferencesManager(this)
         sessionState = SessionStateManager(this)
 
         // OverlayManager 초기화
@@ -67,12 +70,8 @@ class ShortsBlockService : AccessibilityService() {
                 restoreVolume(currentPackage)
                 sessionState.handleEvent(SessionEvent.SkipConfirmed, currentPackage)
 
-                val prefs = getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
-                prefs.edit().apply {
-                    remove(AppConstants.PREF_COMPLETED_SESSION_ID)
-                    remove(AppConstants.PREF_ALLOWED_UNTIL_SCROLL)
-                    apply()
-                }
+                prefsManager.clearCompletedSessionId()
+                prefsManager.clearAllowedUntilScroll()
 
                 performGlobalBackAction()
             },
@@ -82,8 +81,7 @@ class ShortsBlockService : AccessibilityService() {
                 sessionState.handleEvent(SessionEvent.WatchConfirmed, currentPackage)
                 stopForegroundCheck()
 
-                val prefs = getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
-                prefs.edit().putBoolean(AppConstants.PREF_ALLOWED_UNTIL_SCROLL, true).apply()
+                prefsManager.isAllowedUntilScroll = true
 
                 handler.postDelayed({
                     restoreVolume(currentPackage)
@@ -97,9 +95,7 @@ class ShortsBlockService : AccessibilityService() {
         clearStaleSessionData()
 
         // Persisted allowed state 복원
-        val prefs = getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
-        val persistedAllowedUntilScroll = prefs.getBoolean(AppConstants.PREF_ALLOWED_UNTIL_SCROLL, false)
-        if (persistedAllowedUntilScroll) {
+        if (prefsManager.isAllowedUntilScroll) {
             Log.d(TAG, "Restoring allowed state from SharedPreferences")
             sessionState.handleEvent(SessionEvent.TimerCompleted, packageName)  // 복원
         }
@@ -109,10 +105,7 @@ class ShortsBlockService : AccessibilityService() {
         if (event == null) return
 
         // 차단 활성화 상태 확인
-        val prefs = getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
-        val isBlockingEnabled = prefs.getBoolean(AppConstants.PREF_BLOCKING_ENABLED, true)
-
-        if (!isBlockingEnabled) {
+        if (!prefsManager.isBlockingEnabled) {
             // 차단 비활성화 시 오버레이 제거
             if (overlayManager.isOverlayVisible(packageName)) {
                 cancelPendingOverlay()
@@ -138,7 +131,7 @@ class ShortsBlockService : AccessibilityService() {
                 // 차단 대상 앱이 아닌 앱으로 전환
                 if (currentForegroundPackage !in AppBlockingRegistry.TARGET_PACKAGES) {
                     Log.d(TAG, "Foreground changed to $currentForegroundPackage, dismissing overlay")
-                    handleLeavingTargetApp(prefs)
+                    handleLeavingTargetApp()
                     return
                 }
             }
@@ -150,7 +143,7 @@ class ShortsBlockService : AccessibilityService() {
 
             if (packageName !in AppBlockingRegistry.TARGET_PACKAGES && overlayManager.isOverlayVisible(packageName)) {
                 Log.d(TAG, "Left target app to $packageName, dismissing overlay")
-                handleLeavingTargetApp(prefs)
+                handleLeavingTargetApp()
                 return
             }
         }
@@ -170,10 +163,10 @@ class ShortsBlockService : AccessibilityService() {
         Log.d(TAG, ">>> isShorts=$isInShortsScreen, currentState=$currentState")
 
         // 상태 전이 처리
-        handleStateTransitions(isInShortsScreen, packageName, prefs, rootNode, appConfig)
+        handleStateTransitions(isInShortsScreen, packageName, rootNode, appConfig)
 
         // 상태에 따른 액션 수행
-        handleStateActions(packageName, prefs)
+        handleStateActions(packageName)
     }
 
     /**
@@ -182,7 +175,6 @@ class ShortsBlockService : AccessibilityService() {
     private fun handleStateTransitions(
         isInShortsScreen: Boolean,
         packageName: String,
-        prefs: android.content.SharedPreferences,
         rootNode: AccessibilityNodeInfo,
         appConfig: AppBlockingConfig
     ) {
@@ -240,11 +232,8 @@ class ShortsBlockService : AccessibilityService() {
 
                             if (newState == ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION) {
                                 Log.d(TAG, "Scroll detected - clearing session")
-                                prefs.edit().apply {
-                                    remove(AppConstants.PREF_COMPLETED_SESSION_ID)
-                                    remove(AppConstants.PREF_ALLOWED_UNTIL_SCROLL)
-                                    apply()
-                                }
+                                prefsManager.clearCompletedSessionId()
+                                prefsManager.clearAllowedUntilScroll()
                             }
                         } else {
                             Log.w(TAG, "Hash is 0 - skipping")
@@ -269,7 +258,7 @@ class ShortsBlockService : AccessibilityService() {
     /**
      * 상태에 따른 액션 수행
      */
-    private fun handleStateActions(packageName: String, prefs: android.content.SharedPreferences) {
+    private fun handleStateActions(packageName: String) {
         val overlayType = sessionState.getOverlayType(packageName)
 
         if (overlayType != null && !overlayManager.isOverlayVisible(packageName)) {
@@ -282,18 +271,16 @@ class ShortsBlockService : AccessibilityService() {
     /**
      * 차단 대상 앱을 벗어났을 때 처리
      */
-    private fun handleLeavingTargetApp(prefs: android.content.SharedPreferences) {
+    private fun handleLeavingTargetApp() {
         cancelPendingOverlay()
         overlayManager.hideOverlay(packageName)
         restoreVolume(packageName)
         sessionState.handleEvent(SessionEvent.Reset, packageName)
 
         // SharedPreferences 클리어
-        prefs.edit().apply {
-            remove(AppConstants.PREF_COMPLETED_SESSION_ID)
-            remove(AppConstants.PREF_ALLOWED_UNTIL_SCROLL)
-            apply()
-        }
+        prefsManager.clearCompletedSessionId()
+        prefsManager.clearAllowedUntilScroll()
+
         Log.d(TAG, "Cleared all state - left shorts app")
     }
 
@@ -337,8 +324,7 @@ class ShortsBlockService : AccessibilityService() {
 
                 // 세션 ID 생성
                 val sessionId = java.util.UUID.randomUUID().toString()
-                val prefs = getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
-                prefs.edit().putString(AppConstants.PREF_CURRENT_SESSION_ID, sessionId).apply()
+                prefsManager.currentSessionId = sessionId
                 Log.d(TAG, "Session created: $sessionId")
 
                 if (!prevState.isBackground) {
@@ -593,14 +579,7 @@ class ShortsBlockService : AccessibilityService() {
         sessionState.handleEvent(SessionEvent.Reset, packageName)
         appStartTime = 0
 
-        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
-        prefs.edit().apply {
-            remove(AppConstants.PREF_CURRENT_SESSION_ID)
-            remove(AppConstants.PREF_COMPLETED_SESSION_ID)
-            remove("session_created_time")
-            remove(AppConstants.PREF_ALLOWED_UNTIL_SCROLL)
-            apply()
-        }
+        prefsManager.clearSessionState()
 
         Log.d(TAG, "Stale session data cleared")
     }
