@@ -78,7 +78,6 @@
     <string name="permission_enable_permission">권한 활성화</string>
 
     <!-- Manufacturer-specific Accessibility Guides -->
-    <string name="permission_accessibility_guide_label">팁:</string>
     <string name="permission_accessibility_guide_samsung">💡 [설치된 앱]에서 un:short를 찾으세요</string>
     <string name="permission_accessibility_guide_lg">💡 [고급 설정]에서 un:short를 찾으세요</string>
     <string name="permission_accessibility_guide_xiaomi">💡 [다운로드한 서비스]에서 un:short를 찾으세요</string>
@@ -119,7 +118,6 @@
     <string name="share_text">쇼츠 중독에서 벗어나세요!\nun:short 앱으로 의도적인 미디어 소비를 시작하세요.\n\n%s</string>
 
     <!-- Privacy Consent Dialog -->
-    <string name="privacy_dialog_title">접근성 권한 사용 안내</string>
     <string name="privacy_dialog_title_simple">접근성 권한 사용 안내</string>
 
     <string name="privacy_why_title">왜 접근성 권한이 필요한가요?</string>
@@ -141,12 +139,4 @@
     <string name="privacy_btn_agree">동의하고 설정으로 이동</string>
     <string name="privacy_btn_exit">앱 종료</string>
 
-    <string name="privacy_policy_update_title">개인정보 처리방침 업데이트</string>
-    <string name="privacy_policy_update_message">개인정보 처리방침이 업데이트되었습니다.\n\n변경된 내용을 확인하고 동의해주세요.\n\n동의하지 않으면 쇼츠 차단 기능이 비활성화됩니다.</string>
-    <string name="privacy_policy_update_review">확인하기</string>
-    <string name="privacy_policy_update_later">나중에</string>
-
-    <string name="privacy_consent_required_title">동의 필요</string>
-    <string name="privacy_consent_required_message">쇼츠 차단 기능을 사용하려면\n개인정보 처리방침 동의가 필요합니다.</string>
-    <string name="privacy_consent_review_button">정책 확인하기</string>
 </resources>

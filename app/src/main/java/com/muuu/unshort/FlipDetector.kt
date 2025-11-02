@@ -52,6 +52,4 @@ class FlipDetector(context: Context) : SensorEventListener {
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         // Not needed for this use case
     }
-
-    fun isCurrentlyFlipped(): Boolean = isFlipped
 }

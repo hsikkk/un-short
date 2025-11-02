@@ -17,8 +17,7 @@ class PrivacyConsentDialog(
     context: Context,
     private val onAgree: (() -> Unit)? = null,
     private val onExit: () -> Unit,
-    private val exitButtonText: String? = null,
-    private val readOnlyMode: Boolean = false
+    private val exitButtonText: String? = null
 ) : Dialog(context) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,21 +52,14 @@ class PrivacyConsentDialog(
         val agreeButton = view.findViewById<Button>(R.id.btnAgree)
         val exitButton = view.findViewById<Button>(R.id.btnExit)
 
-        if (readOnlyMode) {
-            // 읽기 전용 모드: Agree 버튼 숨김
-            agreeButton.visibility = View.GONE
-            exitButton.text = "Close"
-        } else {
-            // 일반 모드: 동의/거부 버튼 표시
-            agreeButton.setOnClickListener {
-                onAgree?.invoke()
-                dismiss()
-            }
+        agreeButton.setOnClickListener {
+            onAgree?.invoke()
+            dismiss()
+        }
 
-            // 커스텀 버튼 텍스트가 제공되면 사용
-            exitButtonText?.let {
-                exitButton.text = it
-            }
+        // 커스텀 버튼 텍스트가 제공되면 사용
+        exitButtonText?.let {
+            exitButton.text = it
         }
 
         exitButton.setOnClickListener {

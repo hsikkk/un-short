@@ -80,7 +80,6 @@
     <string name="permission_enable_permission">Enable Permission</string>
 
     <!-- Manufacturer-specific Accessibility Guides -->
-    <string name="permission_accessibility_guide_label">Tip:</string>
     <string name="permission_accessibility_guide_samsung">💡 Look for [Installed apps] → un:short</string>
     <string name="permission_accessibility_guide_lg">💡 Look for [Advanced settings] → un:short</string>
     <string name="permission_accessibility_guide_xiaomi">💡 Look for [Downloaded services] → un:short</string>
@@ -88,12 +87,6 @@
     <string name="permission_accessibility_guide_oppo">💡 Look for [Installed services] → un:short</string>
     <string name="permission_accessibility_guide_vivo">💡 Look for [Installed services] → un:short</string>
     <string name="permission_accessibility_guide_default">💡 Find un:short and turn it on</string>
-
-    <!-- Accessibility Consent Dialog -->
-    <string name="accessibility_consent_dialog_title">Accessibility Permission Notice</string>
-    <string name="accessibility_consent_dialog_message">un:short needs accessibility permission to detect short-form videos.\n\nWe only use it to identify shorts screens and never access your personal information.</string>
-    <string name="accessibility_consent_agree">Agree and Go to Settings</string>
-    <string name="accessibility_consent_cancel">Cancel</string>
 
     <!-- Timer Activity -->
     <string name="timer_seconds_unit">seconds</string>
@@ -130,7 +123,6 @@
     <string name="share_text">Break free from short-form addiction!\nStart mindful media consumption with un:short.\n\n%s</string>
 
     <!-- Privacy Consent Dialog -->
-    <string name="privacy_dialog_title">Accessibility Permission Usage Notice</string>
     <string name="privacy_dialog_title_simple">What We Access</string>
 
     <string name="privacy_why_title">Why is accessibility permission needed?</string>
@@ -152,12 +144,4 @@
     <string name="privacy_btn_agree">Agree &amp; Go to Settings</string>
     <string name="privacy_btn_exit">Exit App</string>
 
-    <string name="privacy_policy_update_title">Privacy Policy Updated</string>
-    <string name="privacy_policy_update_message">Our privacy policy has been updated.\n\nPlease review the changes and provide your consent.\n\nWithout consent, shorts blocking feature will be disabled.</string>
-    <string name="privacy_policy_update_review">Review</string>
-    <string name="privacy_policy_update_later">Later</string>
-
-    <string name="privacy_consent_required_title">Consent Required</string>
-    <string name="privacy_consent_required_message">To use shorts blocking feature,\nprivacy policy consent is required.</string>
-    <string name="privacy_consent_review_button">Review Policy</string>
 </resources>

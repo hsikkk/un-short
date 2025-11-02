@@ -61,7 +61,7 @@ class TimerActivity : BaseActivity() {
     private var remainingMillis = 0L // 남은 시간 (밀리초)
     private var isTimerRunning = false
     private var isFlipped = false
-    private var currentRotation = 0f // 현재 회전 각도 추적
+    private var accumulatedRotation = 0f // 폰 아이콘 애니메이션 누적 회전 각도
     private lateinit var prefs: SharedPreferences
     private lateinit var currentSessionId: String
     private var sourcePackageName: String = ""
@@ -202,7 +202,7 @@ class TimerActivity : BaseActivity() {
                     phoneIcon.animate().cancel()
                     phoneIcon.clearAnimation() // Clear pending callbacks
                     phoneIcon.rotationY = 0f // Reset rotation immediately
-                    currentRotation = 0f // Reset rotation counter
+                    accumulatedRotation = 0f // Reset rotation counter
 
                     // Use postDelayed to ensure isFlipped state is stable
                     phoneIcon.postDelayed({
@@ -242,10 +242,10 @@ class TimerActivity : BaseActivity() {
             return
         }
 
-        Log.d(TAG, "Starting phone icon animation cycle - rotating to ${currentRotation + 360}deg")
+        Log.d(TAG, "Starting phone icon animation cycle - rotating to ${accumulatedRotation + 360}deg")
 
         // 첫 번째 반바퀴: 0 → 180도, 투명 → 흰색
-        val firstHalfRotation = currentRotation + 180f
+        val firstHalfRotation = accumulatedRotation + 180f
         val colorToWhite = ValueAnimator.ofObject(
             ArgbEvaluator(),
             Color.TRANSPARENT,
@@ -272,7 +272,7 @@ class TimerActivity : BaseActivity() {
                 }
 
                 // 두 번째 반바퀴: 180 → 360도, 흰색 → 투명
-                currentRotation += 360f
+                accumulatedRotation += 360f
                 val colorToTransparent = ValueAnimator.ofObject(
                     ArgbEvaluator(),
                     Color.WHITE,
@@ -288,7 +288,7 @@ class TimerActivity : BaseActivity() {
                 colorToTransparent.start()
 
                 phoneIcon.animate()
-                    .rotationY(currentRotation)
+                    .rotationY(accumulatedRotation)
                     .setDuration(900)
                     .setInterpolator(AccelerateDecelerateInterpolator())
                     .withEndAction {
