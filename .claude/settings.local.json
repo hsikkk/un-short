@@ -13,7 +13,8 @@
       "Bash(chmod:*)",
       "Bash(tree:*)",
       "Bash(git log:*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(/Users/muuu/Development/shortblock/app/src/main/java/com/muuu/unshort/ShortsBlockService.kt)"
     ],
     "deny": [],
     "ask": []

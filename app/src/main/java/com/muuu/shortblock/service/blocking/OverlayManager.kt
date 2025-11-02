@@ -13,10 +13,7 @@ import com.muuu.unshort.OverlayType
 /**
  * 오버레이 생명주기 관리자
  *
- * 책임:
- * - BlockOverlay 인스턴스 생성 및 관리
- * - 오버레이 표시/숨김 처리
- * - 타이머 완료 브로드캐스트 수신 및 콜백 처리
+ * 앱별로 독립적인 오버레이 관리
  */
 class OverlayManager(
     private val context: Context,
@@ -26,9 +23,10 @@ class OverlayManager(
 ) {
     private val TAG = "OverlayManager"
 
-    private var blockOverlay: BlockOverlay? = null
-    private var currentSessionId: String = ""
-    private var lastShownSessionId: String = ""  // 마지막으로 표시한 세션 ID (타이머 브로드캐스트용)
+    // 앱별 오버레이 저장
+    private val overlayByPackage = mutableMapOf<String, BlockOverlay>()
+    private val sessionIdByPackage = mutableMapOf<String, String>()
+    private val lastShownSessionIdByPackage = mutableMapOf<String, String>()
 
     // 타이머 완료 브로드캐스트 수신
     private val timerReceiver = object : BroadcastReceiver() {
@@ -36,21 +34,23 @@ class OverlayManager(
             when (intent?.action) {
                 AppConstants.ACTION_TIMER_COMPLETED -> {
                     val sessionId = intent.getStringExtra("session_id") ?: ""
-                    Log.d(TAG, "Timer completed broadcast received for session: $sessionId")
-                    Log.d(TAG, "Current session: $currentSessionId, Last shown: $lastShownSessionId")
+                    Log.d(TAG, "Timer completed broadcast: $sessionId")
 
-                    // 현재 세션이거나 마지막으로 표시한 세션이면 처리
-                    if (sessionId == currentSessionId || sessionId == lastShownSessionId) {
-                        Log.d(TAG, "Session matches - calling onTimerCompleted callback")
-                        onTimerCompleted()
-                        // updateButtonVisibility 제거 - overlayType으로 UI 결정됨
-                    } else {
-                        Log.d(TAG, "Session mismatch - ignoring")
+                    // 모든 앱의 세션 ID 체크
+                    sessionIdByPackage.forEach { (pkg, currentId) ->
+                        val lastShownId = lastShownSessionIdByPackage[pkg]
+                        if (sessionId == currentId || sessionId == lastShownId) {
+                            Log.d(TAG, "[$pkg] Session matches - calling callback")
+                            onTimerCompleted()
+                        }
                     }
                 }
                 AppConstants.ACTION_CLOSE_OVERLAY -> {
-                    Log.d(TAG, "Close overlay broadcast received")
-                    hideOverlay()
+                    Log.d(TAG, "Close overlay broadcast")
+                    // 모든 오버레이 닫기
+                    overlayByPackage.keys.toList().forEach { pkg ->
+                        hideOverlay(pkg)
+                    }
                 }
             }
         }
@@ -58,9 +58,6 @@ class OverlayManager(
 
     private var isReceiverRegistered = false
 
-    /**
-     * 초기화 - 브로드캐스트 리시버 등록
-     */
     fun initialize() {
         if (!isReceiverRegistered) {
             val filter = IntentFilter().apply {
@@ -80,34 +77,96 @@ class OverlayManager(
                 Log.e(TAG, "Error registering receiver", e)
             }
         }
-        Log.d(TAG, "OverlayManager initialized")
     }
 
     /**
-     * 오버레이 뷰만 제거 (리시버와 세션 ID는 유지)
-     * 타이머 완료 브로드캐스트를 받기 위해 리시버와 세션 ID는 Service 생명주기 동안 유지
+     * 오버레이 표시
      */
-    fun hideOverlay() {
-        blockOverlay?.let { overlay ->
-            try {
-                if (overlay.isShowing()) {
-                    overlay.dismiss()
-                    Log.d(TAG, "Overlay dismissed for session: $currentSessionId (session ID retained)")
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "Error dismissing overlay", e)
+    fun showOverlay(
+        packageName: String,
+        sessionId: String,
+        overlayType: OverlayType = OverlayType.INITIAL
+    ): String {
+        // 기존 오버레이 있으면 제거
+        overlayByPackage[packageName]?.let { existing ->
+            if (existing.isShowing()) {
+                Log.d(TAG, "[$packageName] Dismissing existing overlay to show new type: $overlayType")
+                existing.dismiss()
             }
         }
 
-        blockOverlay = null
-        // currentSessionId는 유지! (타이머 브로드캐스트를 받기 위해)
+        sessionIdByPackage[packageName] = sessionId
+        lastShownSessionIdByPackage[packageName] = sessionId
+
+        try {
+            val overlay = BlockOverlay(context)
+
+            overlay.show(
+                onDismiss = {
+                    Log.d(TAG, "[$packageName] Overlay dismissed")
+                    overlayByPackage.remove(packageName)
+                },
+                onComplete = {
+                    Log.d(TAG, "[$packageName] Timer completed")
+                    onTimerCompleted()
+                },
+                onSkip = {
+                    Log.d(TAG, "[$packageName] Skip button pressed")
+                    hideOverlay(packageName)
+                    onSkip()
+                },
+                onWatch = {
+                    Log.d(TAG, "[$packageName] Watch button pressed")
+                    hideOverlay(packageName)
+                    onWatch()
+                },
+                sessionId = sessionId,
+                sourcePackage = packageName,
+                overlayType = overlayType
+            )
+
+            overlayByPackage[packageName] = overlay
+            Log.d(TAG, "[$packageName] Overlay shown: session=$sessionId, type=$overlayType")
+        } catch (e: Exception) {
+            Log.e(TAG, "[$packageName] Failed to show overlay", e)
+        }
+
+        return sessionId
     }
 
     /**
-     * 정리 - 브로드캐스트 리시버 해제 (Service onDestroy에서만 호출)
+     * 오버레이 숨김
+     */
+    fun hideOverlay(packageName: String) {
+        overlayByPackage[packageName]?.let { overlay ->
+            try {
+                if (overlay.isShowing()) {
+                    overlay.dismiss()
+                    Log.d(TAG, "[$packageName] Overlay dismissed")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "[$packageName] Error dismissing overlay", e)
+            }
+        }
+
+        overlayByPackage.remove(packageName)
+    }
+
+    /**
+     * 오버레이 표시 여부
+     */
+    fun isOverlayVisible(packageName: String): Boolean {
+        return overlayByPackage[packageName]?.isShowing() == true
+    }
+
+    /**
+     * 정리
      */
     fun cleanup() {
-        hideOverlay()
+        // 모든 오버레이 제거
+        overlayByPackage.keys.toList().forEach { pkg ->
+            hideOverlay(pkg)
+        }
 
         if (isReceiverRegistered) {
             try {
@@ -119,80 +178,8 @@ class OverlayManager(
             }
         }
 
-        currentSessionId = ""
-        lastShownSessionId = ""
+        sessionIdByPackage.clear()
+        lastShownSessionIdByPackage.clear()
         Log.d(TAG, "OverlayManager cleaned up")
-    }
-
-    /**
-     * 오버레이 표시
-     *
-     * @param packageName 차단 대상 앱 패키지명
-     * @param sessionId 세션 ID
-     * @param overlayType 오버레이 타입 (INITIAL 또는 CONFIRMATION)
-     * @return 생성된 세션 ID
-     */
-    fun showOverlay(
-        packageName: String,
-        sessionId: String,
-        overlayType: OverlayType = OverlayType.INITIAL
-    ): String {
-        if (blockOverlay?.isShowing() == true) {
-            Log.w(TAG, "Overlay already showing - not showing again")
-            return currentSessionId
-        }
-
-        currentSessionId = sessionId
-        lastShownSessionId = sessionId  // 마지막 세션 ID 저장
-
-        try {
-            val overlay = BlockOverlay(context)
-
-            overlay.show(
-                onDismiss = {
-                    Log.d(TAG, "Overlay dismissed")
-                    blockOverlay = null
-                },
-                onComplete = {
-                    Log.d(TAG, "Timer completed")
-                    // 타이머 완료 시 콜백 호출 (버튼만 변경, 오버레이는 유지)
-                    onTimerCompleted()
-                },
-                onSkip = {
-                    Log.d(TAG, "Skip button pressed")
-                    hideOverlay()
-                    onSkip()
-                },
-                onWatch = {
-                    Log.d(TAG, "Watch button pressed")
-                    hideOverlay()
-                    onWatch()
-                },
-                sessionId = sessionId,
-                sourcePackage = packageName,
-                overlayType = overlayType
-            )
-
-            blockOverlay = overlay
-            Log.d(TAG, "Overlay shown for session: $sessionId, package: $packageName, type: $overlayType")
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to show overlay", e)
-        }
-
-        return sessionId
-    }
-
-    /**
-     * 현재 오버레이가 표시 중인지 확인
-     */
-    fun isOverlayVisible(): Boolean {
-        return blockOverlay?.isShowing() == true
-    }
-
-    /**
-     * 현재 세션 ID 반환
-     */
-    fun getCurrentSessionId(): String {
-        return currentSessionId
     }
 }

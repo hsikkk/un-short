@@ -106,9 +106,9 @@ class ShortsBlockService : AccessibilityService() {
 
         if (!isBlockingEnabled) {
             // 차단 비활성화 시 오버레이 제거
-            if (overlayManager.isOverlayVisible()) {
+            if (overlayManager.isOverlayVisible(packageName)) {
                 cancelPendingOverlay()
-                overlayManager.hideOverlay()
+                overlayManager.hideOverlay(packageName)
             }
             return
         }
@@ -121,7 +121,7 @@ class ShortsBlockService : AccessibilityService() {
         Log.d(TAG, "Current state: ${sessionState.getCurrentState(packageName)}")
 
         // 오버레이 표시 중 포그라운드 앱 변경 감지
-        if (overlayManager.isOverlayVisible()) {
+        if (overlayManager.isOverlayVisible(packageName)) {
             val currentForegroundPackage = rootInActiveWindow?.packageName?.toString()
 
             if (currentForegroundPackage != null && currentForegroundPackage != lastForegroundPackage) {
@@ -140,7 +140,7 @@ class ShortsBlockService : AccessibilityService() {
         if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
             Log.d(TAG, "Window state changed: $packageName")
 
-            if (packageName !in AppBlockingRegistry.TARGET_PACKAGES && overlayManager.isOverlayVisible()) {
+            if (packageName !in AppBlockingRegistry.TARGET_PACKAGES && overlayManager.isOverlayVisible(packageName)) {
                 Log.d(TAG, "Left target app to $packageName, dismissing overlay")
                 handleLeavingTargetApp(prefs)
                 return
@@ -211,7 +211,7 @@ class ShortsBlockService : AccessibilityService() {
                     }
 
                     cancelPendingOverlay()
-                    overlayManager.hideOverlay()
+                    overlayManager.hideOverlay(packageName)
                 } else {
                     // 쇼츠 화면 내에서 콘텐츠 변화 감지
                     Log.d(TAG, "Still in shorts, state=$currentState, checking for scroll...")
@@ -264,7 +264,7 @@ class ShortsBlockService : AccessibilityService() {
     private fun handleStateActions(packageName: String, prefs: android.content.SharedPreferences) {
         val overlayType = sessionState.getOverlayType(packageName)
 
-        if (overlayType != null && !overlayManager.isOverlayVisible()) {
+        if (overlayType != null && !overlayManager.isOverlayVisible(packageName)) {
             // 오버레이 표시 필요
             Log.d(TAG, "State requires overlay: $overlayType")
             showBlockOverlay(packageName, overlayType)
@@ -276,7 +276,7 @@ class ShortsBlockService : AccessibilityService() {
      */
     private fun handleLeavingTargetApp(prefs: android.content.SharedPreferences) {
         cancelPendingOverlay()
-        overlayManager.hideOverlay()
+        overlayManager.hideOverlay(packageName)
         sessionState.handleEvent(SessionEvent.Reset, packageName)
 
         // SharedPreferences 클리어
@@ -301,7 +301,7 @@ class ShortsBlockService : AccessibilityService() {
         }
 
         // 이미 오버레이가 표시 중이면 스킵
-        if (overlayManager.isOverlayVisible()) {
+        if (overlayManager.isOverlayVisible(packageName)) {
             Log.d(TAG, "Overlay already visible - skipping")
             return
         }
@@ -388,13 +388,13 @@ class ShortsBlockService : AccessibilityService() {
                             currentForegroundPackage == packageName -> {
                                 Log.d(TAG, "Switched to our app ($currentForegroundPackage) - entering background")
                                 sessionState.handleEvent(SessionEvent.EnterBackground, packageName)
-                                overlayManager.hideOverlay()
+                                overlayManager.hideOverlay(packageName)
                             }
                             // 다른 앱 - Background 상태로 전이
                             else -> {
                                 Log.d(TAG, "Switched to other app ($currentForegroundPackage) - entering background")
                                 sessionState.handleEvent(SessionEvent.EnterBackground, packageName)
-                                overlayManager.hideOverlay()
+                                overlayManager.hideOverlay(packageName)
                                 stopForegroundCheck()
                                 return
                             }
