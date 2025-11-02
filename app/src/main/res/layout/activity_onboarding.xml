@@ -53,6 +53,24 @@
 
     </LinearLayout>
 
+    <!-- Skip Button (Top Right, aligned with indicators) -->
+    <TextView
+        android:id="@+id/skipButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/onboarding_skip"
+        android:textSize="16sp"
+        android:textColor="@color/gray_600"
+        android:fontFamily="@font/spoqa_sans_neo_medium"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="8dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toTopOf="@id/indicatorContainer"
+        app:layout_constraintBottom_toBottomOf="@id/indicatorContainer"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- ViewPager2 -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"

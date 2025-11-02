@@ -37,22 +37,11 @@ class OnboardingActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager2
     private lateinit var indicators: List<View>
+    private lateinit var skipButton: TextView
 
     // 애니메이션 관련
     private var timerAnimator: ValueAnimator? = null
     private val handler = Handler(Looper.getMainLooper())
-
-    // 5번째 페이지의 권한 설정 뷰들
-    private var accessibilityCard: View? = null
-    private var overlayCard: View? = null
-    private var onboardingServiceStatusText: TextView? = null
-    private var onboardingServiceDescription: TextView? = null
-    private var onboardingOverlayStatusText: TextView? = null
-    private var onboardingOverlayDescription: TextView? = null
-    private var onboardingSettingsButton: Button? = null
-    private var onboardingOverlayButton: Button? = null
-    private var startButton: Button? = null
-    private lateinit var permissionUIHelper: PermissionUIHelper
 
     private val layouts = listOf(
         R.layout.onboarding_page_1,
@@ -104,8 +93,8 @@ class OnboardingActivity : AppCompatActivity() {
             showPrivacyConsentDialog()
         }
 
-        permissionUIHelper = PermissionUIHelper(this)
         viewPager = findViewById(R.id.viewPager)
+        skipButton = findViewById(R.id.skipButton)
 
         indicators = listOf(
             findViewById(R.id.indicator1),
@@ -115,6 +104,11 @@ class OnboardingActivity : AppCompatActivity() {
             findViewById(R.id.indicator5)
         )
 
+        // Skip button click listener
+        skipButton.setOnClickListener {
+            finishOnboarding()
+        }
+
         // ViewPager2 어댑터 설정
         viewPager.adapter = OnboardingAdapter(layouts)
 
@@ -123,6 +117,9 @@ class OnboardingActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 updateIndicators(position)
+
+                // Skip button visibility: 페이지 1-4에만 표시, 5번째 페이지는 숨김
+                skipButton.visibility = if (position < 4) View.VISIBLE else View.GONE
 
                 // 페이지별 애니메이션 시작
                 handler.postDelayed({
@@ -146,37 +143,6 @@ class OnboardingActivity : AppCompatActivity() {
                 view.setBackgroundResource(R.drawable.indicator_inactive)
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // 권한 설정에서 돌아왔을 때 UI 업데이트 (3페이지에 있을 때만)
-        updatePermissionUI()
-    }
-
-    private fun updatePermissionUI() {
-        // 접근성 서비스 카드 업데이트
-        permissionUIHelper.updateAccessibilityCard(
-            PermissionUIHelper.PermissionUIElements(
-                card = accessibilityCard,
-                statusText = onboardingServiceStatusText,
-                descriptionText = onboardingServiceDescription,
-                settingsButton = onboardingSettingsButton
-            )
-        )
-
-        // 오버레이 권한 카드 업데이트
-        permissionUIHelper.updateOverlayCard(
-            PermissionUIHelper.PermissionUIElements(
-                card = overlayCard,
-                statusText = onboardingOverlayStatusText,
-                descriptionText = onboardingOverlayDescription,
-                settingsButton = onboardingOverlayButton
-            )
-        )
-
-        // 시작하기 버튼 표시 업데이트
-        permissionUIHelper.updateCompleteButton(startButton)
     }
 
     private fun finishOnboarding() {
@@ -205,9 +171,9 @@ class OnboardingActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: OnboardingViewHolder, position: Int) {
-            // 5페이지(권한 설정 페이지)인 경우 버튼 리스너 설정
+            // 5페이지(시작 페이지)인 경우 버튼 리스너 설정
             if (position == 4) {
-                setupPermissionPage(holder.itemView)
+                setupStartPage(holder.itemView)
             }
         }
 
@@ -218,37 +184,12 @@ class OnboardingActivity : AppCompatActivity() {
 
     class OnboardingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    private fun setupPermissionPage(view: View) {
-        accessibilityCard = view.findViewById(R.id.onboardingAccessibilityCard)
-        overlayCard = view.findViewById(R.id.onboardingOverlayCard)
-        onboardingServiceStatusText = view.findViewById(R.id.onboardingServiceStatusText)
-        onboardingServiceDescription = view.findViewById(R.id.onboardingServiceDescription)
-        onboardingOverlayStatusText = view.findViewById(R.id.onboardingOverlayStatusText)
-        onboardingOverlayDescription = view.findViewById(R.id.onboardingOverlayDescription)
-        onboardingSettingsButton = view.findViewById(R.id.onboardingSettingsButton)
-        onboardingOverlayButton = view.findViewById(R.id.onboardingOverlayButton)
-        startButton = view.findViewById(R.id.startButton)
-
-        Log.d("OnboardingActivity", "setupPermissionPage - Views found - settingsButton: ${onboardingSettingsButton != null}, overlayButton: ${onboardingOverlayButton != null}")
-
-        // 버튼 리스너 설정
-        onboardingSettingsButton?.setOnClickListener {
-            Log.d("OnboardingActivity", "Accessibility button clicked")
-            PermissionUtils.openAccessibilitySettings(this)
-        }
-
-        onboardingOverlayButton?.setOnClickListener {
-            Log.d("OnboardingActivity", "Overlay button clicked")
-            PermissionUtils.openOverlaySettings(this)
-        }
-
+    private fun setupStartPage(view: View) {
+        val startButton = view.findViewById<Button>(R.id.startButton)
         startButton?.setOnClickListener {
             Log.d("OnboardingActivity", "Start button clicked")
             finishOnboarding()
         }
-
-        // 초기 상태 업데이트
-        updatePermissionUI()
     }
 
     private fun startPageAnimation(position: Int) {

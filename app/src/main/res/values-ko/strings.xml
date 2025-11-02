@@ -88,8 +88,10 @@
     <string name="onboarding_page2_title">쇼츠를 보고 싶다면\n잠시 생각해보세요</string>
     <string name="onboarding_page3_title">그래도 보고 싶다면,\n잠깐의 여유를 가져보세요</string>
     <string name="onboarding_page4_title">마지막으로\n한 번 더 생각해보세요</string>
-    <string name="onboarding_page5_title">쇼츠 차단을 위해서\n권한을 허용해주세요</string>
+    <string name="onboarding_page5_title">이제 시작해볼까요?</string>
+    <string name="onboarding_page5_subtitle">un:short와 함께\n의도적인 미디어 소비를 시작하세요</string>
     <string name="onboarding_start_button">시작하기</string>
+    <string name="onboarding_skip">건너뛰기</string>
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">대기 시간</string>
