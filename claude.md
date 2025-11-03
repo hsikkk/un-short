@@ -25,11 +25,6 @@
 - `primary_medium` #2D2D2D
 - `primary_light` #424242
 
-#### Accent Colors (생동감)
-- `accent_purple` #8B5CF6 - 메인 액센트, 타이머 강조
-- `accent_purple_light` #A78BFA - 보조 강조
-- `accent_blue` #3B82F6 - 오버레이 권한 섹션 강조
-
 #### Status Colors (직관적 피드백)
 - `success` #10B981 - 완료/활성화 상태
 - `warning` #F59E0B - 경고
@@ -39,6 +34,11 @@
 - Gray 50~900 스케일로 섬세한 계층 표현
 - `gray_50` #FAFAFA - 배경
 - `white` #FFFFFF - 카드 배경
+
+**디자인 철학:**
+- 다크/그레이스케일 중심의 미니멀리즘
+- 색상은 상태 표시 목적으로만 사용 (성공/경고/에러)
+- 타이포그래피와 여백으로 시각적 계층 표현
 
 ### 3. 타이포그래피
 
