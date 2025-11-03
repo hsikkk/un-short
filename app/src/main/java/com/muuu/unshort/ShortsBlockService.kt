@@ -257,6 +257,8 @@ class ShortsBlockService : AccessibilityService() {
                     }
 
                     cancelPendingOverlay()
+                    restoreVolume(packageName)
+
                     overlayManager.hideOverlay(packageName)
                 } else {
                     // 쇼츠 화면 내에서 콘텐츠 변화 감지
@@ -404,6 +406,8 @@ class ShortsBlockService : AccessibilityService() {
             } catch (e: Exception) {
                 Log.e(TAG, "Error showing overlay", e)
                 pendingOverlayJob = null
+
+                restoreVolume(packageName)
             }
         }
 
