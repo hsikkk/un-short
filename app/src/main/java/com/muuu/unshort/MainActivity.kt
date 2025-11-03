@@ -33,6 +33,7 @@ class MainActivity : BaseActivity() {
     private lateinit var statusDot: View
     private lateinit var statusLabel: TextView
     private lateinit var settingsButton: ImageView
+    private lateinit var settingsBadge: View
     private lateinit var settingsTipBanner: FrameLayout
     private lateinit var settingsTipCloseButton: TextView
     private lateinit var bannerAdView: MuuuBannerAdView
@@ -88,6 +89,7 @@ class MainActivity : BaseActivity() {
         statusDot = findViewById(R.id.statusDot)
         statusLabel = findViewById(R.id.statusLabel)
         settingsButton = findViewById(R.id.settingsButton)
+        settingsBadge = findViewById(R.id.settingsBadge)
         settingsTipBanner = findViewById(R.id.settingsTipBanner)
         settingsTipCloseButton = findViewById(R.id.settingsTipCloseButton)
 
@@ -161,6 +163,7 @@ class MainActivity : BaseActivity() {
         super.onResume()
         checkPermissionsAndUpdateUI()
         updateSettingsTipBannerVisibility()
+        updateSettingsBadgeVisibility()
     }
 
     private fun checkPermissionsAndUpdateUI() {
@@ -185,6 +188,10 @@ class MainActivity : BaseActivity() {
     private fun updateSettingsTipBannerVisibility() {
         val shouldShow = !prefsManager.hasVisitedSettings && !prefsManager.hasSeenSettingsTip
         settingsTipBanner.visibility = if (shouldShow) View.VISIBLE else View.GONE
+    }
+
+    private fun updateSettingsBadgeVisibility() {
+        settingsBadge.visibility = if (!prefsManager.hasVisitedSettings) View.VISIBLE else View.INVISIBLE
     }
 
     private fun checkPermissions(): Boolean {
