@@ -323,6 +323,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
+            <!-- 안내 문구 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blocked_apps_notice"
+                android:textSize="12sp"
+                android:fontFamily="@font/spoqa_sans_neo_light"
+                android:textColor="#9E9E9E"
+                android:alpha="0.7"
+                android:layout_marginTop="16dp"
+                android:lineSpacingExtra="2dp" />
+
         </LinearLayout>
 
     </LinearLayout>

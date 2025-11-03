@@ -35,6 +35,9 @@
     <string name="blocked_apps_title">차단 대상</string>
     <string name="app_youtube_shorts">YouTube Shorts</string>
     <string name="app_instagram_reels">Instagram Reels</string>
+    <string name="app_facebook_reels">Facebook Reels</string>
+    <string name="app_naver_shorts">네이버 클립</string>
+    <string name="blocked_apps_notice">• 설치된 앱만 표시됩니다\n• 일부 앱 버전에서는 차단되지 않을 수 있습니다</string>
     <string name="permission_warning_icon">⚠</string>
     <string name="permission_warning_title">권한이 필요합니다</string>
     <string name="permission_warning_message">차단 기능을 사용하려면\n접근성 및 오버레이 권한이 필요합니다</string>
