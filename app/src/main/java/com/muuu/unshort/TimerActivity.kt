@@ -6,8 +6,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.SharedPreferences
 import android.graphics.Color
+import com.muuu.unshort.prefs.PreferencesManager
 import android.graphics.drawable.GradientDrawable
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -64,7 +64,7 @@ class TimerActivity : BaseActivity() {
     private var isTimerRunning = false
     private var isFlipped = false
     private var accumulatedRotation = 0f // 폰 아이콘 애니메이션 누적 회전 각도
-    private lateinit var prefs: SharedPreferences
+    private lateinit var prefsManager: PreferencesManager
     private lateinit var currentSessionId: String
     private var sourcePackageName: String = ""
     private lateinit var flipDetector: FlipDetector
@@ -109,10 +109,10 @@ class TimerActivity : BaseActivity() {
         sourcePackageName = intent.getStringExtra("source_package") ?: ""
         Log.d(TAG, "onCreate with session_id: $currentSessionId, source_package: $sourcePackageName")
 
-        prefs = getSharedPreferences(AppConstants.PREF_NAME, Context.MODE_PRIVATE)
+        prefsManager = PreferencesManager(this)
 
         // 설정에서 타이머 시간 읽어오기 (기본값: 30초)
-        timerDuration = prefs.getInt(AppConstants.PREF_WAIT_TIME, 30)
+        timerDuration = prefsManager.waitTime
         remainingSeconds = timerDuration
         remainingMillis = (timerDuration * 1000).toLong()
         Log.d(TAG, "Timer duration set to: $timerDuration seconds")
@@ -159,7 +159,7 @@ class TimerActivity : BaseActivity() {
         continueButton.setOnClickListener {
             // Mark timer as completed for this session
             if (currentSessionId.isNotEmpty()) {
-                prefs.edit().putString(AppConstants.PREF_COMPLETED_SESSION_ID, currentSessionId).apply()
+                prefsManager.completedSessionId = currentSessionId
                 Log.d(TAG, "Timer completed for session: $currentSessionId")
             }
 
@@ -333,7 +333,7 @@ class TimerActivity : BaseActivity() {
 
                 // Mark timer as completed for this session
                 if (currentSessionId.isNotEmpty()) {
-                    prefs.edit().putString(AppConstants.PREF_COMPLETED_SESSION_ID, currentSessionId).apply()
+                    prefsManager.completedSessionId = currentSessionId
                     Log.d(TAG, "Timer completed for session: $currentSessionId")
 
                     // Send broadcast to notify OverlayManager
@@ -365,8 +365,7 @@ class TimerActivity : BaseActivity() {
 
     private fun triggerHapticFeedback() {
         // Check if haptic feedback is enabled in settings
-        val isHapticEnabled = prefs.getBoolean(AppConstants.PREF_HAPTIC_ENABLED, true)
-        if (!isHapticEnabled) {
+        if (!prefsManager.isHapticEnabled) {
             Log.d(TAG, "Haptic feedback disabled in settings")
             return
         }
