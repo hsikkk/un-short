@@ -12,17 +12,17 @@ object AdConfig {
      * 테스트용 배너 광고 단위 ID
      * 실제 운영 시에는 실제 광고 단위 ID로 교체
      */
-    const val BANNER_HOME_BOTTOM = "ca-app-pub-3940256099942544/6300978111"
+    const val BANNER_HOME_BOTTOM = "ca-app-pub-4831094849543419/7233881974"
 
     /**
      * 타이머 화면 하단 배너 광고
      */
-    const val BANNER_TIMER_BOTTOM = "ca-app-pub-3940256099942544/6300978111"
+    const val BANNER_TIMER_BOTTOM = "ca-app-pub-4831094849543419/2199873682"
 
     /**
      * 타이머 화면 상단 네이티브 광고
      */
-    const val NATIVE_TIMER_TOP = "ca-app-pub-3940256099942544/2247696110"
+    const val NATIVE_TIMER_TOP = "ca-app-pub-4831094849543419/1719036695"
 
     // 향후 다른 광고 단위 ID 추가 예시:
     // const val BANNER_SETTINGS = "ca-app-pub-xxxxx/xxxxx"
