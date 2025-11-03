@@ -351,7 +351,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
 
                     <ImageView
                         android:layout_width="18dp"
@@ -363,6 +364,55 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/app_instagram_reels"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/spoqa_sans_neo_light"
+                        android:textColor="#000000"
+                        android:alpha="0.5" />
+
+                </LinearLayout>
+
+                <!-- Facebook Reels -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_facebook"
+                        android:layout_marginEnd="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_facebook_reels"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/spoqa_sans_neo_light"
+                        android:textColor="#000000"
+                        android:alpha="0.5" />
+
+                </LinearLayout>
+
+                <!-- Naver Shorts -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_naver"
+                        android:layout_marginEnd="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_naver_shorts"
                         android:textSize="15sp"
                         android:fontFamily="@font/spoqa_sans_neo_light"
                         android:textColor="#000000"

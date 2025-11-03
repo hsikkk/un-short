@@ -147,6 +147,111 @@ object AppBlockingRegistry {
         )
     )
 
+    val FACEBOOK = AppBlockingConfig(
+        packageName = "com.facebook.katana",
+        displayName = "Facebook Reels",
+        viewIdDetectors = listOf(
+            ViewIdDetector("com.facebook.katana:id/video_feed_container"),
+            ViewIdDetector("com.facebook.katana:id/reels_viewer_fragment_container")
+        ),
+        textDetectors = listOf(
+            TextDetector(
+                text = "Reels",
+                requiresSelection = false,
+                searchType = SearchType.TEXT
+            ),
+            TextDetector(
+                text = "릴스",
+                requiresSelection = false,
+                searchType = SearchType.TEXT
+            )
+        ),
+        hashConfig = HashConfig(
+            containerViewId = "com.facebook.katana:id/video_feed_container",
+            includedViewIdPatterns = listOf(
+                "username",
+                "caption",
+                "description",
+                "user_name",
+                "text_content",
+                "primary_text",
+                "title"
+            ),
+            excludedViewIdPatterns = listOf(
+                "comment",
+                "like",
+                "share",
+                "action_bar",
+                "button",
+                "progress",
+                "time",
+                "duration",
+                "seek",
+                "player_control",
+                "reaction"
+            ),
+            excludedTextPatterns = listOf(
+                Regex("^\\d+[KMB]?$"),          // 1K, 10M, 100B 등
+                Regex("^\\d+\\.\\d+[KMB]?$")    // 1.2K, 3.5M 등
+            ),
+            maxDepth = 8,
+            textValidator = { text ->
+                text.length > 2 && !text.all { it.isDigit() || it == ',' || it == '.' }
+            }
+        )
+    )
+
+    val NAVER = AppBlockingConfig(
+        packageName = "com.nhn.android.search",
+        displayName = "Naver Shorts",
+        viewIdDetectors = listOf(
+            // 네이버는 View ID를 사용하지 않음
+        ),
+        textDetectors = listOf(
+            TextDetector(
+                text = "#네이버클립",
+                requiresSelection = false,
+                searchType = SearchType.TEXT
+            ),
+            TextDetector(
+                text = "#네이버숏폼",
+                requiresSelection = false,
+                searchType = SearchType.TEXT
+            )
+        ),
+        hashConfig = HashConfig(
+            containerViewId = "com.nhn.android.search:id/shorts_container",
+            includedViewIdPatterns = listOf(
+                "title",
+                "username",
+                "caption",
+                "description",
+                "text_content",
+                "author"
+            ),
+            excludedViewIdPatterns = listOf(
+                "comment",
+                "like",
+                "share",
+                "action",
+                "button",
+                "progress",
+                "time",
+                "duration",
+                "seek",
+                "player_control"
+            ),
+            excludedTextPatterns = listOf(
+                Regex("^\\d+[만천억]?$"),        // 1만, 10천 등
+                Regex("^\\d+\\.\\d+[만천억]?$")  // 1.2만 등
+            ),
+            maxDepth = 8,
+            textValidator = { text ->
+                text.length > 2 && !text.all { it.isDigit() || it == ',' || it == '.' }
+            }
+        )
+    )
+
     // TikTok은 추후 추가 예정
     // val TIKTOK = AppBlockingConfig(...)
 
@@ -155,7 +260,9 @@ object AppBlockingRegistry {
      */
     val ALL_CONFIGS = listOf(
         YOUTUBE,
-        INSTAGRAM
+        INSTAGRAM,
+        FACEBOOK,
+        NAVER
     )
 
     /**
