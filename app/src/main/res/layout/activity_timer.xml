@@ -240,14 +240,14 @@
     <LinearLayout
         android:id="@+id/successScreen"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
         android:gravity="center"
         android:background="#000000"
         android:padding="24dp"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/nativeAdContainer"
+        app:layout_constraintBottom_toTopOf="@id/adViewContainer">
 
         <!-- Success Icon -->
         <!-- CSS: width: 80px, height: 80px, border: 3px solid #fff, border-radius: 50%, margin-bottom: 24px -->

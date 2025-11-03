@@ -55,7 +55,7 @@
     <string name="settings_haptic_title">햅틱 피드백</string>
     <string name="settings_haptic_desc">타이머 완료 시 진동 알림</string>
     <string name="settings_block_scrolled_title">스크롤한 쇼츠만 차단</string>
-    <string name="settings_block_scrolled_desc">스크롤 시 다음 쇼츠만 차단</string>
+    <string name="settings_block_scrolled_desc">첫 번째 쇼츠 허용, 스크롤 시 차단</string>
     <string name="settings_prevent_disable_title">충동적 차단 비활성화 방지</string>
     <string name="settings_prevent_disable_desc">의도치 않은 차단 비활성화 방지</string>
     <string name="settings_section_additional">부가 기능</string>
