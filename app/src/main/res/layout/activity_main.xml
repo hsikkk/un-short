@@ -316,111 +316,12 @@
                 android:layout_marginBottom="16dp"
                 android:textAllCaps="true" />
 
+            <!-- 동적으로 생성될 앱 리스트 컨테이너 -->
             <LinearLayout
+                android:id="@+id/blockedAppsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <!-- YouTube Shorts -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="12dp">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/ic_youtube"
-                        android:layout_marginEnd="10dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_youtube_shorts"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/spoqa_sans_neo_light"
-                        android:textColor="#000000"
-                        android:alpha="0.5" />
-
-                </LinearLayout>
-
-                <!-- Instagram Reels -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="12dp">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/ic_instagram"
-                        android:layout_marginEnd="10dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_instagram_reels"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/spoqa_sans_neo_light"
-                        android:textColor="#000000"
-                        android:alpha="0.5" />
-
-                </LinearLayout>
-
-                <!-- Facebook Reels -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="12dp">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/ic_facebook"
-                        android:layout_marginEnd="10dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_facebook_reels"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/spoqa_sans_neo_light"
-                        android:textColor="#000000"
-                        android:alpha="0.5" />
-
-                </LinearLayout>
-
-                <!-- Naver Shorts -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/ic_naver"
-                        android:layout_marginEnd="10dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_naver_shorts"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/spoqa_sans_neo_light"
-                        android:textColor="#000000"
-                        android:alpha="0.5" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+                android:orientation="vertical" />
 
         </LinearLayout>
 

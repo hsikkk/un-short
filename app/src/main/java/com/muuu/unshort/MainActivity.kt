@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
@@ -17,6 +18,7 @@ import com.muuu.ad.view.MuuuBannerAdView
 import com.muuu.ad.core.adunit.MuuuBannerAdUnit
 import com.muuu.ad.core.model.MuuuBannerSize
 import com.muuu.unshort.prefs.PreferencesManager
+import com.muuu.shortblock.service.blocking.AppBlockingRegistry
 
 class MainActivity : BaseActivity() {
 
@@ -38,6 +40,7 @@ class MainActivity : BaseActivity() {
     private lateinit var settingsTipCloseButton: TextView
     private lateinit var bannerAdView: MuuuBannerAdView
     private lateinit var prefsManager: PreferencesManager
+    private lateinit var blockedAppsContainer: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +95,10 @@ class MainActivity : BaseActivity() {
         settingsBadge = findViewById(R.id.settingsBadge)
         settingsTipBanner = findViewById(R.id.settingsTipBanner)
         settingsTipCloseButton = findViewById(R.id.settingsTipCloseButton)
+        blockedAppsContainer = findViewById(R.id.blockedAppsContainer)
+
+        // 설치된 앱만 동적으로 생성하여 표시
+        populateBlockedApps()
 
         // 권한 설정 버튼 클릭 리스너
         permissionSettingsButton.setOnClickListener {
@@ -297,6 +304,62 @@ class MainActivity : BaseActivity() {
             }
         )
         dialog.show()
+    }
+
+    /**
+     * 설치된 앱만 동적으로 생성하여 표시
+     */
+    private fun populateBlockedApps() {
+        // 컨테이너 초기화
+        blockedAppsContainer.removeAllViews()
+
+        // 설치된 앱만 필터링
+        val installedConfigs = AppBlockingRegistry.ALL_CONFIGS
+            .filter { isAppInstalled(it.packageName) }
+
+        // 각 앱에 대해 View 동적 생성
+        installedConfigs.forEachIndexed { index, config ->
+            val appItemView = createAppItemView(config, isLast = index == installedConfigs.size - 1)
+            blockedAppsContainer.addView(appItemView)
+        }
+    }
+
+    /**
+     * 앱 항목 View 생성 (레이아웃 inflate 방식)
+     */
+    private fun createAppItemView(config: com.muuu.shortblock.service.blocking.AppBlockingConfig, isLast: Boolean): View {
+        val density = resources.displayMetrics.density
+        val inflater = layoutInflater
+
+        val itemView = inflater.inflate(R.layout.item_blocked_app, blockedAppsContainer, false)
+
+        // LayoutParams 설정 (margin)
+        itemView.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            bottomMargin = if (!isLast) (12 * density).toInt() else 0
+        }
+
+        // 아이콘 설정
+        itemView.findViewById<ImageView>(R.id.appIcon).setImageResource(config.iconResId)
+
+        // 텍스트 설정
+        itemView.findViewById<TextView>(R.id.appName).text = config.displayName
+
+        return itemView
+    }
+
+    /**
+     * 특정 패키지가 설치되어 있는지 확인
+     */
+    private fun isAppInstalled(packageName: String): Boolean {
+        return try {
+            packageManager.getPackageInfo(packageName, 0)
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 
 }

@@ -15,6 +15,14 @@
     <!-- Android 13+ advertising ID permission (for future ads/analytics) -->
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
+    <!-- Package Visibility (Android 11+) -->
+    <queries>
+        <package android:name="com.google.android.youtube" />
+        <package android:name="com.instagram.android" />
+        <package android:name="com.facebook.katana" />
+        <package android:name="com.nhn.android.search" />
+    </queries>
+
     <application
         android:name=".UnshortApplication"
         android:allowBackup="true"

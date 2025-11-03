@@ -1,5 +1,7 @@
 package com.muuu.shortblock.service.blocking
 
+import com.muuu.unshort.R
+
 /**
  * 쇼츠 감지를 위한 View ID 감지기 설정
  */
@@ -39,6 +41,7 @@ data class HashConfig(
 data class AppBlockingConfig(
     val packageName: String,
     val displayName: String,
+    val iconResId: Int,  // 아이콘 리소스 ID
     val viewIdDetectors: List<ViewIdDetector>,
     val textDetectors: List<TextDetector>,
     val hashConfig: HashConfig
@@ -56,6 +59,7 @@ object AppBlockingRegistry {
     val YOUTUBE = AppBlockingConfig(
         packageName = "com.google.android.youtube",
         displayName = "YouTube Shorts",
+        iconResId = R.drawable.ic_youtube,
         viewIdDetectors = listOf(
             ViewIdDetector("com.google.android.youtube:id/reel_player_page_container")
         ),
@@ -101,6 +105,7 @@ object AppBlockingRegistry {
     val INSTAGRAM = AppBlockingConfig(
         packageName = "com.instagram.android",
         displayName = "Instagram Reels",
+        iconResId = R.drawable.ic_instagram,
         viewIdDetectors = listOf(
             ViewIdDetector("com.instagram.android:id/clips_viewer_view_pager")
         ),
@@ -150,6 +155,7 @@ object AppBlockingRegistry {
     val FACEBOOK = AppBlockingConfig(
         packageName = "com.facebook.katana",
         displayName = "Facebook Reels",
+        iconResId = R.drawable.ic_facebook,
         viewIdDetectors = listOf(
             ViewIdDetector("com.facebook.katana:id/video_feed_container"),
             ViewIdDetector("com.facebook.katana:id/reels_viewer_fragment_container")
@@ -204,6 +210,7 @@ object AppBlockingRegistry {
     val NAVER = AppBlockingConfig(
         packageName = "com.nhn.android.search",
         displayName = "Naver Shorts",
+        iconResId = R.drawable.ic_naver,
         viewIdDetectors = listOf(
             // 네이버는 View ID를 사용하지 않음
         ),
