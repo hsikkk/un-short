@@ -171,6 +171,8 @@ class MainActivity : BaseActivity() {
         checkPermissionsAndUpdateUI()
         updateSettingsTipBannerVisibility()
         updateSettingsBadgeVisibility()
+        // 앱 설치/삭제 상황 반영
+        populateBlockedApps()
     }
 
     private fun checkPermissionsAndUpdateUI() {
