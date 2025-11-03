@@ -32,7 +32,7 @@
     <string name="status_active">ACTIVE</string>
     <string name="status_inactive">INACTIVE</string>
     <string name="toggle_description">Power toggle</string>
-    <string name="blocked_apps_title">Blocked Apps</string>
+    <string name="blocked_apps_title">Blocked Apps: </string>
     <string name="app_youtube_shorts">YouTube Shorts</string>
     <string name="app_instagram_reels">Instagram Reels</string>
     <string name="app_facebook_reels">Facebook Reels</string>
