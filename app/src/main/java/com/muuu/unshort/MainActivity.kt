@@ -12,8 +12,14 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.text.buildSpannedString
+import androidx.core.text.bold
+import androidx.lifecycle.lifecycleScope
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
+import com.muuu.unshort.data.statistics.StatisticsRepository
+import kotlinx.coroutines.launch
+import java.util.Calendar
 import com.muuu.ad.view.MuuuBannerAdView
 import com.muuu.ad.core.adunit.MuuuBannerAdUnit
 import com.muuu.ad.core.model.MuuuBannerSize
@@ -34,6 +40,8 @@ class MainActivity : BaseActivity() {
     private lateinit var offText: TextView
     private lateinit var statusDot: View
     private lateinit var statusLabel: TextView
+    private lateinit var shortsEntryNumber: TextView
+    private lateinit var shortsConsumptionNumber: TextView
     private lateinit var settingsButton: ImageView
     private lateinit var settingsBadge: View
     private lateinit var settingsTipBanner: FrameLayout
@@ -92,6 +100,8 @@ class MainActivity : BaseActivity() {
         offText = findViewById(R.id.offText)
         statusDot = findViewById(R.id.statusDot)
         statusLabel = findViewById(R.id.statusLabel)
+        shortsEntryNumber = findViewById(R.id.shortsEntryNumber)
+        shortsConsumptionNumber = findViewById(R.id.shortsConsumptionNumber)
         settingsButton = findViewById(R.id.settingsButton)
         settingsBadge = findViewById(R.id.settingsBadge)
         settingsTipBanner = findViewById(R.id.settingsTipBanner)
@@ -173,6 +183,7 @@ class MainActivity : BaseActivity() {
         checkPermissionsAndUpdateUI()
         updateSettingsTipBannerVisibility()
         updateSettingsBadgeVisibility()
+        updateStatisticsSummary()
         // 앱 설치/삭제 상황 반영
         populateBlockedApps()
     }
@@ -360,6 +371,54 @@ class MainActivity : BaseActivity() {
             true
         } catch (e: Exception) {
             false
+        }
+    }
+
+    /**
+     * 오늘 쇼츠 진입/소비 통계 업데이트
+     */
+    private fun updateStatisticsSummary() {
+        lifecycleScope.launch {
+            try {
+                val startOfDay = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, 0)
+                    set(Calendar.MINUTE, 0)
+                    set(Calendar.SECOND, 0)
+                    set(Calendar.MILLISECOND, 0)
+                }.timeInMillis
+
+                val endOfDay = System.currentTimeMillis()
+
+                val repository = StatisticsRepository(this@MainActivity)
+                val totalAttempts = repository.getSessionCountForDate(startOfDay, endOfDay)
+                val watchedCount = repository.getWatchCountForDate(startOfDay, endOfDay)
+
+                // 쇼츠 진입 숫자 업데이트
+                shortsEntryNumber.text = totalAttempts.toString()
+
+                // 숫자가 0이면 회색, 아니면 primary_dark
+                if (totalAttempts == 0) {
+                    shortsEntryNumber.setTextColor(Color.parseColor("#9E9E9E"))
+                } else {
+                    shortsEntryNumber.setTextColor(ResourcesCompat.getColor(resources, R.color.primary_dark, null))
+                }
+
+                // 쇼츠 소비 숫자 업데이트
+                shortsConsumptionNumber.text = watchedCount.toString()
+
+                // 숫자가 0이면 회색, 아니면 primary_dark
+                if (watchedCount == 0) {
+                    shortsConsumptionNumber.setTextColor(Color.parseColor("#9E9E9E"))
+                } else {
+                    shortsConsumptionNumber.setTextColor(ResourcesCompat.getColor(resources, R.color.primary_dark, null))
+                }
+
+            } catch (e: Exception) {
+                shortsEntryNumber.text = "0"
+                shortsConsumptionNumber.text = "0"
+                shortsEntryNumber.setTextColor(Color.parseColor("#9E9E9E"))
+                shortsConsumptionNumber.setTextColor(Color.parseColor("#9E9E9E"))
+            }
         }
     }
 
