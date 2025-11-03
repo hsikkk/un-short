@@ -8,6 +8,50 @@
     android:clickable="true"
     android:focusable="true">
 
+    <!-- Tip Message (Top) -->
+    <LinearLayout
+        android:id="@+id/tipContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="64dp"
+        android:orientation="horizontal"
+        android:gravity="start|center_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Tip Badge -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tip"
+            android:textSize="11sp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/spoqa_sans_neo_medium"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:background="@drawable/tip_badge_background"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Tip Message -->
+        <TextView
+            android:id="@+id/tipMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tip message"
+            android:textSize="13sp"
+            android:textColor="#FFFFFF"
+            android:alpha="0.4"
+            android:fontFamily="@font/spoqa_sans_neo_light"
+            android:gravity="start" />
+
+    </LinearLayout>
+
     <!-- Main Message -->
     <TextView
         android:id="@+id/mainMessage"

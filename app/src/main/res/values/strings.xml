@@ -184,4 +184,15 @@
     <string name="device_admin_disable_message">You may disable impulsively. Really disable?</string>
     <string name="device_admin_disable_phrase">disable deletion protection</string>
 
+    <!-- Overlay Tip Messages -->
+    <string-array name="overlay_tips">
+        <item>You can adjust wait time in settings</item>
+        <item>Find more blocking options in settings</item>
+        <item>How about reading a book instead?</item>
+        <item>Take a walk or do some stretching</item>
+        <item>A brief wait creates better choices</item>
+        <item>You\'re changing your habits right now</item>
+        <item>Do you really need this content now?</item>
+    </string-array>
+
 </resources>

@@ -15,6 +15,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
+import com.muuu.unshort.prefs.PreferencesManager
 
 class BlockOverlay(private val context: Context) {
 
@@ -26,7 +27,9 @@ class BlockOverlay(private val context: Context) {
     private lateinit var watchButton: TextView
     private lateinit var startTimerButton: TextView
     private lateinit var mainMessage: TextView
+    private lateinit var tipMessage: TextView
     private lateinit var buttonContainer: LinearLayout
+    private lateinit var prefsManager: PreferencesManager
 
     private var onDismissListener: (() -> Unit)? = null
     private var onCompleteListener: (() -> Unit)? = null
@@ -69,8 +72,13 @@ class BlockOverlay(private val context: Context) {
         watchButton = overlayView!!.findViewById(R.id.watchButton)
         startTimerButton = overlayView!!.findViewById(R.id.startTimerButton)
         mainMessage = overlayView!!.findViewById(R.id.mainMessage)
+        tipMessage = overlayView!!.findViewById(R.id.tipMessage)
         buttonContainer = overlayView!!.findViewById(R.id.buttonContainer)
         Log.d(TAG, "Overlay view inflated successfully")
+
+        // PreferencesManager 초기화 및 Tip 메시지 설정
+        prefsManager = PreferencesManager(context)
+        setupTipMessage()
 
         // 오버레이 타입에 따라 UI 결정
         val isTimerCompleted = overlayType == OverlayType.CONFIRMATION
@@ -300,5 +308,15 @@ class BlockOverlay(private val context: Context) {
             result = context.resources.getDimensionPixelSize(resourceId)
         }
         return result
+    }
+
+    private fun setupTipMessage() {
+        val tips = context.resources.getStringArray(R.array.overlay_tips)
+        val randomIndex = tips.indices.random()
+        val message = tips[randomIndex]
+
+        tipMessage.text = message
+
+        Log.d(TAG, "Tip message set: $message (random index: $randomIndex)")
     }
 }

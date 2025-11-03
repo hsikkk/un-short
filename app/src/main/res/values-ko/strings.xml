@@ -178,4 +178,15 @@
     <string name="device_admin_disable_message">충동적으로 해제할 수 있습니다. 정말 해제하시겠어요?</string>
     <string name="device_admin_disable_phrase">삭제 방지를 해제합니다</string>
 
+    <!-- Overlay Tip Messages -->
+    <string-array name="overlay_tips">
+        <item>대기 시간은 설정에서 조정할 수 있어요</item>
+        <item>설정에서 더 강력한 차단 옵션을 찾아보세요</item>
+        <item>이 시간에 책 한 페이지는 어떨까요?</item>
+        <item>잠깐 산책하거나 스트레칭은 어떨까요?</item>
+        <item>짧은 기다림이 더 나은 선택을 만들어요</item>
+        <item>지금 이 순간, 습관을 바꾸고 있어요</item>
+        <item>정말 지금 필요한 콘텐츠인가요?</item>
+    </string-array>
+
 </resources>
