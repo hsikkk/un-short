@@ -1,7 +1,10 @@
 package com.muuu.unshort
 
 import android.accessibilityservice.AccessibilityService
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
@@ -47,6 +50,9 @@ class ShortsBlockService : AccessibilityService() {
 
     // Fresh start 감지용
     private var appStartTime: Long = 0
+
+    // Screen state receiver
+    private var screenStateReceiver: ScreenStateReceiver? = null
 
     override fun onServiceConnected() {
         super.onServiceConnected()
@@ -99,6 +105,9 @@ class ShortsBlockService : AccessibilityService() {
             Log.d(TAG, "Restoring allowed state from SharedPreferences")
             sessionState.handleEvent(SessionEvent.TimerCompleted, packageName)  // 복원
         }
+
+        // Screen state receiver 등록
+        registerScreenStateReceiver()
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
@@ -624,6 +633,9 @@ class ShortsBlockService : AccessibilityService() {
     override fun onDestroy() {
         super.onDestroy()
 
+        // Screen state receiver 해제
+        unregisterScreenStateReceiver()
+
         // 모든 저장된 볼륨 복원
         savedVolumeByPackage.keys.toList().forEach { pkg ->
             restoreVolume(pkg)
@@ -634,5 +646,99 @@ class ShortsBlockService : AccessibilityService() {
         stopForegroundCheck()
         overlayManager.cleanup()
         Log.d(TAG, "Service destroyed")
+    }
+
+    /**
+     * Screen state receiver 등록
+     */
+    private fun registerScreenStateReceiver() {
+        try {
+            screenStateReceiver = ScreenStateReceiver()
+            val filter = IntentFilter().apply {
+                addAction(Intent.ACTION_SCREEN_OFF)
+                addAction(Intent.ACTION_USER_PRESENT)
+                addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
+            }
+            registerReceiver(screenStateReceiver, filter)
+            Log.d(TAG, "ScreenStateReceiver registered")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error registering ScreenStateReceiver", e)
+        }
+    }
+
+    /**
+     * Screen state receiver 해제
+     */
+    private fun unregisterScreenStateReceiver() {
+        try {
+            screenStateReceiver?.let {
+                unregisterReceiver(it)
+                screenStateReceiver = null
+                Log.d(TAG, "ScreenStateReceiver unregistered")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error unregistering ScreenStateReceiver", e)
+        }
+    }
+
+    /**
+     * 화면 상태 변화 감지 BroadcastReceiver
+     * - 화면 꺼짐 (ACTION_SCREEN_OFF)
+     * - 화면 잠금 해제 (ACTION_USER_PRESENT)
+     * - 홈 버튼/최근 앱 버튼 (ACTION_CLOSE_SYSTEM_DIALOGS)
+     */
+    private inner class ScreenStateReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (intent?.action) {
+                Intent.ACTION_SCREEN_OFF -> {
+                    Log.d(TAG, "Screen turned off - hiding overlay")
+                    handleScreenStateChange("SCREEN_OFF")
+                }
+                Intent.ACTION_USER_PRESENT -> {
+                    Log.d(TAG, "Screen unlocked")
+                    // 잠금 해제 시에는 오버레이를 숨기지 않음 (사용자가 다시 돌아온 것)
+                }
+                Intent.ACTION_CLOSE_SYSTEM_DIALOGS -> {
+                    val reason = intent.getStringExtra("reason")
+                    Log.d(TAG, "System dialogs closed - reason: $reason")
+                    when (reason) {
+                        "homekey" -> {
+                            Log.d(TAG, "Home button pressed - hiding overlay")
+                            handleScreenStateChange("HOME_BUTTON")
+                        }
+                        "recentapps" -> {
+                            Log.d(TAG, "Recent apps button pressed - hiding overlay")
+                            handleScreenStateChange("RECENT_APPS")
+                        }
+                    }
+                }
+            }
+        }
+
+        private fun handleScreenStateChange(trigger: String) {
+            // 오버레이가 표시 중일 때만 처리
+            if (overlayManager.isOverlayVisible(currentPackage)) {
+                Log.d(TAG, "[$trigger] Overlay visible - hiding and transitioning to background")
+
+                // Pending overlay job 취소
+                cancelPendingOverlay()
+
+                // 오버레이 숨김
+                overlayManager.hideOverlay(currentPackage)
+
+                // 볼륨 복원
+                restoreVolume(currentPackage)
+
+                // Background 상태로 전이
+                sessionState.handleEvent(SessionEvent.EnterBackground, currentPackage)
+
+                // Foreground check 중지
+                stopForegroundCheck()
+
+                Log.d(TAG, "[$trigger] Overlay hidden and state transitioned to background")
+            } else {
+                Log.d(TAG, "[$trigger] No overlay visible - ignoring")
+            }
+        }
     }
 }
