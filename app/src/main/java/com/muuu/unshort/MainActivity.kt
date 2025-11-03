@@ -37,6 +37,7 @@ class MainActivity : BaseActivity() {
     private lateinit var settingsButton: ImageView
     private lateinit var settingsBadge: View
     private lateinit var settingsTipBanner: FrameLayout
+    private lateinit var settingsTipBannerContent: LinearLayout
     private lateinit var settingsTipCloseButton: TextView
     private lateinit var bannerAdView: MuuuBannerAdView
     private lateinit var prefsManager: PreferencesManager
@@ -94,6 +95,7 @@ class MainActivity : BaseActivity() {
         settingsButton = findViewById(R.id.settingsButton)
         settingsBadge = findViewById(R.id.settingsBadge)
         settingsTipBanner = findViewById(R.id.settingsTipBanner)
+        settingsTipBannerContent = findViewById(R.id.settingsTipBannerContent)
         settingsTipCloseButton = findViewById(R.id.settingsTipCloseButton)
         blockedAppsContainer = findViewById(R.id.blockedAppsContainer)
 
@@ -113,14 +115,14 @@ class MainActivity : BaseActivity() {
             startActivity(intent)
         }
 
-        // 설정 팁 배너 전체 클릭 리스너
-        settingsTipBanner.setOnClickListener {
+        // 설정 팁 배너 콘텐츠 영역 클릭 리스너 (설정으로 이동)
+        settingsTipBannerContent.setOnClickListener {
             prefsManager.hasVisitedSettings = true
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
 
-        // 설정 팁 배너 닫기 버튼 클릭 리스너 (이벤트 전파 막기)
+        // 설정 팁 배너 닫기 버튼 클릭 리스너 (배너 숨김만)
         settingsTipCloseButton.setOnClickListener {
             prefsManager.hasSeenSettingsTip = true
             settingsTipBanner.visibility = View.GONE

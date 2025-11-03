@@ -111,6 +111,7 @@
             android:visibility="invisible">
 
             <LinearLayout
+                android:id="@+id/settingsTipBannerContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
