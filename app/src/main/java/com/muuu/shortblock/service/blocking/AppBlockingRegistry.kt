@@ -157,18 +157,19 @@ object AppBlockingRegistry {
         displayName = "Facebook Reels",
         iconResId = R.drawable.ic_facebook,
         viewIdDetectors = listOf(
-            ViewIdDetector("com.facebook.katana:id/video_feed_container"),
+            // video_feed_container 제거: 피드 전체에서 사용되어 오감지 발생
+            // reels_viewer_fragment_container만 사용: 전체화면 릴스 전용
             ViewIdDetector("com.facebook.katana:id/reels_viewer_fragment_container")
         ),
         textDetectors = listOf(
             TextDetector(
                 text = "Reels",
-                requiresSelection = false,
+                requiresSelection = true,  // false → true: 선택된 상태에서만 감지
                 searchType = SearchType.TEXT
             ),
             TextDetector(
                 text = "릴스",
-                requiresSelection = false,
+                requiresSelection = true,  // false → true: 선택된 상태에서만 감지
                 searchType = SearchType.TEXT
             )
         ),
