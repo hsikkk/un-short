@@ -34,7 +34,6 @@ class MainActivity : BaseActivity() {
     private lateinit var offText: TextView
     private lateinit var statusDot: View
     private lateinit var statusLabel: TextView
-    private lateinit var statisticsButton: ImageView
     private lateinit var settingsButton: ImageView
     private lateinit var settingsBadge: View
     private lateinit var settingsTipBanner: FrameLayout
@@ -93,7 +92,6 @@ class MainActivity : BaseActivity() {
         offText = findViewById(R.id.offText)
         statusDot = findViewById(R.id.statusDot)
         statusLabel = findViewById(R.id.statusLabel)
-        statisticsButton = findViewById(R.id.statisticsButton)
         settingsButton = findViewById(R.id.settingsButton)
         settingsBadge = findViewById(R.id.settingsBadge)
         settingsTipBanner = findViewById(R.id.settingsTipBanner)
@@ -107,12 +105,6 @@ class MainActivity : BaseActivity() {
         // 권한 설정 버튼 클릭 리스너
         permissionSettingsButton.setOnClickListener {
             val intent = Intent(this, PermissionSetupActivity::class.java)
-            startActivity(intent)
-        }
-
-        // 통계 버튼 클릭 리스너
-        statisticsButton.setOnClickListener {
-            val intent = Intent(this, StatisticsActivity::class.java)
             startActivity(intent)
         }
 

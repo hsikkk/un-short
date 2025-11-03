@@ -198,23 +198,5 @@
         <item>Do you really need this content now?</item>
     </string-array>
 
-    <!-- Statistics Activity -->
-    <string name="statistics_title">통계</string>
-    <string name="statistics_today">오늘</string>
-    <string name="statistics_attempts">%d번 시도</string>
-    <string name="statistics_watched">시청</string>
-    <string name="statistics_saved_message">%d개를 건너뛰어\n%d분을 아꼈습니다</string>
-    <string name="statistics_detail_title">세부 정보</string>
-    <string name="statistics_first_watch_only">첫 쇼츠만 시청</string>
-    <string name="statistics_scroll_watch">스크롤 시청</string>
-    <string name="statistics_recent_7days">최근 7일</string>
-    <string name="statistics_insight_good">잘하고 있습니다</string>
-    <string name="statistics_mon">월</string>
-    <string name="statistics_tue">화</string>
-    <string name="statistics_wed">수</string>
-    <string name="statistics_thu">목</string>
-    <string name="statistics_fri">금</string>
-    <string name="statistics_sat">토</string>
-    <string name="statistics_sun">일</string>
 
 </resources>
