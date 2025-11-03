@@ -10,4 +10,12 @@
     <dimen name="text_caption">15sp</dimen>
     <dimen name="text_label">14sp</dimen>
     <dimen name="text_small">13sp</dimen>
+
+    <!-- Spacing -->
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_medium">12dp</dimen>
+    <dimen name="spacing_large">24dp</dimen>
+
+    <!-- Chart -->
+    <dimen name="chart_bar_height">16dp</dimen>
 </resources>
