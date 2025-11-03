@@ -298,39 +298,47 @@
         <!-- Target Apps Section -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp"
-            android:paddingTop="16dp"
-            android:gravity="top">
+            android:paddingTop="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/blocked_apps_title"
-                android:textSize="16sp"
-                android:fontFamily="@font/spoqa_sans_neo_bold"
-                android:textColor="#000000"
-                android:alpha="0.4"
-                android:letterSpacing="0.1"
-                android:layout_marginBottom="16dp"
-                android:textAllCaps="true" />
-
-            <!-- 가로 스크롤 앱 리스트 컨테이너 -->
-            <HorizontalScrollView
+            <!-- 차단 대상 텍스트 + 아이콘 리스트 (한 줄) -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:layout_marginBottom="16dp">
 
-                <LinearLayout
-                    android:id="@+id/blockedAppsContainer"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
+                    android:text="@string/blocked_apps_title"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/spoqa_sans_neo_bold"
+                    android:textColor="#000000"
+                    android:alpha="0.4"
+                    android:letterSpacing="0.1"
+                    android:layout_marginEnd="12dp"
+                    android:textAllCaps="true" />
 
-            </HorizontalScrollView>
+                <!-- 가로 스크롤 앱 리스트 컨테이너 -->
+                <HorizontalScrollView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/blockedAppsContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" />
+
+                </HorizontalScrollView>
+
+            </LinearLayout>
 
             <!-- 안내 문구 -->
             <TextView
