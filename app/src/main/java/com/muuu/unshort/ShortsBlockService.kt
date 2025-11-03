@@ -56,6 +56,9 @@ class ShortsBlockService : AccessibilityService() {
     // 타이머 완료 상태 추적 (통계 기록용)
     private var currentTimerCompleted: Boolean = false
 
+    // 현재 세션이 스크롤 후 재진입인지 추적 (통계 기록용)
+    private var isCurrentSessionFromScroll: Boolean = false
+
     // Screen state receiver
     private var screenStateReceiver: ScreenStateReceiver? = null
 
@@ -87,9 +90,11 @@ class ShortsBlockService : AccessibilityService() {
                 statisticsRepository.recordSession(
                     packageName = currentPackage,
                     didWatch = false,
-                    timerCompleted = currentTimerCompleted
+                    timerCompleted = currentTimerCompleted,
+                    isScrollSession = isCurrentSessionFromScroll
                 )
                 currentTimerCompleted = false
+                isCurrentSessionFromScroll = false
 
                 restoreVolume(currentPackage)
                 sessionState.handleEvent(SessionEvent.SkipConfirmed, currentPackage)
@@ -107,9 +112,11 @@ class ShortsBlockService : AccessibilityService() {
                 statisticsRepository.recordSession(
                     packageName = currentPackage,
                     didWatch = true,
-                    timerCompleted = currentTimerCompleted
+                    timerCompleted = currentTimerCompleted,
+                    isScrollSession = isCurrentSessionFromScroll
                 )
                 currentTimerCompleted = false
+                isCurrentSessionFromScroll = false
 
                 sessionState.handleEvent(SessionEvent.WatchConfirmed, currentPackage)
                 stopForegroundCheck()
@@ -315,9 +322,11 @@ class ShortsBlockService : AccessibilityService() {
         statisticsRepository.recordSession(
             packageName = currentPackage,
             didWatch = false,
-            timerCompleted = currentTimerCompleted
+            timerCompleted = currentTimerCompleted,
+            isScrollSession = isCurrentSessionFromScroll
         )
         currentTimerCompleted = false
+        isCurrentSessionFromScroll = false
 
         cancelPendingOverlay()
         overlayManager.hideOverlay(packageName)
@@ -368,6 +377,10 @@ class ShortsBlockService : AccessibilityService() {
         pendingOverlayJob = Runnable {
             try {
                 Log.d(TAG, "Executing pending overlay job for $packageName")
+
+                // 현재 세션이 스크롤 후 재진입인지 확인 (통계 기록용)
+                isCurrentSessionFromScroll = prefsManager.isAllowedUntilScroll
+                Log.d(TAG, "Session from scroll: $isCurrentSessionFromScroll")
 
                 // 세션 ID 생성
                 val sessionId = java.util.UUID.randomUUID().toString()

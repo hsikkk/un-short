@@ -41,5 +41,12 @@ data class ShortsSession(
      * - true: 30초 타이머 완료 후 선택
      * - false: 타이머 완료 전 종료 (Skip 또는 앱 나감)
      */
-    val timerCompleted: Boolean
+    val timerCompleted: Boolean,
+
+    /**
+     * 스크롤 세션 여부
+     * - true: 스크롤 후 재진입 세션 (이미 한 번 시청 허용된 상태에서 다시 차단됨)
+     * - false: 첫 진입 세션 (처음 앱 실행 후 차단됨)
+     */
+    val isScrollSession: Boolean = false
 )

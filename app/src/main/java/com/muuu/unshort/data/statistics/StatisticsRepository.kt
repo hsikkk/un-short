@@ -34,11 +34,13 @@ class StatisticsRepository(context: Context) {
      * @param packageName 차단 대상 앱 패키지명
      * @param didWatch 시청 여부 (true: 시청함, false: 시청 안함)
      * @param timerCompleted 타이머 완료 여부
+     * @param isScrollSession 스크롤 세션 여부 (true: 스크롤 후 재진입, false: 첫 진입)
      */
     fun recordSession(
         packageName: String,
         didWatch: Boolean,
-        timerCompleted: Boolean
+        timerCompleted: Boolean,
+        isScrollSession: Boolean = false
     ) {
         scope.launch {
             try {
@@ -46,10 +48,11 @@ class StatisticsRepository(context: Context) {
                     timestamp = System.currentTimeMillis(),
                     packageName = packageName,
                     didWatch = didWatch,
-                    timerCompleted = timerCompleted
+                    timerCompleted = timerCompleted,
+                    isScrollSession = isScrollSession
                 )
                 dao.insert(session)
-                Log.d(TAG, "Session recorded: pkg=$packageName, didWatch=$didWatch, timerCompleted=$timerCompleted")
+                Log.d(TAG, "Session recorded: pkg=$packageName, didWatch=$didWatch, timerCompleted=$timerCompleted, isScrollSession=$isScrollSession")
             } catch (e: Exception) {
                 Log.e(TAG, "Error recording session", e)
             }
@@ -99,5 +102,21 @@ class StatisticsRepository(context: Context) {
     suspend fun getSkipCount(): Int {
         val thirtyDaysAgo = System.currentTimeMillis() - THIRTY_DAYS_MS
         return dao.getSkipCount(thirtyDaysAgo)
+    }
+
+    /**
+     * 최근 30일 첫 쇼츠만 시청 개수
+     */
+    suspend fun getFirstWatchOnlyCount(): Int {
+        val thirtyDaysAgo = System.currentTimeMillis() - THIRTY_DAYS_MS
+        return dao.getFirstWatchOnlyCount(thirtyDaysAgo)
+    }
+
+    /**
+     * 최근 30일 스크롤 시청 개수
+     */
+    suspend fun getScrollWatchCount(): Int {
+        val thirtyDaysAgo = System.currentTimeMillis() - THIRTY_DAYS_MS
+        return dao.getScrollWatchCount(thirtyDaysAgo)
     }
 }
