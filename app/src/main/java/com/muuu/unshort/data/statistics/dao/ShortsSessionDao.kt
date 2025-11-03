@@ -72,4 +72,55 @@ interface ShortsSessionDao {
      */
     @Query("SELECT COUNT(*) FROM shorts_sessions WHERE timestamp >= :startTime AND didWatch = 1 AND isScrollSession = 1")
     suspend fun getScrollWatchCount(startTime: Long): Int
+
+    /**
+     * 특정 날짜 범위의 세션 총 개수
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @param endTime 종료 시각 (밀리초)
+     * @return 세션 개수
+     */
+    @Query("SELECT COUNT(*) FROM shorts_sessions WHERE timestamp >= :startTime AND timestamp < :endTime")
+    suspend fun getSessionCountBetween(startTime: Long, endTime: Long): Int
+
+    /**
+     * 특정 날짜 범위에서 시청한 세션 개수
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @param endTime 종료 시각 (밀리초)
+     * @return 시청한 세션 개수
+     */
+    @Query("SELECT COUNT(*) FROM shorts_sessions WHERE timestamp >= :startTime AND timestamp < :endTime AND didWatch = 1")
+    suspend fun getWatchCountBetween(startTime: Long, endTime: Long): Int
+
+    /**
+     * 특정 날짜 범위에서 첫 쇼츠만 시청한 세션 개수
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @param endTime 종료 시각 (밀리초)
+     * @return 첫 진입 세션에서 시청한 개수
+     */
+    @Query("SELECT COUNT(*) FROM shorts_sessions WHERE timestamp >= :startTime AND timestamp < :endTime AND didWatch = 1 AND isScrollSession = 0")
+    suspend fun getFirstWatchOnlyCountBetween(startTime: Long, endTime: Long): Int
+
+    /**
+     * 특정 날짜 범위에서 스크롤 시청한 세션 개수
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @param endTime 종료 시각 (밀리초)
+     * @return 스크롤 후 재진입 세션에서 시청한 개수
+     */
+    @Query("SELECT COUNT(*) FROM shorts_sessions WHERE timestamp >= :startTime AND timestamp < :endTime AND didWatch = 1 AND isScrollSession = 1")
+    suspend fun getScrollWatchCountBetween(startTime: Long, endTime: Long): Int
+
+    /**
+     * 특정 날짜 범위에서 특정 앱의 시청 세션 개수
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @param endTime 종료 시각 (밀리초)
+     * @param packageName 앱 패키지명
+     * @return 해당 앱에서 시청한 세션 개수
+     */
+    @Query("SELECT COUNT(*) FROM shorts_sessions WHERE timestamp >= :startTime AND timestamp < :endTime AND packageName = :packageName AND didWatch = 1")
+    suspend fun getWatchCountByAppBetween(startTime: Long, endTime: Long, packageName: String): Int
 }

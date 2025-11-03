@@ -117,15 +117,16 @@ class StatisticsActivity : AppCompatActivity() {
     private fun loadStatistics() {
         lifecycleScope.launch {
             try {
-                // TODO: Load actual statistics for selected date
-                // For now, show placeholder data
+                // Get date range for selected date
+                val (startTime, endTime) = getDateRange(currentDate)
 
-                val totalAttempts = 27
-                val watchedCount = 4
+                // Load statistics for selected date
+                val totalAttempts = statisticsRepository.getSessionCountForDate(startTime, endTime)
+                val watchedCount = statisticsRepository.getWatchCountForDate(startTime, endTime)
                 val skippedCount = totalAttempts - watchedCount
                 val savedMinutes = (skippedCount * 0.5).toInt() // Assuming 30 seconds per shorts
 
-                // Update UI
+                // Update Hero section
                 heroContextText.text = String.format("%d번 시도", totalAttempts)
                 heroValueText.text = watchedCount.toString()
                 heroSubText.text = String.format(
@@ -134,12 +135,30 @@ class StatisticsActivity : AppCompatActivity() {
                     savedMinutes
                 )
 
-                // Detail section
-                firstWatchOnlyValue.text = "3"
-                scrollWatchValue.text = "1"
-                youtubeValue.text = "3"
-                instagramValue.text = "1"
-                tiktokValue.text = "0"
+                // Load detail section
+                val firstWatchOnly = statisticsRepository.getFirstWatchOnlyCountForDate(startTime, endTime)
+                val scrollWatch = statisticsRepository.getScrollWatchCountForDate(startTime, endTime)
+
+                firstWatchOnlyValue.text = firstWatchOnly.toString()
+                scrollWatchValue.text = scrollWatch.toString()
+
+                // Load app-specific statistics
+                val youtubeCount = statisticsRepository.getWatchCountByAppForDate(
+                    startTime, endTime, "com.google.android.youtube"
+                )
+                val instagramCount = statisticsRepository.getWatchCountByAppForDate(
+                    startTime, endTime, "com.instagram.android"
+                )
+                val tiktokCount = statisticsRepository.getWatchCountByAppForDate(
+                    startTime, endTime, "com.zhiliaoapp.musically"
+                )
+
+                youtubeValue.text = youtubeCount.toString()
+                instagramValue.text = instagramCount.toString()
+                tiktokValue.text = tiktokCount.toString()
+
+                // Update insight message based on performance
+                updateInsightMessage(firstWatchOnly, scrollWatch)
 
                 // Load 7-day chart
                 load7DaysChart()
@@ -150,35 +169,81 @@ class StatisticsActivity : AppCompatActivity() {
         }
     }
 
+    private fun getDateRange(date: Calendar): Pair<Long, Long> {
+        val start = Calendar.getInstance().apply {
+            timeInMillis = date.timeInMillis
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        val end = Calendar.getInstance().apply {
+            timeInMillis = start.timeInMillis
+            add(Calendar.DAY_OF_MONTH, 1)
+        }
+
+        return Pair(start.timeInMillis, end.timeInMillis)
+    }
+
+    private fun updateInsightMessage(firstWatchOnly: Int, scrollWatch: Int) {
+        val message = when {
+            scrollWatch == 0 && firstWatchOnly <= 3 -> "잘하고 있습니다"
+            scrollWatch == 0 -> "첫 쇼츠만 보고 있네요"
+            scrollWatch <= firstWatchOnly -> "조금씩 개선되고 있어요"
+            else -> "스크롤을 줄여보세요"
+        }
+        insightText.text = message
+    }
+
     private fun load7DaysChart() {
-        // Clear existing chart items
-        chartSection.removeViews(1, chartSection.childCount - 1)
+        lifecycleScope.launch {
+            try {
+                // Clear existing chart items
+                chartSection.removeViews(1, chartSection.childCount - 1)
 
-        val dayLabels = arrayOf(
-            getString(R.string.statistics_mon),
-            getString(R.string.statistics_tue),
-            getString(R.string.statistics_wed),
-            getString(R.string.statistics_thu),
-            getString(R.string.statistics_fri),
-            getString(R.string.statistics_sat),
-            getString(R.string.statistics_sun)
-        )
+                val dayLabels = arrayOf(
+                    getString(R.string.statistics_mon),
+                    getString(R.string.statistics_tue),
+                    getString(R.string.statistics_wed),
+                    getString(R.string.statistics_thu),
+                    getString(R.string.statistics_fri),
+                    getString(R.string.statistics_sat),
+                    getString(R.string.statistics_sun)
+                )
 
-        // Sample data
-        val data = arrayOf(8, 3, 12, 5, 3, 1, 4)
-        val maxValue = data.maxOrNull() ?: 1
+                // Load data for last 7 days
+                val data = IntArray(7)
+                val today = Calendar.getInstance()
+                val todayDayOfWeek = today.get(Calendar.DAY_OF_WEEK)
+                val todayIndex = (todayDayOfWeek + 5) % 7 // Convert to Monday=0 format
 
-        val todayDayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
-        val todayIndex = (todayDayOfWeek + 5) % 7 // Convert to Monday=0 format
+                for (i in 0..6) {
+                    val date = Calendar.getInstance().apply {
+                        // Calculate date: today - (6-i) days, starting from 6 days ago
+                        val daysAgo = 6 - ((todayIndex - i + 7) % 7)
+                        add(Calendar.DAY_OF_MONTH, -daysAgo)
+                    }
 
-        for (i in data.indices) {
-            val chartRow = createChartRow(
-                dayLabels[i],
-                data[i],
-                maxValue,
-                i == todayIndex
-            )
-            chartSection.addView(chartRow)
+                    val (startTime, endTime) = getDateRange(date)
+                    data[i] = statisticsRepository.getWatchCountForDate(startTime, endTime)
+                }
+
+                val maxValue = data.maxOrNull() ?: 1
+
+                for (i in data.indices) {
+                    val chartRow = createChartRow(
+                        dayLabels[i],
+                        data[i],
+                        maxValue,
+                        i == todayIndex
+                    )
+                    chartSection.addView(chartRow)
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 

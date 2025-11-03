@@ -119,4 +119,60 @@ class StatisticsRepository(context: Context) {
         val thirtyDaysAgo = System.currentTimeMillis() - THIRTY_DAYS_MS
         return dao.getScrollWatchCount(thirtyDaysAgo)
     }
+
+    /**
+     * 특정 날짜의 세션 총 개수
+     *
+     * @param startTime 날짜 시작 시각 (밀리초)
+     * @param endTime 날짜 종료 시각 (밀리초)
+     * @return 세션 개수
+     */
+    suspend fun getSessionCountForDate(startTime: Long, endTime: Long): Int {
+        return dao.getSessionCountBetween(startTime, endTime)
+    }
+
+    /**
+     * 특정 날짜의 시청 세션 개수
+     *
+     * @param startTime 날짜 시작 시각 (밀리초)
+     * @param endTime 날짜 종료 시각 (밀리초)
+     * @return 시청한 세션 개수
+     */
+    suspend fun getWatchCountForDate(startTime: Long, endTime: Long): Int {
+        return dao.getWatchCountBetween(startTime, endTime)
+    }
+
+    /**
+     * 특정 날짜의 첫 쇼츠만 시청 개수
+     *
+     * @param startTime 날짜 시작 시각 (밀리초)
+     * @param endTime 날짜 종료 시각 (밀리초)
+     * @return 첫 진입 세션에서 시청한 개수
+     */
+    suspend fun getFirstWatchOnlyCountForDate(startTime: Long, endTime: Long): Int {
+        return dao.getFirstWatchOnlyCountBetween(startTime, endTime)
+    }
+
+    /**
+     * 특정 날짜의 스크롤 시청 개수
+     *
+     * @param startTime 날짜 시작 시각 (밀리초)
+     * @param endTime 날짜 종료 시각 (밀리초)
+     * @return 스크롤 후 재진입 세션에서 시청한 개수
+     */
+    suspend fun getScrollWatchCountForDate(startTime: Long, endTime: Long): Int {
+        return dao.getScrollWatchCountBetween(startTime, endTime)
+    }
+
+    /**
+     * 특정 날짜의 앱별 시청 개수
+     *
+     * @param startTime 날짜 시작 시각 (밀리초)
+     * @param endTime 날짜 종료 시각 (밀리초)
+     * @param packageName 앱 패키지명
+     * @return 해당 앱에서 시청한 세션 개수
+     */
+    suspend fun getWatchCountByAppForDate(startTime: Long, endTime: Long, packageName: String): Int {
+        return dao.getWatchCountByAppBetween(startTime, endTime, packageName)
+    }
 }
