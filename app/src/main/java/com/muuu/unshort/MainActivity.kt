@@ -337,8 +337,16 @@ class MainActivity : BaseActivity() {
         // 가로 스크롤용 레이아웃 사용 - 아이콘만 표시
         val itemView = inflater.inflate(R.layout.item_blocked_app_horizontal, blockedAppsContainer, false)
 
+        // 실제 앱 아이콘 가져오기
+        val appIcon = try {
+            packageManager.getApplicationIcon(config.packageName)
+        } catch (e: Exception) {
+            // 앱을 찾을 수 없으면 기본 아이콘 사용
+            ResourcesCompat.getDrawable(resources, config.iconResId, null)
+        }
+
         // 아이콘 설정
-        (itemView as ImageView).setImageResource(config.iconResId)
+        (itemView as ImageView).setImageDrawable(appIcon)
 
         return itemView
     }
