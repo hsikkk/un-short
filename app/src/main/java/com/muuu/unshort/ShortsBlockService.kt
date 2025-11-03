@@ -14,6 +14,7 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.muuu.shortblock.service.blocking.*
 import com.muuu.unshort.prefs.PreferencesManager
+import com.muuu.unshort.data.statistics.StatisticsRepository
 
 /**
  * 쇼츠 차단 AccessibilityService
@@ -35,6 +36,7 @@ class ShortsBlockService : AccessibilityService() {
     private lateinit var sessionState: SessionStateManager
     private lateinit var overlayManager: OverlayManager
     private lateinit var prefsManager: PreferencesManager
+    private lateinit var statisticsRepository: StatisticsRepository
 
     // 현재 처리 중인 패키지
     private var currentPackage: String = ""
@@ -51,6 +53,9 @@ class ShortsBlockService : AccessibilityService() {
     // Fresh start 감지용
     private var appStartTime: Long = 0
 
+    // 타이머 완료 상태 추적 (통계 기록용)
+    private var currentTimerCompleted: Boolean = false
+
     // Screen state receiver
     private var screenStateReceiver: ScreenStateReceiver? = null
 
@@ -61,11 +66,15 @@ class ShortsBlockService : AccessibilityService() {
         // Managers 초기화
         prefsManager = PreferencesManager(this)
         sessionState = SessionStateManager(this)
+        statisticsRepository = StatisticsRepository(this)
 
         // OverlayManager 초기화
         overlayManager = OverlayManager(
             context = this,
             onTimerCompleted = {
+                // 타이머 완료 플래그 설정 (통계 기록용)
+                currentTimerCompleted = true
+
                 // 타이머 완료 → 확인 필요 상태로 전이
                 sessionState.handleEvent(SessionEvent.TimerCompleted, currentPackage)
                 stopForegroundCheck()
@@ -73,6 +82,15 @@ class ShortsBlockService : AccessibilityService() {
             onSkip = {
                 // "안볼래요" 버튼 - 뒤로 가기
                 Log.d(TAG, "Skip button pressed - performing back action")
+
+                // 세션 기록 (시청 안함)
+                statisticsRepository.recordSession(
+                    packageName = currentPackage,
+                    didWatch = false,
+                    timerCompleted = currentTimerCompleted
+                )
+                currentTimerCompleted = false
+
                 restoreVolume(currentPackage)
                 sessionState.handleEvent(SessionEvent.SkipConfirmed, currentPackage)
 
@@ -84,6 +102,15 @@ class ShortsBlockService : AccessibilityService() {
             onWatch = {
                 // "볼래요" 버튼 - 시청 허용 상태로 전이
                 Log.d(TAG, "Watch button pressed - allowing watch")
+
+                // 세션 기록 (시청함)
+                statisticsRepository.recordSession(
+                    packageName = currentPackage,
+                    didWatch = true,
+                    timerCompleted = currentTimerCompleted
+                )
+                currentTimerCompleted = false
+
                 sessionState.handleEvent(SessionEvent.WatchConfirmed, currentPackage)
                 stopForegroundCheck()
 
@@ -105,6 +132,9 @@ class ShortsBlockService : AccessibilityService() {
             Log.d(TAG, "Restoring allowed state from SharedPreferences")
             sessionState.handleEvent(SessionEvent.TimerCompleted, packageName)  // 복원
         }
+
+        // 30일 이전 통계 데이터 정리
+        statisticsRepository.cleanOldData()
 
         // Screen state receiver 등록
         registerScreenStateReceiver()
@@ -281,6 +311,14 @@ class ShortsBlockService : AccessibilityService() {
      * 차단 대상 앱을 벗어났을 때 처리
      */
     private fun handleLeavingTargetApp() {
+        // 세션 기록 (앱 나감 = 시청 안함)
+        statisticsRepository.recordSession(
+            packageName = currentPackage,
+            didWatch = false,
+            timerCompleted = currentTimerCompleted
+        )
+        currentTimerCompleted = false
+
         cancelPendingOverlay()
         overlayManager.hideOverlay(packageName)
         restoreVolume(packageName)
