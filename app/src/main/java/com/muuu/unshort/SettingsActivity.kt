@@ -16,8 +16,11 @@ class SettingsActivity : BaseActivity() {
     private lateinit var waitTimeValue: TextView
     private lateinit var waitTimeItem: LinearLayout
     private lateinit var hapticSwitch: Switch
+    private lateinit var hapticItem: LinearLayout
     private lateinit var allowFirstSwitch: Switch
+    private lateinit var allowFirstItem: LinearLayout
     private lateinit var preventDisableSwitch: Switch
+    private lateinit var preventDisableItem: LinearLayout
     private lateinit var deviceAdminSwitch: Switch
     private lateinit var deviceAdminItem: LinearLayout
     private lateinit var feedbackItem: LinearLayout
@@ -45,8 +48,11 @@ class SettingsActivity : BaseActivity() {
         waitTimeValue = findViewById(R.id.waitTimeValue)
         waitTimeItem = findViewById(R.id.waitTimeItem)
         hapticSwitch = findViewById(R.id.hapticSwitch)
+        hapticItem = findViewById(R.id.hapticItem)
         allowFirstSwitch = findViewById(R.id.allowFirstSwitch)
+        allowFirstItem = findViewById(R.id.allowFirstItem)
         preventDisableSwitch = findViewById(R.id.preventDisableSwitch)
+        preventDisableItem = findViewById(R.id.preventDisableItem)
         deviceAdminSwitch = findViewById(R.id.deviceAdminSwitch)
         deviceAdminItem = findViewById(R.id.deviceAdminItem)
         feedbackItem = findViewById(R.id.feedbackItem)
@@ -75,12 +81,22 @@ class SettingsActivity : BaseActivity() {
             prefsManager.isHapticEnabled = isChecked
         }
 
+        // 햅틱 아이템 클릭 시 스위치 토글
+        hapticItem.setOnClickListener {
+            hapticSwitch.isChecked = !hapticSwitch.isChecked
+        }
+
         // 스크롤한 쇼츠만 차단 설정 초기화
         allowFirstSwitch.isChecked = prefsManager.isBlockScrolledOnly
 
         // 스크롤한 쇼츠만 차단 스위치 리스너
         allowFirstSwitch.setOnCheckedChangeListener { _, isChecked ->
             prefsManager.isBlockScrolledOnly = isChecked
+        }
+
+        // 스크롤한 쇼츠만 차단 아이템 클릭 시 스위치 토글
+        allowFirstItem.setOnClickListener {
+            allowFirstSwitch.isChecked = !allowFirstSwitch.isChecked
         }
 
         // 충동적 해제 방지 설정 초기화
@@ -91,8 +107,18 @@ class SettingsActivity : BaseActivity() {
             prefsManager.isPreventImpulsiveDisable = isChecked
         }
 
+        // 충동적 해제 방지 아이템 클릭 시 스위치 토글
+        preventDisableItem.setOnClickListener {
+            preventDisableSwitch.isChecked = !preventDisableSwitch.isChecked
+        }
+
         // Device Admin 스위치 초기 상태 설정 (리스너도 함께 설정됨)
         updateDeviceAdminSwitchState()
+
+        // Device Admin 아이템 클릭 시 스위치 토글
+        deviceAdminItem.setOnClickListener {
+            deviceAdminSwitch.isChecked = !deviceAdminSwitch.isChecked
+        }
 
         // 뒤로 가기 버튼
         backButton.setOnClickListener {
