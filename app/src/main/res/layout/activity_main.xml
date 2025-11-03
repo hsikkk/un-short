@@ -317,12 +317,20 @@
                 android:layout_marginBottom="16dp"
                 android:textAllCaps="true" />
 
-            <!-- 동적으로 생성될 앱 리스트 컨테이너 -->
-            <LinearLayout
-                android:id="@+id/blockedAppsContainer"
+            <!-- 가로 스크롤 앱 리스트 컨테이너 -->
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:scrollbars="none"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:id="@+id/blockedAppsContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+
+            </HorizontalScrollView>
 
             <!-- 안내 문구 -->
             <TextView
@@ -333,7 +341,6 @@
                 android:fontFamily="@font/spoqa_sans_neo_light"
                 android:textColor="#9E9E9E"
                 android:alpha="0.7"
-                android:layout_marginTop="16dp"
                 android:lineSpacingExtra="2dp" />
 
         </LinearLayout>

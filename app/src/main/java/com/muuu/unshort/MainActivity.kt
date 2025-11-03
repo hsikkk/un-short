@@ -329,27 +329,19 @@ class MainActivity : BaseActivity() {
     }
 
     /**
-     * 앱 항목 View 생성 (레이아웃 inflate 방식)
+     * 앱 항목 View 생성 (가로 스크롤용 레이아웃)
      */
     private fun createAppItemView(config: com.muuu.shortblock.service.blocking.AppBlockingConfig, isLast: Boolean): View {
-        val density = resources.displayMetrics.density
         val inflater = layoutInflater
 
-        val itemView = inflater.inflate(R.layout.item_blocked_app, blockedAppsContainer, false)
-
-        // LayoutParams 설정 (margin)
-        itemView.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        ).apply {
-            bottomMargin = if (!isLast) (12 * density).toInt() else 0
-        }
+        // 가로 스크롤용 레이아웃 사용
+        val itemView = inflater.inflate(R.layout.item_blocked_app_horizontal, blockedAppsContainer, false)
 
         // 아이콘 설정
         itemView.findViewById<ImageView>(R.id.appIcon).setImageResource(config.iconResId)
 
-        // 텍스트 설정
-        itemView.findViewById<TextView>(R.id.appName).text = config.displayName
+        // 앱 이름 설정 (shortName 사용)
+        itemView.findViewById<TextView>(R.id.appName).text = config.shortName
 
         return itemView
     }

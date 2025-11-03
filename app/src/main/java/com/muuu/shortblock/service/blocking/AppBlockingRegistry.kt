@@ -41,6 +41,7 @@ data class HashConfig(
 data class AppBlockingConfig(
     val packageName: String,
     val displayName: String,
+    val shortName: String,  // 가로 스크롤용 짧은 이름
     val iconResId: Int,  // 아이콘 리소스 ID
     val viewIdDetectors: List<ViewIdDetector>,
     val textDetectors: List<TextDetector>,
@@ -59,6 +60,7 @@ object AppBlockingRegistry {
     val YOUTUBE = AppBlockingConfig(
         packageName = "com.google.android.youtube",
         displayName = "YouTube Shorts",
+        shortName = "YouTube",
         iconResId = R.drawable.ic_youtube,
         viewIdDetectors = listOf(
             ViewIdDetector("com.google.android.youtube:id/reel_player_page_container")
@@ -105,6 +107,7 @@ object AppBlockingRegistry {
     val INSTAGRAM = AppBlockingConfig(
         packageName = "com.instagram.android",
         displayName = "Instagram Reels",
+        shortName = "Instagram",
         iconResId = R.drawable.ic_instagram,
         viewIdDetectors = listOf(
             ViewIdDetector("com.instagram.android:id/clips_viewer_view_pager")
@@ -155,6 +158,7 @@ object AppBlockingRegistry {
     val FACEBOOK = AppBlockingConfig(
         packageName = "com.facebook.katana",
         displayName = "Facebook Reels",
+        shortName = "Facebook",
         iconResId = R.drawable.ic_facebook,
         viewIdDetectors = listOf(
             // video_feed_container 제거: 피드 전체에서 사용되어 오감지 발생
@@ -211,6 +215,7 @@ object AppBlockingRegistry {
     val NAVER = AppBlockingConfig(
         packageName = "com.nhn.android.search",
         displayName = "Naver Shorts",
+        shortName = "Naver",
         iconResId = R.drawable.ic_naver,
         viewIdDetectors = listOf(
             // 네이버는 View ID를 사용하지 않음
