@@ -334,14 +334,11 @@ class MainActivity : BaseActivity() {
     private fun createAppItemView(config: com.muuu.shortblock.service.blocking.AppBlockingConfig, isLast: Boolean): View {
         val inflater = layoutInflater
 
-        // 가로 스크롤용 레이아웃 사용
+        // 가로 스크롤용 레이아웃 사용 - 아이콘만 표시
         val itemView = inflater.inflate(R.layout.item_blocked_app_horizontal, blockedAppsContainer, false)
 
         // 아이콘 설정
-        itemView.findViewById<ImageView>(R.id.appIcon).setImageResource(config.iconResId)
-
-        // 앱 이름 설정 (shortName 사용)
-        itemView.findViewById<TextView>(R.id.appName).text = config.shortName
+        (itemView as ImageView).setImageResource(config.iconResId)
 
         return itemView
     }
