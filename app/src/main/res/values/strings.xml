@@ -44,7 +44,7 @@
     <string name="permission_setup_button">Set up permissions</string>
 
     <!-- Settings Tip Banner -->
-    <string name="settings_tip_message">Explore more features in settings (⋮)</string>
+    <string name="settings_tip_message">Tap the [⋮] menu at the top right to explore more features</string>
     <string name="settings_tip_button">Go →</string>
 
     <!-- Settings Activity -->

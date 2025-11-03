@@ -44,7 +44,7 @@
     <string name="permission_setup_button">권한 설정하기</string>
 
     <!-- Settings Tip Banner -->
-    <string name="settings_tip_message">설정(⋮)에서 더 많은 기능을 사용해보세요</string>
+    <string name="settings_tip_message">오른쪽 상단 [⋮] 메뉴를 눌러 더 많은 기능을 확인해보세요</string>
 
     <!-- Settings Activity -->
     <string name="settings_title">설정</string>
