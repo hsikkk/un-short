@@ -33,6 +33,8 @@ class MainActivity : BaseActivity() {
     private lateinit var statusDot: View
     private lateinit var statusLabel: TextView
     private lateinit var settingsButton: ImageView
+    private lateinit var settingsTipBanner: FrameLayout
+    private lateinit var settingsTipCloseButton: TextView
     private lateinit var bannerAdView: MuuuBannerAdView
     private lateinit var prefsManager: PreferencesManager
 
@@ -86,6 +88,8 @@ class MainActivity : BaseActivity() {
         statusDot = findViewById(R.id.statusDot)
         statusLabel = findViewById(R.id.statusLabel)
         settingsButton = findViewById(R.id.settingsButton)
+        settingsTipBanner = findViewById(R.id.settingsTipBanner)
+        settingsTipCloseButton = findViewById(R.id.settingsTipCloseButton)
 
         // 권한 설정 버튼 클릭 리스너
         permissionSettingsButton.setOnClickListener {
@@ -95,10 +99,23 @@ class MainActivity : BaseActivity() {
 
         // 설정 버튼 클릭 리스너
         settingsButton.setOnClickListener {
+            prefsManager.hasVisitedSettings = true
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
 
+        // 설정 팁 배너 전체 클릭 리스너
+        settingsTipBanner.setOnClickListener {
+            prefsManager.hasVisitedSettings = true
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+        }
+
+        // 설정 팁 배너 닫기 버튼 클릭 리스너 (이벤트 전파 막기)
+        settingsTipCloseButton.setOnClickListener {
+            prefsManager.hasSeenSettingsTip = true
+            settingsTipBanner.visibility = View.GONE
+        }
 
         // 토글 스위치 클릭 리스너
         toggleContainer.setOnClickListener {
@@ -143,6 +160,7 @@ class MainActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         checkPermissionsAndUpdateUI()
+        updateSettingsTipBannerVisibility()
     }
 
     private fun checkPermissionsAndUpdateUI() {
@@ -162,6 +180,11 @@ class MainActivity : BaseActivity() {
             // 저장된 차단 상태 불러오기
             updateUI(prefsManager.isBlockingEnabled)
         }
+    }
+
+    private fun updateSettingsTipBannerVisibility() {
+        val shouldShow = !prefsManager.hasVisitedSettings && !prefsManager.hasSeenSettingsTip
+        settingsTipBanner.visibility = if (shouldShow) View.VISIBLE else View.GONE
     }
 
     private fun checkPermissions(): Boolean {

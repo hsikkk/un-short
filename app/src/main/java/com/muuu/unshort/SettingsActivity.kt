@@ -33,6 +33,13 @@ class SettingsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
+        // Managers 초기화
+        deviceAdminManager = DeviceAdminManager(this)
+        prefsManager = PreferencesManager(this)
+
+        // 설정 화면 방문 플래그 저장
+        prefsManager.hasVisitedSettings = true
+
         // View 초기화
         backButton = findViewById(R.id.backButton)
         waitTimeValue = findViewById(R.id.waitTimeValue)
@@ -47,10 +54,6 @@ class SettingsActivity : BaseActivity() {
         reviewItem = findViewById(R.id.reviewItem)
         versionItem = findViewById(R.id.versionItem)
         versionText = findViewById(R.id.versionText)
-
-        // Managers 초기화
-        deviceAdminManager = DeviceAdminManager(this)
-        prefsManager = PreferencesManager(this)
 
         // 버전 정보 설정
         try {

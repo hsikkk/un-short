@@ -71,6 +71,16 @@ class PreferencesManager(context: Context) {
         prefs.edit().remove(AppConstants.PREF_CURRENT_SESSION_ID).apply()
     }
 
+    // ========== Nudge ==========
+
+    var hasVisitedSettings: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_HAS_VISITED_SETTINGS, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_HAS_VISITED_SETTINGS, value).apply()
+
+    var hasSeenSettingsTip: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_HAS_SEEN_SETTINGS_TIP, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_HAS_SEEN_SETTINGS_TIP, value).apply()
+
     // ========== Batch Operations ==========
 
     /**

@@ -40,6 +40,10 @@
     <string name="permission_warning_message">To use blocking features,\naccessibility and overlay permissions are required</string>
     <string name="permission_setup_button">Set up permissions</string>
 
+    <!-- Settings Tip Banner -->
+    <string name="settings_tip_message">Explore more features in settings (⋮)</string>
+    <string name="settings_tip_button">Go →</string>
+
     <!-- Settings Activity -->
     <string name="settings_title">Settings</string>
     <string name="settings_section_block_options">Block Options</string>

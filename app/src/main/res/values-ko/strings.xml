@@ -40,6 +40,9 @@
     <string name="permission_warning_message">차단 기능을 사용하려면\n접근성 및 오버레이 권한이 필요합니다</string>
     <string name="permission_setup_button">권한 설정하기</string>
 
+    <!-- Settings Tip Banner -->
+    <string name="settings_tip_message">설정(⋮)에서 더 많은 기능을 사용해보세요</string>
+
     <!-- Settings Activity -->
     <string name="settings_title">설정</string>
     <string name="settings_section_block_options">차단 옵션 관리</string>

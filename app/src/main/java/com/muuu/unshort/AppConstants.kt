@@ -28,4 +28,8 @@ object AppConstants {
     // Session (timer)
     const val PREF_CURRENT_SESSION_ID = "current_session_id"
     const val PREF_COMPLETED_SESSION_ID = "completed_session_id"
+
+    // Nudge
+    const val PREF_HAS_VISITED_SETTINGS = "has_visited_settings"
+    const val PREF_HAS_SEEN_SETTINGS_TIP = "has_seen_settings_tip"
 }

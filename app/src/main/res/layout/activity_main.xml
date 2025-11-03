@@ -81,6 +81,75 @@
         app:layout_constraintTop_toBottomOf="@id/topSection"
         app:layout_constraintBottom_toTopOf="@id/adViewContainer">
 
+        <!-- Settings Tip Banner -->
+        <FrameLayout
+            android:id="@+id/settingsTipBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/gray_100"
+            android:visibility="invisible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
+
+            <!-- Icon and Message -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💡"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_tip_message"
+                    android:textSize="@dimen/text_caption"
+                    android:fontFamily="@font/spoqa_sans_neo_light"
+                    android:textColor="#000000"
+                    android:alpha="0.6" />
+
+            </LinearLayout>
+
+            <!-- Close Button -->
+            <TextView
+                android:id="@+id/settingsTipCloseButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✕"
+                android:textSize="18sp"
+                android:textColor="#000000"
+                android:alpha="0.3"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
         <!-- Toggle Content Area -->
         <LinearLayout
             android:layout_width="match_parent"
