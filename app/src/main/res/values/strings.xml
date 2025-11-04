@@ -38,6 +38,12 @@
     <string name="app_facebook_reels">Facebook Reels</string>
     <string name="app_naver_shorts">Naver Shorts</string>
     <string name="blocked_apps_notice">• Only installed apps are shown\n• Some app versions may not be blocked</string>
+    <string name="stats_watch_time">Watch Time</string>
+    <string name="stats_entry_count">Entry</string>
+    <string name="stats_consumption_count">Watched</string>
+    <string name="time_unit_hour">h</string>
+    <string name="time_unit_minute">m</string>
+    <string name="time_unit_second">s</string>
     <string name="permission_warning_icon">⚠</string>
     <string name="permission_warning_title">Permissions Required</string>
     <string name="permission_warning_message">To use blocking features,\naccessibility and overlay permissions are required</string>

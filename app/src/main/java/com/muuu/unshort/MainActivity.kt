@@ -43,6 +43,7 @@ class MainActivity : BaseActivity() {
     private lateinit var statusLabel: TextView
     private lateinit var shortsEntryNumber: TextView
     private lateinit var shortsConsumptionNumber: TextView
+    private lateinit var watchTimeText: TextView
     private lateinit var settingsButton: ImageView
     private lateinit var settingsBadge: View
     private var bannerAdView: MuuuBannerAdView? = null
@@ -95,6 +96,7 @@ class MainActivity : BaseActivity() {
         statusLabel = findViewById(R.id.statusLabel)
         shortsEntryNumber = findViewById(R.id.shortsEntryNumber)
         shortsConsumptionNumber = findViewById(R.id.shortsConsumptionNumber)
+        watchTimeText = findViewById(R.id.watchTimeText)
         settingsButton = findViewById(R.id.settingsButton)
         settingsBadge = findViewById(R.id.settingsBadge)
         blockedAppsContainer = findViewById(R.id.blockedAppsContainer)
@@ -362,6 +364,7 @@ class MainActivity : BaseActivity() {
                 val repository = StatisticsRepository(this@MainActivity)
                 val totalAttempts = repository.getSessionCountForDate(startOfDay, endOfDay)
                 val watchedCount = repository.getWatchCountForDate(startOfDay, endOfDay)
+                val watchTimeMs = repository.getTotalWatchTimeForPeriod(startOfDay, endOfDay)
 
                 // 쇼츠 진입 숫자 업데이트
                 shortsEntryNumber.text = totalAttempts.toString()
@@ -383,12 +386,47 @@ class MainActivity : BaseActivity() {
                     shortsConsumptionNumber.setTextColor(ResourcesCompat.getColor(resources, R.color.primary_dark, null))
                 }
 
+                // 시청 시간 업데이트
+                watchTimeText.text = formatWatchTime(watchTimeMs)
+
+                // 시간이 0이면 회색, 아니면 primary_dark
+                if (watchTimeMs == 0L) {
+                    watchTimeText.setTextColor(Color.parseColor("#9E9E9E"))
+                } else {
+                    watchTimeText.setTextColor(ResourcesCompat.getColor(resources, R.color.primary_dark, null))
+                }
+
             } catch (e: Exception) {
                 shortsEntryNumber.text = "0"
                 shortsConsumptionNumber.text = "0"
+                watchTimeText.text = "0m"
                 shortsEntryNumber.setTextColor(Color.parseColor("#9E9E9E"))
                 shortsConsumptionNumber.setTextColor(Color.parseColor("#9E9E9E"))
+                watchTimeText.setTextColor(Color.parseColor("#9E9E9E"))
             }
+        }
+    }
+
+    /**
+     * 시청 시간을 사람이 읽기 쉬운 형식으로 포맷
+     *
+     * @param milliseconds 시청 시간 (밀리초)
+     * @return 포맷된 시간 문자열 (예: "5m", "1h 30m", "2h")
+     */
+    private fun formatWatchTime(milliseconds: Long): String {
+        val minuteUnit = getString(R.string.time_unit_minute)
+        val hourUnit = getString(R.string.time_unit_hour)
+
+        if (milliseconds == 0L) return "0$minuteUnit"
+
+        val totalMinutes = (milliseconds / 60000).toInt()
+        val hours = totalMinutes / 60
+        val minutes = totalMinutes % 60
+
+        return when {
+            hours == 0 -> "$minutes$minuteUnit"
+            minutes == 0 -> "$hours$hourUnit"
+            else -> "$hours$hourUnit $minutes$minuteUnit"
         }
     }
 
