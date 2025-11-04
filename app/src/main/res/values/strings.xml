@@ -9,8 +9,8 @@
     <string name="flip_required">Please flip your phone</string>
 
     <!-- BlockOverlay Messages -->
-    <string name="block_message_before_timer">Right now, do you truly need shorts?</string>
-    <string name="block_message_after_timer">You\'ve waited this far. Still want to watch?</string>
+    <string name="block_message_before_timer">Right now,\ndo you truly need shorts?</string>
+    <string name="block_message_after_timer">You\'ve waited this far.\nStill want to watch?</string>
     <string name="block_button_think_again">Think again</string>
     <string name="block_button_close">Just close</string>
     <string name="block_button_no">No, I won\'t watch</string>

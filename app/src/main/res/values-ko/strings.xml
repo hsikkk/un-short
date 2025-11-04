@@ -9,8 +9,8 @@
     <string name="flip_required">폰을 뒤집어주세요</string>
 
     <!-- BlockOverlay Messages -->
-    <string name="block_message_before_timer">지금 이 순간, 쇼츠가 정말 필요할까요?</string>
-    <string name="block_message_after_timer">여기까지 기다렸네요. 정말로 볼 건가요?</string>
+    <string name="block_message_before_timer">지금 이 순간,\n쇼츠가 정말 필요할까요?</string>
+    <string name="block_message_after_timer">여기까지 기다렸네요.\n정말로 볼 건가요?</string>
     <string name="block_button_think_again">한 번 더 생각해보기</string>
     <string name="block_button_close">그냥 닫기</string>
     <string name="block_button_no">아니요, 안 볼래요</string>
