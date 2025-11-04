@@ -212,4 +212,23 @@
     <string name="premium_banner_subtitle">Customization + Protection</string>
     <string name="premium_banner_button">Upgrade</string>
 
+    <!-- Premium Upgrade Activity -->
+    <string name="premium_upgrade_title">Premium</string>
+    <string name="premium_upgrade_headline">Upgrade to Premium</string>
+    <string name="premium_upgrade_subtitle">Stronger blocking and protection</string>
+    <string name="premium_upgrade_button">Upgrade Now</string>
+    <string name="premium_upgrade_coming_soon">Payment system coming soon!</string>
+
+    <!-- Premium Features -->
+    <string name="premium_feature_ad_free_title">Ad-Free Experience</string>
+    <string name="premium_feature_ad_free_desc">Clean and focused experience</string>
+    <string name="premium_feature_custom_timer_title">Custom Timer Settings</string>
+    <string name="premium_feature_custom_timer_desc">Set freely from 5 seconds to 5 minutes</string>
+    <string name="premium_feature_smart_block_title">Smart Blocking</string>
+    <string name="premium_feature_smart_block_desc">Allow first shorts, block on scroll</string>
+    <string name="premium_feature_prevent_disable_title">Prevent Impulsive Disable</string>
+    <string name="premium_feature_prevent_disable_desc">Confirmation required to disable blocking</string>
+    <string name="premium_feature_prevent_delete_title">App Deletion Protection</string>
+    <string name="premium_feature_prevent_delete_desc">Prevent impulsive app uninstallation</string>
+
 </resources>

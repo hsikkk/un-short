@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <!-- Back Button -->
+    <ImageView
+        android:id="@+id/closeButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_back"
+        android:tint="@color/gray_900"
+        android:alpha="0.7"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="4dp"
+        android:contentDescription="Close" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Title -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/premium_upgrade_headline"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/spoqa_sans_neo_bold"
+                android:textColor="@color/primary_dark"
+                android:gravity="center"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/premium_upgrade_subtitle"
+                android:textSize="14sp"
+                android:fontFamily="@font/spoqa_sans_neo"
+                android:textColor="@color/gray_600"
+                android:gravity="center"
+                android:layout_marginBottom="32dp" />
+
+            <!-- Feature 1: 광고 제거 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:text="✓"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_700"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/premium_feature_ad_free_title"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/spoqa_sans_neo_bold"
+                        android:textColor="@color/gray_900" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/premium_feature_ad_free_desc"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/spoqa_sans_neo"
+                        android:textColor="@color/gray_600"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Feature 2: 타이머 자유 설정 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:text="✓"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_700"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/premium_feature_custom_timer_title"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/spoqa_sans_neo_bold"
+                        android:textColor="@color/gray_900" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/premium_feature_custom_timer_desc"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/spoqa_sans_neo"
+                        android:textColor="@color/gray_600"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Feature 3: 스마트 차단 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:text="✓"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_700"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/premium_feature_smart_block_title"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/spoqa_sans_neo_bold"
+                        android:textColor="@color/gray_900" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/premium_feature_smart_block_desc"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/spoqa_sans_neo"
+                        android:textColor="@color/gray_600"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Feature 4: 충동적 해제 방지 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:text="✓"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_700"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/premium_feature_prevent_disable_title"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/spoqa_sans_neo_bold"
+                        android:textColor="@color/gray_900" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/premium_feature_prevent_disable_desc"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/spoqa_sans_neo"
+                        android:textColor="@color/gray_600"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Feature 5: 앱 삭제 방지 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="32dp">
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:text="✓"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_700"
+                    android:gravity="center"
+                    android:layout_marginEnd="16dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/premium_feature_prevent_delete_title"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/spoqa_sans_neo_bold"
+                        android:textColor="@color/gray_900" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/premium_feature_prevent_delete_desc"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/spoqa_sans_neo"
+                        android:textColor="@color/gray_600"
+                        android:layout_marginTop="2dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@color/white"
+        android:elevation="8dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/upgradeButton"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/premium_upgrade_button"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
+            app:backgroundTint="@color/primary_dark"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</LinearLayout>

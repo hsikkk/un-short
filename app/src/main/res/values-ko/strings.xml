@@ -206,4 +206,23 @@
     <string name="premium_banner_subtitle">커스터마이징 + 보호 기능</string>
     <string name="premium_banner_button">업그레이드</string>
 
+    <!-- Premium Upgrade Activity -->
+    <string name="premium_upgrade_title">프리미엄</string>
+    <string name="premium_upgrade_headline">프리미엄으로 업그레이드</string>
+    <string name="premium_upgrade_subtitle">더 강력한 차단과 보호 기능</string>
+    <string name="premium_upgrade_button">지금 업그레이드</string>
+    <string name="premium_upgrade_coming_soon">결제 시스템 준비 중입니다. 곧 만나요!</string>
+
+    <!-- Premium Features -->
+    <string name="premium_feature_ad_free_title">광고 제거</string>
+    <string name="premium_feature_ad_free_desc">깔끔하고 집중된 경험</string>
+    <string name="premium_feature_custom_timer_title">타이머 자유 설정</string>
+    <string name="premium_feature_custom_timer_desc">5초부터 5분까지 원하는 대로</string>
+    <string name="premium_feature_smart_block_title">스마트 차단</string>
+    <string name="premium_feature_smart_block_desc">첫 영상은 허용, 스크롤만 차단</string>
+    <string name="premium_feature_prevent_disable_title">충동적 해제 방지</string>
+    <string name="premium_feature_prevent_disable_desc">차단 해제 시 확인 문구 입력 필요</string>
+    <string name="premium_feature_prevent_delete_title">앱 삭제 방지</string>
+    <string name="premium_feature_prevent_delete_desc">충동적인 앱 삭제를 막아줌</string>
+
 </resources>

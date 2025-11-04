@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.muuu.unshort.admin.DeviceAdminManager
 import com.muuu.unshort.prefs.PreferencesManager
@@ -119,7 +118,7 @@ class SettingsActivity : BaseActivity() {
         // 스크롤한 쇼츠만 차단 아이템 클릭 시 처리
         allowFirstItem.setOnClickListener {
             if (!PremiumManager.isPremium()) {
-                showPremiumRequiredDialog()
+                PremiumManager.showPremiumPurchase(this) { }
             } else {
                 allowFirstSwitch.isChecked = !allowFirstSwitch.isChecked
             }
@@ -141,7 +140,7 @@ class SettingsActivity : BaseActivity() {
         // 충동적 해제 방지 아이템 클릭 시 처리
         preventDisableItem.setOnClickListener {
             if (!PremiumManager.isPremium()) {
-                showPremiumRequiredDialog()
+                PremiumManager.showPremiumPurchase(this) { }
             } else {
                 preventDisableSwitch.isChecked = !preventDisableSwitch.isChecked
             }
@@ -153,7 +152,7 @@ class SettingsActivity : BaseActivity() {
         // Device Admin 아이템 클릭 시 처리
         deviceAdminItem.setOnClickListener {
             if (!PremiumManager.isPremium()) {
-                showPremiumRequiredDialog()
+                PremiumManager.showPremiumPurchase(this) { }
             } else {
                 deviceAdminSwitch.isChecked = !deviceAdminSwitch.isChecked
             }
@@ -166,11 +165,11 @@ class SettingsActivity : BaseActivity() {
 
         // 프리미엄 배너 클릭
         premiumBanner.setOnClickListener {
-            showPremiumRequiredDialog()
+            PremiumManager.showPremiumPurchase(this) { }
         }
 
         premiumBannerButton.setOnClickListener {
-            showPremiumRequiredDialog()
+            PremiumManager.showPremiumPurchase(this) { }
         }
 
         // 대기 시간 설정
@@ -230,32 +229,12 @@ class SettingsActivity : BaseActivity() {
     private fun showWaitTimeBottomSheet() {
         // 프리미엄 체크
         if (!PremiumManager.isPremium()) {
-            showPremiumRequiredDialog()
+            PremiumManager.showPremiumPurchase(this) { }
             return
         }
 
         // 프리미엄 사용자: 커스텀 타이머 표시
         showCustomTimerBottomSheet()
-    }
-
-    /**
-     * 프리미엄 필요 다이얼로그 표시
-     */
-    private fun showPremiumRequiredDialog() {
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.premium_required_title))
-            .setMessage(getString(R.string.premium_required_message))
-            .setPositiveButton(getString(R.string.premium_button_upgrade)) { _, _ ->
-                // 프리미엄 구매 플로우 시작
-                PremiumManager.showPremiumPurchase(this) { success ->
-                    if (success) {
-                        // 구매 성공 시 커스텀 타이머 표시
-                        showCustomTimerBottomSheet()
-                    }
-                }
-            }
-            .setNegativeButton(getString(R.string.premium_button_cancel), null)
-            .show()
     }
 
     /**

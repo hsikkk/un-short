@@ -2,8 +2,8 @@ package com.muuu.unshort.premium
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 
 /**
  * 더미 프리미엄 제공자 (개발/테스트용)
@@ -34,31 +34,12 @@ class DummyPremiumProvider(
         activity: Activity,
         onResult: (success: Boolean) -> Unit
     ) {
-        // 더미 다이얼로그 표시
-        AlertDialog.Builder(activity)
-            .setTitle("✨ 프리미엄 업그레이드")
-            .setMessage(
-                """
-                프리미엄 기능:
+        // PremiumUpgradeActivity 실행
+        val intent = Intent(activity, Class.forName("com.muuu.unshort.PremiumUpgradeActivity"))
+        activity.startActivity(intent)
 
-                ✅ 광고 제거
-                ✅ 타이머 자유 설정 (5초~5분)
-                ✅ 스크롤한 쇼츠만 차단
-                ✅ 충동적 해제 방지
-                ✅ 앱 삭제 방지
-
-                결제 시스템 준비 중입니다.
-                """.trimIndent()
-            )
-            .setPositiveButton("확인") { dialog, _ ->
-                dialog.dismiss()
-                onResult(false)
-            }
-            .setNegativeButton("취소") { dialog, _ ->
-                dialog.dismiss()
-                onResult(false)
-            }
-            .show()
+        // 더미: 항상 실패 (구매 안 함)
+        onResult(false)
     }
 
     override fun syncPremiumStatus(onComplete: () -> Unit) {
