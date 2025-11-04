@@ -59,11 +59,6 @@ class ShortsBlockService : AccessibilityService() {
     // 현재 세션이 스크롤 후 재진입인지 추적 (통계 기록용)
     private var isCurrentSessionFromScroll: Boolean = false
 
-    // 시청 시간 추적
-    private var watchStartTime: Long? = null  // 최초 시청 시작 시각
-    private var currentWatchStartTime: Long? = null  // 현재 포그라운드 시청 구간 시작 시각
-    private var accumulatedWatchTime: Long = 0  // 누적 시청 시간 (밀리초)
-
     // Screen state receiver
     private var screenStateReceiver: ScreenStateReceiver? = null
 
@@ -105,14 +100,6 @@ class ShortsBlockService : AccessibilityService() {
             onWatch = {
                 // "볼래요" 버튼 - 시청 허용 상태로 전이
                 Log.d(TAG, "Watch button pressed - allowing watch")
-
-                // 시청 시작 시각 기록
-                val now = System.currentTimeMillis()
-                if (watchStartTime == null) {
-                    watchStartTime = now
-                }
-                currentWatchStartTime = now
-                Log.d(TAG, "Watch started at $now")
 
                 sessionState.handleEvent(SessionEvent.WatchConfirmed, currentPackage)
                 stopForegroundCheck()
@@ -243,15 +230,11 @@ class ShortsBlockService : AccessibilityService() {
                         // 같은 차단 대상 앱 내 다른 화면
                         foregroundPkg == packageName -> {
                             Log.d(TAG, "Exited shorts within same app")
-                            // 시청 중이었으면 시청 시간 일시정지
-                            pauseWatchTime()
                             sessionState.handleEvent(SessionEvent.ExitShorts, packageName)
                         }
                         // 다른 앱 = Background 전환
                         else -> {
                             Log.d(TAG, "Exited shorts to other app/home - entering background")
-                            // 시청 중이었으면 시청 시간 일시정지
-                            pauseWatchTime()
                             sessionState.handleEvent(SessionEvent.EnterBackground, packageName)
                         }
                     }
@@ -299,12 +282,6 @@ class ShortsBlockService : AccessibilityService() {
             ShortsSessionState.BACKGROUND_ALLOWED_UNTIL_SCROLL -> {
                 if (isInShortsScreen) {
                     sessionState.handleEvent(SessionEvent.ReturnToShorts, packageName)
-
-                    // ALLOWED 상태로 복귀한 경우 시청 재개
-                    val newState = sessionState.getCurrentState(packageName)
-                    if (newState == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL) {
-                        resumeWatchTime()
-                    }
                 }
             }
         }
@@ -803,67 +780,27 @@ class ShortsBlockService : AccessibilityService() {
     }
 
     /**
-     * 현재 시청 구간 종료 및 누적 시간 계산
-     */
-    private fun pauseWatchTime() {
-        currentWatchStartTime?.let { startTime ->
-            val duration = System.currentTimeMillis() - startTime
-            accumulatedWatchTime += duration
-            currentWatchStartTime = null
-            Log.d(TAG, "Watch paused: duration=${duration}ms, accumulated=${accumulatedWatchTime}ms")
-        }
-    }
-
-    /**
-     * 시청 재개 (포그라운드 복귀 시)
-     */
-    private fun resumeWatchTime() {
-        if (currentWatchStartTime == null) {
-            currentWatchStartTime = System.currentTimeMillis()
-            Log.d(TAG, "Watch resumed at $currentWatchStartTime")
-        }
-    }
-
-    /**
-     * 세션 기록 및 시청 시간 초기화
-     */
-    private fun recordSessionWithWatchTime(
-        didWatch: Boolean,
-        timerCompleted: Boolean,
-        isScrollSession: Boolean
-    ) {
-        // 현재 시청 중이면 마지막 구간 추가
-        pauseWatchTime()
-
-        val watchEnd = if (accumulatedWatchTime > 0) System.currentTimeMillis() else null
-
-        statisticsRepository.recordSession(
-            packageName = currentPackage,
-            didWatch = didWatch,
-            timerCompleted = timerCompleted,
-            isScrollSession = isScrollSession,
-            watchStartTime = watchStartTime,
-            watchEndTime = watchEnd,
-            watchDurationMs = if (accumulatedWatchTime > 0) accumulatedWatchTime else null
-        )
-
-        Log.d(TAG, "Session recorded: didWatch=$didWatch, duration=${accumulatedWatchTime}ms")
-
-        // 초기화
-        watchStartTime = null
-        currentWatchStartTime = null
-        accumulatedWatchTime = 0
-    }
-
-    /**
      * 상태 전이로부터 세션 기록 (SessionStateManager 콜백)
      */
     private fun recordSessionFromStateTransition(info: SessionStateManager.SessionEndInfo) {
-        recordSessionWithWatchTime(
+        val watchEnd = if (info.watchDurationMs != null && info.watchDurationMs > 0) {
+            System.currentTimeMillis()
+        } else {
+            null
+        }
+
+        statisticsRepository.recordSession(
+            packageName = info.packageName,
             didWatch = info.didWatch,
             timerCompleted = currentTimerCompleted,
-            isScrollSession = isCurrentSessionFromScroll
+            isScrollSession = isCurrentSessionFromScroll,
+            watchStartTime = info.watchStartTime,
+            watchEndTime = watchEnd,
+            watchDurationMs = info.watchDurationMs
         )
+
+        Log.d(TAG, "Session recorded: didWatch=${info.didWatch}, duration=${info.watchDurationMs}ms")
+
         currentTimerCompleted = false
         isCurrentSessionFromScroll = false
     }

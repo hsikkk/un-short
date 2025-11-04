@@ -24,12 +24,17 @@ class SessionStateManager(
         val previousState: ShortsSessionState,
         val newState: ShortsSessionState,
         val event: SessionEvent,
-        val didWatch: Boolean
+        val didWatch: Boolean,
+        val watchStartTime: Long?,
+        val watchDurationMs: Long?
     )
 
     // 앱별 상태 저장
     private val stateByPackage = mutableMapOf<String, ShortsSessionState>()
     private val previousStateByPackage = mutableMapOf<String, ShortsSessionState>()
+
+    // 앱별 시청 시간 추적
+    private val watchTimeByPackage = mutableMapOf<String, WatchTimeTracker>()
 
     // 앱별 스크롤 감지 데이터
     private data class ScrollData(var hash: Int = 0, var stableCount: Int = 0)
@@ -45,11 +50,11 @@ class SessionStateManager(
 
         val newState = when (event) {
             is SessionEvent.EnterShorts -> transitionOnEnterShorts(current, packageName)
-            is SessionEvent.ExitShorts -> transitionOnExitShorts(packageName)
-            is SessionEvent.EnterBackground -> transitionOnEnterBackground(current)
-            is SessionEvent.ReturnToShorts -> transitionOnReturnToShorts(current)
+            is SessionEvent.ExitShorts -> transitionOnExitShorts(current, packageName)
+            is SessionEvent.EnterBackground -> transitionOnEnterBackground(current, packageName)
+            is SessionEvent.ReturnToShorts -> transitionOnReturnToShorts(current, packageName)
             is SessionEvent.TimerCompleted -> transitionOnTimerCompleted(current)
-            is SessionEvent.WatchConfirmed -> transitionOnWatchConfirmed(current)
+            is SessionEvent.WatchConfirmed -> transitionOnWatchConfirmed(current, packageName)
             is SessionEvent.SkipConfirmed -> transitionOnSkipConfirmed(packageName)
             is SessionEvent.ContentHashChanged -> {
                 handleContentHashChanged(event.hash, packageName)
@@ -67,16 +72,26 @@ class SessionStateManager(
         // 세션 종료 판단 및 콜백 호출
         if (shouldRecordSession(current, newState, event)) {
             val didWatch = current == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
+            val watchTracker = watchTimeByPackage[packageName]
+
+            // 현재 시청 중이면 마지막 구간 추가
+            watchTracker?.pause()
+
             onSessionEnd?.invoke(
                 SessionEndInfo(
                     packageName = packageName,
                     previousState = current,
                     newState = newState,
                     event = event,
-                    didWatch = didWatch
+                    didWatch = didWatch,
+                    watchStartTime = watchTracker?.getWatchStartTime(),
+                    watchDurationMs = watchTracker?.getAccumulatedTime()
                 )
             )
-            Log.d(TAG, "[$packageName] Session recorded: didWatch=$didWatch")
+            Log.d(TAG, "[$packageName] Session recorded: didWatch=$didWatch, duration=${watchTracker?.getAccumulatedTime()}ms")
+
+            // 시청 시간 초기화
+            watchTracker?.reset()
         }
     }
 
@@ -128,31 +143,51 @@ class SessionStateManager(
         return ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
     }
 
-    private fun transitionOnExitShorts(packageName: String): ShortsSessionState {
+    private fun transitionOnExitShorts(current: ShortsSessionState, packageName: String): ShortsSessionState {
         scrollDataByPackage[packageName] = ScrollData()
+        // 시청 중이었으면 일시정지
+        if (current == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL) {
+            watchTimeByPackage[packageName]?.pause()
+        }
         return ShortsSessionState.IDLE
     }
 
-    private fun transitionOnEnterBackground(current: ShortsSessionState) = when (current) {
-        ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER ->
-            ShortsSessionState.BACKGROUND_BLOCKED_NEED_TIMER
-        ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION ->
-            ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION
-        ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL ->
-            ShortsSessionState.BACKGROUND_ALLOWED_UNTIL_SCROLL
-        else -> current
+    private fun transitionOnEnterBackground(current: ShortsSessionState, packageName: String): ShortsSessionState {
+        // 시청 중이었으면 일시정지
+        if (current == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL) {
+            watchTimeByPackage[packageName]?.pause()
+        }
+
+        return when (current) {
+            ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER ->
+                ShortsSessionState.BACKGROUND_BLOCKED_NEED_TIMER
+            ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION ->
+                ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION
+            ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL ->
+                ShortsSessionState.BACKGROUND_ALLOWED_UNTIL_SCROLL
+            else -> current
+        }
     }
 
-    private fun transitionOnReturnToShorts(current: ShortsSessionState) = when (current) {
-        ShortsSessionState.BACKGROUND_BLOCKED_NEED_TIMER ->
-            ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
-        ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION ->
-            ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION
-        ShortsSessionState.BACKGROUND_ALLOWED_UNTIL_SCROLL ->
-            ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
-        ShortsSessionState.IDLE ->
-            ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
-        else -> current
+    private fun transitionOnReturnToShorts(current: ShortsSessionState, packageName: String): ShortsSessionState {
+        val newState = when (current) {
+            ShortsSessionState.BACKGROUND_BLOCKED_NEED_TIMER ->
+                ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
+            ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION ->
+                ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION
+            ShortsSessionState.BACKGROUND_ALLOWED_UNTIL_SCROLL ->
+                ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
+            ShortsSessionState.IDLE ->
+                ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
+            else -> current
+        }
+
+        // ALLOWED 상태로 복귀한 경우 시청 재개
+        if (newState == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL) {
+            watchTimeByPackage[packageName]?.resume()
+        }
+
+        return newState
     }
 
     private fun transitionOnTimerCompleted(current: ShortsSessionState) = when (current) {
@@ -166,12 +201,18 @@ class SessionStateManager(
         }
     }
 
-    private fun transitionOnWatchConfirmed(current: ShortsSessionState) = when (current) {
-        ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION ->
-            ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
-        else -> {
-            Log.w(TAG, "Watch confirmed in unexpected state: $current")
-            current
+    private fun transitionOnWatchConfirmed(current: ShortsSessionState, packageName: String): ShortsSessionState {
+        return when (current) {
+            ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION -> {
+                // 시청 시작
+                val tracker = watchTimeByPackage.getOrPut(packageName) { WatchTimeTracker() }
+                tracker.start()
+                ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
+            }
+            else -> {
+                Log.w(TAG, "Watch confirmed in unexpected state: $current")
+                current
+            }
         }
     }
 
@@ -213,16 +254,24 @@ class SessionStateManager(
             Log.d(TAG, "[$packageName] Scroll event | $current → $newState (new video)")
 
             // 세션 기록 (스크롤 = 시청 완료)
+            val watchTracker = watchTimeByPackage[packageName]
+            watchTracker?.pause()
+
             onSessionEnd?.invoke(
                 SessionEndInfo(
                     packageName = packageName,
                     previousState = current,
                     newState = newState,
                     event = SessionEvent.ContentHashChanged(newHash),
-                    didWatch = true
+                    didWatch = true,
+                    watchStartTime = watchTracker?.getWatchStartTime(),
+                    watchDurationMs = watchTracker?.getAccumulatedTime()
                 )
             )
-            Log.d(TAG, "[$packageName] Session recorded: didWatch=true (scroll)")
+            Log.d(TAG, "[$packageName] Session recorded: didWatch=true (scroll), duration=${watchTracker?.getAccumulatedTime()}ms")
+
+            // 시청 시간 초기화
+            watchTracker?.reset()
         } else {
             Log.d(TAG, "[$packageName] Scroll not triggered: scrollDetected=$scrollDetected, current=$current")
         }
