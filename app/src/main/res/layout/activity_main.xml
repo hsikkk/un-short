@@ -27,14 +27,42 @@
                 android:padding="32dp"
                 android:paddingTop="16dp">
 
-            <TextView
+            <!-- App Name with Premium Badge -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textSize="@dimen/text_logo"
-                android:fontFamily="@font/spoqa_sans_neo_thin"
-                android:textColor="#FFFFFF"
-                android:letterSpacing="-0.02" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textSize="@dimen/text_logo"
+                    android:fontFamily="@font/spoqa_sans_neo_thin"
+                    android:textColor="#FFFFFF"
+                    android:letterSpacing="-0.02" />
+
+                <!-- Premium Badge -->
+                <TextView
+                    android:id="@+id/premiumBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginTop="3dp"
+                    android:text="PRO"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/spoqa_sans_neo_medium"
+                    android:textColor="#BDBDBD"
+                    android:background="@drawable/premium_badge_background"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:letterSpacing="0.05"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"

@@ -25,6 +25,7 @@ import com.muuu.ad.core.adunit.MuuuBannerAdUnit
 import com.muuu.ad.core.model.MuuuBannerSize
 import com.muuu.unshort.ad.AdManager
 import com.muuu.unshort.prefs.PreferencesManager
+import com.muuu.unshort.premium.PremiumManager
 import com.muuu.shortblock.service.blocking.AppBlockingRegistry
 
 class MainActivity : BaseActivity() {
@@ -46,6 +47,7 @@ class MainActivity : BaseActivity() {
     private lateinit var watchTimeText: TextView
     private lateinit var settingsButton: ImageView
     private lateinit var settingsBadge: View
+    private lateinit var premiumBadge: TextView
     private var bannerAdView: MuuuBannerAdView? = null
     private lateinit var prefsManager: PreferencesManager
     private lateinit var blockedAppsContainer: LinearLayout
@@ -99,6 +101,7 @@ class MainActivity : BaseActivity() {
         watchTimeText = findViewById(R.id.watchTimeText)
         settingsButton = findViewById(R.id.settingsButton)
         settingsBadge = findViewById(R.id.settingsBadge)
+        premiumBadge = findViewById(R.id.premiumBadge)
         blockedAppsContainer = findViewById(R.id.blockedAppsContainer)
 
         // 설치된 앱만 동적으로 생성하여 표시
@@ -160,6 +163,7 @@ class MainActivity : BaseActivity() {
         super.onResume()
         checkPermissionsAndUpdateUI()
         updateSettingsBadgeVisibility()
+        updatePremiumBadgeVisibility()
         updateStatisticsSummary()
         // 앱 설치/삭제 상황 반영
         populateBlockedApps()
@@ -186,6 +190,10 @@ class MainActivity : BaseActivity() {
 
     private fun updateSettingsBadgeVisibility() {
         settingsBadge.visibility = if (!prefsManager.hasVisitedSettings) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun updatePremiumBadgeVisibility() {
+        premiumBadge.visibility = if (PremiumManager.isPremium()) View.VISIBLE else View.GONE
     }
 
     private fun checkPermissions(): Boolean {
