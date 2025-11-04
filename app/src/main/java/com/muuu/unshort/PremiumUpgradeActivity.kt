@@ -2,7 +2,9 @@ package com.muuu.unshort
 
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.Toast
 import com.google.android.material.button.MaterialButton
+import com.muuu.unshort.premium.PremiumManager
 
 /**
  * 프리미엄 업그레이드 화면
@@ -30,11 +32,17 @@ class PremiumUpgradeActivity : BaseActivity() {
             finish()
         }
 
-        // 업그레이드 버튼 (더미)
+        // 업그레이드 버튼
         upgradeButton.setOnClickListener {
-            // 더미: 항상 성공으로 처리 (DummyPremiumProvider에서 onResult(true) 호출)
-            // Activity 종료하면 PremiumManager의 Callback이 자동으로 UI 갱신
-            finish()
+            // PremiumManager를 통해 실제 구매 플로우 시작
+            // Dummy: Toast + 즉시 성공
+            // Google Play Billing: 실제 결제 화면
+            PremiumManager.showPremiumPurchase(this) { success ->
+                if (success) {
+                    Toast.makeText(this, "프리미엄 활성화!", Toast.LENGTH_SHORT).show()
+                }
+                finish()
+            }
         }
     }
 }

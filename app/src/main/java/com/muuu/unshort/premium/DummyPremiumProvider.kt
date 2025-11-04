@@ -16,29 +16,27 @@ class DummyPremiumProvider(
 ) : PremiumProvider {
 
     companion object {
-        /**
-         * 개발/테스트용 플래그
-         * true로 설정하면 모든 프리미엄 기능 활성화
-         *
-         * TODO: 실제 배포 시 제거하거나 BuildConfig로 제어
-         */
-        private const val DEBUG_PREMIUM_ENABLED = false
+        private const val PREF_NAME = "dummy_premium_prefs"
+        private const val KEY_IS_PREMIUM = "is_premium"
     }
 
+    private val dummyPrefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+
     override fun isPremium(): Boolean {
-        // 개발 중에는 true로 설정해서 프리미엄 기능 테스트 가능
-        return DEBUG_PREMIUM_ENABLED
+        // Dummy Pref에서 읽기
+        return dummyPrefs.getBoolean(KEY_IS_PREMIUM, false)
     }
 
     override fun startPurchaseFlow(
         activity: Activity,
         onResult: (success: Boolean) -> Unit
     ) {
-        // PremiumUpgradeActivity 실행
-        val intent = Intent(activity, Class.forName("com.muuu.unshort.PremiumUpgradeActivity"))
-        activity.startActivity(intent)
+        // 더미: Pref에 저장하고 즉시 성공 처리
+        dummyPrefs.edit()
+            .putBoolean(KEY_IS_PREMIUM, true)
+            .apply()
 
-        // 더미: 항상 성공 (테스트용)
+        Toast.makeText(activity, "더미 구매 완료!", Toast.LENGTH_SHORT).show()
         onResult(true)
     }
 

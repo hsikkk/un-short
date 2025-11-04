@@ -118,7 +118,7 @@ class SettingsActivity : BaseActivity() {
         // 스크롤한 쇼츠만 차단 아이템 클릭 시 처리
         allowFirstItem.setOnClickListener {
             if (!PremiumManager.isPremium()) {
-                PremiumManager.showPremiumPurchase(this) { }
+                startActivity(Intent(this, PremiumUpgradeActivity::class.java))
             } else {
                 allowFirstSwitch.isChecked = !allowFirstSwitch.isChecked
             }
@@ -140,7 +140,7 @@ class SettingsActivity : BaseActivity() {
         // 충동적 해제 방지 아이템 클릭 시 처리
         preventDisableItem.setOnClickListener {
             if (!PremiumManager.isPremium()) {
-                PremiumManager.showPremiumPurchase(this) { }
+                startActivity(Intent(this, PremiumUpgradeActivity::class.java))
             } else {
                 preventDisableSwitch.isChecked = !preventDisableSwitch.isChecked
             }
@@ -152,7 +152,7 @@ class SettingsActivity : BaseActivity() {
         // Device Admin 아이템 클릭 시 처리
         deviceAdminItem.setOnClickListener {
             if (!PremiumManager.isPremium()) {
-                PremiumManager.showPremiumPurchase(this) { }
+                startActivity(Intent(this, PremiumUpgradeActivity::class.java))
             } else {
                 deviceAdminSwitch.isChecked = !deviceAdminSwitch.isChecked
             }
@@ -165,11 +165,11 @@ class SettingsActivity : BaseActivity() {
 
         // 프리미엄 배너 클릭
         premiumBanner.setOnClickListener {
-            PremiumManager.showPremiumPurchase(this) { }
+            startActivity(Intent(this, PremiumUpgradeActivity::class.java))
         }
 
         premiumBannerButton.setOnClickListener {
-            PremiumManager.showPremiumPurchase(this) { }
+            startActivity(Intent(this, PremiumUpgradeActivity::class.java))
         }
 
         // 대기 시간 설정
@@ -229,7 +229,7 @@ class SettingsActivity : BaseActivity() {
     private fun showWaitTimeBottomSheet() {
         // 프리미엄 체크
         if (!PremiumManager.isPremium()) {
-            PremiumManager.showPremiumPurchase(this) { }
+            startActivity(Intent(this, PremiumUpgradeActivity::class.java))
             return
         }
 
