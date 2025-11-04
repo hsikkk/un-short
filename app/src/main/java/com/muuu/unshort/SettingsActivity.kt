@@ -385,6 +385,9 @@ class SettingsActivity : BaseActivity() {
         super.onResume()
         // 설정 화면에서 돌아왔을 때 Device Admin 상태 업데이트
         updateDeviceAdminSwitchState()
+
+        // 프리미엄 업그레이드 후 돌아왔을 때 UI 업데이트
+        updatePremiumUI()
     }
 
     private fun showDeviceAdminDisableDialog() {
