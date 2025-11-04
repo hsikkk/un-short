@@ -100,8 +100,14 @@ object AppBlockingRegistry {
                 Regex(".*댓글\\s*\\d+.*"),  // "댓글 91개 보기"
                 Regex(".*좋아요\\s*\\d+.*"),  // "좋아요 262개"
                 Regex(".*조회수\\s*\\d+.*"),  // "조회수 1.2만회"
-                Regex(".*동영상.*좋아요.*"),  // "동영상에 좋아요 표시", "동영상에 싫어요 표시"
-                Regex(".*동영상.*싫어요.*")
+                Regex(".*동영상.*좋아요.*"),  // "동영상에 좋아요 표시"
+                Regex(".*동영상.*싫어요.*"),  // "동영상에 싫어요 표시"
+                Regex("동영상 재생"),  // Play 버튼
+                Regex("동영상 일지중지"),  // Pause 버튼 (일시정지 오타)
+                Regex("라이브"),  // 라이브 뱃지
+                Regex("Play video"),  // 영어 Play
+                Regex("Pause video"),  // 영어 Pause
+                Regex("Live")  // 영어 Live
             ),
             maxDepth = 8,
             textValidator = { text ->
