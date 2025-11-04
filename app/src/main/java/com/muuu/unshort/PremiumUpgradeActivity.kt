@@ -2,7 +2,6 @@ package com.muuu.unshort
 
 import android.os.Bundle
 import android.widget.ImageView
-import android.widget.Toast
 import com.google.android.material.button.MaterialButton
 
 /**
@@ -33,14 +32,8 @@ class PremiumUpgradeActivity : BaseActivity() {
 
         // 업그레이드 버튼 (더미)
         upgradeButton.setOnClickListener {
-            // 더미: Toast 메시지 표시
-            Toast.makeText(
-                this,
-                getString(R.string.premium_upgrade_coming_soon),
-                Toast.LENGTH_SHORT
-            ).show()
-
-            // Activity 종료
+            // 더미: 항상 성공으로 처리 (DummyPremiumProvider에서 onResult(true) 호출)
+            // Activity 종료하면 PremiumManager의 Callback이 자동으로 UI 갱신
             finish()
         }
     }

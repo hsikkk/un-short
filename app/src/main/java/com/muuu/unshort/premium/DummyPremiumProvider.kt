@@ -38,8 +38,8 @@ class DummyPremiumProvider(
         val intent = Intent(activity, Class.forName("com.muuu.unshort.PremiumUpgradeActivity"))
         activity.startActivity(intent)
 
-        // 더미: 항상 실패 (구매 안 함)
-        onResult(false)
+        // 더미: 항상 성공 (테스트용)
+        onResult(true)
     }
 
     override fun syncPremiumStatus(onComplete: () -> Unit) {
