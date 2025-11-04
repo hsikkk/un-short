@@ -89,4 +89,7 @@ dependencies {
 
     // Muuu Ad SDK
     implementation("com.muuu:ad:0.1.0")
+
+    // Google Play Billing Library
+    implementation("com.android.billingclient:billing-ktx:7.1.1")
 }

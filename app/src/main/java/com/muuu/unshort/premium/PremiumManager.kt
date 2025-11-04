@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.muuu.unshort.BuildConfig
 import com.muuu.unshort.admin.DeviceAdminManager
 import java.util.concurrent.TimeUnit
 
@@ -34,8 +35,13 @@ object PremiumManager {
     fun initialize(context: Context) {
         appContext = context.applicationContext
 
-        // TODO: 나중에 BuildConfig나 설정으로 Provider 선택 가능하게
-        provider = DummyPremiumProvider(context)
+        // Debug 빌드: DummyProvider, Release 빌드: GooglePlayBillingProvider
+//        provider = GooglePlayBillingProvider(context)
+        provider = if (BuildConfig.DEBUG) {
+            DummyPremiumProvider(context)
+        } else {
+            GooglePlayBillingProvider(context)
+        }
 
         // 초기 상태 동기화
         provider.syncPremiumStatus {

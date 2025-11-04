@@ -15,6 +15,9 @@
     <!-- Android 13+ advertising ID permission (for future ads/analytics) -->
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
+    <!-- Google Play Billing (for in-app purchases) -->
+    <uses-permission android:name="com.android.vending.BILLING" />
+
     <!-- Package Visibility (Android 11+) -->
     <queries>
         <package android:name="com.google.android.youtube" />
