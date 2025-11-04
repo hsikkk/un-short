@@ -103,9 +103,9 @@ object AppBlockingRegistry {
                 Regex("동영상 재생"),  // Play 버튼
                 Regex("동영상 일지중지"),  // Pause 버튼 (일시정지 오타)
                 Regex("라이브"),  // 라이브 뱃지
-                Regex("Play video"),  // 영어 Play
-                Regex("Pause video"),  // 영어 Pause
-                Regex("Live")  // 영어 Live
+                Regex("Play [Vv]ideo", RegexOption.IGNORE_CASE),  // 영어 Play
+                Regex("Pause [Vv]ideo", RegexOption.IGNORE_CASE),  // 영어 Pause
+                Regex("Live", RegexOption.IGNORE_CASE)  // 영어 Live
             ),
             maxDepth = 8,
             textValidator = { text ->
