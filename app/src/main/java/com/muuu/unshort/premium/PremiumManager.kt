@@ -48,19 +48,31 @@ object PremiumManager {
 
     /**
      * WorkManager로 24시간마다 프리미엄 상태 동기화 스케줄
+     *
+     * 안전성:
+     * - API 26+ 지원 (minSdk = 26)
+     * - 백그라운드 제약 대응 (expedited 사용 안 함)
+     * - 실패 시 포그라운드 동기화로 대체
      */
     private fun schedulePremiumSync() {
-        val syncWork = PeriodicWorkRequestBuilder<PremiumSyncWorker>(
-            24, TimeUnit.HOURS,
-            15, TimeUnit.MINUTES  // flex interval
-        ).build()
-
-        WorkManager.getInstance(appContext)
-            .enqueueUniquePeriodicWork(
-                "premium_sync",
-                ExistingPeriodicWorkPolicy.KEEP,
-                syncWork
+        try {
+            val syncWork = PeriodicWorkRequestBuilder<PremiumSyncWorker>(
+                24, TimeUnit.HOURS,
+                15, TimeUnit.MINUTES  // flex interval
             )
+                .build()
+
+            WorkManager.getInstance(appContext)
+                .enqueueUniquePeriodicWork(
+                    "premium_sync",
+                    ExistingPeriodicWorkPolicy.KEEP,
+                    syncWork
+                )
+        } catch (e: Exception) {
+            // WorkManager 초기화 실패 시 무시 (치명적이지 않음)
+            // 포그라운드 동기화는 여전히 작동
+            android.util.Log.w("PremiumManager", "Failed to schedule premium sync", e)
+        }
     }
 
     /**
@@ -101,11 +113,15 @@ object PremiumManager {
      * 포그라운드 진입 시 또는 WorkManager에서 호출
      */
     fun syncPremiumStatus() {
-        provider.syncPremiumStatus {
-            val newStatus = provider.isPremium()
-            if (isPremiumCache != newStatus) {
-                updatePremiumStatus(newStatus)
+        try {
+            provider.syncPremiumStatus {
+                val newStatus = provider.isPremium()
+                if (isPremiumCache != newStatus) {
+                    updatePremiumStatus(newStatus)
+                }
             }
+        } catch (e: Exception) {
+            // 동기화 실패 시 현재 상태 유지
         }
     }
 
