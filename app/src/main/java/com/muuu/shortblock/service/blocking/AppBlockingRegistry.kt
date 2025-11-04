@@ -241,7 +241,9 @@ object AppBlockingRegistry {
         shortName = "Naver",
         iconResId = R.drawable.ic_naver,
         viewIdDetectors = listOf(
-            // 네이버는 View ID를 사용하지 않음
+            ViewIdDetector("com.nhn.android.search:id/pager"),
+            ViewIdDetector("com.nhn.android.search:id/player_view"),
+            ViewIdDetector("com.nhn.android.search:id/horizontal_scroll_view")
         ),
         textDetectors = listOf(
             TextDetector(
@@ -256,7 +258,7 @@ object AppBlockingRegistry {
             )
         ),
         hashConfig = HashConfig(
-            containerViewId = "com.nhn.android.search:id/shorts_container",
+            containerViewId = "com.nhn.android.search:id/pager",
             includedViewIdPatterns = listOf(
                 "title",
                 "username",
