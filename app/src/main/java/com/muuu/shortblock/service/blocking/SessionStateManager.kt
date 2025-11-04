@@ -264,12 +264,27 @@ class SessionStateManager(
             val watchTracker = watchTimeByPackage[packageName]
             watchTracker?.pause()
 
+            // 세션 종료 정보 먼저 수집 (reset 전에)
+            val sessionEndInfo = SessionEndInfo(
+                packageName = packageName,
+                previousState = current,
+                newState = current, // 임시, 아래서 업데이트
+                event = SessionEvent.ContentHashChanged(newHash),
+                didWatch = true,
+                watchStartTime = watchTracker?.getWatchStartTime(),
+                watchDurationMs = watchTracker?.getAccumulatedTime()
+            )
+            Log.d(TAG, "[$packageName] Session recorded: didWatch=true (scroll), duration=${watchTracker?.getAccumulatedTime()}ms")
+
+            // 항상 reset (차단 상태 무관)
+            watchTracker?.reset()
+
             // 차단 상태에 따라 다음 상태 결정
             val newState = if (!isBlockingEnabled()) {
                 // 차단 OFF: 즉시 새 세션 시작 (ALLOWED 상태 유지)
-                Log.d(TAG, "[$packageName] Blocking disabled - staying in ALLOWED state after scroll")
-                val newTracker = watchTimeByPackage.getOrPut(packageName) { WatchTimeTracker() }
-                newTracker.start()
+                Log.d(TAG, "[$packageName] Blocking disabled - staying in ALLOWED state after scroll, starting new session from 0")
+                val tracker = watchTimeByPackage.getOrPut(packageName) { WatchTimeTracker() }
+                tracker.start()
                 ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
             } else {
                 // 차단 ON: 새 영상이므로 다시 차단 필요
@@ -279,23 +294,8 @@ class SessionStateManager(
 
             stateByPackage[packageName] = newState
 
-            onSessionEnd?.invoke(
-                SessionEndInfo(
-                    packageName = packageName,
-                    previousState = current,
-                    newState = newState,
-                    event = SessionEvent.ContentHashChanged(newHash),
-                    didWatch = true,
-                    watchStartTime = watchTracker?.getWatchStartTime(),
-                    watchDurationMs = watchTracker?.getAccumulatedTime()
-                )
-            )
-            Log.d(TAG, "[$packageName] Session recorded: didWatch=true (scroll), duration=${watchTracker?.getAccumulatedTime()}ms")
-
-            // 차단 ON 상태에서만 시청 시간 초기화 (차단 OFF는 이미 새 tracker 시작됨)
-            if (isBlockingEnabled()) {
-                watchTracker?.reset()
-            }
+            // 세션 종료 콜백 호출 (올바른 newState로)
+            onSessionEnd?.invoke(sessionEndInfo.copy(newState = newState))
         } else {
             Log.d(TAG, "[$packageName] Scroll not triggered: scrollDetected=$scrollDetected, current=$current")
         }
