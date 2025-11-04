@@ -2,6 +2,11 @@ package com.muuu.unshort.premium
 
 import android.app.Activity
 import android.content.Context
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import com.muuu.unshort.admin.DeviceAdminManager
+import java.util.concurrent.TimeUnit
 
 /**
  * 프리미엄 기능 관리자
@@ -12,6 +17,7 @@ import android.content.Context
 object PremiumManager {
 
     private lateinit var provider: PremiumProvider
+    private lateinit var appContext: Context
     private var isPremiumCache: Boolean = false
 
     /**
@@ -26,6 +32,8 @@ object PremiumManager {
      * @param context Application 컨텍스트
      */
     fun initialize(context: Context) {
+        appContext = context.applicationContext
+
         // TODO: 나중에 BuildConfig나 설정으로 Provider 선택 가능하게
         provider = DummyPremiumProvider(context)
 
@@ -33,6 +41,26 @@ object PremiumManager {
         provider.syncPremiumStatus {
             isPremiumCache = provider.isPremium()
         }
+
+        // WorkManager로 24시간 주기 동기화 스케줄
+        schedulePremiumSync()
+    }
+
+    /**
+     * WorkManager로 24시간마다 프리미엄 상태 동기화 스케줄
+     */
+    private fun schedulePremiumSync() {
+        val syncWork = PeriodicWorkRequestBuilder<PremiumSyncWorker>(
+            24, TimeUnit.HOURS,
+            15, TimeUnit.MINUTES  // flex interval
+        ).build()
+
+        WorkManager.getInstance(appContext)
+            .enqueueUniquePeriodicWork(
+                "premium_sync",
+                ExistingPeriodicWorkPolicy.KEEP,
+                syncWork
+            )
     }
 
     /**
@@ -68,18 +96,55 @@ object PremiumManager {
     }
 
     /**
+     * 프리미엄 상태 동기화 (Public)
+     *
+     * 포그라운드 진입 시 또는 WorkManager에서 호출
+     */
+    fun syncPremiumStatus() {
+        provider.syncPremiumStatus {
+            val newStatus = provider.isPremium()
+            if (isPremiumCache != newStatus) {
+                updatePremiumStatus(newStatus)
+            }
+        }
+    }
+
+    /**
      * 프리미엄 상태 업데이트 (내부용)
      *
      * @param isPremium 새로운 프리미엄 상태
      */
     private fun updatePremiumStatus(isPremium: Boolean) {
         if (isPremiumCache != isPremium) {
+            val wasPremium = isPremiumCache
             isPremiumCache = isPremium
+
+            // 프리미엄 → 무료 전환 시 (구독 해지)
+            if (wasPremium && !isPremium) {
+                onPremiumDowngrade()
+            }
 
             // 모든 리스너에게 알림
             listeners.forEach { listener ->
                 listener.invoke()
             }
+        }
+    }
+
+    /**
+     * 프리미엄 해지 시 처리
+     *
+     * Device Admin 자동 해제 등
+     */
+    private fun onPremiumDowngrade() {
+        try {
+            // Device Admin 자동 해제
+            val deviceAdminManager = DeviceAdminManager(appContext)
+            if (deviceAdminManager.isDeviceAdminActive()) {
+                deviceAdminManager.removeAdmin()
+            }
+        } catch (e: Exception) {
+            // Device Admin 해제 실패 시 무시 (치명적이지 않음)
         }
     }
 

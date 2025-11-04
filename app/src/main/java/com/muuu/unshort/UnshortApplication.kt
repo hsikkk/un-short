@@ -2,6 +2,9 @@ package com.muuu.unshort
 
 import android.app.Application
 import android.util.Log
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.amplitude.android.Amplitude
 import com.amplitude.android.Configuration
 import com.muuu.ad.MuuuAdManagner
@@ -40,5 +43,15 @@ class UnshortApplication : Application() {
         Log.d(TAG, "Muuu Ad SDK initialized with debug mode: ${BuildConfig.DEBUG}")
         Log.d(TAG, "Amplitude initialized - API Key: ${BuildConfig.AMPLITUDE_API_KEY.take(8)}...")
         Log.d(TAG, "Debug mode: ${BuildConfig.DEBUG}")
+
+        // 앱 Foreground/Background 감지
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onStart(owner: LifecycleOwner) {
+                super.onStart(owner)
+                // 앱이 foreground로 진입할 때마다 프리미엄 상태 동기화
+                PremiumManager.syncPremiumStatus()
+                Log.d(TAG, "App moved to foreground - syncing premium status")
+            }
+        })
     }
 }

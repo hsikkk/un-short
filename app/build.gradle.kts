@@ -78,6 +78,12 @@ dependencies {
     implementation("androidx.room:room-ktx:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")
 
+    // WorkManager
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+
+    // Lifecycle Process (ProcessLifecycleOwner)
+    implementation("androidx.lifecycle:lifecycle-process:2.8.7")
+
     // Amplitude Analytics
     implementation("com.amplitude:analytics-android:1.22.4")
 
