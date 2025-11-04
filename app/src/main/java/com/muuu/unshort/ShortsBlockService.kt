@@ -71,6 +71,7 @@ class ShortsBlockService : AccessibilityService() {
         statisticsRepository = StatisticsRepository(this)
         sessionState = SessionStateManager(
             context = this,
+            isBlockingEnabled = { prefsManager.isBlockingEnabled },
             onSessionEnd = { info -> recordSessionFromStateTransition(info) }
         )
 
@@ -133,18 +134,17 @@ class ShortsBlockService : AccessibilityService() {
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null) return
 
-        // 차단 활성화 상태 확인
+        val packageName = event.packageName?.toString() ?: return
+        currentPackage = packageName  // 현재 패키지 저장
+
+        // 차단 비활성화 시 오버레이만 제거하고 세션 추적은 계속
         if (!prefsManager.isBlockingEnabled) {
-            // 차단 비활성화 시 오버레이 제거
             if (overlayManager.isOverlayVisible(packageName)) {
                 cancelPendingOverlay()
                 overlayManager.hideOverlay(packageName)
             }
-            return
+            // return 제거 - 세션 추적 계속 진행
         }
-
-        val packageName = event.packageName?.toString() ?: return
-        currentPackage = packageName  // 현재 패키지 저장
 
         // 이벤트 로깅
         Log.d(TAG, "=== Event: ${event.eventType}, Package: $packageName ===")
@@ -293,10 +293,13 @@ class ShortsBlockService : AccessibilityService() {
     private fun handleStateActions(packageName: String) {
         val overlayType = sessionState.getOverlayType(packageName)
 
-        if (overlayType != null && !overlayManager.isOverlayVisible(packageName)) {
+        // 차단이 활성화되어 있고, 오버레이가 필요한 경우에만 표시
+        if (prefsManager.isBlockingEnabled && overlayType != null && !overlayManager.isOverlayVisible(packageName)) {
             // 오버레이 표시 필요
             Log.d(TAG, "State requires overlay: $overlayType")
             showBlockOverlay(packageName, overlayType)
+        } else if (!prefsManager.isBlockingEnabled) {
+            Log.d(TAG, "Blocking disabled - skipping overlay display, session tracking continues")
         }
     }
 

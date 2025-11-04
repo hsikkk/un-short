@@ -11,6 +11,7 @@ import com.muuu.unshort.OverlayType
  */
 class SessionStateManager(
     private val context: Context,
+    private val isBlockingEnabled: () -> Boolean,
     private val onSessionEnd: ((SessionEndInfo) -> Unit)? = null
 ) {
 
@@ -128,6 +129,14 @@ class SessionStateManager(
         // Initialize ScrollData for scroll detection
         scrollDataByPackage[packageName] = ScrollData()
 
+        // 차단이 OFF일 때: 즉시 ALLOWED 상태로 전환 + 시청 시간 측정 시작
+        if (!isBlockingEnabled()) {
+            Log.d(TAG, "[$packageName] Blocking disabled - allowing shorts and starting watch time tracking")
+            val tracker = watchTimeByPackage.getOrPut(packageName) { WatchTimeTracker() }
+            tracker.start()
+            return ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
+        }
+
         // Check if "block scrolled shorts only" feature is enabled
         val prefsManager = com.muuu.unshort.prefs.PreferencesManager(context)
         val blockScrolledOnly = prefsManager.isBlockScrolledOnly
@@ -135,6 +144,8 @@ class SessionStateManager(
         // If coming from IDLE and feature is enabled → Allow first shorts
         if (blockScrolledOnly && current == ShortsSessionState.IDLE) {
             Log.d(TAG, "[$packageName] First shorts allowed - ScrollData initialized")
+            val tracker = watchTimeByPackage.getOrPut(packageName) { WatchTimeTracker() }
+            tracker.start()
             return ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
         }
 
@@ -248,14 +259,25 @@ class SessionStateManager(
         if (scrollDetected && current == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL) {
             Log.d(TAG, "[$packageName] Scroll detected: ${scrollData.hash} → $newHash")
             previousStateByPackage[packageName] = current
-            // 스크롤 = 새 영상 = 처음부터 다시 시작
-            val newState = ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
-            stateByPackage[packageName] = newState
-            Log.d(TAG, "[$packageName] Scroll event | $current → $newState (new video)")
 
-            // 세션 기록 (스크롤 = 시청 완료)
+            // 세션 기록 먼저 수행 (스크롤 = 시청 완료)
             val watchTracker = watchTimeByPackage[packageName]
             watchTracker?.pause()
+
+            // 차단 상태에 따라 다음 상태 결정
+            val newState = if (!isBlockingEnabled()) {
+                // 차단 OFF: 즉시 새 세션 시작 (ALLOWED 상태 유지)
+                Log.d(TAG, "[$packageName] Blocking disabled - staying in ALLOWED state after scroll")
+                val newTracker = watchTimeByPackage.getOrPut(packageName) { WatchTimeTracker() }
+                newTracker.start()
+                ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
+            } else {
+                // 차단 ON: 새 영상이므로 다시 차단 필요
+                Log.d(TAG, "[$packageName] Scroll event | $current → IN_SHORTS_BLOCKED_NEED_TIMER (new video)")
+                ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
+            }
+
+            stateByPackage[packageName] = newState
 
             onSessionEnd?.invoke(
                 SessionEndInfo(
@@ -270,8 +292,10 @@ class SessionStateManager(
             )
             Log.d(TAG, "[$packageName] Session recorded: didWatch=true (scroll), duration=${watchTracker?.getAccumulatedTime()}ms")
 
-            // 시청 시간 초기화
-            watchTracker?.reset()
+            // 차단 ON 상태에서만 시청 시간 초기화 (차단 OFF는 이미 새 tracker 시작됨)
+            if (isBlockingEnabled()) {
+                watchTracker?.reset()
+            }
         } else {
             Log.d(TAG, "[$packageName] Scroll not triggered: scrollDetected=$scrollDetected, current=$current")
         }
