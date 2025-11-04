@@ -30,16 +30,22 @@ object AdManager {
      * @param activity Activity 컨텍스트
      * @param container 광고를 추가할 ViewGroup
      * @param adUnit 광고 단위 정보
+     * @param keepContainerSpace 프리미엄 시 container 영역 유지 여부 (기본값: true)
      * @return 생성된 MuuuBannerAdView (프리미엄이면 null)
      */
     fun setupBannerAd(
         activity: Activity,
         container: ViewGroup,
-        adUnit: MuuuBannerAdUnit
+        adUnit: MuuuBannerAdUnit,
+        keepContainerSpace: Boolean = true
     ): MuuuBannerAdView? {
         // 이미 프리미엄이면 광고 표시 안함
         if (PremiumManager.isPremium()) {
-            container.visibility = View.GONE
+            if (keepContainerSpace) {
+                container.visibility = View.INVISIBLE
+            } else {
+                container.visibility = View.GONE
+            }
             return null
         }
 
@@ -53,7 +59,11 @@ object AdManager {
         val premiumChangeListener = {
             if (PremiumManager.isPremium()) {
                 bannerAdView.destroy()
-                container.visibility = View.GONE
+                if (keepContainerSpace) {
+                    container.visibility = View.INVISIBLE
+                } else {
+                    container.visibility = View.GONE
+                }
             }
         }
         PremiumManager.addPremiumChangeListener(premiumChangeListener)
@@ -81,17 +91,23 @@ object AdManager {
      * @param container 광고를 추가할 ViewGroup
      * @param adUnit 광고 단위 정보
      * @param template 광고 템플릿 (옵션)
+     * @param keepContainerSpace 프리미엄 시 container 영역 유지 여부 (기본값: true)
      * @return 생성된 MuuuNativeAdView (프리미엄이면 null)
      */
     fun setupNativeAd(
         activity: Activity,
         container: ViewGroup,
         adUnit: MuuuNativeAdUnit,
-        template: MuuuNativeAdTemplate? = null
+        template: MuuuNativeAdTemplate? = null,
+        keepContainerSpace: Boolean = true
     ): MuuuNativeAdView? {
         // 이미 프리미엄이면 광고 표시 안함
         if (PremiumManager.isPremium()) {
-            container.visibility = View.GONE
+            if (keepContainerSpace) {
+                container.visibility = View.INVISIBLE
+            } else {
+                container.visibility = View.GONE
+            }
             return null
         }
 
@@ -113,7 +129,11 @@ object AdManager {
         val premiumChangeListener = {
             if (PremiumManager.isPremium()) {
                 nativeAdView.destroy()
-                container.visibility = View.GONE
+                if (keepContainerSpace) {
+                    container.visibility = View.INVISIBLE
+                } else {
+                    container.visibility = View.GONE
+                }
             }
         }
         PremiumManager.addPremiumChangeListener(premiumChangeListener)
