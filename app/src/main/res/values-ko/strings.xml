@@ -48,18 +48,18 @@
 
     <!-- Settings Activity -->
     <string name="settings_title">설정</string>
-    <string name="settings_section_block_options">차단 옵션 관리</string>
-    <string name="settings_delay_time_title">대기 시간</string>
-    <string name="settings_delay_time_desc">쇼츠 차단 시 대기 시간</string>
+    <string name="settings_section_blocking">차단 설정</string>
+    <string name="settings_section_protection">보호 기능</string>
+    <string name="settings_section_other">기타</string>
+    <string name="settings_delay_time_title">대기 시간 관리</string>
+    <string name="settings_delay_time_desc">차단 화면 접근 전 대기 시간 설정</string>
     <string name="settings_delay_time_value">%d초</string>
     <string name="settings_haptic_title">햅틱 피드백</string>
     <string name="settings_haptic_desc">타이머 완료 시 진동 알림</string>
     <string name="settings_block_scrolled_title">스크롤한 쇼츠만 차단</string>
-    <string name="settings_block_scrolled_desc">첫 번째 쇼츠 허용, 스크롤 시 차단</string>
+    <string name="settings_block_scrolled_desc">첫 번째 쇼츠는 허용, 스크롤 시 차단</string>
     <string name="settings_prevent_disable_title">충동적 차단 비활성화 방지</string>
-    <string name="settings_prevent_disable_desc">의도치 않은 차단 비활성화 방지</string>
-    <string name="settings_section_additional">부가 기능</string>
-    <string name="settings_section_other">기타</string>
+    <string name="settings_prevent_disable_desc">차단 해제 시 확인 문구 입력 필요</string>
     <string name="settings_feedback">피드백 보내기</string>
     <string name="settings_share">앱 공유하기</string>
     <string name="settings_review">리뷰 남기기</string>
@@ -191,5 +191,19 @@
         <item>지금 이 순간, 습관을 바꾸고 있어요</item>
         <item>정말 지금 필요한 콘텐츠인가요?</item>
     </string-array>
+
+    <!-- Custom Timer (Premium) -->
+    <string name="custom_timer_title">대기 시간 설정</string>
+    <string name="custom_timer_presets">빠른 설정</string>
+    <string name="custom_timer_done">완료</string>
+    <string name="premium_required_title">✨ 프리미엄 기능</string>
+    <string name="premium_required_message">대기 시간 커스터마이징 및 추가 기능을 잠금 해제하세요!\n\n• 대기 시간 자유 설정 (5–300초)\n• 스크롤한 쇼츠만 차단\n• 충동적 해제 방지\n• 앱 삭제 방지</string>
+    <string name="premium_button_upgrade">프리미엄 업그레이드</string>
+    <string name="premium_button_cancel">나중에</string>
+
+    <!-- Premium Banner -->
+    <string name="premium_banner_title">더 많은 기능 잠금 해제</string>
+    <string name="premium_banner_subtitle">커스터마이징 + 보호 기능</string>
+    <string name="premium_banner_button">업그레이드</string>
 
 </resources>

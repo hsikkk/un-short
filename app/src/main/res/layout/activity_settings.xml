@@ -65,11 +65,64 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- 프리미엄 배너 (무료 사용자만 표시) -->
+            <LinearLayout
+                android:id="@+id/premiumBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_premium_banner"
+                android:layout_margin="16dp"
+                android:padding="16dp"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/premium_banner_title"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/spoqa_sans_neo_bold"
+                        android:textColor="@color/gray_900" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/premium_banner_subtitle"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/spoqa_sans_neo"
+                        android:textColor="@color/gray_600"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/premiumBannerButton"
+                    style="@style/Widget.Material3.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="@string/premium_banner_button"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/spoqa_sans_neo_bold"
+                    app:backgroundTint="@color/primary_dark"
+                    android:textColor="@color/white"
+                    android:paddingHorizontal="16dp"
+                    xmlns:app="http://schemas.android.com/apk/res-auto" />
+            </LinearLayout>
+
             <!-- Section: 차단 옵션 관리 -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_section_block_options"
+                android:text="@string/settings_section_blocking"
                 android:textSize="@dimen/text_caption"
                 android:textColor="#000000"
                 android:alpha="0.5"
@@ -124,7 +177,22 @@
                     android:text="30초"
                     android:textSize="@dimen/text_caption"
                     android:textColor="#000000"
-                    android:alpha="0.6" />
+                    android:alpha="0.6"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:id="@+id/waitTimeProBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PRO"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/spoqa_sans_neo_bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/bg_pro_badge"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -174,28 +242,6 @@
 
             </LinearLayout>
 
-            <!-- Divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:background="#000000"
-                android:alpha="0.05" />
-
-            <!-- Section: 부가 기능 -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_section_additional"
-                android:textSize="@dimen/text_caption"
-                android:textColor="#000000"
-                android:alpha="0.5"
-                android:fontFamily="@font/spoqa_sans_neo"
-                android:paddingHorizontal="24dp"
-                android:paddingTop="24dp"
-                android:paddingBottom="12dp"
-                android:letterSpacing="0.02" />
-
             <!-- 스크롤한 쇼츠만 차단 -->
             <LinearLayout
                 android:id="@+id/allowFirstItem"
@@ -240,15 +286,43 @@
                     android:layout_height="wrap_content"
                     android:checked="false" />
 
-                <ImageView
+                <TextView
                     android:id="@+id/allowFirstProBadge"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_lock"
-                    android:contentDescription="Premium feature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PRO"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/spoqa_sans_neo_bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/bg_pro_badge"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp"
                     android:visibility="gone" />
 
             </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="#000000"
+                android:alpha="0.05" />
+
+            <!-- Section: 보호 기능 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_section_protection"
+                android:textSize="@dimen/text_caption"
+                android:textColor="#000000"
+                android:alpha="0.5"
+                android:fontFamily="@font/spoqa_sans_neo"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="12dp"
+                android:letterSpacing="0.02" />
 
             <!-- 충동적 차단 비활성화 방지 -->
             <LinearLayout
@@ -294,12 +368,18 @@
                     android:layout_height="wrap_content"
                     android:checked="false" />
 
-                <ImageView
+                <TextView
                     android:id="@+id/preventDisableProBadge"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_lock"
-                    android:contentDescription="Premium feature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PRO"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/spoqa_sans_neo_bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/bg_pro_badge"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp"
                     android:visibility="gone" />
 
             </LinearLayout>
@@ -348,12 +428,18 @@
                     android:layout_height="wrap_content"
                     android:checked="false" />
 
-                <ImageView
+                <TextView
                     android:id="@+id/deviceAdminProBadge"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_lock"
-                    android:contentDescription="Premium feature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PRO"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/spoqa_sans_neo_bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/bg_pro_badge"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp"
                     android:visibility="gone" />
 
             </LinearLayout>

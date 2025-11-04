@@ -49,7 +49,9 @@
 
     <!-- Settings Activity -->
     <string name="settings_title">Settings</string>
-    <string name="settings_section_block_options">Block Options</string>
+    <string name="settings_section_blocking">Blocking Settings</string>
+    <string name="settings_section_protection">Protection</string>
+    <string name="settings_section_other">Other</string>
     <string name="settings_delay_time_title">Delay Time</string>
     <string name="settings_delay_time_desc">Set wait time before accessing shorts</string>
     <string name="settings_delay_time_value">%d seconds</string>
@@ -59,8 +61,6 @@
     <string name="settings_block_scrolled_desc">Allow first shorts, block on scroll</string>
     <string name="settings_prevent_disable_title">Prevent Impulsive Disable</string>
     <string name="settings_prevent_disable_desc">Prevent unintended disable</string>
-    <string name="settings_section_additional">Additional Features</string>
-    <string name="settings_section_other">Other</string>
     <string name="settings_feedback">Send Feedback</string>
     <string name="settings_share">Share App</string>
     <string name="settings_review">Leave a Review</string>
@@ -206,5 +206,10 @@
     <string name="premium_required_message">Unlock custom wait time and more!\n\n• Set wait time freely (5–300 seconds)\n• Block only scrolled shorts\n• Prevent impulsive disable\n• Prevent app deletion</string>
     <string name="premium_button_upgrade">Upgrade to Premium</string>
     <string name="premium_button_cancel">Not now</string>
+
+    <!-- Premium Banner -->
+    <string name="premium_banner_title">Unlock More Features</string>
+    <string name="premium_banner_subtitle">Customization + Protection</string>
+    <string name="premium_banner_button">Upgrade</string>
 
 </resources>

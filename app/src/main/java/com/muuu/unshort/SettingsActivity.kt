@@ -15,6 +15,8 @@ import com.muuu.unshort.premium.PremiumManager
 class SettingsActivity : BaseActivity() {
 
     private lateinit var backButton: ImageView
+    private lateinit var premiumBanner: LinearLayout
+    private lateinit var premiumBannerButton: com.google.android.material.button.MaterialButton
     private lateinit var waitTimeValue: TextView
     private lateinit var waitTimeItem: LinearLayout
     private lateinit var hapticSwitch: Switch
@@ -30,9 +32,10 @@ class SettingsActivity : BaseActivity() {
     private lateinit var reviewItem: LinearLayout
     private lateinit var versionItem: LinearLayout
     private lateinit var versionText: TextView
-    private lateinit var allowFirstProBadge: ImageView
-    private lateinit var preventDisableProBadge: ImageView
-    private lateinit var deviceAdminProBadge: ImageView
+    private lateinit var waitTimeProBadge: TextView
+    private lateinit var allowFirstProBadge: TextView
+    private lateinit var preventDisableProBadge: TextView
+    private lateinit var deviceAdminProBadge: TextView
 
     private lateinit var deviceAdminManager: DeviceAdminManager
     private lateinit var prefsManager: PreferencesManager
@@ -50,6 +53,8 @@ class SettingsActivity : BaseActivity() {
 
         // View 초기화
         backButton = findViewById(R.id.backButton)
+        premiumBanner = findViewById(R.id.premiumBanner)
+        premiumBannerButton = findViewById(R.id.premiumBannerButton)
         waitTimeValue = findViewById(R.id.waitTimeValue)
         waitTimeItem = findViewById(R.id.waitTimeItem)
         hapticSwitch = findViewById(R.id.hapticSwitch)
@@ -65,6 +70,7 @@ class SettingsActivity : BaseActivity() {
         reviewItem = findViewById(R.id.reviewItem)
         versionItem = findViewById(R.id.versionItem)
         versionText = findViewById(R.id.versionText)
+        waitTimeProBadge = findViewById(R.id.waitTimeProBadge)
         allowFirstProBadge = findViewById(R.id.allowFirstProBadge)
         preventDisableProBadge = findViewById(R.id.preventDisableProBadge)
         deviceAdminProBadge = findViewById(R.id.deviceAdminProBadge)
@@ -156,6 +162,15 @@ class SettingsActivity : BaseActivity() {
         // 뒤로 가기 버튼
         backButton.setOnClickListener {
             finish()
+        }
+
+        // 프리미엄 배너 클릭
+        premiumBanner.setOnClickListener {
+            showPremiumRequiredDialog()
+        }
+
+        premiumBannerButton.setOnClickListener {
+            showPremiumRequiredDialog()
         }
 
         // 대기 시간 설정
@@ -318,25 +333,31 @@ class SettingsActivity : BaseActivity() {
     private fun updatePremiumUI() {
         val isPremium = PremiumManager.isPremium()
 
-        if (isPremium) {
-            // 프리미엄: Switch 표시, PRO 배지 숨기기
-            allowFirstSwitch.visibility = android.view.View.VISIBLE
-            preventDisableSwitch.visibility = android.view.View.VISIBLE
-            deviceAdminSwitch.visibility = android.view.View.VISIBLE
+        // Alpha 값 (더 흐리게)
+        val premiumAlpha = if (isPremium) 1.0f else 0.4f
 
-            allowFirstProBadge.visibility = android.view.View.GONE
-            preventDisableProBadge.visibility = android.view.View.GONE
-            deviceAdminProBadge.visibility = android.view.View.GONE
-        } else {
-            // 무료: Switch 숨기기, PRO 배지 표시
-            allowFirstSwitch.visibility = android.view.View.GONE
-            preventDisableSwitch.visibility = android.view.View.GONE
-            deviceAdminSwitch.visibility = android.view.View.GONE
+        // 배너
+        premiumBanner.visibility = if (isPremium) android.view.View.GONE else android.view.View.VISIBLE
 
-            allowFirstProBadge.visibility = android.view.View.VISIBLE
-            preventDisableProBadge.visibility = android.view.View.VISIBLE
-            deviceAdminProBadge.visibility = android.view.View.VISIBLE
-        }
+        // 대기 시간
+        waitTimeValue.visibility = if (isPremium) android.view.View.VISIBLE else android.view.View.GONE
+        waitTimeProBadge.visibility = if (isPremium) android.view.View.GONE else android.view.View.VISIBLE
+        waitTimeItem.alpha = premiumAlpha
+
+        // 스크롤한 쇼츠만 차단
+        allowFirstSwitch.visibility = if (isPremium) android.view.View.VISIBLE else android.view.View.GONE
+        allowFirstProBadge.visibility = if (isPremium) android.view.View.GONE else android.view.View.VISIBLE
+        allowFirstItem.alpha = premiumAlpha
+
+        // 충동적 해제 방지
+        preventDisableSwitch.visibility = if (isPremium) android.view.View.VISIBLE else android.view.View.GONE
+        preventDisableProBadge.visibility = if (isPremium) android.view.View.GONE else android.view.View.VISIBLE
+        preventDisableItem.alpha = premiumAlpha
+
+        // 앱 삭제 방지
+        deviceAdminSwitch.visibility = if (isPremium) android.view.View.VISIBLE else android.view.View.GONE
+        deviceAdminProBadge.visibility = if (isPremium) android.view.View.GONE else android.view.View.VISIBLE
+        deviceAdminItem.alpha = premiumAlpha
     }
 
     /**
