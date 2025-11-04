@@ -123,4 +123,64 @@ interface ShortsSessionDao {
      */
     @Query("SELECT COUNT(*) FROM shorts_sessions WHERE timestamp >= :startTime AND timestamp < :endTime AND packageName = :packageName AND didWatch = 1")
     suspend fun getWatchCountByAppBetween(startTime: Long, endTime: Long, packageName: String): Int
+
+    // ========== 시청 시간 관련 쿼리 ==========
+
+    /**
+     * 특정 시각 이후의 총 시청 시간 (밀리초)
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @return 총 시청 시간 (밀리초), null이면 0 반환
+     */
+    @Query("SELECT COALESCE(SUM(watchDurationMs), 0) FROM shorts_sessions WHERE timestamp >= :startTime AND watchDurationMs IS NOT NULL")
+    suspend fun getTotalWatchTime(startTime: Long): Long
+
+    /**
+     * 특정 날짜 범위의 총 시청 시간 (밀리초)
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @param endTime 종료 시각 (밀리초)
+     * @return 총 시청 시간 (밀리초), null이면 0 반환
+     */
+    @Query("SELECT COALESCE(SUM(watchDurationMs), 0) FROM shorts_sessions WHERE timestamp >= :startTime AND timestamp < :endTime AND watchDurationMs IS NOT NULL")
+    suspend fun getTotalWatchTimeBetween(startTime: Long, endTime: Long): Long
+
+    /**
+     * 특정 시각 이후의 평균 시청 시간 (밀리초)
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @return 평균 시청 시간 (밀리초), 데이터 없으면 0 반환
+     */
+    @Query("SELECT COALESCE(AVG(watchDurationMs), 0) FROM shorts_sessions WHERE timestamp >= :startTime AND watchDurationMs IS NOT NULL")
+    suspend fun getAverageWatchTime(startTime: Long): Long
+
+    /**
+     * 특정 날짜 범위의 평균 시청 시간 (밀리초)
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @param endTime 종료 시각 (밀리초)
+     * @return 평균 시청 시간 (밀리초), 데이터 없으면 0 반환
+     */
+    @Query("SELECT COALESCE(AVG(watchDurationMs), 0) FROM shorts_sessions WHERE timestamp >= :startTime AND timestamp < :endTime AND watchDurationMs IS NOT NULL")
+    suspend fun getAverageWatchTimeBetween(startTime: Long, endTime: Long): Long
+
+    /**
+     * 특정 날짜 범위의 앱별 총 시청 시간 (밀리초)
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @param endTime 종료 시각 (밀리초)
+     * @param packageName 앱 패키지명
+     * @return 해당 앱의 총 시청 시간 (밀리초), null이면 0 반환
+     */
+    @Query("SELECT COALESCE(SUM(watchDurationMs), 0) FROM shorts_sessions WHERE timestamp >= :startTime AND timestamp < :endTime AND packageName = :packageName AND watchDurationMs IS NOT NULL")
+    suspend fun getTotalWatchTimeByAppBetween(startTime: Long, endTime: Long, packageName: String): Long
+
+    /**
+     * 특정 시각 이후 시청 시간이 기록된 세션 개수
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @return 시청 시간이 있는 세션 개수
+     */
+    @Query("SELECT COUNT(*) FROM shorts_sessions WHERE timestamp >= :startTime AND watchDurationMs IS NOT NULL AND watchDurationMs > 0")
+    suspend fun getWatchSessionCount(startTime: Long): Int
 }

@@ -35,12 +35,18 @@ class StatisticsRepository(context: Context) {
      * @param didWatch 시청 여부 (true: 시청함, false: 시청 안함)
      * @param timerCompleted 타이머 완료 여부
      * @param isScrollSession 스크롤 세션 여부 (true: 스크롤 후 재진입, false: 첫 진입)
+     * @param watchStartTime 시청 시작 시각 (밀리초)
+     * @param watchEndTime 시청 종료 시각 (밀리초)
+     * @param watchDurationMs 누적 시청 시간 (밀리초, 포그라운드만)
      */
     fun recordSession(
         packageName: String,
         didWatch: Boolean,
         timerCompleted: Boolean,
-        isScrollSession: Boolean = false
+        isScrollSession: Boolean = false,
+        watchStartTime: Long? = null,
+        watchEndTime: Long? = null,
+        watchDurationMs: Long? = null
     ) {
         scope.launch {
             try {
@@ -49,10 +55,13 @@ class StatisticsRepository(context: Context) {
                     packageName = packageName,
                     didWatch = didWatch,
                     timerCompleted = timerCompleted,
-                    isScrollSession = isScrollSession
+                    isScrollSession = isScrollSession,
+                    watchStartTime = watchStartTime,
+                    watchEndTime = watchEndTime,
+                    watchDurationMs = watchDurationMs
                 )
                 dao.insert(session)
-                Log.d(TAG, "Session recorded: pkg=$packageName, didWatch=$didWatch, timerCompleted=$timerCompleted, isScrollSession=$isScrollSession")
+                Log.d(TAG, "Session recorded: pkg=$packageName, didWatch=$didWatch, timerCompleted=$timerCompleted, isScrollSession=$isScrollSession, watchDuration=${watchDurationMs}ms")
             } catch (e: Exception) {
                 Log.e(TAG, "Error recording session", e)
             }
@@ -174,5 +183,65 @@ class StatisticsRepository(context: Context) {
      */
     suspend fun getWatchCountByAppForDate(startTime: Long, endTime: Long, packageName: String): Int {
         return dao.getWatchCountByAppBetween(startTime, endTime, packageName)
+    }
+
+    // ========== 시청 시간 관련 메서드 ==========
+
+    /**
+     * 최근 30일 총 시청 시간 (밀리초)
+     */
+    suspend fun getTotalWatchTime(): Long {
+        val thirtyDaysAgo = System.currentTimeMillis() - THIRTY_DAYS_MS
+        return dao.getTotalWatchTime(thirtyDaysAgo)
+    }
+
+    /**
+     * 특정 기간 총 시청 시간 (밀리초)
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @param endTime 종료 시각 (밀리초)
+     * @return 총 시청 시간 (밀리초)
+     */
+    suspend fun getTotalWatchTimeForPeriod(startTime: Long, endTime: Long): Long {
+        return dao.getTotalWatchTimeBetween(startTime, endTime)
+    }
+
+    /**
+     * 최근 30일 평균 시청 시간 (밀리초)
+     */
+    suspend fun getAverageWatchTime(): Long {
+        val thirtyDaysAgo = System.currentTimeMillis() - THIRTY_DAYS_MS
+        return dao.getAverageWatchTime(thirtyDaysAgo)
+    }
+
+    /**
+     * 특정 기간 평균 시청 시간 (밀리초)
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @param endTime 종료 시각 (밀리초)
+     * @return 평균 시청 시간 (밀리초)
+     */
+    suspend fun getAverageWatchTimeForPeriod(startTime: Long, endTime: Long): Long {
+        return dao.getAverageWatchTimeBetween(startTime, endTime)
+    }
+
+    /**
+     * 특정 기간 앱별 총 시청 시간 (밀리초)
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @param endTime 종료 시각 (밀리초)
+     * @param packageName 앱 패키지명
+     * @return 해당 앱의 총 시청 시간 (밀리초)
+     */
+    suspend fun getTotalWatchTimeByApp(startTime: Long, endTime: Long, packageName: String): Long {
+        return dao.getTotalWatchTimeByAppBetween(startTime, endTime, packageName)
+    }
+
+    /**
+     * 최근 30일 시청 세션 개수 (시청 시간이 있는 세션만)
+     */
+    suspend fun getWatchSessionCount(): Int {
+        val thirtyDaysAgo = System.currentTimeMillis() - THIRTY_DAYS_MS
+        return dao.getWatchSessionCount(thirtyDaysAgo)
     }
 }

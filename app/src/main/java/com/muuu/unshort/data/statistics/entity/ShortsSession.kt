@@ -48,5 +48,23 @@ data class ShortsSession(
      * - true: 스크롤 후 재진입 세션 (이미 한 번 시청 허용된 상태에서 다시 차단됨)
      * - false: 첫 진입 세션 (처음 앱 실행 후 차단됨)
      */
-    val isScrollSession: Boolean = false
+    val isScrollSession: Boolean = false,
+
+    /**
+     * 최초 시청 시작 시각 (밀리초)
+     * "볼래요" 선택 시의 시각
+     */
+    val watchStartTime: Long? = null,
+
+    /**
+     * 최종 시청 종료 시각 (밀리초)
+     * 세션 종료 시의 시각
+     */
+    val watchEndTime: Long? = null,
+
+    /**
+     * 누적 시청 시간 (밀리초)
+     * 포그라운드에서 실제 시청한 시간만 포함 (백그라운드 제외)
+     */
+    val watchDurationMs: Long? = null
 )
