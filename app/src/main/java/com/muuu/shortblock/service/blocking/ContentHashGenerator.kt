@@ -36,10 +36,12 @@ class ContentHashGenerator {
             contentBuilder = contentBuilder
         )
 
-        val hash = contentBuilder.toString().hashCode()
-        val contentLength = contentBuilder.length
+        val content = contentBuilder.toString()
+        val hash = content.hashCode()
+        val contentLength = content.length
 
         Log.d(TAG, "Generated hash: $hash (content length: $contentLength)")
+        Log.d(TAG, "Content for hash: $content")
 
         return hash
     }

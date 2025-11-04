@@ -110,19 +110,21 @@ class SessionStateManager(
         current: ShortsSessionState,
         packageName: String
     ): ShortsSessionState {
+        // Initialize ScrollData for scroll detection
+        scrollDataByPackage[packageName] = ScrollData()
+
         // Check if "block scrolled shorts only" feature is enabled
         val prefsManager = com.muuu.unshort.prefs.PreferencesManager(context)
         val blockScrolledOnly = prefsManager.isBlockScrolledOnly
 
         // If coming from IDLE and feature is enabled → Allow first shorts
         if (blockScrolledOnly && current == ShortsSessionState.IDLE) {
-            // Initialize ScrollData for scroll detection
-            scrollDataByPackage[packageName] = ScrollData()
             Log.d(TAG, "[$packageName] First shorts allowed - ScrollData initialized")
             return ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
         }
 
         // Default behavior: block and need timer
+        Log.d(TAG, "[$packageName] Blocking shorts - ScrollData initialized")
         return ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
     }
 
