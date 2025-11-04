@@ -101,11 +101,22 @@ object AppBlockingRegistry {
                 Regex(".*좋아요\\s*\\d+.*"),  // "좋아요 262개"
                 Regex(".*조회수\\s*\\d+.*"),  // "조회수 1.2만회"
                 Regex("동영상 재생"),  // Play 버튼
-                Regex("동영상 일지중지"),  // Pause 버튼 (일시정지 오타)
+                Regex("동영상 일지중지"),  // Pause 버튼
+                Regex("동영상 진행률"),  // 진행률
+                Regex("채널로 이동"),  // 채널 버튼
+                Regex("더보기"),  // 더보기 버튼
                 Regex("라이브"),  // 라이브 뱃지
-                Regex("Play [Vv]ideo", RegexOption.IGNORE_CASE),  // 영어 Play
-                Regex("Pause [Vv]ideo", RegexOption.IGNORE_CASE),  // 영어 Pause
-                Regex("Live", RegexOption.IGNORE_CASE)  // 영어 Live
+                Regex("구독"),  // 구독 버튼
+                Regex("Play [Vv]ideo", RegexOption.IGNORE_CASE),  // Play
+                Regex("Pause [Vv]ideo", RegexOption.IGNORE_CASE),  // Pause
+                Regex("Video [Pp]rogress", RegexOption.IGNORE_CASE),  // Progress
+                Regex("Go to channel", RegexOption.IGNORE_CASE),  // Channel button
+                Regex("Show more", RegexOption.IGNORE_CASE),  // More button
+                Regex("Subscribe.*", RegexOption.IGNORE_CASE),  // Subscribe
+                Regex("Subscriptions", RegexOption.IGNORE_CASE),  // Tab
+                Regex("Shopping", RegexOption.IGNORE_CASE),  // Tab
+                Regex("Live", RegexOption.IGNORE_CASE),  // Live
+                Regex(".*Affiliate.*", RegexOption.IGNORE_CASE)  // 광고 텍스트
             ),
             maxDepth = 8,
             textValidator = { text ->
