@@ -9,8 +9,8 @@
     <string name="flip_required">Please flip your phone</string>
 
     <!-- BlockOverlay Messages -->
-    <string name="block_message_before_timer">Do you really need to watch this now?</string>
-    <string name="block_message_after_timer">Are you sure you want to watch?</string>
+    <string name="block_message_before_timer">Right now, do you truly need shorts?</string>
+    <string name="block_message_after_timer">You\'ve waited this far. Still want to watch?</string>
     <string name="block_button_think_again">Think again</string>
     <string name="block_button_close">Just close</string>
     <string name="block_button_no">No, I won\'t watch</string>
@@ -23,7 +23,7 @@
     <!-- Timer Screen -->
     <string name="timer_instruction_title">Take a moment</string>
     <string name="timer_instruction_message_onboarding">Flip your phone and think about\nwhether you really need to watch</string>
-    <string name="timer_instruction_message_full">Flip your phone and think about whether you really need to watch. If this time feels wasteful, wouldn\'t the video be even more wasteful?</string>
+    <string name="timer_instruction_message_full">Flip your phone and wait 30 seconds.\nWill you regret this choice in 30 minutes?\nWhat do you truly need right now?</string>
 
     <!-- Main Activity -->
     <string name="main_subtitle">Break free from short-form content.\nSmall habits for mindful consumption.</string>
@@ -189,13 +189,14 @@
 
     <!-- Overlay Tip Messages -->
     <string-array name="overlay_tips">
-        <item>You can adjust wait time in settings</item>
         <item>Find more blocking options in settings</item>
-        <item>How about reading a book instead?</item>
-        <item>Take a walk or do some stretching</item>
+        <item>30 seconds is enough to read a page</item>
+        <item>A 5-minute walk feels better than 30 minutes of shorts</item>
         <item>A brief wait creates better choices</item>
         <item>You\'re changing your habits right now</item>
         <item>Do you really need this content now?</item>
+        <item>Unlock stronger blocking with Premium</item>
+        <item>Premium: Customize your blocking strategy</item>
     </string-array>
 
     <!-- Custom Timer (Premium) -->

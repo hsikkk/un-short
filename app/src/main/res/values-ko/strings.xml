@@ -9,8 +9,8 @@
     <string name="flip_required">폰을 뒤집어주세요</string>
 
     <!-- BlockOverlay Messages -->
-    <string name="block_message_before_timer">정말 지금 쇼츠를 봐야 할까요?</string>
-    <string name="block_message_after_timer">진짜로 볼 건가요?</string>
+    <string name="block_message_before_timer">지금 이 순간, 쇼츠가 정말 필요할까요?</string>
+    <string name="block_message_after_timer">여기까지 기다렸네요. 정말로 볼 건가요?</string>
     <string name="block_button_think_again">한 번 더 생각해보기</string>
     <string name="block_button_close">그냥 닫기</string>
     <string name="block_button_no">아니요, 안 볼래요</string>
@@ -23,7 +23,7 @@
     <!-- Timer Screen -->
     <string name="timer_instruction_title">잠시 생각해보기</string>
     <string name="timer_instruction_message_onboarding">폰을 뒤집고 진짜 봐야 하는지\n생각해보세요</string>
-    <string name="timer_instruction_message_full">폰을 뒤집고 진짜 봐야 하는지 생각해보세요\n이 시간이 아깝다면, 영상은 더 아깝지 않을까요?</string>
+    <string name="timer_instruction_message_full">폰을 뒤집고 30초만 기다려주세요.\n30분 후 당신은 이 선택을 후회하지 않을까요?\n지금 당신에게 정말 필요한 건 무엇인가요?</string>
 
     <!-- Main Activity -->
     <string name="main_subtitle">쇼츠 콘텐츠에서 벗어나세요.\n의도적인 소비를 위한 작은 습관.</string>
@@ -183,13 +183,14 @@
 
     <!-- Overlay Tip Messages -->
     <string-array name="overlay_tips">
-        <item>대기 시간은 설정에서 조정할 수 있어요</item>
         <item>설정에서 더 강력한 차단 옵션을 찾아보세요</item>
-        <item>이 시간에 책 한 페이지는 어떨까요?</item>
-        <item>잠깐 산책하거나 스트레칭은 어떨까요?</item>
+        <item>30초면 책 한 페이지를 읽을 수 있어요</item>
+        <item>5분 산책이 30분 쇼츠보다 기분 좋을 거예요</item>
         <item>짧은 기다림이 더 나은 선택을 만들어요</item>
         <item>지금 이 순간, 습관을 바꾸고 있어요</item>
         <item>정말 지금 필요한 콘텐츠인가요?</item>
+        <item>프리미엄으로 더 강력한 차단 전략을 만들어보세요</item>
+        <item>프리미엄: 나만의 차단 전략 커스터마이징</item>
     </string-array>
 
     <!-- Custom Timer (Premium) -->
