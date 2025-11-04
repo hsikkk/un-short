@@ -73,8 +73,11 @@ class ShortsBlockService : AccessibilityService() {
 
         // Managers 초기화
         prefsManager = PreferencesManager(this)
-        sessionState = SessionStateManager(this)
         statisticsRepository = StatisticsRepository(this)
+        sessionState = SessionStateManager(
+            context = this,
+            onSessionEnd = { info -> recordSessionFromStateTransition(info) }
+        )
 
         // OverlayManager 초기화
         overlayManager = OverlayManager(
@@ -90,15 +93,6 @@ class ShortsBlockService : AccessibilityService() {
             onSkip = {
                 // "안볼래요" 버튼 - 뒤로 가기
                 Log.d(TAG, "Skip button pressed - performing back action")
-
-                // 세션 기록 (시청 안함)
-                recordSessionWithWatchTime(
-                    didWatch = false,
-                    timerCompleted = currentTimerCompleted,
-                    isScrollSession = isCurrentSessionFromScroll
-                )
-                currentTimerCompleted = false
-                isCurrentSessionFromScroll = false
 
                 restoreVolume(currentPackage)
                 sessionState.handleEvent(SessionEvent.SkipConfirmed, currentPackage)
@@ -179,7 +173,7 @@ class ShortsBlockService : AccessibilityService() {
                 // 차단 대상 앱이 아닌 앱으로 전환
                 if (currentForegroundPackage !in AppBlockingRegistry.TARGET_PACKAGES) {
                     Log.d(TAG, "Foreground changed to $currentForegroundPackage, dismissing overlay")
-                    handleLeavingTargetApp()
+                    handleLeavingTargetApp(currentForegroundPackage)
                     return
                 }
             }
@@ -191,7 +185,7 @@ class ShortsBlockService : AccessibilityService() {
 
             if (packageName !in AppBlockingRegistry.TARGET_PACKAGES && overlayManager.isOverlayVisible(packageName)) {
                 Log.d(TAG, "Left target app to $packageName, dismissing overlay")
-                handleLeavingTargetApp()
+                handleLeavingTargetApp(packageName)
                 return
             }
         }
@@ -285,16 +279,7 @@ class ShortsBlockService : AccessibilityService() {
                             Log.d(TAG, "State after hash event: $newState")
 
                             if (newState == ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION) {
-                                Log.d(TAG, "Scroll detected - recording session and clearing state")
-
-                                // 이전 세션 기록 (스크롤로 시청 종료)
-                                recordSessionWithWatchTime(
-                                    didWatch = true,
-                                    timerCompleted = currentTimerCompleted,
-                                    isScrollSession = isCurrentSessionFromScroll
-                                )
-                                currentTimerCompleted = false
-                                isCurrentSessionFromScroll = false
+                                Log.d(TAG, "Scroll detected - clearing state")
 
                                 prefsManager.clearCompletedSessionId()
                                 prefsManager.clearAllowedUntilScroll()
@@ -340,20 +325,19 @@ class ShortsBlockService : AccessibilityService() {
 
     /**
      * 차단 대상 앱을 벗어났을 때 처리
+     *
+     * @param targetPackageName 이동한 대상 앱의 패키지명 (null이면 알 수 없음)
      */
-    private fun handleLeavingTargetApp() {
-        // 세션 기록 (앱 나감 = 시청 안함)
-        recordSessionWithWatchTime(
-            didWatch = false,
-            timerCompleted = currentTimerCompleted,
-            isScrollSession = isCurrentSessionFromScroll
-        )
-        currentTimerCompleted = false
-        isCurrentSessionFromScroll = false
-
+    private fun handleLeavingTargetApp(targetPackageName: String? = null) {
         cancelPendingOverlay()
         overlayManager.hideOverlay(packageName)
         restoreVolume(packageName)
+
+        // 우리 앱으로 전환된 경우 체크 (세션 기록은 SessionStateManager에서 처리)
+        if (targetPackageName == this.packageName) {
+            Log.d(TAG, "Switched to our app")
+        }
+
         sessionState.handleEvent(SessionEvent.Reset, packageName)
 
         // SharedPreferences 클리어
@@ -869,5 +853,18 @@ class ShortsBlockService : AccessibilityService() {
         watchStartTime = null
         currentWatchStartTime = null
         accumulatedWatchTime = 0
+    }
+
+    /**
+     * 상태 전이로부터 세션 기록 (SessionStateManager 콜백)
+     */
+    private fun recordSessionFromStateTransition(info: SessionStateManager.SessionEndInfo) {
+        recordSessionWithWatchTime(
+            didWatch = info.didWatch,
+            timerCompleted = currentTimerCompleted,
+            isScrollSession = isCurrentSessionFromScroll
+        )
+        currentTimerCompleted = false
+        isCurrentSessionFromScroll = false
     }
 }

@@ -9,9 +9,23 @@ import com.muuu.unshort.OverlayType
  *
  * 앱별로 독립적인 상태 관리
  */
-class SessionStateManager(private val context: Context) {
+class SessionStateManager(
+    private val context: Context,
+    private val onSessionEnd: ((SessionEndInfo) -> Unit)? = null
+) {
 
     private val TAG = "SessionStateManager"
+
+    /**
+     * 세션 종료 정보
+     */
+    data class SessionEndInfo(
+        val packageName: String,
+        val previousState: ShortsSessionState,
+        val newState: ShortsSessionState,
+        val event: SessionEvent,
+        val didWatch: Boolean
+    )
 
     // 앱별 상태 저장
     private val stateByPackage = mutableMapOf<String, ShortsSessionState>()
@@ -48,6 +62,45 @@ class SessionStateManager(private val context: Context) {
 
         if (current != newState) {
             Log.d(TAG, "[$packageName] ${event::class.simpleName} | $current → $newState")
+        }
+
+        // 세션 종료 판단 및 콜백 호출
+        if (shouldRecordSession(current, newState, event)) {
+            val didWatch = current == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
+            onSessionEnd?.invoke(
+                SessionEndInfo(
+                    packageName = packageName,
+                    previousState = current,
+                    newState = newState,
+                    event = event,
+                    didWatch = didWatch
+                )
+            )
+            Log.d(TAG, "[$packageName] Session recorded: didWatch=$didWatch")
+        }
+    }
+
+    /**
+     * 세션 기록이 필요한 상태 전이인지 판단
+     */
+    private fun shouldRecordSession(
+        current: ShortsSessionState,
+        newState: ShortsSessionState,
+        event: SessionEvent
+    ): Boolean {
+        return when {
+            // "안볼래요" 버튼
+            event is SessionEvent.SkipConfirmed -> true
+
+            // 시청 중 쇼츠 화면 이탈 (같은 앱 내 다른 화면)
+            current == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
+                && newState == ShortsSessionState.IDLE
+                && event is SessionEvent.ExitShorts -> true
+
+            // 앱 완전 이탈 (Reset 이벤트)
+            event is SessionEvent.Reset && current != ShortsSessionState.IDLE -> true
+
+            else -> false
         }
     }
 
@@ -156,6 +209,18 @@ class SessionStateManager(private val context: Context) {
             val newState = ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
             stateByPackage[packageName] = newState
             Log.d(TAG, "[$packageName] Scroll event | $current → $newState (new video)")
+
+            // 세션 기록 (스크롤 = 시청 완료)
+            onSessionEnd?.invoke(
+                SessionEndInfo(
+                    packageName = packageName,
+                    previousState = current,
+                    newState = newState,
+                    event = SessionEvent.ContentHashChanged(newHash),
+                    didWatch = true
+                )
+            )
+            Log.d(TAG, "[$packageName] Session recorded: didWatch=true (scroll)")
         } else {
             Log.d(TAG, "[$packageName] Scroll not triggered: scrollDetected=$scrollDetected, current=$current")
         }
