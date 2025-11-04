@@ -107,7 +107,7 @@
     <string name="timer_seconds_unit">seconds</string>
     <string name="timer_flip_instruction">폰을 뒤집어주세요</string>
     <string name="timer_breathe_message">깊게 숨을 쉬어보세요</string>
-    <string name="timer_skip_button">안 볼래요</string>
+    <string name="timer_skip_button">취소</string>
 
     <!-- Onboarding -->
     <string name="onboarding_page1_title">쇼츠 중독에서\n벗어나세요</string>
@@ -173,6 +173,12 @@
     <string name="privacy_btn_agree">동의하고 설정으로 이동</string>
     <string name="privacy_btn_exit">앱 종료</string>
     <string name="privacy_btn_disagree">동의하지 않음</string>
+
+    <!-- Disable Warning Dialog (before timer) -->
+    <string name="disable_warning_title">잠깐만요</string>
+    <string name="disable_warning_message">비활성화하기 전에 한 번 더 생각해보는 건 어떨까요?</string>
+    <string name="disable_warning_confirm">한 번 더 생각해보기</string>
+    <string name="disable_warning_cancel">계속 켜두기</string>
 
     <!-- Disable Confirmation Dialog -->
     <string name="disable_dialog_title">정말 해제하시겠어요?</string>

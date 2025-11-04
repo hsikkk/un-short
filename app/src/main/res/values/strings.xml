@@ -110,7 +110,7 @@
     <string name="timer_seconds_unit">seconds</string>
     <string name="timer_flip_instruction">Flip your phone</string>
     <string name="timer_breathe_message">Take a deep breath</string>
-    <string name="timer_skip_button">I won\'t watch</string>
+    <string name="timer_skip_button">Cancel</string>
 
     <!-- Ads -->
     <string name="ad">AD</string>
@@ -179,6 +179,12 @@
     <string name="privacy_btn_agree">Agree &amp; Go to Settings</string>
     <string name="privacy_btn_exit">Exit App</string>
     <string name="privacy_btn_disagree">Disagree</string>
+
+    <!-- Disable Warning Dialog (before timer) -->
+    <string name="disable_warning_title">Wait a moment</string>
+    <string name="disable_warning_message">How about thinking once more before disabling?</string>
+    <string name="disable_warning_confirm">Think about it</string>
+    <string name="disable_warning_cancel">Keep it enabled</string>
 
     <!-- Disable Confirmation Dialog -->
     <string name="disable_dialog_title">Really disable?</string>

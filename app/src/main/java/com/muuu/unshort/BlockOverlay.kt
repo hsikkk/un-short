@@ -202,14 +202,14 @@ class BlockOverlay(private val context: Context) {
             // Track start timer button click
             AnalyticsManager.trackEvent(context, AnalyticsEvent.OVERLAY_BUTTON_START_TIMER)
 
-            // TimerActivity로 이동
-            val intent = Intent(context, TimerActivity::class.java).apply {
+            // ShortsBlockTimerActivity로 이동
+            val intent = Intent(context, com.muuu.unshort.timer.ShortsBlockTimerActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 putExtra("session_id", currentSessionId)
                 putExtra("source_package", sourcePackageName)
             }
             context.startActivity(intent)
-            Log.d(TAG, "Started TimerActivity with session: $currentSessionId, source: $sourcePackageName")
+            Log.d(TAG, "Started ShortsBlockTimerActivity with session: $currentSessionId, source: $sourcePackageName")
 
             // 오버레이 dismiss (TimerActivity가 보이도록)
             dismiss()

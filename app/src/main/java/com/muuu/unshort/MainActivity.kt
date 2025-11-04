@@ -1,6 +1,7 @@
 package com.muuu.unshort
 
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -9,6 +10,8 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -52,11 +55,28 @@ class MainActivity : BaseActivity() {
     private lateinit var prefsManager: PreferencesManager
     private lateinit var blockedAppsContainer: LinearLayout
 
+    // 3단계 보호 플로우 헬퍼
+    private lateinit var protectionHelper: ThreeStepProtectionHelper
+    private lateinit var disableConfirmTimerLauncher: ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Managers 초기화
         prefsManager = PreferencesManager(this)
+
+        // 3단계 보호 플로우 헬퍼 초기화
+        protectionHelper = ThreeStepProtectionHelper(this)
+
+        // Register activity result launcher for timer
+        disableConfirmTimerLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            // Helper에게 결과 전달 (저장된 config와 action 사용)
+            protectionHelper.handleTimerResult(result.resultCode)
+        }
+
+        protectionHelper.registerTimerLauncher(disableConfirmTimerLauncher)
 
         // 온보딩 체크
         if (!prefsManager.isOnboardingCompleted) {
@@ -279,26 +299,33 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showDisableConfirmDialog() {
-        val dialog = DisableConfirmDialog(
-            context = this,
-            onConfirm = {
-                // User confirmed - proceed with disabling
+        // 3단계 보호 플로우 시작
+        protectionHelper.start(
+            warningConfig = WarningConfig(
+                titleResId = R.string.disable_warning_title,
+                messageResId = R.string.disable_warning_message,
+                positiveTextResId = R.string.disable_warning_confirm,
+                negativeTextResId = R.string.disable_warning_cancel
+            ),
+            confirmConfig = ConfirmConfig(
+                titleResId = R.string.disable_dialog_title,
+                messageResId = R.string.disable_dialog_message,
+                requiredPhraseResId = R.string.disable_dialog_phrase,
+                onCancel = {
+                    // 2단계 취소 시 토글 UI를 ON 상태로 복원
+                    updateUI(true, animate = false)
+                },
+                onWarningCancel = {
+                    // 0단계 취소 시에도 토글 UI 복원
+                    updateUI(true, animate = false)
+                }
+            ),
+            finalAction = {
                 prefsManager.isBlockingEnabled = false
-
-                // Track blocking state change
-                AnalyticsManager.trackEvent(
-                    this,
-                    AnalyticsEvent.BLOCKING_DISABLED
-                )
-
-                // UI 업데이트 (애니메이션 포함)
+                AnalyticsManager.trackEvent(this, AnalyticsEvent.BLOCKING_DISABLED)
                 updateUI(false, animate = true)
-            },
-            onCancel = {
-                // User cancelled - do nothing, toggle stays in current position
             }
         )
-        dialog.show()
     }
 
     /**

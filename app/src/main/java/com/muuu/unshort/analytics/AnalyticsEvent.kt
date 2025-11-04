@@ -25,4 +25,9 @@ object AnalyticsEvent {
     // Timer
     const val TIMER_ACTIVITY_OPENED = "timer_activity_opened"
     const val TIMER_COMPLETED = "timer_completed"
+
+    // Disable Confirm Timer
+    const val DISABLE_CONFIRM_TIMER_OPENED = "disable_confirm_timer_opened"
+    const val DISABLE_CONFIRM_TIMER_COMPLETED = "disable_confirm_timer_completed"
+    const val DISABLE_CONFIRM_TIMER_SKIPPED = "disable_confirm_timer_skipped"
 }

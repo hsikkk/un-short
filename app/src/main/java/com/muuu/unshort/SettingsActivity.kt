@@ -6,6 +6,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.muuu.unshort.admin.DeviceAdminManager
 import com.muuu.unshort.prefs.PreferencesManager
@@ -39,6 +41,10 @@ class SettingsActivity : BaseActivity() {
     private lateinit var deviceAdminManager: DeviceAdminManager
     private lateinit var prefsManager: PreferencesManager
 
+    // 3단계 보호 플로우 헬퍼
+    private lateinit var protectionHelper: ThreeStepProtectionHelper
+    private lateinit var disableConfirmTimerLauncher: ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -46,6 +52,19 @@ class SettingsActivity : BaseActivity() {
         // Managers 초기화
         deviceAdminManager = DeviceAdminManager(this)
         prefsManager = PreferencesManager(this)
+
+        // 3단계 보호 플로우 헬퍼 초기화
+        protectionHelper = ThreeStepProtectionHelper(this)
+
+        // Register activity result launcher for timer
+        disableConfirmTimerLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            // Helper에게 결과 전달 (저장된 config와 action 사용)
+            protectionHelper.handleTimerResult(result.resultCode)
+        }
+
+        protectionHelper.registerTimerLauncher(disableConfirmTimerLauncher)
 
         // 설정 화면 방문 플래그 저장
         prefsManager.hasVisitedSettings = true
@@ -384,21 +403,31 @@ class SettingsActivity : BaseActivity() {
     }
 
     private fun showDeviceAdminDisableDialog() {
-        val dialog = DisableConfirmDialog(
-            context = this,
-            titleResId = R.string.device_admin_disable_title,
-            messageResId = R.string.device_admin_disable_message,
-            requiredPhraseResId = R.string.device_admin_disable_phrase,
-            onConfirm = {
-                // User confirmed - proceed with disabling
+        // 3단계 보호 플로우 시작
+        protectionHelper.start(
+            warningConfig = WarningConfig(
+                titleResId = R.string.disable_warning_title,
+                messageResId = R.string.disable_warning_message,
+                positiveTextResId = R.string.disable_warning_confirm,
+                negativeTextResId = R.string.disable_warning_cancel
+            ),
+            confirmConfig = ConfirmConfig(
+                titleResId = R.string.device_admin_disable_title,
+                messageResId = R.string.device_admin_disable_message,
+                requiredPhraseResId = R.string.device_admin_disable_phrase,
+                onCancel = {
+                    // 2단계 취소 시 스위치 복원
+                    updateDeviceAdminSwitchState()
+                },
+                onWarningCancel = {
+                    // 0단계 취소 시 스위치 복원
+                    updateDeviceAdminSwitchState()
+                }
+            ),
+            finalAction = {
                 deviceAdminManager.removeAdmin()
-            },
-            onCancel = {
-                // User cancelled - restore switch state
-                updateDeviceAdminSwitchState()
             }
         )
-        dialog.show()
     }
 
     private fun setupPreventDisableListener() {
@@ -422,26 +451,38 @@ class SettingsActivity : BaseActivity() {
     }
 
     private fun showPreventDisableOffDialog() {
-        val dialog = DisableConfirmDialog(
-            context = this,
-            titleResId = R.string.prevent_impulsive_disable_off_title,
-            messageResId = R.string.prevent_impulsive_disable_off_message,
-            requiredPhraseResId = R.string.prevent_impulsive_disable_off_phrase,
-            onConfirm = {
-                // User confirmed - proceed with disabling
+        // 3단계 보호 플로우 시작
+        protectionHelper.start(
+            warningConfig = WarningConfig(
+                titleResId = R.string.disable_warning_title,
+                messageResId = R.string.disable_warning_message,
+                positiveTextResId = R.string.disable_warning_confirm,
+                negativeTextResId = R.string.disable_warning_cancel
+            ),
+            confirmConfig = ConfirmConfig(
+                titleResId = R.string.prevent_impulsive_disable_off_title,
+                messageResId = R.string.prevent_impulsive_disable_off_message,
+                requiredPhraseResId = R.string.prevent_impulsive_disable_off_phrase,
+                onCancel = {
+                    // 2단계 취소 시 스위치 복원
+                    preventDisableSwitch.setOnCheckedChangeListener(null)
+                    preventDisableSwitch.isChecked = true
+                    setupPreventDisableListener()
+                },
+                onWarningCancel = {
+                    // 0단계 취소 시 스위치 복원
+                    preventDisableSwitch.setOnCheckedChangeListener(null)
+                    preventDisableSwitch.isChecked = true
+                    setupPreventDisableListener()
+                }
+            ),
+            finalAction = {
                 prefsManager.isPreventImpulsiveDisable = false
                 preventDisableSwitch.setOnCheckedChangeListener(null)
                 preventDisableSwitch.isChecked = false
                 setupPreventDisableListener()
-            },
-            onCancel = {
-                // User cancelled - restore switch state
-                preventDisableSwitch.setOnCheckedChangeListener(null)
-                preventDisableSwitch.isChecked = true
-                setupPreventDisableListener()
             }
         )
-        dialog.show()
     }
 
     companion object {

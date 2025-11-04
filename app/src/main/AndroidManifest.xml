@@ -76,6 +76,21 @@
             android:excludeFromRecents="true" />
 
         <activity
+            android:name=".timer.ShortsBlockTimerActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.muuu.unshort.timer"
+            android:excludeFromRecents="true" />
+
+        <activity
+            android:name=".timer.DisableConfirmTimerActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".PremiumUpgradeActivity"
             android:exported="false"
             android:theme="@style/AppTheme"
