@@ -45,9 +45,6 @@ class MainActivity : BaseActivity() {
     private lateinit var shortsConsumptionNumber: TextView
     private lateinit var settingsButton: ImageView
     private lateinit var settingsBadge: View
-    private lateinit var settingsTipBanner: FrameLayout
-    private lateinit var settingsTipBannerContent: LinearLayout
-    private lateinit var settingsTipCloseButton: TextView
     private var bannerAdView: MuuuBannerAdView? = null
     private lateinit var prefsManager: PreferencesManager
     private lateinit var blockedAppsContainer: LinearLayout
@@ -100,9 +97,6 @@ class MainActivity : BaseActivity() {
         shortsConsumptionNumber = findViewById(R.id.shortsConsumptionNumber)
         settingsButton = findViewById(R.id.settingsButton)
         settingsBadge = findViewById(R.id.settingsBadge)
-        settingsTipBanner = findViewById(R.id.settingsTipBanner)
-        settingsTipBannerContent = findViewById(R.id.settingsTipBannerContent)
-        settingsTipCloseButton = findViewById(R.id.settingsTipCloseButton)
         blockedAppsContainer = findViewById(R.id.blockedAppsContainer)
 
         // 설치된 앱만 동적으로 생성하여 표시
@@ -116,22 +110,8 @@ class MainActivity : BaseActivity() {
 
         // 설정 버튼 클릭 리스너
         settingsButton.setOnClickListener {
-            prefsManager.hasVisitedSettings = true
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
-        }
-
-        // 설정 팁 배너 콘텐츠 영역 클릭 리스너 (설정으로 이동)
-        settingsTipBannerContent.setOnClickListener {
-            prefsManager.hasVisitedSettings = true
-            val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
-        }
-
-        // 설정 팁 배너 닫기 버튼 클릭 리스너 (배너 숨김만)
-        settingsTipCloseButton.setOnClickListener {
-            prefsManager.hasSeenSettingsTip = true
-            settingsTipBanner.visibility = View.GONE
         }
 
         // 토글 스위치 클릭 리스너
@@ -177,7 +157,6 @@ class MainActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         checkPermissionsAndUpdateUI()
-        updateSettingsTipBannerVisibility()
         updateSettingsBadgeVisibility()
         updateStatisticsSummary()
         // 앱 설치/삭제 상황 반영
@@ -201,11 +180,6 @@ class MainActivity : BaseActivity() {
             // 저장된 차단 상태 불러오기
             updateUI(prefsManager.isBlockingEnabled)
         }
-    }
-
-    private fun updateSettingsTipBannerVisibility() {
-        val shouldShow = !prefsManager.hasVisitedSettings && !prefsManager.hasSeenSettingsTip
-        settingsTipBanner.visibility = if (shouldShow) View.VISIBLE else View.GONE
     }
 
     private fun updateSettingsBadgeVisibility() {

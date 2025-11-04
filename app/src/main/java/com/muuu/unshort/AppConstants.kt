@@ -31,5 +31,4 @@ object AppConstants {
 
     // Nudge
     const val PREF_HAS_VISITED_SETTINGS = "has_visited_settings"
-    const val PREF_HAS_SEEN_SETTINGS_TIP = "has_seen_settings_tip"
 }
