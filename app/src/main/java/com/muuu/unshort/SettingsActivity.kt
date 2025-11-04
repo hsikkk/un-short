@@ -128,14 +128,7 @@ class SettingsActivity : BaseActivity() {
         preventDisableSwitch.isChecked = prefsManager.isPreventImpulsiveDisable
 
         // 충동적 해제 방지 스위치 리스너
-        preventDisableSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (!PremiumManager.isPremium()) {
-                // 프리미엄 아니면 되돌리기
-                preventDisableSwitch.isChecked = false
-                return@setOnCheckedChangeListener
-            }
-            prefsManager.isPreventImpulsiveDisable = isChecked
-        }
+        setupPreventDisableListener()
 
         // 충동적 해제 방지 아이템 클릭 시 처리
         preventDisableItem.setOnClickListener {
@@ -403,6 +396,49 @@ class SettingsActivity : BaseActivity() {
             onCancel = {
                 // User cancelled - restore switch state
                 updateDeviceAdminSwitchState()
+            }
+        )
+        dialog.show()
+    }
+
+    private fun setupPreventDisableListener() {
+        preventDisableSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (!PremiumManager.isPremium()) {
+                // 프리미엄 아니면 되돌리기
+                preventDisableSwitch.setOnCheckedChangeListener(null)
+                preventDisableSwitch.isChecked = false
+                setupPreventDisableListener()
+                return@setOnCheckedChangeListener
+            }
+
+            if (!isChecked && prefsManager.isPreventImpulsiveDisable) {
+                // OFF로 전환 시도 - 확인 다이얼로그 표시
+                showPreventDisableOffDialog()
+            } else {
+                // ON으로 전환 - 즉시 저장
+                prefsManager.isPreventImpulsiveDisable = isChecked
+            }
+        }
+    }
+
+    private fun showPreventDisableOffDialog() {
+        val dialog = DisableConfirmDialog(
+            context = this,
+            titleResId = R.string.prevent_impulsive_disable_off_title,
+            messageResId = R.string.prevent_impulsive_disable_off_message,
+            requiredPhraseResId = R.string.prevent_impulsive_disable_off_phrase,
+            onConfirm = {
+                // User confirmed - proceed with disabling
+                prefsManager.isPreventImpulsiveDisable = false
+                preventDisableSwitch.setOnCheckedChangeListener(null)
+                preventDisableSwitch.isChecked = false
+                setupPreventDisableListener()
+            },
+            onCancel = {
+                // User cancelled - restore switch state
+                preventDisableSwitch.setOnCheckedChangeListener(null)
+                preventDisableSwitch.isChecked = true
+                setupPreventDisableListener()
             }
         )
         dialog.show()

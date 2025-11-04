@@ -185,7 +185,12 @@
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">삭제 방지를 비활성화하시겠어요?</string>
     <string name="device_admin_disable_message">충동적으로 비활성화할 수 있습니다. 정말 비활성화하시겠어요?</string>
-    <string name="device_admin_disable_phrase">삭제 방지를 해제합니다</string>
+    <string name="device_admin_disable_phrase">해당 기능을 비활성화 합니다</string>
+
+    <!-- Prevent Impulsive Disable OFF Dialog -->
+    <string name="prevent_impulsive_disable_off_title">정말 해제하시겠어요?</string>
+    <string name="prevent_impulsive_disable_off_message">해제하려면 아래 문구를 입력해주세요</string>
+    <string name="prevent_impulsive_disable_off_phrase">해당 기능을 비활성화 합니다</string>
 
     <!-- Overlay Tip Messages -->
     <string-array name="overlay_tips">

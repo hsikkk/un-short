@@ -191,7 +191,12 @@
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">Disable deletion protection?</string>
     <string name="device_admin_disable_message">You may disable impulsively. Really disable?</string>
-    <string name="device_admin_disable_phrase">disable deletion protection</string>
+    <string name="device_admin_disable_phrase">disable this feature</string>
+
+    <!-- Prevent Impulsive Disable OFF Dialog -->
+    <string name="prevent_impulsive_disable_off_title">Really disable?</string>
+    <string name="prevent_impulsive_disable_off_message">To disable, enter the phrase below:</string>
+    <string name="prevent_impulsive_disable_off_phrase">disable this feature</string>
 
     <!-- Overlay Tip Messages -->
     <string-array name="overlay_tips">
