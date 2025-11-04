@@ -32,7 +32,8 @@ data class HashConfig(
     val excludedViewIdPatterns: List<String>,
     val excludedTextPatterns: List<Regex>,
     val maxDepth: Int = 8,
-    val textValidator: (String) -> Boolean  // 앱별 텍스트 검증 함수
+    val textValidator: (String) -> Boolean,  // 앱별 텍스트 검증 함수
+    val excludeBoundsRight: Int? = null  // 우측 x 좌표 이상인 노드 제외 (null이면 제한 없음)
 )
 
 /**
@@ -94,13 +95,20 @@ object AppBlockingRegistry {
                 "player_control"
             ),
             excludedTextPatterns = listOf(
-                Regex("\\d+:\\d+")  // 시간 패턴만 (0:15, 1:30 등)
+                Regex("\\d+:\\d+"),  // 시간 패턴 (0:15, 1:30 등)
+                Regex(".*\\d+명.*좋아함.*"),  // "나 외에 사용자 262명이 이 동영상을 좋아함"
+                Regex(".*댓글\\s*\\d+.*"),  // "댓글 91개 보기"
+                Regex(".*좋아요\\s*\\d+.*"),  // "좋아요 262개"
+                Regex(".*조회수\\s*\\d+.*"),  // "조회수 1.2만회"
+                Regex(".*동영상.*좋아요.*"),  // "동영상에 좋아요 표시", "동영상에 싫어요 표시"
+                Regex(".*동영상.*싫어요.*")
             ),
             maxDepth = 8,
             textValidator = { text ->
                 // YouTube: 콜론/슬래시만 있는 텍스트 제외
                 text.length > 2 && !text.all { it.isDigit() || it == ':' || it == '/' }
-            }
+            },
+            excludeBoundsRight = 1200  // 우측 사이드바 제외 (좋아요/댓글/공유 버튼)
         )
     )
 

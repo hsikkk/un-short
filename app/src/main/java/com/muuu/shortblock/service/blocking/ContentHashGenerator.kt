@@ -60,6 +60,15 @@ class ContentHashGenerator {
             return
         }
 
+        // Bounds 제한 체크 (우측 사이드바 제외)
+        config.excludeBoundsRight?.let { rightLimit ->
+            val bounds = android.graphics.Rect()
+            node.getBoundsInScreen(bounds)
+            if (bounds.left >= rightLimit) {
+                return  // 우측 영역 노드는 스킵
+            }
+        }
+
         val viewId = node.viewIdResourceName ?: ""
 
         // Excluded viewId 패턴 체크 (기존과 동일)
@@ -86,19 +95,19 @@ class ContentHashGenerator {
             }
         }
 
-        // ContentDescription 수집 (주요 노드에서만)
-        val isContentNode = viewId.contains("title", ignoreCase = true) ||
-                           viewId.contains("channel", ignoreCase = true) ||
-                           viewId.contains("author", ignoreCase = true) ||
-                           viewId.contains("description", ignoreCase = true) ||
-                           viewId.contains("metadata", ignoreCase = true) ||
-                           viewId.contains("username", ignoreCase = true) ||
-                           viewId.contains("caption", ignoreCase = true)
+        // ContentDescription 수집
+        node.contentDescription?.toString()?.let { desc ->
+            if (desc.isNotEmpty() && desc.length > 5) {
+                // textValidator로 유효성 검증
+                if (config.textValidator(desc)) {
+                    // Excluded text 패턴 체크
+                    val shouldExclude = config.excludedTextPatterns.any { pattern ->
+                        pattern.matches(desc)
+                    }
 
-        if (isContentNode) {
-            node.contentDescription?.toString()?.let { desc ->
-                if (desc.isNotEmpty() && desc.length > 5) {
-                    contentBuilder.append(desc).append("|")
+                    if (!shouldExclude) {
+                        contentBuilder.append(desc).append("|")
+                    }
                 }
             }
         }
