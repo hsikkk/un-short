@@ -35,6 +35,7 @@ import com.muuu.ad.core.adunit.MuuuNativeAdUnit
 import com.muuu.ad.core.model.MuuuBannerSize
 import com.muuu.ad.core.model.MuuuNativeAdBinder
 import com.muuu.ad.core.model.nativetemplate.MuuuNativeAdTemplate
+import com.muuu.unshort.ad.AdManager
 
 /**
  * 타이머 Activity - tmp/timer.html 디자인 기반
@@ -54,8 +55,8 @@ class TimerActivity : BaseActivity() {
     private lateinit var mainContent: View
     private lateinit var successScreen: View
     private lateinit var continueButton: TextView
-    private lateinit var bannerAdView: MuuuBannerAdView
-    private lateinit var nativeAdView: MuuuNativeAdView
+    private var bannerAdView: MuuuBannerAdView? = null
+    private var nativeAdView: MuuuNativeAdView? = null
 
     private var countDownTimer: CountDownTimer? = null
     private var remainingSeconds = 30
@@ -79,26 +80,37 @@ class TimerActivity : BaseActivity() {
         // Track timer activity opened
         AnalyticsManager.trackEvent(this, AnalyticsEvent.TIMER_ACTIVITY_OPENED)
 
-        // Setup native ad at top
-        setupNativeAd()
-
-        // Create Muuu banner ad unit
-        val bannerAdUnit = MuuuBannerAdUnit(
-            key = AdConfig.BANNER_TIMER_BOTTOM,
-            placement = "timer_screen_bottom",
-            bannerSize = MuuuBannerSize.Banner,
-            refreshInterval = 4
+        // 광고 설정 (AdManager가 프리미엄 체크 및 자동 제거 처리)
+        // 네이티브 광고 (상단)
+        val nativeAdContainer = findViewById<FrameLayout>(R.id.nativeAd)
+        nativeAdView = AdManager.setupNativeAd(
+            activity = this,
+            container = nativeAdContainer,
+            adUnit = MuuuNativeAdUnit(
+                key = AdConfig.NATIVE_TIMER_TOP,
+                placement = "timer_screen_top",
+                refreshInterval = 7
+            ),
+            template = MuuuNativeAdTemplate.Line(
+                backgroundColor = getColor(R.color.primary_dark),
+                contentColor = getColor(R.color.white),
+                adMarkLabelBackgroundColor = getColor(R.color.gray_700),
+                adMarkLabelTextColor = getColor(R.color.white)
+            )
         )
 
-        // Create and setup Muuu banner ad view
-        bannerAdView = MuuuBannerAdView(this, bannerAdUnit)
-
-        // Add MuuuBannerAdView to container
+        // 배너 광고 (하단)
         val adViewContainer = findViewById<FrameLayout>(R.id.adView)
-        adViewContainer.addView(bannerAdView)
-
-        // Load ad
-        bannerAdView.loadAd()
+        bannerAdView = AdManager.setupBannerAd(
+            activity = this,
+            container = adViewContainer,
+            adUnit = MuuuBannerAdUnit(
+                key = AdConfig.BANNER_TIMER_BOTTOM,
+                placement = "timer_screen_bottom",
+                bannerSize = MuuuBannerSize.Banner,
+                refreshInterval = 4
+            )
+        )
 
         // 화면 꺼짐 방지
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -456,36 +468,6 @@ class TimerActivity : BaseActivity() {
         }
     }
 
-    private fun setupNativeAd() {
-        // Create Muuu native ad unit
-        val nativeAdUnit = MuuuNativeAdUnit(
-            key = AdConfig.NATIVE_TIMER_TOP,
-            placement = "timer_screen_top",
-            refreshInterval = 7
-        )
-
-        // Create and setup Muuu native ad view
-        nativeAdView = MuuuNativeAdView(this, nativeAdUnit)
-
-        nativeAdView.setAdBinder(MuuuNativeAdBinder.fromTemplate(
-            this@TimerActivity,
-            MuuuNativeAdTemplate.Line(
-                backgroundColor = getColor(R.color.primary_dark),
-                  contentColor = getColor(R.color.white),
-                  adMarkLabelBackgroundColor = getColor(R.color.gray_700),
-                  adMarkLabelTextColor = getColor(R.color.white)
-            )
-        ))
-
-        // Add to container
-        val nativeAdContainer = findViewById<FrameLayout>(R.id.nativeAd)
-        nativeAdContainer.removeAllViews()
-        nativeAdContainer.addView(nativeAdView)
-
-        // Load ad
-        nativeAdView.loadAd()
-        Log.d(TAG, "Loading Muuu native ad...")
-    }
 
     override fun onDestroy() {
         super.onDestroy()

@@ -6,9 +6,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.muuu.unshort.admin.DeviceAdminManager
 import com.muuu.unshort.prefs.PreferencesManager
+import com.muuu.unshort.premium.PremiumManager
 
 class SettingsActivity : BaseActivity() {
 
@@ -28,6 +30,9 @@ class SettingsActivity : BaseActivity() {
     private lateinit var reviewItem: LinearLayout
     private lateinit var versionItem: LinearLayout
     private lateinit var versionText: TextView
+    private lateinit var allowFirstProBadge: ImageView
+    private lateinit var preventDisableProBadge: ImageView
+    private lateinit var deviceAdminProBadge: ImageView
 
     private lateinit var deviceAdminManager: DeviceAdminManager
     private lateinit var prefsManager: PreferencesManager
@@ -60,6 +65,9 @@ class SettingsActivity : BaseActivity() {
         reviewItem = findViewById(R.id.reviewItem)
         versionItem = findViewById(R.id.versionItem)
         versionText = findViewById(R.id.versionText)
+        allowFirstProBadge = findViewById(R.id.allowFirstProBadge)
+        preventDisableProBadge = findViewById(R.id.preventDisableProBadge)
+        deviceAdminProBadge = findViewById(R.id.deviceAdminProBadge)
 
         // 버전 정보 설정
         try {
@@ -72,6 +80,9 @@ class SettingsActivity : BaseActivity() {
 
         // 저장된 설정 표시
         updateWaitTimeDisplay(prefsManager.waitTime)
+
+        // 프리미엄 UI 초기화
+        updatePremiumUI()
 
         // 햅틱 피드백 설정 초기화
         hapticSwitch.isChecked = prefsManager.isHapticEnabled
@@ -91,12 +102,21 @@ class SettingsActivity : BaseActivity() {
 
         // 스크롤한 쇼츠만 차단 스위치 리스너
         allowFirstSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (!PremiumManager.isPremium()) {
+                // 프리미엄 아니면 되돌리기
+                allowFirstSwitch.isChecked = false
+                return@setOnCheckedChangeListener
+            }
             prefsManager.isBlockScrolledOnly = isChecked
         }
 
-        // 스크롤한 쇼츠만 차단 아이템 클릭 시 스위치 토글
+        // 스크롤한 쇼츠만 차단 아이템 클릭 시 처리
         allowFirstItem.setOnClickListener {
-            allowFirstSwitch.isChecked = !allowFirstSwitch.isChecked
+            if (!PremiumManager.isPremium()) {
+                showPremiumRequiredDialog()
+            } else {
+                allowFirstSwitch.isChecked = !allowFirstSwitch.isChecked
+            }
         }
 
         // 충동적 해제 방지 설정 초기화
@@ -104,20 +124,33 @@ class SettingsActivity : BaseActivity() {
 
         // 충동적 해제 방지 스위치 리스너
         preventDisableSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (!PremiumManager.isPremium()) {
+                // 프리미엄 아니면 되돌리기
+                preventDisableSwitch.isChecked = false
+                return@setOnCheckedChangeListener
+            }
             prefsManager.isPreventImpulsiveDisable = isChecked
         }
 
-        // 충동적 해제 방지 아이템 클릭 시 스위치 토글
+        // 충동적 해제 방지 아이템 클릭 시 처리
         preventDisableItem.setOnClickListener {
-            preventDisableSwitch.isChecked = !preventDisableSwitch.isChecked
+            if (!PremiumManager.isPremium()) {
+                showPremiumRequiredDialog()
+            } else {
+                preventDisableSwitch.isChecked = !preventDisableSwitch.isChecked
+            }
         }
 
         // Device Admin 스위치 초기 상태 설정 (리스너도 함께 설정됨)
         updateDeviceAdminSwitchState()
 
-        // Device Admin 아이템 클릭 시 스위치 토글
+        // Device Admin 아이템 클릭 시 처리
         deviceAdminItem.setOnClickListener {
-            deviceAdminSwitch.isChecked = !deviceAdminSwitch.isChecked
+            if (!PremiumManager.isPremium()) {
+                showPremiumRequiredDialog()
+            } else {
+                deviceAdminSwitch.isChecked = !deviceAdminSwitch.isChecked
+            }
         }
 
         // 뒤로 가기 버튼
@@ -180,59 +213,130 @@ class SettingsActivity : BaseActivity() {
     }
 
     private fun showWaitTimeBottomSheet() {
+        // 프리미엄 체크
+        if (!PremiumManager.isPremium()) {
+            showPremiumRequiredDialog()
+            return
+        }
+
+        // 프리미엄 사용자: 커스텀 타이머 표시
+        showCustomTimerBottomSheet()
+    }
+
+    /**
+     * 프리미엄 필요 다이얼로그 표시
+     */
+    private fun showPremiumRequiredDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.premium_required_title))
+            .setMessage(getString(R.string.premium_required_message))
+            .setPositiveButton(getString(R.string.premium_button_upgrade)) { _, _ ->
+                // 프리미엄 구매 플로우 시작
+                PremiumManager.showPremiumPurchase(this) { success ->
+                    if (success) {
+                        // 구매 성공 시 커스텀 타이머 표시
+                        showCustomTimerBottomSheet()
+                    }
+                }
+            }
+            .setNegativeButton(getString(R.string.premium_button_cancel), null)
+            .show()
+    }
+
+    /**
+     * 커스텀 타이머 Bottom Sheet (프리미엄 전용)
+     */
+    private fun showCustomTimerBottomSheet() {
         val bottomSheetDialog = BottomSheetDialog(this)
-        val view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_delay_time, null)
+        val view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_custom_timer, null)
 
         val currentWaitTime = prefsManager.waitTime
 
-        // 라디오 버튼 찾기
-        val radio15 = view.findViewById<RadioButton>(R.id.radio15)
-        val radio30 = view.findViewById<RadioButton>(R.id.radio30)
-        val radio60 = view.findViewById<RadioButton>(R.id.radio60)
+        // View 찾기
+        val timerValueText = view.findViewById<TextView>(R.id.timerValueText)
+        val timerSeekBar = view.findViewById<SeekBar>(R.id.timerSeekBar)
+        val preset15 = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.preset15)
+        val preset30 = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.preset30)
+        val preset60 = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.preset60)
+        val doneButton = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.doneButton)
 
-        // 현재 설정된 값에 따라 라디오 버튼 체크
-        when (currentWaitTime) {
-            15 -> radio15.isChecked = true
-            30 -> radio30.isChecked = true
-            60 -> radio60.isChecked = true
+        // SeekBar 설정 (5~300초, 5초 단위)
+        // progress: 0~295 → 실제값: 5~300초
+        timerSeekBar.max = 295
+        timerSeekBar.progress = currentWaitTime - 5
+        timerValueText.text = getString(R.string.settings_delay_time_value, currentWaitTime)
+
+        // SeekBar 리스너
+        timerSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                // 5초 단위로 스냅
+                val snappedProgress = (progress / 5) * 5
+                val seconds = snappedProgress + 5
+                timerValueText.text = getString(R.string.settings_delay_time_value, seconds)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                // 5초 단위로 스냅
+                val snappedProgress = (seekBar!!.progress / 5) * 5
+                seekBar.progress = snappedProgress
+            }
+        })
+
+        // 프리셋 버튼들
+        preset15.setOnClickListener {
+            timerSeekBar.progress = 10 // 15 - 5 = 10
+            timerValueText.text = getString(R.string.settings_delay_time_value, 15)
         }
 
-        // 옵션 클릭 리스너들
-        view.findViewById<LinearLayout>(R.id.option15).setOnClickListener {
-            // 모든 라디오 버튼 해제 후 선택
-            radio15.isChecked = true
-            radio30.isChecked = false
-            radio60.isChecked = false
-
-            prefsManager.waitTime = 15
-            updateWaitTimeDisplay(15)
-            bottomSheetDialog.dismiss()
+        preset30.setOnClickListener {
+            timerSeekBar.progress = 25 // 30 - 5 = 25
+            timerValueText.text = getString(R.string.settings_delay_time_value, 30)
         }
 
-        view.findViewById<LinearLayout>(R.id.option30).setOnClickListener {
-            // 모든 라디오 버튼 해제 후 선택
-            radio15.isChecked = false
-            radio30.isChecked = true
-            radio60.isChecked = false
-
-            prefsManager.waitTime = 30
-            updateWaitTimeDisplay(30)
-            bottomSheetDialog.dismiss()
+        preset60.setOnClickListener {
+            timerSeekBar.progress = 55 // 60 - 5 = 55
+            timerValueText.text = getString(R.string.settings_delay_time_value, 60)
         }
 
-        view.findViewById<LinearLayout>(R.id.option60).setOnClickListener {
-            // 모든 라디오 버튼 해제 후 선택
-            radio15.isChecked = false
-            radio30.isChecked = false
-            radio60.isChecked = true
-
-            prefsManager.waitTime = 60
-            updateWaitTimeDisplay(60)
+        // 완료 버튼
+        doneButton.setOnClickListener {
+            val finalProgress = (timerSeekBar.progress / 5) * 5
+            val seconds = finalProgress + 5
+            prefsManager.waitTime = seconds
+            updateWaitTimeDisplay(seconds)
             bottomSheetDialog.dismiss()
         }
 
         bottomSheetDialog.setContentView(view)
         bottomSheetDialog.show()
+    }
+
+    /**
+     * 프리미엄 UI 업데이트
+     */
+    private fun updatePremiumUI() {
+        val isPremium = PremiumManager.isPremium()
+
+        if (isPremium) {
+            // 프리미엄: Switch 표시, PRO 배지 숨기기
+            allowFirstSwitch.visibility = android.view.View.VISIBLE
+            preventDisableSwitch.visibility = android.view.View.VISIBLE
+            deviceAdminSwitch.visibility = android.view.View.VISIBLE
+
+            allowFirstProBadge.visibility = android.view.View.GONE
+            preventDisableProBadge.visibility = android.view.View.GONE
+            deviceAdminProBadge.visibility = android.view.View.GONE
+        } else {
+            // 무료: Switch 숨기기, PRO 배지 표시
+            allowFirstSwitch.visibility = android.view.View.GONE
+            preventDisableSwitch.visibility = android.view.View.GONE
+            deviceAdminSwitch.visibility = android.view.View.GONE
+
+            allowFirstProBadge.visibility = android.view.View.VISIBLE
+            preventDisableProBadge.visibility = android.view.View.VISIBLE
+            deviceAdminProBadge.visibility = android.view.View.VISIBLE
+        }
     }
 
     /**
@@ -245,6 +349,12 @@ class SettingsActivity : BaseActivity() {
         deviceAdminSwitch.isChecked = isActive
         // 리스너 다시 설정
         deviceAdminSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (!PremiumManager.isPremium()) {
+                // 프리미엄 아니면 되돌리기
+                deviceAdminSwitch.isChecked = false
+                return@setOnCheckedChangeListener
+            }
+
             if (isChecked) {
                 deviceAdminManager.requestActivation(this, REQUEST_CODE_ENABLE_DEVICE_ADMIN)
             } else {

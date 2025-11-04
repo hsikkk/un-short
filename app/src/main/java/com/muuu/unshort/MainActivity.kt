@@ -23,6 +23,7 @@ import java.util.Calendar
 import com.muuu.ad.view.MuuuBannerAdView
 import com.muuu.ad.core.adunit.MuuuBannerAdUnit
 import com.muuu.ad.core.model.MuuuBannerSize
+import com.muuu.unshort.ad.AdManager
 import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.shortblock.service.blocking.AppBlockingRegistry
 
@@ -47,7 +48,7 @@ class MainActivity : BaseActivity() {
     private lateinit var settingsTipBanner: FrameLayout
     private lateinit var settingsTipBannerContent: LinearLayout
     private lateinit var settingsTipCloseButton: TextView
-    private lateinit var bannerAdView: MuuuBannerAdView
+    private var bannerAdView: MuuuBannerAdView? = null
     private lateinit var prefsManager: PreferencesManager
     private lateinit var blockedAppsContainer: LinearLayout
 
@@ -71,23 +72,18 @@ class MainActivity : BaseActivity() {
         // Track app launch
         AnalyticsManager.trackEvent(this, AnalyticsEvent.APP_LAUNCHED)
 
-        // Create Muuu banner ad unit
-        val bannerAdUnit = MuuuBannerAdUnit(
-            key = AdConfig.BANNER_HOME_BOTTOM,
-            placement = "main_screen_bottom",
-            bannerSize = MuuuBannerSize.Banner,
-            refreshInterval = 7
-        )
-
-        // Create and setup Muuu banner ad view
-        bannerAdView = MuuuBannerAdView(this, bannerAdUnit)
-
-        // Add MuuuBannerAdView to container
+        // 광고 설정 (AdManager가 프리미엄 체크 및 자동 제거 처리)
         val adViewContainer = findViewById<FrameLayout>(R.id.adView)
-        adViewContainer.addView(bannerAdView)
-
-        // Load ad
-        bannerAdView.loadAd()
+        bannerAdView = AdManager.setupBannerAd(
+            activity = this,
+            container = adViewContainer,
+            adUnit = MuuuBannerAdUnit(
+                key = AdConfig.BANNER_HOME_BOTTOM,
+                placement = "main_screen_bottom",
+                bannerSize = MuuuBannerSize.Banner,
+                refreshInterval = 7
+            )
+        )
 
         // View 초기화
         toggleArea = findViewById(R.id.toggleArea)

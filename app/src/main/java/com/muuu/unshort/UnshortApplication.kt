@@ -5,6 +5,7 @@ import android.util.Log
 import com.amplitude.android.Amplitude
 import com.amplitude.android.Configuration
 import com.muuu.ad.MuuuAdManagner
+import com.muuu.unshort.premium.PremiumManager
 
 class UnshortApplication : Application() {
 
@@ -16,6 +17,9 @@ class UnshortApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        // PremiumManager 초기화
+        PremiumManager.initialize(this)
 
         // Muuu Ad SDK 초기화
         MuuuAdManagner.init(

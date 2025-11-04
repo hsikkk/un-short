@@ -198,5 +198,13 @@
         <item>Do you really need this content now?</item>
     </string-array>
 
+    <!-- Custom Timer (Premium) -->
+    <string name="custom_timer_title">Set Wait Time</string>
+    <string name="custom_timer_presets">Quick Presets</string>
+    <string name="custom_timer_done">Done</string>
+    <string name="premium_required_title">✨ Premium Feature</string>
+    <string name="premium_required_message">Unlock custom wait time and more!\n\n• Set wait time freely (5–300 seconds)\n• Block only scrolled shorts\n• Prevent impulsive disable\n• Prevent app deletion</string>
+    <string name="premium_button_upgrade">Upgrade to Premium</string>
+    <string name="premium_button_cancel">Not now</string>
 
 </resources>
