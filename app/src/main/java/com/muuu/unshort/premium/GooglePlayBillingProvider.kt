@@ -3,7 +3,9 @@ package com.muuu.unshort.premium
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.android.billingclient.api.*
+import com.muuu.unshort.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -99,6 +101,11 @@ class GooglePlayBillingProvider(
                 // 연결 확인
                 if (!ensureConnected()) {
                     withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            activity,
+                            activity.getString(R.string.billing_error_connection_failed),
+                            Toast.LENGTH_SHORT
+                        ).show()
                         onResult(false)
                     }
                     return@launch
@@ -127,10 +134,24 @@ class GooglePlayBillingProvider(
                             launchBillingFlow(activity, productDetails, offerToken)
                         } else {
                             Log.e(TAG, "No subscription offers available")
+                            activity.runOnUiThread {
+                                Toast.makeText(
+                                    activity,
+                                    activity.getString(R.string.billing_error_sku_not_found),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                             onResult(false)
                         }
                     } else {
                         Log.e(TAG, "Failed to query product details: ${billingResult.debugMessage}")
+                        activity.runOnUiThread {
+                            Toast.makeText(
+                                activity,
+                                activity.getString(R.string.billing_error_sku_not_found),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                         onResult(false)
                     }
                 }
@@ -304,6 +325,11 @@ class GooglePlayBillingProvider(
             try {
                 if (!ensureConnected()) {
                     withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            activity,
+                            activity.getString(R.string.billing_error_connection_failed),
+                            Toast.LENGTH_SHORT
+                        ).show()
                         onResult(false)
                     }
                     return@launch
@@ -325,10 +351,24 @@ class GooglePlayBillingProvider(
                             isPremiumCache = true
                             onResult(true)
                         } else {
+                            activity.runOnUiThread {
+                                Toast.makeText(
+                                    activity,
+                                    activity.getString(R.string.billing_error_restore_no_subscription),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                             onResult(false)
                         }
                     } else {
                         Log.e(TAG, "Failed to restore purchases: ${billingResult.debugMessage}")
+                        activity.runOnUiThread {
+                            Toast.makeText(
+                                activity,
+                                activity.getString(R.string.billing_error_restore_failed),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                         onResult(false)
                     }
                 }

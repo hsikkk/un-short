@@ -198,6 +198,14 @@
     <string name="prevent_impulsive_disable_off_message">To disable, enter the phrase below:</string>
     <string name="prevent_impulsive_disable_off_phrase">disable this feature</string>
 
+    <!-- Billing Error Messages -->
+    <string name="billing_error_connection_failed">Unable to connect to Google Play. Please try again.</string>
+    <string name="billing_error_sku_not_found">Unable to process request. Please try again later.</string>
+    <string name="billing_error_purchase_failed">Purchase failed. Please try again.</string>
+    <string name="billing_error_restore_failed">Unable to process request. Please try again later.</string>
+    <string name="billing_error_restore_no_subscription">No active subscription found.</string>
+    <string name="billing_error_unknown">An error occurred. Please try again later.</string>
+
     <!-- Overlay Tip Messages -->
     <string-array name="overlay_tips">
         <item>Find more blocking options in settings</item>

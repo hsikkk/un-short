@@ -192,6 +192,14 @@
     <string name="prevent_impulsive_disable_off_message">해제하려면 아래 문구를 입력해주세요</string>
     <string name="prevent_impulsive_disable_off_phrase">해당 기능을 비활성화 합니다</string>
 
+    <!-- Billing Error Messages -->
+    <string name="billing_error_connection_failed">Google Play 연결에 실패했습니다. 다시 시도해주세요.</string>
+    <string name="billing_error_sku_not_found">요청을 처리할 수 없습니다. 잠시 후 다시 시도해주세요.</string>
+    <string name="billing_error_purchase_failed">구매에 실패했습니다. 다시 시도해주세요.</string>
+    <string name="billing_error_restore_failed">요청을 처리할 수 없습니다. 잠시 후 다시 시도해주세요.</string>
+    <string name="billing_error_restore_no_subscription">활성화된 구독이 없습니다.</string>
+    <string name="billing_error_unknown">오류가 발생했습니다. 나중에 다시 시도해주세요.</string>
+
     <!-- Overlay Tip Messages -->
     <string-array name="overlay_tips">
         <item>설정에서 더 강력한 차단 옵션을 찾아보세요</item>
