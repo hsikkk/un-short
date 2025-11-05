@@ -18,6 +18,7 @@ class SettingsActivity : BaseActivity() {
     private lateinit var backButton: ImageView
     private lateinit var premiumBanner: LinearLayout
     private lateinit var premiumBannerButton: com.google.android.material.button.MaterialButton
+    private lateinit var subscriptionManagementItem: LinearLayout
     private lateinit var waitTimeValue: TextView
     private lateinit var waitTimeItem: LinearLayout
     private lateinit var hapticSwitch: Switch
@@ -73,6 +74,7 @@ class SettingsActivity : BaseActivity() {
         backButton = findViewById(R.id.backButton)
         premiumBanner = findViewById(R.id.premiumBanner)
         premiumBannerButton = findViewById(R.id.premiumBannerButton)
+        subscriptionManagementItem = findViewById(R.id.subscriptionManagementItem)
         waitTimeValue = findViewById(R.id.waitTimeValue)
         waitTimeItem = findViewById(R.id.waitTimeItem)
         hapticSwitch = findViewById(R.id.hapticSwitch)
@@ -182,6 +184,11 @@ class SettingsActivity : BaseActivity() {
 
         premiumBannerButton.setOnClickListener {
             startActivity(Intent(this, PremiumUpgradeActivity::class.java))
+        }
+
+        // 구독 관리
+        subscriptionManagementItem.setOnClickListener {
+            startActivity(Intent(this, SubscriptionManagementActivity::class.java))
         }
 
         // 대기 시간 설정
@@ -329,6 +336,9 @@ class SettingsActivity : BaseActivity() {
 
         // 배너
         premiumBanner.visibility = if (isPremium) android.view.View.GONE else android.view.View.VISIBLE
+
+        // 구독 관리 (프리미엄 사용자에게만 표시)
+        subscriptionManagementItem.visibility = if (isPremium) android.view.View.VISIBLE else android.view.View.GONE
 
         // 대기 시간
         waitTimeValue.visibility = if (isPremium) android.view.View.VISIBLE else android.view.View.GONE

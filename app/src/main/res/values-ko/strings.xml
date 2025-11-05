@@ -239,6 +239,21 @@
     <string name="premium_upgrade_button">지금 업그레이드</string>
     <string name="premium_upgrade_coming_soon">결제 시스템 준비 중입니다. 곧 만나요!</string>
 
+    <!-- Subscription Management -->
+    <string name="subscription_management">구독 관리</string>
+
+    <!-- Subscription Management Activity -->
+    <string name="subscription_management_title">구독</string>
+    <string name="subscription_status_active">활성</string>
+    <string name="subscription_status_expired">만료됨</string>
+    <string name="subscription_start_date">시작일</string>
+    <string name="subscription_next_billing">다음 결제일</string>
+    <string name="subscription_auto_renew_on">자동 갱신 활성화</string>
+    <string name="subscription_auto_renew_off">자동 갱신 비활성화</string>
+    <string name="subscription_cancel_button">관리 또는 해지</string>
+    <string name="subscription_cancel_desc">구독을 해지하거나 수정하려면\nGoogle Play 스토어로 이동합니다</string>
+    <string name="subscription_info_note">* 마지막 결제일 기준 추정값</string>
+
     <!-- Premium Features -->
     <string name="premium_feature_ad_free_title">광고 제거</string>
     <string name="premium_feature_ad_free_desc">깔끔하고 집중된 경험</string>

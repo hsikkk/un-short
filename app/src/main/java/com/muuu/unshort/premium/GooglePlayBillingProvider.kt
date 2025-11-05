@@ -2,6 +2,8 @@ package com.muuu.unshort.premium
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import com.android.billingclient.api.*
@@ -11,6 +13,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
+
+/**
+ * 구독 정보 (UI 표시용)
+ *
+ * 주의: 만료일은 추정값이며 보안 검증 목적으로 사용 불가
+ */
+data class SubscriptionInfo(
+    val isActive: Boolean,
+    val purchaseDate: Date,
+    val estimatedExpiryDate: Date?,
+    val autoRenewing: Boolean
+)
 
 /**
  * Google Play Billing 기반 프리미엄 제공자
@@ -38,6 +53,9 @@ class GooglePlayBillingProvider(
 
     private var billingClient: BillingClient? = null
     private var isPremiumCache: Boolean = false
+
+    // 현재 활성 구독 정보 (캐싱용)
+    private var currentPurchase: Purchase? = null
 
     // 구매 플로우 콜백
     private var purchaseFlowCallback: ((Boolean) -> Unit)? = null
@@ -112,6 +130,7 @@ class GooglePlayBillingProvider(
                 }
 
                 // 제품 정보 조회
+                Log.d(TAG, "Querying product: productId=$PREMIUM_PRODUCT_ID, packageName=${context.packageName}")
                 val productList = listOf(
                     QueryProductDetailsParams.Product.newBuilder()
                         .setProductId(PREMIUM_PRODUCT_ID)
@@ -144,7 +163,7 @@ class GooglePlayBillingProvider(
                             onResult(false)
                         }
                     } else {
-                        Log.e(TAG, "Failed to query product details: ${billingResult.debugMessage}")
+                        Log.e(TAG, "Failed to query product details: responseCode=${billingResult.responseCode}, message=${billingResult.debugMessage}, productListSize=${productDetailsList.size}")
                         activity.runOnUiThread {
                             Toast.makeText(
                                 activity,
@@ -299,13 +318,14 @@ class GooglePlayBillingProvider(
 
                 billingClient?.queryPurchasesAsync(params) { billingResult, purchasesList ->
                     if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                        // 활성 구독이 있는지 확인
-                        val hasActiveSubscription = purchasesList.any { purchase ->
+                        // 활성 구독 찾기
+                        val activePurchase = purchasesList.firstOrNull { purchase ->
                             purchase.products.contains(PREMIUM_PRODUCT_ID) &&
                             purchase.purchaseState == Purchase.PurchaseState.PURCHASED
                         }
 
-                        isPremiumCache = hasActiveSubscription
+                        currentPurchase = activePurchase
+                        isPremiumCache = activePurchase != null
                         Log.d(TAG, "Premium status: $isPremiumCache")
                     } else {
                         Log.e(TAG, "Failed to query purchases: ${billingResult.debugMessage}")
@@ -413,6 +433,63 @@ class GooglePlayBillingProvider(
         }
 
         return@withContext connected
+    }
+
+    /**
+     * 구독 정보 조회 (UI 표시용)
+     *
+     * 주의: 만료일은 추정값이며 보안 검증 목적으로 사용 불가
+     *
+     * @return SubscriptionInfo or null (비구독자)
+     */
+    fun getSubscriptionInfo(): SubscriptionInfo? {
+        val purchase = currentPurchase ?: return null
+
+        if (purchase.purchaseState != Purchase.PurchaseState.PURCHASED) {
+            return null
+        }
+
+        val purchaseDate = Date(purchase.purchaseTime)
+        val expiryDate = calculateExpiryDate(purchaseDate)
+
+        return SubscriptionInfo(
+            isActive = true,
+            purchaseDate = purchaseDate,
+            estimatedExpiryDate = expiryDate,
+            autoRenewing = purchase.isAutoRenewing
+        )
+    }
+
+    /**
+     * 구독 만료일 계산
+     *
+     * unshort_premium_monthly는 1개월 구독이므로 하드코딩
+     */
+    private fun calculateExpiryDate(purchaseDate: Date): Date {
+        val calendar = Calendar.getInstance()
+        calendar.time = purchaseDate
+        calendar.add(Calendar.MONTH, 1)
+        return calendar.time
+    }
+
+    /**
+     * 구독 관리 페이지 열기
+     *
+     * Google Play Store의 구독 관리 페이지로 Deep Link
+     */
+    override fun openSubscriptionManagement(context: Context) {
+        try {
+            val packageName = context.packageName
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://play.google.com/store/account/subscriptions?sku=$PREMIUM_PRODUCT_ID&package=$packageName")
+            )
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+        } catch (e: Exception) {
+            // Play Store 앱이 없는 경우 등 에러 처리
+            Log.e(TAG, "Failed to open subscription management", e)
+        }
     }
 
     /**

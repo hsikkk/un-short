@@ -245,6 +245,22 @@
     <string name="premium_upgrade_button">Upgrade Now</string>
     <string name="premium_upgrade_coming_soon">Payment system coming soon!</string>
 
+    <!-- Subscription Management -->
+    <string name="subscription_management">Manage Subscription</string>
+    <string name="subscription_management_desc">Manage or cancel your subscription</string>
+
+    <!-- Subscription Management Activity -->
+    <string name="subscription_management_title">Subscription</string>
+    <string name="subscription_status_active">Active</string>
+    <string name="subscription_status_expired">Expired</string>
+    <string name="subscription_start_date">Start Date</string>
+    <string name="subscription_next_billing">Next Billing Date</string>
+    <string name="subscription_auto_renew_on">Auto-renewal enabled</string>
+    <string name="subscription_auto_renew_off">Auto-renewal disabled</string>
+    <string name="subscription_cancel_button">Manage or Cancel</string>
+    <string name="subscription_cancel_desc">To cancel or modify your subscription,\nyou will be directed to Google Play Store</string>
+    <string name="subscription_info_note">* Estimated date based on last billing</string>
+
     <!-- Premium Features -->
     <string name="premium_feature_ad_free_title">Ad-Free Experience</string>
     <string name="premium_feature_ad_free_desc">Clean and focused experience</string>

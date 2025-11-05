@@ -205,4 +205,27 @@ object PremiumManager {
             onResult(success)
         }
     }
+
+    /**
+     * 구독 정보 조회 (UI 표시용)
+     *
+     * 주의: 만료일은 추정값이며 보안 검증 목적으로 사용 불가
+     *
+     * @return SubscriptionInfo or null (비구독자)
+     */
+    fun getSubscriptionInfo(): SubscriptionInfo? {
+        return (provider as? GooglePlayBillingProvider)?.getSubscriptionInfo()
+    }
+
+    /**
+     * 구독 관리 페이지 열기
+     *
+     * Provider를 통해 플랫폼별 구독 관리 페이지로 이동
+     * (Google Play Store, App Store 등)
+     *
+     * @param context Context
+     */
+    fun openSubscriptionManagement(context: Context) {
+        provider.openSubscriptionManagement(context)
+    }
 }

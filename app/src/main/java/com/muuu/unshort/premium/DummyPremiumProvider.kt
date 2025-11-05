@@ -53,4 +53,13 @@ class DummyPremiumProvider(
         Toast.makeText(activity, "복원할 구매 내역이 없습니다", Toast.LENGTH_SHORT).show()
         onResult(false)
     }
+
+    override fun openSubscriptionManagement(context: Context) {
+        // 더미: 구독 제거
+        dummyPrefs.edit()
+            .putBoolean(KEY_IS_PREMIUM, false)
+            .apply()
+
+        Toast.makeText(context, "구독 해지됨 (Dummy)", Toast.LENGTH_SHORT).show()
+    }
 }

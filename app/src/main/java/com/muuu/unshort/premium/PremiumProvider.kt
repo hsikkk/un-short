@@ -1,6 +1,7 @@
 package com.muuu.unshort.premium
 
 import android.app.Activity
+import android.content.Context
 
 /**
  * 프리미엄 기능 제공자 인터페이스
@@ -45,4 +46,13 @@ interface PremiumProvider {
         activity: Activity,
         onResult: (success: Boolean) -> Unit
     )
+
+    /**
+     * 구독 관리 페이지 열기
+     *
+     * Play Store 등 플랫폼별 구독 관리 화면으로 이동
+     *
+     * @param context Context
+     */
+    fun openSubscriptionManagement(context: Context)
 }

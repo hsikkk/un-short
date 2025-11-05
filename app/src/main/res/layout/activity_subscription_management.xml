@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- Header -->
+    <FrameLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <!-- Back Button -->
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_back"
+                android:tint="@color/gray_900"
+                android:alpha="0.7"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="4dp"
+                android:contentDescription="@string/permission_back_button"/>
+
+            <!-- Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/subscription_management_title"
+                android:textSize="16sp"
+                android:fontFamily="@font/spoqa_sans_neo_medium"
+                android:textColor="@color/gray_900"/>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        android:alpha="0.1" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- 구독 상태 카드 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/gray_200">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <!-- 구독 상태 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Status"
+                            android:textSize="14sp"
+                            android:textColor="@color/gray_600"
+                            android:fontFamily="@font/spoqa_sans_neo" />
+
+                        <TextView
+                            android:id="@+id/subscriptionStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subscription_status_active"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/spoqa_sans_neo_bold"
+                            android:textColor="@color/success" />
+
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="@color/gray_200" />
+
+                    <!-- 구독 시작일 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/subscription_start_date"
+                            android:textSize="14sp"
+                            android:textColor="@color/gray_600"
+                            android:fontFamily="@font/spoqa_sans_neo" />
+
+                        <TextView
+                            android:id="@+id/subscriptionStartDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2024-01-01"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/spoqa_sans_neo"
+                            android:textColor="@color/gray_900" />
+
+                    </LinearLayout>
+
+                    <!-- 다음 결제일 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/subscription_next_billing"
+                            android:textSize="14sp"
+                            android:textColor="@color/gray_600"
+                            android:fontFamily="@font/spoqa_sans_neo" />
+
+                        <TextView
+                            android:id="@+id/subscriptionNextBilling"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2024-02-01"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/spoqa_sans_neo"
+                            android:textColor="@color/gray_900" />
+
+                    </LinearLayout>
+
+                    <!-- 자동 갱신 상태 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Auto-renewal"
+                            android:textSize="14sp"
+                            android:textColor="@color/gray_600"
+                            android:fontFamily="@font/spoqa_sans_neo" />
+
+                        <TextView
+                            android:id="@+id/subscriptionAutoRenew"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subscription_auto_renew_on"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/spoqa_sans_neo"
+                            android:textColor="@color/gray_900" />
+
+                    </LinearLayout>
+
+                    <!-- 주의사항 -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/subscription_info_note"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray_500"
+                        android:fontFamily="@font/spoqa_sans_neo"
+                        android:layout_marginTop="16dp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 구독 해지 카드 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/gray_200">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/subscription_cancel_desc"
+                        android:textSize="14sp"
+                        android:textColor="@color/gray_600"
+                        android:fontFamily="@font/spoqa_sans_neo"
+                        android:lineSpacingExtra="4dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/cancelSubscriptionButton"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/subscription_cancel_button"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/spoqa_sans_neo_bold"
+                        app:strokeColor="@color/gray_300"
+                        app:strokeWidth="1dp"
+                        android:textColor="@color/gray_900" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
