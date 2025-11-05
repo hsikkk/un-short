@@ -7,6 +7,15 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.amplitude.android.Amplitude
 import com.amplitude.android.Configuration
+import com.google.firebase.FirebaseApp
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.muuu.ad.MuuuAdManagner
 import com.muuu.unshort.premium.PremiumManager
 
@@ -15,11 +24,50 @@ class UnshortApplication : Application() {
     companion object {
         lateinit var amplitude: Amplitude
             private set
+        lateinit var analytics: FirebaseAnalytics
+            private set
+        lateinit var crashlytics: FirebaseCrashlytics
+            private set
+        lateinit var remoteConfig: FirebaseRemoteConfig
+            private set
         private const val TAG = "UnshortApplication"
     }
 
     override fun onCreate() {
         super.onCreate()
+
+        // Firebase 초기화
+        FirebaseApp.initializeApp(this)
+
+        // Firebase Analytics 초기화
+        analytics = Firebase.analytics
+        analytics.setAnalyticsCollectionEnabled(true)
+
+        // Firebase Crashlytics 초기화
+        crashlytics = Firebase.crashlytics
+        crashlytics.setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
+
+        // Firebase Remote Config 초기화
+        remoteConfig = Firebase.remoteConfig
+        val configSettings = remoteConfigSettings {
+            minimumFetchIntervalInSeconds = if (BuildConfig.DEBUG) 0 else 3600
+        }
+        remoteConfig.setConfigSettingsAsync(configSettings)
+
+        // Remote Config 기본값 설정
+        remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
+
+        // Remote Config fetch
+        remoteConfig.fetchAndActivate()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "Firebase Remote Config fetched and activated")
+                } else {
+                    Log.w(TAG, "Firebase Remote Config fetch failed", task.exception)
+                }
+            }
+
+        Log.d(TAG, "Firebase initialized - Analytics, Crashlytics, Remote Config")
 
         // PremiumManager 초기화
         PremiumManager.initialize(this)

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "149694254483",
+    "project_id": "unshort-dev",
+    "storage_bucket": "unshort-dev.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149694254483:android:5aad69d7b304c12416ac66",
+        "android_client_info": {
+          "package_name": "com.muuu.unshort.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQaIlizRL9ApekBErioTZmwef5uSmFc7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
