@@ -191,13 +191,23 @@ object AppBlockingRegistry {
         textDetectors = listOf(
             TextDetector(
                 text = "Reels",
-                requiresSelection = true,  // false → true: 선택된 상태에서만 감지
+                requiresSelection = true,
                 searchType = SearchType.TEXT
             ),
             TextDetector(
                 text = "릴스",
-                requiresSelection = true,  // false → true: 선택된 상태에서만 감지
+                requiresSelection = true,  // 릴스 탭이 선택된 상태에서만 감지
                 searchType = SearchType.TEXT
+            ),
+            TextDetector(
+                text = "릴스 상세 정보",
+                requiresSelection = false,  // 전체화면 릴스 감지 (한국어)
+                searchType = SearchType.CONTENT_DESCRIPTION
+            ),
+            TextDetector(
+                text = "Reel details",
+                requiresSelection = false,  // 전체화면 릴스 감지 (영어)
+                searchType = SearchType.CONTENT_DESCRIPTION
             )
         ),
         hashConfig = HashConfig(
