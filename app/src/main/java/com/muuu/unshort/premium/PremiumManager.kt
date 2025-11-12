@@ -7,6 +7,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.muuu.unshort.BuildConfig
 import com.muuu.unshort.admin.DeviceAdminManager
+import com.muuu.unshort.prefs.PreferencesManager
 import java.util.concurrent.TimeUnit
 
 /**
@@ -156,17 +157,25 @@ object PremiumManager {
     /**
      * 프리미엄 해지 시 처리
      *
-     * Device Admin 자동 해제 등
+     * Device Admin 자동 해제 및 프리미엄 설정 초기화
      */
     private fun onPremiumDowngrade() {
         try {
+            val prefsManager = PreferencesManager(appContext)
+
             // Device Admin 자동 해제
             val deviceAdminManager = DeviceAdminManager(appContext)
             if (deviceAdminManager.isDeviceAdminActive()) {
                 deviceAdminManager.removeAdmin()
             }
+
+            // 프리미엄 설정들 기본값으로 리셋
+            prefsManager.waitTime = 30  // 기본 30초
+            prefsManager.isBlockScrolledOnly = false
+            prefsManager.isPreventImpulsiveDisable = false
+
         } catch (e: Exception) {
-            // Device Admin 해제 실패 시 무시 (치명적이지 않음)
+            // 실패 시 무시 (치명적이지 않음)
         }
     }
 
