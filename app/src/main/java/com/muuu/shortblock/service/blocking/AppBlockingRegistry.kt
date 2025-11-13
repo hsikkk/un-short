@@ -174,7 +174,8 @@ object AppBlockingRegistry {
             textValidator = { text ->
                 // Instagram: 콤마/마침표만 있는 텍스트 제외
                 text.length > 2 && !text.all { it.isDigit() || it == ',' || it == '.' }
-            }
+            },
+            excludeBoundsRight = 1200  // 우측 사이드바 제외 (좋아요/댓글/공유 버튼)
         )
     )
 
