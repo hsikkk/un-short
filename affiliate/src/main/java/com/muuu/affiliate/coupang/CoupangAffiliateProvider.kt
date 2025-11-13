@@ -5,10 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.muuu.affiliate.AffiliateProvider
 
 /**
@@ -26,12 +30,35 @@ class CoupangAffiliateProvider(
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    override fun createBannerView(
-        context: Context,
-        width: Int,
-        height: Int
-    ): View {
-        return WebView(context).apply {
+    override fun createBannerView(context: Context): View {
+        // 고정 크기: 320dp x 50dp
+        val density = context.resources.displayMetrics.density
+        val widthPx = (320 * density).toInt()
+        val heightPx = (50 * density).toInt()
+        // 컨테이너 생성 (고지 문구 + WebView)
+        val container = LinearLayout(context).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        }
+
+        // 고지 문구 TextView
+        val disclosureText = TextView(context).apply {
+            text = "이 앱은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다"
+            textSize = 10f
+            setTextColor(0xFF8A8A8A.toInt())
+            gravity = Gravity.CENTER
+            val dp4 = (context.resources.displayMetrics.density * 4).toInt()
+            setPadding(dp4, 0, dp4, dp4)
+        }
+
+        // WebView 생성
+        val webView = WebView(context).apply {
+            layoutParams = ViewGroup.LayoutParams(widthPx, heightPx)
+
             // WebView 설정
             settings.apply {
                 javaScriptEnabled = true
@@ -90,8 +117,8 @@ class CoupangAffiliateProvider(
                             "id": $partnersId,
                             "template": "carousel",
                             "trackingCode": "$trackingCode",
-                            "width": "$width",
-                            "height": "$height",
+                            "width": "320",
+                            "height": "50",
                             "tsource": ""
                         });
                     </script>
@@ -108,7 +135,13 @@ class CoupangAffiliateProvider(
                 null
             )
 
-            Log.d(TAG, "Coupang banner WebView created (${width}x${height})")
+            Log.d(TAG, "Coupang banner WebView created (320x50 dp)")
         }
+
+        // 컨테이너에 추가: 고지 문구 → WebView 순서
+        container.addView(disclosureText)
+        container.addView(webView)
+
+        return container
     }
 }

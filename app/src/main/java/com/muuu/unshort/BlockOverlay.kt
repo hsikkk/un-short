@@ -379,11 +379,7 @@ class BlockOverlay(private val context: Context) {
                     onDismissListener?.invoke()
                 }
             )
-            val bannerView = provider.createBannerView(
-                context = context,
-                width = 320,
-                height = 50
-            )
+            val bannerView = provider.createBannerView(context)
 
             // 컨테이너에 배너 추가
             affiliateBannerContainer.removeAllViews()

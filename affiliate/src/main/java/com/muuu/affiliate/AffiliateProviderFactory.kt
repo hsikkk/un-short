@@ -42,7 +42,9 @@ object AffiliateProviderFactory {
                 // Amazon 지원 국가
                 AmazonAffiliateProvider(
                     context = context,
-                    domain = getAmazonDomain(country)
+                    domain = getAmazonDomain(country),
+                    associateId = "muuu-20",  // TODO: 각 국가별 Associate ID 등록 필요
+                    onLinkClick = onLinkClick
                 )
             }
 
@@ -50,7 +52,9 @@ object AffiliateProviderFactory {
                 // 기본값: Amazon.com
                 AmazonAffiliateProvider(
                     context = context,
-                    domain = "com"
+                    domain = "com",
+                    associateId = "muuu-20",
+                    onLinkClick = onLinkClick
                 )
             }
         }
