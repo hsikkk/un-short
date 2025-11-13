@@ -22,6 +22,7 @@ import com.muuu.affiliate.AffiliateProviderFactory
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.prefs.PreferencesManager
+import com.muuu.unshort.premium.PremiumManager
 
 class BlockOverlay(private val context: Context) {
 
@@ -361,11 +362,13 @@ class BlockOverlay(private val context: Context) {
      */
     private fun setupAffiliateBanner() {
         try {
-            // TODO: 프리미엄 유저는 배너 숨김
-            // if (isPremiumUser()) {
-            //     affiliateBannerContainer.visibility = View.GONE
-            //     return
-            // }
+            // 프리미엄 유저는 배너 숨김
+            if (PremiumManager.isPremium()) {
+                affiliateBannerContainer.visibility = View.GONE
+                brandWatermark.visibility = View.VISIBLE
+                Log.d(TAG, "Premium user - affiliate banner hidden, watermark visible")
+                return
+            }
 
             // Affiliate Provider로부터 배너 뷰 생성 (Analytics 콜백 포함)
             val provider = AffiliateProviderFactory.create(
