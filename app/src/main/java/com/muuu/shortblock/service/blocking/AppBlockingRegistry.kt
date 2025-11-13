@@ -138,7 +138,7 @@ object AppBlockingRegistry {
         textDetectors = listOf(
             TextDetector(
                 text = "Reels",
-                requiresSelection = false,
+                requiresSelection = true,
                 searchType = SearchType.CONTENT_DESCRIPTION
             )
         ),
