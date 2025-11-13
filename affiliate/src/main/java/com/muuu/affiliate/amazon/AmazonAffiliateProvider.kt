@@ -8,9 +8,12 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.muuu.affiliate.AffiliateProvider
+import com.muuu.affiliate.R
 
 /**
  * Amazon Associates Affiliate Provider
@@ -52,16 +55,18 @@ class AmazonAffiliateProvider(
             setPadding(dp4, 0, dp4, dp4)
         }
 
-        // 배너 TextView (클릭 가능)
-        val bannerView = TextView(context).apply {
-            text = "Shop on Amazon"
-            textSize = 15f
-            setTextColor(0xFFFFFFFF.toInt())
-            setTypeface(null, Typeface.BOLD)
+        // 배너 레이아웃 (로고 + 텍스트)
+        val bannerLayout = LinearLayout(context).apply {
+            orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER
-            setBackgroundColor(0xFF2D2D2D.toInt())
-
             layoutParams = ViewGroup.LayoutParams(widthPx, heightPx)
+
+            // Amazon 브랜드 그라데이션 배경
+            background = ContextCompat.getDrawable(context, R.drawable.amazon_banner_background)
+
+            val dp12 = (context.resources.displayMetrics.density * 12).toInt()
+            val dp14 = (context.resources.displayMetrics.density * 14).toInt()
+            setPadding(dp12, dp14, dp12, dp14)
 
             isClickable = true
             isFocusable = true
@@ -85,9 +90,40 @@ class AmazonAffiliateProvider(
             }
         }
 
+        // Amazon 로고
+        val logoView = ImageView(context).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            setImageResource(R.drawable.ic_amazon_logo)
+            scaleType = ImageView.ScaleType.FIT_CENTER
+            adjustViewBounds = true
+        }
+
+        // 텍스트
+        val textView = TextView(context).apply {
+            text = "Shop on Amazon"
+            textSize = 16f
+            setTextColor(0xFFFFFFFF.toInt())
+            setTypeface(null, Typeface.BOLD)
+
+            val dp12 = (context.resources.displayMetrics.density * 12).toInt()
+            layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply {
+                marginStart = dp12
+            }
+        }
+
+        // 배너 레이아웃에 로고와 텍스트 추가
+        bannerLayout.addView(logoView)
+        bannerLayout.addView(textView)
+
         // 컨테이너에 추가: 고지 문구 → 배너 순서
         container.addView(disclosureText)
-        container.addView(bannerView)
+        container.addView(bannerLayout)
 
         Log.d(TAG, "Amazon banner created (320x50 dp, domain: $domain, id: $associateId)")
 
