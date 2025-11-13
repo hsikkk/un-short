@@ -37,6 +37,7 @@ class BlockOverlay(private val context: Context) {
     private lateinit var buttonContainer: LinearLayout
     private lateinit var prefsManager: PreferencesManager
     private lateinit var affiliateBannerContainer: LinearLayout
+    private lateinit var brandWatermark: TextView
 
     private var onDismissListener: (() -> Unit)? = null
     private var onCompleteListener: (() -> Unit)? = null
@@ -82,6 +83,7 @@ class BlockOverlay(private val context: Context) {
         tipMessage = overlayView!!.findViewById(R.id.tipMessage)
         buttonContainer = overlayView!!.findViewById(R.id.buttonContainer)
         affiliateBannerContainer = overlayView!!.findViewById(R.id.affiliateBannerContainer)
+        brandWatermark = overlayView!!.findViewById(R.id.brandWatermark)
 
         Log.d(TAG, "Overlay view inflated successfully")
 
@@ -386,11 +388,16 @@ class BlockOverlay(private val context: Context) {
             affiliateBannerContainer.addView(bannerView)
             affiliateBannerContainer.visibility = View.VISIBLE
 
-            Log.d(TAG, "Affiliate banner loaded successfully via Provider")
+            // Affiliate 배너가 있으면 워터마크 숨김 (레이아웃 유지)
+            brandWatermark.visibility = View.INVISIBLE
+
+            Log.d(TAG, "Affiliate banner loaded successfully via Provider, watermark hidden")
 
         } catch (e: Exception) {
             Log.e(TAG, "Error loading affiliate banner", e)
             affiliateBannerContainer.visibility = View.GONE
+            // 배너 로드 실패 시 워터마크 표시
+            brandWatermark.visibility = View.VISIBLE
         }
     }
 }
