@@ -106,4 +106,7 @@ dependencies {
 
     // Firebase Remote Config
     implementation("com.google.firebase:firebase-config-ktx")
+
+    // Affiliate 모듈
+    implementation(project(":affiliate"))
 }

@@ -30,4 +30,7 @@ object AnalyticsEvent {
     const val DISABLE_CONFIRM_TIMER_OPENED = "disable_confirm_timer_opened"
     const val DISABLE_CONFIRM_TIMER_COMPLETED = "disable_confirm_timer_completed"
     const val DISABLE_CONFIRM_TIMER_SKIPPED = "disable_confirm_timer_skipped"
+
+    // Affiliate
+    const val AFFILIATE_PRODUCT_CLICKED = "affiliate_product_clicked"
 }

@@ -138,6 +138,19 @@
 
     </LinearLayout>
 
+    <!-- Affiliate Banner Container -->
+    <LinearLayout
+        android:id="@+id/affiliateBannerContainer"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="50dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- Brand Watermark -->
     <TextView
         android:id="@+id/brandWatermark"
@@ -149,7 +162,7 @@
         android:textColor="#4A4A4A"
         android:fontFamily="@font/spoqa_sans_neo_light"
         android:letterSpacing="0.05"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/affiliateBannerContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

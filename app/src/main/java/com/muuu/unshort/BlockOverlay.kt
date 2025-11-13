@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
+import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -14,8 +15,10 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
+import android.webkit.WebView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.muuu.affiliate.AffiliateProviderFactory
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.prefs.PreferencesManager
@@ -33,6 +36,7 @@ class BlockOverlay(private val context: Context) {
     private lateinit var tipMessage: TextView
     private lateinit var buttonContainer: LinearLayout
     private lateinit var prefsManager: PreferencesManager
+    private lateinit var affiliateBannerContainer: LinearLayout
 
     private var onDismissListener: (() -> Unit)? = null
     private var onCompleteListener: (() -> Unit)? = null
@@ -77,11 +81,16 @@ class BlockOverlay(private val context: Context) {
         mainMessage = overlayView!!.findViewById(R.id.mainMessage)
         tipMessage = overlayView!!.findViewById(R.id.tipMessage)
         buttonContainer = overlayView!!.findViewById(R.id.buttonContainer)
+        affiliateBannerContainer = overlayView!!.findViewById(R.id.affiliateBannerContainer)
+
         Log.d(TAG, "Overlay view inflated successfully")
 
         // PreferencesManager 초기화 및 Tip 메시지 설정
         prefsManager = PreferencesManager(context)
         setupTipMessage()
+
+        // Affiliate Banner 로드
+        setupAffiliateBanner()
 
         // 오버레이 타입에 따라 UI 결정
         val isTimerCompleted = overlayType == OverlayType.CONFIRMATION
@@ -288,6 +297,18 @@ class BlockOverlay(private val context: Context) {
     fun dismiss() {
         Log.d(TAG, ">>> dismiss() called")
 
+        // WebView 정리
+        if (::affiliateBannerContainer.isInitialized) {
+            // 컨테이너 내부의 WebView 정리
+            for (i in 0 until affiliateBannerContainer.childCount) {
+                val child = affiliateBannerContainer.getChildAt(i)
+                if (child is WebView) {
+                    child.loadUrl("about:blank")
+                    child.destroy()
+                }
+            }
+        }
+
         overlayView?.let {
             Log.d(TAG, "Removing overlay view from WindowManager")
             windowManager.removeView(it)
@@ -331,5 +352,49 @@ class BlockOverlay(private val context: Context) {
         tipMessage.text = message
 
         Log.d(TAG, "Tip message set: $message (random index: $randomIndex)")
+    }
+
+    /**
+     * Affiliate 배너 설정 (Provider를 통해)
+     */
+    private fun setupAffiliateBanner() {
+        try {
+            // TODO: 프리미엄 유저는 배너 숨김
+            // if (isPremiumUser()) {
+            //     affiliateBannerContainer.visibility = View.GONE
+            //     return
+            // }
+
+            // Affiliate Provider로부터 배너 뷰 생성 (Analytics 콜백 포함)
+            val provider = AffiliateProviderFactory.create(
+                context = context,
+                onLinkClick = { url ->
+                    // Affiliate 링크 클릭 시 Analytics 트래킹
+                    AnalyticsManager.trackEvent(context, AnalyticsEvent.AFFILIATE_PRODUCT_CLICKED)
+                    Log.d(TAG, "Affiliate link clicked: $url")
+
+                    // 오버레이 닫기
+                    dismiss()
+
+                    onDismissListener?.invoke()
+                }
+            )
+            val bannerView = provider.createBannerView(
+                context = context,
+                width = 320,
+                height = 50
+            )
+
+            // 컨테이너에 배너 추가
+            affiliateBannerContainer.removeAllViews()
+            affiliateBannerContainer.addView(bannerView)
+            affiliateBannerContainer.visibility = View.VISIBLE
+
+            Log.d(TAG, "Affiliate banner loaded successfully via Provider")
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Error loading affiliate banner", e)
+            affiliateBannerContainer.visibility = View.GONE
+        }
     }
 }
