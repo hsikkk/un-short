@@ -266,4 +266,19 @@
     <string name="premium_feature_prevent_delete_title">앱 삭제 방지</string>
     <string name="premium_feature_prevent_delete_desc">충동적인 앱 삭제를 막아줌</string>
 
+    <!-- Promo Code -->
+    <string name="promo_button_text">프로모션 코드가 있으신가요?</string>
+    <string name="promo_dialog_title">프로모션 코드 입력</string>
+    <string name="promo_dialog_subtitle">Lifetime Premium 코드를 입력하세요</string>
+    <string name="promo_dialog_cancel">취소</string>
+    <string name="promo_dialog_confirm">확인</string>
+    <string name="promo_error_empty">프로모션 코드를 입력해주세요</string>
+    <string name="promo_error_invalid_format">올바른 형식이 아닙니다\n(예: UNSHORT-XXXXX-XXXXXXXX)</string>
+    <string name="promo_error_invalid_code">유효하지 않은 코드입니다</string>
+    <string name="promo_error_unknown">오류가 발생했습니다: %s</string>
+    <string name="promo_success">Lifetime Premium이 활성화되었습니다!</string>
+    <string name="promo_lifetime_status">Lifetime Premium (영구)</string>
+    <string name="promo_no_expiry">만료일 없음</string>
+    <string name="promo_not_applicable">해당 없음</string>
+
 </resources>

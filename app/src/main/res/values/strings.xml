@@ -273,4 +273,19 @@
     <string name="premium_feature_prevent_delete_title">App Deletion Protection</string>
     <string name="premium_feature_prevent_delete_desc">Prevent impulsive app uninstallation</string>
 
+    <!-- Promo Code -->
+    <string name="promo_button_text">Have a promo code?</string>
+    <string name="promo_dialog_title">Enter Promo Code</string>
+    <string name="promo_dialog_subtitle">Enter your Lifetime Premium code</string>
+    <string name="promo_dialog_cancel">Cancel</string>
+    <string name="promo_dialog_confirm">Confirm</string>
+    <string name="promo_error_empty">Please enter a promo code</string>
+    <string name="promo_error_invalid_format">Invalid format\n(Example: UNSHORT-XXXXX-XXXXXXXX)</string>
+    <string name="promo_error_invalid_code">Invalid promo code</string>
+    <string name="promo_error_unknown">Error occurred: %s</string>
+    <string name="promo_success">Lifetime Premium activated!</string>
+    <string name="promo_lifetime_status">Lifetime Premium (Permanent)</string>
+    <string name="promo_no_expiry">No expiration</string>
+    <string name="promo_not_applicable">N/A</string>
+
 </resources>

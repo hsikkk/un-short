@@ -60,7 +60,7 @@ class SubscriptionManagementActivity : BaseActivity() {
             val lifetimeInfo = PremiumManager.getLifetimePremiumInfo()
 
             // Lifetime Premium 상태 표시
-            subscriptionStatus.text = "Lifetime Premium (영구)"
+            subscriptionStatus.text = getString(R.string.promo_lifetime_status)
             subscriptionStatus.setTextColor(getColor(R.color.success))
 
             // 활성화 날짜
@@ -71,10 +71,10 @@ class SubscriptionManagementActivity : BaseActivity() {
             }
 
             // Lifetime은 만료일 없음
-            subscriptionNextBilling.text = "만료일 없음"
+            subscriptionNextBilling.text = getString(R.string.promo_no_expiry)
 
             // 자동 갱신 없음
-            subscriptionAutoRenew.text = "해당 없음"
+            subscriptionAutoRenew.text = getString(R.string.promo_not_applicable)
 
             // 구독 해지 버튼 숨김 (Lifetime은 해지 불가)
             cancelSubscriptionButton.visibility = View.GONE

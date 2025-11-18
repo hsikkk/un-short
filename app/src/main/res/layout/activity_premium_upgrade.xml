@@ -304,16 +304,17 @@
             android:id="@+id/promoCodeButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="프로모션 코드가 있으신가요?"
+            android:text="@string/promo_button_text"
             android:textSize="14sp"
             android:fontFamily="@font/spoqa_sans_neo_regular"
             android:textColor="@color/gray_600"
             android:gravity="center"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackground"
-            android:padding="12dp" />
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp"/>
 
     </LinearLayout>
 

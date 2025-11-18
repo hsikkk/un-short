@@ -30,6 +30,12 @@ class PromoCodeDialog(
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_promo_code)
 
+        // 다이얼로그 너비 설정 (화면의 90%)
+        window?.setLayout(
+            (context.resources.displayMetrics.widthPixels * 0.9).toInt(),
+            android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
         initViews()
         setupListeners()
     }
@@ -47,7 +53,7 @@ class PromoCodeDialog(
             val code = promoCodeInput.text.toString().trim()
 
             if (code.isEmpty()) {
-                showError("프로모션 코드를 입력해주세요")
+                showError(context.getString(com.muuu.unshort.R.string.promo_error_empty))
                 return@setOnClickListener
             }
 
@@ -67,7 +73,7 @@ class PromoCodeDialog(
 
         when (result) {
             is PromoCodeValidator.ValidationResult.Valid -> {
-                showSuccess("Lifetime Premium이 활성화되었습니다!")
+                showSuccess(context.getString(com.muuu.unshort.R.string.promo_success))
                 confirmButton.isEnabled = false
                 promoCodeInput.isEnabled = false
 
@@ -79,15 +85,15 @@ class PromoCodeDialog(
             }
 
             is PromoCodeValidator.ValidationResult.InvalidFormat -> {
-                showError("올바른 형식이 아닙니다\n(예: UNSHORT-XXXXX-XXXXXXXX)")
+                showError(context.getString(com.muuu.unshort.R.string.promo_error_invalid_format))
             }
 
             is PromoCodeValidator.ValidationResult.InvalidSignature -> {
-                showError("유효하지 않은 코드입니다")
+                showError(context.getString(com.muuu.unshort.R.string.promo_error_invalid_code))
             }
 
             is PromoCodeValidator.ValidationResult.Error -> {
-                showError("오류가 발생했습니다: ${result.message}")
+                showError(context.getString(com.muuu.unshort.R.string.promo_error_unknown, result.message))
             }
         }
     }

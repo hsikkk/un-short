@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="프로모션 코드 입력"
+        android:text="@string/promo_dialog_title"
         android:textSize="20sp"
         android:fontFamily="@font/spoqa_sans_neo_bold"
         android:textColor="@color/primary_dark"
@@ -21,7 +21,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lifetime Premium 코드를 입력하세요"
+        android:text="@string/promo_dialog_subtitle"
         android:textSize="14sp"
         android:fontFamily="@font/spoqa_sans_neo_regular"
         android:textColor="@color/gray_600"
@@ -81,7 +81,7 @@
             android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="취소"
+            android:text="@string/promo_dialog_cancel"
             android:fontFamily="@font/spoqa_sans_neo_medium"
             android:textColor="@color/gray_600"
             style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -92,7 +92,7 @@
             android:id="@+id/confirmButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="확인"
+            android:text="@string/promo_dialog_confirm"
             android:fontFamily="@font/spoqa_sans_neo_bold"
             android:backgroundTint="@color/primary_dark" />
 
