@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">un:short</string>
+    <string name="accessibility_service_description">Обнаруживает короткие видео и добавляет осознанную паузу с переворотом телефона, чтобы помочь избавиться от зависимости.</string>
+    <string name="flip_phone_title">Подождите минутку! 🤚</string>
+    <string name="flip_phone_message">Чтобы смотреть Shorts,\nпереверните телефон и подождите 30 секунд</string>
+    <string name="time_remaining">Осталось времени: %d секунд</string>
+    <string name="flip_detected">Телефон перевернут ✓</string>
+    <string name="flip_required">Пожалуйста, переверните телефон</string>
+
+    <!-- BlockOverlay Messages -->
+    <string name="block_message_before_timer">Прямо сейчас,\nдействительно ли вам нужны shorts?</string>
+    <string name="block_message_after_timer">Вы подождали так долго.\nВсё ещё хотите смотреть?</string>
+    <string name="block_button_think_again">Подумайте ещё раз</string>
+    <string name="block_button_close">Просто закрыть</string>
+    <string name="block_button_no">Нет, не буду смотреть</string>
+    <string name="block_button_yes">Да, буду смотреть</string>
+
+    <!-- Timer Success Screen -->
+    <string name="timer_success_title">У вас получилось!</string>
+    <string name="timer_success_message">Отличная работа, сделав паузу\nТеперь вы можете сделать более мудрый выбор</string>
+
+    <!-- Timer Screen -->
+    <string name="timer_instruction_title">Остановитесь на мгновение</string>
+    <string name="timer_instruction_message_onboarding">Переверните телефон и подумайте,\nдействительно ли вам нужно смотреть</string>
+    <string name="timer_instruction_message_full">Переверните телефон и подождите 30 секунд.\nПожалеете ли вы об этом выборе через 30 минут?\nЧто вам действительно нужно сейчас?</string>
+
+    <!-- Main Activity -->
+    <string name="main_subtitle">Избавьтесь от короткого контента.\nМаленькие привычки для осознанного потребления.</string>
+    <string name="status_on">ВКЛ</string>
+    <string name="status_off">ВЫКЛ</string>
+    <string name="status_active">АКТИВНО</string>
+    <string name="status_inactive">НЕАКТИВНО</string>
+    <string name="toggle_description">Переключатель питания</string>
+    <string name="blocked_apps_title">Заблокированные приложения: </string>
+    <string name="app_youtube_shorts">YouTube Shorts</string>
+    <string name="app_instagram_reels">Instagram Reels</string>
+    <string name="app_facebook_reels">Facebook Reels</string>
+    <string name="app_naver_shorts">Naver Shorts</string>
+    <string name="blocked_apps_notice">• Показаны только установленные приложения\n• Некоторые версии приложений могут не блокироваться</string>
+    <string name="stats_watch_time">Время просмотра</string>
+    <string name="stats_entry_count">Входы</string>
+    <string name="stats_consumption_count">Просмотрено</string>
+    <string name="time_unit_hour">ч</string>
+    <string name="time_unit_minute">мин</string>
+    <string name="time_unit_second">с</string>
+    <string name="permission_warning_icon">⚠</string>
+    <string name="permission_warning_title">Требуются разрешения</string>
+    <string name="permission_warning_message">Для использования функций блокировки\nнеобходимы разрешения специальных возможностей и наложения</string>
+    <string name="permission_setup_button">Настроить разрешения</string>
+
+    <!-- Settings Tip Banner -->
+    <string name="settings_tip_message">Нажмите на меню [⋮] в правом верхнем углу, чтобы изучить больше функций</string>
+    <string name="settings_tip_button">Перейти →</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_section_blocking">Настройки блокировки</string>
+    <string name="settings_section_protection">Защита</string>
+    <string name="settings_section_other">Прочее</string>
+    <string name="settings_delay_time_title">Время задержки</string>
+    <string name="settings_delay_time_desc">Установить время ожидания перед доступом к shorts</string>
+    <string name="settings_delay_time_value">%d секунд</string>
+    <string name="settings_haptic_title">Тактильная обратная связь</string>
+    <string name="settings_haptic_desc">Уведомление вибрацией при завершении таймера</string>
+    <string name="settings_block_scrolled_title">Блокировать только прокрученные Shorts</string>
+    <string name="settings_block_scrolled_desc">Разрешить первый shorts, блокировать при прокрутке</string>
+    <string name="settings_prevent_disable_title">Предотвратить импульсивное отключение</string>
+    <string name="settings_prevent_disable_desc">Предотвратить непреднамеренное отключение</string>
+    <string name="settings_feedback">Отправить отзыв</string>
+    <string name="settings_share">Поделиться приложением</string>
+    <string name="settings_review">Оставить отзыв</string>
+    <string name="settings_version">Информация о версии</string>
+    <string name="settings_version_value">v%s</string>
+    <string name="settings_version_default">v1.0.0</string>
+
+    <!-- Permission Setup Activity -->
+    <string name="permission_back_button">Назад</string>
+    <string name="permission_title">Настройка разрешений</string>
+    <string name="permission_subtitle">Пожалуйста, предоставьте разрешения\nдля блокировки shorts</string>
+    <string name="permission_done">Готово</string>
+
+    <!-- Permission Cards -->
+    <string name="permission_number_1">1</string>
+    <string name="permission_number_2">2</string>
+
+    <!-- Accessibility Setup Card -->
+    <string name="permission_accessibility">Настройка службы специальных возможностей</string>
+    <string name="permission_accessibility_completed">Служба специальных возможностей ✓</string>
+    <string name="permission_overlay">Отображение поверх других приложений</string>
+    <string name="permission_overlay_completed">Отображение поверх других приложений ✓</string>
+    <string name="permission_why">Зачем это нужно?</string>
+    <string name="permission_accessibility_reason">Требуется для обнаружения открытия экрана shorts.</string>
+    <string name="permission_overlay_reason">Требуется для отображения экрана блокировки поверх shorts.</string>
+    <string name="permission_not_set">Ещё не настроено</string>
+    <string name="permission_completed">Настройка завершена</string>
+    <string name="permission_go_to_settings">Перейти в настройки</string>
+    <string name="permission_enable_permission">Включить разрешение</string>
+
+    <!-- Manufacturer-specific Accessibility Guides -->
+    <string name="permission_accessibility_guide_samsung">💡 Найдите [Установленные приложения] → un:short</string>
+    <string name="permission_accessibility_guide_lg">💡 Найдите [Дополнительные настройки] → un:short</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 Найдите [Загруженные службы] → un:short</string>
+    <string name="permission_accessibility_guide_huawei">💡 Найдите [Загруженные службы] → un:short</string>
+    <string name="permission_accessibility_guide_oppo">💡 Найдите [Установленные службы] → un:short</string>
+    <string name="permission_accessibility_guide_vivo">💡 Найдите [Установленные службы] → un:short</string>
+    <string name="permission_accessibility_guide_default">💡 Найдите un:short и включите его</string>
+
+    <!-- Timer Activity -->
+    <string name="timer_seconds_unit">секунд</string>
+    <string name="timer_flip_instruction">Переверните телефон</string>
+    <string name="timer_breathe_message">Сделайте глубокий вдох</string>
+    <string name="timer_skip_button">Отмена</string>
+
+    <!-- Ads -->
+    <string name="ad">РЕКЛАМА</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_page1_title">Избавьтесь от\nзависимости от короткого контента</string>
+    <string name="onboarding_page1_subtitle">Маленькие привычки для осознанного потребления</string>
+    <string name="onboarding_page2_title">Если хотите смотреть shorts,\nостановитесь, чтобы подумать</string>
+    <string name="onboarding_page3_title">Если всё ещё хотите смотреть,\nсделайте короткую паузу</string>
+    <string name="onboarding_page4_title">Наконец,\nподумайте ещё раз</string>
+    <string name="onboarding_page5_title">Готовы начать?</string>
+    <string name="onboarding_page5_subtitle">Начните своё путешествие к\nосознанному потреблению медиа с un:short</string>
+    <string name="onboarding_start_button">Начать</string>
+    <string name="onboarding_skip">Пропустить</string>
+
+    <!-- Delay Time Bottom Sheet -->
+    <string name="delay_time_title">Время задержки</string>
+    <string name="delay_time_desc">Установить время ожидания перед доступом к shorts</string>
+    <string name="delay_time_15">15 секунд</string>
+    <string name="delay_time_30">30 секунд</string>
+    <string name="delay_time_60">60 секунд</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_email_app_not_found">Приложение электронной почты не найдено</string>
+    <string name="toast_device_admin_enabled">Защита от удаления приложения включена</string>
+    <string name="toast_device_admin_cancelled">Защита от удаления приложения отменена</string>
+
+    <!-- Share & Feedback -->
+    <string name="feedback_subject">Отзыв о приложении un:short</string>
+    <string name="share_text">Избавьтесь от зависимости от короткого контента!\nНачните осознанное потребление медиа с un:short.\n\n%s</string>
+
+    <!-- Device Admin (App Uninstall Protection) -->
+    <string name="device_admin_title">Защита от удаления приложения</string>
+    <string name="device_admin_desc">Предотвратить импульсивное удаление приложения</string>
+    <string name="device_admin_explanation">Вы когда-нибудь удаляли приложение в момент слабости?\n\nun:short предотвращает импульсивное удаление, когда ваша решимость колеблется.</string>
+    <string name="device_admin_dialog_title">Включить защиту от удаления?</string>
+    <string name="device_admin_dialog_message">Эта функция добавляет дополнительный шаг перед удалением un:short.\n\nОна помогает вам противостоять импульсивным решениям в моменты слабости.\n\nВы можете отключить это в любое время в Настройки → Безопасность → Приложения администрирования устройства.</string>
+    <string name="device_admin_dialog_enable">Включить</string>
+    <string name="device_admin_dialog_cancel">Не сейчас</string>
+    <string name="device_admin_deactivate_title">Отключить защиту?</string>
+    <string name="device_admin_deactivate_message">Чтобы отключить эту функцию, перейдите в:\n\nНастройки → Безопасность → Приложения администрирования устройства → un:short\n\nЗатем нажмите [Отключить]</string>
+    <string name="device_admin_deactivate_button">Перейти в настройки</string>
+    <string name="device_admin_receiver_enabled">Защита от удаления приложения un:short включена</string>
+    <string name="device_admin_receiver_disable_warning">Отключение защиты от удаления позволяет импульсивно удалить un:short. Продолжить?</string>
+    <string name="device_admin_receiver_disabled">Защита от удаления приложения un:short отключена</string>
+
+    <!-- Privacy Consent Dialog -->
+    <string name="privacy_dialog_title_simple">К чему мы получаем доступ</string>
+
+    <string name="privacy_why_title">Зачем нужно разрешение специальных возможностей?</string>
+    <string name="privacy_why_content">un:short использует службу специальных возможностей для обнаружения короткого видео контента.\n\nЭто основная функция для автоматической блокировки shorts при обнаружении.</string>
+
+    <string name="privacy_data_title">Данные, которые мы собираем</string>
+    <string name="privacy_data_collected">✓ Содержимое экрана (только для обнаружения shorts)\n✓ Имена пакетов приложений\n✓ Хеш метаданных видео (временно)</string>
+    <string name="privacy_data_not_collected">✗ Персональная информация (имя, контакты и т.д.)\n✗ История просмотра\n✗ Информация об аккаунте\n✗ Ввод текста</string>
+
+    <string name="privacy_usage_title">Как используются данные</string>
+    <string name="privacy_usage_content">• Используется только для обнаружения экрана shorts\n• Нет передачи на сервер (100% офлайн)\n• Только временные хеши для обнаружения изменения видео\n• Автоматическое удаление при закрытии приложения</string>
+
+    <string name="privacy_storage_title">Политика хранения данных</string>
+    <string name="privacy_storage_content">• Только идентификаторы сессий временно хранятся на устройстве\n• Немедленно удаляются при перезапуске приложения/службы\n• Никогда не передаются третьим лицам</string>
+
+    <string name="privacy_faq_title">Часто задаваемые вопросы</string>
+    <string name="privacy_faq_content">В: Сохраняется ли моя история просмотра?\nО: Нет. Временно сохраняются только хеш-значения.\n\nВ: Вы делитесь данными с третьими лицами?\nО: Нет. Полностью офлайн работа.\n\nВ: Могу ли я отозвать разрешение позже?\nО: Да. Вы можете отключить его в настройках в любое время.</string>
+
+    <string name="privacy_btn_agree">Согласиться &amp; Перейти в настройки</string>
+    <string name="privacy_btn_exit">Выйти из приложения</string>
+    <string name="privacy_btn_disagree">Не согласен</string>
+
+    <!-- Disable Warning Dialog (before timer) -->
+    <string name="disable_warning_title">Подождите минутку</string>
+    <string name="disable_warning_message">Может, подумаете ещё раз перед отключением?</string>
+    <string name="disable_warning_confirm">Подумать об этом</string>
+    <string name="disable_warning_cancel">Оставить включённым</string>
+
+    <!-- Disable Confirmation Dialog -->
+    <string name="disable_dialog_title">Действительно отключить?</string>
+    <string name="disable_dialog_message">Для отключения введите фразу ниже:</string>
+    <string name="disable_dialog_phrase">disable shorts blocking</string>
+    <string name="disable_dialog_input_hint">Введите здесь</string>
+    <string name="disable_dialog_cancel">Отмена</string>
+    <string name="disable_dialog_confirm">Подтвердить</string>
+
+    <!-- Device Admin Disable Dialog -->
+    <string name="device_admin_disable_title">Отключить защиту от удаления?</string>
+    <string name="device_admin_disable_message">Вы можете отключить импульсивно. Действительно отключить?</string>
+    <string name="device_admin_disable_phrase">disable this feature</string>
+
+    <!-- Prevent Impulsive Disable OFF Dialog -->
+    <string name="prevent_impulsive_disable_off_title">Действительно отключить?</string>
+    <string name="prevent_impulsive_disable_off_message">Для отключения введите фразу ниже:</string>
+    <string name="prevent_impulsive_disable_off_phrase">disable this feature</string>
+
+    <!-- Billing Error Messages -->
+    <string name="billing_error_connection_failed">Не удалось подключиться к Google Play. Пожалуйста, попробуйте снова.</string>
+    <string name="billing_error_sku_not_found">Не удалось обработать запрос. Пожалуйста, попробуйте позже.</string>
+    <string name="billing_error_purchase_failed">Покупка не удалась. Пожалуйста, попробуйте снова.</string>
+    <string name="billing_error_restore_failed">Не удалось обработать запрос. Пожалуйста, попробуйте позже.</string>
+    <string name="billing_error_restore_no_subscription">Активная подписка не найдена.</string>
+    <string name="billing_error_unknown">Произошла ошибка. Пожалуйста, попробуйте позже.</string>
+
+    <!-- Overlay Tip Messages -->
+    <string-array name="overlay_tips">
+        <item>Найдите больше опций блокировки в настройках</item>
+        <item>30 секунд достаточно, чтобы прочитать страницу</item>
+        <item>5-минутная прогулка приятнее, чем 30 минут shorts</item>
+        <item>Короткое ожидание создаёт лучший выбор</item>
+        <item>Вы меняете свои привычки прямо сейчас</item>
+        <item>Действительно ли вам нужен этот контент сейчас?</item>
+        <item>Разблокируйте более сильную блокировку с Premium</item>
+        <item>Premium: Настройте свою стратегию блокировки</item>
+    </string-array>
+
+    <!-- Custom Timer (Premium) -->
+    <string name="custom_timer_title">Установить время ожидания</string>
+    <string name="custom_timer_presets">Быстрые предустановки</string>
+    <string name="custom_timer_done">Готово</string>
+    <string name="premium_required_title">✨ Функция Premium</string>
+    <string name="premium_required_message">Разблокируйте настраиваемое время ожидания и многое другое!\n\n• Свободно устанавливайте время ожидания (5–300 секунд)\n• Блокировать только прокрученные shorts\n• Предотвратить импульсивное отключение\n• Предотвратить удаление приложения</string>
+    <string name="premium_button_upgrade">Перейти на Premium</string>
+    <string name="premium_button_cancel">Не сейчас</string>
+
+    <!-- Premium Banner -->
+    <string name="premium_banner_title">Разблокировать больше функций</string>
+    <string name="premium_banner_subtitle">Настройка + Защита</string>
+    <string name="premium_banner_button">Обновить</string>
+
+    <!-- Premium Upgrade Activity -->
+    <string name="premium_upgrade_title">Premium</string>
+    <string name="premium_upgrade_headline">Перейти на Premium</string>
+    <string name="premium_upgrade_subtitle">Более сильная блокировка и защита</string>
+    <string name="premium_upgrade_button">Обновить сейчас</string>
+    <string name="premium_upgrade_coming_soon">Платёжная система скоро!</string>
+
+    <!-- Subscription Management -->
+    <string name="subscription_management">Управление подпиской</string>
+    <string name="subscription_management_desc">Управлять или отменить вашу подписку</string>
+
+    <!-- Subscription Management Activity -->
+    <string name="subscription_management_title">Подписка</string>
+    <string name="subscription_status_active">Активна</string>
+    <string name="subscription_status_expired">Истекла</string>
+    <string name="subscription_start_date">Дата начала</string>
+    <string name="subscription_next_billing">Следующая дата оплаты</string>
+    <string name="subscription_auto_renew_on">Автопродление включено</string>
+    <string name="subscription_auto_renew_off">Автопродление отключено</string>
+    <string name="subscription_cancel_button">Управлять или отменить</string>
+    <string name="subscription_cancel_desc">Для отмены или изменения подписки\nвы будете перенаправлены в Google Play Store</string>
+    <string name="subscription_info_note">* Примерная дата на основе последней оплаты</string>
+
+    <!-- Premium Features -->
+    <string name="premium_feature_ad_free_title">Без рекламы</string>
+    <string name="premium_feature_ad_free_desc">Чистый и сфокусированный опыт</string>
+    <string name="premium_feature_custom_timer_title">Настраиваемые настройки таймера</string>
+    <string name="premium_feature_custom_timer_desc">Свободно устанавливайте от 5 секунд до 5 минут</string>
+    <string name="premium_feature_smart_block_title">Умная блокировка</string>
+    <string name="premium_feature_smart_block_desc">Разрешить первый shorts, блокировать при прокрутке</string>
+    <string name="premium_feature_prevent_disable_title">Предотвратить импульсивное отключение</string>
+    <string name="premium_feature_prevent_disable_desc">Требуется подтверждение для отключения блокировки</string>
+    <string name="premium_feature_prevent_delete_title">Защита от удаления приложения</string>
+    <string name="premium_feature_prevent_delete_desc">Предотвратить импульсивное удаление приложения</string>
+
+    <!-- Promo Code -->
+    <string name="promo_button_text">Есть промо-код?</string>
+    <string name="promo_dialog_title">Введите промо-код</string>
+    <string name="promo_dialog_subtitle">Введите ваш код Lifetime Premium</string>
+    <string name="promo_dialog_cancel">Отмена</string>
+    <string name="promo_dialog_confirm">Подтвердить</string>
+    <string name="promo_error_empty">Пожалуйста, введите промо-код</string>
+    <string name="promo_error_invalid_format">Неверный формат\n(Пример: UNSHORT-XXXXX-XXXXXXXX)</string>
+    <string name="promo_error_invalid_code">Неверный промо-код</string>
+    <string name="promo_error_unknown">Произошла ошибка: %s</string>
+    <string name="promo_success">Lifetime Premium активирован!</string>
+    <string name="promo_lifetime_status">Lifetime Premium (Навсегда)</string>
+    <string name="promo_no_expiry">Без срока действия</string>
+    <string name="promo_not_applicable">Н/Д</string>
+
+</resources>

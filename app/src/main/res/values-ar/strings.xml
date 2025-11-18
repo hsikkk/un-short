@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">un:short</string>
+    <string name="accessibility_service_description">يكتشف الفيديوهات القصيرة ويضيف وقفة واعية بقلب الهاتف للمساعدة في التحرر من الإدمان.</string>
+    <string name="flip_phone_title">انتظر لحظة! 🤚</string>
+    <string name="flip_phone_message">لمشاهدة Shorts،\nاقلب هاتفك وانتظر 30 ثانية</string>
+    <string name="time_remaining">الوقت المتبقي: %d ثانية</string>
+    <string name="flip_detected">تم قلب الهاتف ✓</string>
+    <string name="flip_required">يرجى قلب هاتفك</string>
+
+    <!-- BlockOverlay Messages -->
+    <string name="block_message_before_timer">الآن،\nهل تحتاج حقاً إلى shorts؟</string>
+    <string name="block_message_after_timer">لقد انتظرت حتى هنا.\nما زلت تريد المشاهدة؟</string>
+    <string name="block_button_think_again">فكر مرة أخرى</string>
+    <string name="block_button_close">أغلق فقط</string>
+    <string name="block_button_no">لا، لن أشاهد</string>
+    <string name="block_button_yes">نعم، سأشاهد</string>
+
+    <!-- Timer Success Screen -->
+    <string name="timer_success_title">لقد نجحت!</string>
+    <string name="timer_success_message">عمل رائع بأخذ فترة راحة\nالآن يمكنك اتخاذ خيار أكثر حكمة</string>
+
+    <!-- Timer Screen -->
+    <string name="timer_instruction_title">خذ لحظة</string>
+    <string name="timer_instruction_message_onboarding">اقلب هاتفك وفكر فيما إذا كنت\nتحتاج حقاً للمشاهدة</string>
+    <string name="timer_instruction_message_full">اقلب هاتفك وانتظر 30 ثانية.\nهل ستندم على هذا الاختيار بعد 30 دقيقة؟\nما الذي تحتاجه حقاً الآن؟</string>
+
+    <!-- Main Activity -->
+    <string name="main_subtitle">تحرر من المحتوى القصير.\nعادات صغيرة للاستهلاك الواعي.</string>
+    <string name="status_on">تشغيل</string>
+    <string name="status_off">إيقاف</string>
+    <string name="status_active">نشط</string>
+    <string name="status_inactive">غير نشط</string>
+    <string name="toggle_description">مفتاح التشغيل</string>
+    <string name="blocked_apps_title">التطبيقات المحظورة: </string>
+    <string name="app_youtube_shorts">YouTube Shorts</string>
+    <string name="app_instagram_reels">Instagram Reels</string>
+    <string name="app_facebook_reels">Facebook Reels</string>
+    <string name="app_naver_shorts">Naver Shorts</string>
+    <string name="blocked_apps_notice">• تظهر التطبيقات المثبتة فقط\n• قد لا يتم حظر بعض إصدارات التطبيقات</string>
+    <string name="stats_watch_time">وقت المشاهدة</string>
+    <string name="stats_entry_count">الدخول</string>
+    <string name="stats_consumption_count">تمت المشاهدة</string>
+    <string name="time_unit_hour">س</string>
+    <string name="time_unit_minute">د</string>
+    <string name="time_unit_second">ث</string>
+    <string name="permission_warning_icon">⚠</string>
+    <string name="permission_warning_title">الأذونات مطلوبة</string>
+    <string name="permission_warning_message">لاستخدام ميزات الحظر،\nمطلوب أذونات إمكانية الوصول والتراكب</string>
+    <string name="permission_setup_button">إعداد الأذونات</string>
+
+    <!-- Settings Tip Banner -->
+    <string name="settings_tip_message">انقر على قائمة [⋮] في الزاوية العلوية اليمنى لاستكشاف المزيد من الميزات</string>
+    <string name="settings_tip_button">انتقل →</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_section_blocking">إعدادات الحظر</string>
+    <string name="settings_section_protection">الحماية</string>
+    <string name="settings_section_other">أخرى</string>
+    <string name="settings_delay_time_title">وقت التأخير</string>
+    <string name="settings_delay_time_desc">تعيين وقت الانتظار قبل الوصول إلى shorts</string>
+    <string name="settings_delay_time_value">%d ثانية</string>
+    <string name="settings_haptic_title">ردود الفعل اللمسية</string>
+    <string name="settings_haptic_desc">إشعار بالاهتزاز عند اكتمال المؤقت</string>
+    <string name="settings_block_scrolled_title">حظر Shorts المتدرجة فقط</string>
+    <string name="settings_block_scrolled_desc">السماح بأول shorts، الحظر عند التمرير</string>
+    <string name="settings_prevent_disable_title">منع التعطيل الاندفاعي</string>
+    <string name="settings_prevent_disable_desc">منع التعطيل غير المقصود</string>
+    <string name="settings_feedback">إرسال ملاحظات</string>
+    <string name="settings_share">مشاركة التطبيق</string>
+    <string name="settings_review">ترك مراجعة</string>
+    <string name="settings_version">معلومات الإصدار</string>
+    <string name="settings_version_value">v%s</string>
+    <string name="settings_version_default">v1.0.0</string>
+
+    <!-- Permission Setup Activity -->
+    <string name="permission_back_button">رجوع</string>
+    <string name="permission_title">إعداد الأذونات</string>
+    <string name="permission_subtitle">يرجى السماح بالأذونات\nlحظر shorts</string>
+    <string name="permission_done">تم</string>
+
+    <!-- Permission Cards -->
+    <string name="permission_number_1">1</string>
+    <string name="permission_number_2">2</string>
+
+    <!-- Accessibility Setup Card -->
+    <string name="permission_accessibility">إعداد خدمة إمكانية الوصول</string>
+    <string name="permission_accessibility_completed">خدمة إمكانية الوصول ✓</string>
+    <string name="permission_overlay">العرض فوق التطبيقات الأخرى</string>
+    <string name="permission_overlay_completed">العرض فوق التطبيقات الأخرى ✓</string>
+    <string name="permission_why">لماذا هذا مطلوب؟</string>
+    <string name="permission_accessibility_reason">مطلوب لاكتشاف فتح شاشة shorts.</string>
+    <string name="permission_overlay_reason">مطلوب لعرض شاشة الحظر فوق shorts.</string>
+    <string name="permission_not_set">لم يتم الإعداد بعد</string>
+    <string name="permission_completed">اكتمل الإعداد</string>
+    <string name="permission_go_to_settings">الذهاب إلى الإعدادات</string>
+    <string name="permission_enable_permission">تمكين الإذن</string>
+
+    <!-- Manufacturer-specific Accessibility Guides -->
+    <string name="permission_accessibility_guide_samsung">💡 ابحث عن [التطبيقات المثبتة] → un:short</string>
+    <string name="permission_accessibility_guide_lg">💡 ابحث عن [الإعدادات المتقدمة] → un:short</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 ابحث عن [الخدمات المحملة] → un:short</string>
+    <string name="permission_accessibility_guide_huawei">💡 ابحث عن [الخدمات المحملة] → un:short</string>
+    <string name="permission_accessibility_guide_oppo">💡 ابحث عن [الخدمات المثبتة] → un:short</string>
+    <string name="permission_accessibility_guide_vivo">💡 ابحث عن [الخدمات المثبتة] → un:short</string>
+    <string name="permission_accessibility_guide_default">💡 ابحث عن un:short وقم بتشغيله</string>
+
+    <!-- Timer Activity -->
+    <string name="timer_seconds_unit">ثانية</string>
+    <string name="timer_flip_instruction">اقلب هاتفك</string>
+    <string name="timer_breathe_message">خذ نفساً عميقاً</string>
+    <string name="timer_skip_button">إلغاء</string>
+
+    <!-- Ads -->
+    <string name="ad">إعلان</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_page1_title">تحرر من\nإدمان المحتوى القصير</string>
+    <string name="onboarding_page1_subtitle">عادات صغيرة للاستهلاك المقصود</string>
+    <string name="onboarding_page2_title">إذا كنت تريد مشاهدة shorts،\nخذ لحظة للتفكير</string>
+    <string name="onboarding_page3_title">إذا كنت لا تزال تريد المشاهدة،\nخذ وقفة قصيرة</string>
+    <string name="onboarding_page4_title">أخيراً،\nفكر مرة أخرى</string>
+    <string name="onboarding_page5_title">هل أنت مستعد للبدء؟</string>
+    <string name="onboarding_page5_subtitle">ابدأ رحلتك نحو\nاستهلاك إعلامي واعٍ مع un:short</string>
+    <string name="onboarding_start_button">ابدأ</string>
+    <string name="onboarding_skip">تخطي</string>
+
+    <!-- Delay Time Bottom Sheet -->
+    <string name="delay_time_title">وقت التأخير</string>
+    <string name="delay_time_desc">تعيين وقت الانتظار قبل الوصول إلى shorts</string>
+    <string name="delay_time_15">15 ثانية</string>
+    <string name="delay_time_30">30 ثانية</string>
+    <string name="delay_time_60">60 ثانية</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_email_app_not_found">لم يتم العثور على تطبيق البريد الإلكتروني</string>
+    <string name="toast_device_admin_enabled">تم تمكين حماية حذف التطبيق</string>
+    <string name="toast_device_admin_cancelled">تم إلغاء حماية حذف التطبيق</string>
+
+    <!-- Share & Feedback -->
+    <string name="feedback_subject">ملاحظات تطبيق un:short</string>
+    <string name="share_text">تحرر من إدمان المحتوى القصير!\nابدأ الاستهلاك الإعلامي الواعي مع un:short.\n\n%s</string>
+
+    <!-- Device Admin (App Uninstall Protection) -->
+    <string name="device_admin_title">حماية حذف التطبيق</string>
+    <string name="device_admin_desc">منع إلغاء تثبيت التطبيق الاندفاعي</string>
+    <string name="device_admin_explanation">هل سبق أن حذفت التطبيق في لحظة ضعف؟\n\nun:short يمنع إلغاء التثبيت الاندفاعي عندما تتراجع عزيمتك.</string>
+    <string name="device_admin_dialog_title">تمكين حماية الحذف؟</string>
+    <string name="device_admin_dialog_message">تضيف هذه الميزة خطوة إضافية قبل إلغاء تثبيت un:short.\n\nإنها تساعدك على مقاومة القرارات الاندفاعية أثناء لحظات الضعف.\n\nيمكنك إلغاء تنشيط هذا في أي وقت في الإعدادات ← الأمان ← تطبيقات إدارة الجهاز.</string>
+    <string name="device_admin_dialog_enable">تمكين</string>
+    <string name="device_admin_dialog_cancel">ليس الآن</string>
+    <string name="device_admin_deactivate_title">إلغاء تنشيط الحماية؟</string>
+    <string name="device_admin_deactivate_message">لتعطيل هذه الميزة، انتقل إلى:\n\nالإعدادات ← الأمان ← تطبيقات إدارة الجهاز ← un:short\n\nثم اضغط على [إلغاء التنشيط]</string>
+    <string name="device_admin_deactivate_button">الذهاب إلى الإعدادات</string>
+    <string name="device_admin_receiver_enabled">تم تمكين حماية حذف تطبيق un:short</string>
+    <string name="device_admin_receiver_disable_warning">إلغاء تنشيط حماية الحذف يسمح بإلغاء التثبيت الاندفاعي لـ un:short. هل تريد المتابعة؟</string>
+    <string name="device_admin_receiver_disabled">تم تعطيل حماية حذف تطبيق un:short</string>
+
+    <!-- Privacy Consent Dialog -->
+    <string name="privacy_dialog_title_simple">ما الذي نصل إليه</string>
+
+    <string name="privacy_why_title">لماذا يُطلب إذن إمكانية الوصول؟</string>
+    <string name="privacy_why_content">un:short يستخدم خدمة إمكانية الوصول لاكتشاف محتوى الفيديو القصير.\n\nهذه هي الوظيفة الأساسية لحظر shorts تلقائياً عند اكتشافها.</string>
+
+    <string name="privacy_data_title">البيانات التي نجمعها</string>
+    <string name="privacy_data_collected">✓ محتوى الشاشة (لاكتشاف shorts فقط)\n✓ أسماء حزم التطبيقات\n✓ تجزئة بيانات الفيديو الوصفية (مؤقت)</string>
+    <string name="privacy_data_not_collected">✗ المعلومات الشخصية (الاسم، جهات الاتصال، إلخ.)\n✗ سجل المشاهدة\n✗ معلومات الحساب\n✗ إدخال النص</string>
+
+    <string name="privacy_usage_title">كيف يتم استخدام البيانات</string>
+    <string name="privacy_usage_content">• يُستخدم فقط لاكتشاف شاشة shorts\n• لا يوجد نقل للخادم (100٪ غير متصل)\n• تجزئات مؤقتة فقط لاكتشاف تغيير الفيديو\n• حذف تلقائي عند إغلاق التطبيق</string>
+
+    <string name="privacy_storage_title">سياسة تخزين البيانات</string>
+    <string name="privacy_storage_content">• يتم تخزين معرفات الجلسة فقط مؤقتاً على الجهاز\n• يتم حذفها فوراً عند إعادة تشغيل التطبيق/الخدمة\n• لا يتم مشاركتها مع أطراف ثالثة أبداً</string>
+
+    <string name="privacy_faq_title">الأسئلة الشائعة</string>
+    <string name="privacy_faq_content">س: هل يتم حفظ سجل المشاهدة الخاص بي؟\nج: لا. يتم تخزين قيم التجزئة مؤقتاً فقط.\n\nس: هل تشاركون البيانات مع أطراف ثالثة؟\nج: لا. عملية غير متصلة تماماً.\n\nس: هل يمكنني إلغاء الإذن لاحقاً؟\nج: نعم. يمكنك تعطيله في الإعدادات في أي وقت.</string>
+
+    <string name="privacy_btn_agree">موافق &amp; انتقل إلى الإعدادات</string>
+    <string name="privacy_btn_exit">الخروج من التطبيق</string>
+    <string name="privacy_btn_disagree">لا أوافق</string>
+
+    <!-- Disable Warning Dialog (before timer) -->
+    <string name="disable_warning_title">انتظر لحظة</string>
+    <string name="disable_warning_message">ما رأيك في التفكير مرة أخرى قبل التعطيل؟</string>
+    <string name="disable_warning_confirm">فكر في الأمر</string>
+    <string name="disable_warning_cancel">احتفظ بالتمكين</string>
+
+    <!-- Disable Confirmation Dialog -->
+    <string name="disable_dialog_title">هل تريد حقاً التعطيل؟</string>
+    <string name="disable_dialog_message">للتعطيل، أدخل العبارة أدناه:</string>
+    <string name="disable_dialog_phrase">disable shorts blocking</string>
+    <string name="disable_dialog_input_hint">أدخل هنا</string>
+    <string name="disable_dialog_cancel">إلغاء</string>
+    <string name="disable_dialog_confirm">تأكيد</string>
+
+    <!-- Device Admin Disable Dialog -->
+    <string name="device_admin_disable_title">تعطيل حماية الحذف؟</string>
+    <string name="device_admin_disable_message">قد تعطل بشكل اندفاعي. هل تريد حقاً التعطيل؟</string>
+    <string name="device_admin_disable_phrase">disable this feature</string>
+
+    <!-- Prevent Impulsive Disable OFF Dialog -->
+    <string name="prevent_impulsive_disable_off_title">هل تريد حقاً التعطيل؟</string>
+    <string name="prevent_impulsive_disable_off_message">للتعطيل، أدخل العبارة أدناه:</string>
+    <string name="prevent_impulsive_disable_off_phrase">disable this feature</string>
+
+    <!-- Billing Error Messages -->
+    <string name="billing_error_connection_failed">غير قادر على الاتصال بـ Google Play. يرجى المحاولة مرة أخرى.</string>
+    <string name="billing_error_sku_not_found">غير قادر على معالجة الطلب. يرجى المحاولة لاحقاً.</string>
+    <string name="billing_error_purchase_failed">فشل الشراء. يرجى المحاولة مرة أخرى.</string>
+    <string name="billing_error_restore_failed">غير قادر على معالجة الطلب. يرجى المحاولة لاحقاً.</string>
+    <string name="billing_error_restore_no_subscription">لم يتم العثور على اشتراك نشط.</string>
+    <string name="billing_error_unknown">حدث خطأ. يرجى المحاولة لاحقاً.</string>
+
+    <!-- Overlay Tip Messages -->
+    <string-array name="overlay_tips">
+        <item>ابحث عن المزيد من خيارات الحظر في الإعدادات</item>
+        <item>30 ثانية كافية لقراءة صفحة</item>
+        <item>المشي لمدة 5 دقائق أفضل من 30 دقيقة من shorts</item>
+        <item>الانتظار القصير يخلق خيارات أفضل</item>
+        <item>أنت تغير عاداتك الآن</item>
+        <item>هل تحتاج حقاً لهذا المحتوى الآن؟</item>
+        <item>افتح حظراً أقوى مع Premium</item>
+        <item>Premium: خصص استراتيجية الحظر الخاصة بك</item>
+    </string-array>
+
+    <!-- Custom Timer (Premium) -->
+    <string name="custom_timer_title">تعيين وقت الانتظار</string>
+    <string name="custom_timer_presets">إعدادات مسبقة سريعة</string>
+    <string name="custom_timer_done">تم</string>
+    <string name="premium_required_title">✨ ميزة Premium</string>
+    <string name="premium_required_message">افتح وقت انتظار مخصص والمزيد!\n\n• تعيين وقت الانتظار بحرية (5-300 ثانية)\n• حظر Shorts المتدرجة فقط\n• منع التعطيل الاندفاعي\n• منع حذف التطبيق</string>
+    <string name="premium_button_upgrade">الترقية إلى Premium</string>
+    <string name="premium_button_cancel">ليس الآن</string>
+
+    <!-- Premium Banner -->
+    <string name="premium_banner_title">افتح المزيد من الميزات</string>
+    <string name="premium_banner_subtitle">التخصيص + الحماية</string>
+    <string name="premium_banner_button">ترقية</string>
+
+    <!-- Premium Upgrade Activity -->
+    <string name="premium_upgrade_title">Premium</string>
+    <string name="premium_upgrade_headline">الترقية إلى Premium</string>
+    <string name="premium_upgrade_subtitle">حظر وحماية أقوى</string>
+    <string name="premium_upgrade_button">الترقية الآن</string>
+    <string name="premium_upgrade_coming_soon">نظام الدفع قريباً!</string>
+
+    <!-- Subscription Management -->
+    <string name="subscription_management">إدارة الاشتراك</string>
+    <string name="subscription_management_desc">إدارة أو إلغاء اشتراكك</string>
+
+    <!-- Subscription Management Activity -->
+    <string name="subscription_management_title">الاشتراك</string>
+    <string name="subscription_status_active">نشط</string>
+    <string name="subscription_status_expired">منتهي الصلاحية</string>
+    <string name="subscription_start_date">تاريخ البدء</string>
+    <string name="subscription_next_billing">تاريخ الفوترة التالي</string>
+    <string name="subscription_auto_renew_on">تم تمكين التجديد التلقائي</string>
+    <string name="subscription_auto_renew_off">تم تعطيل التجديد التلقائي</string>
+    <string name="subscription_cancel_button">إدارة أو إلغاء</string>
+    <string name="subscription_cancel_desc">لإلغاء أو تعديل اشتراكك،\nسيتم توجيهك إلى Google Play Store</string>
+    <string name="subscription_info_note">* تاريخ تقديري بناءً على آخر فاتورة</string>
+
+    <!-- Premium Features -->
+    <string name="premium_feature_ad_free_title">تجربة خالية من الإعلانات</string>
+    <string name="premium_feature_ad_free_desc">تجربة نظيفة ومركزة</string>
+    <string name="premium_feature_custom_timer_title">إعدادات مؤقت مخصصة</string>
+    <string name="premium_feature_custom_timer_desc">تعيين بحرية من 5 ثوانٍ إلى 5 دقائق</string>
+    <string name="premium_feature_smart_block_title">الحظر الذكي</string>
+    <string name="premium_feature_smart_block_desc">السماح بأول shorts، الحظر عند التمرير</string>
+    <string name="premium_feature_prevent_disable_title">منع التعطيل الاندفاعي</string>
+    <string name="premium_feature_prevent_disable_desc">مطلوب تأكيد لتعطيل الحظر</string>
+    <string name="premium_feature_prevent_delete_title">حماية حذف التطبيق</string>
+    <string name="premium_feature_prevent_delete_desc">منع إلغاء تثبيت التطبيق الاندفاعي</string>
+
+    <!-- Promo Code -->
+    <string name="promo_button_text">هل لديك كود ترويجي؟</string>
+    <string name="promo_dialog_title">أدخل الكود الترويجي</string>
+    <string name="promo_dialog_subtitle">أدخل كود Premium مدى الحياة الخاص بك</string>
+    <string name="promo_dialog_cancel">إلغاء</string>
+    <string name="promo_dialog_confirm">تأكيد</string>
+    <string name="promo_error_empty">يرجى إدخال كود ترويجي</string>
+    <string name="promo_error_invalid_format">تنسيق غير صالح\n(مثال: UNSHORT-XXXXX-XXXXXXXX)</string>
+    <string name="promo_error_invalid_code">كود ترويجي غير صالح</string>
+    <string name="promo_error_unknown">حدث خطأ: %s</string>
+    <string name="promo_success">تم تفعيل Premium مدى الحياة!</string>
+    <string name="promo_lifetime_status">Premium مدى الحياة (دائم)</string>
+    <string name="promo_no_expiry">بدون انتهاء</string>
+    <string name="promo_not_applicable">غير متاح</string>
+
+</resources>

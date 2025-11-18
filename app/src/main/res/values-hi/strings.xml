@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">un:short</string>
+    <string name="accessibility_service_description">छोटे वीडियो का पता लगाता है और लत से छुटकारा पाने के लिए फोन पलटने के साथ एक सोच-विचार वाला विराम जोड़ता है।</string>
+    <string name="flip_phone_title">एक पल रुकें! 🤚</string>
+    <string name="flip_phone_message">Shorts देखने के लिए,\nअपना फोन पलटें और 30 सेकंड प्रतीक्षा करें</string>
+    <string name="time_remaining">शेष समय: %d सेकंड</string>
+    <string name="flip_detected">फोन पलट दिया गया ✓</string>
+    <string name="flip_required">कृपया अपना फोन पलटें</string>
+
+    <!-- BlockOverlay Messages -->
+    <string name="block_message_before_timer">अभी,\nक्या आपको वाकई Shorts की ज़रूरत है?</string>
+    <string name="block_message_after_timer">आप यहाँ तक इंतज़ार कर चुके हैं।\nफिर भी देखना चाहते हैं?</string>
+    <string name="block_button_think_again">फिर से सोचें</string>
+    <string name="block_button_close">बस बंद करें</string>
+    <string name="block_button_no">नहीं, मैं नहीं देखूंगा</string>
+    <string name="block_button_yes">हाँ, मैं देखूंगा</string>
+
+    <!-- Timer Success Screen -->
+    <string name="timer_success_title">आपने कर दिखाया!</string>
+    <string name="timer_success_message">विराम लेने के लिए बहुत बढ़िया\nअब आप एक बेहतर निर्णय ले सकते हैं</string>
+
+    <!-- Timer Screen -->
+    <string name="timer_instruction_title">एक पल लें</string>
+    <string name="timer_instruction_message_onboarding">अपना फोन पलटें और सोचें कि\nक्या आपको वाकई देखने की ज़रूरत है</string>
+    <string name="timer_instruction_message_full">अपना फोन पलटें और 30 सेकंड प्रतीक्षा करें।\nक्या आप 30 मिनट में इस चयन पर पछताएंगे?\nअभी आपको वाकई क्या चाहिए?</string>
+
+    <!-- Main Activity -->
+    <string name="main_subtitle">छोटे कंटेंट से मुक्त हो जाएं।\nसोच-समझकर उपभोग के लिए छोटी आदतें।</string>
+    <string name="status_on">चालू</string>
+    <string name="status_off">बंद</string>
+    <string name="status_active">सक्रिय</string>
+    <string name="status_inactive">निष्क्रिय</string>
+    <string name="toggle_description">पावर टॉगल</string>
+    <string name="blocked_apps_title">अवरुद्ध ऐप्स: </string>
+    <string name="app_youtube_shorts">YouTube Shorts</string>
+    <string name="app_instagram_reels">Instagram Reels</string>
+    <string name="app_facebook_reels">Facebook Reels</string>
+    <string name="app_naver_shorts">Naver Shorts</string>
+    <string name="blocked_apps_notice">• केवल इंस्टॉल किए गए ऐप्स दिखाए जाते हैं\n• कुछ ऐप संस्करण अवरुद्ध नहीं हो सकते</string>
+    <string name="stats_watch_time">देखने का समय</string>
+    <string name="stats_entry_count">प्रवेश</string>
+    <string name="stats_consumption_count">देखा गया</string>
+    <string name="time_unit_hour">घं</string>
+    <string name="time_unit_minute">मि</string>
+    <string name="time_unit_second">से</string>
+    <string name="permission_warning_icon">⚠</string>
+    <string name="permission_warning_title">अनुमतियां आवश्यक हैं</string>
+    <string name="permission_warning_message">ब्लॉकिंग सुविधाओं का उपयोग करने के लिए,\nपहुंच और ओवरले अनुमतियां आवश्यक हैं</string>
+    <string name="permission_setup_button">अनुमतियां सेट करें</string>
+
+    <!-- Settings Tip Banner -->
+    <string name="settings_tip_message">अधिक सुविधाओं का पता लगाने के लिए ऊपर दाईं ओर [⋮] मेनू टैप करें</string>
+    <string name="settings_tip_button">जाएं →</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_title">सेटिंग्स</string>
+    <string name="settings_section_blocking">ब्लॉकिंग सेटिंग्स</string>
+    <string name="settings_section_protection">सुरक्षा</string>
+    <string name="settings_section_other">अन्य</string>
+    <string name="settings_delay_time_title">विलंब समय</string>
+    <string name="settings_delay_time_desc">Shorts तक पहुंचने से पहले प्रतीक्षा समय सेट करें</string>
+    <string name="settings_delay_time_value">%d सेकंड</string>
+    <string name="settings_haptic_title">हैप्टिक फीडबैक</string>
+    <string name="settings_haptic_desc">टाइमर पूरा होने पर कंपन सूचना</string>
+    <string name="settings_block_scrolled_title">केवल स्क्रॉल किए गए Shorts को ब्लॉक करें</string>
+    <string name="settings_block_scrolled_desc">पहले Shorts की अनुमति दें, स्क्रॉल पर ब्लॉक करें</string>
+    <string name="settings_prevent_disable_title">आवेगपूर्ण अक्षम करने को रोकें</string>
+    <string name="settings_prevent_disable_desc">अनजाने में अक्षम होने से रोकें</string>
+    <string name="settings_feedback">फीडबैक भेजें</string>
+    <string name="settings_share">ऐप साझा करें</string>
+    <string name="settings_review">समीक्षा लिखें</string>
+    <string name="settings_version">संस्करण जानकारी</string>
+    <string name="settings_version_value">v%s</string>
+    <string name="settings_version_default">v1.0.0</string>
+
+    <!-- Permission Setup Activity -->
+    <string name="permission_back_button">वापस</string>
+    <string name="permission_title">अनुमति सेटअप</string>
+    <string name="permission_subtitle">कृपया Shorts को ब्लॉक करने के लिए\nअनुमतियां दें</string>
+    <string name="permission_done">पूर्ण</string>
+
+    <!-- Permission Cards -->
+    <string name="permission_number_1">1</string>
+    <string name="permission_number_2">2</string>
+
+    <!-- Accessibility Setup Card -->
+    <string name="permission_accessibility">पहुंच सेवा सेटअप</string>
+    <string name="permission_accessibility_completed">पहुंच सेवा ✓</string>
+    <string name="permission_overlay">अन्य ऐप्स के ऊपर प्रदर्शित करें</string>
+    <string name="permission_overlay_completed">अन्य ऐप्स के ऊपर प्रदर्शित करें ✓</string>
+    <string name="permission_why">यह क्यों आवश्यक है?</string>
+    <string name="permission_accessibility_reason">Shorts स्क्रीन खुलने का पता लगाने के लिए आवश्यक।</string>
+    <string name="permission_overlay_reason">Shorts के ऊपर ब्लॉकिंग स्क्रीन प्रदर्शित करने के लिए आवश्यक।</string>
+    <string name="permission_not_set">अभी तक सेट नहीं किया गया</string>
+    <string name="permission_completed">सेटअप पूर्ण</string>
+    <string name="permission_go_to_settings">सेटिंग्स में जाएं</string>
+    <string name="permission_enable_permission">अनुमति सक्षम करें</string>
+
+    <!-- Manufacturer-specific Accessibility Guides -->
+    <string name="permission_accessibility_guide_samsung">💡 [इंस्टॉल किए गए ऐप्स] → un:short ढूंढें</string>
+    <string name="permission_accessibility_guide_lg">💡 [उन्नत सेटिंग्स] → un:short ढूंढें</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 [डाउनलोड की गई सेवाएं] → un:short ढूंढें</string>
+    <string name="permission_accessibility_guide_huawei">💡 [डाउनलोड की गई सेवाएं] → un:short ढूंढें</string>
+    <string name="permission_accessibility_guide_oppo">💡 [इंस्टॉल की गई सेवाएं] → un:short ढूंढें</string>
+    <string name="permission_accessibility_guide_vivo">💡 [इंस्टॉल की गई सेवाएं] → un:short ढूंढें</string>
+    <string name="permission_accessibility_guide_default">💡 un:short ढूंढें और इसे चालू करें</string>
+
+    <!-- Timer Activity -->
+    <string name="timer_seconds_unit">सेकंड</string>
+    <string name="timer_flip_instruction">अपना फोन पलटें</string>
+    <string name="timer_breathe_message">एक गहरी सांस लें</string>
+    <string name="timer_skip_button">रद्द करें</string>
+
+    <!-- Ads -->
+    <string name="ad">विज्ञापन</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_page1_title">छोटे कंटेंट की लत से\nमुक्त हो जाएं</string>
+    <string name="onboarding_page1_subtitle">सोच-समझकर उपभोग के लिए छोटी आदतें</string>
+    <string name="onboarding_page2_title">यदि आप Shorts देखना चाहते हैं,\nतो एक पल सोचें</string>
+    <string name="onboarding_page3_title">यदि आप फिर भी देखना चाहते हैं,\nतो एक संक्षिप्त विराम लें</string>
+    <string name="onboarding_page4_title">अंत में,\nएक बार फिर सोचें</string>
+    <string name="onboarding_page5_title">शुरू करने के लिए तैयार हैं?</string>
+    <string name="onboarding_page5_subtitle">un:short के साथ सोच-समझकर\nमीडिया उपभोग की दिशा में अपनी यात्रा शुरू करें</string>
+    <string name="onboarding_start_button">शुरू करें</string>
+    <string name="onboarding_skip">छोड़ें</string>
+
+    <!-- Delay Time Bottom Sheet -->
+    <string name="delay_time_title">विलंब समय</string>
+    <string name="delay_time_desc">Shorts तक पहुंचने से पहले प्रतीक्षा समय सेट करें</string>
+    <string name="delay_time_15">15 सेकंड</string>
+    <string name="delay_time_30">30 सेकंड</string>
+    <string name="delay_time_60">60 सेकंड</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_email_app_not_found">ईमेल ऐप नहीं मिला</string>
+    <string name="toast_device_admin_enabled">ऐप हटाने की सुरक्षा सक्षम की गई</string>
+    <string name="toast_device_admin_cancelled">ऐप हटाने की सुरक्षा रद्द की गई</string>
+
+    <!-- Share & Feedback -->
+    <string name="feedback_subject">un:short ऐप फीडबैक</string>
+    <string name="share_text">छोटे कंटेंट की लत से मुक्त हो जाएं!\nun:short के साथ सोच-समझकर मीडिया उपभोग शुरू करें।\n\n%s</string>
+
+    <!-- Device Admin (App Uninstall Protection) -->
+    <string name="device_admin_title">ऐप हटाने की सुरक्षा</string>
+    <string name="device_admin_desc">आवेगपूर्ण ऐप अनइंस्टॉलेशन को रोकें</string>
+    <string name="device_admin_explanation">कभी कमज़ोरी के क्षण में ऐप को हटा दिया?\n\nun:short आपके संकल्प के डगमगाने पर आवेगपूर्ण अनइंस्टॉलेशन को रोकता है।</string>
+    <string name="device_admin_dialog_title">हटाने की सुरक्षा सक्षम करें?</string>
+    <string name="device_admin_dialog_message">यह सुविधा un:short को अनइंस्टॉल करने से पहले एक अतिरिक्त चरण जोड़ती है।\n\nयह कमज़ोरी के क्षणों में आवेगपूर्ण निर्णयों से बचने में मदद करती है।\n\nआप इसे किसी भी समय सेटिंग्स → सुरक्षा → डिवाइस व्यवस्थापक ऐप्स में निष्क्रिय कर सकते हैं।</string>
+    <string name="device_admin_dialog_enable">सक्षम करें</string>
+    <string name="device_admin_dialog_cancel">अभी नहीं</string>
+    <string name="device_admin_deactivate_title">सुरक्षा निष्क्रिय करें?</string>
+    <string name="device_admin_deactivate_message">इस सुविधा को अक्षम करने के लिए, यहाँ जाएं:\n\nसेटिंग्स → सुरक्षा → डिवाइस व्यवस्थापक ऐप्स → un:short\n\nफिर [निष्क्रिय करें] टैप करें</string>
+    <string name="device_admin_deactivate_button">सेटिंग्स में जाएं</string>
+    <string name="device_admin_receiver_enabled">un:short ऐप हटाने की सुरक्षा सक्षम की गई</string>
+    <string name="device_admin_receiver_disable_warning">हटाने की सुरक्षा को अक्षम करने से un:short का आवेगपूर्ण अनइंस्टॉलेशन हो सकता है। जारी रखें?</string>
+    <string name="device_admin_receiver_disabled">un:short ऐप हटाने की सुरक्षा अक्षम की गई</string>
+
+    <!-- Privacy Consent Dialog -->
+    <string name="privacy_dialog_title_simple">हम क्या एक्सेस करते हैं</string>
+
+    <string name="privacy_why_title">पहुंच अनुमति क्यों आवश्यक है?</string>
+    <string name="privacy_why_content">un:short छोटे वीडियो कंटेंट का पता लगाने के लिए पहुंच सेवा का उपयोग करता है।\n\nयह पता लगाने पर Shorts को स्वचालित रूप से ब्लॉक करने का मुख्य कार्य है।</string>
+
+    <string name="privacy_data_title">हम क्या डेटा एकत्र करते हैं</string>
+    <string name="privacy_data_collected">✓ स्क्रीन कंटेंट (केवल Shorts पहचान के लिए)\n✓ ऐप पैकेज नाम\n✓ वीडियो मेटाडेटा हैश (अस्थायी)</string>
+    <string name="privacy_data_not_collected">✗ व्यक्तिगत जानकारी (नाम, संपर्क, आदि)\n✗ देखने का इतिहास\n✗ खाता जानकारी\n✗ टेक्स्ट इनपुट</string>
+
+    <string name="privacy_usage_title">डेटा का उपयोग कैसे किया जाता है</string>
+    <string name="privacy_usage_content">• केवल Shorts स्क्रीन पहचान के लिए उपयोग किया जाता है\n• कोई सर्वर ट्रांसमिशन नहीं (100% ऑफलाइन)\n• केवल वीडियो परिवर्तन पहचान के लिए अस्थायी हैश\n• ऐप बंद होने पर स्वचालित रूप से हटाया जाता है</string>
+
+    <string name="privacy_storage_title">डेटा संग्रहण नीति</string>
+    <string name="privacy_storage_content">• केवल सत्र ID डिवाइस पर अस्थायी रूप से संग्रहीत\n• ऐप/सेवा पुनः शुरू होने पर तुरंत हटाया जाता है\n• कभी भी तीसरे पक्ष के साथ साझा नहीं किया जाता</string>
+
+    <string name="privacy_faq_title">अक्सर पूछे जाने वाले प्रश्न</string>
+    <string name="privacy_faq_content">प्र: क्या मेरा देखने का इतिहास सहेजा जाता है?\nउ: नहीं। केवल हैश मान अस्थायी रूप से संग्रहीत होते हैं।\n\nप्र: क्या आप डेटा तीसरे पक्ष के साथ साझा करते हैं?\nउ: नहीं। पूरी तरह से ऑफलाइन संचालन।\n\nप्र: क्या मैं बाद में अनुमति रद्द कर सकता हूँ?\nउ: हाँ। आप इसे किसी भी समय सेटिंग्स में अक्षम कर सकते हैं।</string>
+
+    <string name="privacy_btn_agree">सहमत हूँ और सेटिंग्स में जाएं</string>
+    <string name="privacy_btn_exit">ऐप से बाहर निकलें</string>
+    <string name="privacy_btn_disagree">असहमत</string>
+
+    <!-- Disable Warning Dialog (before timer) -->
+    <string name="disable_warning_title">एक पल रुकें</string>
+    <string name="disable_warning_message">अक्षम करने से पहले एक बार फिर सोचने का क्या ख्याल है?</string>
+    <string name="disable_warning_confirm">इस बारे में सोचें</string>
+    <string name="disable_warning_cancel">इसे सक्षम रखें</string>
+
+    <!-- Disable Confirmation Dialog -->
+    <string name="disable_dialog_title">वाकई अक्षम करें?</string>
+    <string name="disable_dialog_message">अक्षम करने के लिए, नीचे दिया गया वाक्यांश दर्ज करें:</string>
+    <string name="disable_dialog_phrase">disable shorts blocking</string>
+    <string name="disable_dialog_input_hint">यहाँ दर्ज करें</string>
+    <string name="disable_dialog_cancel">रद्द करें</string>
+    <string name="disable_dialog_confirm">पुष्टि करें</string>
+
+    <!-- Device Admin Disable Dialog -->
+    <string name="device_admin_disable_title">हटाने की सुरक्षा अक्षम करें?</string>
+    <string name="device_admin_disable_message">आप आवेगपूर्ण तरीके से अक्षम कर सकते हैं। वाकई अक्षम करें?</string>
+    <string name="device_admin_disable_phrase">disable this feature</string>
+
+    <!-- Prevent Impulsive Disable OFF Dialog -->
+    <string name="prevent_impulsive_disable_off_title">वाकई अक्षम करें?</string>
+    <string name="prevent_impulsive_disable_off_message">अक्षम करने के लिए, नीचे दिया गया वाक्यांश दर्ज करें:</string>
+    <string name="prevent_impulsive_disable_off_phrase">disable this feature</string>
+
+    <!-- Billing Error Messages -->
+    <string name="billing_error_connection_failed">Google Play से कनेक्ट करने में असमर्थ। कृपया पुनः प्रयास करें।</string>
+    <string name="billing_error_sku_not_found">अनुरोध को प्रोसेस करने में असमर्थ। कृपया बाद में पुनः प्रयास करें।</string>
+    <string name="billing_error_purchase_failed">खरीद विफल रही। कृपया पुनः प्रयास करें।</string>
+    <string name="billing_error_restore_failed">अनुरोध को प्रोसेस करने में असमर्थ। कृपया बाद में पुनः प्रयास करें।</string>
+    <string name="billing_error_restore_no_subscription">कोई सक्रिय सदस्यता नहीं मिली।</string>
+    <string name="billing_error_unknown">एक त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।</string>
+
+    <!-- Overlay Tip Messages -->
+    <string-array name="overlay_tips">
+        <item>सेटिंग्स में अधिक ब्लॉकिंग विकल्प ढूंढें</item>
+        <item>30 सेकंड एक पृष्ठ पढ़ने के लिए काफी हैं</item>
+        <item>5 मिनट की सैर 30 मिनट के Shorts से बेहतर लगती है</item>
+        <item>एक संक्षिप्त प्रतीक्षा बेहतर विकल्प बनाती है</item>
+        <item>आप अभी अपनी आदतें बदल रहे हैं</item>
+        <item>क्या आपको वाकई अभी इस कंटेंट की ज़रूरत है?</item>
+        <item>Premium के साथ मजबूत ब्लॉकिंग अनलॉक करें</item>
+        <item>Premium: अपनी ब्लॉकिंग रणनीति को अनुकूलित करें</item>
+    </string-array>
+
+    <!-- Custom Timer (Premium) -->
+    <string name="custom_timer_title">प्रतीक्षा समय सेट करें</string>
+    <string name="custom_timer_presets">त्वरित प्रीसेट</string>
+    <string name="custom_timer_done">पूर्ण</string>
+    <string name="premium_required_title">✨ Premium सुविधा</string>
+    <string name="premium_required_message">कस्टम प्रतीक्षा समय और अधिक अनलॉक करें!\n\n• प्रतीक्षा समय को स्वतंत्र रूप से सेट करें (5–300 सेकंड)\n• केवल स्क्रॉल किए गए Shorts को ब्लॉक करें\n• आवेगपूर्ण अक्षम करने को रोकें\n• ऐप हटाने को रोकें</string>
+    <string name="premium_button_upgrade">Premium में अपग्रेड करें</string>
+    <string name="premium_button_cancel">अभी नहीं</string>
+
+    <!-- Premium Banner -->
+    <string name="premium_banner_title">अधिक सुविधाएं अनलॉक करें</string>
+    <string name="premium_banner_subtitle">अनुकूलन + सुरक्षा</string>
+    <string name="premium_banner_button">अपग्रेड करें</string>
+
+    <!-- Premium Upgrade Activity -->
+    <string name="premium_upgrade_title">Premium</string>
+    <string name="premium_upgrade_headline">Premium में अपग्रेड करें</string>
+    <string name="premium_upgrade_subtitle">मजबूत ब्लॉकिंग और सुरक्षा</string>
+    <string name="premium_upgrade_button">अभी अपग्रेड करें</string>
+    <string name="premium_upgrade_coming_soon">भुगतान प्रणाली जल्द आ रही है!</string>
+
+    <!-- Subscription Management -->
+    <string name="subscription_management">सदस्यता प्रबंधित करें</string>
+    <string name="subscription_management_desc">अपनी सदस्यता को प्रबंधित या रद्द करें</string>
+
+    <!-- Subscription Management Activity -->
+    <string name="subscription_management_title">सदस्यता</string>
+    <string name="subscription_status_active">सक्रिय</string>
+    <string name="subscription_status_expired">समाप्त</string>
+    <string name="subscription_start_date">प्रारंभ तिथि</string>
+    <string name="subscription_next_billing">अगली बिलिंग तिथि</string>
+    <string name="subscription_auto_renew_on">स्वचालित नवीनीकरण सक्षम</string>
+    <string name="subscription_auto_renew_off">स्वचालित नवीनीकरण अक्षम</string>
+    <string name="subscription_cancel_button">प्रबंधित करें या रद्द करें</string>
+    <string name="subscription_cancel_desc">अपनी सदस्यता को रद्द या संशोधित करने के लिए,\nआपको Google Play Store पर निर्देशित किया जाएगा</string>
+    <string name="subscription_info_note">* अंतिम बिलिंग के आधार पर अनुमानित तिथि</string>
+
+    <!-- Premium Features -->
+    <string name="premium_feature_ad_free_title">विज्ञापन-मुक्त अनुभव</string>
+    <string name="premium_feature_ad_free_desc">स्वच्छ और केंद्रित अनुभव</string>
+    <string name="premium_feature_custom_timer_title">कस्टम टाइमर सेटिंग्स</string>
+    <string name="premium_feature_custom_timer_desc">5 सेकंड से 5 मिनट तक स्वतंत्र रूप से सेट करें</string>
+    <string name="premium_feature_smart_block_title">स्मार्ट ब्लॉकिंग</string>
+    <string name="premium_feature_smart_block_desc">पहले Shorts की अनुमति दें, स्क्रॉल पर ब्लॉक करें</string>
+    <string name="premium_feature_prevent_disable_title">आवेगपूर्ण अक्षम करने को रोकें</string>
+    <string name="premium_feature_prevent_disable_desc">ब्लॉकिंग को अक्षम करने के लिए पुष्टि आवश्यक</string>
+    <string name="premium_feature_prevent_delete_title">ऐप हटाने की सुरक्षा</string>
+    <string name="premium_feature_prevent_delete_desc">आवेगपूर्ण ऐप अनइंस्टॉलेशन को रोकें</string>
+
+    <!-- Promo Code -->
+    <string name="promo_button_text">प्रोमो कोड है?</string>
+    <string name="promo_dialog_title">प्रोमो कोड दर्ज करें</string>
+    <string name="promo_dialog_subtitle">अपना Lifetime Premium कोड दर्ज करें</string>
+    <string name="promo_dialog_cancel">रद्द करें</string>
+    <string name="promo_dialog_confirm">पुष्टि करें</string>
+    <string name="promo_error_empty">कृपया एक प्रोमो कोड दर्ज करें</string>
+    <string name="promo_error_invalid_format">अमान्य प्रारूप\n(उदाहरण: UNSHORT-XXXXX-XXXXXXXX)</string>
+    <string name="promo_error_invalid_code">अमान्य प्रोमो कोड</string>
+    <string name="promo_error_unknown">त्रुटि हुई: %s</string>
+    <string name="promo_success">Lifetime Premium सक्रिय किया गया!</string>
+    <string name="promo_lifetime_status">Lifetime Premium (स्थायी)</string>
+    <string name="promo_no_expiry">कोई समाप्ति नहीं</string>
+    <string name="promo_not_applicable">लागू नहीं</string>
+
+</resources>

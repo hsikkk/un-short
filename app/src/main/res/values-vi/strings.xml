@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">un:short</string>
+    <string name="accessibility_service_description">Phát hiện video ngắn và thêm khoảng dừng có chủ đích bằng cách lật điện thoại để giúp thoát khỏi sự nghiện.</string>
+    <string name="flip_phone_title">Chờ một chút! 🤚</string>
+    <string name="flip_phone_message">Để xem Shorts,\nlật điện thoại và đợi 30 giây</string>
+    <string name="time_remaining">Thời gian còn lại: %d giây</string>
+    <string name="flip_detected">Điện thoại đã lật ✓</string>
+    <string name="flip_required">Vui lòng lật điện thoại</string>
+
+    <!-- BlockOverlay Messages -->
+    <string name="block_message_before_timer">Bây giờ,\nbạn có thực sự cần shorts không?</string>
+    <string name="block_message_after_timer">Bạn đã đợi đến đây rồi.\nVẫn muốn xem chứ?</string>
+    <string name="block_button_think_again">Suy nghĩ lại</string>
+    <string name="block_button_close">Chỉ đóng</string>
+    <string name="block_button_no">Không, tôi sẽ không xem</string>
+    <string name="block_button_yes">Có, tôi sẽ xem</string>
+
+    <!-- Timer Success Screen -->
+    <string name="timer_success_title">Bạn đã làm được!</string>
+    <string name="timer_success_message">Tuyệt vời khi dừng lại\nBây giờ bạn có thể đưa ra lựa chọn khôn ngoan hơn</string>
+
+    <!-- Timer Screen -->
+    <string name="timer_instruction_title">Dành một chút thời gian</string>
+    <string name="timer_instruction_message_onboarding">Lật điện thoại và suy nghĩ xem\nbạn có thực sự cần xem không</string>
+    <string name="timer_instruction_message_full">Lật điện thoại và đợi 30 giây.\nBạn sẽ hối hận về lựa chọn này trong 30 phút nữa không?\nBạn thực sự cần gì ngay bây giờ?</string>
+
+    <!-- Main Activity -->
+    <string name="main_subtitle">Thoát khỏi nội dung dạng ngắn.\nThói quen nhỏ cho việc tiêu thụ có chủ đích.</string>
+    <string name="status_on">BẬT</string>
+    <string name="status_off">TẮT</string>
+    <string name="status_active">ĐANG HOẠT ĐỘNG</string>
+    <string name="status_inactive">KHÔNG HOẠT ĐỘNG</string>
+    <string name="toggle_description">Nút bật tắt nguồn</string>
+    <string name="blocked_apps_title">Ứng dụng bị chặn: </string>
+    <string name="app_youtube_shorts">YouTube Shorts</string>
+    <string name="app_instagram_reels">Instagram Reels</string>
+    <string name="app_facebook_reels">Facebook Reels</string>
+    <string name="app_naver_shorts">Naver Shorts</string>
+    <string name="blocked_apps_notice">• Chỉ hiển thị các ứng dụng đã cài đặt\n• Một số phiên bản ứng dụng có thể không bị chặn</string>
+    <string name="stats_watch_time">Thời gian xem</string>
+    <string name="stats_entry_count">Lần truy cập</string>
+    <string name="stats_consumption_count">Đã xem</string>
+    <string name="time_unit_hour">giờ</string>
+    <string name="time_unit_minute">ph</string>
+    <string name="time_unit_second">giây</string>
+    <string name="permission_warning_icon">⚠</string>
+    <string name="permission_warning_title">Yêu cầu quyền</string>
+    <string name="permission_warning_message">Để sử dụng tính năng chặn,\ncần có quyền truy cập và hiển thị trên các ứng dụng khác</string>
+    <string name="permission_setup_button">Thiết lập quyền</string>
+
+    <!-- Settings Tip Banner -->
+    <string name="settings_tip_message">Nhấn vào menu [⋮] ở góc trên bên phải để khám phá thêm tính năng</string>
+    <string name="settings_tip_button">Đi →</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_title">Cài đặt</string>
+    <string name="settings_section_blocking">Cài đặt chặn</string>
+    <string name="settings_section_protection">Bảo vệ</string>
+    <string name="settings_section_other">Khác</string>
+    <string name="settings_delay_time_title">Thời gian trзадержка</string>
+    <string name="settings_delay_time_desc">Đặt thời gian chờ trước khi truy cập shorts</string>
+    <string name="settings_delay_time_value">%d giây</string>
+    <string name="settings_haptic_title">Phản hồi rung</string>
+    <string name="settings_haptic_desc">Thông báo rung khi bộ đếm thời gian hoàn thành</string>
+    <string name="settings_block_scrolled_title">Chỉ chặn Shorts đã cuộn</string>
+    <string name="settings_block_scrolled_desc">Cho phép shorts đầu tiên, chặn khi cuộn</string>
+    <string name="settings_prevent_disable_title">Ngăn tắt bốc đồng</string>
+    <string name="settings_prevent_disable_desc">Ngăn tắt không chủ ý</string>
+    <string name="settings_feedback">Gửi phản hồi</string>
+    <string name="settings_share">Chia sẻ ứng dụng</string>
+    <string name="settings_review">Để lại đánh giá</string>
+    <string name="settings_version">Thông tin phiên bản</string>
+    <string name="settings_version_value">v%s</string>
+    <string name="settings_version_default">v1.0.0</string>
+
+    <!-- Permission Setup Activity -->
+    <string name="permission_back_button">Quay lại</string>
+    <string name="permission_title">Thiết lập quyền</string>
+    <string name="permission_subtitle">Vui lòng cho phép quyền\nđể chặn shorts</string>
+    <string name="permission_done">Hoàn thành</string>
+
+    <!-- Permission Cards -->
+    <string name="permission_number_1">1</string>
+    <string name="permission_number_2">2</string>
+
+    <!-- Accessibility Setup Card -->
+    <string name="permission_accessibility">Thiết lập dịch vụ truy cập</string>
+    <string name="permission_accessibility_completed">Dịch vụ truy cập ✓</string>
+    <string name="permission_overlay">Hiển thị trên các ứng dụng khác</string>
+    <string name="permission_overlay_completed">Hiển thị trên các ứng dụng khác ✓</string>
+    <string name="permission_why">Tại sao cần điều này?</string>
+    <string name="permission_accessibility_reason">Cần để phát hiện khi màn hình shorts được mở.</string>
+    <string name="permission_overlay_reason">Cần để hiển thị màn hình chặn trên shorts.</string>
+    <string name="permission_not_set">Chưa thiết lập</string>
+    <string name="permission_completed">Thiết lập hoàn tất</string>
+    <string name="permission_go_to_settings">Đi đến cài đặt</string>
+    <string name="permission_enable_permission">Bật quyền</string>
+
+    <!-- Manufacturer-specific Accessibility Guides -->
+    <string name="permission_accessibility_guide_samsung">💡 Tìm [Ứng dụng đã cài đặt] → un:short</string>
+    <string name="permission_accessibility_guide_lg">💡 Tìm [Cài đặt nâng cao] → un:short</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 Tìm [Dịch vụ đã tải xuống] → un:short</string>
+    <string name="permission_accessibility_guide_huawei">💡 Tìm [Dịch vụ đã tải xuống] → un:short</string>
+    <string name="permission_accessibility_guide_oppo">💡 Tìm [Dịch vụ đã cài đặt] → un:short</string>
+    <string name="permission_accessibility_guide_vivo">💡 Tìm [Dịch vụ đã cài đặt] → un:short</string>
+    <string name="permission_accessibility_guide_default">💡 Tìm un:short và bật nó</string>
+
+    <!-- Timer Activity -->
+    <string name="timer_seconds_unit">giây</string>
+    <string name="timer_flip_instruction">Lật điện thoại</string>
+    <string name="timer_breathe_message">Hít thở sâu</string>
+    <string name="timer_skip_button">Hủy</string>
+
+    <!-- Ads -->
+    <string name="ad">QUẢNG CÁO</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_page1_title">Thoát khỏi\nsự nghiện dạng ngắn</string>
+    <string name="onboarding_page1_subtitle">Thói quen nhỏ cho việc tiêu thụ có chủ đích</string>
+    <string name="onboarding_page2_title">Nếu bạn muốn xem shorts,\nhãy dành thời gian suy nghĩ</string>
+    <string name="onboarding_page3_title">Nếu bạn vẫn muốn xem,\nhãy dừng lại ngắn</string>
+    <string name="onboarding_page4_title">Cuối cùng,\nhãy suy nghĩ thêm một lần</string>
+    <string name="onboarding_page5_title">Sẵn sàng bắt đầu?</string>
+    <string name="onboarding_page5_subtitle">Bắt đầu hành trình của bạn hướng tới\nviệc tiêu thụ phương tiện có chủ đích với un:short</string>
+    <string name="onboarding_start_button">Bắt đầu</string>
+    <string name="onboarding_skip">Bỏ qua</string>
+
+    <!-- Delay Time Bottom Sheet -->
+    <string name="delay_time_title">Thời gian trì hoãn</string>
+    <string name="delay_time_desc">Đặt thời gian chờ trước khi truy cập shorts</string>
+    <string name="delay_time_15">15 giây</string>
+    <string name="delay_time_30">30 giây</string>
+    <string name="delay_time_60">60 giây</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_email_app_not_found">Không tìm thấy ứng dụng email</string>
+    <string name="toast_device_admin_enabled">Bảo vệ xóa ứng dụng đã bật</string>
+    <string name="toast_device_admin_cancelled">Bảo vệ xóa ứng dụng đã hủy</string>
+
+    <!-- Share & Feedback -->
+    <string name="feedback_subject">Phản hồi ứng dụng un:short</string>
+    <string name="share_text">Thoát khỏi sự nghiện dạng ngắn!\nBắt đầu tiêu thụ phương tiện có chủ đích với un:short.\n\n%s</string>
+
+    <!-- Device Admin (App Uninstall Protection) -->
+    <string name="device_admin_title">Bảo vệ xóa ứng dụng</string>
+    <string name="device_admin_desc">Ngăn gỡ cài đặt ứng dụng bốc đồng</string>
+    <string name="device_admin_explanation">Đã từng xóa ứng dụng trong giây phút yếu đuối?\n\nun:short ngăn bạn gỡ cài đặt bốc đồng khi quyết tâm lung lay.</string>
+    <string name="device_admin_dialog_title">Bật bảo vệ xóa?</string>
+    <string name="device_admin_dialog_message">Tính năng này thêm bước bổ sung trước khi gỡ cài đặt un:short.\n\nNó giúp bạn chống lại quyết định bốc đồng trong những khoảnh khắc yếu đuối.\n\nBạn có thể tắt tính năng này bất kỳ lúc nào trong Cài đặt → Bảo mật → Ứng dụng quản trị thiết bị.</string>
+    <string name="device_admin_dialog_enable">Bật</string>
+    <string name="device_admin_dialog_cancel">Không phải bây giờ</string>
+    <string name="device_admin_deactivate_title">Tắt bảo vệ?</string>
+    <string name="device_admin_deactivate_message">Để tắt tính năng này, hãy đi đến:\n\nCài đặt → Bảo mật → Ứng dụng quản trị thiết bị → un:short\n\nSau đó nhấn [Tắt]</string>
+    <string name="device_admin_deactivate_button">Đi đến cài đặt</string>
+    <string name="device_admin_receiver_enabled">Bảo vệ xóa ứng dụng un:short đã bật</string>
+    <string name="device_admin_receiver_disable_warning">Tắt bảo vệ xóa cho phép gỡ cài đặt bốc đồng un:short. Tiếp tục?</string>
+    <string name="device_admin_receiver_disabled">Bảo vệ xóa ứng dụng un:short đã tắt</string>
+
+    <!-- Privacy Consent Dialog -->
+    <string name="privacy_dialog_title_simple">Chúng tôi truy cập gì</string>
+
+    <string name="privacy_why_title">Tại sao cần quyền truy cập?</string>
+    <string name="privacy_why_content">un:short sử dụng dịch vụ truy cập để phát hiện nội dung video ngắn.\n\nĐây là chức năng cốt lõi để tự động chặn shorts khi phát hiện.</string>
+
+    <string name="privacy_data_title">Dữ liệu chúng tôi thu thập</string>
+    <string name="privacy_data_collected">✓ Nội dung màn hình (chỉ để phát hiện shorts)\n✓ Tên gói ứng dụng\n✓ Hash siêu dữ liệu video (tạm thời)</string>
+    <string name="privacy_data_not_collected">✗ Thông tin cá nhân (tên, liên hệ, v.v.)\n✗ Lịch sử xem\n✗ Thông tin tài khoản\n✗ Nhập văn bản</string>
+
+    <string name="privacy_usage_title">Cách sử dụng dữ liệu</string>
+    <string name="privacy_usage_content">• Chỉ dùng để phát hiện màn hình shorts\n• Không truyền đến máy chủ (100% ngoại tuyến)\n• Chỉ hash tạm thời để phát hiện thay đổi video\n• Tự động xóa khi đóng ứng dụng</string>
+
+    <string name="privacy_storage_title">Chính sách lưu trữ dữ liệu</string>
+    <string name="privacy_storage_content">• Chỉ lưu trữ ID phiên tạm thời trên thiết bị\n• Xóa ngay lập tức khi khởi động lại ứng dụng/dịch vụ\n• Không bao giờ chia sẻ với bên thứ ba</string>
+
+    <string name="privacy_faq_title">Câu hỏi thường gặp</string>
+    <string name="privacy_faq_content">H: Lịch sử xem có được lưu không?\nĐ: Không. Chỉ giá trị hash được lưu tạm thời.\n\nH: Có chia sẻ dữ liệu với bên thứ ba không?\nĐ: Không. Hoàn toàn hoạt động ngoại tuyến.\n\nH: Tôi có thể thu hồi quyền sau không?\nĐ: Có. Bạn có thể tắt bất kỳ lúc nào trong cài đặt.</string>
+
+    <string name="privacy_btn_agree">Đồng ý &amp; Đi đến cài đặt</string>
+    <string name="privacy_btn_exit">Thoát ứng dụng</string>
+    <string name="privacy_btn_disagree">Không đồng ý</string>
+
+    <!-- Disable Warning Dialog (before timer) -->
+    <string name="disable_warning_title">Chờ một chút</string>
+    <string name="disable_warning_message">Suy nghĩ thêm một lần trước khi tắt nhé?</string>
+    <string name="disable_warning_confirm">Suy nghĩ về nó</string>
+    <string name="disable_warning_cancel">Giữ nó bật</string>
+
+    <!-- Disable Confirmation Dialog -->
+    <string name="disable_dialog_title">Thực sự tắt?</string>
+    <string name="disable_dialog_message">Để tắt, hãy nhập cụm từ bên dưới:</string>
+    <string name="disable_dialog_phrase">disable shorts blocking</string>
+    <string name="disable_dialog_input_hint">Nhập vào đây</string>
+    <string name="disable_dialog_cancel">Hủy</string>
+    <string name="disable_dialog_confirm">Xác nhận</string>
+
+    <!-- Device Admin Disable Dialog -->
+    <string name="device_admin_disable_title">Tắt bảo vệ xóa?</string>
+    <string name="device_admin_disable_message">Bạn có thể tắt bốc đồng. Thực sự tắt?</string>
+    <string name="device_admin_disable_phrase">disable this feature</string>
+
+    <!-- Prevent Impulsive Disable OFF Dialog -->
+    <string name="prevent_impulsive_disable_off_title">Thực sự tắt?</string>
+    <string name="prevent_impulsive_disable_off_message">Để tắt, hãy nhập cụm từ bên dưới:</string>
+    <string name="prevent_impulsive_disable_off_phrase">disable this feature</string>
+
+    <!-- Billing Error Messages -->
+    <string name="billing_error_connection_failed">Không thể kết nối với Google Play. Vui lòng thử lại.</string>
+    <string name="billing_error_sku_not_found">Không thể xử lý yêu cầu. Vui lòng thử lại sau.</string>
+    <string name="billing_error_purchase_failed">Mua hàng thất bại. Vui lòng thử lại.</string>
+    <string name="billing_error_restore_failed">Không thể xử lý yêu cầu. Vui lòng thử lại sau.</string>
+    <string name="billing_error_restore_no_subscription">Không tìm thấy đăng ký hoạt động.</string>
+    <string name="billing_error_unknown">Đã xảy ra lỗi. Vui lòng thử lại sau.</string>
+
+    <!-- Overlay Tip Messages -->
+    <string-array name="overlay_tips">
+        <item>Tìm thêm tùy chọn chặn trong cài đặt</item>
+        <item>30 giây là đủ để đọc một trang</item>
+        <item>Đi bộ 5 phút cảm thấy tốt hơn 30 phút xem shorts</item>
+        <item>Chờ đợi ngắn tạo ra lựa chọn tốt hơn</item>
+        <item>Bạn đang thay đổi thói quen ngay bây giờ</item>
+        <item>Bạn có thực sự cần nội dung này bây giờ?</item>
+        <item>Mở khóa chặn mạnh hơn với Premium</item>
+        <item>Premium: Tùy chỉnh chiến lược chặn của bạn</item>
+    </string-array>
+
+    <!-- Custom Timer (Premium) -->
+    <string name="custom_timer_title">Đặt thời gian chờ</string>
+    <string name="custom_timer_presets">Cài đặt sẵn nhanh</string>
+    <string name="custom_timer_done">Hoàn thành</string>
+    <string name="premium_required_title">✨ Tính năng Premium</string>
+    <string name="premium_required_message">Mở khóa thời gian chờ tùy chỉnh và hơn thế nữa!\n\n• Đặt thời gian chờ tự do (5–300 giây)\n• Chỉ chặn shorts đã cuộn\n• Ngăn tắt bốc đồng\n• Ngăn xóa ứng dụng</string>
+    <string name="premium_button_upgrade">Nâng cấp lên Premium</string>
+    <string name="premium_button_cancel">Không phải bây giờ</string>
+
+    <!-- Premium Banner -->
+    <string name="premium_banner_title">Mở khóa thêm tính năng</string>
+    <string name="premium_banner_subtitle">Tùy chỉnh + Bảo vệ</string>
+    <string name="premium_banner_button">Nâng cấp</string>
+
+    <!-- Premium Upgrade Activity -->
+    <string name="premium_upgrade_title">Premium</string>
+    <string name="premium_upgrade_headline">Nâng cấp lên Premium</string>
+    <string name="premium_upgrade_subtitle">Chặn và bảo vệ mạnh mẽ hơn</string>
+    <string name="premium_upgrade_button">Nâng cấp ngay</string>
+    <string name="premium_upgrade_coming_soon">Hệ thống thanh toán sắp ra mắt!</string>
+
+    <!-- Subscription Management -->
+    <string name="subscription_management">Quản lý đăng ký</string>
+    <string name="subscription_management_desc">Quản lý hoặc hủy đăng ký của bạn</string>
+
+    <!-- Subscription Management Activity -->
+    <string name="subscription_management_title">Đăng ký</string>
+    <string name="subscription_status_active">Đang hoạt động</string>
+    <string name="subscription_status_expired">Đã hết hạn</string>
+    <string name="subscription_start_date">Ngày bắt đầu</string>
+    <string name="subscription_next_billing">Ngày thanh toán tiếp theo</string>
+    <string name="subscription_auto_renew_on">Đã bật tự động gia hạn</string>
+    <string name="subscription_auto_renew_off">Đã tắt tự động gia hạn</string>
+    <string name="subscription_cancel_button">Quản lý hoặc Hủy</string>
+    <string name="subscription_cancel_desc">Để hủy hoặc sửa đổi đăng ký của bạn,\nbạn sẽ được chuyển đến Google Play Store</string>
+    <string name="subscription_info_note">* Ngày ước tính dựa trên thanh toán gần nhất</string>
+
+    <!-- Premium Features -->
+    <string name="premium_feature_ad_free_title">Trải nghiệm không quảng cáo</string>
+    <string name="premium_feature_ad_free_desc">Trải nghiệm sạch sẽ và tập trung</string>
+    <string name="premium_feature_custom_timer_title">Cài đặt bộ đếm tùy chỉnh</string>
+    <string name="premium_feature_custom_timer_desc">Đặt tự do từ 5 giây đến 5 phút</string>
+    <string name="premium_feature_smart_block_title">Chặn thông minh</string>
+    <string name="premium_feature_smart_block_desc">Cho phép shorts đầu tiên, chặn khi cuộn</string>
+    <string name="premium_feature_prevent_disable_title">Ngăn tắt bốc đồng</string>
+    <string name="premium_feature_prevent_disable_desc">Yêu cầu xác nhận để tắt chặn</string>
+    <string name="premium_feature_prevent_delete_title">Bảo vệ xóa ứng dụng</string>
+    <string name="premium_feature_prevent_delete_desc">Ngăn gỡ cài đặt ứng dụng bốc đồng</string>
+
+    <!-- Promo Code -->
+    <string name="promo_button_text">Có mã khuyến mãi?</string>
+    <string name="promo_dialog_title">Nhập mã khuyến mãi</string>
+    <string name="promo_dialog_subtitle">Nhập mã Premium trọn đời của bạn</string>
+    <string name="promo_dialog_cancel">Hủy</string>
+    <string name="promo_dialog_confirm">Xác nhận</string>
+    <string name="promo_error_empty">Vui lòng nhập mã khuyến mãi</string>
+    <string name="promo_error_invalid_format">Định dạng không hợp lệ\n(Ví dụ: UNSHORT-XXXXX-XXXXXXXX)</string>
+    <string name="promo_error_invalid_code">Mã khuyến mãi không hợp lệ</string>
+    <string name="promo_error_unknown">Đã xảy ra lỗi: %s</string>
+    <string name="promo_success">Premium trọn đời đã kích hoạt!</string>
+    <string name="promo_lifetime_status">Premium trọn đời (Vĩnh viễn)</string>
+    <string name="promo_no_expiry">Không hết hạn</string>
+    <string name="promo_not_applicable">Không áp dụng</string>
+
+</resources>

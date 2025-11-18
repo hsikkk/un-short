@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">un:short</string>
+    <string name="accessibility_service_description">偵測短影音並透過翻轉手機添加停頓時刻,幫助擺脫成癮。</string>
+    <string name="flip_phone_title">等一下! 🤚</string>
+    <string name="flip_phone_message">要觀看短影音,\n請翻轉手機並等待30秒</string>
+    <string name="time_remaining">剩餘時間:%d秒</string>
+    <string name="flip_detected">手機已翻轉 ✓</string>
+    <string name="flip_required">請翻轉手機</string>
+
+    <!-- BlockOverlay Messages -->
+    <string name="block_message_before_timer">現在,\n你真的需要看短影音嗎?</string>
+    <string name="block_message_after_timer">你已經等了這麼久。\n還要看嗎?</string>
+    <string name="block_button_think_again">再想想</string>
+    <string name="block_button_close">直接關閉</string>
+    <string name="block_button_no">不,我不看</string>
+    <string name="block_button_yes">是的,我要看</string>
+
+    <!-- Timer Success Screen -->
+    <string name="timer_success_title">你做到了!</string>
+    <string name="timer_success_message">停頓一下很棒\n現在你可以做出更明智的選擇</string>
+
+    <!-- Timer Screen -->
+    <string name="timer_instruction_title">停下來想一想</string>
+    <string name="timer_instruction_message_onboarding">翻轉手機並思考一下\n你是否真的需要觀看</string>
+    <string name="timer_instruction_message_full">翻轉手機並等待30秒。\n30分鐘後你會後悔這個選擇嗎?\n你現在真正需要的是什麼?</string>
+
+    <!-- Main Activity -->
+    <string name="main_subtitle">擺脫短影音內容。\n有意識消費的小習慣。</string>
+    <string name="status_on">開</string>
+    <string name="status_off">關</string>
+    <string name="status_active">啟用</string>
+    <string name="status_inactive">未啟用</string>
+    <string name="toggle_description">電源開關</string>
+    <string name="blocked_apps_title">已封鎖應用程式: </string>
+    <string name="app_youtube_shorts">YouTube Shorts</string>
+    <string name="app_instagram_reels">Instagram Reels</string>
+    <string name="app_facebook_reels">Facebook Reels</string>
+    <string name="app_naver_shorts">Naver Shorts</string>
+    <string name="blocked_apps_notice">• 僅顯示已安裝的應用程式\n• 某些應用程式版本可能無法封鎖</string>
+    <string name="stats_watch_time">觀看時間</string>
+    <string name="stats_entry_count">進入</string>
+    <string name="stats_consumption_count">已觀看</string>
+    <string name="time_unit_hour">時</string>
+    <string name="time_unit_minute">分</string>
+    <string name="time_unit_second">秒</string>
+    <string name="permission_warning_icon">⚠</string>
+    <string name="permission_warning_title">需要權限</string>
+    <string name="permission_warning_message">要使用封鎖功能,\n需要無障礙功能和懸浮視窗權限</string>
+    <string name="permission_setup_button">設定權限</string>
+
+    <!-- Settings Tip Banner -->
+    <string name="settings_tip_message">點擊右上角的[⋮]選單以探索更多功能</string>
+    <string name="settings_tip_button">前往 →</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_title">設定</string>
+    <string name="settings_section_blocking">封鎖設定</string>
+    <string name="settings_section_protection">保護</string>
+    <string name="settings_section_other">其他</string>
+    <string name="settings_delay_time_title">延遲時間</string>
+    <string name="settings_delay_time_desc">設定存取短影音前的等待時間</string>
+    <string name="settings_delay_time_value">%d秒</string>
+    <string name="settings_haptic_title">觸覺回饋</string>
+    <string name="settings_haptic_desc">計時器完成時振動通知</string>
+    <string name="settings_block_scrolled_title">僅封鎖滾動的短影音</string>
+    <string name="settings_block_scrolled_desc">允許第一個短影音,滾動時封鎖</string>
+    <string name="settings_prevent_disable_title">防止衝動關閉</string>
+    <string name="settings_prevent_disable_desc">防止意外關閉</string>
+    <string name="settings_feedback">傳送意見回饋</string>
+    <string name="settings_share">分享應用程式</string>
+    <string name="settings_review">發表評論</string>
+    <string name="settings_version">版本資訊</string>
+    <string name="settings_version_value">v%s</string>
+    <string name="settings_version_default">v1.0.0</string>
+
+    <!-- Permission Setup Activity -->
+    <string name="permission_back_button">返回</string>
+    <string name="permission_title">權限設定</string>
+    <string name="permission_subtitle">請允許權限\n以封鎖短影音</string>
+    <string name="permission_done">完成</string>
+
+    <!-- Permission Cards -->
+    <string name="permission_number_1">1</string>
+    <string name="permission_number_2">2</string>
+
+    <!-- Accessibility Setup Card -->
+    <string name="permission_accessibility">無障礙功能服務設定</string>
+    <string name="permission_accessibility_completed">無障礙功能服務 ✓</string>
+    <string name="permission_overlay">顯示在其他應用程式上層</string>
+    <string name="permission_overlay_completed">顯示在其他應用程式上層 ✓</string>
+    <string name="permission_why">為什麼需要這個?</string>
+    <string name="permission_accessibility_reason">偵測短影音畫面開啟時所需。</string>
+    <string name="permission_overlay_reason">在短影音上顯示封鎖畫面所需。</string>
+    <string name="permission_not_set">尚未設定</string>
+    <string name="permission_completed">設定完成</string>
+    <string name="permission_go_to_settings">前往設定</string>
+    <string name="permission_enable_permission">啟用權限</string>
+
+    <!-- Manufacturer-specific Accessibility Guides -->
+    <string name="permission_accessibility_guide_samsung">💡 尋找[已安裝的應用程式] → un:short</string>
+    <string name="permission_accessibility_guide_lg">💡 尋找[進階設定] → un:short</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 尋找[已下載的服務] → un:short</string>
+    <string name="permission_accessibility_guide_huawei">💡 尋找[已下載的服務] → un:short</string>
+    <string name="permission_accessibility_guide_oppo">💡 尋找[已安裝的服務] → un:short</string>
+    <string name="permission_accessibility_guide_vivo">💡 尋找[已安裝的服務] → un:short</string>
+    <string name="permission_accessibility_guide_default">💡 找到un:short並開啟</string>
+
+    <!-- Timer Activity -->
+    <string name="timer_seconds_unit">秒</string>
+    <string name="timer_flip_instruction">翻轉手機</string>
+    <string name="timer_breathe_message">深呼吸</string>
+    <string name="timer_skip_button">取消</string>
+
+    <!-- Ads -->
+    <string name="ad">廣告</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_page1_title">擺脫\n短影音成癮</string>
+    <string name="onboarding_page1_subtitle">有意識消費的小習慣</string>
+    <string name="onboarding_page2_title">如果你想看短影音,\n先停下來想一想</string>
+    <string name="onboarding_page3_title">如果你還想看,\n稍作停頓</string>
+    <string name="onboarding_page4_title">最後,\n再想一次</string>
+    <string name="onboarding_page5_title">準備好開始了嗎?</string>
+    <string name="onboarding_page5_subtitle">與un:short一起\n開始有意識的媒體消費之旅</string>
+    <string name="onboarding_start_button">開始</string>
+    <string name="onboarding_skip">跳過</string>
+
+    <!-- Delay Time Bottom Sheet -->
+    <string name="delay_time_title">延遲時間</string>
+    <string name="delay_time_desc">設定存取短影音前的等待時間</string>
+    <string name="delay_time_15">15秒</string>
+    <string name="delay_time_30">30秒</string>
+    <string name="delay_time_60">60秒</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_email_app_not_found">未找到電子郵件應用程式</string>
+    <string name="toast_device_admin_enabled">應用程式刪除保護已啟用</string>
+    <string name="toast_device_admin_cancelled">應用程式刪除保護已取消</string>
+
+    <!-- Share & Feedback -->
+    <string name="feedback_subject">un:short應用程式意見回饋</string>
+    <string name="share_text">擺脫短影音成癮!\n使用un:short開始有意識的媒體消費。\n\n%s</string>
+
+    <!-- Device Admin (App Uninstall Protection) -->
+    <string name="device_admin_title">應用程式刪除保護</string>
+    <string name="device_admin_desc">防止衝動解除安裝應用程式</string>
+    <string name="device_admin_explanation">曾在意志薄弱時刪除應用程式嗎?\n\nun:short可以防止你在決心動搖時衝動解除安裝。</string>
+    <string name="device_admin_dialog_title">啟用刪除保護?</string>
+    <string name="device_admin_dialog_message">此功能在解除安裝un:short之前新增額外步驟。\n\n它可以幫助你抵制意志薄弱時的衝動決定。\n\n你可以隨時在設定 → 安全性 → 裝置管理應用程式中停用此功能。</string>
+    <string name="device_admin_dialog_enable">啟用</string>
+    <string name="device_admin_dialog_cancel">暫不</string>
+    <string name="device_admin_deactivate_title">停用保護?</string>
+    <string name="device_admin_deactivate_message">要停用此功能,請前往:\n\n設定 → 安全性 → 裝置管理應用程式 → un:short\n\n然後點擊[停用]</string>
+    <string name="device_admin_deactivate_button">前往設定</string>
+    <string name="device_admin_receiver_enabled">un:short應用程式刪除保護已啟用</string>
+    <string name="device_admin_receiver_disable_warning">停用刪除保護將允許衝動解除安裝un:short。繼續?</string>
+    <string name="device_admin_receiver_disabled">un:short應用程式刪除保護已停用</string>
+
+    <!-- Privacy Consent Dialog -->
+    <string name="privacy_dialog_title_simple">我們存取的內容</string>
+
+    <string name="privacy_why_title">為什麼需要無障礙功能權限?</string>
+    <string name="privacy_why_content">un:short使用無障礙功能服務偵測短影音內容。\n\n這是偵測到短影音時自動封鎖的核心功能。</string>
+
+    <string name="privacy_data_title">我們收集的資料</string>
+    <string name="privacy_data_collected">✓ 螢幕內容(僅用於短影音偵測)\n✓ 應用程式套件名稱\n✓ 影片中繼資料雜湊值(暫時)</string>
+    <string name="privacy_data_not_collected">✗ 個人資訊(姓名、聯絡人等)\n✗ 觀看記錄\n✗ 帳戶資訊\n✗ 文字輸入</string>
+
+    <string name="privacy_usage_title">資料使用方式</string>
+    <string name="privacy_usage_content">• 僅用於短影音畫面偵測\n• 不傳輸到伺服器(100%離線)\n• 僅用於影片變更偵測的暫時雜湊值\n• 應用程式關閉時自動刪除</string>
+
+    <string name="privacy_storage_title">資料儲存政策</string>
+    <string name="privacy_storage_content">• 僅在裝置上暫時儲存工作階段ID\n• 應用程式/服務重新啟動時立即刪除\n• 絕不與第三方共用</string>
+
+    <string name="privacy_faq_title">常見問題</string>
+    <string name="privacy_faq_content">問:是否儲存觀看記錄?\n答:否。僅暫時儲存雜湊值。\n\n問:是否與第三方共用資料?\n答:否。完全離線運作。\n\n問:以後可以撤銷權限嗎?\n答:可以。你可以隨時在設定中停用。</string>
+
+    <string name="privacy_btn_agree">同意並前往設定</string>
+    <string name="privacy_btn_exit">結束應用程式</string>
+    <string name="privacy_btn_disagree">不同意</string>
+
+    <!-- Disable Warning Dialog (before timer) -->
+    <string name="disable_warning_title">等一下</string>
+    <string name="disable_warning_message">在關閉之前要不要再想一次?</string>
+    <string name="disable_warning_confirm">想一想</string>
+    <string name="disable_warning_cancel">保持啟用</string>
+
+    <!-- Disable Confirmation Dialog -->
+    <string name="disable_dialog_title">真的要關閉嗎?</string>
+    <string name="disable_dialog_message">要關閉,請輸入以下短語:</string>
+    <string name="disable_dialog_phrase">disable shorts blocking</string>
+    <string name="disable_dialog_input_hint">在此輸入</string>
+    <string name="disable_dialog_cancel">取消</string>
+    <string name="disable_dialog_confirm">確認</string>
+
+    <!-- Device Admin Disable Dialog -->
+    <string name="device_admin_disable_title">停用刪除保護?</string>
+    <string name="device_admin_disable_message">你可能會衝動停用。真的要停用嗎?</string>
+    <string name="device_admin_disable_phrase">disable this feature</string>
+
+    <!-- Prevent Impulsive Disable OFF Dialog -->
+    <string name="prevent_impulsive_disable_off_title">真的要關閉嗎?</string>
+    <string name="prevent_impulsive_disable_off_message">要關閉,請輸入以下短語:</string>
+    <string name="prevent_impulsive_disable_off_phrase">disable this feature</string>
+
+    <!-- Billing Error Messages -->
+    <string name="billing_error_connection_failed">無法連接到Google Play。請重試。</string>
+    <string name="billing_error_sku_not_found">無法處理要求。請稍後重試。</string>
+    <string name="billing_error_purchase_failed">購買失敗。請重試。</string>
+    <string name="billing_error_restore_failed">無法處理要求。請稍後重試。</string>
+    <string name="billing_error_restore_no_subscription">未找到有效訂閱。</string>
+    <string name="billing_error_unknown">發生錯誤。請稍後重試。</string>
+
+    <!-- Overlay Tip Messages -->
+    <string-array name="overlay_tips">
+        <item>在設定中尋找更多封鎖選項</item>
+        <item>30秒足以讀一頁</item>
+        <item>5分鐘散步比30分鐘短影音感覺更好</item>
+        <item>短暫的等待創造更好的選擇</item>
+        <item>你正在改變你的習慣</item>
+        <item>你現在真的需要這個內容嗎?</item>
+        <item>用進階版解鎖更強的封鎖</item>
+        <item>進階版:自訂你的封鎖策略</item>
+    </string-array>
+
+    <!-- Custom Timer (Premium) -->
+    <string name="custom_timer_title">設定等待時間</string>
+    <string name="custom_timer_presets">快速預設</string>
+    <string name="custom_timer_done">完成</string>
+    <string name="premium_required_title">✨ 進階功能</string>
+    <string name="premium_required_message">解鎖自訂等待時間等功能!\n\n• 自由設定等待時間(5-300秒)\n• 僅封鎖滾動的短影音\n• 防止衝動關閉\n• 防止應用程式刪除</string>
+    <string name="premium_button_upgrade">升級到進階版</string>
+    <string name="premium_button_cancel">暫不</string>
+
+    <!-- Premium Banner -->
+    <string name="premium_banner_title">解鎖更多功能</string>
+    <string name="premium_banner_subtitle">自訂 + 保護</string>
+    <string name="premium_banner_button">升級</string>
+
+    <!-- Premium Upgrade Activity -->
+    <string name="premium_upgrade_title">進階版</string>
+    <string name="premium_upgrade_headline">升級到進階版</string>
+    <string name="premium_upgrade_subtitle">更強的封鎖和保護</string>
+    <string name="premium_upgrade_button">立即升級</string>
+    <string name="premium_upgrade_coming_soon">支付系統即將推出!</string>
+
+    <!-- Subscription Management -->
+    <string name="subscription_management">管理訂閱</string>
+    <string name="subscription_management_desc">管理或取消訂閱</string>
+
+    <!-- Subscription Management Activity -->
+    <string name="subscription_management_title">訂閱</string>
+    <string name="subscription_status_active">啟用</string>
+    <string name="subscription_status_expired">已過期</string>
+    <string name="subscription_start_date">開始日期</string>
+    <string name="subscription_next_billing">下次計費日期</string>
+    <string name="subscription_auto_renew_on">已啟用自動續訂</string>
+    <string name="subscription_auto_renew_off">已停用自動續訂</string>
+    <string name="subscription_cancel_button">管理或取消</string>
+    <string name="subscription_cancel_desc">要取消或修改訂閱,\n你將被引導至Google Play商店</string>
+    <string name="subscription_info_note">* 基於上次計費的估計日期</string>
+
+    <!-- Premium Features -->
+    <string name="premium_feature_ad_free_title">無廣告體驗</string>
+    <string name="premium_feature_ad_free_desc">清爽專注的體驗</string>
+    <string name="premium_feature_custom_timer_title">自訂計時器設定</string>
+    <string name="premium_feature_custom_timer_desc">從5秒到5分鐘自由設定</string>
+    <string name="premium_feature_smart_block_title">智慧封鎖</string>
+    <string name="premium_feature_smart_block_desc">允許第一個短影音,滾動時封鎖</string>
+    <string name="premium_feature_prevent_disable_title">防止衝動關閉</string>
+    <string name="premium_feature_prevent_disable_desc">關閉封鎖需要確認</string>
+    <string name="premium_feature_prevent_delete_title">應用程式刪除保護</string>
+    <string name="premium_feature_prevent_delete_desc">防止衝動解除安裝應用程式</string>
+
+    <!-- Promo Code -->
+    <string name="promo_button_text">有促銷代碼?</string>
+    <string name="promo_dialog_title">輸入促銷代碼</string>
+    <string name="promo_dialog_subtitle">輸入你的終身進階版代碼</string>
+    <string name="promo_dialog_cancel">取消</string>
+    <string name="promo_dialog_confirm">確認</string>
+    <string name="promo_error_empty">請輸入促銷代碼</string>
+    <string name="promo_error_invalid_format">無效格式\n(範例: UNSHORT-XXXXX-XXXXXXXX)</string>
+    <string name="promo_error_invalid_code">無效促銷代碼</string>
+    <string name="promo_error_unknown">發生錯誤: %s</string>
+    <string name="promo_success">終身進階版已啟用!</string>
+    <string name="promo_lifetime_status">終身進階版(永久)</string>
+    <string name="promo_no_expiry">無到期時間</string>
+    <string name="promo_not_applicable">不適用</string>
+
+</resources>

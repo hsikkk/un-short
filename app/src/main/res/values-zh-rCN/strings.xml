@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">un:short</string>
+    <string name="accessibility_service_description">检测短视频并通过翻转手机添加停顿时刻,帮助摆脱成瘾。</string>
+    <string name="flip_phone_title">等一下! 🤚</string>
+    <string name="flip_phone_message">要观看短视频,\n请翻转手机并等待30秒</string>
+    <string name="time_remaining">剩余时间:%d秒</string>
+    <string name="flip_detected">手机已翻转 ✓</string>
+    <string name="flip_required">请翻转手机</string>
+
+    <!-- BlockOverlay Messages -->
+    <string name="block_message_before_timer">现在,\n你真的需要看短视频吗?</string>
+    <string name="block_message_after_timer">你已经等了这么久。\n还要看吗?</string>
+    <string name="block_button_think_again">再想想</string>
+    <string name="block_button_close">直接关闭</string>
+    <string name="block_button_no">不,我不看</string>
+    <string name="block_button_yes">是的,我要看</string>
+
+    <!-- Timer Success Screen -->
+    <string name="timer_success_title">你做到了!</string>
+    <string name="timer_success_message">停顿一下很棒\n现在你可以做出更明智的选择</string>
+
+    <!-- Timer Screen -->
+    <string name="timer_instruction_title">停下来想一想</string>
+    <string name="timer_instruction_message_onboarding">翻转手机并思考一下\n你是否真的需要观看</string>
+    <string name="timer_instruction_message_full">翻转手机并等待30秒。\n30分钟后你会后悔这个选择吗?\n你现在真正需要的是什么?</string>
+
+    <!-- Main Activity -->
+    <string name="main_subtitle">摆脱短视频内容。\n有意识消费的小习惯。</string>
+    <string name="status_on">开</string>
+    <string name="status_off">关</string>
+    <string name="status_active">激活</string>
+    <string name="status_inactive">未激活</string>
+    <string name="toggle_description">电源开关</string>
+    <string name="blocked_apps_title">已屏蔽应用: </string>
+    <string name="app_youtube_shorts">YouTube Shorts</string>
+    <string name="app_instagram_reels">Instagram Reels</string>
+    <string name="app_facebook_reels">Facebook Reels</string>
+    <string name="app_naver_shorts">Naver Shorts</string>
+    <string name="blocked_apps_notice">• 仅显示已安装的应用\n• 某些应用版本可能无法屏蔽</string>
+    <string name="stats_watch_time">观看时间</string>
+    <string name="stats_entry_count">进入</string>
+    <string name="stats_consumption_count">已观看</string>
+    <string name="time_unit_hour">时</string>
+    <string name="time_unit_minute">分</string>
+    <string name="time_unit_second">秒</string>
+    <string name="permission_warning_icon">⚠</string>
+    <string name="permission_warning_title">需要权限</string>
+    <string name="permission_warning_message">要使用屏蔽功能,\n需要辅助功能和悬浮窗权限</string>
+    <string name="permission_setup_button">设置权限</string>
+
+    <!-- Settings Tip Banner -->
+    <string name="settings_tip_message">点击右上角的[⋮]菜单以探索更多功能</string>
+    <string name="settings_tip_button">前往 →</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_title">设置</string>
+    <string name="settings_section_blocking">屏蔽设置</string>
+    <string name="settings_section_protection">保护</string>
+    <string name="settings_section_other">其他</string>
+    <string name="settings_delay_time_title">延迟时间</string>
+    <string name="settings_delay_time_desc">设置访问短视频前的等待时间</string>
+    <string name="settings_delay_time_value">%d秒</string>
+    <string name="settings_haptic_title">触觉反馈</string>
+    <string name="settings_haptic_desc">计时器完成时振动通知</string>
+    <string name="settings_block_scrolled_title">仅屏蔽滚动的短视频</string>
+    <string name="settings_block_scrolled_desc">允许第一个短视频,滚动时屏蔽</string>
+    <string name="settings_prevent_disable_title">防止冲动关闭</string>
+    <string name="settings_prevent_disable_desc">防止意外关闭</string>
+    <string name="settings_feedback">发送反馈</string>
+    <string name="settings_share">分享应用</string>
+    <string name="settings_review">发表评论</string>
+    <string name="settings_version">版本信息</string>
+    <string name="settings_version_value">v%s</string>
+    <string name="settings_version_default">v1.0.0</string>
+
+    <!-- Permission Setup Activity -->
+    <string name="permission_back_button">返回</string>
+    <string name="permission_title">权限设置</string>
+    <string name="permission_subtitle">请允许权限\n以屏蔽短视频</string>
+    <string name="permission_done">完成</string>
+
+    <!-- Permission Cards -->
+    <string name="permission_number_1">1</string>
+    <string name="permission_number_2">2</string>
+
+    <!-- Accessibility Setup Card -->
+    <string name="permission_accessibility">辅助功能服务设置</string>
+    <string name="permission_accessibility_completed">辅助功能服务 ✓</string>
+    <string name="permission_overlay">显示在其他应用上层</string>
+    <string name="permission_overlay_completed">显示在其他应用上层 ✓</string>
+    <string name="permission_why">为什么需要这个?</string>
+    <string name="permission_accessibility_reason">检测短视频屏幕打开时所需。</string>
+    <string name="permission_overlay_reason">在短视频上显示屏蔽屏幕所需。</string>
+    <string name="permission_not_set">尚未设置</string>
+    <string name="permission_completed">设置完成</string>
+    <string name="permission_go_to_settings">前往设置</string>
+    <string name="permission_enable_permission">启用权限</string>
+
+    <!-- Manufacturer-specific Accessibility Guides -->
+    <string name="permission_accessibility_guide_samsung">💡 查找[已安装的应用] → un:short</string>
+    <string name="permission_accessibility_guide_lg">💡 查找[高级设置] → un:short</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 查找[已下载的服务] → un:short</string>
+    <string name="permission_accessibility_guide_huawei">💡 查找[已下载的服务] → un:short</string>
+    <string name="permission_accessibility_guide_oppo">💡 查找[已安装的服务] → un:short</string>
+    <string name="permission_accessibility_guide_vivo">💡 查找[已安装的服务] → un:short</string>
+    <string name="permission_accessibility_guide_default">💡 找到un:short并打开</string>
+
+    <!-- Timer Activity -->
+    <string name="timer_seconds_unit">秒</string>
+    <string name="timer_flip_instruction">翻转手机</string>
+    <string name="timer_breathe_message">深呼吸</string>
+    <string name="timer_skip_button">取消</string>
+
+    <!-- Ads -->
+    <string name="ad">广告</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_page1_title">摆脱\n短视频成瘾</string>
+    <string name="onboarding_page1_subtitle">有意识消费的小习惯</string>
+    <string name="onboarding_page2_title">如果你想看短视频,\n先停下来想一想</string>
+    <string name="onboarding_page3_title">如果你还想看,\n稍作停顿</string>
+    <string name="onboarding_page4_title">最后,\n再想一次</string>
+    <string name="onboarding_page5_title">准备好开始了吗?</string>
+    <string name="onboarding_page5_subtitle">与un:short一起\n开始有意识的媒体消费之旅</string>
+    <string name="onboarding_start_button">开始</string>
+    <string name="onboarding_skip">跳过</string>
+
+    <!-- Delay Time Bottom Sheet -->
+    <string name="delay_time_title">延迟时间</string>
+    <string name="delay_time_desc">设置访问短视频前的等待时间</string>
+    <string name="delay_time_15">15秒</string>
+    <string name="delay_time_30">30秒</string>
+    <string name="delay_time_60">60秒</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_email_app_not_found">未找到电子邮件应用</string>
+    <string name="toast_device_admin_enabled">应用删除保护已启用</string>
+    <string name="toast_device_admin_cancelled">应用删除保护已取消</string>
+
+    <!-- Share & Feedback -->
+    <string name="feedback_subject">un:short应用反馈</string>
+    <string name="share_text">摆脱短视频成瘾!\n使用un:short开始有意识的媒体消费。\n\n%s</string>
+
+    <!-- Device Admin (App Uninstall Protection) -->
+    <string name="device_admin_title">应用删除保护</string>
+    <string name="device_admin_desc">防止冲动卸载应用</string>
+    <string name="device_admin_explanation">曾在意志薄弱时删除应用吗?\n\nun:short可以防止你在决心动摇时冲动卸载。</string>
+    <string name="device_admin_dialog_title">启用删除保护?</string>
+    <string name="device_admin_dialog_message">此功能在卸载un:short之前添加额外步骤。\n\n它可以帮助你抵制意志薄弱时的冲动决定。\n\n你可以随时在设置 → 安全 → 设备管理器应用中停用此功能。</string>
+    <string name="device_admin_dialog_enable">启用</string>
+    <string name="device_admin_dialog_cancel">暂不</string>
+    <string name="device_admin_deactivate_title">停用保护?</string>
+    <string name="device_admin_deactivate_message">要禁用此功能,请转到:\n\n设置 → 安全 → 设备管理器应用 → un:short\n\n然后点击[停用]</string>
+    <string name="device_admin_deactivate_button">前往设置</string>
+    <string name="device_admin_receiver_enabled">un:short应用删除保护已启用</string>
+    <string name="device_admin_receiver_disable_warning">禁用删除保护将允许冲动卸载un:short。继续?</string>
+    <string name="device_admin_receiver_disabled">un:short应用删除保护已禁用</string>
+
+    <!-- Privacy Consent Dialog -->
+    <string name="privacy_dialog_title_simple">我们访问的内容</string>
+
+    <string name="privacy_why_title">为什么需要辅助功能权限?</string>
+    <string name="privacy_why_content">un:short使用辅助功能服务检测短视频内容。\n\n这是检测到短视频时自动屏蔽的核心功能。</string>
+
+    <string name="privacy_data_title">我们收集的数据</string>
+    <string name="privacy_data_collected">✓ 屏幕内容(仅用于短视频检测)\n✓ 应用包名\n✓ 视频元数据哈希(临时)</string>
+    <string name="privacy_data_not_collected">✗ 个人信息(姓名、联系人等)\n✗ 观看历史\n✗ 账户信息\n✗ 文本输入</string>
+
+    <string name="privacy_usage_title">数据使用方式</string>
+    <string name="privacy_usage_content">• 仅用于短视频屏幕检测\n• 不传输到服务器(100%离线)\n• 仅用于视频更改检测的临时哈希\n• 应用关闭时自动删除</string>
+
+    <string name="privacy_storage_title">数据存储策略</string>
+    <string name="privacy_storage_content">• 仅在设备上临时存储会话ID\n• 应用/服务重启时立即删除\n• 绝不与第三方共享</string>
+
+    <string name="privacy_faq_title">常见问题</string>
+    <string name="privacy_faq_content">问:是否保存观看历史?\n答:否。仅临时存储哈希值。\n\n问:是否与第三方共享数据?\n答:否。完全离线运行。\n\n问:以后可以撤销权限吗?\n答:可以。你可以随时在设置中禁用。</string>
+
+    <string name="privacy_btn_agree">同意并前往设置</string>
+    <string name="privacy_btn_exit">退出应用</string>
+    <string name="privacy_btn_disagree">不同意</string>
+
+    <!-- Disable Warning Dialog (before timer) -->
+    <string name="disable_warning_title">等一下</string>
+    <string name="disable_warning_message">在关闭之前要不要再想一次?</string>
+    <string name="disable_warning_confirm">想一想</string>
+    <string name="disable_warning_cancel">保持启用</string>
+
+    <!-- Disable Confirmation Dialog -->
+    <string name="disable_dialog_title">真的要关闭吗?</string>
+    <string name="disable_dialog_message">要关闭,请输入以下短语:</string>
+    <string name="disable_dialog_phrase">disable shorts blocking</string>
+    <string name="disable_dialog_input_hint">在此输入</string>
+    <string name="disable_dialog_cancel">取消</string>
+    <string name="disable_dialog_confirm">确认</string>
+
+    <!-- Device Admin Disable Dialog -->
+    <string name="device_admin_disable_title">禁用删除保护?</string>
+    <string name="device_admin_disable_message">你可能会冲动禁用。真的要禁用吗?</string>
+    <string name="device_admin_disable_phrase">disable this feature</string>
+
+    <!-- Prevent Impulsive Disable OFF Dialog -->
+    <string name="prevent_impulsive_disable_off_title">真的要关闭吗?</string>
+    <string name="prevent_impulsive_disable_off_message">要关闭,请输入以下短语:</string>
+    <string name="prevent_impulsive_disable_off_phrase">disable this feature</string>
+
+    <!-- Billing Error Messages -->
+    <string name="billing_error_connection_failed">无法连接到Google Play。请重试。</string>
+    <string name="billing_error_sku_not_found">无法处理请求。请稍后重试。</string>
+    <string name="billing_error_purchase_failed">购买失败。请重试。</string>
+    <string name="billing_error_restore_failed">无法处理请求。请稍后重试。</string>
+    <string name="billing_error_restore_no_subscription">未找到有效订阅。</string>
+    <string name="billing_error_unknown">发生错误。请稍后重试。</string>
+
+    <!-- Overlay Tip Messages -->
+    <string-array name="overlay_tips">
+        <item>在设置中查找更多屏蔽选项</item>
+        <item>30秒足以读一页</item>
+        <item>5分钟散步比30分钟短视频感觉更好</item>
+        <item>短暂的等待创造更好的选择</item>
+        <item>你正在改变你的习惯</item>
+        <item>你现在真的需要这个内容吗?</item>
+        <item>用高级版解锁更强的屏蔽</item>
+        <item>高级版:自定义你的屏蔽策略</item>
+    </string-array>
+
+    <!-- Custom Timer (Premium) -->
+    <string name="custom_timer_title">设置等待时间</string>
+    <string name="custom_timer_presets">快速预设</string>
+    <string name="custom_timer_done">完成</string>
+    <string name="premium_required_title">✨ 高级功能</string>
+    <string name="premium_required_message">解锁自定义等待时间等功能!\n\n• 自由设置等待时间(5-300秒)\n• 仅屏蔽滚动的短视频\n• 防止冲动关闭\n• 防止应用删除</string>
+    <string name="premium_button_upgrade">升级到高级版</string>
+    <string name="premium_button_cancel">暂不</string>
+
+    <!-- Premium Banner -->
+    <string name="premium_banner_title">解锁更多功能</string>
+    <string name="premium_banner_subtitle">自定义 + 保护</string>
+    <string name="premium_banner_button">升级</string>
+
+    <!-- Premium Upgrade Activity -->
+    <string name="premium_upgrade_title">高级版</string>
+    <string name="premium_upgrade_headline">升级到高级版</string>
+    <string name="premium_upgrade_subtitle">更强的屏蔽和保护</string>
+    <string name="premium_upgrade_button">立即升级</string>
+    <string name="premium_upgrade_coming_soon">支付系统即将推出!</string>
+
+    <!-- Subscription Management -->
+    <string name="subscription_management">管理订阅</string>
+    <string name="subscription_management_desc">管理或取消订阅</string>
+
+    <!-- Subscription Management Activity -->
+    <string name="subscription_management_title">订阅</string>
+    <string name="subscription_status_active">激活</string>
+    <string name="subscription_status_expired">已过期</string>
+    <string name="subscription_start_date">开始日期</string>
+    <string name="subscription_next_billing">下次计费日期</string>
+    <string name="subscription_auto_renew_on">已启用自动续订</string>
+    <string name="subscription_auto_renew_off">已禁用自动续订</string>
+    <string name="subscription_cancel_button">管理或取消</string>
+    <string name="subscription_cancel_desc">要取消或修改订阅,\n你将被引导至Google Play商店</string>
+    <string name="subscription_info_note">* 基于上次计费的估计日期</string>
+
+    <!-- Premium Features -->
+    <string name="premium_feature_ad_free_title">无广告体验</string>
+    <string name="premium_feature_ad_free_desc">清爽专注的体验</string>
+    <string name="premium_feature_custom_timer_title">自定义计时器设置</string>
+    <string name="premium_feature_custom_timer_desc">从5秒到5分钟自由设置</string>
+    <string name="premium_feature_smart_block_title">智能屏蔽</string>
+    <string name="premium_feature_smart_block_desc">允许第一个短视频,滚动时屏蔽</string>
+    <string name="premium_feature_prevent_disable_title">防止冲动关闭</string>
+    <string name="premium_feature_prevent_disable_desc">关闭屏蔽需要确认</string>
+    <string name="premium_feature_prevent_delete_title">应用删除保护</string>
+    <string name="premium_feature_prevent_delete_desc">防止冲动卸载应用</string>
+
+    <!-- Promo Code -->
+    <string name="promo_button_text">有促销代码?</string>
+    <string name="promo_dialog_title">输入促销代码</string>
+    <string name="promo_dialog_subtitle">输入你的终身高级版代码</string>
+    <string name="promo_dialog_cancel">取消</string>
+    <string name="promo_dialog_confirm">确认</string>
+    <string name="promo_error_empty">请输入促销代码</string>
+    <string name="promo_error_invalid_format">无效格式\n(示例: UNSHORT-XXXXX-XXXXXXXX)</string>
+    <string name="promo_error_invalid_code">无效促销代码</string>
+    <string name="promo_error_unknown">发生错误: %s</string>
+    <string name="promo_success">终身高级版已激活!</string>
+    <string name="promo_lifetime_status">终身高级版(永久)</string>
+    <string name="promo_no_expiry">无过期时间</string>
+    <string name="promo_not_applicable">不适用</string>
+
+</resources>

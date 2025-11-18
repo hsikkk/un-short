@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">un:short</string>
+    <string name="accessibility_service_description">Mendeteksi video pendek dan menambahkan jeda sadar dengan membalik ponsel untuk membantu lepas dari kecanduan.</string>
+    <string name="flip_phone_title">Tunggu sebentar! 🤚</string>
+    <string name="flip_phone_message">Untuk menonton Shorts,
+balik ponsel Anda dan tunggu 30 detik</string>
+    <string name="time_remaining">Waktu tersisa: %d detik</string>
+    <string name="flip_detected">Ponsel dibalik ✓</string>
+    <string name="flip_required">Silakan balik ponsel</string>
+
+    <!-- BlockOverlay Messages -->
+    <string name="block_message_before_timer">Sekarang,
+apakah Anda benar-benar perlu shorts?</string>
+    <string name="block_message_after_timer">Anda sudah menunggu sejauh ini.\nMasih ingin menonton?</string>
+    <string name="block_button_think_again">Pikirkan lagi</string>
+    <string name="block_button_close">Tutup saja</string>
+    <string name="block_button_no">Tidak, saya tidak akan menonton</string>
+    <string name="block_button_yes">Ya, saya akan menonton</string>
+
+    <!-- Timer Success Screen -->
+    <string name="timer_success_title">Anda berhasil!</string>
+    <string name="timer_success_message">Bagus sekali berhenti sejenak\nSekarang Anda dapat membuat pilihan yang lebih bijak</string>
+
+    <!-- Timer Screen -->
+    <string name="timer_instruction_title">Luangkan waktu sejenak</string>
+    <string name="timer_instruction_message_onboarding">Balik ponsel Anda dan pikirkan\napakah Anda benar-benar perlu menonton</string>
+    <string name="timer_instruction_message_full">Balik ponsel Anda dan tunggu 30 detik.\nApakah Anda akan menyesal dengan pilihan ini dalam 30 menit?\nApa yang benar-benar Anda butuhkan sekarang?</string>
+
+    <!-- Main Activity -->
+    <string name="main_subtitle">Lepaskan dari konten bentuk pendek.\nKebiasaan kecil untuk konsumsi yang sadar.</string>
+    <string name="status_on">NYALA</string>
+    <string name="status_off">MATI</string>
+    <string name="status_active">AKTIF</string>
+    <string name="status_inactive">TIDAK AKTIF</string>
+    <string name="toggle_description">Tombol daya</string>
+    <string name="blocked_apps_title">Aplikasi yang Diblokir: </string>
+    <string name="app_youtube_shorts">YouTube Shorts</string>
+    <string name="app_instagram_reels">Instagram Reels</string>
+    <string name="app_facebook_reels">Facebook Reels</string>
+    <string name="app_naver_shorts">Naver Shorts</string>
+    <string name="blocked_apps_notice">• Hanya menampilkan aplikasi yang terinstal\n• Beberapa versi aplikasi mungkin tidak diblokir</string>
+    <string name="stats_watch_time">Waktu Tonton</string>
+    <string name="stats_entry_count">Masuk</string>
+    <string name="stats_consumption_count">Ditonton</string>
+    <string name="time_unit_hour">j</string>
+    <string name="time_unit_minute">m</string>
+    <string name="time_unit_second">d</string>
+    <string name="permission_warning_icon">⚠</string>
+    <string name="permission_warning_title">Izin Diperlukan</string>
+    <string name="permission_warning_message">Untuk menggunakan fitur pemblokiran,\nizin aksesibilitas dan overlay diperlukan</string>
+    <string name="permission_setup_button">Atur izin</string>
+
+    <!-- Settings Tip Banner -->
+    <string name="settings_tip_message">Ketuk menu [⋮] di kanan atas untuk menjelajahi lebih banyak fitur</string>
+    <string name="settings_tip_button">Pergi →</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_title">Pengaturan</string>
+    <string name="settings_section_blocking">Pengaturan Pemblokiran</string>
+    <string name="settings_section_protection">Perlindungan</string>
+    <string name="settings_section_other">Lainnya</string>
+    <string name="settings_delay_time_title">Waktu Tunda</string>
+    <string name="settings_delay_time_desc">Atur waktu tunggu sebelum mengakses shorts</string>
+    <string name="settings_delay_time_value">%d detik</string>
+    <string name="settings_haptic_title">Umpan Balik Haptik</string>
+    <string name="settings_haptic_desc">Notifikasi getaran saat timer selesai</string>
+    <string name="settings_block_scrolled_title">Blokir Hanya Shorts yang Digulir</string>
+    <string name="settings_block_scrolled_desc">Izinkan shorts pertama, blokir saat digulir</string>
+    <string name="settings_prevent_disable_title">Cegah Penonaktifan Impulsif</string>
+    <string name="settings_prevent_disable_desc">Cegah penonaktifan yang tidak disengaja</string>
+    <string name="settings_feedback">Kirim Masukan</string>
+    <string name="settings_share">Bagikan Aplikasi</string>
+    <string name="settings_review">Beri Ulasan</string>
+    <string name="settings_version">Info Versi</string>
+    <string name="settings_version_value">v%s</string>
+    <string name="settings_version_default">v1.0.0</string>
+
+    <!-- Permission Setup Activity -->
+    <string name="permission_back_button">Kembali</string>
+    <string name="permission_title">Pengaturan Izin</string>
+    <string name="permission_subtitle">Silakan izinkan\nuntuk memblokir shorts</string>
+    <string name="permission_done">Selesai</string>
+
+    <!-- Permission Cards -->
+    <string name="permission_number_1">1</string>
+    <string name="permission_number_2">2</string>
+
+    <!-- Accessibility Setup Card -->
+    <string name="permission_accessibility">Pengaturan Layanan Aksesibilitas</string>
+    <string name="permission_accessibility_completed">Layanan Aksesibilitas ✓</string>
+    <string name="permission_overlay">Tampilkan di atas aplikasi lain</string>
+    <string name="permission_overlay_completed">Tampilkan di atas aplikasi lain ✓</string>
+    <string name="permission_why">Mengapa ini diperlukan?</string>
+    <string name="permission_accessibility_reason">Diperlukan untuk mendeteksi saat layar shorts dibuka.</string>
+    <string name="permission_overlay_reason">Diperlukan untuk menampilkan layar pemblokiran di atas shorts.</string>
+    <string name="permission_not_set">Belum diatur</string>
+    <string name="permission_completed">Pengaturan selesai</string>
+    <string name="permission_go_to_settings">Buka pengaturan</string>
+    <string name="permission_enable_permission">Aktifkan Izin</string>
+
+    <!-- Manufacturer-specific Accessibility Guides -->
+    <string name="permission_accessibility_guide_samsung">💡 Cari [Aplikasi yang diinstal] → un:short</string>
+    <string name="permission_accessibility_guide_lg">💡 Cari [Pengaturan lanjutan] → un:short</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 Cari [Layanan yang diunduh] → un:short</string>
+    <string name="permission_accessibility_guide_huawei">💡 Cari [Layanan yang diunduh] → un:short</string>
+    <string name="permission_accessibility_guide_oppo">💡 Cari [Layanan yang diinstal] → un:short</string>
+    <string name="permission_accessibility_guide_vivo">💡 Cari [Layanan yang diinstal] → un:short</string>
+    <string name="permission_accessibility_guide_default">💡 Temukan un:short dan nyalakan</string>
+
+    <!-- Timer Activity -->
+    <string name="timer_seconds_unit">detik</string>
+    <string name="timer_flip_instruction">Balik ponsel</string>
+    <string name="timer_breathe_message">Tarik napas dalam</string>
+    <string name="timer_skip_button">Batal</string>
+
+    <!-- Ads -->
+    <string name="ad">IKLAN</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_page1_title">Lepaskan dari\nkecanduan bentuk pendek</string>
+    <string name="onboarding_page1_subtitle">Kebiasaan kecil untuk konsumsi yang disengaja</string>
+    <string name="onboarding_page2_title">Jika Anda ingin menonton shorts,\nluangkan waktu untuk berpikir</string>
+    <string name="onboarding_page3_title">Jika Anda masih ingin menonton,\nberhenti sejenak</string>
+    <string name="onboarding_page4_title">Akhirnya,\npikirkan sekali lagi</string>
+    <string name="onboarding_page5_title">Siap Untuk Memulai?</string>
+    <string name="onboarding_page5_subtitle">Mulai perjalanan Anda menuju\nkonsumsi media yang sadar dengan un:short</string>
+    <string name="onboarding_start_button">Mulai</string>
+    <string name="onboarding_skip">Lewati</string>
+
+    <!-- Delay Time Bottom Sheet -->
+    <string name="delay_time_title">Waktu Tunda</string>
+    <string name="delay_time_desc">Atur waktu tunggu sebelum mengakses shorts</string>
+    <string name="delay_time_15">15 detik</string>
+    <string name="delay_time_30">30 detik</string>
+    <string name="delay_time_60">60 detik</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_email_app_not_found">Aplikasi email tidak ditemukan</string>
+    <string name="toast_device_admin_enabled">Perlindungan penghapusan aplikasi diaktifkan</string>
+    <string name="toast_device_admin_cancelled">Perlindungan penghapusan aplikasi dibatalkan</string>
+
+    <!-- Share & Feedback -->
+    <string name="feedback_subject">Masukan aplikasi un:short</string>
+    <string name="share_text">Lepaskan dari kecanduan bentuk pendek!\nMulai konsumsi media yang sadar dengan un:short.\n\n%s</string>
+
+    <!-- Device Admin (App Uninstall Protection) -->
+    <string name="device_admin_title">Perlindungan Penghapusan Aplikasi</string>
+    <string name="device_admin_desc">Cegah pencopatan aplikasi secara impulsif</string>
+    <string name="device_admin_explanation">Pernah menghapus aplikasi di saat lemah?\n\nun:short mencegah pencopatan impulsif saat tekad Anda goyah.</string>
+    <string name="device_admin_dialog_title">Aktifkan Perlindungan Penghapusan?</string>
+    <string name="device_admin_dialog_message">Fitur ini menambahkan langkah ekstra sebelum mencopot un:short.\n\nIni membantu Anda melawan keputusan impulsif saat lemah.\n\nAnda dapat menonaktifkan ini kapan saja di Pengaturan → Keamanan → Aplikasi admin perangkat.</string>
+    <string name="device_admin_dialog_enable">Aktifkan</string>
+    <string name="device_admin_dialog_cancel">Nanti saja</string>
+    <string name="device_admin_deactivate_title">Nonaktifkan Perlindungan?</string>
+    <string name="device_admin_deactivate_message">Untuk menonaktifkan fitur ini, buka:\n\nPengaturan → Keamanan → Aplikasi admin perangkat → un:short\n\nLalu ketuk [Nonaktifkan]</string>
+    <string name="device_admin_deactivate_button">Buka Pengaturan</string>
+    <string name="device_admin_receiver_enabled">Perlindungan penghapusan aplikasi un:short diaktifkan</string>
+    <string name="device_admin_receiver_disable_warning">Menonaktifkan perlindungan penghapusan mengizinkan pencopatan impulsif un:short. Lanjutkan?</string>
+    <string name="device_admin_receiver_disabled">Perlindungan penghapusan aplikasi un:short dinonaktifkan</string>
+
+    <!-- Privacy Consent Dialog -->
+    <string name="privacy_dialog_title_simple">Apa Yang Kami Akses</string>
+
+    <string name="privacy_why_title">Mengapa izin aksesibilitas diperlukan?</string>
+    <string name="privacy_why_content">un:short menggunakan layanan aksesibilitas untuk mendeteksi konten video pendek.\n\nIni adalah fungsi inti untuk secara otomatis memblokir shorts saat terdeteksi.</string>
+
+    <string name="privacy_data_title">Data Yang Kami Kumpulkan</string>
+    <string name="privacy_data_collected">✓ Konten layar (hanya untuk deteksi shorts)\n✓ Nama paket aplikasi\n✓ Hash metadata video (sementara)</string>
+    <string name="privacy_data_not_collected">✗ Informasi pribadi (nama, kontak, dll.)\n✗ Riwayat tontonan\n✗ Informasi akun\n✗ Input teks</string>
+
+    <string name="privacy_usage_title">Bagaimana Data Digunakan</string>
+    <string name="privacy_usage_content">• Digunakan hanya untuk deteksi layar shorts\n• Tidak dikirim ke server (100% offline)\n• Hanya hash sementara untuk deteksi perubahan video\n• Otomatis dihapus saat aplikasi ditutup</string>
+
+    <string name="privacy_storage_title">Kebijakan Penyimpanan Data</string>
+    <string name="privacy_storage_content">• Hanya ID sesi yang disimpan sementara di perangkat\n• Segera dihapus saat aplikasi/layanan dimulai ulang\n• Tidak pernah dibagikan dengan pihak ketiga</string>
+
+    <string name="privacy_faq_title">Pertanyaan Yang Sering Diajukan</string>
+    <string name="privacy_faq_content">T: Apakah riwayat tontonan saya disimpan?\nJ: Tidak. Hanya nilai hash yang disimpan sementara.\n\nT: Apakah Anda membagikan data dengan pihak ketiga?\nJ: Tidak. Sepenuhnya beroperasi offline.\n\nT: Bisakah saya mencabut izin nanti?\nJ: Ya. Anda dapat menonaktifkannya di pengaturan kapan saja.</string>
+
+    <string name="privacy_btn_agree">Setuju &amp; Buka Pengaturan</string>
+    <string name="privacy_btn_exit">Keluar Aplikasi</string>
+    <string name="privacy_btn_disagree">Tidak Setuju</string>
+
+    <!-- Disable Warning Dialog (before timer) -->
+    <string name="disable_warning_title">Tunggu sebentar</string>
+    <string name="disable_warning_message">Bagaimana dengan memikirkan sekali lagi sebelum menonaktifkan?</string>
+    <string name="disable_warning_confirm">Pikirkan dulu</string>
+    <string name="disable_warning_cancel">Tetap aktifkan</string>
+
+    <!-- Disable Confirmation Dialog -->
+    <string name="disable_dialog_title">Benar-benar nonaktifkan?</string>
+    <string name="disable_dialog_message">Untuk menonaktifkan, masukkan frasa di bawah ini:</string>
+    <string name="disable_dialog_phrase">disable shorts blocking</string>
+    <string name="disable_dialog_input_hint">Masukkan di sini</string>
+    <string name="disable_dialog_cancel">Batal</string>
+    <string name="disable_dialog_confirm">Konfirmasi</string>
+
+    <!-- Device Admin Disable Dialog -->
+    <string name="device_admin_disable_title">Nonaktifkan perlindungan penghapusan?</string>
+    <string name="device_admin_disable_message">Anda mungkin menonaktifkan secara impulsif. Benar-benar nonaktifkan?</string>
+    <string name="device_admin_disable_phrase">disable this feature</string>
+
+    <!-- Prevent Impulsive Disable OFF Dialog -->
+    <string name="prevent_impulsive_disable_off_title">Benar-benar nonaktifkan?</string>
+    <string name="prevent_impulsive_disable_off_message">Untuk menonaktifkan, masukkan frasa di bawah ini:</string>
+    <string name="prevent_impulsive_disable_off_phrase">disable this feature</string>
+
+    <!-- Billing Error Messages -->
+    <string name="billing_error_connection_failed">Tidak dapat terhubung ke Google Play. Silakan coba lagi.</string>
+    <string name="billing_error_sku_not_found">Tidak dapat memproses permintaan. Silakan coba lagi nanti.</string>
+    <string name="billing_error_purchase_failed">Pembelian gagal. Silakan coba lagi.</string>
+    <string name="billing_error_restore_failed">Tidak dapat memproses permintaan. Silakan coba lagi nanti.</string>
+    <string name="billing_error_restore_no_subscription">Tidak ada langganan aktif yang ditemukan.</string>
+    <string name="billing_error_unknown">Terjadi kesalahan. Silakan coba lagi nanti.</string>
+
+    <!-- Overlay Tip Messages -->
+    <string-array name="overlay_tips">
+        <item>Temukan lebih banyak opsi pemblokiran di pengaturan</item>
+        <item>30 detik cukup untuk membaca satu halaman</item>
+        <item>Jalan kaki 5 menit terasa lebih baik dari 30 menit shorts</item>
+        <item>Penantian singkat menciptakan pilihan yang lebih baik</item>
+        <item>Anda sedang mengubah kebiasaan Anda sekarang</item>
+        <item>Apakah Anda benar-benar membutuhkan konten ini sekarang?</item>
+        <item>Buka kunci pemblokiran lebih kuat dengan Premium</item>
+        <item>Premium: Sesuaikan strategi pemblokiran Anda</item>
+    </string-array>
+
+    <!-- Custom Timer (Premium) -->
+    <string name="custom_timer_title">Atur Waktu Tunggu</string>
+    <string name="custom_timer_presets">Preset Cepat</string>
+    <string name="custom_timer_done">Selesai</string>
+    <string name="premium_required_title">✨ Fitur Premium</string>
+    <string name="premium_required_message">Buka kunci waktu tunggu kustom dan lainnya!\n\n• Atur waktu tunggu dengan bebas (5–300 detik)\n• Blokir hanya shorts yang digulir\n• Cegah penonaktifan impulsif\n• Cegah penghapusan aplikasi</string>
+    <string name="premium_button_upgrade">Tingkatkan ke Premium</string>
+    <string name="premium_button_cancel">Nanti saja</string>
+
+    <!-- Premium Banner -->
+    <string name="premium_banner_title">Buka Lebih Banyak Fitur</string>
+    <string name="premium_banner_subtitle">Kustomisasi + Perlindungan</string>
+    <string name="premium_banner_button">Tingkatkan</string>
+
+    <!-- Premium Upgrade Activity -->
+    <string name="premium_upgrade_title">Premium</string>
+    <string name="premium_upgrade_headline">Tingkatkan ke Premium</string>
+    <string name="premium_upgrade_subtitle">Pemblokiran dan perlindungan yang lebih kuat</string>
+    <string name="premium_upgrade_button">Tingkatkan Sekarang</string>
+    <string name="premium_upgrade_coming_soon">Sistem pembayaran segera hadir!</string>
+
+    <!-- Subscription Management -->
+    <string name="subscription_management">Kelola Langganan</string>
+    <string name="subscription_management_desc">Kelola atau batalkan langganan Anda</string>
+
+    <!-- Subscription Management Activity -->
+    <string name="subscription_management_title">Langganan</string>
+    <string name="subscription_status_active">Aktif</string>
+    <string name="subscription_status_expired">Kedaluwarsa</string>
+    <string name="subscription_start_date">Tanggal Mulai</string>
+    <string name="subscription_next_billing">Tanggal Penagihan Berikutnya</string>
+    <string name="subscription_auto_renew_on">Perpanjangan otomatis diaktifkan</string>
+    <string name="subscription_auto_renew_off">Perpanjangan otomatis dinonaktifkan</string>
+    <string name="subscription_cancel_button">Kelola atau Batalkan</string>
+    <string name="subscription_cancel_desc">Untuk membatalkan atau memodifikasi langganan Anda,\nAnda akan diarahkan ke Google Play Store</string>
+    <string name="subscription_info_note">* Perkiraan tanggal berdasarkan penagihan terakhir</string>
+
+    <!-- Premium Features -->
+    <string name="premium_feature_ad_free_title">Pengalaman Bebas Iklan</string>
+    <string name="premium_feature_ad_free_desc">Pengalaman yang bersih dan fokus</string>
+    <string name="premium_feature_custom_timer_title">Pengaturan Timer Kustom</string>
+    <string name="premium_feature_custom_timer_desc">Atur dengan bebas dari 5 detik hingga 5 menit</string>
+    <string name="premium_feature_smart_block_title">Pemblokiran Cerdas</string>
+    <string name="premium_feature_smart_block_desc">Izinkan shorts pertama, blokir saat digulir</string>
+    <string name="premium_feature_prevent_disable_title">Cegah Penonaktifan Impulsif</string>
+    <string name="premium_feature_prevent_disable_desc">Konfirmasi diperlukan untuk menonaktifkan pemblokiran</string>
+    <string name="premium_feature_prevent_delete_title">Perlindungan Penghapusan Aplikasi</string>
+    <string name="premium_feature_prevent_delete_desc">Cegah pencopatan aplikasi secara impulsif</string>
+
+    <!-- Promo Code -->
+    <string name="promo_button_text">Punya kode promo?</string>
+    <string name="promo_dialog_title">Masukkan Kode Promo</string>
+    <string name="promo_dialog_subtitle">Masukkan kode Premium Seumur Hidup Anda</string>
+    <string name="promo_dialog_cancel">Batal</string>
+    <string name="promo_dialog_confirm">Konfirmasi</string>
+    <string name="promo_error_empty">Silakan masukkan kode promo</string>
+    <string name="promo_error_invalid_format">Format tidak valid\n(Contoh: UNSHORT-XXXXX-XXXXXXXX)</string>
+    <string name="promo_error_invalid_code">Kode promo tidak valid</string>
+    <string name="promo_error_unknown">Terjadi kesalahan: %s</string>
+    <string name="promo_success">Premium Seumur Hidup diaktifkan!</string>
+    <string name="promo_lifetime_status">Premium Seumur Hidup (Permanen)</string>
+    <string name="promo_no_expiry">Tidak ada kedaluwarsa</string>
+    <string name="promo_not_applicable">Tidak berlaku</string>
+
+</resources>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">un:short</string>
+    <string name="accessibility_service_description">Kısa videoları tespit eder ve telefonu çevirerek bilinçli bir duraklama ekleyerek bağımlılıktan kurtulmaya yardımcı olur.</string>
+    <string name="flip_phone_title">Bir dakika! 🤚</string>
+    <string name="flip_phone_message">Shorts izlemek için,\ntelefonunuzu çevirin ve 30 saniye bekleyin</string>
+    <string name="time_remaining">Kalan süre: %d saniye</string>
+    <string name="flip_detected">Telefon çevrildi ✓</string>
+    <string name="flip_required">Lütfen telefonunuzu çevirin</string>
+
+    <!-- BlockOverlay Messages -->
+    <string name="block_message_before_timer">Şu anda,\ngerçekten shorts\'a ihtiyacınız var mı?</string>
+    <string name="block_message_after_timer">Buraya kadar beklediniz.\nHâlâ izlemek istiyor musunuz?</string>
+    <string name="block_button_think_again">Tekrar düşün</string>
+    <string name="block_button_close">Sadece kapat</string>
+    <string name="block_button_no">Hayır, izlemeyeceğim</string>
+    <string name="block_button_yes">Evet, izleyeceğim</string>
+
+    <!-- Timer Success Screen -->
+    <string name="timer_success_title">Başardınız!</string>
+    <string name="timer_success_message">Mola verdiğiniz için harika iş\nŞimdi daha akıllıca bir seçim yapabilirsiniz</string>
+
+    <!-- Timer Screen -->
+    <string name="timer_instruction_title">Bir an için durun</string>
+    <string name="timer_instruction_message_onboarding">Telefonunuzu çevirin ve gerçekten\nizlemeniz gerekip gerekmediğini düşünün</string>
+    <string name="timer_instruction_message_full">Telefonunuzu çevirin ve 30 saniye bekleyin.\n30 dakika sonra bu seçime pişman olacak mısınız?\nŞu anda gerçekten neye ihtiyacınız var?</string>
+
+    <!-- Main Activity -->
+    <string name="main_subtitle">Kısa içerikten kurtulun.\nBilinçli tüketim için küçük alışkanlıklar.</string>
+    <string name="status_on">AÇIK</string>
+    <string name="status_off">KAPALI</string>
+    <string name="status_active">AKTİF</string>
+    <string name="status_inactive">PASİF</string>
+    <string name="toggle_description">Güç düğmesi</string>
+    <string name="blocked_apps_title">Engellenen uygulamalar: </string>
+    <string name="app_youtube_shorts">YouTube Shorts</string>
+    <string name="app_instagram_reels">Instagram Reels</string>
+    <string name="app_facebook_reels">Facebook Reels</string>
+    <string name="app_naver_shorts">Naver Shorts</string>
+    <string name="blocked_apps_notice">• Yalnızca yüklü uygulamalar gösterilir\n• Bazı uygulama sürümleri engellenemeyebilir</string>
+    <string name="stats_watch_time">İzleme süresi</string>
+    <string name="stats_entry_count">Giriş</string>
+    <string name="stats_consumption_count">İzlendi</string>
+    <string name="time_unit_hour">sa</string>
+    <string name="time_unit_minute">dk</string>
+    <string name="time_unit_second">sn</string>
+    <string name="permission_warning_icon">⚠</string>
+    <string name="permission_warning_title">İzinler gerekli</string>
+    <string name="permission_warning_message">Engelleme özelliklerini kullanmak için,\nerişilebilirlik ve kaplama izinleri gereklidir</string>
+    <string name="permission_setup_button">İzinleri ayarla</string>
+
+    <!-- Settings Tip Banner -->
+    <string name="settings_tip_message">Daha fazla özelliği keşfetmek için sağ üstteki [⋮] menüsüne dokunun</string>
+    <string name="settings_tip_button">Git →</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_section_blocking">Engelleme ayarları</string>
+    <string name="settings_section_protection">Koruma</string>
+    <string name="settings_section_other">Diğer</string>
+    <string name="settings_delay_time_title">Gecikme süresi</string>
+    <string name="settings_delay_time_desc">Shorts\'a erişmeden önceki bekleme süresini ayarla</string>
+    <string name="settings_delay_time_value">%d saniye</string>
+    <string name="settings_haptic_title">Dokunsal geri bildirim</string>
+    <string name="settings_haptic_desc">Zamanlayıcı tamamlandığında titreşim bildirimi</string>
+    <string name="settings_block_scrolled_title">Yalnızca kaydırılan Shorts\'ları engelle</string>
+    <string name="settings_block_scrolled_desc">İlk shorts\'a izin ver, kaydırmada engelle</string>
+    <string name="settings_prevent_disable_title">Dürtüsel devre dışı bırakmayı önle</string>
+    <string name="settings_prevent_disable_desc">İstenmeyen devre dışı bırakmayı önle</string>
+    <string name="settings_feedback">Geri bildirim gönder</string>
+    <string name="settings_share">Uygulamayı paylaş</string>
+    <string name="settings_review">Değerlendirme yap</string>
+    <string name="settings_version">Sürüm bilgisi</string>
+    <string name="settings_version_value">v%s</string>
+    <string name="settings_version_default">v1.0.0</string>
+
+    <!-- Permission Setup Activity -->
+    <string name="permission_back_button">Geri</string>
+    <string name="permission_title">İzin ayarı</string>
+    <string name="permission_subtitle">Shorts\'ları engellemek için\nlütfen izinlere izin verin</string>
+    <string name="permission_done">Bitti</string>
+
+    <!-- Permission Cards -->
+    <string name="permission_number_1">1</string>
+    <string name="permission_number_2">2</string>
+
+    <!-- Accessibility Setup Card -->
+    <string name="permission_accessibility">Erişilebilirlik hizmeti kurulumu</string>
+    <string name="permission_accessibility_completed">Erişilebilirlik hizmeti ✓</string>
+    <string name="permission_overlay">Diğer uygulamaların üzerinde görüntüle</string>
+    <string name="permission_overlay_completed">Diğer uygulamaların üzerinde görüntüle ✓</string>
+    <string name="permission_why">Bu neden gerekli?</string>
+    <string name="permission_accessibility_reason">Shorts ekranı açıldığında tespit etmek için gereklidir.</string>
+    <string name="permission_overlay_reason">Shorts\'un üzerinde engelleme ekranı görüntülemek için gereklidir.</string>
+    <string name="permission_not_set">Henüz ayarlanmadı</string>
+    <string name="permission_completed">Kurulum tamamlandı</string>
+    <string name="permission_go_to_settings">Ayarlara git</string>
+    <string name="permission_enable_permission">İzni etkinleştir</string>
+
+    <!-- Manufacturer-specific Accessibility Guides -->
+    <string name="permission_accessibility_guide_samsung">💡 [Yüklü uygulamalar] → un:short\'u arayın</string>
+    <string name="permission_accessibility_guide_lg">💡 [Gelişmiş ayarlar] → un:short\'u arayın</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 [İndirilen hizmetler] → un:short\'u arayın</string>
+    <string name="permission_accessibility_guide_huawei">💡 [İndirilen hizmetler] → un:short\'u arayın</string>
+    <string name="permission_accessibility_guide_oppo">💡 [Yüklü hizmetler] → un:short\'u arayın</string>
+    <string name="permission_accessibility_guide_vivo">💡 [Yüklü hizmetler] → un:short\'u arayın</string>
+    <string name="permission_accessibility_guide_default">💡 un:short\'u bulun ve açın</string>
+
+    <!-- Timer Activity -->
+    <string name="timer_seconds_unit">saniye</string>
+    <string name="timer_flip_instruction">Telefonunuzu çevirin</string>
+    <string name="timer_breathe_message">Derin bir nefes alın</string>
+    <string name="timer_skip_button">İptal</string>
+
+    <!-- Ads -->
+    <string name="ad">REKLAM</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_page1_title">Kısa içerik\nbağımlılığından kurtulun</string>
+    <string name="onboarding_page1_subtitle">Bilinçli tüketim için küçük alışkanlıklar</string>
+    <string name="onboarding_page2_title">Shorts izlemek istiyorsanız,\nbir an için düşünün</string>
+    <string name="onboarding_page3_title">Hâlâ izlemek istiyorsanız,\nkısa bir mola verin</string>
+    <string name="onboarding_page4_title">Son olarak,\nbir kez daha düşünün</string>
+    <string name="onboarding_page5_title">Başlamaya hazır mısınız?</string>
+    <string name="onboarding_page5_subtitle">un:short ile bilinçli medya tüketimine\ndoğru yolculuğunuza başlayın</string>
+    <string name="onboarding_start_button">Başla</string>
+    <string name="onboarding_skip">Atla</string>
+
+    <!-- Delay Time Bottom Sheet -->
+    <string name="delay_time_title">Gecikme süresi</string>
+    <string name="delay_time_desc">Shorts\'a erişmeden önceki bekleme süresini ayarla</string>
+    <string name="delay_time_15">15 saniye</string>
+    <string name="delay_time_30">30 saniye</string>
+    <string name="delay_time_60">60 saniye</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_email_app_not_found">E-posta uygulaması bulunamadı</string>
+    <string name="toast_device_admin_enabled">Uygulama silme koruması etkinleştirildi</string>
+    <string name="toast_device_admin_cancelled">Uygulama silme koruması iptal edildi</string>
+
+    <!-- Share & Feedback -->
+    <string name="feedback_subject">un:short uygulama geri bildirimi</string>
+    <string name="share_text">Kısa içerik bağımlılığından kurtulun!\nun:short ile bilinçli medya tüketimine başlayın.\n\n%s</string>
+
+    <!-- Device Admin (App Uninstall Protection) -->
+    <string name="device_admin_title">Uygulama silme koruması</string>
+    <string name="device_admin_desc">Dürtüsel uygulama kaldırmayı önle</string>
+    <string name="device_admin_explanation">Zayıf bir anda uygulamayı hiç sildiniz mi?\n\nun:short, kararlılığınız sarsıldığında dürtüsel kaldırmayı önler.</string>
+    <string name="device_admin_dialog_title">Silme korumasını etkinleştir?</string>
+    <string name="device_admin_dialog_message">Bu özellik, un:short\'u kaldırmadan önce ekstra bir adım ekler.\n\nZayıf anlarda dürtüsel kararlara direnmenize yardımcı olur.\n\nBunu istediğiniz zaman Ayarlar → Güvenlik → Cihaz yöneticisi uygulamaları\'nda devre dışı bırakabilirsiniz.</string>
+    <string name="device_admin_dialog_enable">Etkinleştir</string>
+    <string name="device_admin_dialog_cancel">Şimdi değil</string>
+    <string name="device_admin_deactivate_title">Korumayı devre dışı bırak?</string>
+    <string name="device_admin_deactivate_message">Bu özelliği devre dışı bırakmak için şuraya gidin:\n\nAyarlar → Güvenlik → Cihaz yöneticisi uygulamaları → un:short\n\nSonra [Devre dışı bırak]\'a dokunun</string>
+    <string name="device_admin_deactivate_button">Ayarlara git</string>
+    <string name="device_admin_receiver_enabled">un:short uygulama silme koruması etkinleştirildi</string>
+    <string name="device_admin_receiver_disable_warning">Silme korumasını devre dışı bırakmak, un:short\'un dürtüsel kaldırılmasına izin verir. Devam et?</string>
+    <string name="device_admin_receiver_disabled">un:short uygulama silme koruması devre dışı bırakıldı</string>
+
+    <!-- Privacy Consent Dialog -->
+    <string name="privacy_dialog_title_simple">Eriştiğimiz şeyler</string>
+
+    <string name="privacy_why_title">Erişilebilirlik izni neden gerekli?</string>
+    <string name="privacy_why_content">un:short, kısa video içeriğini tespit etmek için erişilebilirlik hizmetini kullanır.\n\nBu, tespit edildiğinde shorts\'ları otomatik olarak engellemek için temel işlevdir.</string>
+
+    <string name="privacy_data_title">Topladığımız veriler</string>
+    <string name="privacy_data_collected">✓ Ekran içeriği (yalnızca shorts tespiti için)\n✓ Uygulama paket adları\n✓ Video meta veri hash\'i (geçici)</string>
+    <string name="privacy_data_not_collected">✗ Kişisel bilgiler (ad, kişiler vb.)\n✗ İzleme geçmişi\n✗ Hesap bilgileri\n✗ Metin girişi</string>
+
+    <string name="privacy_usage_title">Veriler nasıl kullanılır</string>
+    <string name="privacy_usage_content">• Yalnızca shorts ekran tespiti için kullanılır\n• Sunucuya aktarım yok (100% çevrimdışı)\n• Video değişikliği tespiti için yalnızca geçici hash\'ler\n• Uygulama kapatıldığında otomatik silme</string>
+
+    <string name="privacy_storage_title">Veri depolama politikası</string>
+    <string name="privacy_storage_content">• Yalnızca oturum kimlikleri cihazda geçici olarak saklanır\n• Uygulama/hizmet yeniden başlatıldığında hemen silinir\n• Asla üçüncü taraflarla paylaşılmaz</string>
+
+    <string name="privacy_faq_title">Sık sorulan sorular</string>
+    <string name="privacy_faq_content">S: İzleme geçmişim kaydediliyor mu?\nC: Hayır. Yalnızca hash değerleri geçici olarak saklanır.\n\nS: Verileri üçüncü taraflarla paylaşıyor musunuz?\nC: Hayır. Tamamen çevrimdışı çalışma.\n\nS: İzni daha sonra iptal edebilir miyim?\nC: Evet. İstediğiniz zaman ayarlarda devre dışı bırakabilirsiniz.</string>
+
+    <string name="privacy_btn_agree">Kabul et &amp; Ayarlara git</string>
+    <string name="privacy_btn_exit">Uygulamadan çık</string>
+    <string name="privacy_btn_disagree">Reddet</string>
+
+    <!-- Disable Warning Dialog (before timer) -->
+    <string name="disable_warning_title">Bir dakika</string>
+    <string name="disable_warning_message">Devre dışı bırakmadan önce bir kez daha düşünmeye ne dersiniz?</string>
+    <string name="disable_warning_confirm">Bunu düşün</string>
+    <string name="disable_warning_cancel">Etkin tut</string>
+
+    <!-- Disable Confirmation Dialog -->
+    <string name="disable_dialog_title">Gerçekten devre dışı bırak?</string>
+    <string name="disable_dialog_message">Devre dışı bırakmak için aşağıdaki ifadeyi girin:</string>
+    <string name="disable_dialog_phrase">disable shorts blocking</string>
+    <string name="disable_dialog_input_hint">Buraya girin</string>
+    <string name="disable_dialog_cancel">İptal</string>
+    <string name="disable_dialog_confirm">Onayla</string>
+
+    <!-- Device Admin Disable Dialog -->
+    <string name="device_admin_disable_title">Silme korumasını devre dışı bırak?</string>
+    <string name="device_admin_disable_message">Dürtüsel olarak devre dışı bırakabilirsiniz. Gerçekten devre dışı bırak?</string>
+    <string name="device_admin_disable_phrase">disable this feature</string>
+
+    <!-- Prevent Impulsive Disable OFF Dialog -->
+    <string name="prevent_impulsive_disable_off_title">Gerçekten devre dışı bırak?</string>
+    <string name="prevent_impulsive_disable_off_message">Devre dışı bırakmak için aşağıdaki ifadeyi girin:</string>
+    <string name="prevent_impulsive_disable_off_phrase">disable this feature</string>
+
+    <!-- Billing Error Messages -->
+    <string name="billing_error_connection_failed">Google Play\'e bağlanılamıyor. Lütfen tekrar deneyin.</string>
+    <string name="billing_error_sku_not_found">İstek işlenemiyor. Lütfen daha sonra tekrar deneyin.</string>
+    <string name="billing_error_purchase_failed">Satın alma başarısız. Lütfen tekrar deneyin.</string>
+    <string name="billing_error_restore_failed">İstek işlenemiyor. Lütfen daha sonra tekrar deneyin.</string>
+    <string name="billing_error_restore_no_subscription">Aktif abonelik bulunamadı.</string>
+    <string name="billing_error_unknown">Bir hata oluştu. Lütfen daha sonra tekrar deneyin.</string>
+
+    <!-- Overlay Tip Messages -->
+    <string-array name="overlay_tips">
+        <item>Ayarlarda daha fazla engelleme seçeneği bulun</item>
+        <item>Bir sayfa okumak için 30 saniye yeterlidir</item>
+        <item>5 dakikalık yürüyüş, 30 dakikalık shorts\'tan daha iyi hissettirir</item>
+        <item>Kısa bir bekleme daha iyi seçimler yaratır</item>
+        <item>Şu anda alışkanlıklarınızı değiştiriyorsunuz</item>
+        <item>Bu içeriğe şu anda gerçekten ihtiyacınız var mı?</item>
+        <item>Premium ile daha güçlü engellemenin kilidini açın</item>
+        <item>Premium: Engelleme stratejinizi özelleştirin</item>
+    </string-array>
+
+    <!-- Custom Timer (Premium) -->
+    <string name="custom_timer_title">Bekleme süresini ayarla</string>
+    <string name="custom_timer_presets">Hızlı ön ayarlar</string>
+    <string name="custom_timer_done">Bitti</string>
+    <string name="premium_required_title">✨ Premium özellik</string>
+    <string name="premium_required_message">Özel bekleme süresi ve daha fazlasının kilidini açın!\n\n• Bekleme süresini serbestçe ayarlayın (5–300 saniye)\n• Yalnızca kaydırılan shorts\'ları engelle\n• Dürtüsel devre dışı bırakmayı önle\n• Uygulama silmeyi önle</string>
+    <string name="premium_button_upgrade">Premium\'a yükselt</string>
+    <string name="premium_button_cancel">Şimdi değil</string>
+
+    <!-- Premium Banner -->
+    <string name="premium_banner_title">Daha fazla özelliğin kilidini aç</string>
+    <string name="premium_banner_subtitle">Özelleştirme + Koruma</string>
+    <string name="premium_banner_button">Yükselt</string>
+
+    <!-- Premium Upgrade Activity -->
+    <string name="premium_upgrade_title">Premium</string>
+    <string name="premium_upgrade_headline">Premium\'a yükselt</string>
+    <string name="premium_upgrade_subtitle">Daha güçlü engelleme ve koruma</string>
+    <string name="premium_upgrade_button">Şimdi yükselt</string>
+    <string name="premium_upgrade_coming_soon">Ödeme sistemi yakında geliyor!</string>
+
+    <!-- Subscription Management -->
+    <string name="subscription_management">Aboneliği yönet</string>
+    <string name="subscription_management_desc">Aboneliğinizi yönetin veya iptal edin</string>
+
+    <!-- Subscription Management Activity -->
+    <string name="subscription_management_title">Abonelik</string>
+    <string name="subscription_status_active">Aktif</string>
+    <string name="subscription_status_expired">Süresi doldu</string>
+    <string name="subscription_start_date">Başlangıç tarihi</string>
+    <string name="subscription_next_billing">Sonraki fatura tarihi</string>
+    <string name="subscription_auto_renew_on">Otomatik yenileme etkin</string>
+    <string name="subscription_auto_renew_off">Otomatik yenileme devre dışı</string>
+    <string name="subscription_cancel_button">Yönet veya iptal et</string>
+    <string name="subscription_cancel_desc">Aboneliğinizi iptal etmek veya değiştirmek için,\nGoogle Play Store\'a yönlendirileceksiniz</string>
+    <string name="subscription_info_note">* Son faturaya dayalı tahmini tarih</string>
+
+    <!-- Premium Features -->
+    <string name="premium_feature_ad_free_title">Reklamsız deneyim</string>
+    <string name="premium_feature_ad_free_desc">Temiz ve odaklanmış deneyim</string>
+    <string name="premium_feature_custom_timer_title">Özel zamanlayıcı ayarları</string>
+    <string name="premium_feature_custom_timer_desc">5 saniyeden 5 dakikaya serbestçe ayarla</string>
+    <string name="premium_feature_smart_block_title">Akıllı engelleme</string>
+    <string name="premium_feature_smart_block_desc">İlk shorts\'a izin ver, kaydırmada engelle</string>
+    <string name="premium_feature_prevent_disable_title">Dürtüsel devre dışı bırakmayı önle</string>
+    <string name="premium_feature_prevent_disable_desc">Engellemeyi devre dışı bırakmak için onay gerekli</string>
+    <string name="premium_feature_prevent_delete_title">Uygulama silme koruması</string>
+    <string name="premium_feature_prevent_delete_desc">Dürtüsel uygulama kaldırmayı önle</string>
+
+    <!-- Promo Code -->
+    <string name="promo_button_text">Promosyon kodunuz var mı?</string>
+    <string name="promo_dialog_title">Promosyon kodunu girin</string>
+    <string name="promo_dialog_subtitle">Ömür boyu Premium kodunuzu girin</string>
+    <string name="promo_dialog_cancel">İptal</string>
+    <string name="promo_dialog_confirm">Onayla</string>
+    <string name="promo_error_empty">Lütfen bir promosyon kodu girin</string>
+    <string name="promo_error_invalid_format">Geçersiz format\n(Örnek: UNSHORT-XXXXX-XXXXXXXX)</string>
+    <string name="promo_error_invalid_code">Geçersiz promosyon kodu</string>
+    <string name="promo_error_unknown">Hata oluştu: %s</string>
+    <string name="promo_success">Ömür boyu Premium etkinleştirildi!</string>
+    <string name="promo_lifetime_status">Ömür boyu Premium (Kalıcı)</string>
+    <string name="promo_no_expiry">Süresi yok</string>
+    <string name="promo_not_applicable">Uygulanamaz</string>
+
+</resources>

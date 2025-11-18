@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">un:short</string>
+    <string name="accessibility_service_description">Rileva video brevi e aggiunge una pausa consapevole girando il telefono per aiutare a liberarsi dalla dipendenza.</string>
+    <string name="flip_phone_title">Aspetta un momento! 🤚</string>
+    <string name="flip_phone_message">Per guardare gli Shorts,\ngira il telefono e aspetta 30 secondi</string>
+    <string name="time_remaining">Tempo rimanente: %d secondi</string>
+    <string name="flip_detected">Telefono girato ✓</string>
+    <string name="flip_required">Per favore gira il telefono</string>
+
+    <!-- BlockOverlay Messages -->
+    <string name="block_message_before_timer">Proprio adesso,\nhai davvero bisogno degli shorts?</string>
+    <string name="block_message_after_timer">Hai aspettato fin qui.\nVuoi ancora guardare?</string>
+    <string name="block_button_think_again">Ripensaci</string>
+    <string name="block_button_close">Chiudi e basta</string>
+    <string name="block_button_no">No, non guarderò</string>
+    <string name="block_button_yes">Sì, guarderò</string>
+
+    <!-- Timer Success Screen -->
+    <string name="timer_success_title">Ce l\'hai fatta!</string>
+    <string name="timer_success_message">Ottimo lavoro facendo una pausa\nOra puoi fare una scelta più saggia</string>
+
+    <!-- Timer Screen -->
+    <string name="timer_instruction_title">Prenditi un momento</string>
+    <string name="timer_instruction_message_onboarding">Gira il telefono e pensa se\ndevi davvero guardare</string>
+    <string name="timer_instruction_message_full">Gira il telefono e aspetta 30 secondi.\nTi pentirai di questa scelta tra 30 minuti?\nDi cosa hai davvero bisogno adesso?</string>
+
+    <!-- Main Activity -->
+    <string name="main_subtitle">Liberati dai contenuti brevi.\nPiccole abitudini per un consumo consapevole.</string>
+    <string name="status_on">ACCESO</string>
+    <string name="status_off">SPENTO</string>
+    <string name="status_active">ATTIVO</string>
+    <string name="status_inactive">INATTIVO</string>
+    <string name="toggle_description">Interruttore di accensione</string>
+    <string name="blocked_apps_title">App bloccate: </string>
+    <string name="app_youtube_shorts">YouTube Shorts</string>
+    <string name="app_instagram_reels">Instagram Reels</string>
+    <string name="app_facebook_reels">Facebook Reels</string>
+    <string name="app_naver_shorts">Naver Shorts</string>
+    <string name="blocked_apps_notice">• Vengono mostrate solo le app installate\n• Alcune versioni di app potrebbero non essere bloccate</string>
+    <string name="stats_watch_time">Tempo di visualizzazione</string>
+    <string name="stats_entry_count">Ingressi</string>
+    <string name="stats_consumption_count">Guardati</string>
+    <string name="time_unit_hour">h</string>
+    <string name="time_unit_minute">min</string>
+    <string name="time_unit_second">s</string>
+    <string name="permission_warning_icon">⚠</string>
+    <string name="permission_warning_title">Autorizzazioni richieste</string>
+    <string name="permission_warning_message">Per utilizzare le funzioni di blocco,\nsono necessarie le autorizzazioni di accessibilità e sovrapposizione</string>
+    <string name="permission_setup_button">Configura autorizzazioni</string>
+
+    <!-- Settings Tip Banner -->
+    <string name="settings_tip_message">Tocca il menu [⋮] in alto a destra per esplorare altre funzioni</string>
+    <string name="settings_tip_button">Vai →</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_title">Impostazioni</string>
+    <string name="settings_section_blocking">Impostazioni di blocco</string>
+    <string name="settings_section_protection">Protezione</string>
+    <string name="settings_section_other">Altro</string>
+    <string name="settings_delay_time_title">Tempo di attesa</string>
+    <string name="settings_delay_time_desc">Imposta il tempo di attesa prima di accedere agli shorts</string>
+    <string name="settings_delay_time_value">%d secondi</string>
+    <string name="settings_haptic_title">Feedback aptico</string>
+    <string name="settings_haptic_desc">Notifica di vibrazione al completamento del timer</string>
+    <string name="settings_block_scrolled_title">Blocca solo gli Shorts scorsi</string>
+    <string name="settings_block_scrolled_desc">Consenti il primo shorts, blocca allo scorrimento</string>
+    <string name="settings_prevent_disable_title">Previeni disattivazione impulsiva</string>
+    <string name="settings_prevent_disable_desc">Previeni disattivazione involontaria</string>
+    <string name="settings_feedback">Invia feedback</string>
+    <string name="settings_share">Condividi app</string>
+    <string name="settings_review">Lascia una recensione</string>
+    <string name="settings_version">Informazioni versione</string>
+    <string name="settings_version_value">v%s</string>
+    <string name="settings_version_default">v1.0.0</string>
+
+    <!-- Permission Setup Activity -->
+    <string name="permission_back_button">Indietro</string>
+    <string name="permission_title">Configurazione autorizzazioni</string>
+    <string name="permission_subtitle">Concedi le autorizzazioni\nper bloccare gli shorts</string>
+    <string name="permission_done">Fatto</string>
+
+    <!-- Permission Cards -->
+    <string name="permission_number_1">1</string>
+    <string name="permission_number_2">2</string>
+
+    <!-- Accessibility Setup Card -->
+    <string name="permission_accessibility">Configurazione del servizio di accessibilità</string>
+    <string name="permission_accessibility_completed">Servizio di accessibilità ✓</string>
+    <string name="permission_overlay">Mostra sopra le altre app</string>
+    <string name="permission_overlay_completed">Mostra sopra le altre app ✓</string>
+    <string name="permission_why">Perché è necessario?</string>
+    <string name="permission_accessibility_reason">Necessario per rilevare quando viene aperta la schermata degli shorts.</string>
+    <string name="permission_overlay_reason">Necessario per mostrare la schermata di blocco sopra gli shorts.</string>
+    <string name="permission_not_set">Non ancora configurato</string>
+    <string name="permission_completed">Configurazione completata</string>
+    <string name="permission_go_to_settings">Vai alle impostazioni</string>
+    <string name="permission_enable_permission">Abilita autorizzazione</string>
+
+    <!-- Manufacturer-specific Accessibility Guides -->
+    <string name="permission_accessibility_guide_samsung">💡 Cerca [App installate] → un:short</string>
+    <string name="permission_accessibility_guide_lg">💡 Cerca [Impostazioni avanzate] → un:short</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 Cerca [Servizi scaricati] → un:short</string>
+    <string name="permission_accessibility_guide_huawei">💡 Cerca [Servizi scaricati] → un:short</string>
+    <string name="permission_accessibility_guide_oppo">💡 Cerca [Servizi installati] → un:short</string>
+    <string name="permission_accessibility_guide_vivo">💡 Cerca [Servizi installati] → un:short</string>
+    <string name="permission_accessibility_guide_default">💡 Trova un:short e attivalo</string>
+
+    <!-- Timer Activity -->
+    <string name="timer_seconds_unit">secondi</string>
+    <string name="timer_flip_instruction">Gira il telefono</string>
+    <string name="timer_breathe_message">Fai un respiro profondo</string>
+    <string name="timer_skip_button">Annulla</string>
+
+    <!-- Ads -->
+    <string name="ad">PUBBLICITÀ</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_page1_title">Liberati dalla\ndipendenza dai contenuti brevi</string>
+    <string name="onboarding_page1_subtitle">Piccole abitudini per un consumo intenzionale</string>
+    <string name="onboarding_page2_title">Se vuoi guardare gli shorts,\nprenditi un momento per pensare</string>
+    <string name="onboarding_page3_title">Se vuoi ancora guardare,\nfai una breve pausa</string>
+    <string name="onboarding_page4_title">Infine,\npensa ancora una volta</string>
+    <string name="onboarding_page5_title">Pronto per iniziare?</string>
+    <string name="onboarding_page5_subtitle">Inizia il tuo percorso verso\nun consumo mediatico consapevole con un:short</string>
+    <string name="onboarding_start_button">Inizia</string>
+    <string name="onboarding_skip">Salta</string>
+
+    <!-- Delay Time Bottom Sheet -->
+    <string name="delay_time_title">Tempo di attesa</string>
+    <string name="delay_time_desc">Imposta il tempo di attesa prima di accedere agli shorts</string>
+    <string name="delay_time_15">15 secondi</string>
+    <string name="delay_time_30">30 secondi</string>
+    <string name="delay_time_60">60 secondi</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_email_app_not_found">App email non trovata</string>
+    <string name="toast_device_admin_enabled">Protezione dalla cancellazione dell\'app abilitata</string>
+    <string name="toast_device_admin_cancelled">Protezione dalla cancellazione dell\'app annullata</string>
+
+    <!-- Share & Feedback -->
+    <string name="feedback_subject">Feedback app un:short</string>
+    <string name="share_text">Liberati dalla dipendenza dai contenuti brevi!\nInizia un consumo mediatico consapevole con un:short.\n\n%s</string>
+
+    <!-- Device Admin (App Uninstall Protection) -->
+    <string name="device_admin_title">Protezione dalla cancellazione dell\'app</string>
+    <string name="device_admin_desc">Previeni disinstallazione impulsiva dell\'app</string>
+    <string name="device_admin_explanation">Hai mai cancellato l\'app in un momento di debolezza?\n\nun:short previene la disinstallazione impulsiva quando la tua determinazione vacilla.</string>
+    <string name="device_admin_dialog_title">Abilitare la protezione dalla cancellazione?</string>
+    <string name="device_admin_dialog_message">Questa funzione aggiunge un passaggio extra prima di disinstallare un:short.\n\nTi aiuta a resistere a decisioni impulsive durante momenti di debolezza.\n\nPuoi disattivarla in qualsiasi momento in Impostazioni → Sicurezza → App di amministrazione del dispositivo.</string>
+    <string name="device_admin_dialog_enable">Abilita</string>
+    <string name="device_admin_dialog_cancel">Non ora</string>
+    <string name="device_admin_deactivate_title">Disattivare la protezione?</string>
+    <string name="device_admin_deactivate_message">Per disattivare questa funzione, vai a:\n\nImpostazioni → Sicurezza → App di amministrazione del dispositivo → un:short\n\nPoi tocca [Disattiva]</string>
+    <string name="device_admin_deactivate_button">Vai alle impostazioni</string>
+    <string name="device_admin_receiver_enabled">Protezione dalla cancellazione dell\'app un:short abilitata</string>
+    <string name="device_admin_receiver_disable_warning">Disabilitare la protezione dalla cancellazione consente la disinstallazione impulsiva di un:short. Continuare?</string>
+    <string name="device_admin_receiver_disabled">Protezione dalla cancellazione dell\'app un:short disabilitata</string>
+
+    <!-- Privacy Consent Dialog -->
+    <string name="privacy_dialog_title_simple">A cosa accediamo</string>
+
+    <string name="privacy_why_title">Perché è necessaria l\'autorizzazione di accessibilità?</string>
+    <string name="privacy_why_content">un:short utilizza il servizio di accessibilità per rilevare contenuti video brevi.\n\nQuesta è la funzione principale per bloccare automaticamente gli shorts quando vengono rilevati.</string>
+
+    <string name="privacy_data_title">Dati che raccogliamo</string>
+    <string name="privacy_data_collected">✓ Contenuto dello schermo (solo per il rilevamento degli shorts)\n✓ Nomi dei pacchetti delle app\n✓ Hash dei metadati video (temporaneo)</string>
+    <string name="privacy_data_not_collected">✗ Informazioni personali (nome, contatti, ecc.)\n✗ Cronologia di visualizzazione\n✗ Informazioni account\n✗ Input di testo</string>
+
+    <string name="privacy_usage_title">Come vengono utilizzati i dati</string>
+    <string name="privacy_usage_content">• Utilizzato solo per il rilevamento della schermata degli shorts\n• Nessuna trasmissione al server (100% offline)\n• Solo hash temporanei per il rilevamento delle modifiche ai video\n• Eliminazione automatica alla chiusura dell\'app</string>
+
+    <string name="privacy_storage_title">Politica di archiviazione dei dati</string>
+    <string name="privacy_storage_content">• Solo gli ID di sessione vengono archiviati temporaneamente sul dispositivo\n• Eliminati immediatamente al riavvio dell\'app/servizio\n• Mai condivisi con terze parti</string>
+
+    <string name="privacy_faq_title">Domande frequenti</string>
+    <string name="privacy_faq_content">D: La mia cronologia di visualizzazione viene salvata?\nR: No. Vengono memorizzati temporaneamente solo valori hash.\n\nD: Condividete i dati con terze parti?\nR: No. Funzionamento completamente offline.\n\nD: Posso revocare l\'autorizzazione in seguito?\nR: Sì. Puoi disattivarla nelle impostazioni in qualsiasi momento.</string>
+
+    <string name="privacy_btn_agree">Accetta &amp; Vai alle impostazioni</string>
+    <string name="privacy_btn_exit">Esci dall\'app</string>
+    <string name="privacy_btn_disagree">Rifiuta</string>
+
+    <!-- Disable Warning Dialog (before timer) -->
+    <string name="disable_warning_title">Aspetta un momento</string>
+    <string name="disable_warning_message">Che ne dici di pensare ancora una volta prima di disattivare?</string>
+    <string name="disable_warning_confirm">Pensaci</string>
+    <string name="disable_warning_cancel">Mantieni abilitato</string>
+
+    <!-- Disable Confirmation Dialog -->
+    <string name="disable_dialog_title">Davvero disattivare?</string>
+    <string name="disable_dialog_message">Per disattivare, inserisci la frase seguente:</string>
+    <string name="disable_dialog_phrase">disable shorts blocking</string>
+    <string name="disable_dialog_input_hint">Inserisci qui</string>
+    <string name="disable_dialog_cancel">Annulla</string>
+    <string name="disable_dialog_confirm">Conferma</string>
+
+    <!-- Device Admin Disable Dialog -->
+    <string name="device_admin_disable_title">Disattivare la protezione dalla cancellazione?</string>
+    <string name="device_admin_disable_message">Potresti disattivare impulsivamente. Davvero disattivare?</string>
+    <string name="device_admin_disable_phrase">disable this feature</string>
+
+    <!-- Prevent Impulsive Disable OFF Dialog -->
+    <string name="prevent_impulsive_disable_off_title">Davvero disattivare?</string>
+    <string name="prevent_impulsive_disable_off_message">Per disattivare, inserisci la frase seguente:</string>
+    <string name="prevent_impulsive_disable_off_phrase">disable this feature</string>
+
+    <!-- Billing Error Messages -->
+    <string name="billing_error_connection_failed">Impossibile connettersi a Google Play. Per favore riprova.</string>
+    <string name="billing_error_sku_not_found">Impossibile elaborare la richiesta. Per favore riprova più tardi.</string>
+    <string name="billing_error_purchase_failed">Acquisto non riuscito. Per favore riprova.</string>
+    <string name="billing_error_restore_failed">Impossibile elaborare la richiesta. Per favore riprova più tardi.</string>
+    <string name="billing_error_restore_no_subscription">Nessun abbonamento attivo trovato.</string>
+    <string name="billing_error_unknown">Si è verificato un errore. Per favore riprova più tardi.</string>
+
+    <!-- Overlay Tip Messages -->
+    <string-array name="overlay_tips">
+        <item>Trova più opzioni di blocco nelle impostazioni</item>
+        <item>30 secondi sono sufficienti per leggere una pagina</item>
+        <item>Una passeggiata di 5 minuti è meglio di 30 minuti di shorts</item>
+        <item>Una breve attesa crea scelte migliori</item>
+        <item>Stai cambiando le tue abitudini proprio ora</item>
+        <item>Hai davvero bisogno di questo contenuto ora?</item>
+        <item>Sblocca un blocco più forte con Premium</item>
+        <item>Premium: Personalizza la tua strategia di blocco</item>
+    </string-array>
+
+    <!-- Custom Timer (Premium) -->
+    <string name="custom_timer_title">Imposta tempo di attesa</string>
+    <string name="custom_timer_presets">Predefiniti rapidi</string>
+    <string name="custom_timer_done">Fatto</string>
+    <string name="premium_required_title">✨ Funzione Premium</string>
+    <string name="premium_required_message">Sblocca tempo di attesa personalizzato e altro!\n\n• Imposta liberamente il tempo di attesa (5–300 secondi)\n• Blocca solo gli shorts scorsi\n• Previeni disattivazione impulsiva\n• Previeni cancellazione dell\'app</string>
+    <string name="premium_button_upgrade">Passa a Premium</string>
+    <string name="premium_button_cancel">Non ora</string>
+
+    <!-- Premium Banner -->
+    <string name="premium_banner_title">Sblocca più funzioni</string>
+    <string name="premium_banner_subtitle">Personalizzazione + Protezione</string>
+    <string name="premium_banner_button">Aggiorna</string>
+
+    <!-- Premium Upgrade Activity -->
+    <string name="premium_upgrade_title">Premium</string>
+    <string name="premium_upgrade_headline">Passa a Premium</string>
+    <string name="premium_upgrade_subtitle">Blocco e protezione più forti</string>
+    <string name="premium_upgrade_button">Aggiorna ora</string>
+    <string name="premium_upgrade_coming_soon">Sistema di pagamento in arrivo!</string>
+
+    <!-- Subscription Management -->
+    <string name="subscription_management">Gestisci abbonamento</string>
+    <string name="subscription_management_desc">Gestisci o annulla il tuo abbonamento</string>
+
+    <!-- Subscription Management Activity -->
+    <string name="subscription_management_title">Abbonamento</string>
+    <string name="subscription_status_active">Attivo</string>
+    <string name="subscription_status_expired">Scaduto</string>
+    <string name="subscription_start_date">Data di inizio</string>
+    <string name="subscription_next_billing">Prossima data di fatturazione</string>
+    <string name="subscription_auto_renew_on">Rinnovo automatico abilitato</string>
+    <string name="subscription_auto_renew_off">Rinnovo automatico disabilitato</string>
+    <string name="subscription_cancel_button">Gestisci o annulla</string>
+    <string name="subscription_cancel_desc">Per annullare o modificare il tuo abbonamento,\nverrai indirizzato a Google Play Store</string>
+    <string name="subscription_info_note">* Data stimata in base all\'ultima fatturazione</string>
+
+    <!-- Premium Features -->
+    <string name="premium_feature_ad_free_title">Esperienza senza pubblicità</string>
+    <string name="premium_feature_ad_free_desc">Esperienza pulita e focalizzata</string>
+    <string name="premium_feature_custom_timer_title">Impostazioni timer personalizzate</string>
+    <string name="premium_feature_custom_timer_desc">Imposta liberamente da 5 secondi a 5 minuti</string>
+    <string name="premium_feature_smart_block_title">Blocco intelligente</string>
+    <string name="premium_feature_smart_block_desc">Consenti il primo shorts, blocca allo scorrimento</string>
+    <string name="premium_feature_prevent_disable_title">Previeni disattivazione impulsiva</string>
+    <string name="premium_feature_prevent_disable_desc">Conferma richiesta per disattivare il blocco</string>
+    <string name="premium_feature_prevent_delete_title">Protezione dalla cancellazione dell\'app</string>
+    <string name="premium_feature_prevent_delete_desc">Previeni disinstallazione impulsiva dell\'app</string>
+
+    <!-- Promo Code -->
+    <string name="promo_button_text">Hai un codice promozionale?</string>
+    <string name="promo_dialog_title">Inserisci codice promozionale</string>
+    <string name="promo_dialog_subtitle">Inserisci il tuo codice Premium a vita</string>
+    <string name="promo_dialog_cancel">Annulla</string>
+    <string name="promo_dialog_confirm">Conferma</string>
+    <string name="promo_error_empty">Per favore inserisci un codice promozionale</string>
+    <string name="promo_error_invalid_format">Formato non valido\n(Esempio: UNSHORT-XXXXX-XXXXXXXX)</string>
+    <string name="promo_error_invalid_code">Codice promozionale non valido</string>
+    <string name="promo_error_unknown">Si è verificato un errore: %s</string>
+    <string name="promo_success">Premium a vita attivato!</string>
+    <string name="promo_lifetime_status">Premium a vita (Permanente)</string>
+    <string name="promo_no_expiry">Nessuna scadenza</string>
+    <string name="promo_not_applicable">N/D</string>
+
+</resources>

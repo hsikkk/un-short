@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">un:short</string>
+    <string name="accessibility_service_description">ショート動画を検知し、スマホを裏返すことで一時停止を促し、依存から抜け出すサポートをします。</string>
+    <string name="flip_phone_title">ちょっと待って! 🤚</string>
+    <string name="flip_phone_message">Shortsを見るには、\nスマホを裏返して30秒待ってください</string>
+    <string name="time_remaining">残り時間: %d秒</string>
+    <string name="flip_detected">スマホが裏返されました ✓</string>
+    <string name="flip_required">スマホを裏返してください</string>
+
+    <!-- BlockOverlay Messages -->
+    <string name="block_message_before_timer">今、\n本当にショート動画が必要ですか?</string>
+    <string name="block_message_after_timer">ここまで待ちました。\nまだ見たいですか?</string>
+    <string name="block_button_think_again">もう一度考える</string>
+    <string name="block_button_close">閉じるだけ</string>
+    <string name="block_button_no">見ません</string>
+    <string name="block_button_yes">見ます</string>
+
+    <!-- Timer Success Screen -->
+    <string name="timer_success_title">できました!</string>
+    <string name="timer_success_message">一時停止、お疲れ様です\nより賢明な選択ができますね</string>
+
+    <!-- Timer Screen -->
+    <string name="timer_instruction_title">少し考えましょう</string>
+    <string name="timer_instruction_message_onboarding">スマホを裏返して、\n本当に見る必要があるか考えてください</string>
+    <string name="timer_instruction_message_full">スマホを裏返して30秒待ってください。\n30分後にこの選択を後悔しますか?\n今、本当に必要なものは何ですか?</string>
+
+    <!-- Main Activity -->
+    <string name="main_subtitle">ショート動画から抜け出しましょう。\n意識的な消費のための小さな習慣。</string>
+    <string name="status_on">ON</string>
+    <string name="status_off">OFF</string>
+    <string name="status_active">有効</string>
+    <string name="status_inactive">無効</string>
+    <string name="toggle_description">電源トグル</string>
+    <string name="blocked_apps_title">ブロック対象アプリ: </string>
+    <string name="app_youtube_shorts">YouTube Shorts</string>
+    <string name="app_instagram_reels">Instagram Reels</string>
+    <string name="app_facebook_reels">Facebook Reels</string>
+    <string name="app_naver_shorts">Naver Shorts</string>
+    <string name="blocked_apps_notice">• インストールされているアプリのみ表示されます\n• 一部のアプリバージョンはブロックされない場合があります</string>
+    <string name="stats_watch_time">視聴時間</string>
+    <string name="stats_entry_count">アクセス</string>
+    <string name="stats_consumption_count">視聴済み</string>
+    <string name="time_unit_hour">時間</string>
+    <string name="time_unit_minute">分</string>
+    <string name="time_unit_second">秒</string>
+    <string name="permission_warning_icon">⚠</string>
+    <string name="permission_warning_title">権限が必要です</string>
+    <string name="permission_warning_message">ブロック機能を使用するには、\nアクセシビリティとオーバーレイ権限が必要です</string>
+    <string name="permission_setup_button">権限を設定</string>
+
+    <!-- Settings Tip Banner -->
+    <string name="settings_tip_message">右上の[⋮]メニューをタップして、さらに機能を探しましょう</string>
+    <string name="settings_tip_button">移動 →</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_title">設定</string>
+    <string name="settings_section_blocking">ブロック設定</string>
+    <string name="settings_section_protection">保護</string>
+    <string name="settings_section_other">その他</string>
+    <string name="settings_delay_time_title">遅延時間</string>
+    <string name="settings_delay_time_desc">ショート動画にアクセスする前の待機時間を設定</string>
+    <string name="settings_delay_time_value">%d秒</string>
+    <string name="settings_haptic_title">触覚フィードバック</string>
+    <string name="settings_haptic_desc">タイマー完了時の振動通知</string>
+    <string name="settings_block_scrolled_title">スクロールしたShortsのみブロック</string>
+    <string name="settings_block_scrolled_desc">最初のショート動画は許可し、スクロール時にブロック</string>
+    <string name="settings_prevent_disable_title">衝動的な無効化を防止</string>
+    <string name="settings_prevent_disable_desc">意図しない無効化を防止</string>
+    <string name="settings_feedback">フィードバックを送信</string>
+    <string name="settings_share">アプリを共有</string>
+    <string name="settings_review">レビューを書く</string>
+    <string name="settings_version">バージョン情報</string>
+    <string name="settings_version_value">v%s</string>
+    <string name="settings_version_default">v1.0.0</string>
+
+    <!-- Permission Setup Activity -->
+    <string name="permission_back_button">戻る</string>
+    <string name="permission_title">権限設定</string>
+    <string name="permission_subtitle">ショート動画をブロックするために\n権限を許可してください</string>
+    <string name="permission_done">完了</string>
+
+    <!-- Permission Cards -->
+    <string name="permission_number_1">1</string>
+    <string name="permission_number_2">2</string>
+
+    <!-- Accessibility Setup Card -->
+    <string name="permission_accessibility">アクセシビリティサービスの設定</string>
+    <string name="permission_accessibility_completed">アクセシビリティサービス ✓</string>
+    <string name="permission_overlay">他のアプリの上に表示</string>
+    <string name="permission_overlay_completed">他のアプリの上に表示 ✓</string>
+    <string name="permission_why">なぜ必要ですか?</string>
+    <string name="permission_accessibility_reason">ショート動画画面が開かれたことを検知するために必要です。</string>
+    <string name="permission_overlay_reason">ショート動画の上にブロック画面を表示するために必要です。</string>
+    <string name="permission_not_set">未設定</string>
+    <string name="permission_completed">設定完了</string>
+    <string name="permission_go_to_settings">設定に移動</string>
+    <string name="permission_enable_permission">権限を有効化</string>
+
+    <!-- Manufacturer-specific Accessibility Guides -->
+    <string name="permission_accessibility_guide_samsung">💡 [インストール済みアプリ] → un:shortを探してください</string>
+    <string name="permission_accessibility_guide_lg">💡 [詳細設定] → un:shortを探してください</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 [ダウンロードしたサービス] → un:shortを探してください</string>
+    <string name="permission_accessibility_guide_huawei">💡 [ダウンロードしたサービス] → un:shortを探してください</string>
+    <string name="permission_accessibility_guide_oppo">💡 [インストール済みサービス] → un:shortを探してください</string>
+    <string name="permission_accessibility_guide_vivo">💡 [インストール済みサービス] → un:shortを探してください</string>
+    <string name="permission_accessibility_guide_default">💡 un:shortを見つけて有効にしてください</string>
+
+    <!-- Timer Activity -->
+    <string name="timer_seconds_unit">秒</string>
+    <string name="timer_flip_instruction">スマホを裏返す</string>
+    <string name="timer_breathe_message">深呼吸しましょう</string>
+    <string name="timer_skip_button">キャンセル</string>
+
+    <!-- Ads -->
+    <string name="ad">広告</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_page1_title">ショート動画依存から\n抜け出しましょう</string>
+    <string name="onboarding_page1_subtitle">意識的な消費のための小さな習慣</string>
+    <string name="onboarding_page2_title">ショート動画を見たいなら、\n一度考えてみましょう</string>
+    <string name="onboarding_page3_title">それでも見たいなら、\n少し一時停止しましょう</string>
+    <string name="onboarding_page4_title">最後に、\nもう一度考えましょう</string>
+    <string name="onboarding_page5_title">始める準備はできましたか?</string>
+    <string name="onboarding_page5_subtitle">un:shortで\n意識的なメディア消費への旅を始めましょう</string>
+    <string name="onboarding_start_button">始める</string>
+    <string name="onboarding_skip">スキップ</string>
+
+    <!-- Delay Time Bottom Sheet -->
+    <string name="delay_time_title">遅延時間</string>
+    <string name="delay_time_desc">ショート動画にアクセスする前の待機時間を設定</string>
+    <string name="delay_time_15">15秒</string>
+    <string name="delay_time_30">30秒</string>
+    <string name="delay_time_60">60秒</string>
+
+    <!-- Toast Messages -->
+    <string name="toast_email_app_not_found">メールアプリが見つかりません</string>
+    <string name="toast_device_admin_enabled">アプリ削除保護が有効になりました</string>
+    <string name="toast_device_admin_cancelled">アプリ削除保護がキャンセルされました</string>
+
+    <!-- Share & Feedback -->
+    <string name="feedback_subject">un:shortアプリのフィードバック</string>
+    <string name="share_text">ショート動画依存から抜け出しましょう!\nun:shortで意識的なメディア消費を始めましょう。\n\n%s</string>
+
+    <!-- Device Admin (App Uninstall Protection) -->
+    <string name="device_admin_title">アプリ削除保護</string>
+    <string name="device_admin_desc">衝動的なアプリのアンインストールを防止</string>
+    <string name="device_admin_explanation">弱い瞬間にアプリを削除したことはありませんか?\n\nun:shortは、決意が揺らいだときの衝動的なアンインストールを防ぎます。</string>
+    <string name="device_admin_dialog_title">削除保護を有効にしますか?</string>
+    <string name="device_admin_dialog_message">この機能は、un:shortをアンインストールする前に追加のステップを追加します。\n\n弱い瞬間の衝動的な決定に抵抗するのに役立ちます。\n\nこの機能は、設定 → セキュリティ → デバイス管理アプリでいつでも無効にできます。</string>
+    <string name="device_admin_dialog_enable">有効化</string>
+    <string name="device_admin_dialog_cancel">今はしない</string>
+    <string name="device_admin_deactivate_title">保護を無効にしますか?</string>
+    <string name="device_admin_deactivate_message">この機能を無効にするには、次の場所に移動してください:\n\n設定 → セキュリティ → デバイス管理アプリ → un:short\n\n次に、[無効化]をタップします</string>
+    <string name="device_admin_deactivate_button">設定に移動</string>
+    <string name="device_admin_receiver_enabled">un:shortアプリ削除保護が有効になりました</string>
+    <string name="device_admin_receiver_disable_warning">削除保護を無効にすると、un:shortの衝動的なアンインストールが可能になります。続行しますか?</string>
+    <string name="device_admin_receiver_disabled">un:shortアプリ削除保護が無効になりました</string>
+
+    <!-- Privacy Consent Dialog -->
+    <string name="privacy_dialog_title_simple">アクセスする内容</string>
+
+    <string name="privacy_why_title">なぜアクセシビリティ権限が必要ですか?</string>
+    <string name="privacy_why_content">un:shortは、ショート動画コンテンツを検知するためにアクセシビリティサービスを使用します。\n\nこれは、検知時に自動的にショート動画をブロックするコア機能です。</string>
+
+    <string name="privacy_data_title">収集するデータ</string>
+    <string name="privacy_data_collected">✓ 画面コンテンツ(ショート動画検知のみ)\n✓ アプリパッケージ名\n✓ 動画メタデータハッシュ(一時的)</string>
+    <string name="privacy_data_not_collected">✗ 個人情報(名前、連絡先など)\n✗ 視聴履歴\n✗ アカウント情報\n✗ テキスト入力</string>
+
+    <string name="privacy_usage_title">データの使用方法</string>
+    <string name="privacy_usage_content">• ショート動画画面の検知のみに使用\n• サーバーに送信しない(100%オフライン)\n• 動画変更検知のための一時ハッシュのみ\n• アプリ終了時に自動削除</string>
+
+    <string name="privacy_storage_title">データ保存ポリシー</string>
+    <string name="privacy_storage_content">• セッションIDのみデバイスに一時保存\n• アプリ/サービス再起動時に即座に削除\n• 第三者と共有されることはありません</string>
+
+    <string name="privacy_faq_title">よくある質問</string>
+    <string name="privacy_faq_content">Q: 視聴履歴は保存されますか?\nA: いいえ。ハッシュ値のみが一時的に保存されます。\n\nQ: 第三者とデータを共有しますか?\nA: いいえ。完全にオフラインで動作します。\n\nQ: 後で権限を取り消せますか?\nA: はい。設定でいつでも無効にできます。</string>
+
+    <string name="privacy_btn_agree">同意して設定に移動</string>
+    <string name="privacy_btn_exit">アプリを終了</string>
+    <string name="privacy_btn_disagree">同意しない</string>
+
+    <!-- Disable Warning Dialog (before timer) -->
+    <string name="disable_warning_title">ちょっと待って</string>
+    <string name="disable_warning_message">無効にする前にもう一度考えてみませんか?</string>
+    <string name="disable_warning_confirm">考えてみる</string>
+    <string name="disable_warning_cancel">有効のままにする</string>
+
+    <!-- Disable Confirmation Dialog -->
+    <string name="disable_dialog_title">本当に無効にしますか?</string>
+    <string name="disable_dialog_message">無効にするには、以下のフレーズを入力してください:</string>
+    <string name="disable_dialog_phrase">disable shorts blocking</string>
+    <string name="disable_dialog_input_hint">ここに入力</string>
+    <string name="disable_dialog_cancel">キャンセル</string>
+    <string name="disable_dialog_confirm">確認</string>
+
+    <!-- Device Admin Disable Dialog -->
+    <string name="device_admin_disable_title">削除保護を無効にしますか?</string>
+    <string name="device_admin_disable_message">衝動的に無効にする可能性があります。本当に無効にしますか?</string>
+    <string name="device_admin_disable_phrase">disable this feature</string>
+
+    <!-- Prevent Impulsive Disable OFF Dialog -->
+    <string name="prevent_impulsive_disable_off_title">本当に無効にしますか?</string>
+    <string name="prevent_impulsive_disable_off_message">無効にするには、以下のフレーズを入力してください:</string>
+    <string name="prevent_impulsive_disable_off_phrase">disable this feature</string>
+
+    <!-- Billing Error Messages -->
+    <string name="billing_error_connection_failed">Google Playに接続できません。もう一度お試しください。</string>
+    <string name="billing_error_sku_not_found">リクエストを処理できません。後でもう一度お試しください。</string>
+    <string name="billing_error_purchase_failed">購入に失敗しました。もう一度お試しください。</string>
+    <string name="billing_error_restore_failed">リクエストを処理できません。後でもう一度お試しください。</string>
+    <string name="billing_error_restore_no_subscription">有効なサブスクリプションが見つかりません。</string>
+    <string name="billing_error_unknown">エラーが発生しました。後でもう一度お試しください。</string>
+
+    <!-- Overlay Tip Messages -->
+    <string-array name="overlay_tips">
+        <item>設定でさらにブロックオプションを見つける</item>
+        <item>30秒あれば1ページ読めます</item>
+        <item>5分の散歩は30分のショート動画より気持ちいい</item>
+        <item>少しの待機でより良い選択ができます</item>
+        <item>今、あなたは習慣を変えています</item>
+        <item>本当に今このコンテンツが必要ですか?</item>
+        <item>プレミアムでより強力なブロックを解除</item>
+        <item>プレミアム: ブロック戦略をカスタマイズ</item>
+    </string-array>
+
+    <!-- Custom Timer (Premium) -->
+    <string name="custom_timer_title">待機時間を設定</string>
+    <string name="custom_timer_presets">クイックプリセット</string>
+    <string name="custom_timer_done">完了</string>
+    <string name="premium_required_title">✨ プレミアム機能</string>
+    <string name="premium_required_message">カスタム待機時間などを解除しましょう!\n\n• 待機時間を自由に設定(5〜300秒)\n• スクロールしたShortsのみブロック\n• 衝動的な無効化を防止\n• アプリ削除を防止</string>
+    <string name="premium_button_upgrade">プレミアムにアップグレード</string>
+    <string name="premium_button_cancel">今はしない</string>
+
+    <!-- Premium Banner -->
+    <string name="premium_banner_title">さらに機能を解除</string>
+    <string name="premium_banner_subtitle">カスタマイズ + 保護</string>
+    <string name="premium_banner_button">アップグレード</string>
+
+    <!-- Premium Upgrade Activity -->
+    <string name="premium_upgrade_title">プレミアム</string>
+    <string name="premium_upgrade_headline">プレミアムにアップグレード</string>
+    <string name="premium_upgrade_subtitle">より強力なブロックと保護</string>
+    <string name="premium_upgrade_button">今すぐアップグレード</string>
+    <string name="premium_upgrade_coming_soon">決済システムは近日公開!</string>
+
+    <!-- Subscription Management -->
+    <string name="subscription_management">サブスクリプション管理</string>
+    <string name="subscription_management_desc">サブスクリプションを管理またはキャンセル</string>
+
+    <!-- Subscription Management Activity -->
+    <string name="subscription_management_title">サブスクリプション</string>
+    <string name="subscription_status_active">有効</string>
+    <string name="subscription_status_expired">期限切れ</string>
+    <string name="subscription_start_date">開始日</string>
+    <string name="subscription_next_billing">次回請求日</string>
+    <string name="subscription_auto_renew_on">自動更新が有効</string>
+    <string name="subscription_auto_renew_off">自動更新が無効</string>
+    <string name="subscription_cancel_button">管理またはキャンセル</string>
+    <string name="subscription_cancel_desc">サブスクリプションをキャンセルまたは変更するには、\nGoogle Play Storeに移動します</string>
+    <string name="subscription_info_note">* 最後の請求に基づく推定日</string>
+
+    <!-- Premium Features -->
+    <string name="premium_feature_ad_free_title">広告なしの体験</string>
+    <string name="premium_feature_ad_free_desc">クリーンで集中できる体験</string>
+    <string name="premium_feature_custom_timer_title">カスタムタイマー設定</string>
+    <string name="premium_feature_custom_timer_desc">5秒から5分まで自由に設定</string>
+    <string name="premium_feature_smart_block_title">スマートブロック</string>
+    <string name="premium_feature_smart_block_desc">最初のショート動画は許可し、スクロール時にブロック</string>
+    <string name="premium_feature_prevent_disable_title">衝動的な無効化を防止</string>
+    <string name="premium_feature_prevent_disable_desc">ブロックを無効にするには確認が必要</string>
+    <string name="premium_feature_prevent_delete_title">アプリ削除保護</string>
+    <string name="premium_feature_prevent_delete_desc">衝動的なアプリのアンインストールを防止</string>
+
+    <!-- Promo Code -->
+    <string name="promo_button_text">プロモコードをお持ちですか?</string>
+    <string name="promo_dialog_title">プロモコードを入力</string>
+    <string name="promo_dialog_subtitle">ライフタイムプレミアムコードを入力</string>
+    <string name="promo_dialog_cancel">キャンセル</string>
+    <string name="promo_dialog_confirm">確認</string>
+    <string name="promo_error_empty">プロモコードを入力してください</string>
+    <string name="promo_error_invalid_format">無効な形式\n(例: UNSHORT-XXXXX-XXXXXXXX)</string>
+    <string name="promo_error_invalid_code">無効なプロモコード</string>
+    <string name="promo_error_unknown">エラーが発生しました: %s</string>
+    <string name="promo_success">ライフタイムプレミアムが有効になりました!</string>
+    <string name="promo_lifetime_status">ライフタイムプレミアム(永久)</string>
+    <string name="promo_no_expiry">期限なし</string>
+    <string name="promo_not_applicable">該当なし</string>
+
+</resources>
