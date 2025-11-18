@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/white">
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="프로모션 코드 입력"
+        android:textSize="20sp"
+        android:fontFamily="@font/spoqa_sans_neo_bold"
+        android:textColor="@color/primary_dark"
+        android:gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lifetime Premium 코드를 입력하세요"
+        android:textSize="14sp"
+        android:fontFamily="@font/spoqa_sans_neo_regular"
+        android:textColor="@color/gray_600"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Input Field -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="UNSHORT-XXXXX-XXXXXXXX"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/promoCodeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapCharacters"
+            android:fontFamily="@font/spoqa_sans_neo_regular"
+            android:textSize="16sp"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Error Message -->
+    <TextView
+        android:id="@+id/errorMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:fontFamily="@font/spoqa_sans_neo_regular"
+        android:textColor="@color/error"
+        android:layout_marginTop="8dp"
+        android:visibility="gone" />
+
+    <!-- Success Message -->
+    <TextView
+        android:id="@+id/successMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:fontFamily="@font/spoqa_sans_neo_regular"
+        android:textColor="@color/success"
+        android:layout_marginTop="8dp"
+        android:visibility="gone" />
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="24dp"
+        android:gravity="end">
+
+        <!-- Cancel Button -->
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:fontFamily="@font/spoqa_sans_neo_medium"
+            android:textColor="@color/gray_600"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Confirm Button -->
+        <Button
+            android:id="@+id/confirmButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
+            android:backgroundTint="@color/primary_dark" />
+
+    </LinearLayout>
+
+</LinearLayout>

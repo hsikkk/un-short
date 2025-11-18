@@ -31,4 +31,9 @@ object AppConstants {
 
     // Nudge
     const val PREF_HAS_VISITED_SETTINGS = "has_visited_settings"
+
+    // Lifetime Premium
+    const val PREF_IS_LIFETIME_PREMIUM = "is_lifetime_premium"
+    const val PREF_REDEEMED_PROMO_CODE = "redeemed_promo_code"
+    const val PREF_REDEEMED_AT = "redeemed_at"
 }

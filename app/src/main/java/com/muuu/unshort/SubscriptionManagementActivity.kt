@@ -55,6 +55,34 @@ class SubscriptionManagementActivity : BaseActivity() {
      * 구독 정보 로드 및 UI 업데이트
      */
     private fun loadSubscriptionInfo() {
+        // Lifetime Premium 확인 (최우선)
+        if (PremiumManager.isLifetimePremium()) {
+            val lifetimeInfo = PremiumManager.getLifetimePremiumInfo()
+
+            // Lifetime Premium 상태 표시
+            subscriptionStatus.text = "Lifetime Premium (영구)"
+            subscriptionStatus.setTextColor(getColor(R.color.success))
+
+            // 활성화 날짜
+            if (lifetimeInfo != null) {
+                subscriptionStartDate.text = dateFormat.format(Date(lifetimeInfo.redeemedAt))
+            } else {
+                subscriptionStartDate.text = "-"
+            }
+
+            // Lifetime은 만료일 없음
+            subscriptionNextBilling.text = "만료일 없음"
+
+            // 자동 갱신 없음
+            subscriptionAutoRenew.text = "해당 없음"
+
+            // 구독 해지 버튼 숨김 (Lifetime은 해지 불가)
+            cancelSubscriptionButton.visibility = View.GONE
+
+            return
+        }
+
+        // Google Play 구독 정보 확인
         val subscriptionInfo = PremiumManager.getSubscriptionInfo()
 
         if (subscriptionInfo != null) {
@@ -88,6 +116,8 @@ class SubscriptionManagementActivity : BaseActivity() {
             } else {
                 getString(R.string.subscription_auto_renew_off)
             }
+
+            cancelSubscriptionButton.visibility = View.VISIBLE
         } else {
             // 구독 정보 없음 (비구독자)
             subscriptionStatus.text = getString(R.string.subscription_status_expired)
@@ -95,6 +125,7 @@ class SubscriptionManagementActivity : BaseActivity() {
             subscriptionStartDate.text = "-"
             subscriptionNextBilling.text = "-"
             subscriptionAutoRenew.text = "-"
+            cancelSubscriptionButton.visibility = View.GONE
         }
     }
 }

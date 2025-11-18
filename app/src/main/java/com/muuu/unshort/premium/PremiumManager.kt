@@ -8,6 +8,7 @@ import androidx.work.WorkManager
 import com.muuu.unshort.BuildConfig
 import com.muuu.unshort.admin.DeviceAdminManager
 import com.muuu.unshort.prefs.PreferencesManager
+import com.muuu.unshort.promo.PromoCodeValidator
 import java.util.concurrent.TimeUnit
 
 /**
@@ -19,6 +20,7 @@ import java.util.concurrent.TimeUnit
 object PremiumManager {
 
     private lateinit var provider: PremiumProvider
+    private lateinit var lifetimeProvider: LifetimePremiumProvider
     private lateinit var appContext: Context
     private var isPremiumCache: Boolean = false
 
@@ -36,6 +38,9 @@ object PremiumManager {
     fun initialize(context: Context) {
         appContext = context.applicationContext
 
+        // Lifetime Premium Provider 초기화 (항상 사용)
+        lifetimeProvider = LifetimePremiumProvider(context)
+
         // Debug 빌드: DummyProvider, Release 빌드: GooglePlayBillingProvider
 //        provider = GooglePlayBillingProvider(context)
         provider = if (BuildConfig.DEBUG) {
@@ -46,7 +51,7 @@ object PremiumManager {
 
         // 초기 상태 동기화
         provider.syncPremiumStatus {
-            isPremiumCache = provider.isPremium()
+            isPremiumCache = checkPremiumStatus()
         }
 
         // WorkManager로 24시간 주기 동기화 스케줄
@@ -83,12 +88,37 @@ object PremiumManager {
     }
 
     /**
-     * 프리미엄 여부 확인
+     * 프리미엄 여부 확인 (우선순위 적용)
+     *
+     * 우선순위:
+     * 1. Lifetime Premium (최우선)
+     * 2. Google Play 구독
      *
      * @return true if premium, false otherwise
      */
     fun isPremium(): Boolean {
         return isPremiumCache
+    }
+
+    /**
+     * 프리미엄 상태 확인 (내부용)
+     *
+     * Lifetime Premium과 구독 상태를 모두 체크하여 우선순위에 따라 반환
+     *
+     * @return true if premium, false otherwise
+     */
+    private fun checkPremiumStatus(): Boolean {
+        // 1. Lifetime Premium 확인 (최우선)
+        if (lifetimeProvider.isPremium()) {
+            return true
+        }
+
+        // 2. Google Play 구독 확인
+        if (provider.isPremium()) {
+            return true
+        }
+
+        return false
     }
 
     /**
@@ -122,7 +152,7 @@ object PremiumManager {
     fun syncPremiumStatus() {
         try {
             provider.syncPremiumStatus {
-                val newStatus = provider.isPremium()
+                val newStatus = checkPremiumStatus()
                 if (isPremiumCache != newStatus) {
                     updatePremiumStatus(newStatus)
                 }
@@ -237,4 +267,40 @@ object PremiumManager {
     fun openSubscriptionManagement(context: Context) {
         provider.openSubscriptionManagement(context)
     }
+
+    /**
+     * 프로모션 코드로 Lifetime Premium 활성화
+     *
+     * @param code 프로모션 코드
+     * @return ValidationResult
+     */
+    fun activatePromoCode(code: String): PromoCodeValidator.ValidationResult {
+        val result = lifetimeProvider.activateWithPromoCode(code)
+
+        if (result is PromoCodeValidator.ValidationResult.Valid) {
+            // 프리미엄 상태 업데이트
+            updatePremiumStatus(true)
+        }
+
+        return result
+    }
+
+    /**
+     * Lifetime Premium 정보 조회
+     *
+     * @return RedeemedInfo or null
+     */
+    fun getLifetimePremiumInfo(): LifetimePremiumProvider.RedeemedInfo? {
+        return lifetimeProvider.getRedeemedInfo()
+    }
+
+    /**
+     * Lifetime Premium 여부 확인
+     *
+     * @return true if lifetime premium
+     */
+    fun isLifetimePremium(): Boolean {
+        return lifetimeProvider.isPremium()
+    }
 }
+

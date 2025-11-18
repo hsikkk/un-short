@@ -2,9 +2,11 @@ package com.muuu.unshort
 
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.button.MaterialButton
 import com.muuu.unshort.premium.PremiumManager
+import com.muuu.unshort.promo.PromoCodeDialog
 
 /**
  * 프리미엄 업그레이드 화면
@@ -18,6 +20,7 @@ class PremiumUpgradeActivity : BaseActivity() {
 
     private lateinit var closeButton: ImageView
     private lateinit var upgradeButton: MaterialButton
+    private lateinit var promoCodeButton: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +29,7 @@ class PremiumUpgradeActivity : BaseActivity() {
         // View 초기화
         closeButton = findViewById(R.id.closeButton)
         upgradeButton = findViewById(R.id.upgradeButton)
+        promoCodeButton = findViewById(R.id.promoCodeButton)
 
         // 닫기 버튼
         closeButton.setOnClickListener {
@@ -44,5 +48,19 @@ class PremiumUpgradeActivity : BaseActivity() {
                 finish()
             }
         }
+
+        // 프로모션 코드 버튼
+        promoCodeButton.setOnClickListener {
+            showPromoCodeDialog()
+        }
+    }
+
+    private fun showPromoCodeDialog() {
+        val dialog = PromoCodeDialog(this) {
+            // 성공 시 화면 종료
+            Toast.makeText(this, "Lifetime Premium이 활성화되었습니다!", Toast.LENGTH_LONG).show()
+            finish()
+        }
+        dialog.show()
     }
 }

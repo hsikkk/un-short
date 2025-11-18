@@ -298,6 +298,23 @@
             android:fontFamily="@font/spoqa_sans_neo_bold"
             app:backgroundTint="@color/primary_dark"
             android:textColor="@color/white" />
+
+        <!-- Promo Code Button -->
+        <TextView
+            android:id="@+id/promoCodeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="프로모션 코드가 있으신가요?"
+            android:textSize="14sp"
+            android:fontFamily="@font/spoqa_sans_neo_regular"
+            android:textColor="@color/gray_600"
+            android:gravity="center"
+            android:layout_marginTop="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:padding="12dp" />
+
     </LinearLayout>
 
 </LinearLayout>

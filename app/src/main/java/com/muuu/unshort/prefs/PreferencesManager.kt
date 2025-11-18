@@ -77,6 +77,20 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(AppConstants.PREF_HAS_VISITED_SETTINGS, false)
         set(value) = prefs.edit().putBoolean(AppConstants.PREF_HAS_VISITED_SETTINGS, value).apply()
 
+    // ========== Lifetime Premium ==========
+
+    var isLifetimePremium: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_IS_LIFETIME_PREMIUM, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_IS_LIFETIME_PREMIUM, value).apply()
+
+    var redeemedPromoCode: String?
+        get() = prefs.getString(AppConstants.PREF_REDEEMED_PROMO_CODE, null)
+        set(value) = prefs.edit().putString(AppConstants.PREF_REDEEMED_PROMO_CODE, value).apply()
+
+    var redeemedAt: Long
+        get() = prefs.getLong(AppConstants.PREF_REDEEMED_AT, 0L)
+        set(value) = prefs.edit().putLong(AppConstants.PREF_REDEEMED_AT, value).apply()
+
     // ========== Batch Operations ==========
 
     /**
