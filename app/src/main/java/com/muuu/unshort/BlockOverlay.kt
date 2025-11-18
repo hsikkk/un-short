@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
+import android.graphics.Point
 import android.net.Uri
 import android.os.Build
 import android.os.Handler
@@ -47,6 +48,10 @@ class BlockOverlay(private val context: Context) {
     private var onWatchListener: (() -> Unit)? = null
     private var currentSessionId: String = ""
     private var sourcePackageName: String = ""
+
+    // 오버레이 생성 시 계산한 시스템 바 높이 저장
+    private var cachedStatusBarHeight: Int = 0
+    private var cachedNavigationBarHeight: Int = 0
 
     // Periodic check는 더 이상 사용하지 않음 (overlayType 파라미터로 대체)
 
@@ -234,17 +239,27 @@ class BlockOverlay(private val context: Context) {
             // onDismissListener는 호출하지 않음 (타이머로 이동한 것이므로 정상 플로우)
         }
 
-        // 윈도우 매니저 파라미터 설정 - 실제 화면 + 상태바 + 네비게이션바 전체 덮기
-        val displayMetrics = context.resources.displayMetrics
-        val screenHeight = displayMetrics.heightPixels
+        // 윈도우 매니저 파라미터 설정 - 실제 물리적 화면 크기 사용
+        val realSize = Point()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val bounds = windowManager.currentWindowMetrics.bounds
+            realSize.x = bounds.width()
+            realSize.y = bounds.height()
+        } else {
+            @Suppress("DEPRECATION")
+            windowManager.defaultDisplay.getRealSize(realSize)
+        }
+
         val statusBarHeight = getStatusBarHeight()
         val navigationBarHeight = getNavigationBarHeight()
-        val totalHeight = screenHeight + statusBarHeight + navigationBarHeight
-        Log.d(TAG, "Screen: $screenHeight, Status bar: $statusBarHeight, Nav bar: $navigationBarHeight, Total: $totalHeight")
+        cachedStatusBarHeight = statusBarHeight  // 캐시에 저장 (로깅용)
+        cachedNavigationBarHeight = navigationBarHeight  // 캐시에 저장 (로깅용)
+
+        Log.d(TAG, "Real display size: ${realSize.y}px, Status bar: $statusBarHeight, Nav bar: $navigationBarHeight")
 
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,
-            totalHeight,  // 실제 화면 + 상태바 + 네비게이션바
+            realSize.y,  // 실제 물리적 화면 높이
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
             // 모든 터치 완전 차단 + 홈/알림창 방지
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
@@ -392,9 +407,6 @@ class BlockOverlay(private val context: Context) {
             affiliateBannerContainer.addView(bannerView)
             affiliateBannerContainer.visibility = View.VISIBLE
 
-            // 네비게이션 바 높이에 따라 동적으로 bottom margin 설정
-            setupAffiliateBannerMargin()
-
             // Affiliate 배너가 있으면 워터마크 숨김 (레이아웃 유지)
             brandWatermark.visibility = View.INVISIBLE
 
@@ -406,21 +418,5 @@ class BlockOverlay(private val context: Context) {
             // 배너 로드 실패 시 워터마크 표시
             brandWatermark.visibility = View.VISIBLE
         }
-    }
-
-    /**
-     * 네비게이션 바 높이에 따라 배너의 bottom margin 설정
-     */
-    private fun setupAffiliateBannerMargin() {
-        val navigationBarHeight = getNavigationBarHeight()
-        val density = context.resources.displayMetrics.density
-        val additionalMargin = (16 * density).toInt()
-        val bottomMargin = navigationBarHeight + additionalMargin
-
-        val layoutParams = affiliateBannerContainer.layoutParams as ViewGroup.MarginLayoutParams
-        layoutParams.bottomMargin = bottomMargin
-        affiliateBannerContainer.layoutParams = layoutParams
-
-        Log.d(TAG, "Navigation bar height: ${navigationBarHeight}px, total bottom margin: ${bottomMargin}px")
     }
 }
