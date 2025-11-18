@@ -50,7 +50,7 @@ class CoupangAffiliateProvider(
             text = "이 앱은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다"
             textSize = 10f
             setTextColor(0xFF8A8A8A.toInt())
-            gravity = Gravity.CENTER
+            gravity = Gravity.START
             val dp4 = (context.resources.displayMetrics.density * 4).toInt()
             setPadding(dp4, 0, dp4, dp4)
         }
