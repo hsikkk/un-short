@@ -1,0 +1,51 @@
+🚫 Befreie Dich von Kurzvideo-Sucht
+
+un:short hilft dir, bewusste Gewohnheiten beim Konsum von Inhalten aufzubauen, indem es endloses Scrollen auf YouTube Shorts, Instagram Reels und anderen Kurzvideo-Plattformen blockiert.
+
+✨ Hauptfunktionen
+
+• 🎬 Auto-Block: Erkennt und blockiert automatisch YouTube Shorts, Instagram Reels und mehr
+• ⏱️ 30-Sekunden-Wartezeit: Abkühlungs-Timer verhindert impulsiven Konsum
+• 🤔 Frage Dich: "Musst du das jetzt wirklich ansehen?" Frage dich selbst
+• 📊 Nutzungsstatistiken: Verfolge Blockierungshäufigkeit und eingesparte Zeit
+
+🔍 Verwendung des Barrierefreiheitsdienstes
+
+Diese App verwendet die AccessibilityService-API von Android, um automatisch zu erkennen, wenn du auf Kurzvideo-Inhalte wie YouTube Shorts und Instagram Reels zugreifst. Diese Berechtigung ist für folgende Kernfunktionen unerlässlich:
+
+• Automatische Erkennung von Kurzvideo-Bildschirmen
+• Anzeige eines Blockierungsbildschirms zur Verhinderung unbewussten Konsums
+• Bereitstellung von 30 Sekunden zum Nachdenken vor dem Ansehen
+
+Dieser Dienst wird ausschließlich zum Blockieren von Kurzvideo-Inhalten verwendet und greift nicht auf andere persönliche Informationen oder Daten zu.
+
+🎯 Warum un:short?
+
+Kurzvideos sind hochgradig süchtig machend. Wir öffnen unbewusst Apps und scrollen endlos, verlieren das Zeitgefühl. un:short fügt diesem unbewussten Verhalten bewusste Reibung hinzu, indem es:
+
+• 30 Sekunden zum Nachdenken bereitstellt
+• Fragen stellt, um bewusste Entscheidungen zu fördern
+• Gewohnheitsmuster durchbricht
+
+💡 So Verwendest Du die App
+
+1. Installiere und erteile die erforderlichen Berechtigungen
+2. Läuft automatisch im Hintergrund
+3. Blockierungsbildschirm erscheint beim Zugriff auf Shorts
+4. Nimm dir 30 Sekunden zum Nachdenken, bevor du fortfährst
+
+🔒 Datenschutz
+
+• Alle Daten werden lokal auf deinem Gerät gespeichert
+• Keine Informationen werden an externe Server gesendet
+• Minimale Berechtigungen angefordert
+
+📱 Unterstützte Apps
+
+• YouTube (Shorts)
+• Instagram (Reels)
+• Andere Kurzvideo-Plattformen
+
+---
+
+Befreie dich von Shorts-Sucht und baue bewusste Konsumgewohnheiten auf. 🌟

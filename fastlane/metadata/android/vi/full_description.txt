@@ -1,0 +1,51 @@
+🚫 Thoát Khỏi Nghiện Video Ngắn
+
+un:short giúp bạn xây dựng thói quen tiêu thụ nội dung có ý thức bằng cách chặn cuộn vô tận trên YouTube Shorts, Instagram Reels và các nền tảng video ngắn khác.
+
+✨ Tính Năng Chính
+
+• 🎬 Tự Động Chặn: Tự động phát hiện và chặn YouTube Shorts, Instagram Reels và nhiều hơn nữa
+• ⏱️ Chờ 30 Giây: Bộ đếm thời gian ngăn việc xem theo cảm tính
+• 🤔 Đặt Câu Hỏi: "Bạn có thực sự cần xem bây giờ không?" Hỏi bản thân
+• 📊 Thống Kê Sử Dụng: Theo dõi tần suất chặn và thời gian tiết kiệm
+
+🔍 Sử Dụng Dịch Vụ Hỗ Trợ Tiếp Cận
+
+Ứng dụng này sử dụng API AccessibilityService của Android để tự động phát hiện khi bạn truy cập nội dung video ngắn như YouTube Shorts và Instagram Reels. Quyền này cần thiết cho các tính năng cốt lõi sau:
+
+• Tự động phát hiện màn hình nội dung video ngắn
+• Hiển thị màn hình chặn để ngăn việc tiêu thụ vô thức
+• Cung cấp 30 giây để suy nghĩ trước khi xem
+
+Dịch vụ này chỉ được sử dụng để chặn nội dung video ngắn và không truy cập bất kỳ thông tin cá nhân hoặc dữ liệu nào khác.
+
+🎯 Tại Sao Chọn un:short?
+
+Video ngắn cực kỳ gây nghiện. Chúng ta vô thức mở ứng dụng và cuộn không ngừng, mất cảm giác về thời gian. un:short thêm ma sát có chủ ý vào hành vi vô thức này bằng cách:
+
+• Cung cấp 30 giây để suy nghĩ
+• Đặt câu hỏi để thúc đẩy lựa chọn có ý thức
+• Phá vỡ các mô hình thói quen
+
+💡 Cách Sử Dụng
+
+1. Cài đặt và cấp các quyền cần thiết
+2. Tự động chạy trong nền
+3. Màn hình chặn xuất hiện khi truy cập video ngắn
+4. Dành 30 giây suy nghĩ trước khi tiếp tục
+
+🔒 Quyền Riêng Tư
+
+• Tất cả dữ liệu được lưu trữ cục bộ trên thiết bị của bạn
+• Không gửi thông tin đến máy chủ bên ngoài
+• Chỉ yêu cầu quyền tối thiểu
+
+📱 Ứng Dụng Được Hỗ Trợ
+
+• YouTube (Shorts)
+• Instagram (Reels)
+• Các nền tảng video ngắn khác
+
+---
+
+Thoát khỏi nghiện video ngắn và xây dựng thói quen tiêu thụ có ý thức. 🌟

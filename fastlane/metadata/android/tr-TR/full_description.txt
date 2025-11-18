@@ -1,0 +1,51 @@
+🚫 Kısa Video Bağımlılığından Kurtulun
+
+un:short, YouTube Shorts, Instagram Reels ve diğer kısa video platformlarında sonsuz kaydırmayı engelleyerek bilinçli içerik tüketim alışkanlıkları oluşturmanıza yardımcı olur.
+
+✨ Temel Özellikler
+
+• 🎬 Otomatik Engelleme: YouTube Shorts, Instagram Reels ve daha fazlasını otomatik olarak algıla ve engelle
+• ⏱️ 30 Saniyelik Bekleme: Soğuma zamanlayıcısı dürtüsel tüketimi önler
+• 🤔 Kendinize Sorun: "Şimdi gerçekten izlemeye ihtiyacınız var mı?" Kendinize sorun
+• 📊 Kullanım İstatistikleri: Engelleme sıklığını ve tasarruf edilen zamanı takip edin
+
+🔍 Erişilebilirlik Hizmeti Kullanımı
+
+Bu uygulama, YouTube Shorts ve Instagram Reels gibi kısa video içeriğine eriştiğinizde otomatik olarak algılamak için Android'in AccessibilityService API'sini kullanır. Bu izin aşağıdaki temel özellikler için gereklidir:
+
+• Kısa içerik ekranlarının otomatik algılanması
+• Bilinçsiz tüketimi önlemek için engelleme ekranının görüntülenmesi
+• İzlemeden önce düşünmek için 30 saniye sağlanması
+
+Bu hizmet yalnızca kısa içeriği engellemek için kullanılır ve başka hiçbir kişisel bilgi veya veriye erişmez.
+
+🎯 Neden un:short?
+
+Kısa videolar son derece bağımlılık yapıcıdır. Farkında olmadan uygulamaları açar ve sürekli kaydırırız, zaman kavramını kaybederiz. un:short bu bilinçsiz davranışa kasıtlı bir sürtünme ekler:
+
+• Düşünmek için 30 saniye sağlayarak
+• Bilinçli seçimi teşvik etmek için sorular sorarak
+• Alışkanlık kalıplarını kırarak
+
+💡 Nasıl Kullanılır
+
+1. Yükleyin ve gerekli izinleri verin
+2. Arka planda otomatik olarak çalışır
+3. Kısa videolara erişirken engelleme ekranı görünür
+4. Devam etmeden önce 30 saniye düşünün
+
+🔒 Gizlilik
+
+• Tüm veriler cihazınızda yerel olarak saklanır
+• Harici sunuculara hiçbir bilgi gönderilmez
+• Minimum izin talep edilir
+
+📱 Desteklenen Uygulamalar
+
+• YouTube (Shorts)
+• Instagram (Reels)
+• Diğer kısa video platformları
+
+---
+
+Kısa video bağımlılığından kurtulun ve bilinçli tüketim alışkanlıkları edinin. 🌟

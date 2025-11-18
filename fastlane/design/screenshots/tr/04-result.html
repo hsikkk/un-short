@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>unshort - Ekran Görüntüsü 4: Sonuç</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            min-height: 100vh;
+            background: #E5E7EB;
+            padding: 0;
+            margin: 0;
+        }
+
+        .phone-frame {
+            width: 1080px;
+            height: 2340px;
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 180px 120px;
+        }
+
+        /* Success Icon */
+        .success-icon {
+            font-size: 360px;
+            margin-bottom: 120px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-60px); }
+        }
+
+        /* Main Message */
+        .main-message {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 108px;
+            font-weight: 900;
+            color: #FFFFFF;
+            text-align: center;
+            line-height: 1.3;
+            margin-bottom: 72px;
+        }
+
+        .highlight {
+            font-size: 168px;
+            display: block;
+            margin: 48px 0;
+        }
+
+        /* Sub Message */
+        .sub-message {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 54px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            line-height: 1.6;
+            max-width: 840px;
+        }
+
+        /* Brand */
+        .brand {
+            position: absolute;
+            bottom: 120px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 60px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.02em;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="success-icon">🎉</div>
+
+        <div class="main-message">
+            Günde ortalama<br>
+            <span class="highlight">1 saat</span><br>
+            tasarruf et
+        </div>
+
+        <div class="sub-message">
+            Bilinçli tüketim<br>
+            yaşam kalitesini değiştirir
+        </div>
+
+        <div class="brand">un:short</div>
+    </div>
+</body>
+</html>

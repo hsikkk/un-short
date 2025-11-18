@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>unshort - Feature Graphic (简体中文)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            min-height: 100vh;
+            background: #f5f5f5;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Feature Graphic Container: 1024x500px */
+        .feature-graphic {
+            width: 1024px;
+            height: 500px;
+            background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Background Pattern */
+        .bg-pattern {
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+        }
+
+        /* Content Container */
+        .content {
+            position: relative;
+            z-index: 2;
+            padding: 60px 80px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Brand Logo */
+        .logo {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 56px;
+            font-weight: 900;
+            color: #FFFFFF;
+            letter-spacing: 0.02em;
+            margin-bottom: 20px;
+        }
+
+        .logo .colon {
+            color: #8B5CF6;
+        }
+
+        /* Main Message */
+        .main-message {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #FFFFFF;
+            line-height: 1.4;
+            margin-bottom: 24px;
+            max-width: 600px;
+        }
+
+        .highlight {
+            color: #8B5CF6;
+            position: relative;
+        }
+
+        /* Sub Message */
+        .sub-message {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 20px;
+            font-weight: 400;
+            color: #D1D5DB;
+            line-height: 1.6;
+            max-width: 550px;
+            margin-bottom: 32px;
+        }
+
+        /* Features */
+        .features {
+            display: flex;
+            gap: 40px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(139, 92, 246, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .feature-text {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #F3F4F6;
+        }
+
+        /* Decorative Element - Timer */
+        .timer-decoration {
+            position: absolute;
+            right: 80px;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+        }
+
+        .timer-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(139, 92, 246, 0.15);
+            border: 3px solid rgba(139, 92, 246, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .timer-number {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 72px;
+            font-weight: 900;
+            color: #8B5CF6;
+            line-height: 1;
+        }
+
+        .timer-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #D1D5DB;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="feature-graphic">
+        <!-- Background Pattern -->
+        <div class="bg-pattern"></div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <div class="logo">un:short</div>
+
+            <div class="main-message">
+                摆脱<span class="highlight">短视频成瘾</span><br>
+                养成有意识的观看习惯
+            </div>
+
+            <div class="sub-message">
+                屏蔽YouTube Shorts和Instagram Reels<br>
+                用30秒思考时间停止无意识的刷屏
+            </div>
+
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">⏱️</div>
+                    <div class="feature-text">30秒等待</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🤔</div>
+                    <div class="feature-text">自我提问</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-text">自动屏蔽</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timer Decoration -->
+        <div class="timer-decoration">
+            <div class="timer-circle">
+                <div class="timer-number">30</div>
+                <div class="timer-label">秒</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

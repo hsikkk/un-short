@@ -1,0 +1,51 @@
+🚫 Liberati dalla Dipendenza da Video Brevi
+
+un:short ti aiuta a costruire abitudini di consumo consapevole dei contenuti bloccando lo scrolling infinito su YouTube Shorts, Instagram Reels e altre piattaforme di video brevi.
+
+✨ Funzionalità Principali
+
+• 🎬 Blocco Automatico: Rileva e blocca automaticamente YouTube Shorts, Instagram Reels e altro
+• ⏱️ Attesa di 30 Secondi: Il timer di raffreddamento previene il consumo impulsivo
+• 🤔 Chiediti: "Hai davvero bisogno di guardare ora?" Domandati
+• 📊 Statistiche di Utilizzo: Traccia la frequenza di blocco e il tempo risparmiato
+
+🔍 Utilizzo del Servizio di Accessibilità
+
+Questa app utilizza l'API AccessibilityService di Android per rilevare automaticamente quando accedi a contenuti video brevi come YouTube Shorts e Instagram Reels. Questa autorizzazione è essenziale per le seguenti funzionalità principali:
+
+• Rilevamento automatico degli schermi di contenuti brevi
+• Visualizzazione dello schermo di blocco per prevenire il consumo inconsapevole
+• Fornire 30 secondi per riflettere prima di guardare
+
+Questo servizio è utilizzato esclusivamente per bloccare i contenuti brevi e non accede ad altre informazioni personali o dati.
+
+🎯 Perché un:short?
+
+I video brevi creano forte dipendenza. Apriamo inconsciamente le app e scrolliamo all'infinito, perdendo la cognizione del tempo. un:short aggiunge un attrito intenzionale a questo comportamento inconsapevole:
+
+• Fornendo 30 secondi per riflettere
+• Ponendo domande per promuovere scelte intenzionali
+• Spezzando i modelli abituali
+
+💡 Come Usare
+
+1. Installa e concedi le autorizzazioni necessarie
+2. Funziona automaticamente in background
+3. Lo schermo di blocco appare quando accedi agli shorts
+4. Prenditi 30 secondi per riflettere prima di procedere
+
+🔒 Privacy
+
+• Tutti i dati memorizzati localmente sul tuo dispositivo
+• Nessuna informazione inviata a server esterni
+• Autorizzazioni minime richieste
+
+📱 App Supportate
+
+• YouTube (Shorts)
+• Instagram (Reels)
+• Altre piattaforme di video brevi
+
+---
+
+Liberati dalla dipendenza da shorts e costruisci abitudini di consumo consapevole. 🌟

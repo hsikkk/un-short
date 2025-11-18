@@ -1,0 +1,51 @@
+🚫 Lepas dari Kecanduan Video Pendek
+
+un:short membantu Anda membangun kebiasaan konsumsi konten yang sadar dengan memblokir scrolling tak terbatas di YouTube Shorts, Instagram Reels, dan platform video pendek lainnya.
+
+✨ Fitur Utama
+
+• 🎬 Blokir Otomatis: Secara otomatis mendeteksi dan memblokir YouTube Shorts, Instagram Reels, dan lainnya
+• ⏱️ Tunggu 30 Detik: Timer cooldown mencegah konsumsi impulsif
+• 🤔 Tanya Diri Sendiri: "Apakah Anda benar-benar perlu menonton sekarang?" Tanya pada diri sendiri
+• 📊 Statistik Penggunaan: Lacak frekuensi pemblokiran dan waktu yang dihemat
+
+🔍 Penggunaan Layanan Aksesibilitas
+
+Aplikasi ini menggunakan AccessibilityService API Android untuk secara otomatis mendeteksi saat Anda mengakses konten video pendek seperti YouTube Shorts dan Instagram Reels. Izin ini penting untuk fitur inti berikut:
+
+• Deteksi otomatis layar konten video pendek
+• Menampilkan layar pemblokiran untuk mencegah konsumsi tidak sadar
+• Memberikan 30 detik untuk berpikir sebelum menonton
+
+Layanan ini hanya digunakan untuk memblokir konten video pendek dan tidak mengakses informasi pribadi atau data lainnya.
+
+🎯 Mengapa un:short?
+
+Video pendek sangat adiktif. Kita secara tidak sadar membuka aplikasi dan scroll tanpa henti, kehilangan jejak waktu. un:short menambahkan gesekan yang disengaja pada perilaku tidak sadar ini dengan:
+
+• Memberikan 30 detik untuk berpikir
+• Mengajukan pertanyaan untuk mendorong pilihan yang disengaja
+• Memutus pola kebiasaan
+
+💡 Cara Menggunakan
+
+1. Instal dan berikan izin yang diperlukan
+2. Berjalan otomatis di latar belakang
+3. Layar pemblokiran muncul saat mengakses video pendek
+4. Luangkan 30 detik untuk berpikir sebelum melanjutkan
+
+🔒 Privasi
+
+• Semua data disimpan secara lokal di perangkat Anda
+• Tidak ada informasi yang dikirim ke server eksternal
+• Izin minimal yang diminta
+
+📱 Aplikasi yang Didukung
+
+• YouTube (Shorts)
+• Instagram (Reels)
+• Platform video pendek lainnya
+
+---
+
+Lepas dari kecanduan video pendek dan bangun kebiasaan konsumsi yang sadar. 🌟

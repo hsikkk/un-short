@@ -1,0 +1,51 @@
+🚫 Libérez-vous de l'Addiction aux Vidéos Courtes
+
+un:short vous aide à construire des habitudes de consommation de contenu réfléchie en bloquant le défilement infini sur YouTube Shorts, Instagram Reels et autres plateformes de vidéos courtes.
+
+✨ Fonctionnalités Principales
+
+• 🎬 Blocage Automatique : Détecte et bloque automatiquement YouTube Shorts, Instagram Reels et plus
+• ⏱️ Attente de 30 Secondes : Le minuteur de refroidissement prévient la consommation impulsive
+• 🤔 Posez-vous la Question : "Avez-vous vraiment besoin de regarder maintenant ?" Interrogez-vous
+• 📊 Statistiques d'Utilisation : Suivez la fréquence de blocage et le temps économisé
+
+🔍 Utilisation du Service d'Accessibilité
+
+Cette application utilise l'API AccessibilityService d'Android pour détecter automatiquement lorsque vous accédez à du contenu vidéo court comme YouTube Shorts et Instagram Reels. Cette permission est essentielle pour les fonctionnalités principales suivantes :
+
+• Détection automatique des écrans de contenu court
+• Affichage de l'écran de blocage pour prévenir la consommation inconsciente
+• Offrir 30 secondes de réflexion avant de regarder
+
+Ce service est utilisé uniquement pour bloquer le contenu court et n'accède à aucune autre information personnelle ou donnée.
+
+🎯 Pourquoi un:short ?
+
+Les vidéos courtes sont très addictives. Nous ouvrons inconsciemment les applications et défilons sans fin, perdant la notion du temps. un:short ajoute une friction intentionnelle à ce comportement inconscient en :
+
+• Offrant 30 secondes de réflexion
+• Posant des questions pour encourager un choix intentionnel
+• Brisant les schémas habituels
+
+💡 Comment Utiliser
+
+1. Installez et accordez les permissions nécessaires
+2. Fonctionne automatiquement en arrière-plan
+3. L'écran de blocage apparaît lors de l'accès aux shorts
+4. Prenez 30 secondes pour réfléchir avant de continuer
+
+🔒 Confidentialité
+
+• Toutes les données sont stockées localement sur votre appareil
+• Aucune information envoyée à des serveurs externes
+• Permissions minimales demandées
+
+📱 Applications Prises en Charge
+
+• YouTube (Shorts)
+• Instagram (Reels)
+• Autres plateformes de vidéos courtes
+
+---
+
+Libérez-vous de l'addiction aux shorts et construisez des habitudes de consommation réfléchie. 🌟

@@ -13,11 +13,34 @@ async function captureImages() {
   // 출력 디렉토리 생성
   const outputDir = path.join(__dirname, '..', 'metadata', 'android');
 
+  // 언어 매핑: Play Store locale → HTML 디렉토리
+  const languageMapping = {
+    'en-US': 'en',
+    'ko-KR': 'ko',
+    'ja-JP': 'ja',
+    'zh-CN': 'zh-cn',
+    'zh-TW': 'zh-tw',
+    'vi': 'vi',
+    'th': 'th',
+    'in': 'in',
+    'hi-IN': 'hi',
+    'es-ES': 'es',
+    'fr-FR': 'fr',
+    'de-DE': 'de',
+    'pt-BR': 'pt',
+    'ru-RU': 'ru',
+    'it-IT': 'it',
+    'ar': 'ar',
+    'tr-TR': 'tr'
+  };
+
+  const languages = Object.keys(languageMapping);
+
   // Feature Graphics 캡처 (1024x500)
   console.log('📸 Capturing Feature Graphics...');
 
-  for (const lang of ['ko-KR', 'en-US']) {
-    const langCode = lang === 'ko-KR' ? 'ko' : 'en';
+  for (const lang of languages) {
+    const langCode = languageMapping[lang];
     const htmlPath = path.join(__dirname, 'feature-graphics', langCode, 'feature-graphic.html');
     const outputPath = path.join(outputDir, lang, 'images', 'featureGraphic.png');
 
@@ -40,8 +63,8 @@ async function captureImages() {
   // Screenshots 캡처 (1080x2340 - 3x scale)
   console.log('\n📸 Capturing Screenshots...');
 
-  for (const lang of ['ko-KR', 'en-US']) {
-    const langCode = lang === 'ko-KR' ? 'ko' : 'en';
+  for (const lang of languages) {
+    const langCode = languageMapping[lang];
     const screenshotDir = path.join(outputDir, lang, 'images', 'phoneScreenshots');
 
     // 디렉토리 생성

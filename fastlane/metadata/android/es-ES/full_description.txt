@@ -1,0 +1,51 @@
+🚫 Libérate de la Adicción a Videos Cortos
+
+un:short te ayuda a construir hábitos de consumo de contenido consciente al bloquear el scroll infinito en YouTube Shorts, Instagram Reels y otras plataformas de video corto.
+
+✨ Características Principales
+
+• 🎬 Bloqueo Automático: Detecta y bloquea automáticamente YouTube Shorts, Instagram Reels y más
+• ⏱️ Espera de 30 Segundos: El temporizador de enfriamiento previene el consumo impulsivo
+• 🤔 Pregúntate: "¿Realmente necesitas ver esto ahora?" Pregúntate a ti mismo
+• 📊 Estadísticas de Uso: Rastrea la frecuencia de bloqueo y el tiempo ahorrado
+
+🔍 Uso del Servicio de Accesibilidad
+
+Esta aplicación utiliza la API AccessibilityService de Android para detectar automáticamente cuando accedes a contenido de video corto como YouTube Shorts e Instagram Reels. Este permiso es esencial para las siguientes funciones principales:
+
+• Detección automática de pantallas de contenido corto
+• Mostrar pantalla de bloqueo para prevenir consumo inconsciente
+• Proporcionar 30 segundos para pensar antes de ver
+
+Este servicio se utiliza únicamente para bloquear contenido corto y no accede a ninguna otra información personal o datos.
+
+🎯 ¿Por Qué un:short?
+
+Los videos cortos son altamente adictivos. Abrimos aplicaciones inconscientemente y scrolleamos sin parar, perdiendo la noción del tiempo. un:short añade fricción intencional a este comportamiento inconsciente:
+
+• Proporcionando 30 segundos para pensar
+• Haciendo preguntas para promover elecciones intencionales
+• Rompiendo patrones habituales
+
+💡 Cómo Usar
+
+1. Instala y otorga los permisos necesarios
+2. Se ejecuta automáticamente en segundo plano
+3. La pantalla de bloqueo aparece al acceder a shorts
+4. Tómate 30 segundos para pensar antes de continuar
+
+🔒 Privacidad
+
+• Todos los datos se almacenan localmente en tu dispositivo
+• No se envía información a servidores externos
+• Se solicitan permisos mínimos
+
+📱 Aplicaciones Compatibles
+
+• YouTube (Shorts)
+• Instagram (Reels)
+• Otras plataformas de video corto
+
+---
+
+Libérate de la adicción a shorts y construye hábitos de consumo consciente. 🌟

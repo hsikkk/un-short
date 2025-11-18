@@ -1,0 +1,51 @@
+🚫 Liberte-se do Vício em Vídeos Curtos
+
+un:short ajuda você a construir hábitos de consumo consciente de conteúdo ao bloquear a rolagem infinita no YouTube Shorts, Instagram Reels e outras plataformas de vídeos curtos.
+
+✨ Recursos Principais
+
+• 🎬 Bloqueio Automático: Detecta e bloqueia automaticamente YouTube Shorts, Instagram Reels e mais
+• ⏱️ Espera de 30 Segundos: Temporizador de resfriamento previne consumo impulsivo
+• 🤔 Pergunte a Si Mesmo: "Você realmente precisa assistir agora?" Questione-se
+• 📊 Estatísticas de Uso: Rastreie frequência de bloqueio e tempo economizado
+
+🔍 Uso do Serviço de Acessibilidade
+
+Este aplicativo usa a API AccessibilityService do Android para detectar automaticamente quando você acessa conteúdo de vídeo curto como YouTube Shorts e Instagram Reels. Esta permissão é essencial para os seguintes recursos principais:
+
+• Detecção automática de telas de conteúdo curto
+• Exibição de tela de bloqueio para prevenir consumo inconsciente
+• Fornecer 30 segundos para pensar antes de assistir
+
+Este serviço é usado exclusivamente para bloquear conteúdo curto e não acessa nenhuma outra informação pessoal ou dados.
+
+🎯 Por Que un:short?
+
+Vídeos curtos são altamente viciantes. Abrimos aplicativos inconscientemente e rolamos infinitamente, perdendo a noção do tempo. un:short adiciona fricção intencional a esse comportamento inconsciente ao:
+
+• Fornecer 30 segundos para pensar
+• Fazer perguntas para promover escolhas intencionais
+• Quebrar padrões habituais
+
+💡 Como Usar
+
+1. Instale e conceda as permissões necessárias
+2. Executa automaticamente em segundo plano
+3. Tela de bloqueio aparece ao acessar shorts
+4. Reserve 30 segundos para pensar antes de prosseguir
+
+🔒 Privacidade
+
+• Todos os dados armazenados localmente no seu dispositivo
+• Nenhuma informação enviada para servidores externos
+• Permissões mínimas solicitadas
+
+📱 Aplicativos Suportados
+
+• YouTube (Shorts)
+• Instagram (Reels)
+• Outras plataformas de vídeos curtos
+
+---
+
+Liberte-se do vício em shorts e construa hábitos de consumo consciente. 🌟
