@@ -62,10 +62,11 @@ async function captureImages() {
       await page.goto(`file://${htmlPath}`);
       await page.setViewportSize({ width: 1080, height: 2340 });
 
-      const element = await page.locator('.phone-frame');
-      await element.screenshot({
+      // 전체 페이지를 정확히 1080x2340으로 캡처
+      await page.screenshot({
         path: outputPath,
-        scale: 'device'
+        clip: { x: 0, y: 0, width: 1080, height: 2340 },
+        animations: 'disabled'
       });
 
       console.log(`✅ ${lang} Screenshot ${i + 1} (${screenshotName}) saved`);
