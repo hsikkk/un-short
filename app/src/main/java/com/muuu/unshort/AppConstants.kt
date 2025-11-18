@@ -36,4 +36,7 @@ object AppConstants {
     const val PREF_IS_LIFETIME_PREMIUM = "is_lifetime_premium"
     const val PREF_REDEEMED_PROMO_CODE = "redeemed_promo_code"
     const val PREF_REDEEMED_AT = "redeemed_at"
+
+    // Remote Config Keys
+    const val RC_SHOW_AFFILIATE_BANNER = "show_affiliate_banner"
 }

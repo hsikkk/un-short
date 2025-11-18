@@ -378,11 +378,13 @@ class BlockOverlay(private val context: Context) {
      */
     private fun setupAffiliateBanner() {
         try {
-            // 프리미엄 유저는 배너 숨김
-            if (PremiumManager.isPremium()) {
+            // RemoteConfig + Premium 체크
+            val showAffiliateBanner = UnshortApplication.remoteConfig.getBoolean(AppConstants.RC_SHOW_AFFILIATE_BANNER)
+
+            if (!showAffiliateBanner || PremiumManager.isPremium()) {
                 affiliateBannerContainer.visibility = View.GONE
                 brandWatermark.visibility = View.VISIBLE
-                Log.d(TAG, "Premium user - affiliate banner hidden, watermark visible")
+                Log.d(TAG, "Affiliate banner hidden - RemoteConfig: $showAffiliateBanner, Premium: ${PremiumManager.isPremium()}")
                 return
             }
 

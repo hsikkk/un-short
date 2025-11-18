@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <defaultsMap>
     <!-- Firebase Remote Config 기본값 -->
+
+    <!-- Affiliate 배너 표시 여부 (기본값: false) -->
+    <entry>
+        <key>show_affiliate_banner</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>
