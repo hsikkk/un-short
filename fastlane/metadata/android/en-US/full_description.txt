@@ -1,0 +1,51 @@
+🚫 Break Free from Short-Form Video Addiction
+
+un:short helps you build mindful content consumption habits by blocking infinite scrolling on YouTube Shorts, Instagram Reels, and other short-form video platforms.
+
+✨ Key Features
+
+• 🎬 Auto-Block: Automatically detect and block YouTube Shorts, Instagram Reels, and more
+• ⏱️ 30-Second Wait: Cooldown timer prevents impulsive consumption
+• 🤔 Ask Question: "Do you really need to watch now?" Ask yourself
+• 📊 Usage Stats: Track blocking frequency and time saved
+
+🔍 Accessibility Service Usage
+
+This app uses Android's AccessibilityService API to automatically detect when you access short-form video content like YouTube Shorts and Instagram Reels. This permission is essential for the following core features:
+
+• Automatic detection of shorts content screens
+• Displaying blocking screen to prevent unconscious consumption
+• Providing 30 seconds to think before watching
+
+This service is used solely for blocking shorts content and does not access any other personal information or data.
+
+🎯 Why un:short?
+
+Short-form videos are highly addictive. We unconsciously open apps and scroll endlessly, losing track of time. un:short adds intentional friction to this unconscious behavior by:
+
+• Providing 30 seconds to think
+• Asking questions to prompt intentional choice
+• Breaking habitual patterns
+
+💡 How to Use
+
+1. Install and grant necessary permissions
+2. Runs automatically in the background
+3. Blocking screen appears when accessing shorts
+4. Take 30 seconds to think before proceeding
+
+🔒 Privacy
+
+• All data stored locally on your device
+• No information sent to external servers
+• Minimal permissions requested
+
+📱 Supported Apps
+
+• YouTube (Shorts)
+• Instagram (Reels)
+• Other short-form video platforms
+
+---
+
+Break free from shorts addiction and build mindful consumption habits. 🌟

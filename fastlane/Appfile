@@ -1,0 +1,7 @@
+# Appfile for un:short
+# https://docs.fastlane.tools/advanced/Appfile/
+
+# Android 앱 패키지명
+json_key_file("fastlane/play-store-credentials.json")
+package_name("com.muuu.unshort")
+   

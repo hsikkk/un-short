@@ -1,0 +1,12 @@
+{
+  "name": "fastlane-design",
+  "version": "1.0.0",
+  "description": "Capture screenshots and feature graphics for Play Store",
+  "main": "capture-images.js",
+  "scripts": {
+    "capture": "node capture-images.js"
+  },
+  "dependencies": {
+    "playwright": "^1.40.0"
+  }
+}

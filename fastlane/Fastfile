@@ -1,0 +1,174 @@
+# Fastfile for un:short
+# https://docs.fastlane.tools/
+
+default_platform(:android)
+
+platform :android do
+
+  # ========================================
+  # 빌드 Lane
+  # ========================================
+
+  desc "Build a release AAB"
+  lane :build_release do
+    gradle(
+      task: "bundle",
+      build_type: "Release",
+      print_command: true,
+      properties: {
+        "android.injected.signing.store.file" => ENV["KEYSTORE_PATH"],
+        "android.injected.signing.store.password" => ENV["KEYSTORE_PASSWORD"],
+        "android.injected.signing.key.alias" => ENV["KEY_ALIAS"],
+        "android.injected.signing.key.password" => ENV["KEY_PASSWORD"],
+      }
+    )
+  end
+
+  desc "Build a debug APK"
+  lane :build_debug do
+    gradle(
+      task: "assemble",
+      build_type: "Debug"
+    )
+  end
+
+  # ========================================
+  # 배포 Lane
+  # ========================================
+
+  desc "Deploy to Internal Testing track"
+  lane :internal do
+    build_release
+
+    upload_to_play_store(
+      track: "internal",
+      aab: lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH],
+      skip_upload_screenshots: true,
+      skip_upload_images: true,
+      skip_upload_metadata: false
+    )
+
+    UI.success("✅ Successfully deployed to Internal Testing track!")
+  end
+
+  desc "Deploy to Beta track"
+  lane :beta do
+    build_release
+
+    upload_to_play_store(
+      track: "beta",
+      aab: lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH],
+      skip_upload_screenshots: true,
+      skip_upload_images: true,
+      skip_upload_metadata: false
+    )
+
+    UI.success("✅ Successfully deployed to Beta track!")
+  end
+
+  desc "Deploy to Production track"
+  lane :production do
+    build_release
+
+    upload_to_play_store(
+      track: "production",
+      aab: lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH],
+      skip_upload_screenshots: false,
+      skip_upload_images: false,
+      skip_upload_metadata: true,
+      rollout: "0.1" # 10% 단계적 출시로 시작
+    )
+
+    UI.success("✅ Successfully deployed to Production track!")
+  end
+
+  # ========================================
+  # 승격 Lane
+  # ========================================
+
+  desc "Promote Beta to Production"
+  lane :promote_to_production do
+    upload_to_play_store(
+      track: "beta",
+      track_promote_to: "production",
+      skip_upload_aab: true,
+      skip_upload_metadata: true,
+      skip_upload_screenshots: true,
+      skip_upload_images: true,
+      rollout: "0.1" # 10% 단계적 출시로 시작
+    )
+
+    UI.success("✅ Successfully promoted Beta to Production!")
+  end
+
+  # ========================================
+  # 메타데이터 관리 Lane
+  # ========================================
+
+  desc "Update metadata only (without uploading APK/AAB)"
+  lane :update_metadata do
+    upload_to_play_store(
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_screenshots: false,
+      skip_upload_images: false,
+      skip_upload_metadata: false
+    )
+
+    UI.success("✅ Successfully updated metadata!")
+  end
+
+  desc "Download existing metadata from Play Console"
+  lane :download_metadata do
+    download_from_play_store(
+      metadata_path: "./fastlane/metadata"
+    )
+
+    UI.success("✅ Successfully downloaded metadata from Play Console!")
+  end
+
+  # ========================================
+  # 스크린샷 관리 Lane
+  # ========================================
+
+  desc "Upload screenshots only"
+  lane :upload_screenshots do
+    upload_to_play_store(
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: false
+    )
+
+    UI.success("✅ Successfully uploaded screenshots!")
+  end
+
+  # ========================================
+  # 버전 관리 Lane
+  # ========================================
+
+  desc "Bump version code"
+  lane :bump_version_code do
+    # app/build.gradle.kts에서 versionCode 증가
+    version_code = increment_version_code(
+      gradle_file_path: "./app/build.gradle.kts"
+    )
+
+    UI.success("✅ Version code bumped to: #{version_code}")
+  end
+
+  desc "Bump version name"
+  lane :bump_version_name do |options|
+    type = options[:type] || "patch" # major, minor, patch
+
+    # app/build.gradle.kts에서 versionName 증가
+    version_name = increment_version_name(
+      gradle_file_path: "./app/build.gradle.kts",
+      bump_type: type
+    )
+
+    UI.success("✅ Version name bumped to: #{version_name}")
+  end
+
+end
