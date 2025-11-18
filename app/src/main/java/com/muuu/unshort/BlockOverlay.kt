@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
@@ -391,6 +392,9 @@ class BlockOverlay(private val context: Context) {
             affiliateBannerContainer.addView(bannerView)
             affiliateBannerContainer.visibility = View.VISIBLE
 
+            // 네비게이션 바 높이에 따라 동적으로 bottom margin 설정
+            setupAffiliateBannerMargin()
+
             // Affiliate 배너가 있으면 워터마크 숨김 (레이아웃 유지)
             brandWatermark.visibility = View.INVISIBLE
 
@@ -402,5 +406,21 @@ class BlockOverlay(private val context: Context) {
             // 배너 로드 실패 시 워터마크 표시
             brandWatermark.visibility = View.VISIBLE
         }
+    }
+
+    /**
+     * 네비게이션 바 높이에 따라 배너의 bottom margin 설정
+     */
+    private fun setupAffiliateBannerMargin() {
+        val navigationBarHeight = getNavigationBarHeight()
+        val density = context.resources.displayMetrics.density
+        val additionalMargin = (16 * density).toInt()
+        val bottomMargin = navigationBarHeight + additionalMargin
+
+        val layoutParams = affiliateBannerContainer.layoutParams as ViewGroup.MarginLayoutParams
+        layoutParams.bottomMargin = bottomMargin
+        affiliateBannerContainer.layoutParams = layoutParams
+
+        Log.d(TAG, "Navigation bar height: ${navigationBarHeight}px, total bottom margin: ${bottomMargin}px")
     }
 }
