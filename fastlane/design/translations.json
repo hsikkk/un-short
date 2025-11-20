@@ -1,0 +1,376 @@
+{
+  "en-US": {
+    "screenshot1": {
+      "title": "Break free from<br>shorts addiction",
+      "subtitle": "Simple toggle.<br>Powerful habit change.",
+      "tagline": "Mindful consumption"
+    },
+    "screenshot2": {
+      "title": "30-second pause<br>when you need it",
+      "subtitle": "Flip your phone.<br>Reflect on your choice.",
+      "tagline": "Breaking the habit loop"
+    },
+    "screenshot3": {
+      "title": "Ask yourself the<br>right questions",
+      "subtitle": "Do you truly need<br>shorts right now?",
+      "tagline": "Conscious choices"
+    },
+    "screenshot4": {
+      "title": "Build mindful habits<br>one pause at a time",
+      "subtitle": "You did it!<br>Make wiser choices.",
+      "tagline": "Small habits, big impact"
+    }
+  },
+  "ko-KR": {
+    "screenshot1": {
+      "title": "쇼츠 중독에서<br>벗어나세요",
+      "subtitle": "간단한 토글 하나로<br>강력한 습관 변화",
+      "tagline": "의도적인 소비"
+    },
+    "screenshot2": {
+      "title": "필요한 순간<br>30초의 여유",
+      "subtitle": "폰을 뒤집고<br>선택을 되돌아보세요",
+      "tagline": "습관 고리 끊기"
+    },
+    "screenshot3": {
+      "title": "스스로에게<br>질문하세요",
+      "subtitle": "지금 정말<br>쇼츠가 필요한가요?",
+      "tagline": "의식적인 선택"
+    },
+    "screenshot4": {
+      "title": "한 번의 멈춤으로<br>습관을 만드세요",
+      "subtitle": "해냈어요!<br>더 나은 선택을 하세요",
+      "tagline": "작은 습관, 큰 변화"
+    }
+  },
+  "ja-JP": {
+    "screenshot1": {
+      "title": "ショート動画中毒から<br>解放されましょう",
+      "subtitle": "シンプルな切り替えで<br>強力な習慣変化",
+      "tagline": "意図的な消費"
+    },
+    "screenshot2": {
+      "title": "必要な時に<br>30秒の一息",
+      "subtitle": "スマホを裏返して<br>選択を振り返ろう",
+      "tagline": "習慣ループを断つ"
+    },
+    "screenshot3": {
+      "title": "自分自身に<br>問いかけましょう",
+      "subtitle": "今本当に<br>ショート動画が必要？",
+      "tagline": "意識的な選択"
+    },
+    "screenshot4": {
+      "title": "一つの一時停止で<br>習慣を作りましょう",
+      "subtitle": "できました！<br>より賢い選択を",
+      "tagline": "小さな習慣、大きな影響"
+    }
+  },
+  "zh-CN": {
+    "screenshot1": {
+      "title": "摆脱<br>短视频成瘾",
+      "subtitle": "简单切换<br>强大习惯改变",
+      "tagline": "有意识的消费"
+    },
+    "screenshot2": {
+      "title": "需要时<br>暂停30秒",
+      "subtitle": "翻转手机<br>反思你的选择",
+      "tagline": "打破习惯循环"
+    },
+    "screenshot3": {
+      "title": "问自己<br>正确的问题",
+      "subtitle": "你现在真的<br>需要看短视频吗？",
+      "tagline": "有意识的选择"
+    },
+    "screenshot4": {
+      "title": "一次暂停<br>养成正念习惯",
+      "subtitle": "你做到了！<br>做出更明智的选择",
+      "tagline": "小习惯，大影响"
+    }
+  },
+  "es-ES": {
+    "screenshot1": {
+      "title": "Libérate de la<br>adicción a los shorts",
+      "subtitle": "Interruptor simple.<br>Cambio de hábito poderoso.",
+      "tagline": "Consumo consciente"
+    },
+    "screenshot2": {
+      "title": "Pausa de 30 segundos<br>cuando lo necesites",
+      "subtitle": "Voltea tu teléfono.<br>Reflexiona sobre tu elección.",
+      "tagline": "Romper el bucle de hábitos"
+    },
+    "screenshot3": {
+      "title": "Hazte las<br>preguntas correctas",
+      "subtitle": "¿Realmente necesitas<br>shorts ahora?",
+      "tagline": "Elecciones conscientes"
+    },
+    "screenshot4": {
+      "title": "Construye hábitos conscientes<br>una pausa a la vez",
+      "subtitle": "¡Lo lograste!<br>Toma decisiones más sabias.",
+      "tagline": "Pequeños hábitos, gran impacto"
+    }
+  },
+  "fr-FR": {
+    "screenshot1": {
+      "title": "Libérez-vous de<br>l'addiction aux shorts",
+      "subtitle": "Interrupteur simple.<br>Changement d'habitude puissant.",
+      "tagline": "Consommation consciente"
+    },
+    "screenshot2": {
+      "title": "Pause de 30 secondes<br>quand vous en avez besoin",
+      "subtitle": "Retournez votre téléphone.<br>Réfléchissez à votre choix.",
+      "tagline": "Briser la boucle d'habitude"
+    },
+    "screenshot3": {
+      "title": "Posez-vous les<br>bonnes questions",
+      "subtitle": "Avez-vous vraiment besoin<br>de shorts maintenant?",
+      "tagline": "Choix conscients"
+    },
+    "screenshot4": {
+      "title": "Construisez des habitudes conscientes<br>une pause à la fois",
+      "subtitle": "Vous l'avez fait!<br>Faites des choix plus judicieux.",
+      "tagline": "Petites habitudes, grand impact"
+    }
+  },
+  "de-DE": {
+    "screenshot1": {
+      "title": "Befreie dich von<br>Shorts-Sucht",
+      "subtitle": "Einfacher Schalter.<br>Kraftvolle Gewohnheitsänderung.",
+      "tagline": "Bewusster Konsum"
+    },
+    "screenshot2": {
+      "title": "30-Sekunden-Pause<br>wenn du sie brauchst",
+      "subtitle": "Dreh dein Handy um.<br>Überdenke deine Wahl.",
+      "tagline": "Die Gewohnheitsschleife durchbrechen"
+    },
+    "screenshot3": {
+      "title": "Stelle dir die<br>richtigen Fragen",
+      "subtitle": "Brauchst du jetzt<br>wirklich Shorts?",
+      "tagline": "Bewusste Entscheidungen"
+    },
+    "screenshot4": {
+      "title": "Baue achtsame Gewohnheiten auf<br>eine Pause nach der anderen",
+      "subtitle": "Du hast es geschafft!<br>Triff klügere Entscheidungen.",
+      "tagline": "Kleine Gewohnheiten, große Wirkung"
+    }
+  },
+  "pt-BR": {
+    "screenshot1": {
+      "title": "Liberte-se do<br>vício em shorts",
+      "subtitle": "Alternância simples.<br>Mudança de hábito poderosa.",
+      "tagline": "Consumo consciente"
+    },
+    "screenshot2": {
+      "title": "Pausa de 30 segundos<br>quando você precisa",
+      "subtitle": "Vire seu telefone.<br>Reflita sobre sua escolha.",
+      "tagline": "Quebrando o loop de hábitos"
+    },
+    "screenshot3": {
+      "title": "Faça a si mesmo as<br>perguntas certas",
+      "subtitle": "Você realmente precisa<br>de shorts agora?",
+      "tagline": "Escolhas conscientes"
+    },
+    "screenshot4": {
+      "title": "Construa hábitos conscientes<br>uma pausa de cada vez",
+      "subtitle": "Você conseguiu!<br>Faça escolhas mais sábias.",
+      "tagline": "Pequenos hábitos, grande impacto"
+    }
+  },
+  "ru-RU": {
+    "screenshot1": {
+      "title": "Освободитесь от<br>зависимости от shorts",
+      "subtitle": "Простое переключение.<br>Мощное изменение привычки.",
+      "tagline": "Осознанное потребление"
+    },
+    "screenshot2": {
+      "title": "30-секундная пауза<br>когда вам нужно",
+      "subtitle": "Переверните телефон.<br>Обдумайте свой выбор.",
+      "tagline": "Разрыв цикла привычки"
+    },
+    "screenshot3": {
+      "title": "Задайте себе<br>правильные вопросы",
+      "subtitle": "Вам действительно нужны<br>shorts прямо сейчас?",
+      "tagline": "Осознанный выбор"
+    },
+    "screenshot4": {
+      "title": "Формируйте осознанные привычки<br>по одной паузе за раз",
+      "subtitle": "Вы справились!<br>Делайте более мудрый выбор.",
+      "tagline": "Маленькие привычки, большое влияние"
+    }
+  },
+  "it-IT": {
+    "screenshot1": {
+      "title": "Liberati dalla<br>dipendenza dai shorts",
+      "subtitle": "Interruttore semplice.<br>Potente cambio di abitudine.",
+      "tagline": "Consumo consapevole"
+    },
+    "screenshot2": {
+      "title": "Pausa di 30 secondi<br>quando ne hai bisogno",
+      "subtitle": "Capovolgi il telefono.<br>Rifletti sulla tua scelta.",
+      "tagline": "Rompere il ciclo delle abitudini"
+    },
+    "screenshot3": {
+      "title": "Fatti le<br>domande giuste",
+      "subtitle": "Hai davvero bisogno<br>di shorts adesso?",
+      "tagline": "Scelte consapevoli"
+    },
+    "screenshot4": {
+      "title": "Costruisci abitudini consapevoli<br>una pausa alla volta",
+      "subtitle": "Ce l'hai fatta!<br>Fai scelte più sagge.",
+      "tagline": "Piccole abitudini, grande impatto"
+    }
+  },
+  "hi-IN": {
+    "screenshot1": {
+      "title": "शॉर्ट्स की लत से<br>मुक्त हो जाएं",
+      "subtitle": "सरल टॉगल।<br>शक्तिशाली आदत परिवर्तन।",
+      "tagline": "सचेत उपभोग"
+    },
+    "screenshot2": {
+      "title": "जब ज़रूरत हो<br>30 सेकंड का विराम",
+      "subtitle": "अपना फ़ोन पलटें।<br>अपनी पसंद पर विचार करें।",
+      "tagline": "आदत के चक्र को तोड़ना"
+    },
+    "screenshot3": {
+      "title": "खुद से<br>सही सवाल पूछें",
+      "subtitle": "क्या आपको वाकई<br>अभी शॉर्ट्स चाहिए?",
+      "tagline": "सचेत विकल्प"
+    },
+    "screenshot4": {
+      "title": "एक-एक विराम से<br>सचेत आदतें बनाएं",
+      "subtitle": "आपने कर दिखाया!<br>बेहतर विकल्प चुनें।",
+      "tagline": "छोटी आदतें, बड़ा प्रभाव"
+    }
+  },
+  "ar": {
+    "screenshot1": {
+      "title": "تحرر من<br>إدمان الفيديوهات القصيرة",
+      "subtitle": "تبديل بسيط.<br>تغيير قوي في العادة.",
+      "tagline": "استهلاك واعي"
+    },
+    "screenshot2": {
+      "title": "توقف 30 ثانية<br>عندما تحتاجه",
+      "subtitle": "اقلب هاتفك.<br>فكر في اختيارك.",
+      "tagline": "كسر حلقة العادة"
+    },
+    "screenshot3": {
+      "title": "اسأل نفسك<br>الأسئلة الصحيحة",
+      "subtitle": "هل تحتاج حقاً<br>الفيديوهات القصيرة الآن؟",
+      "tagline": "خيارات واعية"
+    },
+    "screenshot4": {
+      "title": "ابنِ عادات واعية<br>توقف واحد في كل مرة",
+      "subtitle": "لقد فعلتها!<br>اتخذ قرارات أكثر حكمة.",
+      "tagline": "عادات صغيرة، تأثير كبير"
+    }
+  },
+  "th": {
+    "screenshot1": {
+      "title": "เลิกติด<br>วิดีโอสั้น",
+      "subtitle": "สลับง่ายๆ<br>เปลี่ยนนิสัยได้อย่างทรงพลัง",
+      "tagline": "การบริโภคอย่างมีสติ"
+    },
+    "screenshot2": {
+      "title": "หยุด 30 วินาที<br>เมื่อคุณต้องการ",
+      "subtitle": "พลิกโทรศัพท์<br>ไตร่ตรองการเลือกของคุณ",
+      "tagline": "ทำลายวงจรนิสัย"
+    },
+    "screenshot3": {
+      "title": "ถามตัวเอง<br>คำถามที่ถูกต้อง",
+      "subtitle": "คุณต้องการ<br>วิดีโอสั้นจริงๆ หรือ?",
+      "tagline": "การเลือกอย่างมีสติ"
+    },
+    "screenshot4": {
+      "title": "สร้างนิสัยที่มีสติ<br>ทีละการหยุด",
+      "subtitle": "คุณทำได้!<br>เลือกอย่างชาญฉลาดขึ้น",
+      "tagline": "นิสัยเล็กๆ ผลกระทบใหญ่"
+    }
+  },
+  "tr-TR": {
+    "screenshot1": {
+      "title": "Shorts bağımlılığından<br>kurtul",
+      "subtitle": "Basit geçiş.<br>Güçlü alışkanlık değişimi.",
+      "tagline": "Bilinçli tüketim"
+    },
+    "screenshot2": {
+      "title": "İhtiyacınız olduğunda<br>30 saniyelik duraklama",
+      "subtitle": "Telefonunuzu çevirin.<br>Seçiminizi düşünün.",
+      "tagline": "Alışkanlık döngüsünü kırmak"
+    },
+    "screenshot3": {
+      "title": "Kendinize<br>doğru soruları sorun",
+      "subtitle": "Şu anda gerçekten<br>shorts'a ihtiyacınız var mı?",
+      "tagline": "Bilinçli seçimler"
+    },
+    "screenshot4": {
+      "title": "Bilinçli alışkanlıklar oluşturun<br>her seferinde bir duraklama",
+      "subtitle": "Başardınız!<br>Daha akıllıca seçimler yapın.",
+      "tagline": "Küçük alışkanlıklar, büyük etki"
+    }
+  },
+  "vi": {
+    "screenshot1": {
+      "title": "Thoát khỏi<br>nghiện video ngắn",
+      "subtitle": "Chuyển đổi đơn giản.<br>Thay đổi thói quen mạnh mẽ.",
+      "tagline": "Tiêu dùng có ý thức"
+    },
+    "screenshot2": {
+      "title": "Tạm dừng 30 giây<br>khi bạn cần",
+      "subtitle": "Lật điện thoại.<br>Suy ngẫm về lựa chọn.",
+      "tagline": "Phá vỡ vòng lặp thói quen"
+    },
+    "screenshot3": {
+      "title": "Tự hỏi bản thân<br>những câu hỏi đúng",
+      "subtitle": "Bạn có thực sự cần<br>video ngắn ngay bây giờ?",
+      "tagline": "Lựa chọn có ý thức"
+    },
+    "screenshot4": {
+      "title": "Xây dựng thói quen có ý thức<br>từng lần tạm dừng",
+      "subtitle": "Bạn đã làm được!<br>Đưa ra lựa chọn khôn ngoan hơn.",
+      "tagline": "Thói quen nhỏ, tác động lớn"
+    }
+  },
+  "in": {
+    "screenshot1": {
+      "title": "Bebas dari<br>kecanduan shorts",
+      "subtitle": "Pengalihan sederhana.<br>Perubahan kebiasaan yang kuat.",
+      "tagline": "Konsumsi yang sadar"
+    },
+    "screenshot2": {
+      "title": "Jeda 30 detik<br>saat Anda membutuhkannya",
+      "subtitle": "Balik ponsel Anda.<br>Renungkan pilihan Anda.",
+      "tagline": "Memutus lingkaran kebiasaan"
+    },
+    "screenshot3": {
+      "title": "Tanyakan pada diri sendiri<br>pertanyaan yang tepat",
+      "subtitle": "Apakah Anda benar-benar<br>butuh shorts sekarang?",
+      "tagline": "Pilihan yang sadar"
+    },
+    "screenshot4": {
+      "title": "Bangun kebiasaan yang sadar<br>satu jeda pada satu waktu",
+      "subtitle": "Anda berhasil!<br>Buat pilihan yang lebih bijak.",
+      "tagline": "Kebiasaan kecil, dampak besar"
+    }
+  },
+  "zh-TW": {
+    "screenshot1": {
+      "title": "擺脫<br>短影片成癮",
+      "subtitle": "簡單切換<br>強大習慣改變",
+      "tagline": "有意識的消費"
+    },
+    "screenshot2": {
+      "title": "需要時<br>暫停30秒",
+      "subtitle": "翻轉手機<br>反思你的選擇",
+      "tagline": "打破習慣循環"
+    },
+    "screenshot3": {
+      "title": "問自己<br>正確的問題",
+      "subtitle": "你現在真的<br>需要看短影片嗎？",
+      "tagline": "有意識的選擇"
+    },
+    "screenshot4": {
+      "title": "一次暫停<br>養成正念習慣",
+      "subtitle": "你做到了！<br>做出更明智的選擇",
+      "tagline": "小習慣，大影響"
+    }
+  }
+}

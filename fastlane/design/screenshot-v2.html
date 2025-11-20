@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>un:short - Play Store Screenshots V2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #e5e5e5;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .info {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .info h1 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .info p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .screenshots-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        /* Each screenshot card - EXACT 1080x1920px */
+        .screenshot {
+            width: 1080px;
+            height: 1920px;
+            background: #FFFFFF;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        /* Layout: Top Text + Center Phone + Bottom Brand */
+        .screenshot-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 100px 80px 120px;
+            background: linear-gradient(180deg, #FAFAFA 0%, #FFFFFF 100%);
+        }
+
+        /* Top Text Section */
+        .text-top {
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .text-top h2 {
+            font-size: 64px;
+            font-weight: 800;
+            line-height: 1.15;
+            color: #1A1A1A;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .text-top p {
+            font-size: 36px;
+            font-weight: 400;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Phone Image */
+        .phone-image {
+            flex-shrink: 0;
+            margin: 40px 0;
+        }
+
+        .phone-image img {
+            display: block;
+            width: 600px;
+            height: auto;
+            border-radius: 40px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+        }
+
+        /* Bottom Brand */
+        .brand-bottom {
+            text-align: center;
+        }
+
+        .brand-bottom .logo {
+            font-size: 48px;
+            font-weight: 900;
+            color: #1A1A1A;
+            letter-spacing: 0.01em;
+            margin-bottom: 8px;
+        }
+
+        .brand-bottom .tagline {
+            font-size: 24px;
+            color: #888;
+            font-weight: 400;
+        }
+
+        /* Color themes for each screenshot */
+        .screenshot-1 .text-top h2 {
+            color: #1A1A1A;
+        }
+
+        .screenshot-2 .text-top h2 {
+            color: #7C3AED;
+        }
+
+        .screenshot-3 .text-top h2 {
+            color: #DC2626;
+        }
+
+        .screenshot-4 .text-top h2 {
+            color: #10B981;
+        }
+
+        /* Download instructions */
+        .download-info {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 40px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .download-info h3 {
+            margin-bottom: 12px;
+            color: #856404;
+        }
+
+        .download-info ol {
+            margin-left: 20px;
+            color: #856404;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="info">
+            <h1>📱 un:short Play Store Screenshots</h1>
+            <p><strong>Size:</strong> 1080 x 1920 pixels (9:16 ratio)</p>
+            <p><strong>Format:</strong> PNG, 24-bit</p>
+            <p><strong>Count:</strong> 4 screenshots</p>
+        </div>
+
+        <div class="screenshots-wrapper">
+            <!-- Screenshot 1: Main Screen -->
+            <div class="screenshot screenshot-1" id="screenshot-1">
+                <div class="screenshot-inner">
+                    <div class="text-top">
+                        <h2>Break free from<br>shorts addiction</h2>
+                        <p>Simple toggle.<br>Powerful habit change.</p>
+                    </div>
+                    <div class="phone-image">
+                        <img src="tmp/KakaoTalk_Photo_2025-11-20-11-12-19 004.jpeg" alt="Main Screen">
+                    </div>
+                    <div class="brand-bottom">
+                        <div class="logo">un:short</div>
+                        <div class="tagline">Mindful consumption</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screenshot 2: Timer Screen -->
+            <div class="screenshot screenshot-2" id="screenshot-2">
+                <div class="screenshot-inner">
+                    <div class="text-top">
+                        <h2>30-second pause<br>when you need it</h2>
+                        <p>Flip your phone.<br>Reflect on your choice.</p>
+                    </div>
+                    <div class="phone-image">
+                        <img src="tmp/KakaoTalk_Photo_2025-11-20-11-12-18 002.jpeg" alt="Timer Screen">
+                    </div>
+                    <div class="brand-bottom">
+                        <div class="logo">un:short</div>
+                        <div class="tagline">Breaking the habit loop</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screenshot 3: Question Screen -->
+            <div class="screenshot screenshot-3" id="screenshot-3">
+                <div class="screenshot-inner">
+                    <div class="text-top">
+                        <h2>Ask yourself the<br>right questions</h2>
+                        <p>Do you truly need<br>shorts right now?</p>
+                    </div>
+                    <div class="phone-image">
+                        <img src="tmp/KakaoTalk_Photo_2025-11-20-11-12-19 003.jpeg" alt="Question Screen">
+                    </div>
+                    <div class="brand-bottom">
+                        <div class="logo">un:short</div>
+                        <div class="tagline">Conscious choices</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screenshot 4: Success Screen -->
+            <div class="screenshot screenshot-4" id="screenshot-4">
+                <div class="screenshot-inner">
+                    <div class="text-top">
+                        <h2>Build mindful habits<br>one pause at a time</h2>
+                        <p>You did it!<br>Make wiser choices.</p>
+                    </div>
+                    <div class="phone-image">
+                        <img src="tmp/KakaoTalk_Photo_2025-11-20-11-12-18 001.jpeg" alt="Success Screen">
+                    </div>
+                    <div class="brand-bottom">
+                        <div class="logo">un:short</div>
+                        <div class="tagline">Small habits, big impact</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="download-info">
+            <h3>📥 How to Download Screenshots</h3>
+            <ol>
+                <li>Open Chrome DevTools (F12 or Cmd+Option+I)</li>
+                <li>Press Cmd+Shift+P (Mac) or Ctrl+Shift+P (Windows)</li>
+                <li>Type "Capture node screenshot"</li>
+                <li>Click on each .screenshot element (screenshot-1, screenshot-2, etc.)</li>
+                <li>Save as PNG files</li>
+                <li>Verify each file is exactly 1080x1920px</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

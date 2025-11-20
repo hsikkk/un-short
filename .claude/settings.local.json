@@ -19,7 +19,16 @@
       "Bash(adb shell am:*)",
       "Bash(adb devices:*)",
       "Bash(adb:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(for dir in */)",
+      "Bash(done)",
+      "Bash(node capture-images.js:*)",
+      "Bash(tee:*)",
+      "Bash(for title_file in fastlane/metadata/android/*/title.txt)",
+      "Bash(do)",
+      "Bash(\"$title_file\")",
+      "Bash(fastlane run upload_to_play_store:*)",
+      "Bash(python3:*)"
     ],
     "deny": [],
     "ask": []
