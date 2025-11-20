@@ -111,6 +111,7 @@
     <string name="timer_flip_instruction">Lật điện thoại</string>
     <string name="timer_breathe_message">Hít thở sâu</string>
     <string name="timer_skip_button">Hủy</string>
+    <string name="timer_continue_button">Quay lại</string>
 
     <!-- Ads -->
     <string name="ad">QUẢNG CÁO</string>

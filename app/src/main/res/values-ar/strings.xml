@@ -111,6 +111,7 @@
     <string name="timer_flip_instruction">اقلب هاتفك</string>
     <string name="timer_breathe_message">خذ نفساً عميقاً</string>
     <string name="timer_skip_button">إلغاء</string>
+    <string name="timer_continue_button">رجوع</string>
 
     <!-- Ads -->
     <string name="ad">إعلان</string>

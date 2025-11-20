@@ -108,6 +108,7 @@
     <string name="timer_flip_instruction">폰을 뒤집어주세요</string>
     <string name="timer_breathe_message">깊게 숨을 쉬어보세요</string>
     <string name="timer_skip_button">취소</string>
+    <string name="timer_continue_button">돌아가기</string>
 
     <!-- Onboarding -->
     <string name="onboarding_page1_title">쇼츠 중독에서\n벗어나세요</string>

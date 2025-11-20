@@ -113,6 +113,7 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="timer_flip_instruction">Balik ponsel</string>
     <string name="timer_breathe_message">Tarik napas dalam</string>
     <string name="timer_skip_button">Batal</string>
+    <string name="timer_continue_button">Kembali</string>
 
     <!-- Ads -->
     <string name="ad">IKLAN</string>

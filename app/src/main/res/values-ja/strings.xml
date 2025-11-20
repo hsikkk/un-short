@@ -111,6 +111,7 @@
     <string name="timer_flip_instruction">スマホを裏返す</string>
     <string name="timer_breathe_message">深呼吸しましょう</string>
     <string name="timer_skip_button">キャンセル</string>
+    <string name="timer_continue_button">戻る</string>
 
     <!-- Ads -->
     <string name="ad">広告</string>

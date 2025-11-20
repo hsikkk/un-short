@@ -111,6 +111,7 @@
     <string name="timer_flip_instruction">अपना फोन पलटें</string>
     <string name="timer_breathe_message">एक गहरी सांस लें</string>
     <string name="timer_skip_button">रद्द करें</string>
+    <string name="timer_continue_button">वापस जाएं</string>
 
     <!-- Ads -->
     <string name="ad">विज्ञापन</string>

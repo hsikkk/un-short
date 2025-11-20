@@ -111,6 +111,7 @@
     <string name="timer_flip_instruction">Gira il telefono</string>
     <string name="timer_breathe_message">Fai un respiro profondo</string>
     <string name="timer_skip_button">Annulla</string>
+    <string name="timer_continue_button">Indietro</string>
 
     <!-- Ads -->
     <string name="ad">PUBBLICITÀ</string>

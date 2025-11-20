@@ -111,6 +111,7 @@
     <string name="timer_flip_instruction">Переверните телефон</string>
     <string name="timer_breathe_message">Сделайте глубокий вдох</string>
     <string name="timer_skip_button">Отмена</string>
+    <string name="timer_continue_button">Назад</string>
 
     <!-- Ads -->
     <string name="ad">РЕКЛАМА</string>

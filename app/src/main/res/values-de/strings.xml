@@ -111,6 +111,7 @@
     <string name="timer_flip_instruction">Telefon umdrehen</string>
     <string name="timer_breathe_message">Atmen Sie tief durch</string>
     <string name="timer_skip_button">Abbrechen</string>
+    <string name="timer_continue_button">Zurück</string>
 
     <!-- Ads -->
     <string name="ad">WERBUNG</string>

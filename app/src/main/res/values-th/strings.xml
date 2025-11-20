@@ -111,6 +111,7 @@
     <string name="timer_flip_instruction">พลิกโทรศัพท์</string>
     <string name="timer_breathe_message">หายใจลึกๆ</string>
     <string name="timer_skip_button">ยกเลิก</string>
+    <string name="timer_continue_button">กลับ</string>
 
     <!-- Ads -->
     <string name="ad">โฆษณา</string>

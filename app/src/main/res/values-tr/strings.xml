@@ -111,6 +111,7 @@
     <string name="timer_flip_instruction">Telefonunuzu çevirin</string>
     <string name="timer_breathe_message">Derin bir nefes alın</string>
     <string name="timer_skip_button">İptal</string>
+    <string name="timer_continue_button">Geri Dön</string>
 
     <!-- Ads -->
     <string name="ad">REKLAM</string>

@@ -111,6 +111,7 @@
     <string name="timer_flip_instruction">翻轉手機</string>
     <string name="timer_breathe_message">深呼吸</string>
     <string name="timer_skip_button">取消</string>
+    <string name="timer_continue_button">返回</string>
 
     <!-- Ads -->
     <string name="ad">廣告</string>
