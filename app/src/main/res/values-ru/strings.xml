@@ -289,4 +289,25 @@
     <string name="promo_no_expiry">Без срока действия</string>
     <string name="promo_not_applicable">Н/Д</string>
 
+    <!-- Disable Type Dialog -->
+    <string name="disable_type_title">Отключить блокировку</string>
+    <string name="disable_type_subtitle">Выберите способ отключения</string>
+    <string name="disable_type_permanent">Постоянно</string>
+    <string name="disable_type_permanent_desc">Оставаться отключённым до ручной активации</string>
+    <string name="disable_type_temporary">Временно</string>
+    <string name="disable_type_temporary_desc">Автоматически включить после установленного времени</string>
+    <string name="disable_type_time_label">Выберите продолжительность</string>
+    <string name="disable_type_30min">30 мин</string>
+    <string name="disable_type_1hour">1 час</string>
+    <string name="disable_type_2hour">2 часа</string>
+    <string name="disable_type_confirm">Отключить</string>
+    <string name="cancel">Отмена</string>
+
+    <!-- Temporary Disable Status -->
+    <string name="status_temp_disabled">Включится через %s</string>
+    <string name="time_less_than_minute">менее 1 мин</string>
+    <string name="time_minutes_format">%d мин</string>
+    <string name="time_hours_format">%d час</string>
+    <string name="time_hours_minutes_format">%1$d ч %2$d мин</string>
+
 </resources>

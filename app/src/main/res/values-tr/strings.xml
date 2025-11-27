@@ -289,4 +289,25 @@
     <string name="promo_no_expiry">Süresi yok</string>
     <string name="promo_not_applicable">Uygulanamaz</string>
 
+    <!-- Disable Type Dialog -->
+    <string name="disable_type_title">Engellemeyi Devre Dışı Bırak</string>
+    <string name="disable_type_subtitle">Nasıl devre dışı bırakılacağını seçin</string>
+    <string name="disable_type_permanent">Kalıcı</string>
+    <string name="disable_type_permanent_desc">Tekrar açana kadar devre dışı kalır</string>
+    <string name="disable_type_temporary">Geçici</string>
+    <string name="disable_type_temporary_desc">Belirlenen süre sonunda otomatik yeniden etkinleştir</string>
+    <string name="disable_type_time_label">Süre seçin</string>
+    <string name="disable_type_30min">30dk</string>
+    <string name="disable_type_1hour">1sa</string>
+    <string name="disable_type_2hour">2sa</string>
+    <string name="disable_type_confirm">Devre Dışı Bırak</string>
+    <string name="cancel">İptal</string>
+
+    <!-- Temporary Disable Status -->
+    <string name="status_temp_disabled">%s sonra otomatik etkinleştirme</string>
+    <string name="time_less_than_minute">1 dakikadan az</string>
+    <string name="time_minutes_format">%d dk</string>
+    <string name="time_hours_format">%d saat</string>
+    <string name="time_hours_minutes_format">%1$d sa %2$d dk</string>
+
 </resources>

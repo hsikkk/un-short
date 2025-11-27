@@ -141,6 +141,16 @@
             </intent-filter>
         </receiver>
 
+        <!-- Temporary Disable Expiration Receiver -->
+        <receiver
+            android:name=".TempDisableReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.muuu.unshort.TEMP_DISABLE_EXPIRED" />
+            </intent-filter>
+        </receiver>
+
         <!-- AdMob App ID -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

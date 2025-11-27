@@ -289,4 +289,25 @@
     <string name="promo_no_expiry">ไม่มีวันหมดอายุ</string>
     <string name="promo_not_applicable">ไม่ใช้</string>
 
+    <!-- Disable Type Dialog -->
+    <string name="disable_type_title">ปิดการบล็อก</string>
+    <string name="disable_type_subtitle">เลือกวิธีปิด</string>
+    <string name="disable_type_permanent">ถาวร</string>
+    <string name="disable_type_permanent_desc">ปิดไว้จนกว่าคุณจะเปิดกลับมา</string>
+    <string name="disable_type_temporary">ชั่วคราว</string>
+    <string name="disable_type_temporary_desc">เปิดอัตโนมัติหลังจากเวลาที่ตั้งไว้</string>
+    <string name="disable_type_time_label">เลือกระยะเวลา</string>
+    <string name="disable_type_30min">30น.</string>
+    <string name="disable_type_1hour">1ชม.</string>
+    <string name="disable_type_2hour">2ชม.</string>
+    <string name="disable_type_confirm">ปิด</string>
+    <string name="cancel">ยกเลิก</string>
+
+    <!-- Temporary Disable Status -->
+    <string name="status_temp_disabled">เปิดอัตโนมัติใน %s</string>
+    <string name="time_less_than_minute">น้อยกว่า 1 นาที</string>
+    <string name="time_minutes_format">%d น.</string>
+    <string name="time_hours_format">%d ชม.</string>
+    <string name="time_hours_minutes_format">%1$d ชม. %2$d น.</string>
+
 </resources>

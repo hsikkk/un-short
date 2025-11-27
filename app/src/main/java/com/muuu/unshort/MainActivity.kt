@@ -18,6 +18,8 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.text.buildSpannedString
 import androidx.core.text.bold
 import androidx.lifecycle.lifecycleScope
+import android.os.Handler
+import android.os.Looper
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.data.statistics.StatisticsRepository
@@ -58,6 +60,16 @@ class MainActivity : BaseActivity() {
     // 3단계 보호 플로우 헬퍼
     private lateinit var protectionHelper: ThreeStepProtectionHelper
     private lateinit var disableConfirmTimerLauncher: ActivityResultLauncher<Intent>
+
+    // 일시 해제 상태 업데이트용 핸들러
+    private val tempDisableHandler = Handler(Looper.getMainLooper())
+    private val tempDisableUpdateRunnable = object : Runnable {
+        override fun run() {
+            updateTempDisableStatus()
+            // 1분마다 업데이트
+            tempDisableHandler.postDelayed(this, 60_000)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -144,26 +156,21 @@ class MainActivity : BaseActivity() {
             val currentState = prefsManager.isBlockingEnabled
             val newState = !currentState
 
-            // If turning OFF, check if confirmation is required
+            // If turning OFF, show disable type dialog
             if (currentState && !newState) {
                 if (prefsManager.isPreventImpulsiveDisable) {
-                    // Show confirmation dialog
+                    // Show 3-step protection flow first
                     showDisableConfirmDialog()
                 } else {
-                    // Proceed immediately without confirmation
-                    prefsManager.isBlockingEnabled = false
-
-                    // Track blocking state change
-                    AnalyticsManager.trackEvent(
-                        this,
-                        AnalyticsEvent.BLOCKING_DISABLED
-                    )
-
-                    // UI 업데이트 (애니메이션 포함)
-                    updateUI(false, animate = true)
+                    // Show disable type dialog directly
+                    showDisableTypeDialog()
                 }
             } else {
                 // Turning ON - proceed immediately
+                // Clear any temporary disable state
+                prefsManager.clearTempDisable()
+                TempDisableReceiver.cancelAlarm(this)
+
                 // 상태 저장
                 prefsManager.isBlockingEnabled = true
 
@@ -174,19 +181,33 @@ class MainActivity : BaseActivity() {
                 )
 
                 // UI 업데이트 (애니메이션 포함)
-                updateUI(newState, animate = true)
+                updateUI(true, animate = true)
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
+        // 일시 해제 만료 체크
+        checkTempDisableExpiration()
+
         checkPermissionsAndUpdateUI()
         updateSettingsBadgeVisibility()
         updatePremiumBadgeVisibility()
         updateStatisticsSummary()
         // 앱 설치/삭제 상황 반영
         populateBlockedApps()
+
+        // 일시 해제 상태 업데이트 시작
+        if (prefsManager.isTemporarilyDisabled()) {
+            tempDisableHandler.post(tempDisableUpdateRunnable)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // 일시 해제 상태 업데이트 중지
+        tempDisableHandler.removeCallbacks(tempDisableUpdateRunnable)
     }
 
     private fun checkPermissionsAndUpdateUI() {
@@ -278,6 +299,8 @@ class MainActivity : BaseActivity() {
             // Status Indicator
             statusDot.setBackgroundResource(R.drawable.status_dot_active)
             statusLabel.text = getString(R.string.status_active)
+            statusLabel.setTextColor(Color.BLACK)
+            statusLabel.alpha = 0.5f
         } else {
             // OFF 상태
             toggleContainer.setBackgroundResource(R.drawable.toggle_track_inactive)
@@ -295,6 +318,8 @@ class MainActivity : BaseActivity() {
             // Status Indicator
             statusDot.setBackgroundResource(R.drawable.status_dot_inactive)
             statusLabel.text = getString(R.string.status_inactive)
+            statusLabel.setTextColor(Color.BLACK)
+            statusLabel.alpha = 0.5f
         }
     }
 
@@ -321,11 +346,96 @@ class MainActivity : BaseActivity() {
                 }
             ),
             finalAction = {
+                // 3단계 보호 플로우 완료 후 해제 타입 선택 다이얼로그 표시
+                showDisableTypeDialog()
+            }
+        )
+    }
+
+    private fun showDisableTypeDialog() {
+        DisableTypeDialog(
+            context = this,
+            onPermanentDisable = {
+                // 영구 해제
+                prefsManager.clearTempDisable()
+                TempDisableReceiver.cancelAlarm(this)
                 prefsManager.isBlockingEnabled = false
                 AnalyticsManager.trackEvent(this, AnalyticsEvent.BLOCKING_DISABLED)
                 updateUI(false, animate = true)
+            },
+            onTemporaryDisable = { durationMinutes ->
+                // 일시 해제
+                val triggerAtMillis = System.currentTimeMillis() + (durationMinutes * 60 * 1000L)
+                prefsManager.tempDisableUntil = triggerAtMillis
+                prefsManager.isBlockingEnabled = false
+
+                // 알람 스케줄링
+                TempDisableReceiver.scheduleReEnable(this, triggerAtMillis)
+
+                AnalyticsManager.trackEvent(this, AnalyticsEvent.BLOCKING_DISABLED)
+                updateUI(false, animate = true)
+
+                // 일시 해제 상태 업데이트 시작
+                tempDisableHandler.post(tempDisableUpdateRunnable)
+            },
+            onCancel = {
+                // 취소 시 UI 복원
+                updateUI(true, animate = false)
             }
-        )
+        ).show()
+    }
+
+    /**
+     * 일시 해제 만료 체크 및 자동 재활성화
+     */
+    private fun checkTempDisableExpiration() {
+        if (prefsManager.tempDisableUntil > 0 && !prefsManager.isTemporarilyDisabled()) {
+            // 일시 해제 시간이 지났으면 재활성화
+            prefsManager.clearTempDisable()
+            prefsManager.isBlockingEnabled = true
+        }
+    }
+
+    /**
+     * 일시 해제 상태 UI 업데이트
+     */
+    private fun updateTempDisableStatus() {
+        if (!prefsManager.isTemporarilyDisabled()) {
+            // 일시 해제 상태 아님 - 핸들러 중지하고 일반 UI 복원
+            tempDisableHandler.removeCallbacks(tempDisableUpdateRunnable)
+            checkTempDisableExpiration()
+            checkPermissionsAndUpdateUI()
+            return
+        }
+
+        // 남은 시간 계산
+        val remainingMs = prefsManager.getTempDisableRemainingTime()
+        val remainingMinutes = (remainingMs / 60_000).toInt()
+
+        // Status Label 업데이트
+        statusDot.setBackgroundResource(R.drawable.status_dot_temp_disabled)
+        statusLabel.text = getString(R.string.status_temp_disabled, formatRemainingTime(remainingMinutes))
+        statusLabel.setTextColor(getColor(R.color.warning))
+        statusLabel.alpha = 1.0f
+    }
+
+    /**
+     * 남은 시간을 사람이 읽기 쉬운 형식으로 포맷
+     */
+    private fun formatRemainingTime(minutes: Int): String {
+        return when {
+            minutes < 1 -> getString(R.string.time_less_than_minute)
+            minutes < 60 -> getString(R.string.time_minutes_format, minutes)
+            else -> {
+                val hours = minutes / 60
+                val mins = minutes % 60
+                if (mins == 0) {
+                    getString(R.string.time_hours_format, hours)
+                } else {
+                    getString(R.string.time_hours_minutes_format, hours, mins)
+                }
+            }
+        }
     }
 
     /**

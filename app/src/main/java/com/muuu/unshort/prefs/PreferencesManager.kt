@@ -35,6 +35,41 @@ class PreferencesManager(context: Context) {
         prefs.edit().remove(AppConstants.PREF_ALLOWED_UNTIL_SCROLL).apply()
     }
 
+    // ========== Temporary Disable ==========
+
+    /**
+     * 일시 해제 만료 시간 (epoch milliseconds)
+     * 0이면 일시 해제 상태 아님
+     */
+    var tempDisableUntil: Long
+        get() = prefs.getLong(AppConstants.PREF_TEMP_DISABLE_UNTIL, 0L)
+        set(value) = prefs.edit().putLong(AppConstants.PREF_TEMP_DISABLE_UNTIL, value).apply()
+
+    /**
+     * 일시 해제 상태인지 확인
+     */
+    fun isTemporarilyDisabled(): Boolean {
+        val until = tempDisableUntil
+        return until > 0 && System.currentTimeMillis() < until
+    }
+
+    /**
+     * 일시 해제 남은 시간 (milliseconds)
+     */
+    fun getTempDisableRemainingTime(): Long {
+        val until = tempDisableUntil
+        if (until <= 0) return 0
+        val remaining = until - System.currentTimeMillis()
+        return if (remaining > 0) remaining else 0
+    }
+
+    /**
+     * 일시 해제 상태 초기화
+     */
+    fun clearTempDisable() {
+        prefs.edit().remove(AppConstants.PREF_TEMP_DISABLE_UNTIL).apply()
+    }
+
     // ========== Settings ==========
 
     var waitTime: Int

@@ -291,4 +291,25 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="promo_no_expiry">Tidak ada kedaluwarsa</string>
     <string name="promo_not_applicable">Tidak berlaku</string>
 
+    <!-- Disable Type Dialog -->
+    <string name="disable_type_title">Nonaktifkan Pemblokiran</string>
+    <string name="disable_type_subtitle">Pilih cara menonaktifkan</string>
+    <string name="disable_type_permanent">Permanen</string>
+    <string name="disable_type_permanent_desc">Tetap nonaktif sampai Anda mengaktifkannya kembali</string>
+    <string name="disable_type_temporary">Sementara</string>
+    <string name="disable_type_temporary_desc">Aktifkan kembali otomatis setelah waktu yang ditentukan</string>
+    <string name="disable_type_time_label">Pilih durasi</string>
+    <string name="disable_type_30min">30m</string>
+    <string name="disable_type_1hour">1j</string>
+    <string name="disable_type_2hour">2j</string>
+    <string name="disable_type_confirm">Nonaktifkan</string>
+    <string name="cancel">Batal</string>
+
+    <!-- Temporary Disable Status -->
+    <string name="status_temp_disabled">Aktif kembali otomatis dalam %s</string>
+    <string name="time_less_than_minute">kurang dari 1 menit</string>
+    <string name="time_minutes_format">%d menit</string>
+    <string name="time_hours_format">%d jam</string>
+    <string name="time_hours_minutes_format">%1$dj %2$dm</string>
+
 </resources>

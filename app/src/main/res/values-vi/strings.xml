@@ -289,4 +289,25 @@
     <string name="promo_no_expiry">Không hết hạn</string>
     <string name="promo_not_applicable">Không áp dụng</string>
 
+    <!-- Disable Type Dialog -->
+    <string name="disable_type_title">Tắt chặn</string>
+    <string name="disable_type_subtitle">Chọn cách tắt</string>
+    <string name="disable_type_permanent">Vĩnh viễn</string>
+    <string name="disable_type_permanent_desc">Vẫn tắt cho đến khi bạn bật lại</string>
+    <string name="disable_type_temporary">Tạm thời</string>
+    <string name="disable_type_temporary_desc">Tự động bật lại sau thời gian đặt</string>
+    <string name="disable_type_time_label">Chọn thời lượng</string>
+    <string name="disable_type_30min">30ph</string>
+    <string name="disable_type_1hour">1giờ</string>
+    <string name="disable_type_2hour">2giờ</string>
+    <string name="disable_type_confirm">Tắt</string>
+    <string name="cancel">Hủy</string>
+
+    <!-- Temporary Disable Status -->
+    <string name="status_temp_disabled">Tự động bật lại sau %s</string>
+    <string name="time_less_than_minute">dưới 1 phút</string>
+    <string name="time_minutes_format">%d phút</string>
+    <string name="time_hours_format">%d giờ</string>
+    <string name="time_hours_minutes_format">%1$dh %2$dph</string>
+
 </resources>

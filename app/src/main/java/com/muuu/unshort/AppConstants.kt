@@ -19,6 +19,10 @@ object AppConstants {
     const val PREF_BLOCKING_ENABLED = "blocking_enabled"
     const val PREF_ALLOWED_UNTIL_SCROLL = "allowed_until_scroll"
 
+    // Temporary Disable
+    const val PREF_TEMP_DISABLE_UNTIL = "temp_disable_until"
+    const val ACTION_TEMP_DISABLE_EXPIRED = "com.muuu.unshort.TEMP_DISABLE_EXPIRED"
+
     // Settings
     const val PREF_WAIT_TIME = "wait_time"
     const val PREF_HAPTIC_ENABLED = "haptic_enabled"

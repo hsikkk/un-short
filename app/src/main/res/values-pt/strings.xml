@@ -289,4 +289,25 @@
     <string name="promo_no_expiry">Sem expiração</string>
     <string name="promo_not_applicable">N/A</string>
 
+    <!-- Disable Type Dialog -->
+    <string name="disable_type_title">Desativar bloqueio</string>
+    <string name="disable_type_subtitle">Escolha como desativar</string>
+    <string name="disable_type_permanent">Permanente</string>
+    <string name="disable_type_permanent_desc">Manter desativado até reativar manualmente</string>
+    <string name="disable_type_temporary">Temporário</string>
+    <string name="disable_type_temporary_desc">Reativar automaticamente após o tempo definido</string>
+    <string name="disable_type_time_label">Selecionar duração</string>
+    <string name="disable_type_30min">30m</string>
+    <string name="disable_type_1hour">1h</string>
+    <string name="disable_type_2hour">2h</string>
+    <string name="disable_type_confirm">Desativar</string>
+    <string name="cancel">Cancelar</string>
+
+    <!-- Temporary Disable Status -->
+    <string name="status_temp_disabled">Reativação em %s</string>
+    <string name="time_less_than_minute">menos de 1 min</string>
+    <string name="time_minutes_format">%d min</string>
+    <string name="time_hours_format">%d hora</string>
+    <string name="time_hours_minutes_format">%1$dh %2$dm</string>
+
 </resources>

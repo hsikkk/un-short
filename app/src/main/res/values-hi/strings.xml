@@ -289,4 +289,25 @@
     <string name="promo_no_expiry">कोई समाप्ति नहीं</string>
     <string name="promo_not_applicable">लागू नहीं</string>
 
+    <!-- Disable Type Dialog -->
+    <string name="disable_type_title">ब्लॉकिंग अक्षम करें</string>
+    <string name="disable_type_subtitle">कैसे अक्षम करना है चुनें</string>
+    <string name="disable_type_permanent">स्थायी</string>
+    <string name="disable_type_permanent_desc">जब तक आप वापस चालू नहीं करते तब तक अक्षम रहेगा</string>
+    <string name="disable_type_temporary">अस्थायी</string>
+    <string name="disable_type_temporary_desc">निर्धारित समय के बाद स्वचालित रूप से पुनः सक्षम</string>
+    <string name="disable_type_time_label">अवधि चुनें</string>
+    <string name="disable_type_30min">30मि</string>
+    <string name="disable_type_1hour">1घं</string>
+    <string name="disable_type_2hour">2घं</string>
+    <string name="disable_type_confirm">अक्षम करें</string>
+    <string name="cancel">रद्द करें</string>
+
+    <!-- Temporary Disable Status -->
+    <string name="status_temp_disabled">%s में स्वचालित पुनः सक्षम</string>
+    <string name="time_less_than_minute">1 मिनट से कम</string>
+    <string name="time_minutes_format">%d मि</string>
+    <string name="time_hours_format">%d घं</string>
+    <string name="time_hours_minutes_format">%1$d घं %2$d मि</string>
+
 </resources>

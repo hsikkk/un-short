@@ -282,4 +282,25 @@
     <string name="promo_no_expiry">만료일 없음</string>
     <string name="promo_not_applicable">해당 없음</string>
 
+    <!-- Disable Type Dialog -->
+    <string name="disable_type_title">차단 해제</string>
+    <string name="disable_type_subtitle">해제 방식을 선택하세요</string>
+    <string name="disable_type_permanent">영구 해제</string>
+    <string name="disable_type_permanent_desc">직접 다시 켤 때까지 해제 상태 유지</string>
+    <string name="disable_type_temporary">일시 해제</string>
+    <string name="disable_type_temporary_desc">설정한 시간 후 자동으로 다시 활성화</string>
+    <string name="disable_type_time_label">해제 시간 선택</string>
+    <string name="disable_type_30min">30분</string>
+    <string name="disable_type_1hour">1시간</string>
+    <string name="disable_type_2hour">2시간</string>
+    <string name="disable_type_confirm">해제하기</string>
+    <string name="cancel">취소</string>
+
+    <!-- Temporary Disable Status -->
+    <string name="status_temp_disabled">%s 후 자동 활성화</string>
+    <string name="time_less_than_minute">1분 미만</string>
+    <string name="time_minutes_format">%d분</string>
+    <string name="time_hours_format">%d시간</string>
+    <string name="time_hours_minutes_format">%1$d시간 %2$d분</string>
+
 </resources>

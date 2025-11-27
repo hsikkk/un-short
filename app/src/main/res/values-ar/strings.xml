@@ -289,4 +289,25 @@
     <string name="promo_no_expiry">بدون انتهاء</string>
     <string name="promo_not_applicable">غير متاح</string>
 
+    <!-- Disable Type Dialog -->
+    <string name="disable_type_title">تعطيل الحظر</string>
+    <string name="disable_type_subtitle">اختر كيفية التعطيل</string>
+    <string name="disable_type_permanent">دائم</string>
+    <string name="disable_type_permanent_desc">يبقى معطلاً حتى تشغله مرة أخرى</string>
+    <string name="disable_type_temporary">مؤقت</string>
+    <string name="disable_type_temporary_desc">إعادة التفعيل التلقائي بعد الوقت المحدد</string>
+    <string name="disable_type_time_label">اختر المدة</string>
+    <string name="disable_type_30min">30 د</string>
+    <string name="disable_type_1hour">1 س</string>
+    <string name="disable_type_2hour">2 س</string>
+    <string name="disable_type_confirm">تعطيل</string>
+    <string name="cancel">إلغاء</string>
+
+    <!-- Temporary Disable Status -->
+    <string name="status_temp_disabled">إعادة التفعيل التلقائي في %s</string>
+    <string name="time_less_than_minute">أقل من دقيقة</string>
+    <string name="time_minutes_format">%d د</string>
+    <string name="time_hours_format">%d س</string>
+    <string name="time_hours_minutes_format">%1$d س %2$d د</string>
+
 </resources>

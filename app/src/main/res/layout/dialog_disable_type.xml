@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_background">
+
+    <!-- Header (Dark Background) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/dialog_header_background"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="24dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/disable_type_title"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/disable_type_subtitle"
+            android:textSize="14sp"
+            android:textColor="@color/gray_400"
+            android:fontFamily="@font/spoqa_sans_neo" />
+    </LinearLayout>
+
+    <!-- Options -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Permanent Disable Option -->
+        <LinearLayout
+            android:id="@+id/optionPermanent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/option_card_background"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <FrameLayout
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="12dp">
+
+                    <View
+                        android:id="@+id/radioPermanentOuter"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/radio_outer_unselected" />
+
+                    <View
+                        android:id="@+id/radioPermanentInner"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/radio_inner"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disable_type_permanent"
+                    android:textSize="16sp"
+                    android:textColor="@color/primary_dark"
+                    android:fontFamily="@font/spoqa_sans_neo_bold" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="32dp"
+                android:text="@string/disable_type_permanent_desc"
+                android:textSize="13sp"
+                android:textColor="@color/gray_600"
+                android:fontFamily="@font/spoqa_sans_neo" />
+        </LinearLayout>
+
+        <!-- Temporary Disable Option -->
+        <LinearLayout
+            android:id="@+id/optionTemporary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/option_card_background"
+            android:padding="16dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <FrameLayout
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="12dp">
+
+                    <View
+                        android:id="@+id/radioTemporaryOuter"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/radio_outer_unselected" />
+
+                    <View
+                        android:id="@+id/radioTemporaryInner"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/radio_inner"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disable_type_temporary"
+                    android:textSize="16sp"
+                    android:textColor="@color/primary_dark"
+                    android:fontFamily="@font/spoqa_sans_neo_bold" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="32dp"
+                android:text="@string/disable_type_temporary_desc"
+                android:textSize="13sp"
+                android:textColor="@color/gray_600"
+                android:fontFamily="@font/spoqa_sans_neo" />
+
+            <!-- Time Selector (visible when temporary selected) -->
+            <LinearLayout
+                android:id="@+id/timeSelectorContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="32dp"
+                android:background="@drawable/time_selector_background"
+                android:padding="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disable_type_time_label"
+                    android:textSize="13sp"
+                    android:textColor="@color/gray_600"
+                    android:fontFamily="@font/spoqa_sans_neo"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Time Presets -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/preset30min"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/disable_type_30min"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/spoqa_sans_neo_medium"
+                        android:textColor="@color/gray_700"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:minHeight="0dp"
+                        android:paddingVertical="0dp"
+                        app:strokeColor="@color/gray_300"
+                        app:cornerRadius="20dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/preset1hour"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/disable_type_1hour"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/spoqa_sans_neo_medium"
+                        android:textColor="@color/gray_700"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:minHeight="0dp"
+                        android:paddingVertical="0dp"
+                        app:strokeColor="@color/gray_300"
+                        app:cornerRadius="20dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/preset2hour"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_weight="1"
+                        android:text="@string/disable_type_2hour"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/spoqa_sans_neo_medium"
+                        android:textColor="@color/gray_700"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:minHeight="0dp"
+                        android:paddingVertical="0dp"
+                        app:strokeColor="@color/gray_300"
+                        app:cornerRadius="20dp" />
+                </LinearLayout>
+
+                <!-- Custom Time Input -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <EditText
+                        android:id="@+id/customTimeInput"
+                        android:layout_width="60dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/input_background"
+                        android:inputType="number"
+                        android:textSize="16sp"
+                        android:textColor="@color/primary_dark"
+                        android:fontFamily="@font/spoqa_sans_neo_medium"
+                        android:gravity="center"
+                        android:maxLength="3"
+                        android:text="1"
+                        android:importantForAutofill="no" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="8dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/unitMinute"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:text="@string/time_unit_minute"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/spoqa_sans_neo_medium"
+                            android:textColor="@color/gray_600"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="0dp"
+                            app:strokeColor="@color/gray_300"
+                            app:cornerRadius="8dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/unitHour"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="4dp"
+                            android:text="@string/time_unit_hour"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/spoqa_sans_neo_medium"
+                            android:textColor="@color/gray_600"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="0dp"
+                            app:strokeColor="@color/gray_300"
+                            app:cornerRadius="8dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="20dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancel"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="12dp"
+            android:text="@string/cancel"
+            android:textSize="15sp"
+            android:textColor="@color/gray_600"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
+            android:textAllCaps="false"
+            android:background="@drawable/button_cancel_background"
+            android:insetTop="0dp"
+            android:insetBottom="0dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnConfirm"
+            style="@style/Widget.App.Button"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="@string/disable_type_confirm"
+            android:textSize="15sp"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
+            android:textAllCaps="false"
+            android:insetTop="0dp"
+            android:insetBottom="0dp" />
+    </LinearLayout>
+</LinearLayout>
