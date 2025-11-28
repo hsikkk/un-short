@@ -10,6 +10,15 @@ android {
     namespace = "com.muuu.unshort"
     compileSdk = 35
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("/Users/muuu/key/key-store.jks")
+            storePassword = "akffod02!!"
+            keyAlias = "key0"
+            keyPassword = "akffod02!!"
+        }
+    }
+
     defaultConfig {
         applicationId = "com.muuu.unshort"
         minSdk = 26
@@ -35,7 +44,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
             buildConfigField("String", "AMPLITUDE_API_KEY", "\"c0d471f3a72a703e5b79055fad3b6191\"")
 
             // APK 최적화
