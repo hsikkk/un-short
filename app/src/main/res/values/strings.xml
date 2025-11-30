@@ -314,7 +314,9 @@
     <string name="report_title">Report</string>
     <string name="report_daily_trend">Daily Trend</string>
     <string name="report_summary">SUMMARY</string>
+    <string name="report_hourly_analysis">HOURLY ANALYSIS</string>
     <string name="report_detail">DETAIL</string>
+    <string name="report_app_analysis">APP ANALYSIS</string>
     <string name="report_today_label">오늘</string>
     <string name="report_block_rate">Block Rate</string>
     <string name="report_empty_detail">No shorts watched</string>

@@ -307,7 +307,9 @@
     <string name="report_title">리포트</string>
     <string name="report_daily_trend">일별 추이</string>
     <string name="report_summary">요약</string>
+    <string name="report_hourly_analysis">시간대별 분석</string>
     <string name="report_detail">상세</string>
+    <string name="report_app_analysis">앱별 분석</string>
     <string name="report_today_label">오늘</string>
     <string name="report_block_rate">차단률</string>
     <string name="report_empty_detail">쇼츠를 보지 않았어요</string>

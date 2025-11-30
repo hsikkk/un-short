@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.activity.viewModels
 import com.muuu.unshort.data.statistics.StatisticsRepository
 import com.muuu.unshort.ui.report.BarChartView
+import com.muuu.unshort.ui.report.HourlyBarChartView
 import com.muuu.unshort.ui.report.ReportViewModel
 
 /**
@@ -25,11 +26,17 @@ class ReportActivity : BaseActivity() {
     private val viewModel: ReportViewModel by viewModels()
 
     private lateinit var chartView: BarChartView
+    private lateinit var hourlyChartView: HourlyBarChartView
 
-    // Tab views
+    // Daily Trend Tab views
     private lateinit var tabAttempts: TextView
     private lateinit var tabWatched: TextView
     private lateinit var tabWatchTime: TextView
+
+    // Hourly Analysis Tab views
+    private lateinit var hourlyTabAttempts: TextView
+    private lateinit var hourlyTabWatched: TextView
+    private lateinit var hourlyTabWatchTime: TextView
 
     // Summary views
     private lateinit var shortsEntryNumber: TextView
@@ -43,6 +50,9 @@ class ReportActivity : BaseActivity() {
     // Date chips container
     private lateinit var dateChipsContainer: LinearLayout
     private val dateChipViews = mutableListOf<TextView>()
+
+    // Hourly metric type state
+    private var currentHourlyMetric = HourlyBarChartView.MetricType.ATTEMPTS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,11 +72,17 @@ class ReportActivity : BaseActivity() {
 
         // Chart
         chartView = findViewById(R.id.chartView)
+        hourlyChartView = findViewById(R.id.hourlyChartView)
 
-        // Tabs
+        // Daily Trend Tabs
         tabAttempts = findViewById(R.id.tabAttempts)
         tabWatched = findViewById(R.id.tabWatched)
         tabWatchTime = findViewById(R.id.tabWatchTime)
+
+        // Hourly Analysis Tabs
+        hourlyTabAttempts = findViewById(R.id.hourlyTabAttempts)
+        hourlyTabWatched = findViewById(R.id.hourlyTabWatched)
+        hourlyTabWatchTime = findViewById(R.id.hourlyTabWatchTime)
 
         // Summary
         shortsEntryNumber = findViewById(R.id.shortsEntryNumber)
@@ -82,6 +98,7 @@ class ReportActivity : BaseActivity() {
     }
 
     private fun setupTabs() {
+        // Daily Trend Tabs
         tabAttempts.setOnClickListener {
             viewModel.selectMetric(BarChartView.MetricType.ATTEMPTS)
         }
@@ -92,6 +109,25 @@ class ReportActivity : BaseActivity() {
 
         tabWatchTime.setOnClickListener {
             viewModel.selectMetric(BarChartView.MetricType.WATCH_TIME)
+        }
+
+        // Hourly Analysis Tabs
+        hourlyTabAttempts.setOnClickListener {
+            currentHourlyMetric = HourlyBarChartView.MetricType.ATTEMPTS
+            updateHourlyChart()
+            updateHourlyTabUI(HourlyBarChartView.MetricType.ATTEMPTS)
+        }
+
+        hourlyTabWatched.setOnClickListener {
+            currentHourlyMetric = HourlyBarChartView.MetricType.WATCHED
+            updateHourlyChart()
+            updateHourlyTabUI(HourlyBarChartView.MetricType.WATCHED)
+        }
+
+        hourlyTabWatchTime.setOnClickListener {
+            currentHourlyMetric = HourlyBarChartView.MetricType.WATCH_TIME
+            updateHourlyChart()
+            updateHourlyTabUI(HourlyBarChartView.MetricType.WATCH_TIME)
         }
     }
 
@@ -160,6 +196,8 @@ class ReportActivity : BaseActivity() {
             updateDateChips(dateState.selectedDate)
             // 차트에 선택된 날짜 전달
             chartView.setSelectedDate(dateState.selectedDate)
+            // Hourly chart도 날짜 업데이트
+            updateHourlyChart()
         }
 
         viewModel.dailyStats.observe(this) { stats ->
@@ -172,6 +210,10 @@ class ReportActivity : BaseActivity() {
 
         viewModel.todayStats.observe(this) { stats ->
             updateSummary(stats)
+        }
+
+        viewModel.hourlyStats.observe(this) { stats ->
+            updateHourlyChart()
         }
 
         viewModel.appStats.observe(this) { apps ->
@@ -220,6 +262,40 @@ class ReportActivity : BaseActivity() {
                 tabWatched.setBackgroundResource(unselectedBg)
                 tabWatchTime.setTextColor(selectedColor)
                 tabWatchTime.setBackgroundResource(selectedBg)
+            }
+        }
+    }
+
+    private fun updateHourlyTabUI(metricType: HourlyBarChartView.MetricType) {
+        val selectedColor = getColor(R.color.gray_900)
+        val unselectedColor = getColor(R.color.gray_600)
+        val selectedBg = R.drawable.tab_selected_background
+        val unselectedBg = R.drawable.tab_unselected_background
+
+        when (metricType) {
+            HourlyBarChartView.MetricType.ATTEMPTS -> {
+                hourlyTabAttempts.setTextColor(selectedColor)
+                hourlyTabAttempts.setBackgroundResource(selectedBg)
+                hourlyTabWatched.setTextColor(unselectedColor)
+                hourlyTabWatched.setBackgroundResource(unselectedBg)
+                hourlyTabWatchTime.setTextColor(unselectedColor)
+                hourlyTabWatchTime.setBackgroundResource(unselectedBg)
+            }
+            HourlyBarChartView.MetricType.WATCHED -> {
+                hourlyTabAttempts.setTextColor(unselectedColor)
+                hourlyTabAttempts.setBackgroundResource(unselectedBg)
+                hourlyTabWatched.setTextColor(selectedColor)
+                hourlyTabWatched.setBackgroundResource(selectedBg)
+                hourlyTabWatchTime.setTextColor(unselectedColor)
+                hourlyTabWatchTime.setBackgroundResource(unselectedBg)
+            }
+            HourlyBarChartView.MetricType.WATCH_TIME -> {
+                hourlyTabAttempts.setTextColor(unselectedColor)
+                hourlyTabAttempts.setBackgroundResource(unselectedBg)
+                hourlyTabWatched.setTextColor(unselectedColor)
+                hourlyTabWatched.setBackgroundResource(unselectedBg)
+                hourlyTabWatchTime.setTextColor(selectedColor)
+                hourlyTabWatchTime.setBackgroundResource(selectedBg)
             }
         }
     }
@@ -352,5 +428,14 @@ class ReportActivity : BaseActivity() {
 
         return cal1.get(java.util.Calendar.YEAR) == cal2.get(java.util.Calendar.YEAR) &&
                 cal1.get(java.util.Calendar.DAY_OF_YEAR) == cal2.get(java.util.Calendar.DAY_OF_YEAR)
+    }
+
+    private fun updateHourlyChart() {
+        val stats = viewModel.hourlyStats.value
+        val selectedDate = viewModel.dateState.value?.selectedDate ?: 0L
+
+        if (!stats.isNullOrEmpty()) {
+            hourlyChartView.setData(stats, currentHourlyMetric, selectedDate)
+        }
     }
 }

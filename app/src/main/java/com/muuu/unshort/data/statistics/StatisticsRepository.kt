@@ -269,6 +269,16 @@ class StatisticsRepository(context: Context) {
     )
 
     /**
+     * 시간대별 통계 데이터 모델
+     */
+    data class HourlyStats(
+        val hour: Int,               // 시간 (0-23)
+        val attemptCount: Int,       // 진입 횟수
+        val watchedCount: Int,       // 시청 횟수
+        val watchTimeMs: Long        // 시청 시간 (밀리초)
+    )
+
+    /**
      * 최근 N일간의 일별 통계 조회
      *
      * @param days 조회할 일수 (기본 7일)
@@ -423,6 +433,43 @@ class StatisticsRepository(context: Context) {
                 )
             }
             .sortedByDescending { it.watchTimeMs }
+    }
+
+    /**
+     * 특정 날짜의 시간대별 통계 조회
+     *
+     * @param startTime 날짜 시작 시각 (밀리초)
+     * @param endTime 날짜 종료 시각 (밀리초)
+     * @return 시간대별 통계 리스트 (시간 오름차순, 0-23시)
+     */
+    suspend fun getHourlyStatsForDate(startTime: Long, endTime: Long): List<HourlyStats> = withContext(Dispatchers.IO) {
+        // 해당 날짜의 모든 세션 조회
+        val sessions = dao.getSessionsBetween(startTime, endTime)
+
+        // 시간 단위로 그룹화 (0시, 1시, ..., 23시)
+        val hourlyMap = mutableMapOf<Int, MutableList<ShortsSession>>()
+        for (i in 0 until 24) {
+            hourlyMap[i] = mutableListOf()
+        }
+
+        sessions.forEach { session ->
+            val calendar = java.util.Calendar.getInstance()
+            calendar.timeInMillis = session.timestamp
+            val hour = calendar.get(java.util.Calendar.HOUR_OF_DAY)  // 0-23
+            hourlyMap[hour]?.add(session)
+        }
+
+        // HourlyStats 리스트 생성
+        hourlyMap.entries
+            .sortedBy { it.key }
+            .map { (hour, sessions) ->
+                HourlyStats(
+                    hour = hour,
+                    attemptCount = sessions.size,
+                    watchedCount = sessions.count { it.didWatch },
+                    watchTimeMs = sessions.sumOf { it.watchDurationMs ?: 0L }
+                )
+            }
     }
 
     private fun getStartOfDay(timestamp: Long): Long {

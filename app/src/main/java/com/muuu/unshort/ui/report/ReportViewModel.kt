@@ -50,6 +50,9 @@ class ReportViewModel(application: Application) : AndroidViewModel(application) 
     private val _appStats = MutableLiveData<List<StatisticsRepository.AppStats>>()
     val appStats: LiveData<List<StatisticsRepository.AppStats>> = _appStats
 
+    private val _hourlyStats = MutableLiveData<List<StatisticsRepository.HourlyStats>>()
+    val hourlyStats: LiveData<List<StatisticsRepository.HourlyStats>> = _hourlyStats
+
     private val _selectedMetric = MutableLiveData<BarChartView.MetricType>(BarChartView.MetricType.ATTEMPTS)
     val selectedMetric: LiveData<BarChartView.MetricType> = _selectedMetric
 
@@ -165,12 +168,17 @@ class ReportViewModel(application: Application) : AndroidViewModel(application) 
                     repository.getDailyStats(REPORT_DAYS_RANGE)
                 }
 
+                val hourly = async(Dispatchers.IO) {
+                    repository.getHourlyStatsForDate(dayStart, dayEnd)
+                }
+
                 val detail = async(Dispatchers.IO) {
                     repository.getAppStatsForDate(dayStart, dayEnd)
                 }
 
                 _todayStats.value = summary.await()
                 _dailyStats.value = dailyTrend.await()
+                _hourlyStats.value = hourly.await()
                 _appStats.value = detail.await()
 
                 Log.d(TAG, "Initial data loaded successfully")
@@ -189,9 +197,13 @@ class ReportViewModel(application: Application) : AndroidViewModel(application) 
                 val dayStart = getStartOfDay(selectedDate)
                 val dayEnd = getEndOfDay(selectedDate)
 
-                // 병렬 로딩 (Summary와 Detail만)
+                // 병렬 로딩 (Summary, Hourly, Detail)
                 val summary = async(Dispatchers.IO) {
                     repository.getStatsForDate(dayStart, dayEnd)
+                }
+
+                val hourly = async(Dispatchers.IO) {
+                    repository.getHourlyStatsForDate(dayStart, dayEnd)
                 }
 
                 val detail = async(Dispatchers.IO) {
@@ -199,6 +211,7 @@ class ReportViewModel(application: Application) : AndroidViewModel(application) 
                 }
 
                 _todayStats.value = summary.await()
+                _hourlyStats.value = hourly.await()
                 _appStats.value = detail.await()
 
                 Log.d(TAG, "Data loaded successfully for ${formatDateForDisplay(selectedDate)}")
