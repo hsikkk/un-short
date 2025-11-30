@@ -32,9 +32,9 @@ class ReportActivity : BaseActivity() {
     private lateinit var tabWatchTime: TextView
 
     // Summary views
-    private lateinit var summaryAttemptValue: TextView
-    private lateinit var summaryWatchedValue: TextView
-    private lateinit var summaryTimeValue: TextView
+    private lateinit var shortsEntryNumber: TextView
+    private lateinit var shortsConsumptionNumber: TextView
+    private lateinit var watchTimeText: TextView
 
     // Detail views
     private lateinit var emptyStateView: View
@@ -64,9 +64,9 @@ class ReportActivity : BaseActivity() {
         tabWatchTime = findViewById(R.id.tabWatchTime)
 
         // Summary
-        summaryAttemptValue = findViewById(R.id.summaryAttemptValue)
-        summaryWatchedValue = findViewById(R.id.summaryWatchedValue)
-        summaryTimeValue = findViewById(R.id.summaryTimeValue)
+        shortsEntryNumber = findViewById(R.id.shortsEntryNumber)
+        shortsConsumptionNumber = findViewById(R.id.shortsConsumptionNumber)
+        watchTimeText = findViewById(R.id.watchTimeText)
 
         // Detail
         emptyStateView = findViewById(R.id.emptyStateView)
@@ -149,9 +149,9 @@ class ReportActivity : BaseActivity() {
     }
 
     private fun updateSummary(stats: StatisticsRepository.DailyStats) {
-        summaryAttemptValue.text = stats.attemptCount.toString()
-        summaryWatchedValue.text = stats.watchedCount.toString()
-        summaryTimeValue.text = formatWatchTime(stats.watchTimeMs)
+        shortsEntryNumber.text = stats.attemptCount.toString()
+        shortsConsumptionNumber.text = stats.watchedCount.toString()
+        watchTimeText.text = formatWatchTime(stats.watchTimeMs)
     }
 
     private fun updateAppList(apps: List<StatisticsRepository.AppStats>) {
