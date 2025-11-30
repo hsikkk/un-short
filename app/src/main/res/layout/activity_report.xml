@@ -62,91 +62,6 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <!-- Daily Trend Section -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="32dp">
-
-                <!-- Section Title -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/report_daily_trend"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/spoqa_sans_neo_medium"
-                    android:textColor="@color/gray_900"
-                    android:alpha="0.5"
-                    android:textAllCaps="true"
-                    android:letterSpacing="0.1"
-                    android:layout_marginBottom="16dp" />
-
-                <!-- Metric Tabs -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@drawable/tab_container_background"
-                    android:padding="4dp"
-                    android:layout_marginBottom="20dp">
-
-                    <TextView
-                        android:id="@+id/tabAttempts"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/report_attempts"
-                        android:textSize="13sp"
-                        android:fontFamily="@font/spoqa_sans_neo_medium"
-                        android:textColor="@color/gray_900"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:background="@drawable/tab_selected_background"
-                        android:gravity="center"
-                        android:clickable="true"
-                        android:focusable="true" />
-
-                    <TextView
-                        android:id="@+id/tabWatched"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/report_watched"
-                        android:textSize="13sp"
-                        android:fontFamily="@font/spoqa_sans_neo_medium"
-                        android:textColor="@color/gray_600"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:background="@drawable/tab_unselected_background"
-                        android:gravity="center"
-                        android:clickable="true"
-                        android:focusable="true" />
-
-                    <TextView
-                        android:id="@+id/tabWatchTime"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/report_watch_time"
-                        android:textSize="13sp"
-                        android:fontFamily="@font/spoqa_sans_neo_medium"
-                        android:textColor="@color/gray_600"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
-                        android:background="@drawable/tab_unselected_background"
-                        android:gravity="center"
-                        android:clickable="true"
-                        android:focusable="true" />
-                </LinearLayout>
-
-                <!-- Chart View -->
-                <com.muuu.unshort.ui.report.BarChartView
-                    android:id="@+id/chartView"
-                    android:layout_width="match_parent"
-                    android:layout_height="260dp" />
-            </LinearLayout>
-
             <!-- Summary Section -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -185,7 +100,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/report_attempts"
+                            android:text="@string/stats_entry_count"
                             android:textSize="13sp"
                             android:fontFamily="@font/spoqa_sans_neo_regular"
                             android:textColor="@color/gray_600"
@@ -219,7 +134,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/report_watched"
+                            android:text="@string/stats_consumption_count"
                             android:textSize="13sp"
                             android:fontFamily="@font/spoqa_sans_neo_regular"
                             android:textColor="@color/gray_600"
@@ -253,7 +168,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/report_watch_time"
+                            android:text="@string/stats_watch_time"
                             android:textSize="13sp"
                             android:fontFamily="@font/spoqa_sans_neo_regular"
                             android:textColor="@color/gray_600"
@@ -269,6 +184,91 @@
                             android:textColor="@color/gray_900" />
                     </LinearLayout>
                 </LinearLayout>
+            </LinearLayout>
+
+            <!-- Daily Trend Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="32dp">
+
+                <!-- Section Title -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/report_daily_trend"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/spoqa_sans_neo_medium"
+                    android:textColor="@color/gray_900"
+                    android:alpha="0.5"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Metric Tabs -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/tab_container_background"
+                    android:padding="4dp"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/tabAttempts"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/stats_entry_count"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/spoqa_sans_neo_medium"
+                        android:textColor="@color/gray_900"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:background="@drawable/tab_selected_background"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                    <TextView
+                        android:id="@+id/tabWatched"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/stats_consumption_count"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/spoqa_sans_neo_medium"
+                        android:textColor="@color/gray_600"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:background="@drawable/tab_unselected_background"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                    <TextView
+                        android:id="@+id/tabWatchTime"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/stats_watch_time"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/spoqa_sans_neo_medium"
+                        android:textColor="@color/gray_600"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:background="@drawable/tab_unselected_background"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+
+                <!-- Chart View -->
+                <com.muuu.unshort.ui.report.BarChartView
+                    android:id="@+id/chartView"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp" />
             </LinearLayout>
 
             <!-- Detail Section -->
