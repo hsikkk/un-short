@@ -314,11 +314,17 @@
     <string name="report_title">GÜNLÜK RAPOR</string>
     <string name="report_daily_trend">Günlük Eğilim</string>
     <string name="report_summary">ÖZET</string>
+    <string name="report_hourly_analysis">SAATLİK ANALİZ</string>
     <string name="report_detail">DETAY</string>
+    <string name="report_app_analysis">UYGULAMA ANALİZİ</string>
     <string name="report_attempts">Giriş</string>
     <string name="report_watched">İzlendi</string>
     <string name="report_watch_time">İzleme Süresi</string>
     <string name="report_today_label">Bugün</string>
+    <string name="report_block_rate">Engelleme oranı</string>
+    <string name="report_empty_detail">Kısa video izlenmedi</string>
+    <string name="report_previous_date">Önceki tarih</string>
+    <string name="report_next_date">Sonraki tarih</string>
     <string name="stats_button">İstatistikler</string>
 
 </resources>

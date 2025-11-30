@@ -314,11 +314,17 @@
     <string name="report_title">التقرير اليومي</string>
     <string name="report_daily_trend">الاتجاه اليومي</string>
     <string name="report_summary">ملخص</string>
+    <string name="report_hourly_analysis">التحليل الساعي</string>
     <string name="report_detail">التفاصيل</string>
+    <string name="report_app_analysis">التحليل حسب التطبيق</string>
     <string name="report_attempts">الدخول</string>
     <string name="report_watched">تمت المشاهدة</string>
     <string name="report_watch_time">وقت المشاهدة</string>
     <string name="report_today_label">اليوم</string>
+    <string name="report_block_rate">معدل الحظر</string>
+    <string name="report_empty_detail">لم تشاهد مقاطع فيديو قصيرة</string>
+    <string name="report_previous_date">التاريخ السابق</string>
+    <string name="report_next_date">التاريخ التالي</string>
     <string name="stats_button">الإحصائيات</string>
 
 </resources>

@@ -314,11 +314,17 @@
     <string name="report_title">TAGESBERICHT</string>
     <string name="report_daily_trend">Täglicher Trend</string>
     <string name="report_summary">ZUSAMMENFASSUNG</string>
+    <string name="report_hourly_analysis">STUNDENANALYSE</string>
     <string name="report_detail">DETAILS</string>
+    <string name="report_app_analysis">APP-ANALYSE</string>
     <string name="report_attempts">Zugriff</string>
     <string name="report_watched">Angesehen</string>
     <string name="report_watch_time">Wiedergabezeit</string>
     <string name="report_today_label">Heute</string>
+    <string name="report_block_rate">Blockierungsrate</string>
+    <string name="report_empty_detail">Keine Kurzvideos angesehen</string>
+    <string name="report_previous_date">Vorheriges Datum</string>
+    <string name="report_next_date">Nächstes Datum</string>
     <string name="stats_button">Statistiken</string>
 
 </resources>

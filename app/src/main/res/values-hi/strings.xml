@@ -314,11 +314,17 @@
     <string name="report_title">दैनिक रिपोर्ट</string>
     <string name="report_daily_trend">दैनिक रुझान</string>
     <string name="report_summary">सारांश</string>
+    <string name="report_hourly_analysis">घंटे के अनुसार विश्लेषण</string>
     <string name="report_detail">विवरण</string>
+    <string name="report_app_analysis">ऐप के अनुसार विश्लेषण</string>
     <string name="report_attempts">प्रवेश</string>
     <string name="report_watched">देखा गया</string>
     <string name="report_watch_time">देखने का समय</string>
     <string name="report_today_label">आज</string>
+    <string name="report_block_rate">ब्लॉक दर</string>
+    <string name="report_empty_detail">कोई शॉर्ट्स नहीं देखा</string>
+    <string name="report_previous_date">पिछली तारीख</string>
+    <string name="report_next_date">अगली तारीख</string>
     <string name="stats_button">आंकड़े</string>
 
 </resources>

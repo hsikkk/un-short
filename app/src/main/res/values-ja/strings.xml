@@ -314,11 +314,17 @@
     <string name="report_title">デイリーレポート</string>
     <string name="report_daily_trend">日別推移</string>
     <string name="report_summary">要約</string>
+    <string name="report_hourly_analysis">時間帯別分析</string>
     <string name="report_detail">詳細</string>
+    <string name="report_app_analysis">アプリ別分析</string>
     <string name="report_attempts">進入</string>
     <string name="report_watched">視聴済み</string>
     <string name="report_watch_time">視聴時間</string>
     <string name="report_today_label">今日</string>
+    <string name="report_block_rate">ブロック率</string>
+    <string name="report_empty_detail">ショート動画を視聴していません</string>
+    <string name="report_previous_date">前の日付</string>
+    <string name="report_next_date">次の日付</string>
     <string name="stats_button">統計</string>
 
 </resources>

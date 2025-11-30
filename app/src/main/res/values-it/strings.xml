@@ -314,11 +314,17 @@
     <string name="report_title">RAPPORTO GIORNALIERO</string>
     <string name="report_daily_trend">Tendenza Giornaliera</string>
     <string name="report_summary">RIEPILOGO</string>
+    <string name="report_hourly_analysis">ANALISI ORARIA</string>
     <string name="report_detail">DETTAGLI</string>
+    <string name="report_app_analysis">ANALISI PER APP</string>
     <string name="report_attempts">Accesso</string>
     <string name="report_watched">Visti</string>
     <string name="report_watch_time">Tempo di Visione</string>
     <string name="report_today_label">Oggi</string>
+    <string name="report_block_rate">Tasso di blocco</string>
+    <string name="report_empty_detail">Nessun video breve guardato</string>
+    <string name="report_previous_date">Data precedente</string>
+    <string name="report_next_date">Prossima data</string>
     <string name="stats_button">Statistiche</string>
 
 </resources>

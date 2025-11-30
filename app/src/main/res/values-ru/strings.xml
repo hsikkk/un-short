@@ -314,11 +314,17 @@
     <string name="report_title">ЕЖЕДНЕВНЫЙ ОТЧЕТ</string>
     <string name="report_daily_trend">Ежедневная Тенденция</string>
     <string name="report_summary">СВОДКА</string>
+    <string name="report_hourly_analysis">ПОЧАСОВОЙ АНАЛИЗ</string>
     <string name="report_detail">ПОДРОБНОСТИ</string>
+    <string name="report_app_analysis">АНАЛИЗ ПО ПРИЛОЖЕНИЯМ</string>
     <string name="report_attempts">Вход</string>
     <string name="report_watched">Просмотрено</string>
     <string name="report_watch_time">Время Просмотра</string>
     <string name="report_today_label">Сегодня</string>
+    <string name="report_block_rate">Степень блокировки</string>
+    <string name="report_empty_detail">Короткие видео не просматривались</string>
+    <string name="report_previous_date">Предыдущая дата</string>
+    <string name="report_next_date">Следующая дата</string>
     <string name="stats_button">Статистика</string>
 
 </resources>

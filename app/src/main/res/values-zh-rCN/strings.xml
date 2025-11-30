@@ -314,11 +314,17 @@
     <string name="report_title">每日报告</string>
     <string name="report_daily_trend">每日趋势</string>
     <string name="report_summary">摘要</string>
+    <string name="report_hourly_analysis">按时段分析</string>
     <string name="report_detail">详情</string>
+    <string name="report_app_analysis">按应用分析</string>
     <string name="report_attempts">进入</string>
     <string name="report_watched">已观看</string>
     <string name="report_watch_time">观看时间</string>
     <string name="report_today_label">今天</string>
+    <string name="report_block_rate">拦截率</string>
+    <string name="report_empty_detail">没有观看短视频</string>
+    <string name="report_previous_date">上一个日期</string>
+    <string name="report_next_date">下一个日期</string>
     <string name="stats_button">统计</string>
 
 </resources>

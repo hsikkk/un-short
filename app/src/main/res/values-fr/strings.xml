@@ -314,11 +314,17 @@
     <string name="report_title">RAPPORT QUOTIDIEN</string>
     <string name="report_daily_trend">Tendance Quotidienne</string>
     <string name="report_summary">RÉSUMÉ</string>
+    <string name="report_hourly_analysis">ANALYSE HORAIRE</string>
     <string name="report_detail">DÉTAIL</string>
+    <string name="report_app_analysis">ANALYSE PAR APPLICATION</string>
     <string name="report_attempts">Entrée</string>
     <string name="report_watched">Regardés</string>
     <string name="report_watch_time">Temps de Visionnage</string>
     <string name="report_today_label">Aujourd\'hui</string>
+    <string name="report_block_rate">Taux de blocage</string>
+    <string name="report_empty_detail">Aucune courte vidéo regardée</string>
+    <string name="report_previous_date">Date précédente</string>
+    <string name="report_next_date">Date suivante</string>
     <string name="stats_button">Statistiques</string>
 
 </resources>

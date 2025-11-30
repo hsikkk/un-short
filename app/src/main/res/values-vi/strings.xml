@@ -314,11 +314,17 @@
     <string name="report_title">BÁO CÁO HÀNG NGÀY</string>
     <string name="report_daily_trend">Xu Hướng Hàng Ngày</string>
     <string name="report_summary">TÓM TẮT</string>
+    <string name="report_hourly_analysis">PHÂN TÍCH THEO GIỜ</string>
     <string name="report_detail">CHI TIẾT</string>
+    <string name="report_app_analysis">PHÂN TÍCH THEO ỨNG DỤNG</string>
     <string name="report_attempts">Lần Truy Cập</string>
     <string name="report_watched">Đã Xem</string>
     <string name="report_watch_time">Thời Gian Xem</string>
     <string name="report_today_label">Hôm Nay</string>
+    <string name="report_block_rate">Tỷ lệ chặn</string>
+    <string name="report_empty_detail">Không xem video ngắn nào</string>
+    <string name="report_previous_date">Ngày trước</string>
+    <string name="report_next_date">Ngày sau</string>
     <string name="stats_button">Thống Kê</string>
 
 </resources>

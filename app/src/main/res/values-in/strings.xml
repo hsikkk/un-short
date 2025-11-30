@@ -316,11 +316,17 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="report_title">LAPORAN HARIAN</string>
     <string name="report_daily_trend">Tren Harian</string>
     <string name="report_summary">RINGKASAN</string>
+    <string name="report_hourly_analysis">ANALISIS PER JAM</string>
     <string name="report_detail">DETAIL</string>
+    <string name="report_app_analysis">ANALISIS PER APLIKASI</string>
     <string name="report_attempts">Masuk</string>
     <string name="report_watched">Ditonton</string>
     <string name="report_watch_time">Waktu Tonton</string>
     <string name="report_today_label">Hari Ini</string>
+    <string name="report_block_rate">Tingkat pemblokiran</string>
+    <string name="report_empty_detail">Tidak ada video pendek yang ditonton</string>
+    <string name="report_previous_date">Tanggal sebelumnya</string>
+    <string name="report_next_date">Tanggal berikutnya</string>
     <string name="stats_button">Statistik</string>
 
 </resources>
