@@ -145,6 +145,12 @@ class MainActivity : BaseActivity() {
             startActivity(intent)
         }
 
+        // 통계 버튼 클릭 리스너
+        findViewById<ImageView>(R.id.statsButton).setOnClickListener {
+            val intent = Intent(this, ReportActivity::class.java)
+            startActivity(intent)
+        }
+
         // 설정 버튼 클릭 리스너
         settingsButton.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)

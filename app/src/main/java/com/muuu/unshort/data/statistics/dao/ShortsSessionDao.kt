@@ -183,4 +183,16 @@ interface ShortsSessionDao {
      */
     @Query("SELECT COUNT(*) FROM shorts_sessions WHERE timestamp >= :startTime AND watchDurationMs IS NOT NULL AND watchDurationMs > 0")
     suspend fun getWatchSessionCount(startTime: Long): Int
+
+    // ========== 일별 통계 조회 ==========
+
+    /**
+     * 특정 날짜 범위의 모든 세션 조회 (일별 리포트용)
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @param endTime 종료 시각 (밀리초)
+     * @return 세션 리스트 (시간순)
+     */
+    @Query("SELECT * FROM shorts_sessions WHERE timestamp >= :startTime AND timestamp < :endTime ORDER BY timestamp ASC")
+    suspend fun getSessionsBetween(startTime: Long, endTime: Long): List<ShortsSession>
 }

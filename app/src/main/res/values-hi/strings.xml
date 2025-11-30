@@ -310,4 +310,15 @@
     <string name="time_hours_format">%d घं</string>
     <string name="time_hours_minutes_format">%1$d घं %2$d मि</string>
 
+    <!-- Report Screen -->
+    <string name="report_title">दैनिक रिपोर्ट</string>
+    <string name="report_daily_trend">दैनिक रुझान</string>
+    <string name="report_summary">सारांश</string>
+    <string name="report_detail">विवरण</string>
+    <string name="report_attempts">प्रवेश</string>
+    <string name="report_watched">देखा गया</string>
+    <string name="report_watch_time">देखने का समय</string>
+    <string name="report_today_label">आज</string>
+    <string name="stats_button">आंकड़े</string>
+
 </resources>

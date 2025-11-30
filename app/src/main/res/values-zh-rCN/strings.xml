@@ -310,4 +310,15 @@
     <string name="time_hours_format">%d小时</string>
     <string name="time_hours_minutes_format">%1$d小时%2$d分钟</string>
 
+    <!-- Report Screen -->
+    <string name="report_title">每日报告</string>
+    <string name="report_daily_trend">每日趋势</string>
+    <string name="report_summary">摘要</string>
+    <string name="report_detail">详情</string>
+    <string name="report_attempts">进入</string>
+    <string name="report_watched">已观看</string>
+    <string name="report_watch_time">观看时间</string>
+    <string name="report_today_label">今天</string>
+    <string name="stats_button">统计</string>
+
 </resources>

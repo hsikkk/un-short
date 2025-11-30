@@ -310,4 +310,15 @@
     <string name="time_hours_format">%d hora</string>
     <string name="time_hours_minutes_format">%1$dh %2$dm</string>
 
+    <!-- Report Screen -->
+    <string name="report_title">INFORME DIARIO</string>
+    <string name="report_daily_trend">Tendencia Diaria</string>
+    <string name="report_summary">RESUMEN</string>
+    <string name="report_detail">DETALLE</string>
+    <string name="report_attempts">Entrada</string>
+    <string name="report_watched">Visto</string>
+    <string name="report_watch_time">Tiempo de Visualización</string>
+    <string name="report_today_label">Hoy</string>
+    <string name="stats_button">Estadísticas</string>
+
 </resources>

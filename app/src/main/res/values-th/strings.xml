@@ -310,4 +310,15 @@
     <string name="time_hours_format">%d ชม.</string>
     <string name="time_hours_minutes_format">%1$d ชม. %2$d น.</string>
 
+    <!-- Report Screen -->
+    <string name="report_title">รายงานประจำวัน</string>
+    <string name="report_daily_trend">แนวโน้มรายวัน</string>
+    <string name="report_summary">สรุป</string>
+    <string name="report_detail">รายละเอียด</string>
+    <string name="report_attempts">การเข้า</string>
+    <string name="report_watched">ดูแล้ว</string>
+    <string name="report_watch_time">เวลาดู</string>
+    <string name="report_today_label">วันนี้</string>
+    <string name="stats_button">สถิติ</string>
+
 </resources>

@@ -310,4 +310,15 @@
     <string name="time_hours_format">%d س</string>
     <string name="time_hours_minutes_format">%1$d س %2$d د</string>
 
+    <!-- Report Screen -->
+    <string name="report_title">التقرير اليومي</string>
+    <string name="report_daily_trend">الاتجاه اليومي</string>
+    <string name="report_summary">ملخص</string>
+    <string name="report_detail">التفاصيل</string>
+    <string name="report_attempts">الدخول</string>
+    <string name="report_watched">تمت المشاهدة</string>
+    <string name="report_watch_time">وقت المشاهدة</string>
+    <string name="report_today_label">اليوم</string>
+    <string name="stats_button">الإحصائيات</string>
+
 </resources>

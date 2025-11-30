@@ -77,6 +77,23 @@
 
             </LinearLayout>
 
+            <!-- Stats Icon -->
+            <ImageView
+                android:id="@+id/statsButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="64dp"
+                android:src="@drawable/ic_stats"
+                android:tint="#FFFFFF"
+                android:alpha="0.7"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="4dp"
+                android:contentDescription="@string/stats_button" />
+
             <!-- Settings Icon with Badge -->
             <FrameLayout
                 android:layout_width="wrap_content"

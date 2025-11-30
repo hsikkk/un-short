@@ -310,4 +310,15 @@
     <string name="time_hours_format">%d час</string>
     <string name="time_hours_minutes_format">%1$d ч %2$d мин</string>
 
+    <!-- Report Screen -->
+    <string name="report_title">ЕЖЕДНЕВНЫЙ ОТЧЕТ</string>
+    <string name="report_daily_trend">Ежедневная Тенденция</string>
+    <string name="report_summary">СВОДКА</string>
+    <string name="report_detail">ПОДРОБНОСТИ</string>
+    <string name="report_attempts">Вход</string>
+    <string name="report_watched">Просмотрено</string>
+    <string name="report_watch_time">Время Просмотра</string>
+    <string name="report_today_label">Сегодня</string>
+    <string name="stats_button">Статистика</string>
+
 </resources>

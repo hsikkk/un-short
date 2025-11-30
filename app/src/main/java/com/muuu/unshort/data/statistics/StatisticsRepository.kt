@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * 통계 데이터 Repository
@@ -243,5 +244,117 @@ class StatisticsRepository(context: Context) {
     suspend fun getWatchSessionCount(): Int {
         val thirtyDaysAgo = System.currentTimeMillis() - THIRTY_DAYS_MS
         return dao.getWatchSessionCount(thirtyDaysAgo)
+    }
+
+    // ========== 리포트 기능을 위한 데이터 모델 및 메서드 ==========
+
+    /**
+     * 일별 통계 데이터 모델
+     */
+    data class DailyStats(
+        val date: Long,              // 날짜 시작 타임스탬프
+        val attemptCount: Int,       // 총 세션 개수 (진입 횟수)
+        val watchedCount: Int,       // 시청한 세션 개수
+        val watchTimeMs: Long        // 총 시청 시간 (밀리초)
+    )
+
+    /**
+     * 앱별 통계 데이터 모델
+     */
+    data class AppStats(
+        val packageName: String,     // 앱 패키지명
+        val attemptCount: Int,       // 해당 앱 세션 개수
+        val watchedCount: Int,       // 시청한 세션 개수
+        val watchTimeMs: Long        // 시청 시간 (밀리초)
+    )
+
+    /**
+     * 최근 N일간의 일별 통계 조회
+     *
+     * @param days 조회할 일수 (기본 7일)
+     * @return 일별 통계 리스트 (날짜 오름차순)
+     */
+    suspend fun getDailyStats(days: Int = 7): List<DailyStats> = withContext(Dispatchers.IO) {
+        val dailyStats = mutableListOf<DailyStats>()
+
+        repeat(days) { index ->
+            // 각 루프마다 새 Calendar 생성
+            val calendar = java.util.Calendar.getInstance()
+
+            // 날짜 경계 계산
+            calendar.set(java.util.Calendar.HOUR_OF_DAY, 0)
+            calendar.set(java.util.Calendar.MINUTE, 0)
+            calendar.set(java.util.Calendar.SECOND, 0)
+            calendar.set(java.util.Calendar.MILLISECOND, 0)
+            calendar.add(java.util.Calendar.DAY_OF_YEAR, -(days - 1 - index))
+            val dayStart = calendar.timeInMillis
+
+            calendar.add(java.util.Calendar.DAY_OF_YEAR, 1)
+            val dayEnd = calendar.timeInMillis
+
+            // 데이터 조회
+            val attemptCount = dao.getSessionCountBetween(dayStart, dayEnd)
+            val watchedCount = dao.getWatchCountBetween(dayStart, dayEnd)
+            val watchTimeMs = dao.getTotalWatchTimeBetween(dayStart, dayEnd)
+
+            dailyStats.add(DailyStats(dayStart, attemptCount, watchedCount, watchTimeMs))
+        }
+
+        dailyStats
+    }
+
+    /**
+     * 오늘의 통계 조회
+     *
+     * @return 오늘의 통계
+     */
+    suspend fun getTodayStats(): DailyStats = withContext(Dispatchers.IO) {
+        val calendar = java.util.Calendar.getInstance()
+        calendar.set(java.util.Calendar.HOUR_OF_DAY, 0)
+        calendar.set(java.util.Calendar.MINUTE, 0)
+        calendar.set(java.util.Calendar.SECOND, 0)
+        calendar.set(java.util.Calendar.MILLISECOND, 0)
+        val dayStart = calendar.timeInMillis
+
+        calendar.add(java.util.Calendar.DAY_OF_YEAR, 1)
+        val dayEnd = calendar.timeInMillis
+
+        val attemptCount = dao.getSessionCountBetween(dayStart, dayEnd)
+        val watchedCount = dao.getWatchCountBetween(dayStart, dayEnd)
+        val watchTimeMs = dao.getTotalWatchTimeBetween(dayStart, dayEnd)
+
+        DailyStats(dayStart, attemptCount, watchedCount, watchTimeMs)
+    }
+
+    /**
+     * 오늘의 앱별 통계 조회
+     *
+     * @return 앱별 통계 리스트 (시청 시간 내림차순)
+     */
+    suspend fun getTodayAppStats(): List<AppStats> = withContext(Dispatchers.IO) {
+        val calendar = java.util.Calendar.getInstance()
+        calendar.set(java.util.Calendar.HOUR_OF_DAY, 0)
+        calendar.set(java.util.Calendar.MINUTE, 0)
+        calendar.set(java.util.Calendar.SECOND, 0)
+        calendar.set(java.util.Calendar.MILLISECOND, 0)
+        val dayStart = calendar.timeInMillis
+
+        calendar.add(java.util.Calendar.DAY_OF_YEAR, 1)
+        val dayEnd = calendar.timeInMillis
+
+        // 오늘의 모든 세션 조회
+        val sessions = dao.getSessionsBetween(dayStart, dayEnd)
+
+        // 패키지명으로 그룹화
+        sessions.groupBy { it.packageName }
+            .map { (packageName, sessions) ->
+                AppStats(
+                    packageName = packageName,
+                    attemptCount = sessions.size,
+                    watchedCount = sessions.count { it.didWatch },
+                    watchTimeMs = sessions.sumOf { it.watchDurationMs ?: 0L }
+                )
+            }
+            .sortedByDescending { it.watchTimeMs }
     }
 }
