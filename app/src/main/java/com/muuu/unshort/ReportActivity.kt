@@ -37,6 +37,7 @@ class ReportActivity : BaseActivity() {
     private lateinit var summaryTimeValue: TextView
 
     // Detail views
+    private lateinit var emptyStateView: View
     private lateinit var appListContainer: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,6 +69,7 @@ class ReportActivity : BaseActivity() {
         summaryTimeValue = findViewById(R.id.summaryTimeValue)
 
         // Detail
+        emptyStateView = findViewById(R.id.emptyStateView)
         appListContainer = findViewById(R.id.appListContainer)
     }
 
@@ -156,8 +158,15 @@ class ReportActivity : BaseActivity() {
         appListContainer.removeAllViews()
 
         if (apps.isEmpty()) {
+            // Empty state 표시
+            emptyStateView.visibility = View.VISIBLE
+            appListContainer.visibility = View.GONE
             return
         }
+
+        // 데이터 있을 때
+        emptyStateView.visibility = View.GONE
+        appListContainer.visibility = View.VISIBLE
 
         apps.forEach { appStat ->
             val appCard = createAppCard(appStat)
@@ -170,6 +179,7 @@ class ReportActivity : BaseActivity() {
 
         val appIcon = cardView.findViewById<ImageView>(R.id.appIcon)
         val appName = cardView.findViewById<TextView>(R.id.appName)
+        val blockRateValue = cardView.findViewById<TextView>(R.id.blockRateValue)
         val attemptCount = cardView.findViewById<TextView>(R.id.attemptCount)
         val watchedCount = cardView.findViewById<TextView>(R.id.watchedCount)
         val watchTime = cardView.findViewById<TextView>(R.id.watchTime)
@@ -179,12 +189,45 @@ class ReportActivity : BaseActivity() {
         appIcon.setImageDrawable(icon)
         appName.text = name
 
+        // 차단률 계산 및 표시
+        val blockRate = calculateBlockRate(appStat)
+        blockRateValue.text = "${blockRate}%"
+        blockRateValue.setTextColor(getBlockRateColor(blockRate))
+
         // 통계 설정
         attemptCount.text = appStat.attemptCount.toString()
         watchedCount.text = appStat.watchedCount.toString()
         watchTime.text = formatWatchTime(appStat.watchTimeMs)
 
         return cardView
+    }
+
+    /**
+     * 차단률 계산
+     *
+     * @param appStat 앱 통계
+     * @return 차단률 (0-100)
+     */
+    private fun calculateBlockRate(appStat: StatisticsRepository.AppStats): Int {
+        return if (appStat.attemptCount > 0) {
+            ((appStat.attemptCount - appStat.watchedCount) * 100.0 / appStat.attemptCount).toInt()
+        } else {
+            0
+        }
+    }
+
+    /**
+     * 차단률에 따른 색상 반환
+     *
+     * @param rate 차단률 (0-100)
+     * @return 색상 리소스
+     */
+    private fun getBlockRateColor(rate: Int): Int {
+        return when {
+            rate >= 80 -> getColor(R.color.success)  // 차단 성공
+            rate < 50 -> getColor(R.color.error)     // 주의 필요
+            else -> getColor(R.color.gray_900)       // 보통
+        }
     }
 
     private fun getAppInfo(packageName: String): Pair<Drawable?, String> {

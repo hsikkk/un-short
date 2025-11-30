@@ -45,92 +45,135 @@
                     android:textColor="@color/gray_900" />
             </LinearLayout>
 
-            <!-- Stats Grid -->
+            <!-- 2-Column Layout: Block Rate (Left) + Stats (Right) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:baselineAligned="false">
 
-                <!-- Attempts -->
+                <!-- Left: Block Rate (Large) -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.35"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="12dp">
 
                     <TextView
+                        android:id="@+id/blockRateValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/report_attempts"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/spoqa_sans_neo_regular"
-                        android:textColor="@color/gray_600"
-                        android:layout_marginBottom="4dp" />
-
-                    <TextView
-                        android:id="@+id/attemptCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="18sp"
+                        android:text="60%"
+                        android:textSize="36sp"
                         android:fontFamily="@font/spoqa_sans_neo_bold"
-                        android:textColor="@color/gray_900" />
+                        android:textColor="@color/gray_900"
+                        android:layout_marginBottom="2dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/report_block_rate"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/spoqa_sans_neo_medium"
+                        android:textColor="@color/gray_600" />
                 </LinearLayout>
 
-                <!-- Watched -->
+                <!-- Vertical Divider -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/divider_vertical_light"
+                    android:alpha="0.3" />
+
+                <!-- Right: Stats (Vertical List) -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="0.65"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="8dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <!-- Attempts -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/report_watched"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/spoqa_sans_neo_regular"
-                        android:textColor="@color/gray_600"
-                        android:layout_marginBottom="4dp" />
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="14dp">
 
-                    <TextView
-                        android:id="@+id/watchedCount"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/report_attempts"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/spoqa_sans_neo_regular"
+                            android:textColor="@color/gray_600" />
+
+                        <TextView
+                            android:id="@+id/attemptCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="18sp"
+                            android:fontFamily="@font/spoqa_sans_neo_bold"
+                            android:textColor="@color/gray_900" />
+                    </LinearLayout>
+
+                    <!-- Watched -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="18sp"
-                        android:fontFamily="@font/spoqa_sans_neo_bold"
-                        android:textColor="@color/gray_900" />
-                </LinearLayout>
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="14dp">
 
-                <!-- Watch Time -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/report_watched"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/spoqa_sans_neo_regular"
+                            android:textColor="@color/gray_600" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/watchedCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="18sp"
+                            android:fontFamily="@font/spoqa_sans_neo_bold"
+                            android:textColor="@color/gray_900" />
+                    </LinearLayout>
+
+                    <!-- Watch Time -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/report_watch_time"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/spoqa_sans_neo_regular"
-                        android:textColor="@color/gray_600"
-                        android:layout_marginBottom="4dp" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/watchTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0분"
-                        android:textSize="18sp"
-                        android:fontFamily="@font/spoqa_sans_neo_bold"
-                        android:textColor="@color/gray_900" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/report_watch_time"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/spoqa_sans_neo_regular"
+                            android:textColor="@color/gray_600" />
+
+                        <TextView
+                            android:id="@+id/watchTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0분"
+                            android:textSize="18sp"
+                            android:fontFamily="@font/spoqa_sans_neo_bold"
+                            android:textColor="@color/gray_900" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

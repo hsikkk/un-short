@@ -290,6 +290,14 @@
                     android:letterSpacing="0.1"
                     android:layout_marginBottom="16dp" />
 
+                <!-- Empty State (initially hidden) -->
+                <include
+                    android:id="@+id/emptyStateView"
+                    layout="@layout/empty_state_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
                 <!-- App List Container -->
                 <LinearLayout
                     android:id="@+id/appListContainer"
