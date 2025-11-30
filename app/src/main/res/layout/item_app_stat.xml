@@ -109,7 +109,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/report_attempts"
+                            android:text="@string/stats_entry_count"
                             android:textSize="14sp"
                             android:fontFamily="@font/spoqa_sans_neo_regular"
                             android:textColor="@color/gray_600" />
@@ -135,7 +135,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/report_watched"
+                            android:text="@string/stats_consumption_count"
                             android:textSize="14sp"
                             android:fontFamily="@font/spoqa_sans_neo_regular"
                             android:textColor="@color/gray_600" />
@@ -160,7 +160,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/report_watch_time"
+                            android:text="@string/stats_watch_time"
                             android:textSize="14sp"
                             android:fontFamily="@font/spoqa_sans_neo_regular"
                             android:textColor="@color/gray_600" />

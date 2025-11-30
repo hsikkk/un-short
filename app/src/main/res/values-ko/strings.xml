@@ -308,9 +308,6 @@
     <string name="report_daily_trend">일별 추이</string>
     <string name="report_summary">요약</string>
     <string name="report_detail">상세</string>
-    <string name="report_attempts">진입</string>
-    <string name="report_watched">시청</string>
-    <string name="report_watch_time">시청 시간</string>
     <string name="report_today_label">오늘</string>
     <string name="report_block_rate">차단률</string>
     <string name="report_empty_detail">오늘은 아직 쇼츠를 보지 않았어요</string>
