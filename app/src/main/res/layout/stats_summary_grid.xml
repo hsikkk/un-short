@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 통계 요약 그리드 (3열: 쇼츠 진입 | 쇼츠 소비 | 시청 시간) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <!-- Shorts Entry -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="4dp">
+
+        <!-- Number -->
+        <TextView
+            android:id="@+id/shortsEntryNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="32sp"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
+            android:textColor="@color/gray_900"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stats_entry_count"
+            android:textSize="13sp"
+            android:fontFamily="@font/spoqa_sans_neo_regular"
+            android:textColor="@color/gray_600"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <!-- Vertical Divider 1 -->
+    <View
+        android:layout_width="1dp"
+        android:layout_height="48dp"
+        android:background="@android:color/black"
+        android:alpha="0.1" />
+
+    <!-- Shorts Consumption -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp">
+
+        <!-- Number -->
+        <TextView
+            android:id="@+id/shortsConsumptionNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="32sp"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
+            android:textColor="@color/gray_900"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stats_consumption_count"
+            android:textSize="13sp"
+            android:fontFamily="@font/spoqa_sans_neo_regular"
+            android:textColor="@color/gray_600"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <!-- Vertical Divider 2 -->
+    <View
+        android:layout_width="1dp"
+        android:layout_height="48dp"
+        android:background="@android:color/black"
+        android:alpha="0.1" />
+
+    <!-- Watch Time -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="8dp">
+
+        <!-- Time Text -->
+        <TextView
+            android:id="@+id/watchTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0분"
+            android:textSize="32sp"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
+            android:textColor="@color/gray_900"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stats_watch_time"
+            android:textSize="13sp"
+            android:fontFamily="@font/spoqa_sans_neo_regular"
+            android:textColor="@color/gray_600"
+            android:gravity="center" />
+    </LinearLayout>
+</LinearLayout>
