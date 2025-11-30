@@ -311,13 +311,15 @@
     <string name="time_hours_minutes_format">%1$dh %2$dm</string>
 
     <!-- Report Screen -->
-    <string name="report_title">DAILY REPORT</string>
+    <string name="report_title">Report</string>
     <string name="report_daily_trend">Daily Trend</string>
     <string name="report_summary">SUMMARY</string>
     <string name="report_detail">DETAIL</string>
     <string name="report_today_label">오늘</string>
     <string name="report_block_rate">Block Rate</string>
-    <string name="report_empty_detail">No shorts watched today</string>
+    <string name="report_empty_detail">No shorts watched</string>
+    <string name="report_previous_date">Previous date</string>
+    <string name="report_next_date">Next date</string>
     <string name="stats_button">Statistics</string>
 
 </resources>

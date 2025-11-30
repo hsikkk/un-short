@@ -40,12 +40,17 @@ class ReportActivity : BaseActivity() {
     private lateinit var emptyStateView: View
     private lateinit var appListContainer: LinearLayout
 
+    // Date chips container
+    private lateinit var dateChipsContainer: LinearLayout
+    private val dateChipViews = mutableListOf<TextView>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_report)
 
         initViews()
         setupTabs()
+        setupDateChips()
         observeData()
     }
 
@@ -71,6 +76,9 @@ class ReportActivity : BaseActivity() {
         // Detail
         emptyStateView = findViewById(R.id.emptyStateView)
         appListContainer = findViewById(R.id.appListContainer)
+
+        // Date chips
+        dateChipsContainer = findViewById(R.id.dateChipsContainer)
     }
 
     private fun setupTabs() {
@@ -87,11 +95,78 @@ class ReportActivity : BaseActivity() {
         }
     }
 
+    private fun setupDateChips() {
+        val calendar = java.util.Calendar.getInstance()
+        val today = calendar.timeInMillis
+        val dateFormat = java.text.SimpleDateFormat("M/d", java.util.Locale.getDefault())
+
+        // 최근 7일 날짜 칩 생성 (6일 전부터 오늘까지, 역순)
+        for (i in 6 downTo 0) {
+            calendar.timeInMillis = today
+            calendar.add(java.util.Calendar.DAY_OF_YEAR, -i)
+            val dateMillis = calendar.timeInMillis
+
+            val chip = TextView(this).apply {
+                text = dateFormat.format(calendar.time)
+                textSize = 14f
+                gravity = android.view.Gravity.CENTER
+                setPadding(
+                    resources.getDimensionPixelSize(R.dimen.chip_padding_vertical),
+                    resources.getDimensionPixelSize(R.dimen.chip_padding_vertical),
+                    resources.getDimensionPixelSize(R.dimen.chip_padding_vertical),
+                    resources.getDimensionPixelSize(R.dimen.chip_padding_vertical)
+                )
+
+                val params = LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1f
+                )
+                layoutParams = params
+
+                // 마지막 칩(오늘)은 선택 상태로
+                val isChipSelected = (i == 0)
+                if (isChipSelected) {
+                    setBackgroundResource(R.drawable.date_chip_selected)
+                    setTextColor(getColor(android.R.color.white))
+                } else {
+                    setBackgroundResource(R.drawable.date_chip_unselected)
+                    setTextColor(getColor(R.color.gray_600))
+                }
+
+                setOnClickListener {
+                    viewModel.selectDate(dateMillis)
+                }
+            }
+
+            dateChipViews.add(chip)
+            dateChipsContainer.addView(chip)
+        }
+    }
+
+    private fun updateChipAppearance(chip: TextView, isSelected: Boolean) {
+        if (isSelected) {
+            chip.setBackgroundResource(R.drawable.date_chip_selected)
+            chip.setTextColor(getColor(android.R.color.white))
+        } else {
+            chip.setBackgroundResource(R.drawable.date_chip_unselected)
+            chip.setTextColor(getColor(R.color.gray_600))
+        }
+    }
+
     private fun observeData() {
+        // 날짜 상태 관찰
+        viewModel.dateState.observe(this) { dateState ->
+            updateDateChips(dateState.selectedDate)
+            // 차트에 선택된 날짜 전달
+            chartView.setSelectedDate(dateState.selectedDate)
+        }
+
         viewModel.dailyStats.observe(this) { stats ->
             if (stats.isNotEmpty()) {
                 val metricType = viewModel.selectedMetric.value ?: BarChartView.MetricType.ATTEMPTS
-                chartView.setData(stats, metricType)
+                val selectedDate = viewModel.dateState.value?.selectedDate ?: 0L
+                chartView.setData(stats, metricType, selectedDate)
             }
         }
 
@@ -109,7 +184,8 @@ class ReportActivity : BaseActivity() {
             // Update chart with current data
             val stats = viewModel.dailyStats.value
             if (!stats.isNullOrEmpty()) {
-                chartView.setData(stats, metricType)
+                val selectedDate = viewModel.dateState.value?.selectedDate ?: 0L
+                chartView.setData(stats, metricType, selectedDate)
             }
         }
     }
@@ -252,5 +328,29 @@ class ReportActivity : BaseActivity() {
             minutes > 0 -> "${minutes}${getString(R.string.time_unit_minute)} ${seconds}${getString(R.string.time_unit_second)}"
             else -> "${seconds}${getString(R.string.time_unit_second)}"
         }
+    }
+
+    private fun updateDateChips(selectedDateMillis: Long) {
+        val calendar = java.util.Calendar.getInstance()
+
+        dateChipViews.forEachIndexed { index, chip ->
+            calendar.timeInMillis = System.currentTimeMillis()
+            // index 0 = 6일 전, index 6 = 오늘
+            calendar.add(java.util.Calendar.DAY_OF_YEAR, -(6 - index))
+            val chipDateMillis = calendar.timeInMillis
+
+            // 같은 날짜인지 비교 (시간 제외)
+            val isSameDay = isSameDay(chipDateMillis, selectedDateMillis)
+            chip.isSelected = isSameDay
+            updateChipAppearance(chip, isSameDay)
+        }
+    }
+
+    private fun isSameDay(date1: Long, date2: Long): Boolean {
+        val cal1 = java.util.Calendar.getInstance().apply { timeInMillis = date1 }
+        val cal2 = java.util.Calendar.getInstance().apply { timeInMillis = date2 }
+
+        return cal1.get(java.util.Calendar.YEAR) == cal2.get(java.util.Calendar.YEAR) &&
+                cal1.get(java.util.Calendar.DAY_OF_YEAR) == cal2.get(java.util.Calendar.DAY_OF_YEAR)
     }
 }

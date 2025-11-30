@@ -24,10 +24,12 @@ class BarChartView @JvmOverloads constructor(
 
     private var dailyStats: List<StatisticsRepository.DailyStats> = emptyList()
     private var metricType: MetricType = MetricType.ATTEMPTS
+    private var selectedDate: Long = 0L
 
     private val barPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val todayBarPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val selectedBarPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val selectedTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val linePaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     private val chartPadding = 40f.dpToPx()
@@ -47,14 +49,23 @@ class BarChartView @JvmOverloads constructor(
         barPaint.color = context.getColor(R.color.gray_400)
         barPaint.style = Paint.Style.FILL
 
-        // 오늘 바 색상 (검정)
-        todayBarPaint.color = context.getColor(R.color.gray_900)
-        todayBarPaint.style = Paint.Style.FILL
+        // 선택된 날짜 바 색상 (검정)
+        selectedBarPaint.color = context.getColor(R.color.gray_900)
+        selectedBarPaint.style = Paint.Style.FILL
 
-        // 텍스트 페인트
+        // 일반 텍스트 페인트
         textPaint.color = context.getColor(R.color.gray_600)
         textPaint.textSize = 11f.dpToPx()
         textPaint.textAlign = Paint.Align.CENTER
+
+        // 선택된 날짜 텍스트 페인트
+        selectedTextPaint.color = context.getColor(R.color.gray_900)
+        selectedTextPaint.textSize = 11f.dpToPx()
+        selectedTextPaint.textAlign = Paint.Align.CENTER
+        selectedTextPaint.typeface = android.graphics.Typeface.create(
+            android.graphics.Typeface.DEFAULT,
+            android.graphics.Typeface.BOLD
+        )
 
         // 가이드라인 페인트
         linePaint.color = context.getColor(R.color.gray_900)
@@ -62,14 +73,20 @@ class BarChartView @JvmOverloads constructor(
         linePaint.alpha = (255 * 0.1).toInt()
     }
 
-    fun setData(stats: List<StatisticsRepository.DailyStats>, type: MetricType = MetricType.ATTEMPTS) {
+    fun setData(stats: List<StatisticsRepository.DailyStats>, type: MetricType = MetricType.ATTEMPTS, selectedDate: Long = 0L) {
         this.dailyStats = stats
         this.metricType = type
+        this.selectedDate = selectedDate
         invalidate()
     }
 
     fun setMetricType(type: MetricType) {
         this.metricType = type
+        invalidate()
+    }
+
+    fun setSelectedDate(date: Long) {
+        this.selectedDate = date
         invalidate()
     }
 
@@ -109,8 +126,9 @@ class BarChartView @JvmOverloads constructor(
 
             val rect = RectF(x, y, x + barWidth, chartPaddingTop + chartHeight)
 
-            // 마지막 바는 오늘 (검정색), 나머지는 회색
-            val paint = if (index == dailyStats.size - 1) todayBarPaint else barPaint
+            // 선택된 날짜는 검정색, 나머지는 회색
+            val isSelected = isSameDay(stat.date, selectedDate)
+            val paint = if (isSelected) selectedBarPaint else barPaint
             canvas.drawRoundRect(rect, 4f.dpToPx(), 4f.dpToPx(), paint)
         }
 
@@ -195,20 +213,30 @@ class BarChartView @JvmOverloads constructor(
 
     private fun drawXAxisLabels(canvas: Canvas, barWidth: Float) {
         val dateFormat = SimpleDateFormat("M/d", Locale.getDefault())
-        val todayLabel = context.getString(R.string.report_today_label)
 
         dailyStats.forEachIndexed { index, stat ->
             val x = chartPadding + (index * (barWidth + barSpacing)) + (barWidth / 2)
             val y = height - 8f.dpToPx()
 
-            val label = if (index == dailyStats.size - 1) {
-                todayLabel
-            } else {
-                dateFormat.format(Date(stat.date))
-            }
+            // 모든 날짜를 "M/d" 형식으로 표시
+            val label = dateFormat.format(Date(stat.date))
 
-            canvas.drawText(label, x, y, textPaint)
+            // 선택된 날짜는 진한 텍스트, 나머지는 일반 텍스트
+            val isSelected = isSameDay(stat.date, selectedDate)
+            val paint = if (isSelected) selectedTextPaint else textPaint
+
+            canvas.drawText(label, x, y, paint)
         }
+    }
+
+    private fun isSameDay(date1: Long, date2: Long): Boolean {
+        if (date2 == 0L) return false
+
+        val cal1 = Calendar.getInstance().apply { timeInMillis = date1 }
+        val cal2 = Calendar.getInstance().apply { timeInMillis = date2 }
+
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+               cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
     }
 
     private fun Float.dpToPx(): Float {

@@ -357,4 +357,81 @@ class StatisticsRepository(context: Context) {
             }
             .sortedByDescending { it.watchTimeMs }
     }
+
+    /**
+     * 특정 날짜의 통계 조회
+     *
+     * @param startTime 날짜 시작 시각 (밀리초)
+     * @param endTime 날짜 종료 시각 (밀리초)
+     * @return 해당 날짜의 통계
+     */
+    suspend fun getStatsForDate(startTime: Long, endTime: Long): DailyStats = withContext(Dispatchers.IO) {
+        val attemptCount = dao.getSessionCountBetween(startTime, endTime)
+        val watchedCount = dao.getWatchCountBetween(startTime, endTime)
+        val watchTimeMs = dao.getTotalWatchTimeBetween(startTime, endTime)
+
+        DailyStats(startTime, attemptCount, watchedCount, watchTimeMs)
+    }
+
+    /**
+     * 특정 날짜를 마지막으로 하는 N일간의 일별 통계 조회
+     *
+     * @param endDate 종료 날짜 (밀리초)
+     * @param days 조회할 일수 (기본 7일)
+     * @return 일별 통계 리스트 (날짜 오름차순)
+     */
+    suspend fun getDailyStatsEndingOn(endDate: Long, days: Int = 7): List<DailyStats> = withContext(Dispatchers.IO) {
+        val dailyStats = mutableListOf<DailyStats>()
+        val normalizedEndDate = getStartOfDay(endDate)
+
+        repeat(days) { index ->
+            val calendar = java.util.Calendar.getInstance()
+            calendar.timeInMillis = normalizedEndDate
+            calendar.add(java.util.Calendar.DAY_OF_YEAR, -(days - 1 - index))
+            val dayStart = calendar.timeInMillis
+
+            calendar.add(java.util.Calendar.DAY_OF_YEAR, 1)
+            val dayEnd = calendar.timeInMillis
+
+            val attemptCount = dao.getSessionCountBetween(dayStart, dayEnd)
+            val watchedCount = dao.getWatchCountBetween(dayStart, dayEnd)
+            val watchTimeMs = dao.getTotalWatchTimeBetween(dayStart, dayEnd)
+
+            dailyStats.add(DailyStats(dayStart, attemptCount, watchedCount, watchTimeMs))
+        }
+
+        dailyStats
+    }
+
+    /**
+     * 특정 날짜의 앱별 통계 조회
+     *
+     * @param startTime 날짜 시작 시각 (밀리초)
+     * @param endTime 날짜 종료 시각 (밀리초)
+     * @return 앱별 통계 리스트 (시청 시간 내림차순)
+     */
+    suspend fun getAppStatsForDate(startTime: Long, endTime: Long): List<AppStats> = withContext(Dispatchers.IO) {
+        val sessions = dao.getSessionsBetween(startTime, endTime)
+
+        sessions.groupBy { it.packageName }
+            .map { (packageName, sessions) ->
+                AppStats(
+                    packageName = packageName,
+                    attemptCount = sessions.size,
+                    watchedCount = sessions.count { it.didWatch },
+                    watchTimeMs = sessions.sumOf { it.watchDurationMs ?: 0L }
+                )
+            }
+            .sortedByDescending { it.watchTimeMs }
+    }
+
+    private fun getStartOfDay(timestamp: Long): Long {
+        return java.util.Calendar.getInstance().apply {
+            timeInMillis = timestamp
+            set(java.util.Calendar.HOUR_OF_DAY, 0)
+            set(java.util.Calendar.MINUTE, 0)
+            set(java.util.Calendar.SECOND, 0)
+            set(java.util.Calendar.MILLISECOND, 0)
+        }.timeInMillis
+    }
 }

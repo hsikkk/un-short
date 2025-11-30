@@ -11,5 +11,9 @@
     <dimen name="text_label">14sp</dimen>
     <dimen name="text_small">13sp</dimen>
 
+    <!-- Date Chip Dimensions -->
+    <dimen name="chip_padding_horizontal">16dp</dimen>
+    <dimen name="chip_padding_vertical">8dp</dimen>
+    <dimen name="chip_margin">8dp</dimen>
 
 </resources>

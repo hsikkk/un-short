@@ -7,41 +7,40 @@
     android:background="@android:color/white">
 
     <!-- Header -->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:background="@android:color/white"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:gravity="center_vertical">
 
         <!-- Back Button -->
         <ImageView
             android:id="@+id/backButton"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_back"
-            android:alpha="0.7"
+            android:padding="8dp"
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="4dp"
             android:contentDescription="@string/permission_back_button" />
 
         <!-- Title -->
         <TextView
-            android:id="@+id/titleText"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
             android:text="@string/report_title"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:fontFamily="@font/spoqa_sans_neo_medium"
             android:textColor="@color/gray_900" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <!-- Divider -->
     <View
@@ -50,6 +49,17 @@
         android:background="@android:color/black"
         android:alpha="0.1" />
 
+    <!-- Date Chips -->
+    <LinearLayout
+        android:id="@+id/dateChipsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp" />
+    
     <!-- Content ScrollView -->
     <ScrollView
         android:layout_width="match_parent"
