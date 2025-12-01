@@ -335,4 +335,10 @@
     <string name="report_help_message">The report shows data from the last 7 days.\nOnly data collected after granting accessibility service permission is displayed.</string>
     <string name="report_help_confirm">OK</string>
 
+    <!-- Exit Confirmation Dialog -->
+    <string name="exit_dialog_title">Exit App?</string>
+    <string name="exit_dialog_message">Are you sure you want to exit?</string>
+    <string name="exit_dialog_confirm">Exit</string>
+    <string name="exit_dialog_cancel">Cancel</string>
+
 </resources>

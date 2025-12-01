@@ -338,4 +338,10 @@
     <string name="report_help_message">Rapor son 7 günün verilerini gösterir.\nYalnızca erişilebilirlik hizmeti izni verildikten sonra toplanan veriler görüntülenir.</string>
     <string name="report_help_confirm">Tamam</string>
 
+    <!-- Exit Confirmation Dialog -->
+    <string name="exit_dialog_title">Uygulamadan Çık?</string>
+    <string name="exit_dialog_message">Çıkmak istediğinizden emin misiniz?</string>
+    <string name="exit_dialog_confirm">Çık</string>
+    <string name="exit_dialog_cancel">İptal</string>
+
 </resources>

@@ -338,4 +338,10 @@
     <string name="report_help_message">Báo cáo hiển thị dữ liệu của 7 ngày gần nhất.\nChỉ hiển thị dữ liệu được thu thập sau khi cấp quyền dịch vụ trợ năng.</string>
     <string name="report_help_confirm">OK</string>
 
+    <!-- Exit Confirmation Dialog -->
+    <string name="exit_dialog_title">Thoát ứng dụng?</string>
+    <string name="exit_dialog_message">Bạn có chắc muốn thoát?</string>
+    <string name="exit_dialog_confirm">Thoát</string>
+    <string name="exit_dialog_cancel">Hủy</string>
+
 </resources>

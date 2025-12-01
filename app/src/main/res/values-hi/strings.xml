@@ -338,4 +338,10 @@
     <string name="report_help_message">रिपोर्ट पिछले 7 दिनों का डेटा दिखाती है।\nकेवल पहुंच सेवा अनुमति देने के बाद एकत्र किया गया डेटा प्रदर्शित होता है।</string>
     <string name="report_help_confirm">ठीक है</string>
 
+    <!-- Exit Confirmation Dialog -->
+    <string name="exit_dialog_title">ऐप बंद करें?</string>
+    <string name="exit_dialog_message">क्या आप वाकई बंद करना चाहते हैं?</string>
+    <string name="exit_dialog_confirm">बंद करें</string>
+    <string name="exit_dialog_cancel">रद्द करें</string>
+
 </resources>

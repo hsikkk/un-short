@@ -1,12 +1,8 @@
 package com.muuu.unshort
 
-import android.Manifest
 import android.animation.ValueAnimator
-import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -17,20 +13,17 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.text.buildSpannedString
-import androidx.core.text.bold
 import androidx.lifecycle.lifecycleScope
 import android.os.Handler
 import android.os.Looper
+import androidx.activity.OnBackPressedCallback
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.data.statistics.StatisticsRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.Dispatchers
 import java.util.Calendar
 import com.muuu.ad.view.MuuuBannerAdView
 import com.muuu.ad.core.adunit.MuuuBannerAdUnit
@@ -125,6 +118,13 @@ class MainActivity : BaseActivity() {
 
         setContentView(R.layout.activity_main)
 
+        // 백버튼 처리 - 종료 확인 다이얼로그
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showExitConfirmDialog()
+            }
+        })
+
         // Track app launch
         AnalyticsManager.trackEvent(this, AnalyticsEvent.APP_LAUNCHED)
 
@@ -139,7 +139,7 @@ class MainActivity : BaseActivity() {
         // 광고 설정 (AdManager가 프리미엄 체크 및 자동 제거 처리)
         val adViewContainer = findViewById<FrameLayout>(R.id.adView)
         bannerAdView = AdManager.setupBannerAd(
-            activity = this,
+            context = this,
             container = adViewContainer,
             adUnit = MuuuBannerAdUnit(
                 key = AdConfig.BANNER_HOME_BOTTOM,
@@ -623,6 +623,21 @@ class MainActivity : BaseActivity() {
             minutes == 0 -> "$hours$hourUnit"
             else -> "$hours$hourUnit $minutes$minuteUnit"
         }
+    }
+
+    /**
+     * 앱 종료 확인 다이얼로그 표시
+     */
+    private fun showExitConfirmDialog() {
+        ExitConfirmationDialog(
+            context = this,
+            onConfirm = {
+                finish()
+            },
+            onCancel = {
+                // 아무것도 하지 않음 (다이얼로그 닫기)
+            }
+        ).show()
     }
 
 }

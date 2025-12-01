@@ -338,4 +338,10 @@
     <string name="report_help_message">يعرض التقرير بيانات آخر 7 أيام.\nيتم عرض البيانات المجمعة فقط بعد منح إذن خدمة إمكانية الوصول.</string>
     <string name="report_help_confirm">موافق</string>
 
+    <!-- Exit Confirmation Dialog -->
+    <string name="exit_dialog_title">إنهاء التطبيق؟</string>
+    <string name="exit_dialog_message">هل أنت متأكد من الإنهاء؟</string>
+    <string name="exit_dialog_confirm">إنهاء</string>
+    <string name="exit_dialog_cancel">إلغاء</string>
+
 </resources>

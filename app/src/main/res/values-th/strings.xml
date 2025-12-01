@@ -338,4 +338,10 @@
     <string name="report_help_message">รายงานแสดงข้อมูล 7 วันที่ผ่านมา\nแสดงเฉพาะข้อมูลที่รวบรวมหลังจากอนุญาตบริการการเข้าถึงเท่านั้น</string>
     <string name="report_help_confirm">ตกลง</string>
 
+    <!-- Exit Confirmation Dialog -->
+    <string name="exit_dialog_title">ออกจากแอป?</string>
+    <string name="exit_dialog_message">คุณแน่ใจหรือไม่ว่าต้องการออก?</string>
+    <string name="exit_dialog_confirm">ออก</string>
+    <string name="exit_dialog_cancel">ยกเลิก</string>
+
 </resources>

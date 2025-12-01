@@ -1,6 +1,7 @@
 package com.muuu.unshort.ad
 
 import android.app.Activity
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -27,14 +28,14 @@ object AdManager {
      * 프리미엄 사용자인 경우 광고를 표시하지 않음
      * 프리미엄 상태 변경 시 자동으로 광고 제거 (Callback 리스너)
      *
-     * @param activity Activity 컨텍스트
+     * @param context 컨텍스트
      * @param container 광고를 추가할 ViewGroup
      * @param adUnit 광고 단위 정보
      * @param keepContainerSpace 프리미엄 시 container 영역 유지 여부 (기본값: true)
      * @return 생성된 MuuuBannerAdView (프리미엄이면 null)
      */
     fun setupBannerAd(
-        activity: Activity,
+        context: Context,
         container: ViewGroup,
         adUnit: MuuuBannerAdUnit,
         keepContainerSpace: Boolean = true
@@ -50,7 +51,7 @@ object AdManager {
         }
 
         // 광고 생성 및 로드
-        val bannerAdView = MuuuBannerAdView(activity, adUnit)
+        val bannerAdView = MuuuBannerAdView(context, adUnit)
         container.addView(bannerAdView)
         bannerAdView.loadAd()
 
@@ -69,8 +70,8 @@ object AdManager {
         PremiumManager.addPremiumChangeListener(premiumChangeListener)
 
         // Activity destroy 시 리스너 제거 (메모리 누수 방지)
-        if (activity is LifecycleOwner) {
-            activity.lifecycle.addObserver(object : DefaultLifecycleObserver {
+        if (context is LifecycleOwner) {
+            context.lifecycle.addObserver(object : DefaultLifecycleObserver {
                 override fun onDestroy(owner: LifecycleOwner) {
                     PremiumManager.removePremiumChangeListener(premiumChangeListener)
                     super.onDestroy(owner)
@@ -87,7 +88,7 @@ object AdManager {
      * 프리미엄 사용자인 경우 광고를 표시하지 않음
      * 프리미엄 상태 변경 시 자동으로 광고 제거 (Callback 리스너)
      *
-     * @param activity Activity 컨텍스트
+     * @param context 컨텍스트
      * @param container 광고를 추가할 ViewGroup
      * @param adUnit 광고 단위 정보
      * @param template 광고 템플릿 (옵션)
@@ -95,7 +96,7 @@ object AdManager {
      * @return 생성된 MuuuNativeAdView (프리미엄이면 null)
      */
     fun setupNativeAd(
-        activity: Activity,
+        context: Context,
         container: ViewGroup,
         adUnit: MuuuNativeAdUnit,
         template: MuuuNativeAdTemplate? = null,
@@ -112,12 +113,12 @@ object AdManager {
         }
 
         // 광고 생성
-        val nativeAdView = MuuuNativeAdView(activity, adUnit)
+        val nativeAdView = MuuuNativeAdView(context, adUnit)
 
         // 템플릿 설정
         if (template != null) {
             nativeAdView.setAdBinder(
-                MuuuNativeAdBinder.fromTemplate(activity, template)
+                MuuuNativeAdBinder.fromTemplate(context, template)
             )
         }
 
@@ -139,8 +140,8 @@ object AdManager {
         PremiumManager.addPremiumChangeListener(premiumChangeListener)
 
         // Activity destroy 시 리스너 제거 (메모리 누수 방지)
-        if (activity is LifecycleOwner) {
-            activity.lifecycle.addObserver(object : DefaultLifecycleObserver {
+        if (context is LifecycleOwner) {
+            context.lifecycle.addObserver(object : DefaultLifecycleObserver {
                 override fun onDestroy(owner: LifecycleOwner) {
                     PremiumManager.removePremiumChangeListener(premiumChangeListener)
                     super.onDestroy(owner)

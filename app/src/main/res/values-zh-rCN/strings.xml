@@ -338,4 +338,10 @@
     <string name="report_help_message">报告显示最近7天的数据。\n仅显示授予无障碍服务权限后收集的数据。</string>
     <string name="report_help_confirm">确定</string>
 
+    <!-- Exit Confirmation Dialog -->
+    <string name="exit_dialog_title">退出应用？</string>
+    <string name="exit_dialog_message">确定要退出吗？</string>
+    <string name="exit_dialog_confirm">退出</string>
+    <string name="exit_dialog_cancel">取消</string>
+
 </resources>

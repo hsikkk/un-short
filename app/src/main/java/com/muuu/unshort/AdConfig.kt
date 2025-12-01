@@ -29,6 +29,12 @@ object AdConfig {
      */
     const val MREC_REPORT = "ca-app-pub-4831094849543419/1966950687"
 
+    /**
+     * Exit Dialog MREC 광고
+     */
+    const val MREC_EXIT = "ca-app-pub-4831094849543419/3738648618"
+
+
     // 향후 다른 광고 단위 ID 추가 예시:
     // const val BANNER_SETTINGS = "ca-app-pub-xxxxx/xxxxx"
     // const val INTERSTITIAL_AFTER_BLOCK = "ca-app-pub-xxxxx/xxxxx"

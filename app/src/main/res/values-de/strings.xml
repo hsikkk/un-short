@@ -338,4 +338,10 @@
     <string name="report_help_message">Der Bericht zeigt Daten der letzten 7 Tage.\nEs werden nur Daten angezeigt, die nach Erteilung der Zugriffsberechtigung gesammelt wurden.</string>
     <string name="report_help_confirm">OK</string>
 
+    <!-- Exit Confirmation Dialog -->
+    <string name="exit_dialog_title">App beenden?</string>
+    <string name="exit_dialog_message">Möchten Sie wirklich beenden?</string>
+    <string name="exit_dialog_confirm">Beenden</string>
+    <string name="exit_dialog_cancel">Abbrechen</string>
+
 </resources>

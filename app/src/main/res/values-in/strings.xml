@@ -340,4 +340,10 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="report_help_message">Laporan menampilkan data 7 hari terakhir.\nHanya data yang dikumpulkan setelah memberikan izin layanan aksesibilitas yang ditampilkan.</string>
     <string name="report_help_confirm">OK</string>
 
+    <!-- Exit Confirmation Dialog -->
+    <string name="exit_dialog_title">Keluar dari Aplikasi?</string>
+    <string name="exit_dialog_message">Apakah Anda yakin ingin keluar?</string>
+    <string name="exit_dialog_confirm">Keluar</string>
+    <string name="exit_dialog_cancel">Batal</string>
+
 </resources>

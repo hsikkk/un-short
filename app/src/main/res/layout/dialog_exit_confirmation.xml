@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_background"
+    android:padding="24dp">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/dialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exit_dialog_title"
+        android:textSize="20sp"
+        android:textColor="@color/gray_900"
+        android:fontFamily="@font/spoqa_sans_neo_bold"
+        android:gravity="start"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Message -->
+    <TextView
+        android:id="@+id/dialogMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exit_dialog_message"
+        android:textSize="14sp"
+        android:textColor="@color/gray_600"
+        android:fontFamily="@font/spoqa_sans_neo"
+        android:layout_marginBottom="16dp"
+        android:gravity="start"/>
+
+    <!-- Ad Container -->
+    <FrameLayout
+        android:id="@+id/adContainer"
+        android:layout_width="300dp"
+        android:layout_height="274dp"
+        android:paddingBottom="24dp"
+        android:layout_gravity="center"/>
+
+    <!-- Buttons Container (Horizontal) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <!-- Cancel Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancel"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="@string/exit_dialog_cancel"
+            android:textSize="15sp"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
+            app:cornerRadius="0dp"
+            android:textColor="@color/gray_900"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Confirm Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnConfirm"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="@string/exit_dialog_confirm"
+            android:textSize="15sp"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
+            app:cornerRadius="0dp"
+            android:backgroundTint="@color/gray_900"
+            android:textColor="@color/white"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

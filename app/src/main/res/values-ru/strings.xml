@@ -338,4 +338,10 @@
     <string name="report_help_message">Отчет показывает данные за последние 7 дней.\nОтображаются только данные, собранные после предоставления разрешения службы специальных возможностей.</string>
     <string name="report_help_confirm">ОК</string>
 
+    <!-- Exit Confirmation Dialog -->
+    <string name="exit_dialog_title">Выйти из приложения?</string>
+    <string name="exit_dialog_message">Вы уверены, что хотите выйти?</string>
+    <string name="exit_dialog_confirm">Выйти</string>
+    <string name="exit_dialog_cancel">Отмена</string>
+
 </resources>

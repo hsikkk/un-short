@@ -338,4 +338,10 @@
     <string name="report_help_message">Le rapport affiche les données des 7 derniers jours.\nSeules les données collectées après l\'octroi de l\'autorisation du service d\'accessibilité sont affichées.</string>
     <string name="report_help_confirm">OK</string>
 
+    <!-- Exit Confirmation Dialog -->
+    <string name="exit_dialog_title">Quitter l\'application ?</string>
+    <string name="exit_dialog_message">Êtes-vous sûr de vouloir quitter ?</string>
+    <string name="exit_dialog_confirm">Quitter</string>
+    <string name="exit_dialog_cancel">Annuler</string>
+
 </resources>
