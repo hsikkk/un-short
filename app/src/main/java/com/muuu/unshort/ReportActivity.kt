@@ -35,6 +35,11 @@ class ReportActivity : BaseActivity() {
     private lateinit var chartPagerAdapter: ChartPagerAdapter
     private lateinit var hourlyChartView: HourlyBarChartView
 
+    // Sticky Date Chips
+    private lateinit var scrollView: ScrollView
+    private lateinit var stickyDateChipsContainer: LinearLayout
+    private lateinit var stickyDateChips: LinearLayout
+
     // Daily Trend Tab views
     private lateinit var tabAttempts: TextView
     private lateinit var tabWatched: TextView
@@ -133,6 +138,11 @@ class ReportActivity : BaseActivity() {
 
         hourlyChartView = findViewById(R.id.hourlyChartView)
 
+        // Sticky Date Chips
+        scrollView = findViewById(R.id.contentScrollView)
+        stickyDateChipsContainer = findViewById(R.id.stickyDateChipsContainer)
+        stickyDateChips = findViewById(R.id.stickyDateChips)
+
         // Daily Trend Tabs
         tabAttempts = findViewById(R.id.tabAttempts)
         tabWatched = findViewById(R.id.tabWatched)
@@ -190,6 +200,39 @@ class ReportActivity : BaseActivity() {
         }
     }
 
+    private fun createDateChip(text: String, dateMillis: Long, isSelected: Boolean): TextView {
+        return TextView(this).apply {
+            this.text = text
+            textSize = 14f
+            gravity = android.view.Gravity.CENTER
+            setPadding(
+                resources.getDimensionPixelSize(R.dimen.chip_padding_vertical),
+                resources.getDimensionPixelSize(R.dimen.chip_padding_vertical),
+                resources.getDimensionPixelSize(R.dimen.chip_padding_vertical),
+                resources.getDimensionPixelSize(R.dimen.chip_padding_vertical)
+            )
+
+            val params = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1f
+            )
+            layoutParams = params
+
+            if (isSelected) {
+                setBackgroundResource(R.drawable.date_chip_selected)
+                setTextColor(getColor(android.R.color.white))
+            } else {
+                setBackgroundResource(R.drawable.date_chip_unselected)
+                setTextColor(getColor(R.color.gray_600))
+            }
+
+            setOnClickListener {
+                viewModel.selectDate(dateMillis)
+            }
+        }
+    }
+
     private fun setupDateChips() {
         val calendar = java.util.Calendar.getInstance()
         val today = calendar.timeInMillis
@@ -200,42 +243,44 @@ class ReportActivity : BaseActivity() {
             calendar.timeInMillis = today
             calendar.add(java.util.Calendar.DAY_OF_YEAR, -i)
             val dateMillis = calendar.timeInMillis
+            val isChipSelected = (i == 0)  // 마지막 칩(오늘)은 선택 상태로
 
-            val chip = TextView(this).apply {
-                text = dateFormat.format(calendar.time)
-                textSize = 14f
-                gravity = android.view.Gravity.CENTER
-                setPadding(
-                    resources.getDimensionPixelSize(R.dimen.chip_padding_vertical),
-                    resources.getDimensionPixelSize(R.dimen.chip_padding_vertical),
-                    resources.getDimensionPixelSize(R.dimen.chip_padding_vertical),
-                    resources.getDimensionPixelSize(R.dimen.chip_padding_vertical)
-                )
+            // 원본 칩 생성
+            val originalChip = createDateChip(dateFormat.format(calendar.time), dateMillis, isChipSelected)
+            dateChipViews.add(originalChip)
+            dateChipsContainer.addView(originalChip)
 
-                val params = LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    1f
-                )
-                layoutParams = params
+            // Sticky 칩 생성 (동일한 스타일)
+            val stickyChip = createDateChip(dateFormat.format(calendar.time), dateMillis, isChipSelected)
+            stickyDateChips.addView(stickyChip)
+        }
 
-                // 마지막 칩(오늘)은 선택 상태로
-                val isChipSelected = (i == 0)
-                if (isChipSelected) {
-                    setBackgroundResource(R.drawable.date_chip_selected)
-                    setTextColor(getColor(android.R.color.white))
-                } else {
-                    setBackgroundResource(R.drawable.date_chip_unselected)
-                    setTextColor(getColor(R.color.gray_600))
+        // 스크롤 리스너 설정
+        setupScrollListener()
+    }
+
+    private fun setupScrollListener() {
+        scrollView.viewTreeObserver.addOnScrollChangedListener {
+            // 원본 Date Chips의 화면상 Y 좌표 계산
+            val location = IntArray(2)
+            dateChipsContainer.getLocationOnScreen(location)
+            val chipY = location[1]
+
+            // 헤더의 하단 Y 좌표 계산 (헤더 높이 하드코딩)
+            val headerLocation = IntArray(2)
+            findViewById<View>(R.id.backButton).getLocationOnScreen(headerLocation)
+            val headerBottom = headerLocation[1] + findViewById<View>(R.id.backButton).height + 20  // 헤더 버튼 + 여유
+
+            // 원본 칩이 헤더 아래로 가면 sticky 표시
+            if (chipY < headerBottom) {
+                if (stickyDateChipsContainer.visibility != View.VISIBLE) {
+                    stickyDateChipsContainer.visibility = View.VISIBLE
                 }
-
-                setOnClickListener {
-                    viewModel.selectDate(dateMillis)
+            } else {
+                if (stickyDateChipsContainer.visibility != View.GONE) {
+                    stickyDateChipsContainer.visibility = View.GONE
                 }
             }
-
-            dateChipViews.add(chip)
-            dateChipsContainer.addView(chip)
         }
     }
 
@@ -475,6 +520,7 @@ class ReportActivity : BaseActivity() {
     private fun updateDateChips(selectedDateMillis: Long) {
         val calendar = java.util.Calendar.getInstance()
 
+        // 원본 칩 업데이트
         dateChipViews.forEachIndexed { index, chip ->
             calendar.timeInMillis = System.currentTimeMillis()
             // index 0 = 6일 전, index 6 = 오늘
@@ -485,6 +531,17 @@ class ReportActivity : BaseActivity() {
             val isSameDay = isSameDay(chipDateMillis, selectedDateMillis)
             chip.isSelected = isSameDay
             updateChipAppearance(chip, isSameDay)
+        }
+
+        // Sticky 칩 업데이트
+        for (i in 0 until stickyDateChips.childCount) {
+            val stickyChip = stickyDateChips.getChildAt(i) as TextView
+            calendar.timeInMillis = System.currentTimeMillis()
+            calendar.add(java.util.Calendar.DAY_OF_YEAR, -(6 - i))
+            val chipDateMillis = calendar.timeInMillis
+
+            val isSameDay = isSameDay(chipDateMillis, selectedDateMillis)
+            updateChipAppearance(stickyChip, isSameDay)
         }
     }
 
