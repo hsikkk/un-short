@@ -104,6 +104,9 @@ class MainActivity : BaseActivity() {
         // Track app launch
         AnalyticsManager.trackEvent(this, AnalyticsEvent.APP_LAUNCHED)
 
+        // Schedule daily report notification
+        DailyReportReceiver.scheduleDailyReport(this)
+
         // 광고 설정 (AdManager가 프리미엄 체크 및 자동 제거 처리)
         val adViewContainer = findViewById<FrameLayout>(R.id.adView)
         bannerAdView = AdManager.setupBannerAd(

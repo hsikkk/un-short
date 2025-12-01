@@ -23,6 +23,10 @@ object AppConstants {
     const val PREF_TEMP_DISABLE_UNTIL = "temp_disable_until"
     const val ACTION_TEMP_DISABLE_EXPIRED = "com.muuu.unshort.TEMP_DISABLE_EXPIRED"
 
+    // Daily Report Notification
+    const val ACTION_DAILY_REPORT_ALARM = "com.muuu.unshort.DAILY_REPORT_ALARM"
+    const val PREF_LAST_NOTIFICATION_DATE = "last_notification_date"
+
     // Settings
     const val PREF_WAIT_TIME = "wait_time"
     const val PREF_HAPTIC_ENABLED = "haptic_enabled"

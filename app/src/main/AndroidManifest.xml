@@ -96,7 +96,7 @@
 
         <activity
             android:name=".ReportActivity"
-            android:exported="false"
+            android:exported="true"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
 
@@ -145,6 +145,16 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="com.muuu.unshort.TEMP_DISABLE_EXPIRED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Daily Report Notification Receiver -->
+        <receiver
+            android:name=".DailyReportReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.muuu.unshort.DAILY_REPORT_ALARM" />
             </intent-filter>
         </receiver>
 

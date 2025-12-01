@@ -126,6 +126,12 @@ class PreferencesManager(context: Context) {
         get() = prefs.getLong(AppConstants.PREF_REDEEMED_AT, 0L)
         set(value) = prefs.edit().putLong(AppConstants.PREF_REDEEMED_AT, value).apply()
 
+    // ========== Daily Report Notification ==========
+
+    var lastNotificationDate: String
+        get() = prefs.getString(AppConstants.PREF_LAST_NOTIFICATION_DATE, "") ?: ""
+        set(value) = prefs.edit().putString(AppConstants.PREF_LAST_NOTIFICATION_DATE, value).apply()
+
     // ========== Batch Operations ==========
 
     /**
