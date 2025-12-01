@@ -28,7 +28,12 @@
       "Bash(do)",
       "Bash(\"$title_file\")",
       "Bash(fastlane run upload_to_play_store:*)",
-      "Bash(python3:*)"
+g      "Bash(python3:*)",
+      "Bash(for file in app/src/main/res/values-{fr,hi,in,it,pt,ru,th,tr,vi}/strings.xml)",
+      "Bash(if grep -q \"settings_daily_notification_title\" \"$file\")",
+      "Bash(then)",
+      "Bash(else)",
+      "Bash(fi)"
     ],
     "deny": [],
     "ask": []

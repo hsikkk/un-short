@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import com.muuu.unshort.R
 import com.muuu.unshort.data.statistics.StatisticsRepository
@@ -25,6 +26,13 @@ class BarChartView @JvmOverloads constructor(
     private var dailyStats: List<StatisticsRepository.DailyStats> = emptyList()
     private var metricType: MetricType = MetricType.ATTEMPTS
     private var selectedDate: Long = 0L
+
+    // 막대 클릭 리스너
+    var onBarClickListener: ((date: Long) -> Unit)? = null
+
+    // 터치 이벤트 처리용
+    private var touchDownX = 0f
+    private var touchDownY = 0f
 
     private val barPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val selectedBarPaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -241,5 +249,101 @@ class BarChartView @JvmOverloads constructor(
 
     private fun Float.dpToPx(): Float {
         return this * context.resources.displayMetrics.density
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                touchDownX = event.x
+                touchDownY = event.y
+                return true
+            }
+            MotionEvent.ACTION_UP -> {
+                val deltaX = kotlin.math.abs(event.x - touchDownX)
+                val deltaY = kotlin.math.abs(event.y - touchDownY)
+
+                // 이동 거리가 작으면 탭으로 간주 (스와이프 아님)
+                if (deltaX < 20f && deltaY < 20f) {
+                    val clickedBarIndex = getBarIndexAtPosition(event.x, event.y)
+
+                    if (clickedBarIndex in dailyStats.indices) {
+                        val clickedDate = dailyStats[clickedBarIndex].date
+                        onBarClickListener?.invoke(clickedDate)
+                        return true
+                    }
+                }
+            }
+        }
+        return super.onTouchEvent(event)
+    }
+
+    private fun getBarIndexAtPosition(x: Float, y: Float): Int {
+        if (dailyStats.isEmpty()) return -1
+
+        val chartHeight = height - chartPaddingTop - chartPaddingBottom
+        val chartWidth = width - chartPadding - chartPaddingRight
+        val barWidth = (chartWidth / dailyStats.size) - barSpacing
+        val adjustedX = x - chartPadding
+
+        // X 좌표로 막대 인덱스 계산
+        val barIndex = (adjustedX / (barWidth + barSpacing)).toInt()
+
+        // 인덱스 유효성 체크
+        if (barIndex < 0 || barIndex >= dailyStats.size) {
+            return -1
+        }
+
+        // 해당 날짜의 값 확인 (막대가 그려졌는지)
+        val stat = dailyStats[barIndex]
+        val value = when (metricType) {
+            MetricType.ATTEMPTS -> stat.attemptCount.toFloat()
+            MetricType.WATCHED -> stat.watchedCount.toFloat()
+            MetricType.WATCH_TIME -> (stat.watchTimeMs / 60000f)
+        }
+
+        // 값이 0이면 막대가 안 그려짐 - 차트 영역에서는 클릭 불가
+        val hasBar = value > 0f
+
+        // 막대 영역 계산
+        val barStartX = barIndex * (barWidth + barSpacing)
+        val barEndX = barStartX + barWidth
+
+        // 막대 높이 계산
+        val values = dailyStats.map { stat ->
+            when (metricType) {
+                MetricType.ATTEMPTS -> stat.attemptCount.toFloat()
+                MetricType.WATCHED -> stat.watchedCount.toFloat()
+                MetricType.WATCH_TIME -> (stat.watchTimeMs / 60000f)
+            }
+        }
+        val maxValue = calculateMaxValue(values.maxOrNull() ?: 0f)
+        val barHeight = if (maxValue > 0f) (value / maxValue) * chartHeight else 0f
+        val barTopY = chartPaddingTop + chartHeight - barHeight
+        val barBottomY = chartPaddingTop + chartHeight
+
+        // Y 좌표로 영역 구분
+        val isInBarArea = hasBar && y >= barTopY && y <= barBottomY
+        val isInLabelArea = y > (chartPaddingTop + chartHeight) && y <= height
+
+        if (isInBarArea) {
+            // 차트 영역: 막대가 실제로 그려진 영역 내부만
+            return if (adjustedX >= barStartX && adjustedX <= barEndX) {
+                barIndex
+            } else {
+                -1
+            }
+        } else if (isInLabelArea) {
+            // X축 라벨 영역: 막대 유무와 상관없이 라벨 클릭은 허용
+            val barCenterX = barStartX + (barWidth / 2)
+            val clickRadius = (barWidth + barSpacing) / 2
+
+            return if (kotlin.math.abs(adjustedX - barCenterX) <= clickRadius) {
+                barIndex
+            } else {
+                -1
+            }
+        }
+
+        return -1
     }
 }

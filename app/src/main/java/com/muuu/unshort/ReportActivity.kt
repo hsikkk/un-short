@@ -113,6 +113,11 @@ class ReportActivity : BaseActivity() {
         chartPagerAdapter = ChartPagerAdapter(this)
         chartViewPager.adapter = chartPagerAdapter
 
+        // 차트 클릭 리스너 설정 - 클릭한 날짜로 선택 변경
+        chartPagerAdapter.onBarClickListener = { clickedDate ->
+            viewModel.selectDate(clickedDate)
+        }
+
         // ViewPager 페이지 변경 리스너 - 탭 동기화
         chartViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {

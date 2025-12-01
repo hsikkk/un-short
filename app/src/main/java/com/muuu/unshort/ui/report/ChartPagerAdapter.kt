@@ -15,6 +15,9 @@ class ChartPagerAdapter(
     private var dailyStats: List<StatisticsRepository.DailyStats> = emptyList()
     private var selectedDate: Long = 0L
 
+    // 막대 클릭 리스너
+    var onBarClickListener: ((date: Long) -> Unit)? = null
+
     override fun getItemCount(): Int = 3  // 진입, 시청, 시청시간
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChartViewHolder {
@@ -34,6 +37,9 @@ class ChartPagerAdapter(
             else -> BarChartView.MetricType.ATTEMPTS
         }
         holder.chartView.setData(dailyStats, metricType, selectedDate)
+
+        // 차트 클릭 리스너 연결
+        holder.chartView.onBarClickListener = onBarClickListener
     }
 
     fun updateData(stats: List<StatisticsRepository.DailyStats>, selectedDate: Long) {
