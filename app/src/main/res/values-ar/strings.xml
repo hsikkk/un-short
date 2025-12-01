@@ -317,7 +317,7 @@
 
     <!-- Report Screen -->
     <string name="report_title">التقرير اليومي</string>
-    <string name="report_daily_trend">الاتجاه اليومي</string>
+    <string name="report_daily_trend">هذا الأسبوع</string>
     <string name="report_summary">ملخص</string>
     <string name="report_hourly_analysis">التحليل الساعي</string>
     <string name="report_detail">التفاصيل</string>

@@ -317,7 +317,7 @@
 
     <!-- Report Screen -->
     <string name="report_title">デイリーレポート</string>
-    <string name="report_daily_trend">日別推移</string>
+    <string name="report_daily_trend">今週の記録</string>
     <string name="report_summary">要約</string>
     <string name="report_hourly_analysis">時間帯別分析</string>
     <string name="report_detail">詳細</string>

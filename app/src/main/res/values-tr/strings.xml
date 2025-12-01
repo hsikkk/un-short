@@ -317,7 +317,7 @@
 
     <!-- Report Screen -->
     <string name="report_title">GÜNLÜK RAPOR</string>
-    <string name="report_daily_trend">Günlük Eğilim</string>
+    <string name="report_daily_trend">Bu Hafta</string>
     <string name="report_summary">ÖZET</string>
     <string name="report_hourly_analysis">SAATLİK ANALİZ</string>
     <string name="report_detail">DETAY</string>

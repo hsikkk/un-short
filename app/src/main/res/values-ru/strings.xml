@@ -317,7 +317,7 @@
 
     <!-- Report Screen -->
     <string name="report_title">ЕЖЕДНЕВНЫЙ ОТЧЕТ</string>
-    <string name="report_daily_trend">Ежедневная Тенденция</string>
+    <string name="report_daily_trend">На Этой Неделе</string>
     <string name="report_summary">СВОДКА</string>
     <string name="report_hourly_analysis">ПОЧАСОВОЙ АНАЛИЗ</string>
     <string name="report_detail">ПОДРОБНОСТИ</string>

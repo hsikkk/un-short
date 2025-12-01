@@ -319,7 +319,7 @@ apakah Anda benar-benar perlu shorts?</string>
 
     <!-- Report Screen -->
     <string name="report_title">LAPORAN HARIAN</string>
-    <string name="report_daily_trend">Tren Harian</string>
+    <string name="report_daily_trend">Minggu Ini</string>
     <string name="report_summary">RINGKASAN</string>
     <string name="report_hourly_analysis">ANALISIS PER JAM</string>
     <string name="report_detail">DETAIL</string>

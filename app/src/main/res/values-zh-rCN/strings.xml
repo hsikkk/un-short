@@ -317,7 +317,7 @@
 
     <!-- Report Screen -->
     <string name="report_title">每日报告</string>
-    <string name="report_daily_trend">每日趋势</string>
+    <string name="report_daily_trend">本周记录</string>
     <string name="report_summary">摘要</string>
     <string name="report_hourly_analysis">按时段分析</string>
     <string name="report_detail">详情</string>

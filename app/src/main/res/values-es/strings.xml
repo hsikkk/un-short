@@ -317,7 +317,7 @@
 
     <!-- Report Screen -->
     <string name="report_title">INFORME DIARIO</string>
-    <string name="report_daily_trend">Tendencia Diaria</string>
+    <string name="report_daily_trend">Esta Semana</string>
     <string name="report_summary">RESUMEN</string>
     <string name="report_hourly_analysis">ANÁLISIS POR HORA</string>
     <string name="report_detail">DETALLE</string>

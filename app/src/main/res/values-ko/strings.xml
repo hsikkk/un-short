@@ -310,7 +310,7 @@
 
     <!-- Report Screen -->
     <string name="report_title">리포트</string>
-    <string name="report_daily_trend">일별 추이</string>
+    <string name="report_daily_trend">이번주 기록</string>
     <string name="report_summary">요약</string>
     <string name="report_hourly_analysis">시간대별 분석</string>
     <string name="report_detail">상세</string>

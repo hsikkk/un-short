@@ -317,7 +317,7 @@
 
     <!-- Report Screen -->
     <string name="report_title">BÁO CÁO HÀNG NGÀY</string>
-    <string name="report_daily_trend">Xu Hướng Hàng Ngày</string>
+    <string name="report_daily_trend">Tuần Này</string>
     <string name="report_summary">TÓM TẮT</string>
     <string name="report_hourly_analysis">PHÂN TÍCH THEO GIỜ</string>
     <string name="report_detail">CHI TIẾT</string>

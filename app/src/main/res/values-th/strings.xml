@@ -317,7 +317,7 @@
 
     <!-- Report Screen -->
     <string name="report_title">รายงานประจำวัน</string>
-    <string name="report_daily_trend">แนวโน้มรายวัน</string>
+    <string name="report_daily_trend">สัปดาห์นี้</string>
     <string name="report_summary">สรุป</string>
     <string name="report_hourly_analysis">การวิเคราะห์รายชั่วโมง</string>
     <string name="report_detail">รายละเอียด</string>

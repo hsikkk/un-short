@@ -317,7 +317,7 @@
 
     <!-- Report Screen -->
     <string name="report_title">RAPPORTO GIORNALIERO</string>
-    <string name="report_daily_trend">Tendenza Giornaliera</string>
+    <string name="report_daily_trend">Questa Settimana</string>
     <string name="report_summary">RIEPILOGO</string>
     <string name="report_hourly_analysis">ANALISI ORARIA</string>
     <string name="report_detail">DETTAGLI</string>
