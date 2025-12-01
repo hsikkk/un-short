@@ -65,7 +65,9 @@
     <string name="settings_haptic_title">Тактильная обратная связь</string>
     <string name="settings_haptic_desc">Уведомление вибрацией при завершении таймера</string>
     <string name="settings_daily_notification_title">Ежедневный отчет</string>
-    <string name="settings_daily_notification_desc">Получайте ежедневный отчет о блокировке Shorts в 20:00</string>
+    <string name="settings_daily_notification_desc">Получайте ежедневный отчет о блокировке Shorts</string>
+    <string name="settings_notification_time_title">Время уведомления</string>
+    <string name="settings_notification_time_desc">Установить время получения отчета</string>
     <string name="settings_block_scrolled_title">Блокировать только прокрученные Shorts</string>
     <string name="settings_block_scrolled_desc">Разрешить первый shorts, блокировать при прокрутке</string>
     <string name="settings_prevent_disable_title">Предотвратить импульсивное отключение</string>

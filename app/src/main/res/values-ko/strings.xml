@@ -64,7 +64,9 @@
     <string name="settings_haptic_title">햅틱 피드백</string>
     <string name="settings_haptic_desc">타이머 완료 시 진동 알림</string>
     <string name="settings_daily_notification_title">일일 리포트 알림</string>
-    <string name="settings_daily_notification_desc">매일 저녁 8시에 오늘의 쇼츠 차단 리포트를 알림으로 받습니다</string>
+    <string name="settings_daily_notification_desc">매일 쇼츠 차단 리포트를 알림으로 받습니다</string>
+    <string name="settings_notification_time_title">알림 시간</string>
+    <string name="settings_notification_time_desc">리포트를 받을 시간을 설정합니다</string>
     <string name="settings_block_scrolled_title">스크롤한 쇼츠만 차단</string>
     <string name="settings_block_scrolled_desc">첫 번째 쇼츠는 허용, 스크롤 시 차단</string>
     <string name="settings_prevent_disable_title">충동적 차단 비활성화 방지</string>

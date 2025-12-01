@@ -65,7 +65,9 @@
     <string name="settings_haptic_title">ردود الفعل اللمسية</string>
     <string name="settings_haptic_desc">إشعار بالاهتزاز عند اكتمال المؤقت</string>
     <string name="settings_daily_notification_title">إشعار التقرير اليومي</string>
-    <string name="settings_daily_notification_desc">احصل على تقرير حظر Shorts يومياً في الساعة 8 مساءً</string>
+    <string name="settings_daily_notification_desc">احصل على تقرير حظر Shorts يومياً</string>
+    <string name="settings_notification_time_title">وقت الإشعار</string>
+    <string name="settings_notification_time_desc">تعيين وقت استلام التقرير</string>
     <string name="settings_block_scrolled_title">حظر Shorts المتدرجة فقط</string>
     <string name="settings_block_scrolled_desc">السماح بأول shorts، الحظر عند التمرير</string>
     <string name="settings_prevent_disable_title">منع التعطيل الاندفاعي</string>

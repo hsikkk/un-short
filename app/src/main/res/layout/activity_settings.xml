@@ -373,6 +373,56 @@
                     android:layout_marginStart="16dp" />
             </LinearLayout>
 
+            <!-- 일일 리포트 알림 시간 설정 (알림 ON일 때만 표시) -->
+            <LinearLayout
+                android:id="@+id/dailyNotificationTimeItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="16dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_notification_time_title"
+                        android:textSize="@dimen/text_body"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/spoqa_sans_neo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_notification_time_desc"
+                        android:textSize="@dimen/text_caption"
+                        android:textColor="#000000"
+                        android:alpha="0.5"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/dailyNotificationTimeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20:00"
+                    android:textSize="@dimen/text_body"
+                    android:textColor="#000000"
+                    android:alpha="0.5"
+                    android:fontFamily="@font/spoqa_sans_neo" />
+            </LinearLayout>
+
             <!-- Divider -->
             <View
                 android:layout_width="match_parent"

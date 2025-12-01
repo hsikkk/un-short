@@ -65,7 +65,9 @@
     <string name="settings_haptic_title">Haptic Feedback</string>
     <string name="settings_haptic_desc">Vibration notification when timer completes</string>
     <string name="settings_daily_notification_title">Daily Report Notification</string>
-    <string name="settings_daily_notification_desc">Receive daily Shorts blocking report at 8 PM every day</string>
+    <string name="settings_daily_notification_desc">Receive daily Shorts blocking report</string>
+    <string name="settings_notification_time_title">Notification time</string>
+    <string name="settings_notification_time_desc">Set the time to receive daily report</string>
     <string name="settings_block_scrolled_title">Block Scrolled Shorts Only</string>
     <string name="settings_block_scrolled_desc">Allow first shorts, block on scroll</string>
     <string name="settings_prevent_disable_title">Prevent Impulsive Disable</string>

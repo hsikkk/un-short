@@ -65,7 +65,9 @@
     <string name="settings_haptic_title">Retour haptique</string>
     <string name="settings_haptic_desc">Notification par vibration à la fin du minuteur</string>
     <string name="settings_daily_notification_title">Notification de rapport quotidien</string>
-    <string name="settings_daily_notification_desc">Recevez un rapport quotidien de blocage de Shorts à 20h00</string>
+    <string name="settings_daily_notification_desc">Recevez un rapport quotidien de blocage de Shorts</string>
+    <string name="settings_notification_time_title">Heure de notification</string>
+    <string name="settings_notification_time_desc">Définir l\'heure de réception du rapport</string>
     <string name="settings_block_scrolled_title">Bloquer uniquement les Shorts défilés</string>
     <string name="settings_block_scrolled_desc">Autoriser le premier shorts, bloquer au défilement</string>
     <string name="settings_prevent_disable_title">Empêcher la désactivation impulsive</string>

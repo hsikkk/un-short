@@ -65,7 +65,9 @@
     <string name="settings_haptic_title">Vibración táctil</string>
     <string name="settings_haptic_desc">Notificación por vibración cuando termina el temporizador</string>
     <string name="settings_daily_notification_title">Notificación de informe diario</string>
-    <string name="settings_daily_notification_desc">Recibe un informe diario de bloqueo de Shorts a las 20:00</string>
+    <string name="settings_daily_notification_desc">Recibe un informe diario de bloqueo de Shorts</string>
+    <string name="settings_notification_time_title">Hora de notificación</string>
+    <string name="settings_notification_time_desc">Establecer hora para recibir informe</string>
     <string name="settings_block_scrolled_title">Bloquear solo Shorts desplazados</string>
     <string name="settings_block_scrolled_desc">Permitir primer shorts, bloquear al desplazar</string>
     <string name="settings_prevent_disable_title">Prevenir desactivación impulsiva</string>

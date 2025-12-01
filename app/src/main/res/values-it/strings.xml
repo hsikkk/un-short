@@ -65,7 +65,9 @@
     <string name="settings_haptic_title">Feedback aptico</string>
     <string name="settings_haptic_desc">Notifica di vibrazione al completamento del timer</string>
     <string name="settings_daily_notification_title">Notifica rapporto giornaliero</string>
-    <string name="settings_daily_notification_desc">Ricevi un rapporto giornaliero sui blocchi di Shorts alle 20:00</string>
+    <string name="settings_daily_notification_desc">Ricevi un rapporto giornaliero sui blocchi di Shorts</string>
+    <string name="settings_notification_time_title">Ora di notifica</string>
+    <string name="settings_notification_time_desc">Imposta l\'orario di ricezione del rapporto</string>
     <string name="settings_block_scrolled_title">Blocca solo gli Shorts scorsi</string>
     <string name="settings_block_scrolled_desc">Consenti il primo shorts, blocca allo scorrimento</string>
     <string name="settings_prevent_disable_title">Previeni disattivazione impulsiva</string>

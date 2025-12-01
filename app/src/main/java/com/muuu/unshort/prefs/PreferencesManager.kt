@@ -136,6 +136,10 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(AppConstants.PREF_DAILY_NOTIFICATIONS_ENABLED, true)
         set(value) = prefs.edit().putBoolean(AppConstants.PREF_DAILY_NOTIFICATIONS_ENABLED, value).apply()
 
+    var dailyNotificationHour: Int
+        get() = prefs.getInt(AppConstants.PREF_DAILY_NOTIFICATION_HOUR, 20)
+        set(value) = prefs.edit().putInt(AppConstants.PREF_DAILY_NOTIFICATION_HOUR, value).apply()
+
     // ========== Notification Permission ==========
 
     var hasAskedNotificationPermission: Boolean

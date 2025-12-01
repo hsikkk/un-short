@@ -1,10 +1,13 @@
 package com.muuu.unshort
 
 import android.app.Activity
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,7 +44,9 @@ class SettingsActivity : BaseActivity() {
 
     // Notification Settings
     private lateinit var dailyNotificationItem: LinearLayout
-    private lateinit var dailyNotificationSwitch: SwitchMaterial
+    private lateinit var dailyNotificationSwitch: Switch
+    private lateinit var dailyNotificationTimeItem: LinearLayout
+    private lateinit var dailyNotificationTimeValue: TextView
 
     private lateinit var deviceAdminManager: DeviceAdminManager
     private lateinit var prefsManager: PreferencesManager
@@ -121,6 +126,8 @@ class SettingsActivity : BaseActivity() {
         // Notification Settings
         dailyNotificationItem = findViewById(R.id.dailyNotificationItem)
         dailyNotificationSwitch = findViewById(R.id.dailyNotificationSwitch)
+        dailyNotificationTimeItem = findViewById(R.id.dailyNotificationTimeItem)
+        dailyNotificationTimeValue = findViewById(R.id.dailyNotificationTimeValue)
 
         // 버전 정보 설정
         try {
@@ -441,6 +448,12 @@ class SettingsActivity : BaseActivity() {
         // Daily Notification Switch - 권한 체크 포함
         setupDailyNotificationSwitch()
 
+        // 시간 설정 UI 초기화
+        updateNotificationTimeDisplay()
+        dailyNotificationTimeItem.setOnClickListener {
+            showNotificationTimePicker()
+        }
+
         // 아이템 클릭 시 토글
         dailyNotificationItem.setOnClickListener {
             dailyNotificationSwitch.isChecked = !dailyNotificationSwitch.isChecked
@@ -545,6 +558,9 @@ class SettingsActivity : BaseActivity() {
             false  // 권한 없으면 무조건 OFF
         }
 
+        // 스위치 상태에 따라 시간 설정 UI 표시/숨김
+        updateNotificationTimeVisibility(dailyNotificationSwitch.isChecked)
+
         // 리스너 설정
         dailyNotificationSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -563,7 +579,55 @@ class SettingsActivity : BaseActivity() {
                 prefsManager.isDailyNotificationsEnabled = false
                 DailyReportReceiver.cancelDailyReport(this)
             }
+
+            // 시간 설정 UI 표시/숨김
+            updateNotificationTimeVisibility(isChecked)
         }
+    }
+
+    /**
+     * 알림 ON/OFF 상태에 따라 시간 설정 UI 표시/숨김
+     */
+    private fun updateNotificationTimeVisibility(isEnabled: Boolean) {
+        dailyNotificationTimeItem.visibility = if (isEnabled) View.VISIBLE else View.GONE
+    }
+
+    /**
+     * 현재 설정된 알림 시간을 UI에 표시
+     */
+    private fun updateNotificationTimeDisplay() {
+        val hour = prefsManager.dailyNotificationHour
+        val timeString = String.format("%02d:00", hour)
+        dailyNotificationTimeValue.text = timeString
+    }
+
+    /**
+     * 알림 시간 선택 다이얼로그 표시
+     */
+    private fun showNotificationTimePicker() {
+        val currentHour = prefsManager.dailyNotificationHour
+
+        val timePicker = TimePickerDialog(
+            this,
+            { _, hourOfDay, _ ->
+                // 시간 저장
+                prefsManager.dailyNotificationHour = hourOfDay
+
+                // UI 업데이트
+                updateNotificationTimeDisplay()
+
+                // 알람 재스케줄링
+                if (prefsManager.isDailyNotificationsEnabled) {
+                    DailyReportReceiver.scheduleDailyReport(this)
+                    Log.d("SettingsActivity", "Rescheduled notification for $hourOfDay:00")
+                }
+            },
+            currentHour,
+            0,  // 분은 항상 0
+            true  // 24시간 형식
+        )
+
+        timePicker.show()
     }
 
     companion object {

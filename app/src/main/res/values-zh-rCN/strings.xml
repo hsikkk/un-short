@@ -65,7 +65,9 @@
     <string name="settings_haptic_title">触觉反馈</string>
     <string name="settings_haptic_desc">计时器完成时振动通知</string>
     <string name="settings_daily_notification_title">每日报告通知</string>
-    <string name="settings_daily_notification_desc">每天晚上8点接收今日短视频拦截报告</string>
+    <string name="settings_daily_notification_desc">接收每日短视频拦截报告</string>
+    <string name="settings_notification_time_title">通知时间</string>
+    <string name="settings_notification_time_desc">设置接收报告的时间</string>
     <string name="settings_block_scrolled_title">仅屏蔽滚动的短视频</string>
     <string name="settings_block_scrolled_desc">允许第一个短视频,滚动时屏蔽</string>
     <string name="settings_prevent_disable_title">防止冲动关闭</string>

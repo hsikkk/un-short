@@ -43,7 +43,7 @@ class DailyReportReceiver : BroadcastReceiver() {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 
-            val triggerTime = getNextReportTime()
+            val triggerTime = getNextReportTime(context)
 
             // Use setExactAndAllowWhileIdle for reliable delivery
             // Handle Android 12+ exact alarm permission
@@ -93,17 +93,20 @@ class DailyReportReceiver : BroadcastReceiver() {
         }
 
         /**
-         * Calculate next report time (8 PM today or tomorrow)
+         * Calculate next report time (configured hour today or tomorrow)
          */
-        private fun getNextReportTime(): Long {
+        private fun getNextReportTime(context: Context): Long {
+            val prefsManager = PreferencesManager(context)
+            val notificationHour = prefsManager.dailyNotificationHour
+
             val calendar = Calendar.getInstance().apply {
-                set(Calendar.HOUR_OF_DAY, 20) // 8 PM
+                set(Calendar.HOUR_OF_DAY, notificationHour)
                 set(Calendar.MINUTE, 0)
                 set(Calendar.SECOND, 0)
                 set(Calendar.MILLISECOND, 0)
             }
 
-            // If 8 PM already passed today, schedule for tomorrow
+            // If configured time already passed today, schedule for tomorrow
             if (calendar.timeInMillis <= System.currentTimeMillis()) {
                 calendar.add(Calendar.DAY_OF_YEAR, 1)
             }

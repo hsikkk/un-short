@@ -65,7 +65,9 @@
     <string name="settings_haptic_title">Dokunsal geri bildirim</string>
     <string name="settings_haptic_desc">Zamanlayıcı tamamlandığında titreşim bildirimi</string>
     <string name="settings_daily_notification_title">Günlük rapor bildirimi</string>
-    <string name="settings_daily_notification_desc">Her gün saat 20:00\'de Shorts engelleme raporu alın</string>
+    <string name="settings_daily_notification_desc">Günlük Shorts engelleme raporu alın</string>
+    <string name="settings_notification_time_title">Bildirim zamanı</string>
+    <string name="settings_notification_time_desc">Rapor alma zamanını ayarla</string>
     <string name="settings_block_scrolled_title">Yalnızca kaydırılan Shorts\'ları engelle</string>
     <string name="settings_block_scrolled_desc">İlk shorts\'a izin ver, kaydırmada engelle</string>
     <string name="settings_prevent_disable_title">Dürtüsel devre dışı bırakmayı önle</string>

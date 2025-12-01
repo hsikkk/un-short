@@ -65,7 +65,9 @@
     <string name="settings_haptic_title">Haptisches Feedback</string>
     <string name="settings_haptic_desc">Vibrationsbenachrichtigung bei Timer-Ablauf</string>
     <string name="settings_daily_notification_title">Tägliche Berichtsbenachrichtigung</string>
-    <string name="settings_daily_notification_desc">Erhalte täglich um 20 Uhr einen Bericht über blockierte Shorts</string>
+    <string name="settings_daily_notification_desc">Erhalte täglich einen Bericht über blockierte Shorts</string>
+    <string name="settings_notification_time_title">Benachrichtigungszeit</string>
+    <string name="settings_notification_time_desc">Zeit für den Erhalt des Berichts festlegen</string>
     <string name="settings_block_scrolled_title">Nur gescrollte Shorts blockieren</string>
     <string name="settings_block_scrolled_desc">Erstes Short erlauben, beim Scrollen blockieren</string>
     <string name="settings_prevent_disable_title">Impulsives Deaktivieren verhindern</string>

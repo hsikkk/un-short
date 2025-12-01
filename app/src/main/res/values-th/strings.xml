@@ -65,7 +65,9 @@
     <string name="settings_haptic_title">การสั่นสะเทือน</string>
     <string name="settings_haptic_desc">แจ้งเตือนด้วยการสั่นเมื่อจับเวลาเสร็จ</string>
     <string name="settings_daily_notification_title">การแจ้งเตือนรายงานประจำวัน</string>
-    <string name="settings_daily_notification_desc">รับรายงานการบล็อก Shorts ทุกวันเวลา 20:00 น.</string>
+    <string name="settings_daily_notification_desc">รับรายงานการบล็อก Shorts ทุกวัน</string>
+    <string name="settings_notification_time_title">เวลาแจ้งเตือน</string>
+    <string name="settings_notification_time_desc">ตั้งเวลารับรายงาน</string>
     <string name="settings_block_scrolled_title">บล็อกเฉพาะ Shorts ที่เลื่อนแล้ว</string>
     <string name="settings_block_scrolled_desc">อนุญาตวิดีโอสั้นแรก บล็อกเมื่อเลื่อน</string>
     <string name="settings_prevent_disable_title">ป้องกันการปิดโดยไม่ตั้งใจ</string>

@@ -65,7 +65,9 @@
     <string name="settings_haptic_title">觸覺回饋</string>
     <string name="settings_haptic_desc">計時器完成時振動通知</string>
     <string name="settings_daily_notification_title">每日報告通知</string>
-    <string name="settings_daily_notification_desc">每天晚上8點接收今日短影片攔截報告</string>
+    <string name="settings_daily_notification_desc">接收每日短影片攔截報告</string>
+    <string name="settings_notification_time_title">通知時間</string>
+    <string name="settings_notification_time_desc">設定接收報告的時間</string>
     <string name="settings_block_scrolled_title">僅封鎖滾動的短影音</string>
     <string name="settings_block_scrolled_desc">允許第一個短影音,滾動時封鎖</string>
     <string name="settings_prevent_disable_title">防止衝動關閉</string>

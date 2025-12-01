@@ -65,7 +65,9 @@
     <string name="settings_haptic_title">触覚フィードバック</string>
     <string name="settings_haptic_desc">タイマー完了時の振動通知</string>
     <string name="settings_daily_notification_title">日次レポート通知</string>
-    <string name="settings_daily_notification_desc">毎日午後8時に今日のショート動画ブロックレポートを受け取ります</string>
+    <string name="settings_daily_notification_desc">毎日ショート動画ブロックレポートを受け取ります</string>
+    <string name="settings_notification_time_title">通知時刻</string>
+    <string name="settings_notification_time_desc">レポートを受け取る時刻を設定</string>
     <string name="settings_block_scrolled_title">スクロールしたShortsのみブロック</string>
     <string name="settings_block_scrolled_desc">最初のショート動画は許可し、スクロール時にブロック</string>
     <string name="settings_prevent_disable_title">衝動的な無効化を防止</string>
