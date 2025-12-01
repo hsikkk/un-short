@@ -29,6 +29,8 @@ import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.data.statistics.StatisticsRepository
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Dispatchers
 import java.util.Calendar
 import com.muuu.ad.view.MuuuBannerAdView
 import com.muuu.ad.core.adunit.MuuuBannerAdUnit
@@ -541,48 +543,54 @@ class MainActivity : BaseActivity() {
 
                 val endOfDay = System.currentTimeMillis()
 
-                val repository = StatisticsRepository(this@MainActivity)
-                val totalAttempts = repository.getSessionCountForDate(startOfDay, endOfDay)
-                val watchedCount = repository.getWatchCountForDate(startOfDay, endOfDay)
-                val watchTimeMs = repository.getTotalWatchTimeForPeriod(startOfDay, endOfDay)
-
-                // 쇼츠 진입 숫자 업데이트
-                shortsEntryNumber.text = totalAttempts.toString()
-
-                // 숫자가 0이면 회색, 아니면 primary_dark
-                if (totalAttempts == 0) {
-                    shortsEntryNumber.setTextColor(Color.parseColor("#9E9E9E"))
-                } else {
-                    shortsEntryNumber.setTextColor(ResourcesCompat.getColor(resources, R.color.primary_dark, null))
+                // DB 조회를 IO 스레드에서 실행
+                val stats = withContext(kotlinx.coroutines.Dispatchers.IO) {
+                    val repository = StatisticsRepository(this@MainActivity)
+                    repository.getTodayStats()
                 }
 
-                // 쇼츠 소비 숫자 업데이트
-                shortsConsumptionNumber.text = watchedCount.toString()
+                // UI 업데이트는 메인 스레드에서
+                withContext(kotlinx.coroutines.Dispatchers.Main) {
+                    // 쇼츠 진입 숫자 업데이트
+                    shortsEntryNumber.text = stats.attemptCount.toString()
 
-                // 숫자가 0이면 회색, 아니면 primary_dark
-                if (watchedCount == 0) {
-                    shortsConsumptionNumber.setTextColor(Color.parseColor("#9E9E9E"))
-                } else {
-                    shortsConsumptionNumber.setTextColor(ResourcesCompat.getColor(resources, R.color.primary_dark, null))
-                }
+                    // 숫자가 0이면 회색, 아니면 primary_dark
+                    if (stats.attemptCount == 0) {
+                        shortsEntryNumber.setTextColor(Color.parseColor("#9E9E9E"))
+                    } else {
+                        shortsEntryNumber.setTextColor(ResourcesCompat.getColor(resources, R.color.primary_dark, null))
+                    }
 
-                // 시청 시간 업데이트
-                watchTimeText.text = formatWatchTime(watchTimeMs)
+                    // 쇼츠 소비 숫자 업데이트
+                    shortsConsumptionNumber.text = stats.watchedCount.toString()
 
-                // 시간이 0이면 회색, 아니면 primary_dark
-                if (watchTimeMs == 0L) {
-                    watchTimeText.setTextColor(Color.parseColor("#9E9E9E"))
-                } else {
-                    watchTimeText.setTextColor(ResourcesCompat.getColor(resources, R.color.primary_dark, null))
+                    // 숫자가 0이면 회색, 아니면 primary_dark
+                    if (stats.watchedCount == 0) {
+                        shortsConsumptionNumber.setTextColor(Color.parseColor("#9E9E9E"))
+                    } else {
+                        shortsConsumptionNumber.setTextColor(ResourcesCompat.getColor(resources, R.color.primary_dark, null))
+                    }
+
+                    // 시청 시간 업데이트
+                    watchTimeText.text = formatWatchTime(stats.watchTimeMs)
+
+                    // 시간이 0이면 회색, 아니면 primary_dark
+                    if (stats.watchTimeMs == 0L) {
+                        watchTimeText.setTextColor(Color.parseColor("#9E9E9E"))
+                    } else {
+                        watchTimeText.setTextColor(ResourcesCompat.getColor(resources, R.color.primary_dark, null))
+                    }
                 }
 
             } catch (e: Exception) {
-                shortsEntryNumber.text = "0"
-                shortsConsumptionNumber.text = "0"
-                watchTimeText.text = "0m"
-                shortsEntryNumber.setTextColor(Color.parseColor("#9E9E9E"))
-                shortsConsumptionNumber.setTextColor(Color.parseColor("#9E9E9E"))
-                watchTimeText.setTextColor(Color.parseColor("#9E9E9E"))
+                withContext(kotlinx.coroutines.Dispatchers.Main) {
+                    shortsEntryNumber.text = "0"
+                    shortsConsumptionNumber.text = "0"
+                    watchTimeText.text = "0m"
+                    shortsEntryNumber.setTextColor(Color.parseColor("#9E9E9E"))
+                    shortsConsumptionNumber.setTextColor(Color.parseColor("#9E9E9E"))
+                    watchTimeText.setTextColor(Color.parseColor("#9E9E9E"))
+                }
             }
         }
     }

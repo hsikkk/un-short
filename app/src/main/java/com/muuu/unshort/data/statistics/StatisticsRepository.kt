@@ -314,7 +314,7 @@ class StatisticsRepository(context: Context) {
     }
 
     /**
-     * 오늘의 통계 조회
+     * 오늘의 통계 조회 (최적화 - 단일 쿼리)
      *
      * @return 오늘의 통계
      */
@@ -329,11 +329,14 @@ class StatisticsRepository(context: Context) {
         calendar.add(java.util.Calendar.DAY_OF_YEAR, 1)
         val dayEnd = calendar.timeInMillis
 
-        val attemptCount = dao.getSessionCountBetween(dayStart, dayEnd)
-        val watchedCount = dao.getWatchCountBetween(dayStart, dayEnd)
-        val watchTimeMs = dao.getTotalWatchTimeBetween(dayStart, dayEnd)
+        // 최적화된 단일 쿼리 사용 (3개 쿼리 → 1개 쿼리)
+        val rawStats = dao.getStatsForDateOptimized(dayStart, dayEnd)
 
-        DailyStats(dayStart, attemptCount, watchedCount, watchTimeMs)
+        if (rawStats != null) {
+            DailyStats(dayStart, rawStats.attemptCount, rawStats.watchedCount, rawStats.totalWatchTimeMs)
+        } else {
+            DailyStats(dayStart, 0, 0, 0L)
+        }
     }
 
     /**

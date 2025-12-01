@@ -195,4 +195,30 @@ interface ShortsSessionDao {
      */
     @Query("SELECT * FROM shorts_sessions WHERE timestamp >= :startTime AND timestamp < :endTime ORDER BY timestamp ASC")
     suspend fun getSessionsBetween(startTime: Long, endTime: Long): List<ShortsSession>
+
+    /**
+     * 특정 날짜 범위의 통계를 한번에 조회 (최적화)
+     *
+     * @param startTime 시작 시각 (밀리초)
+     * @param endTime 종료 시각 (밀리초)
+     * @return [attemptCount, watchedCount, totalWatchTimeMs] 배열
+     */
+    @Query("""
+        SELECT
+            COUNT(*) as attemptCount,
+            SUM(CASE WHEN didWatch = 1 THEN 1 ELSE 0 END) as watchedCount,
+            COALESCE(SUM(watchDurationMs), 0) as totalWatchTimeMs
+        FROM shorts_sessions
+        WHERE timestamp >= :startTime AND timestamp < :endTime
+    """)
+    suspend fun getStatsForDateOptimized(startTime: Long, endTime: Long): DailyStatsRaw?
+
+    /**
+     * 일별 통계 집계 결과 (Raw 데이터)
+     */
+    data class DailyStatsRaw(
+        val attemptCount: Int,
+        val watchedCount: Int,
+        val totalWatchTimeMs: Long
+    )
 }
