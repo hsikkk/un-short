@@ -332,4 +332,10 @@
     <string name="report_next_date">Nächstes Datum</string>
     <string name="stats_button">Statistiken</string>
 
+    <!-- Report Screen Help -->
+    <string name="report_help_button">Hilfe</string>
+    <string name="report_help_title">Berichtsinformationen</string>
+    <string name="report_help_message">Der Bericht zeigt Daten der letzten 7 Tage.\nEs werden nur Daten angezeigt, die nach Erteilung der Zugriffsberechtigung gesammelt wurden.</string>
+    <string name="report_help_confirm">OK</string>
+
 </resources>

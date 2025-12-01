@@ -332,4 +332,10 @@
     <string name="report_next_date">Ngày sau</string>
     <string name="stats_button">Thống Kê</string>
 
+    <!-- Report Screen Help -->
+    <string name="report_help_button">Trợ giúp</string>
+    <string name="report_help_title">Thông tin báo cáo</string>
+    <string name="report_help_message">Báo cáo hiển thị dữ liệu của 7 ngày gần nhất.\nChỉ hiển thị dữ liệu được thu thập sau khi cấp quyền dịch vụ trợ năng.</string>
+    <string name="report_help_confirm">OK</string>
+
 </resources>

@@ -334,4 +334,10 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="report_next_date">Tanggal berikutnya</string>
     <string name="stats_button">Statistik</string>
 
+    <!-- Report Screen Help -->
+    <string name="report_help_button">Bantuan</string>
+    <string name="report_help_title">Informasi Laporan</string>
+    <string name="report_help_message">Laporan menampilkan data 7 hari terakhir.\nHanya data yang dikumpulkan setelah memberikan izin layanan aksesibilitas yang ditampilkan.</string>
+    <string name="report_help_confirm">OK</string>
+
 </resources>

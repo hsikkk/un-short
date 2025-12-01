@@ -332,4 +332,10 @@
     <string name="report_next_date">Fecha siguiente</string>
     <string name="stats_button">Estadísticas</string>
 
+    <!-- Report Screen Help -->
+    <string name="report_help_button">Ayuda</string>
+    <string name="report_help_title">Información del informe</string>
+    <string name="report_help_message">El informe muestra datos de los últimos 7 días.\nSolo se muestran los datos recopilados después de otorgar el permiso de servicio de accesibilidad.</string>
+    <string name="report_help_confirm">Aceptar</string>
+
 </resources>

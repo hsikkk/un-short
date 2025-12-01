@@ -332,4 +332,10 @@
     <string name="report_next_date">Sonraki tarih</string>
     <string name="stats_button">İstatistikler</string>
 
+    <!-- Report Screen Help -->
+    <string name="report_help_button">Yardım</string>
+    <string name="report_help_title">Rapor Bilgileri</string>
+    <string name="report_help_message">Rapor son 7 günün verilerini gösterir.\nYalnızca erişilebilirlik hizmeti izni verildikten sonra toplanan veriler görüntülenir.</string>
+    <string name="report_help_confirm">Tamam</string>
+
 </resources>

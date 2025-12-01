@@ -332,4 +332,10 @@
     <string name="report_next_date">التاريخ التالي</string>
     <string name="stats_button">الإحصائيات</string>
 
+    <!-- Report Screen Help -->
+    <string name="report_help_button">مساعدة</string>
+    <string name="report_help_title">معلومات التقرير</string>
+    <string name="report_help_message">يعرض التقرير بيانات آخر 7 أيام.\nيتم عرض البيانات المجمعة فقط بعد منح إذن خدمة إمكانية الوصول.</string>
+    <string name="report_help_confirm">موافق</string>
+
 </resources>

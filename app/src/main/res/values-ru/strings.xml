@@ -332,4 +332,10 @@
     <string name="report_next_date">Следующая дата</string>
     <string name="stats_button">Статистика</string>
 
+    <!-- Report Screen Help -->
+    <string name="report_help_button">Помощь</string>
+    <string name="report_help_title">Информация об отчете</string>
+    <string name="report_help_message">Отчет показывает данные за последние 7 дней.\nОтображаются только данные, собранные после предоставления разрешения службы специальных возможностей.</string>
+    <string name="report_help_confirm">ОК</string>
+
 </resources>

@@ -332,4 +332,10 @@
     <string name="report_next_date">अगली तारीख</string>
     <string name="stats_button">आंकड़े</string>
 
+    <!-- Report Screen Help -->
+    <string name="report_help_button">मदद</string>
+    <string name="report_help_title">रिपोर्ट जानकारी</string>
+    <string name="report_help_message">रिपोर्ट पिछले 7 दिनों का डेटा दिखाती है।\nकेवल पहुंच सेवा अनुमति देने के बाद एकत्र किया गया डेटा प्रदर्शित होता है।</string>
+    <string name="report_help_confirm">ठीक है</string>
+
 </resources>

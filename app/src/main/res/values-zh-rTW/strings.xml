@@ -332,4 +332,10 @@
     <string name="report_next_date">下一個日期</string>
     <string name="stats_button">統計</string>
 
+    <!-- Report Screen Help -->
+    <string name="report_help_button">幫助</string>
+    <string name="report_help_title">報告資訊</string>
+    <string name="report_help_message">報告顯示最近7天的數據。\n僅顯示授予無障礙服務權限後收集的數據。</string>
+    <string name="report_help_confirm">確定</string>
+
 </resources>
