@@ -429,15 +429,19 @@ class ReportActivity : BaseActivity() {
     }
 
     private fun formatWatchTime(ms: Long): String {
-        val totalSeconds = ms / 1000
-        val hours = totalSeconds / 3600
-        val minutes = (totalSeconds % 3600) / 60
-        val seconds = totalSeconds % 60
+        val minuteUnit = getString(R.string.time_unit_minute)
+        val hourUnit = getString(R.string.time_unit_hour)
+
+        if (ms == 0L) return "0$minuteUnit"
+
+        val totalMinutes = (ms / 60000).toInt()
+        val hours = totalMinutes / 60
+        val minutes = totalMinutes % 60
 
         return when {
-            hours > 0 -> "${hours}${getString(R.string.time_unit_hour)} ${minutes}${getString(R.string.time_unit_minute)}"
-            minutes > 0 -> "${minutes}${getString(R.string.time_unit_minute)} ${seconds}${getString(R.string.time_unit_second)}"
-            else -> "${seconds}${getString(R.string.time_unit_second)}"
+            hours == 0 -> "$minutes$minuteUnit"
+            minutes == 0 -> "$hours$hourUnit"
+            else -> "$hours$hourUnit $minutes$minuteUnit"
         }
     }
 

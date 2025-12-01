@@ -103,13 +103,19 @@
         <!-- Time Text -->
         <TextView
             android:id="@+id/watchTimeText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="0분"
             android:textSize="32sp"
             android:fontFamily="@font/spoqa_sans_neo_bold"
             android:textColor="@color/gray_900"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:maxLines="1"
+            android:gravity="center"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="20sp"
+            android:autoSizeMaxTextSize="32sp"
+            android:autoSizeStepGranularity="1sp" />
 
         <!-- Label -->
         <TextView
