@@ -120,7 +120,7 @@ abstract class BaseTimerActivity : BaseActivity() {
         // 네이티브 광고 (상단)
         val nativeAdContainer = findViewById<FrameLayout>(R.id.nativeAd)
         nativeAdView = AdManager.setupNativeAd(
-            activity = this,
+            context = this,
             container = nativeAdContainer,
             adUnit = MuuuNativeAdUnit(
                 key = AdConfig.NATIVE_TIMER_TOP,
@@ -138,7 +138,7 @@ abstract class BaseTimerActivity : BaseActivity() {
         // 배너 광고 (하단)
         val adViewContainer = findViewById<FrameLayout>(R.id.adView)
         bannerAdView = AdManager.setupBannerAd(
-            activity = this,
+            context = this,
             container = adViewContainer,
             adUnit = MuuuBannerAdUnit(
                 key = AdConfig.BANNER_TIMER_BOTTOM,

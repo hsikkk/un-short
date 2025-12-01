@@ -69,7 +69,7 @@ class ReportActivity : BaseActivity() {
         // MREC 광고 설정
         val adViewContainer = findViewById<FrameLayout>(R.id.adViewReport)
          AdManager.setupBannerAd(
-            activity = this,
+            context = this,
             container = adViewContainer,
             adUnit = MuuuBannerAdUnit(
                 key = AdConfig.MREC_REPORT,
