@@ -18,15 +18,16 @@ import com.muuu.unshort.ui.report.ReportViewModel
 import com.muuu.ad.core.adunit.MuuuBannerAdUnit
 import com.muuu.ad.core.model.MuuuBannerSize
 import com.muuu.unshort.ad.AdManager
+import com.muuu.unshort.ui.report.DailyAnalysisPagerAdapter
 import com.muuu.unshort.ui.report.HourlyChartPagerAdapter
+import java.util.Calendar
 
 /**
  * 일일 리포트 화면
  *
  * 최근 7일간의 쇼츠 사용 통계를 보여줌:
  * - Daily Trend: 일별 추이 그래프 (진입/시청/시청 시간)
- * - Summary: 오늘의 요약 통계
- * - Detail: 앱별 상세 통계
+ * - Daily Analysis: 날짜별 ViewPager (Summary + App + Hourly)
  */
 class ReportActivity : BaseActivity() {
 
@@ -34,8 +35,9 @@ class ReportActivity : BaseActivity() {
 
     private lateinit var chartViewPager: ViewPager2
     private lateinit var chartPagerAdapter: ChartPagerAdapter
-    private lateinit var hourlyChartViewPager: ViewPager2
-    private lateinit var hourlyChartPagerAdapter: HourlyChartPagerAdapter
+
+    private lateinit var dailyAnalysisViewPager: ViewPager2
+    private lateinit var dailyAnalysisPagerAdapter: DailyAnalysisPagerAdapter
 
     // Sticky Date Chips
     private lateinit var scrollView: ScrollView
@@ -47,26 +49,12 @@ class ReportActivity : BaseActivity() {
     private lateinit var tabWatched: TextView
     private lateinit var tabWatchTime: TextView
 
-    // Hourly Analysis Tab views
-    private lateinit var hourlyTabAttempts: TextView
-    private lateinit var hourlyTabWatched: TextView
-    private lateinit var hourlyTabWatchTime: TextView
-
-    // Summary views
-    private lateinit var shortsEntryNumber: TextView
-    private lateinit var shortsConsumptionNumber: TextView
-    private lateinit var watchTimeText: TextView
-
-    // Detail views
-    private lateinit var emptyStateView: View
-    private lateinit var appListContainer: LinearLayout
-
     // Date chips container
     private lateinit var dateChipsContainer: LinearLayout
     private val dateChipViews = mutableListOf<TextView>()
 
-    // Hourly metric type state
-    private var currentHourlyMetric = HourlyBarChartView.MetricType.ATTEMPTS
+    // 날짜 리스트 (최근 7일)
+    private val dates = mutableListOf<Long>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,24 +126,36 @@ class ReportActivity : BaseActivity() {
             }
         })
 
-        // Hourly Chart ViewPager
-        hourlyChartViewPager = findViewById(R.id.hourlyChartViewPager)
-        hourlyChartPagerAdapter = HourlyChartPagerAdapter(this)
-        hourlyChartViewPager.adapter = hourlyChartPagerAdapter
+        // Daily Analysis ViewPager
+        dailyAnalysisViewPager = findViewById(R.id.dailyAnalysisViewPager)
+        dailyAnalysisPagerAdapter = DailyAnalysisPagerAdapter(this)
+        dailyAnalysisViewPager.adapter = dailyAnalysisPagerAdapter
 
-        // ViewPager 페이지 변경 리스너 - 탭 동기화
-        hourlyChartViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        // 날짜 리스트 설정 (최근 7일)
+        dates.clear()
+        for (i in 6 downTo 0) {
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.DAY_OF_YEAR, -i)
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+            dates.add(calendar.timeInMillis)
+        }
+        dailyAnalysisPagerAdapter.setDates(dates)
+
+        // ViewPager 페이지 변경 시 ViewModel selectedDate 업데이트
+        dailyAnalysisViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                val metricType = when (position) {
-                    0 -> HourlyBarChartView.MetricType.ATTEMPTS
-                    1 -> HourlyBarChartView.MetricType.WATCHED
-                    2 -> HourlyBarChartView.MetricType.WATCH_TIME
-                    else -> HourlyBarChartView.MetricType.ATTEMPTS
-                }
-                currentHourlyMetric = metricType
-                updateHourlyTabUI(metricType)
+                val selectedDate = dates[position]
+                viewModel.selectDate(selectedDate)
             }
         })
+
+        // 페이지 바인드 시 데이터 업데이트
+        dailyAnalysisPagerAdapter.onPageBind = { position, view, date ->
+            updatePageData(view, date)
+        }
 
         // Sticky Date Chips
         scrollView = findViewById(R.id.contentScrollView)
@@ -166,20 +166,6 @@ class ReportActivity : BaseActivity() {
         tabAttempts = findViewById(R.id.tabAttempts)
         tabWatched = findViewById(R.id.tabWatched)
         tabWatchTime = findViewById(R.id.tabWatchTime)
-
-        // Hourly Analysis Tabs
-        hourlyTabAttempts = findViewById(R.id.hourlyTabAttempts)
-        hourlyTabWatched = findViewById(R.id.hourlyTabWatched)
-        hourlyTabWatchTime = findViewById(R.id.hourlyTabWatchTime)
-
-        // Summary
-        shortsEntryNumber = findViewById(R.id.shortsEntryNumber)
-        shortsConsumptionNumber = findViewById(R.id.shortsConsumptionNumber)
-        watchTimeText = findViewById(R.id.watchTimeText)
-
-        // Detail
-        emptyStateView = findViewById(R.id.emptyStateView)
-        appListContainer = findViewById(R.id.appListContainer)
 
         // Date chips
         dateChipsContainer = findViewById(R.id.dateChipsContainer)
@@ -197,19 +183,6 @@ class ReportActivity : BaseActivity() {
 
         tabWatchTime.setOnClickListener {
             chartViewPager.setCurrentItem(2, true)
-        }
-
-        // Hourly Analysis Tabs - ViewPager와 동기화
-        hourlyTabAttempts.setOnClickListener {
-            hourlyChartViewPager.setCurrentItem(0, true)
-        }
-
-        hourlyTabWatched.setOnClickListener {
-            hourlyChartViewPager.setCurrentItem(1, true)
-        }
-
-        hourlyTabWatchTime.setOnClickListener {
-            hourlyChartViewPager.setCurrentItem(2, true)
         }
     }
 
@@ -241,7 +214,11 @@ class ReportActivity : BaseActivity() {
             }
 
             setOnClickListener {
-                viewModel.selectDate(dateMillis)
+                // ViewPager 페이지 전환
+                val pageIndex = dates.indexOfFirst { isSameDay(it, dateMillis) }
+                if (pageIndex != -1) {
+                    dailyAnalysisViewPager.setCurrentItem(pageIndex, true)
+                }
             }
         }
     }
@@ -270,6 +247,9 @@ class ReportActivity : BaseActivity() {
 
         // 스크롤 리스너 설정
         setupScrollListener()
+
+        // 초기 페이지 설정 (오늘)
+        dailyAnalysisViewPager.setCurrentItem(6, false)
     }
 
     private fun setupScrollListener() {
@@ -311,11 +291,19 @@ class ReportActivity : BaseActivity() {
         // 날짜 상태 관찰
         viewModel.dateState.observe(this) { dateState ->
             updateDateChips(dateState.selectedDate)
-            // 어댑터에 선택된 날짜 업데이트
+
+            // Daily Trend Chart 업데이트
             val stats = viewModel.dailyStats.value ?: emptyList()
             chartPagerAdapter.updateData(stats, dateState.selectedDate)
-            // Hourly chart도 날짜 업데이트
-            updateHourlyChart()
+
+            // ViewPager 페이지도 업데이트 (날짜 변경 시)
+            val pageIndex = dates.indexOfFirst { isSameDay(it, dateState.selectedDate) }
+            if (pageIndex != -1 && dailyAnalysisViewPager.currentItem != pageIndex) {
+                dailyAnalysisViewPager.setCurrentItem(pageIndex, true)
+            }
+
+            // 현재 페이지의 데이터 강제 업데이트
+            dailyAnalysisPagerAdapter.notifyDataSetChanged()
         }
 
         viewModel.dailyStats.observe(this) { stats ->
@@ -323,18 +311,23 @@ class ReportActivity : BaseActivity() {
                 val selectedDate = viewModel.dateState.value?.selectedDate ?: 0L
                 chartPagerAdapter.updateData(stats, selectedDate)
             }
+            // Daily Analysis 페이지들도 업데이트
+            dailyAnalysisPagerAdapter.notifyDataSetChanged()
         }
 
-        viewModel.todayStats.observe(this) { stats ->
-            updateSummary(stats)
+        viewModel.todayStats.observe(this) {
+            // 선택된 날짜의 Summary stats가 변경되면 현재 페이지 업데이트
+            dailyAnalysisPagerAdapter.notifyDataSetChanged()
         }
 
-        viewModel.hourlyStats.observe(this) { stats ->
-            updateHourlyChart()
+        viewModel.hourlyStats.observe(this) {
+            // Hourly stats가 변경되면 현재 페이지 업데이트
+            dailyAnalysisPagerAdapter.notifyDataSetChanged()
         }
 
-        viewModel.appStats.observe(this) { apps ->
-            updateAppList(apps)
+        viewModel.appStats.observe(this) {
+            // App stats가 변경되면 현재 페이지 업데이트
+            dailyAnalysisPagerAdapter.notifyDataSetChanged()
         }
 
         viewModel.selectedMetric.observe(this) { metricType ->
@@ -386,68 +379,9 @@ class ReportActivity : BaseActivity() {
         }
     }
 
-    private fun updateHourlyTabUI(metricType: HourlyBarChartView.MetricType) {
-        val selectedColor = getColor(R.color.gray_900)
-        val unselectedColor = getColor(R.color.gray_600)
-        val selectedBg = R.drawable.tab_selected_background
-        val unselectedBg = R.drawable.tab_unselected_background
-
-        when (metricType) {
-            HourlyBarChartView.MetricType.ATTEMPTS -> {
-                hourlyTabAttempts.setTextColor(selectedColor)
-                hourlyTabAttempts.setBackgroundResource(selectedBg)
-                hourlyTabWatched.setTextColor(unselectedColor)
-                hourlyTabWatched.setBackgroundResource(unselectedBg)
-                hourlyTabWatchTime.setTextColor(unselectedColor)
-                hourlyTabWatchTime.setBackgroundResource(unselectedBg)
-            }
-            HourlyBarChartView.MetricType.WATCHED -> {
-                hourlyTabAttempts.setTextColor(unselectedColor)
-                hourlyTabAttempts.setBackgroundResource(unselectedBg)
-                hourlyTabWatched.setTextColor(selectedColor)
-                hourlyTabWatched.setBackgroundResource(selectedBg)
-                hourlyTabWatchTime.setTextColor(unselectedColor)
-                hourlyTabWatchTime.setBackgroundResource(unselectedBg)
-            }
-            HourlyBarChartView.MetricType.WATCH_TIME -> {
-                hourlyTabAttempts.setTextColor(unselectedColor)
-                hourlyTabAttempts.setBackgroundResource(unselectedBg)
-                hourlyTabWatched.setTextColor(unselectedColor)
-                hourlyTabWatched.setBackgroundResource(unselectedBg)
-                hourlyTabWatchTime.setTextColor(selectedColor)
-                hourlyTabWatchTime.setBackgroundResource(selectedBg)
-            }
-        }
-    }
-
-    private fun updateSummary(stats: StatisticsRepository.DailyStats) {
-        shortsEntryNumber.text = stats.attemptCount.toString()
-        shortsConsumptionNumber.text = stats.watchedCount.toString()
-        watchTimeText.text = formatWatchTime(stats.watchTimeMs)
-    }
-
-    private fun updateAppList(apps: List<StatisticsRepository.AppStats>) {
-        appListContainer.removeAllViews()
-
-        if (apps.isEmpty()) {
-            // Empty state 표시
-            emptyStateView.visibility = View.VISIBLE
-            appListContainer.visibility = View.GONE
-            return
-        }
-
-        // 데이터 있을 때
-        emptyStateView.visibility = View.GONE
-        appListContainer.visibility = View.VISIBLE
-
-        apps.forEach { appStat ->
-            val appCard = createAppCard(appStat)
-            appListContainer.addView(appCard)
-        }
-    }
 
     private fun createAppCard(appStat: StatisticsRepository.AppStats): View {
-        val cardView = LayoutInflater.from(this).inflate(R.layout.item_app_stat, appListContainer, false)
+        val cardView = LayoutInflater.from(this).inflate(R.layout.item_app_stat, null, false)
 
         val appIcon = cardView.findViewById<ImageView>(R.id.appIcon)
         val appName = cardView.findViewById<TextView>(R.id.appName)
@@ -566,11 +500,121 @@ class ReportActivity : BaseActivity() {
                 cal1.get(java.util.Calendar.DAY_OF_YEAR) == cal2.get(java.util.Calendar.DAY_OF_YEAR)
     }
 
-    private fun updateHourlyChart() {
-        val stats = viewModel.hourlyStats.value ?: emptyList()
-        val selectedDate = viewModel.dateState.value?.selectedDate ?: 0L
+    private fun updatePageData(view: View, date: Long) {
+        // Summary views
+        val shortsEntryNumber = view.findViewById<TextView>(R.id.shortsEntryNumber)
+        val shortsConsumptionNumber = view.findViewById<TextView>(R.id.shortsConsumptionNumber)
+        val watchTimeText = view.findViewById<TextView>(R.id.watchTimeText)
 
-        hourlyChartPagerAdapter.updateData(stats, selectedDate)
+        // App views
+        val emptyStateView = view.findViewById<View>(R.id.emptyStateView)
+        val appListContainer = view.findViewById<LinearLayout>(R.id.appListContainer)
+
+        // Hourly views
+        val hourlyChartViewPager = view.findViewById<ViewPager2>(R.id.hourlyChartViewPager)
+        val hourlyTabAttempts = view.findViewById<TextView>(R.id.hourlyTabAttempts)
+        val hourlyTabWatched = view.findViewById<TextView>(R.id.hourlyTabWatched)
+        val hourlyTabWatchTime = view.findViewById<TextView>(R.id.hourlyTabWatchTime)
+
+        // ViewModel에서 현재 선택된 날짜의 데이터를 사용
+        // dateState가 변경될 때 이 콜백이 다시 호출되므로 현재 데이터를 직접 사용
+        val todayStats = viewModel.todayStats.value
+        val appStats = viewModel.appStats.value ?: emptyList()
+        val hourlyStats = viewModel.hourlyStats.value ?: emptyList()
+
+        // Summary 업데이트
+        if (todayStats != null) {
+            shortsEntryNumber.text = todayStats.attemptCount.toString()
+            shortsConsumptionNumber.text = todayStats.watchedCount.toString()
+            watchTimeText.text = formatWatchTime(todayStats.watchTimeMs)
+        } else {
+            shortsEntryNumber.text = "0"
+            shortsConsumptionNumber.text = "0"
+            watchTimeText.text = "0${getString(R.string.time_unit_minute)}"
+        }
+
+        // App List 업데이트
+        appListContainer.removeAllViews()
+        if (appStats.isEmpty()) {
+            emptyStateView.visibility = View.VISIBLE
+            appListContainer.visibility = View.GONE
+        } else {
+            emptyStateView.visibility = View.GONE
+            appListContainer.visibility = View.VISIBLE
+
+            appStats.forEach { appStat ->
+                val appCard = createAppCard(appStat)
+                appListContainer.addView(appCard)
+            }
+        }
+
+        // Hourly Chart ViewPager 설정
+        val hourlyChartPagerAdapter = HourlyChartPagerAdapter(this)
+        hourlyChartViewPager.adapter = hourlyChartPagerAdapter
+        hourlyChartPagerAdapter.updateData(hourlyStats, date)
+
+        // Hourly Chart 페이지 변경 리스너
+        hourlyChartViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                val metricType = when (position) {
+                    0 -> HourlyBarChartView.MetricType.ATTEMPTS
+                    1 -> HourlyBarChartView.MetricType.WATCHED
+                    2 -> HourlyBarChartView.MetricType.WATCH_TIME
+                    else -> HourlyBarChartView.MetricType.ATTEMPTS
+                }
+                updateHourlyTabUI(hourlyTabAttempts, hourlyTabWatched, hourlyTabWatchTime, metricType)
+            }
+        })
+
+        // Hourly Tabs 클릭 리스너
+        hourlyTabAttempts.setOnClickListener {
+            hourlyChartViewPager.setCurrentItem(0, true)
+        }
+        hourlyTabWatched.setOnClickListener {
+            hourlyChartViewPager.setCurrentItem(1, true)
+        }
+        hourlyTabWatchTime.setOnClickListener {
+            hourlyChartViewPager.setCurrentItem(2, true)
+        }
+    }
+
+    private fun updateHourlyTabUI(
+        tabAttempts: TextView,
+        tabWatched: TextView,
+        tabWatchTime: TextView,
+        metricType: HourlyBarChartView.MetricType
+    ) {
+        val selectedColor = getColor(R.color.gray_900)
+        val unselectedColor = getColor(R.color.gray_600)
+        val selectedBg = R.drawable.tab_selected_background
+        val unselectedBg = R.drawable.tab_unselected_background
+
+        when (metricType) {
+            HourlyBarChartView.MetricType.ATTEMPTS -> {
+                tabAttempts.setTextColor(selectedColor)
+                tabAttempts.setBackgroundResource(selectedBg)
+                tabWatched.setTextColor(unselectedColor)
+                tabWatched.setBackgroundResource(unselectedBg)
+                tabWatchTime.setTextColor(unselectedColor)
+                tabWatchTime.setBackgroundResource(unselectedBg)
+            }
+            HourlyBarChartView.MetricType.WATCHED -> {
+                tabAttempts.setTextColor(unselectedColor)
+                tabAttempts.setBackgroundResource(unselectedBg)
+                tabWatched.setTextColor(selectedColor)
+                tabWatched.setBackgroundResource(selectedBg)
+                tabWatchTime.setTextColor(unselectedColor)
+                tabWatchTime.setBackgroundResource(unselectedBg)
+            }
+            HourlyBarChartView.MetricType.WATCH_TIME -> {
+                tabAttempts.setTextColor(unselectedColor)
+                tabAttempts.setBackgroundResource(unselectedBg)
+                tabWatched.setTextColor(unselectedColor)
+                tabWatched.setBackgroundResource(unselectedBg)
+                tabWatchTime.setTextColor(selectedColor)
+                tabWatchTime.setBackgroundResource(selectedBg)
+            }
+        }
     }
 
     private fun showReportHelpDialog() {
