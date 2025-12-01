@@ -155,9 +155,9 @@ class DailyReportReceiver : BroadcastReceiver() {
 
         // Generate message
         val message = if (blockCount > 0) {
-            "오늘 쇼츠 시청을 ${blockCount}회 참았어요. 잘하고 있어요!"
+            "오늘 ${blockCount}회 참았어요. 자세히 볼까요?"
         } else {
-            "오늘은 쇼츠를 보지 않았어요 ✨"
+            "오늘 하루 리포트를 확인해보세요 ✨"
         }
 
         // Create intent to open ReportActivity
