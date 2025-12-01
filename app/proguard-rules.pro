@@ -19,7 +19,6 @@
 -keep class com.muuu.unshort.OnboardingActivity { *; }
 -keep class com.muuu.unshort.SettingsActivity { *; }
 -keep class com.muuu.unshort.PermissionSetupActivity { *; }
--keep class com.muuu.unshort.TimerActivity { *; }
 
 # Keep BroadcastReceiver
 -keep class com.muuu.unshort.AppRestartReceiver { *; }
