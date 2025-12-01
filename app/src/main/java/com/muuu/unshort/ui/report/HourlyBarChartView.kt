@@ -111,7 +111,7 @@ class HourlyBarChartView @JvmOverloads constructor(
             }
             countTextPaint.measureText(valueText)
         } ?: 0f
-        val chartPaddingRight = maxTextWidth + 12f.dpToPx() // 텍스트 너비 + 최소 여유 공간
+        val chartPaddingRight = maxTextWidth + 24f.dpToPx() // 텍스트 너비 + 최소 여유 공간
 
         val chartWidth = width - chartPaddingLeft - chartPaddingRight
         val chartHeight = height - chartPaddingTop - chartPaddingBottom
