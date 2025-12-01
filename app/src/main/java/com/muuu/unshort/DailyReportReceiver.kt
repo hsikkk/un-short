@@ -154,11 +154,7 @@ class DailyReportReceiver : BroadcastReceiver() {
         createNotificationChannel(context)
 
         // Generate message
-        val message = if (blockCount > 0) {
-            "오늘 ${blockCount}회 참았어요. 자세히 볼까요?"
-        } else {
-            "오늘 하루 리포트를 확인해보세요 ✨"
-        }
+        val message = "오늘 하루 리포트를 확인해보세요 ✨"
 
         // Create intent to open ReportActivity
         val intent = Intent(context, ReportActivity::class.java).apply {
