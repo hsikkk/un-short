@@ -117,9 +117,9 @@
                         android:focusable="true" />
                 </LinearLayout>
 
-                <!-- Chart View -->
-                <com.muuu.unshort.ui.report.BarChartView
-                    android:id="@+id/chartView"
+                <!-- Chart ViewPager -->
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/chartViewPager"
                     android:layout_width="match_parent"
                     android:layout_height="220dp" />
             </LinearLayout>

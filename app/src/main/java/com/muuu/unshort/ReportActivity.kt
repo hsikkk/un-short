@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.muuu.unshort.data.statistics.StatisticsRepository
 import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.ui.report.BarChartView
+import com.muuu.unshort.ui.report.ChartPagerAdapter
 import com.muuu.unshort.ui.report.HourlyBarChartView
 import com.muuu.unshort.ui.report.ReportViewModel
 import com.muuu.ad.core.adunit.MuuuBannerAdUnit
@@ -29,7 +31,8 @@ class ReportActivity : BaseActivity() {
 
     private val viewModel: ReportViewModel by viewModels()
 
-    private lateinit var chartView: BarChartView
+    private lateinit var chartViewPager: ViewPager2
+    private lateinit var chartPagerAdapter: ChartPagerAdapter
     private lateinit var hourlyChartView: HourlyBarChartView
 
     // Daily Trend Tab views
@@ -105,8 +108,24 @@ class ReportActivity : BaseActivity() {
             }
         }
 
-        // Chart
-        chartView = findViewById(R.id.chartView)
+        // Chart ViewPager
+        chartViewPager = findViewById(R.id.chartViewPager)
+        chartPagerAdapter = ChartPagerAdapter(this)
+        chartViewPager.adapter = chartPagerAdapter
+
+        // ViewPager 페이지 변경 리스너 - 탭 동기화
+        chartViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                val metricType = when (position) {
+                    0 -> BarChartView.MetricType.ATTEMPTS
+                    1 -> BarChartView.MetricType.WATCHED
+                    2 -> BarChartView.MetricType.WATCH_TIME
+                    else -> BarChartView.MetricType.ATTEMPTS
+                }
+                viewModel.selectMetric(metricType)
+            }
+        })
+
         hourlyChartView = findViewById(R.id.hourlyChartView)
 
         // Daily Trend Tabs
@@ -133,17 +152,17 @@ class ReportActivity : BaseActivity() {
     }
 
     private fun setupTabs() {
-        // Daily Trend Tabs
+        // Daily Trend Tabs - ViewPager와 동기화
         tabAttempts.setOnClickListener {
-            viewModel.selectMetric(BarChartView.MetricType.ATTEMPTS)
+            chartViewPager.setCurrentItem(0, true)
         }
 
         tabWatched.setOnClickListener {
-            viewModel.selectMetric(BarChartView.MetricType.WATCHED)
+            chartViewPager.setCurrentItem(1, true)
         }
 
         tabWatchTime.setOnClickListener {
-            viewModel.selectMetric(BarChartView.MetricType.WATCH_TIME)
+            chartViewPager.setCurrentItem(2, true)
         }
 
         // Hourly Analysis Tabs
@@ -229,17 +248,17 @@ class ReportActivity : BaseActivity() {
         // 날짜 상태 관찰
         viewModel.dateState.observe(this) { dateState ->
             updateDateChips(dateState.selectedDate)
-            // 차트에 선택된 날짜 전달
-            chartView.setSelectedDate(dateState.selectedDate)
+            // 어댑터에 선택된 날짜 업데이트
+            val stats = viewModel.dailyStats.value ?: emptyList()
+            chartPagerAdapter.updateData(stats, dateState.selectedDate)
             // Hourly chart도 날짜 업데이트
             updateHourlyChart()
         }
 
         viewModel.dailyStats.observe(this) { stats ->
             if (stats.isNotEmpty()) {
-                val metricType = viewModel.selectedMetric.value ?: BarChartView.MetricType.ATTEMPTS
                 val selectedDate = viewModel.dateState.value?.selectedDate ?: 0L
-                chartView.setData(stats, metricType, selectedDate)
+                chartPagerAdapter.updateData(stats, selectedDate)
             }
         }
 
@@ -258,11 +277,14 @@ class ReportActivity : BaseActivity() {
         viewModel.selectedMetric.observe(this) { metricType ->
             updateTabUI(metricType)
 
-            // Update chart with current data
-            val stats = viewModel.dailyStats.value
-            if (!stats.isNullOrEmpty()) {
-                val selectedDate = viewModel.dateState.value?.selectedDate ?: 0L
-                chartView.setData(stats, metricType, selectedDate)
+            // ViewPager 위치 동기화 (탭 클릭 시)
+            val position = when (metricType) {
+                BarChartView.MetricType.ATTEMPTS -> 0
+                BarChartView.MetricType.WATCHED -> 1
+                BarChartView.MetricType.WATCH_TIME -> 2
+            }
+            if (chartViewPager.currentItem != position) {
+                chartViewPager.setCurrentItem(position, true)
             }
         }
     }
