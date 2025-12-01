@@ -122,7 +122,7 @@
                 android:focusable="true" />
         </LinearLayout>
 
-        <androidx.viewpager2.widget.ViewPager2
+        <com.muuu.unshort.ui.report.NestedViewPager2
             android:id="@+id/hourlyChartViewPager"
             android:layout_width="match_parent"
             android:layout_height="608dp" />

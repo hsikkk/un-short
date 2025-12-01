@@ -14,6 +14,7 @@ import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.ui.report.BarChartView
 import com.muuu.unshort.ui.report.ChartPagerAdapter
 import com.muuu.unshort.ui.report.HourlyBarChartView
+import com.muuu.unshort.ui.report.NestedViewPager2
 import com.muuu.unshort.ui.report.ReportViewModel
 import com.muuu.ad.core.adunit.MuuuBannerAdUnit
 import com.muuu.ad.core.model.MuuuBannerSize
@@ -144,17 +145,27 @@ class ReportActivity : BaseActivity() {
         }
         dailyAnalysisPagerAdapter.setDates(dates)
 
-        // ViewPager 페이지 변경 시 ViewModel selectedDate 업데이트
+        // ViewPager 페이지 변경 시 ViewModel selectedDate 업데이트 및 높이 조정
         dailyAnalysisViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 val selectedDate = dates[position]
                 viewModel.selectDate(selectedDate)
+
+                // ViewPager 높이 조정
+                updateViewPagerHeight(dailyAnalysisViewPager)
             }
         })
 
         // 페이지 바인드 시 데이터 업데이트
         dailyAnalysisPagerAdapter.onPageBind = { position, view, date ->
             updatePageData(view, date)
+
+            // 현재 표시 중인 페이지면 높이 재조정
+            if (position == dailyAnalysisViewPager.currentItem) {
+                dailyAnalysisViewPager.post {
+                    updateViewPagerHeight(dailyAnalysisViewPager)
+                }
+            }
         }
 
         // Sticky Date Chips
@@ -169,6 +180,11 @@ class ReportActivity : BaseActivity() {
 
         // Date chips
         dateChipsContainer = findViewById(R.id.dateChipsContainer)
+
+        // 초기 페이지 높이 설정
+        dailyAnalysisViewPager.post {
+            updateViewPagerHeight(dailyAnalysisViewPager)
+        }
     }
 
     private fun setupTabs() {
@@ -511,7 +527,7 @@ class ReportActivity : BaseActivity() {
         val appListContainer = view.findViewById<LinearLayout>(R.id.appListContainer)
 
         // Hourly views
-        val hourlyChartViewPager = view.findViewById<ViewPager2>(R.id.hourlyChartViewPager)
+        val hourlyChartViewPager = view.findViewById<NestedViewPager2>(R.id.hourlyChartViewPager)
         val hourlyTabAttempts = view.findViewById<TextView>(R.id.hourlyTabAttempts)
         val hourlyTabWatched = view.findViewById<TextView>(R.id.hourlyTabWatched)
         val hourlyTabWatchTime = view.findViewById<TextView>(R.id.hourlyTabWatchTime)
@@ -550,11 +566,11 @@ class ReportActivity : BaseActivity() {
 
         // Hourly Chart ViewPager 설정
         val hourlyChartPagerAdapter = HourlyChartPagerAdapter(this)
-        hourlyChartViewPager.adapter = hourlyChartPagerAdapter
+        hourlyChartViewPager.viewPager.adapter = hourlyChartPagerAdapter
         hourlyChartPagerAdapter.updateData(hourlyStats, date)
 
         // Hourly Chart 페이지 변경 리스너
-        hourlyChartViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        hourlyChartViewPager.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 val metricType = when (position) {
                     0 -> HourlyBarChartView.MetricType.ATTEMPTS
@@ -568,13 +584,13 @@ class ReportActivity : BaseActivity() {
 
         // Hourly Tabs 클릭 리스너
         hourlyTabAttempts.setOnClickListener {
-            hourlyChartViewPager.setCurrentItem(0, true)
+            hourlyChartViewPager.viewPager.setCurrentItem(0, true)
         }
         hourlyTabWatched.setOnClickListener {
-            hourlyChartViewPager.setCurrentItem(1, true)
+            hourlyChartViewPager.viewPager.setCurrentItem(1, true)
         }
         hourlyTabWatchTime.setOnClickListener {
-            hourlyChartViewPager.setCurrentItem(2, true)
+            hourlyChartViewPager.viewPager.setCurrentItem(2, true)
         }
     }
 
@@ -627,5 +643,30 @@ class ReportActivity : BaseActivity() {
             canceledOnTouchOutside = true,
             onPositive = {}
         ).show()
+    }
+
+    /**
+     * ViewPager2의 높이를 현재 페이지의 실제 높이에 맞춰 동적으로 조정
+     */
+    private fun updateViewPagerHeight(viewPager: ViewPager2) {
+        viewPager.post {
+            // 현재 표시 중인 페이지의 뷰를 찾음
+            val view = (viewPager.getChildAt(0) as? androidx.recyclerview.widget.RecyclerView)
+                ?.findViewHolderForAdapterPosition(viewPager.currentItem)
+                ?.itemView ?: return@post
+
+            // 뷰의 실제 높이 측정
+            view.measure(
+                View.MeasureSpec.makeMeasureSpec(viewPager.width, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+            )
+
+            // ViewPager 높이 업데이트
+            val params = viewPager.layoutParams
+            if (params.height != view.measuredHeight) {
+                params.height = view.measuredHeight
+                viewPager.layoutParams = params
+            }
+        }
     }
 }
