@@ -597,7 +597,8 @@ class SettingsActivity : BaseActivity() {
      */
     private fun updateNotificationTimeDisplay() {
         val hour = prefsManager.dailyNotificationHour
-        val timeString = String.format("%02d:00", hour)
+        val minute = prefsManager.dailyNotificationMinute
+        val timeString = String.format("%02d:%02d", hour, minute)
         dailyNotificationTimeValue.text = timeString
     }
 
@@ -606,12 +607,14 @@ class SettingsActivity : BaseActivity() {
      */
     private fun showNotificationTimePicker() {
         val currentHour = prefsManager.dailyNotificationHour
+        val currentMinute = prefsManager.dailyNotificationMinute
 
         val timePicker = TimePickerDialog(
             this,
-            { _, hourOfDay, _ ->
+            { _, hourOfDay, minute ->
                 // 시간 저장
                 prefsManager.dailyNotificationHour = hourOfDay
+                prefsManager.dailyNotificationMinute = minute
 
                 // UI 업데이트
                 updateNotificationTimeDisplay()
@@ -619,11 +622,11 @@ class SettingsActivity : BaseActivity() {
                 // 알람 재스케줄링
                 if (prefsManager.isDailyNotificationsEnabled) {
                     DailyReportReceiver.scheduleDailyReport(this)
-                    Log.d("SettingsActivity", "Rescheduled notification for $hourOfDay:00")
+                    Log.d("SettingsActivity", "Rescheduled notification for $hourOfDay:$minute")
                 }
             },
             currentHour,
-            0,  // 분은 항상 0
+            currentMinute,
             true  // 24시간 형식
         )
 

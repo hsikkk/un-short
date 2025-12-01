@@ -98,10 +98,11 @@ class DailyReportReceiver : BroadcastReceiver() {
         private fun getNextReportTime(context: Context): Long {
             val prefsManager = PreferencesManager(context)
             val notificationHour = prefsManager.dailyNotificationHour
+            val notificationMinute = prefsManager.dailyNotificationMinute
 
             val calendar = Calendar.getInstance().apply {
                 set(Calendar.HOUR_OF_DAY, notificationHour)
-                set(Calendar.MINUTE, 0)
+                set(Calendar.MINUTE, notificationMinute)
                 set(Calendar.SECOND, 0)
                 set(Calendar.MILLISECOND, 0)
             }
