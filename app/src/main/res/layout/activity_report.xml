@@ -16,17 +16,6 @@
         android:background="@android:color/black"
         android:alpha="0.1" />
 
-    <!-- Date Chips -->
-    <LinearLayout
-        android:id="@+id/dateChipsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp" />
-    
     <!-- Content ScrollView -->
     <ScrollView
         android:layout_width="match_parent"
@@ -133,67 +122,7 @@
                 android:layout_marginBottom="36dp"
                 android:gravity="center" />
 
-            <!-- Summary Section -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="32dp">
-
-                <!-- Section Title -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/report_summary"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/spoqa_sans_neo_medium"
-                    android:textColor="@color/gray_900"
-                    android:alpha="0.5"
-                    android:textAllCaps="true"
-                    android:letterSpacing="0.1"
-                    android:layout_marginBottom="16dp" />
-
-                <!-- Summary Grid (재사용) -->
-                <include layout="@layout/stats_summary_grid" />
-            </LinearLayout>
-
-            <!-- App Analysis Section -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="32dp">
-
-                <!-- Section Title -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/report_app_analysis"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/spoqa_sans_neo_medium"
-                    android:textColor="@color/gray_900"
-                    android:alpha="0.5"
-                    android:textAllCaps="true"
-                    android:letterSpacing="0.1"
-                    android:layout_marginBottom="16dp" />
-
-                <!-- Empty State (initially hidden) -->
-                <include
-                    android:id="@+id/emptyStateView"
-                    layout="@layout/empty_state_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone" />
-
-                <!-- App List Container -->
-                <LinearLayout
-                    android:id="@+id/appListContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
-            </LinearLayout>
-
-            <!-- Hourly Analysis Section -->
+            <!-- Daily Analysis Section -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -203,7 +132,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/report_hourly_analysis"
+                    android:text="@string/report_daily_analysis"
                     android:textSize="13sp"
                     android:fontFamily="@font/spoqa_sans_neo_medium"
                     android:textColor="@color/gray_900"
@@ -212,7 +141,50 @@
                     android:letterSpacing="0.1"
                     android:layout_marginBottom="16dp" />
 
-                <!-- Metric Tabs -->
+                <!-- Date Chips -->
+                <LinearLayout
+                    android:id="@+id/dateChipsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="20dp" />
+
+                <!-- Summary Grid -->
+                <include layout="@layout/stats_summary_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp" />
+
+                <!-- App Analysis -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="24dp">
+
+                    <!-- Empty State (initially hidden) -->
+                    <include
+                        android:id="@+id/emptyStateView"
+                        layout="@layout/empty_state_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
+                    <!-- App List Container -->
+                    <LinearLayout
+                        android:id="@+id/appListContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+                </LinearLayout>
+
+                <!-- Hourly Analysis -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Metric Tabs -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -270,11 +242,12 @@
                         android:focusable="true" />
                 </LinearLayout>
 
-                <!-- Hourly Chart View -->
-                <com.muuu.unshort.ui.report.HourlyBarChartView
-                    android:id="@+id/hourlyChartView"
-                    android:layout_width="match_parent"
-                    android:layout_height="520dp" />
+                    <!-- Hourly Chart View -->
+                    <com.muuu.unshort.ui.report.HourlyBarChartView
+                        android:id="@+id/hourlyChartView"
+                        android:layout_width="match_parent"
+                        android:layout_height="520dp" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
