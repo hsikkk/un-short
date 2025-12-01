@@ -18,6 +18,7 @@ import com.muuu.unshort.ui.report.ReportViewModel
 import com.muuu.ad.core.adunit.MuuuBannerAdUnit
 import com.muuu.ad.core.model.MuuuBannerSize
 import com.muuu.unshort.ad.AdManager
+import com.muuu.unshort.ui.report.HourlyChartPagerAdapter
 
 /**
  * 일일 리포트 화면
@@ -33,7 +34,8 @@ class ReportActivity : BaseActivity() {
 
     private lateinit var chartViewPager: ViewPager2
     private lateinit var chartPagerAdapter: ChartPagerAdapter
-    private lateinit var hourlyChartView: HourlyBarChartView
+    private lateinit var hourlyChartViewPager: ViewPager2
+    private lateinit var hourlyChartPagerAdapter: HourlyChartPagerAdapter
 
     // Sticky Date Chips
     private lateinit var scrollView: ScrollView
@@ -136,7 +138,24 @@ class ReportActivity : BaseActivity() {
             }
         })
 
-        hourlyChartView = findViewById(R.id.hourlyChartView)
+        // Hourly Chart ViewPager
+        hourlyChartViewPager = findViewById(R.id.hourlyChartViewPager)
+        hourlyChartPagerAdapter = HourlyChartPagerAdapter(this)
+        hourlyChartViewPager.adapter = hourlyChartPagerAdapter
+
+        // ViewPager 페이지 변경 리스너 - 탭 동기화
+        hourlyChartViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                val metricType = when (position) {
+                    0 -> HourlyBarChartView.MetricType.ATTEMPTS
+                    1 -> HourlyBarChartView.MetricType.WATCHED
+                    2 -> HourlyBarChartView.MetricType.WATCH_TIME
+                    else -> HourlyBarChartView.MetricType.ATTEMPTS
+                }
+                currentHourlyMetric = metricType
+                updateHourlyTabUI(metricType)
+            }
+        })
 
         // Sticky Date Chips
         scrollView = findViewById(R.id.contentScrollView)
@@ -180,23 +199,17 @@ class ReportActivity : BaseActivity() {
             chartViewPager.setCurrentItem(2, true)
         }
 
-        // Hourly Analysis Tabs
+        // Hourly Analysis Tabs - ViewPager와 동기화
         hourlyTabAttempts.setOnClickListener {
-            currentHourlyMetric = HourlyBarChartView.MetricType.ATTEMPTS
-            updateHourlyChart()
-            updateHourlyTabUI(HourlyBarChartView.MetricType.ATTEMPTS)
+            hourlyChartViewPager.setCurrentItem(0, true)
         }
 
         hourlyTabWatched.setOnClickListener {
-            currentHourlyMetric = HourlyBarChartView.MetricType.WATCHED
-            updateHourlyChart()
-            updateHourlyTabUI(HourlyBarChartView.MetricType.WATCHED)
+            hourlyChartViewPager.setCurrentItem(1, true)
         }
 
         hourlyTabWatchTime.setOnClickListener {
-            currentHourlyMetric = HourlyBarChartView.MetricType.WATCH_TIME
-            updateHourlyChart()
-            updateHourlyTabUI(HourlyBarChartView.MetricType.WATCH_TIME)
+            hourlyChartViewPager.setCurrentItem(2, true)
         }
     }
 
@@ -554,12 +567,10 @@ class ReportActivity : BaseActivity() {
     }
 
     private fun updateHourlyChart() {
-        val stats = viewModel.hourlyStats.value
+        val stats = viewModel.hourlyStats.value ?: emptyList()
         val selectedDate = viewModel.dateState.value?.selectedDate ?: 0L
 
-        if (!stats.isNullOrEmpty()) {
-            hourlyChartView.setData(stats, currentHourlyMetric, selectedDate)
-        }
+        hourlyChartPagerAdapter.updateData(stats, selectedDate)
     }
 
     private fun showReportHelpDialog() {

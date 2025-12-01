@@ -309,9 +309,9 @@
                         android:focusable="true" />
                 </LinearLayout>
 
-                    <!-- Hourly Chart View -->
-                    <com.muuu.unshort.ui.report.HourlyBarChartView
-                        android:id="@+id/hourlyChartView"
+                    <!-- Hourly Chart ViewPager -->
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/hourlyChartViewPager"
                         android:layout_width="match_parent"
                         android:layout_height="608dp" />
                 </LinearLayout>
