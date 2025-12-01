@@ -38,7 +38,6 @@ class HourlyBarChartView @JvmOverloads constructor(
 
     private val chartPaddingLeft = 48f.dpToPx()
     private val chartPaddingTop = 16f.dpToPx()
-    private val chartPaddingRight = 64f.dpToPx()
     private val chartPaddingBottom = 16f.dpToPx()
 
     init {
@@ -89,9 +88,6 @@ class HourlyBarChartView @JvmOverloads constructor(
 
         if (hourlyStats.isEmpty()) return
 
-        val chartWidth = width - chartPaddingLeft - chartPaddingRight
-        val chartHeight = height - chartPaddingTop - chartPaddingBottom
-
         // 데이터 값 추출
         val values = hourlyStats.map { stat ->
             when (metricType) {
@@ -101,15 +97,28 @@ class HourlyBarChartView @JvmOverloads constructor(
             }
         }
 
-        // 최대값 계산 (ATTEMPTS와 WATCHED는 데이터의 최대값, WATCH_TIME은 비율로 표시)
+        // 최대값 계산 (ATTEMPTS와 WATCHED는 데이터의 최대값, WATCH_TIME은 60분 고정)
         val maxValue = when (metricType) {
             MetricType.ATTEMPTS, MetricType.WATCHED -> values.maxOrNull() ?: 0f
-            MetricType.WATCH_TIME -> values.maxOrNull() ?: 0f
+            MetricType.WATCH_TIME -> 60f // 60분 고정
         }
+
+        // 가장 긴 텍스트의 너비를 계산하여 동적 오른쪽 패딩 설정
+        val maxTextWidth = values.maxOfOrNull { value ->
+            val valueText = when (metricType) {
+                MetricType.WATCH_TIME -> String.format("%.0fm", value)
+                else -> value.toInt().toString()
+            }
+            countTextPaint.measureText(valueText)
+        } ?: 0f
+        val chartPaddingRight = maxTextWidth + 12f.dpToPx() // 텍스트 너비 + 최소 여유 공간
+
+        val chartWidth = width - chartPaddingLeft - chartPaddingRight
+        val chartHeight = height - chartPaddingTop - chartPaddingBottom
 
         // 막대 그리기 (세로 방향)
         val barCount = hourlyStats.size
-        val barHeight = 12f.dpToPx()  // 고정 막대 높이
+        val barHeight = 16f.dpToPx()  // 고정 막대 높이 (12 -> 16)
         val barSpacing = 8f.dpToPx()   // 고정 간격
 
         val isSelectedDateToday = isToday(selectedDate)
@@ -141,15 +150,11 @@ class HourlyBarChartView @JvmOverloads constructor(
 
             // 데이터가 있을 때만 막대 그리기 (미래 시간대는 제외)
             if (maxValue > 0f && value > 0f && !isFutureHour) {
-                // ATTEMPTS와 WATCHED는 최대값까지 꽉 채움, WATCH_TIME은 비율로
-                val barWidth = when (metricType) {
-                    MetricType.ATTEMPTS, MetricType.WATCHED -> {
-                        (value / maxValue) * chartWidth
-                    }
-                    MetricType.WATCH_TIME -> {
-                        (value / maxValue) * chartWidth * 0.7f
-                    }
-                }
+                // 60분 초과 시 60분으로 제한 (WATCH_TIME만)
+                val displayValue = if (metricType == MetricType.WATCH_TIME && value > 60f) 60f else value
+
+                // 모든 메트릭 타입에서 동일하게 처리
+                val barWidth = (displayValue / maxValue) * chartWidth
                 val x = chartPaddingLeft
 
                 // 막대 그리기 (왼쪽에서 오른쪽으로)
@@ -158,8 +163,8 @@ class HourlyBarChartView @JvmOverloads constructor(
 
                 // 막대 오른쪽에 값 텍스트 그리기
                 val valueText = when (metricType) {
-                    MetricType.WATCH_TIME -> String.format("%.0fm", value)
-                    else -> value.toInt().toString()
+                    MetricType.WATCH_TIME -> String.format("%.0fm", displayValue)
+                    else -> displayValue.toInt().toString()
                 }
                 val valueX = x + barWidth + 8f.dpToPx()
                 val valueY = y + barHeight / 2 + 4f.dpToPx()
