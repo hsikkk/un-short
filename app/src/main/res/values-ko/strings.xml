@@ -55,6 +55,7 @@
     <!-- Settings Activity -->
     <string name="settings_title">설정</string>
     <string name="settings_section_blocking">차단 설정</string>
+    <string name="settings_section_notifications">알림</string>
     <string name="settings_section_protection">보호 기능</string>
     <string name="settings_section_other">기타</string>
     <string name="settings_delay_time_title">대기 시간 관리</string>
@@ -62,6 +63,8 @@
     <string name="settings_delay_time_value">%d초</string>
     <string name="settings_haptic_title">햅틱 피드백</string>
     <string name="settings_haptic_desc">타이머 완료 시 진동 알림</string>
+    <string name="settings_daily_notification_title">일일 리포트 알림</string>
+    <string name="settings_daily_notification_desc">매일 저녁 8시에 오늘의 쇼츠 차단 리포트를 알림으로 받습니다</string>
     <string name="settings_block_scrolled_title">스크롤한 쇼츠만 차단</string>
     <string name="settings_block_scrolled_desc">첫 번째 쇼츠는 허용, 스크롤 시 차단</string>
     <string name="settings_prevent_disable_title">충동적 차단 비활성화 방지</string>

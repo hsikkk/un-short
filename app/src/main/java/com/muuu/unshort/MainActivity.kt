@@ -1,10 +1,14 @@
 package com.muuu.unshort
 
+import android.Manifest
 import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -13,6 +17,7 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.text.buildSpannedString
@@ -61,6 +66,9 @@ class MainActivity : BaseActivity() {
     private lateinit var protectionHelper: ThreeStepProtectionHelper
     private lateinit var disableConfirmTimerLauncher: ActivityResultLauncher<Intent>
 
+    // 노티피케이션 권한 Helper
+    private lateinit var notificationPermissionHelper: NotificationPermissionHelper
+
     // 일시 해제 상태 업데이트용 핸들러
     private val tempDisableHandler = Handler(Looper.getMainLooper())
     private val tempDisableUpdateRunnable = object : Runnable {
@@ -90,6 +98,19 @@ class MainActivity : BaseActivity() {
 
         protectionHelper.registerTimerLauncher(disableConfirmTimerLauncher)
 
+        // Initialize notification permission helper
+        notificationPermissionHelper = NotificationPermissionHelper(this, prefsManager)
+        notificationPermissionHelper.registerLauncher(
+            onGranted = {
+                prefsManager.hasAskedNotificationPermission = true
+                Log.d("MainActivity", "Notification permission granted")
+            },
+            onDenied = {
+                prefsManager.hasAskedNotificationPermission = true
+                Log.d("MainActivity", "Notification permission denied")
+            }
+        )
+
         // 온보딩 체크
         if (!prefsManager.isOnboardingCompleted) {
             // 온보딩 화면으로 이동
@@ -104,8 +125,13 @@ class MainActivity : BaseActivity() {
         // Track app launch
         AnalyticsManager.trackEvent(this, AnalyticsEvent.APP_LAUNCHED)
 
-        // Schedule daily report notification
-        DailyReportReceiver.scheduleDailyReport(this)
+        // Schedule daily report notification (only if enabled)
+        if (prefsManager.isDailyNotificationsEnabled) {
+            DailyReportReceiver.scheduleDailyReport(this)
+        }
+
+        // Request notification permission for Android 13+ (once only)
+        notificationPermissionHelper.requestPermission(skipIfAsked = true)
 
         // 광고 설정 (AdManager가 프리미엄 체크 및 자동 제거 처리)
         val adViewContainer = findViewById<FrameLayout>(R.id.adView)

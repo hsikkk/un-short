@@ -56,6 +56,7 @@
     <!-- Settings Activity -->
     <string name="settings_title">設定</string>
     <string name="settings_section_blocking">ブロック設定</string>
+    <string name="settings_section_notifications">通知</string>
     <string name="settings_section_protection">保護</string>
     <string name="settings_section_other">その他</string>
     <string name="settings_delay_time_title">遅延時間</string>
@@ -63,6 +64,8 @@
     <string name="settings_delay_time_value">%d秒</string>
     <string name="settings_haptic_title">触覚フィードバック</string>
     <string name="settings_haptic_desc">タイマー完了時の振動通知</string>
+    <string name="settings_daily_notification_title">日次レポート通知</string>
+    <string name="settings_daily_notification_desc">毎日午後8時に今日のショート動画ブロックレポートを受け取ります</string>
     <string name="settings_block_scrolled_title">スクロールしたShortsのみブロック</string>
     <string name="settings_block_scrolled_desc">最初のショート動画は許可し、スクロール時にブロック</string>
     <string name="settings_prevent_disable_title">衝動的な無効化を防止</string>

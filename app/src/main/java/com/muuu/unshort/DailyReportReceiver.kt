@@ -74,6 +74,25 @@ class DailyReportReceiver : BroadcastReceiver() {
         }
 
         /**
+         * Cancel scheduled daily report notification
+         */
+        fun cancelDailyReport(context: Context) {
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(context, DailyReportReceiver::class.java).apply {
+                action = AppConstants.ACTION_DAILY_REPORT_ALARM
+            }
+            val pendingIntent = PendingIntent.getBroadcast(
+                context,
+                REQUEST_CODE,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+
+            alarmManager.cancel(pendingIntent)
+            Log.d(TAG, "Cancelled daily report alarm")
+        }
+
+        /**
          * Calculate next report time (8 PM today or tomorrow)
          */
         private fun getNextReportTime(): Long {
@@ -97,6 +116,14 @@ class DailyReportReceiver : BroadcastReceiver() {
         Log.d(TAG, "Received broadcast: ${intent.action}")
 
         if (intent.action == AppConstants.ACTION_DAILY_REPORT_ALARM) {
+            val prefsManager = PreferencesManager(context)
+
+            // 알림이 꺼져있으면 발송하지 않음
+            if (!prefsManager.isDailyNotificationsEnabled) {
+                Log.d(TAG, "Daily notifications disabled, skipping")
+                return
+            }
+
             handleDailyReport(context)
         }
     }

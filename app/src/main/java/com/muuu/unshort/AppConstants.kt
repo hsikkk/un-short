@@ -26,6 +26,10 @@ object AppConstants {
     // Daily Report Notification
     const val ACTION_DAILY_REPORT_ALARM = "com.muuu.unshort.DAILY_REPORT_ALARM"
     const val PREF_LAST_NOTIFICATION_DATE = "last_notification_date"
+    const val PREF_DAILY_NOTIFICATIONS_ENABLED = "daily_notifications_enabled"
+
+    // Notification Permission
+    const val PREF_HAS_ASKED_NOTIFICATION_PERMISSION = "has_asked_notification_permission"
 
     // Settings
     const val PREF_WAIT_TIME = "wait_time"

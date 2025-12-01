@@ -39,12 +39,19 @@ class SettingsActivity : BaseActivity() {
     private lateinit var preventDisableProBadge: TextView
     private lateinit var deviceAdminProBadge: TextView
 
+    // Notification Settings
+    private lateinit var dailyNotificationItem: LinearLayout
+    private lateinit var dailyNotificationSwitch: SwitchMaterial
+
     private lateinit var deviceAdminManager: DeviceAdminManager
     private lateinit var prefsManager: PreferencesManager
 
     // 3단계 보호 플로우 헬퍼
     private lateinit var protectionHelper: ThreeStepProtectionHelper
     private lateinit var disableConfirmTimerLauncher: ActivityResultLauncher<Intent>
+
+    // Notification permission helper
+    private lateinit var notificationPermissionHelper: NotificationPermissionHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +73,22 @@ class SettingsActivity : BaseActivity() {
         }
 
         protectionHelper.registerTimerLauncher(disableConfirmTimerLauncher)
+
+        // Initialize notification permission helper
+        notificationPermissionHelper = NotificationPermissionHelper(this, prefsManager)
+        notificationPermissionHelper.registerLauncher(
+            onGranted = {
+                // 권한 허용 → ON + 알람 스케줄링
+                prefsManager.isDailyNotificationsEnabled = true
+                dailyNotificationSwitch.isChecked = true
+                DailyReportReceiver.scheduleDailyReport(this)
+            },
+            onDenied = {
+                // 권한 거부 → OFF 유지
+                dailyNotificationSwitch.isChecked = false
+                prefsManager.isDailyNotificationsEnabled = false
+            }
+        )
 
         // 설정 화면 방문 플래그 저장
         prefsManager.hasVisitedSettings = true
@@ -94,6 +117,10 @@ class SettingsActivity : BaseActivity() {
         allowFirstProBadge = findViewById(R.id.allowFirstProBadge)
         preventDisableProBadge = findViewById(R.id.preventDisableProBadge)
         deviceAdminProBadge = findViewById(R.id.deviceAdminProBadge)
+
+        // Notification Settings
+        dailyNotificationItem = findViewById(R.id.dailyNotificationItem)
+        dailyNotificationSwitch = findViewById(R.id.dailyNotificationSwitch)
 
         // 버전 정보 설정
         try {
@@ -410,6 +437,14 @@ class SettingsActivity : BaseActivity() {
 
         // 프리미엄 업그레이드 후 돌아왔을 때 UI 업데이트
         updatePremiumUI()
+
+        // Daily Notification Switch - 권한 체크 포함
+        setupDailyNotificationSwitch()
+
+        // 아이템 클릭 시 토글
+        dailyNotificationItem.setOnClickListener {
+            dailyNotificationSwitch.isChecked = !dailyNotificationSwitch.isChecked
+        }
     }
 
     private fun showDeviceAdminDisableDialog() {
@@ -493,6 +528,42 @@ class SettingsActivity : BaseActivity() {
                 setupPreventDisableListener()
             }
         )
+    }
+
+    /**
+     * Setup daily notification switch with permission handling
+     */
+    private fun setupDailyNotificationSwitch() {
+        // 기존 리스너 제거 (중복 호출 방지)
+        dailyNotificationSwitch.setOnCheckedChangeListener(null)
+
+        // 권한 여부에 따른 스위치 상태 설정
+        val hasPermission = notificationPermissionHelper.hasPermission()
+        dailyNotificationSwitch.isChecked = if (hasPermission) {
+            prefsManager.isDailyNotificationsEnabled
+        } else {
+            false  // 권한 없으면 무조건 OFF
+        }
+
+        // 리스너 설정
+        dailyNotificationSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // ON 시도
+                if (notificationPermissionHelper.hasPermission()) {
+                    // 권한 있음 - 바로 활성화
+                    prefsManager.isDailyNotificationsEnabled = true
+                    DailyReportReceiver.scheduleDailyReport(this)
+                } else {
+                    // 권한 없음 - 권한 요청
+                    dailyNotificationSwitch.isChecked = false  // 시각적 토글 방지
+                    notificationPermissionHelper.requestPermission(skipIfAsked = false)
+                }
+            } else {
+                // OFF - 권한 무관
+                prefsManager.isDailyNotificationsEnabled = false
+                DailyReportReceiver.cancelDailyReport(this)
+            }
+        }
     }
 
     companion object {

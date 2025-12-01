@@ -56,6 +56,7 @@
     <!-- Settings Activity -->
     <string name="settings_title">設定</string>
     <string name="settings_section_blocking">封鎖設定</string>
+    <string name="settings_section_notifications">通知</string>
     <string name="settings_section_protection">保護</string>
     <string name="settings_section_other">其他</string>
     <string name="settings_delay_time_title">延遲時間</string>
@@ -63,6 +64,8 @@
     <string name="settings_delay_time_value">%d秒</string>
     <string name="settings_haptic_title">觸覺回饋</string>
     <string name="settings_haptic_desc">計時器完成時振動通知</string>
+    <string name="settings_daily_notification_title">每日報告通知</string>
+    <string name="settings_daily_notification_desc">每天晚上8點接收今日短影片攔截報告</string>
     <string name="settings_block_scrolled_title">僅封鎖滾動的短影音</string>
     <string name="settings_block_scrolled_desc">允許第一個短影音,滾動時封鎖</string>
     <string name="settings_prevent_disable_title">防止衝動關閉</string>

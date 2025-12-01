@@ -132,6 +132,16 @@ class PreferencesManager(context: Context) {
         get() = prefs.getString(AppConstants.PREF_LAST_NOTIFICATION_DATE, "") ?: ""
         set(value) = prefs.edit().putString(AppConstants.PREF_LAST_NOTIFICATION_DATE, value).apply()
 
+    var isDailyNotificationsEnabled: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_DAILY_NOTIFICATIONS_ENABLED, true)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_DAILY_NOTIFICATIONS_ENABLED, value).apply()
+
+    // ========== Notification Permission ==========
+
+    var hasAskedNotificationPermission: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_HAS_ASKED_NOTIFICATION_PERMISSION, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_HAS_ASKED_NOTIFICATION_PERMISSION, value).apply()
+
     // ========== Batch Operations ==========
 
     /**

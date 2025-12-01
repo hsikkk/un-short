@@ -55,9 +55,11 @@ class AppRestartReceiver : BroadcastReceiver() {
             // Note: timer_completed and session_created_time are legacy keys, safe to ignore
             Log.d(TAG, "Cleared stale session data")
 
-            // Schedule daily report notification
-            DailyReportReceiver.scheduleDailyReport(context)
-            Log.d(TAG, "Scheduled daily report notification")
+            // Schedule daily report notification (only if enabled)
+            if (prefsManager.isDailyNotificationsEnabled) {
+                DailyReportReceiver.scheduleDailyReport(context)
+                Log.d(TAG, "Scheduled daily report notification")
+            }
         } else {
             Log.d(TAG, "Missing permissions - Accessibility: $hasAccessibilityPermission, Overlay: $hasOverlayPermission")
         }
