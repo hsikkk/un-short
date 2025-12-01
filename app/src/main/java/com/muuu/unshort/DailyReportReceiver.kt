@@ -178,7 +178,7 @@ class DailyReportReceiver : BroadcastReceiver() {
 
         // Build notification
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notification)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("오늘의 쇼츠 차단")
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
