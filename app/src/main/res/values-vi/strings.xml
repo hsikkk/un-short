@@ -56,6 +56,7 @@
     <!-- Settings Activity -->
     <string name="settings_title">Cài đặt</string>
     <string name="settings_section_blocking">Cài đặt chặn</string>
+    <string name="settings_section_notifications">Thông báo</string>
     <string name="settings_section_protection">Bảo vệ</string>
     <string name="settings_section_other">Khác</string>
     <string name="settings_delay_time_title">Thời gian trзадержка</string>
@@ -63,6 +64,8 @@
     <string name="settings_delay_time_value">%d giây</string>
     <string name="settings_haptic_title">Phản hồi rung</string>
     <string name="settings_haptic_desc">Thông báo rung khi bộ đếm thời gian hoàn thành</string>
+    <string name="settings_daily_notification_title">Thông báo báo cáo hàng ngày</string>
+    <string name="settings_daily_notification_desc">Nhận báo cáo chặn Shorts hàng ngày lúc 20:00</string>
     <string name="settings_block_scrolled_title">Chỉ chặn Shorts đã cuộn</string>
     <string name="settings_block_scrolled_desc">Cho phép shorts đầu tiên, chặn khi cuộn</string>
     <string name="settings_prevent_disable_title">Ngăn tắt bốc đồng</string>

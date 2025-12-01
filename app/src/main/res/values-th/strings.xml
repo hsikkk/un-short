@@ -56,6 +56,7 @@
     <!-- Settings Activity -->
     <string name="settings_title">การตั้งค่า</string>
     <string name="settings_section_blocking">การตั้งค่าการบล็อก</string>
+    <string name="settings_section_notifications">การแจ้งเตือน</string>
     <string name="settings_section_protection">การป้องกัน</string>
     <string name="settings_section_other">อื่นๆ</string>
     <string name="settings_delay_time_title">เวลาหน่วง</string>
@@ -63,6 +64,8 @@
     <string name="settings_delay_time_value">%d วินาที</string>
     <string name="settings_haptic_title">การสั่นสะเทือน</string>
     <string name="settings_haptic_desc">แจ้งเตือนด้วยการสั่นเมื่อจับเวลาเสร็จ</string>
+    <string name="settings_daily_notification_title">การแจ้งเตือนรายงานประจำวัน</string>
+    <string name="settings_daily_notification_desc">รับรายงานการบล็อก Shorts ทุกวันเวลา 20:00 น.</string>
     <string name="settings_block_scrolled_title">บล็อกเฉพาะ Shorts ที่เลื่อนแล้ว</string>
     <string name="settings_block_scrolled_desc">อนุญาตวิดีโอสั้นแรก บล็อกเมื่อเลื่อน</string>
     <string name="settings_prevent_disable_title">ป้องกันการปิดโดยไม่ตั้งใจ</string>

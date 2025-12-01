@@ -56,6 +56,7 @@
     <!-- Settings Activity -->
     <string name="settings_title">الإعدادات</string>
     <string name="settings_section_blocking">إعدادات الحظر</string>
+    <string name="settings_section_notifications">الإشعارات</string>
     <string name="settings_section_protection">الحماية</string>
     <string name="settings_section_other">أخرى</string>
     <string name="settings_delay_time_title">وقت التأخير</string>
@@ -63,6 +64,8 @@
     <string name="settings_delay_time_value">%d ثانية</string>
     <string name="settings_haptic_title">ردود الفعل اللمسية</string>
     <string name="settings_haptic_desc">إشعار بالاهتزاز عند اكتمال المؤقت</string>
+    <string name="settings_daily_notification_title">إشعار التقرير اليومي</string>
+    <string name="settings_daily_notification_desc">احصل على تقرير حظر Shorts يومياً في الساعة 8 مساءً</string>
     <string name="settings_block_scrolled_title">حظر Shorts المتدرجة فقط</string>
     <string name="settings_block_scrolled_desc">السماح بأول shorts، الحظر عند التمرير</string>
     <string name="settings_prevent_disable_title">منع التعطيل الاندفاعي</string>

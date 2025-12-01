@@ -58,6 +58,7 @@ apakah Anda benar-benar perlu shorts?</string>
     <!-- Settings Activity -->
     <string name="settings_title">Pengaturan</string>
     <string name="settings_section_blocking">Pengaturan Pemblokiran</string>
+    <string name="settings_section_notifications">Notifikasi</string>
     <string name="settings_section_protection">Perlindungan</string>
     <string name="settings_section_other">Lainnya</string>
     <string name="settings_delay_time_title">Waktu Tunda</string>
@@ -65,6 +66,8 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="settings_delay_time_value">%d detik</string>
     <string name="settings_haptic_title">Umpan Balik Haptik</string>
     <string name="settings_haptic_desc">Notifikasi getaran saat timer selesai</string>
+    <string name="settings_daily_notification_title">Notifikasi Laporan Harian</string>
+    <string name="settings_daily_notification_desc">Terima laporan pemblokiran Shorts harian pada pukul 20:00</string>
     <string name="settings_block_scrolled_title">Blokir Hanya Shorts yang Digulir</string>
     <string name="settings_block_scrolled_desc">Izinkan shorts pertama, blokir saat digulir</string>
     <string name="settings_prevent_disable_title">Cegah Penonaktifan Impulsif</string>

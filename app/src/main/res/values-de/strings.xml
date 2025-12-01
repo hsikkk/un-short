@@ -56,6 +56,7 @@
     <!-- Settings Activity -->
     <string name="settings_title">Einstellungen</string>
     <string name="settings_section_blocking">Blockierungseinstellungen</string>
+    <string name="settings_section_notifications">Benachrichtigungen</string>
     <string name="settings_section_protection">Schutz</string>
     <string name="settings_section_other">Sonstiges</string>
     <string name="settings_delay_time_title">Wartezeit</string>
@@ -63,6 +64,8 @@
     <string name="settings_delay_time_value">%d Sekunden</string>
     <string name="settings_haptic_title">Haptisches Feedback</string>
     <string name="settings_haptic_desc">Vibrationsbenachrichtigung bei Timer-Ablauf</string>
+    <string name="settings_daily_notification_title">Tägliche Berichtsbenachrichtigung</string>
+    <string name="settings_daily_notification_desc">Erhalte täglich um 20 Uhr einen Bericht über blockierte Shorts</string>
     <string name="settings_block_scrolled_title">Nur gescrollte Shorts blockieren</string>
     <string name="settings_block_scrolled_desc">Erstes Short erlauben, beim Scrollen blockieren</string>
     <string name="settings_prevent_disable_title">Impulsives Deaktivieren verhindern</string>

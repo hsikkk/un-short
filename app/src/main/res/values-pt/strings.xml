@@ -56,6 +56,7 @@
     <!-- Settings Activity -->
     <string name="settings_title">Configurações</string>
     <string name="settings_section_blocking">Configurações de bloqueio</string>
+    <string name="settings_section_notifications">Notificações</string>
     <string name="settings_section_protection">Proteção</string>
     <string name="settings_section_other">Outros</string>
     <string name="settings_delay_time_title">Tempo de espera</string>
@@ -63,6 +64,8 @@
     <string name="settings_delay_time_value">%d segundos</string>
     <string name="settings_haptic_title">Feedback tátil</string>
     <string name="settings_haptic_desc">Notificação por vibração quando o cronômetro termina</string>
+    <string name="settings_daily_notification_title">Notificação de relatório diário</string>
+    <string name="settings_daily_notification_desc">Receba relatório diário de bloqueio de Shorts às 20h</string>
     <string name="settings_block_scrolled_title">Bloquear apenas Shorts rolados</string>
     <string name="settings_block_scrolled_desc">Permitir primeiro shorts, bloquear ao rolar</string>
     <string name="settings_prevent_disable_title">Prevenir desativação impulsiva</string>

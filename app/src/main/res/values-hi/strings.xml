@@ -56,6 +56,7 @@
     <!-- Settings Activity -->
     <string name="settings_title">सेटिंग्स</string>
     <string name="settings_section_blocking">ब्लॉकिंग सेटिंग्स</string>
+    <string name="settings_section_notifications">सूचनाएं</string>
     <string name="settings_section_protection">सुरक्षा</string>
     <string name="settings_section_other">अन्य</string>
     <string name="settings_delay_time_title">विलंब समय</string>
@@ -63,6 +64,8 @@
     <string name="settings_delay_time_value">%d सेकंड</string>
     <string name="settings_haptic_title">हैप्टिक फीडबैक</string>
     <string name="settings_haptic_desc">टाइमर पूरा होने पर कंपन सूचना</string>
+    <string name="settings_daily_notification_title">दैनिक रिपोर्ट सूचना</string>
+    <string name="settings_daily_notification_desc">प्रतिदिन शाम 8 बजे Shorts ब्लॉकिंग रिपोर्ट प्राप्त करें</string>
     <string name="settings_block_scrolled_title">केवल स्क्रॉल किए गए Shorts को ब्लॉक करें</string>
     <string name="settings_block_scrolled_desc">पहले Shorts की अनुमति दें, स्क्रॉल पर ब्लॉक करें</string>
     <string name="settings_prevent_disable_title">आवेगपूर्ण अक्षम करने को रोकें</string>
