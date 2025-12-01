@@ -104,6 +104,10 @@ dependencies {
     // Google Play Billing Library
     implementation("com.android.billingclient:billing-ktx:7.1.1")
 
+    // Google Play In-App Review
+    implementation("com.google.android.play:review:2.0.1")
+    implementation("com.google.android.play:review-ktx:2.0.1")
+
     // Firebase BoM (Bill of Materials) - 버전 관리 간소화
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
 

@@ -21,6 +21,16 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(AppConstants.PREF_ONBOARDING_COMPLETED, false)
         set(value) = prefs.edit().putBoolean(AppConstants.PREF_ONBOARDING_COMPLETED, value).apply()
 
+    var onboardingCompletedAt: Long
+        get() = prefs.getLong(AppConstants.PREF_ONBOARDING_COMPLETED_AT, 0L)
+        set(value) = prefs.edit().putLong(AppConstants.PREF_ONBOARDING_COMPLETED_AT, value).apply()
+
+    // ========== In-App Review ==========
+
+    var hasReviewPromptShown: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_REVIEW_PROMPTED, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_REVIEW_PROMPTED, value).apply()
+
     // ========== Blocking ==========
 
     var isBlockingEnabled: Boolean

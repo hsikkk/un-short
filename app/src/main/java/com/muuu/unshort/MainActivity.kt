@@ -65,6 +65,9 @@ class MainActivity : BaseActivity() {
     // 노티피케이션 권한 Helper
     private lateinit var notificationPermissionHelper: NotificationPermissionHelper
 
+    // In-App Review Helper
+    private lateinit var inAppReviewHelper: InAppReviewHelper
+
     // 일시 해제 상태 업데이트용 핸들러
     private val tempDisableHandler = Handler(Looper.getMainLooper())
     private val tempDisableUpdateRunnable = object : Runnable {
@@ -106,6 +109,9 @@ class MainActivity : BaseActivity() {
                 Log.d("MainActivity", "Notification permission denied")
             }
         )
+
+        // Initialize in-app review helper
+        inAppReviewHelper = InAppReviewHelper(this)
 
         // 온보딩 체크
         if (!prefsManager.isOnboardingCompleted) {
@@ -227,6 +233,10 @@ class MainActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        // 리뷰 요청 체크 (조건 충족 시 표시)
+        inAppReviewHelper.checkAndShowReviewIfEligible()
+
         // 일시 해제 만료 체크
         checkTempDisableExpiration()
 

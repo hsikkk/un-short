@@ -33,4 +33,7 @@ object AnalyticsEvent {
 
     // Affiliate
     const val AFFILIATE_PRODUCT_CLICKED = "affiliate_product_clicked"
+
+    // In-App Review
+    const val REVIEW_PROMPT_SHOWN = "review_prompt_shown"
 }

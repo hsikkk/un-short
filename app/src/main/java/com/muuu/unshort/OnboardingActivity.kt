@@ -101,6 +101,7 @@ class OnboardingActivity : BaseActivity() {
         // SharedPreferences에 온보딩 완료 저장
         val prefsManager = PreferencesManager(this)
         prefsManager.isOnboardingCompleted = true
+        prefsManager.onboardingCompletedAt = System.currentTimeMillis()
 
         // Track onboarding completed
         AnalyticsManager.trackEvent(this, AnalyticsEvent.ONBOARDING_COMPLETED)
