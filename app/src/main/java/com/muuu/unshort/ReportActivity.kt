@@ -12,6 +12,9 @@ import com.muuu.unshort.data.statistics.StatisticsRepository
 import com.muuu.unshort.ui.report.BarChartView
 import com.muuu.unshort.ui.report.HourlyBarChartView
 import com.muuu.unshort.ui.report.ReportViewModel
+import com.muuu.ad.core.adunit.MuuuBannerAdUnit
+import com.muuu.ad.core.model.MuuuBannerSize
+import com.muuu.unshort.ad.AdManager
 
 /**
  * 일일 리포트 화면
@@ -57,6 +60,20 @@ class ReportActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_report)
+
+        // MREC 광고 설정
+        val adViewContainer = findViewById<FrameLayout>(R.id.adViewReport)
+         AdManager.setupBannerAd(
+            activity = this,
+            container = adViewContainer,
+            adUnit = MuuuBannerAdUnit(
+                key = AdConfig.MREC_REPORT,
+                placement = "report_top",
+                bannerSize = MuuuBannerSize.MREC,
+                refreshInterval = 7
+            ),
+             keepContainerSpace = false
+        )
 
         initViews()
         setupTabs()

@@ -24,6 +24,11 @@ object AdConfig {
      */
     const val NATIVE_TIMER_TOP = "ca-app-pub-4831094849543419/1719036695"
 
+    /**
+     * 리포트 화면 상단 MREC 광고
+     */
+    const val MREC_REPORT = "ca-app-pub-4831094849543419/1966950687"
+
     // 향후 다른 광고 단위 ID 추가 예시:
     // const val BANNER_SETTINGS = "ca-app-pub-xxxxx/xxxxx"
     // const val INTERSTITIAL_AFTER_BLOCK = "ca-app-pub-xxxxx/xxxxx"
