@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
 import com.muuu.unshort.data.statistics.StatisticsRepository
+import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.ui.report.BarChartView
 import com.muuu.unshort.ui.report.HourlyBarChartView
 import com.muuu.unshort.ui.report.ReportViewModel
@@ -60,6 +61,10 @@ class ReportActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_report)
+
+        // 통계 화면 방문 플래그 저장
+        val prefsManager = PreferencesManager(this)
+        prefsManager.hasVisitedStatistics = true
 
         // MREC 광고 설정
         val adViewContainer = findViewById<FrameLayout>(R.id.adViewReport)

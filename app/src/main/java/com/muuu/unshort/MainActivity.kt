@@ -59,6 +59,7 @@ class MainActivity : BaseActivity() {
     private lateinit var watchTimeText: TextView
     private lateinit var settingsButton: ImageView
     private lateinit var settingsBadge: View
+    private lateinit var statisticsBadge: View
     private lateinit var premiumBadge: TextView
     private var bannerAdView: MuuuBannerAdView? = null
     private lateinit var prefsManager: PreferencesManager
@@ -164,6 +165,7 @@ class MainActivity : BaseActivity() {
         watchTimeText = findViewById(R.id.watchTimeText)
         settingsButton = findViewById(R.id.settingsButton)
         settingsBadge = findViewById(R.id.settingsBadge)
+        statisticsBadge = findViewById(R.id.statisticsBadge)
         premiumBadge = findViewById(R.id.premiumBadge)
         blockedAppsContainer = findViewById(R.id.blockedAppsContainer)
 
@@ -230,6 +232,7 @@ class MainActivity : BaseActivity() {
 
         checkPermissionsAndUpdateUI()
         updateSettingsBadgeVisibility()
+        updateStatisticsBadgeVisibility()
         updatePremiumBadgeVisibility()
         updateStatisticsSummary()
         // 앱 설치/삭제 상황 반영
@@ -268,6 +271,10 @@ class MainActivity : BaseActivity() {
 
     private fun updateSettingsBadgeVisibility() {
         settingsBadge.visibility = if (!prefsManager.hasVisitedSettings) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun updateStatisticsBadgeVisibility() {
+        statisticsBadge.visibility = if (!prefsManager.hasVisitedStatistics) View.VISIBLE else View.INVISIBLE
     }
 
     private fun updatePremiumBadgeVisibility() {

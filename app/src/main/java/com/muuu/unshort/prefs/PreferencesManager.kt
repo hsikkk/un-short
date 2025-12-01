@@ -112,6 +112,10 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(AppConstants.PREF_HAS_VISITED_SETTINGS, false)
         set(value) = prefs.edit().putBoolean(AppConstants.PREF_HAS_VISITED_SETTINGS, value).apply()
 
+    var hasVisitedStatistics: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_HAS_VISITED_STATISTICS, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_HAS_VISITED_STATISTICS, value).apply()
+
     // ========== Lifetime Premium ==========
 
     var isLifetimePremium: Boolean
