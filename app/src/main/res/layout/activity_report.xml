@@ -34,19 +34,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginBottom="32dp">
-
+                
                 <!-- Section Title -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/report_daily_trend"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/spoqa_sans_neo_medium"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/spoqa_sans_neo_bold"
                     android:textColor="@color/gray_900"
-                    android:alpha="0.5"
                     android:textAllCaps="true"
                     android:letterSpacing="0.1"
-                    android:layout_marginBottom="16dp" />
+                    android:layout_marginBottom="20dp" />
 
                 <!-- Metric Tabs -->
                 <LinearLayout
@@ -128,18 +127,24 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <!-- Top Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_300"
+                    android:layout_marginBottom="20dp" />
+
                 <!-- Section Title -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/report_daily_analysis"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/spoqa_sans_neo_medium"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/spoqa_sans_neo_bold"
                     android:textColor="@color/gray_900"
-                    android:alpha="0.5"
                     android:textAllCaps="true"
                     android:letterSpacing="0.1"
-                    android:layout_marginBottom="16dp" />
+                    android:layout_marginBottom="20dp" />
 
                 <!-- Date Chips -->
                 <LinearLayout
@@ -148,6 +153,20 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingBottom="20dp" />
+
+                <!-- Summary Subsection Title -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/report_summary"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/spoqa_sans_neo_medium"
+                    android:textColor="@color/gray_900"
+                    android:alpha="0.5"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.1"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="16dp" />
 
                 <!-- Summary Grid -->
                 <include layout="@layout/stats_summary_grid"
@@ -161,6 +180,19 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginBottom="24dp">
+
+                    <!-- Subsection Title -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/report_app_analysis"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/spoqa_sans_neo_medium"
+                        android:textColor="@color/gray_900"
+                        android:alpha="0.5"
+                        android:textAllCaps="true"
+                        android:letterSpacing="0.1"
+                        android:layout_marginBottom="16dp" />
 
                     <!-- Empty State (initially hidden) -->
                     <include
@@ -183,6 +215,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <!-- Subsection Title -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/report_hourly_analysis"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/spoqa_sans_neo_medium"
+                        android:textColor="@color/gray_900"
+                        android:alpha="0.5"
+                        android:textAllCaps="true"
+                        android:letterSpacing="0.1"
+                        android:layout_marginBottom="16dp" />
 
                     <!-- Metric Tabs -->
                 <LinearLayout
