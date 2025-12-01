@@ -10,9 +10,7 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.muuu.unshort.data.statistics.StatisticsRepository
 import com.muuu.unshort.prefs.PreferencesManager
-import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -113,11 +111,8 @@ class DailyReportReceiver : BroadcastReceiver() {
             return
         }
 
-        // Get today's block count
-        val blockCount = getBlockCountToday(context)
-
         // Send notification
-        sendNotification(context, blockCount)
+        sendNotification(context)
 
         // Record notification sent
         prefsManager.lastNotificationDate = today
@@ -125,31 +120,14 @@ class DailyReportReceiver : BroadcastReceiver() {
         // Schedule next day's alarm
         scheduleDailyReport(context)
 
-        Log.d(TAG, "Daily report sent with $blockCount blocks")
+        Log.d(TAG, "Daily report sent")
     }
 
     private fun getTodayDateString(): String {
         return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
     }
 
-    private fun getBlockCountToday(context: Context): Int {
-        val repository = StatisticsRepository(context)
-        return runBlocking {
-            val todayStart = Calendar.getInstance().apply {
-                set(Calendar.HOUR_OF_DAY, 0)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-            }.timeInMillis
-
-            val todayEnd = System.currentTimeMillis()
-
-            val stats = repository.getStatsForDate(todayStart, todayEnd)
-            stats.attemptCount - stats.watchedCount
-        }
-    }
-
-    private fun sendNotification(context: Context, blockCount: Int) {
+    private fun sendNotification(context: Context) {
         // Create notification channel (Android 8.0+)
         createNotificationChannel(context)
 
