@@ -313,7 +313,7 @@
                     <com.muuu.unshort.ui.report.HourlyBarChartView
                         android:id="@+id/hourlyChartView"
                         android:layout_width="match_parent"
-                        android:layout_height="520dp" />
+                        android:layout_height="608dp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
