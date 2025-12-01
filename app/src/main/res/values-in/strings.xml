@@ -346,4 +346,10 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="exit_dialog_confirm">Keluar</string>
     <string name="exit_dialog_cancel">Batal</string>
 
+    <!-- Daily Report Notification -->
+    <string name="daily_report_notification_message">Lihat laporan harian Anda ✨</string>
+    <string name="daily_report_notification_title">Pemblokiran Shorts Hari Ini</string>
+    <string name="daily_report_channel_name">Laporan Harian</string>
+    <string name="daily_report_channel_desc">Notifikasi statistik pemblokiran Shorts harian</string>
+
 </resources>

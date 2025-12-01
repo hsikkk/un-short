@@ -341,4 +341,10 @@
     <string name="exit_dialog_confirm">Exit</string>
     <string name="exit_dialog_cancel">Cancel</string>
 
+    <!-- Daily Report Notification -->
+    <string name="daily_report_notification_message">Check your daily report ✨</string>
+    <string name="daily_report_notification_title">Today\'s Shorts Blocking</string>
+    <string name="daily_report_channel_name">Daily Report</string>
+    <string name="daily_report_channel_desc">Daily shorts blocking statistics notification</string>
+
 </resources>

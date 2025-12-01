@@ -344,4 +344,10 @@
     <string name="exit_dialog_confirm">Salir</string>
     <string name="exit_dialog_cancel">Cancelar</string>
 
+    <!-- Daily Report Notification -->
+    <string name="daily_report_notification_message">Revisa tu informe diario ✨</string>
+    <string name="daily_report_notification_title">Bloqueo de Shorts de hoy</string>
+    <string name="daily_report_channel_name">Informe diario</string>
+    <string name="daily_report_channel_desc">Notificación de estadísticas diarias de bloqueo de Shorts</string>
+
 </resources>

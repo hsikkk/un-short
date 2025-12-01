@@ -344,4 +344,10 @@
     <string name="exit_dialog_confirm">退出</string>
     <string name="exit_dialog_cancel">取消</string>
 
+    <!-- Daily Report Notification -->
+    <string name="daily_report_notification_message">查看今日报告 ✨</string>
+    <string name="daily_report_notification_title">今日短视频拦截</string>
+    <string name="daily_report_channel_name">每日报告</string>
+    <string name="daily_report_channel_desc">每日短视频拦截统计通知</string>
+
 </resources>

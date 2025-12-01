@@ -344,4 +344,10 @@
     <string name="exit_dialog_confirm">終了</string>
     <string name="exit_dialog_cancel">キャンセル</string>
 
+    <!-- Daily Report Notification -->
+    <string name="daily_report_notification_message">今日のレポートを確認しましょう ✨</string>
+    <string name="daily_report_notification_title">今日のショート動画ブロック</string>
+    <string name="daily_report_channel_name">日次レポート</string>
+    <string name="daily_report_channel_desc">毎日のショート動画ブロック統計通知</string>
+
 </resources>

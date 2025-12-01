@@ -344,4 +344,10 @@
     <string name="exit_dialog_confirm">Quitter</string>
     <string name="exit_dialog_cancel">Annuler</string>
 
+    <!-- Daily Report Notification -->
+    <string name="daily_report_notification_message">Consultez votre rapport quotidien ✨</string>
+    <string name="daily_report_notification_title">Blocage de Shorts d\'aujourd\'hui</string>
+    <string name="daily_report_channel_name">Rapport quotidien</string>
+    <string name="daily_report_channel_desc">Notification des statistiques quotidiennes de blocage de Shorts</string>
+
 </resources>

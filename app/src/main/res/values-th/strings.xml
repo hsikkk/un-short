@@ -344,4 +344,10 @@
     <string name="exit_dialog_confirm">ออก</string>
     <string name="exit_dialog_cancel">ยกเลิก</string>
 
+    <!-- Daily Report Notification -->
+    <string name="daily_report_notification_message">ตรวจสอบรายงานประจำวันของคุณ ✨</string>
+    <string name="daily_report_notification_title">การบล็อก Shorts วันนี้</string>
+    <string name="daily_report_channel_name">รายงานประจำวัน</string>
+    <string name="daily_report_channel_desc">การแจ้งเตือนสถิติการบล็อก Shorts รายวัน</string>
+
 </resources>

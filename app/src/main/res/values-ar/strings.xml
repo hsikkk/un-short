@@ -344,4 +344,10 @@
     <string name="exit_dialog_confirm">إنهاء</string>
     <string name="exit_dialog_cancel">إلغاء</string>
 
+    <!-- Daily Report Notification -->
+    <string name="daily_report_notification_message">تحقق من تقرير اليوم ✨</string>
+    <string name="daily_report_notification_title">حظر الفيديوهات القصيرة اليوم</string>
+    <string name="daily_report_channel_name">تقرير يومي</string>
+    <string name="daily_report_channel_desc">إشعار إحصائيات حظر الفيديوهات القصيرة اليومية</string>
+
 </resources>

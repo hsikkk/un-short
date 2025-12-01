@@ -344,4 +344,10 @@
     <string name="exit_dialog_confirm">बंद करें</string>
     <string name="exit_dialog_cancel">रद्द करें</string>
 
+    <!-- Daily Report Notification -->
+    <string name="daily_report_notification_message">अपनी दैनिक रिपोर्ट देखें ✨</string>
+    <string name="daily_report_notification_title">आज का शॉर्ट्स ब्लॉकिंग</string>
+    <string name="daily_report_channel_name">दैनिक रिपोर्ट</string>
+    <string name="daily_report_channel_desc">दैनिक शॉर्ट्स ब्लॉकिंग आंकड़े सूचना</string>
+
 </resources>

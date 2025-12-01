@@ -344,4 +344,10 @@
     <string name="exit_dialog_confirm">Çık</string>
     <string name="exit_dialog_cancel">İptal</string>
 
+    <!-- Daily Report Notification -->
+    <string name="daily_report_notification_message">Günlük raporunuzu kontrol edin ✨</string>
+    <string name="daily_report_notification_title">Bugünün Shorts Engelleme</string>
+    <string name="daily_report_channel_name">Günlük Rapor</string>
+    <string name="daily_report_channel_desc">Günlük Shorts engelleme istatistikleri bildirimi</string>
+
 </resources>

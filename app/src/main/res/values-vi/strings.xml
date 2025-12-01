@@ -344,4 +344,10 @@
     <string name="exit_dialog_confirm">Thoát</string>
     <string name="exit_dialog_cancel">Hủy</string>
 
+    <!-- Daily Report Notification -->
+    <string name="daily_report_notification_message">Kiểm tra báo cáo hàng ngày của bạn ✨</string>
+    <string name="daily_report_notification_title">Chặn Shorts hôm nay</string>
+    <string name="daily_report_channel_name">Báo cáo hàng ngày</string>
+    <string name="daily_report_channel_desc">Thông báo thống kê chặn Shorts hàng ngày</string>
+
 </resources>

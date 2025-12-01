@@ -334,4 +334,10 @@
     <string name="exit_dialog_confirm">종료</string>
     <string name="exit_dialog_cancel">취소</string>
 
+    <!-- Daily Report Notification -->
+    <string name="daily_report_notification_message">오늘 하루 리포트를 확인해보세요 ✨</string>
+    <string name="daily_report_notification_title">오늘의 쇼츠 차단</string>
+    <string name="daily_report_channel_name">일일 리포트</string>
+    <string name="daily_report_channel_desc">매일 쇼츠 차단 통계 알림</string>
+
 </resources>

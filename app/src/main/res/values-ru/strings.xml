@@ -344,4 +344,10 @@
     <string name="exit_dialog_confirm">Выйти</string>
     <string name="exit_dialog_cancel">Отмена</string>
 
+    <!-- Daily Report Notification -->
+    <string name="daily_report_notification_message">Проверьте свой ежедневный отчет ✨</string>
+    <string name="daily_report_notification_title">Сегодняшняя блокировка Shorts</string>
+    <string name="daily_report_channel_name">Ежедневный отчет</string>
+    <string name="daily_report_channel_desc">Уведомление о статистике блокировки Shorts</string>
+
 </resources>

@@ -163,7 +163,7 @@ class DailyReportReceiver : BroadcastReceiver() {
         createNotificationChannel(context)
 
         // Generate message
-        val message = "오늘 하루 리포트를 확인해보세요 ✨"
+        val message = context.getString(R.string.daily_report_notification_message)
 
         // Create intent to open ReportActivity
         val intent = Intent(context, ReportActivity::class.java).apply {
@@ -179,7 +179,7 @@ class DailyReportReceiver : BroadcastReceiver() {
         // Build notification
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("오늘의 쇼츠 차단")
+            .setContentTitle(context.getString(R.string.daily_report_notification_title))
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
@@ -195,10 +195,10 @@ class DailyReportReceiver : BroadcastReceiver() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "일일 리포트",
+                context.getString(R.string.daily_report_channel_name),
                 NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
-                description = "매일 쇼츠 차단 통계 알림"
+                description = context.getString(R.string.daily_report_channel_desc)
             }
 
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
