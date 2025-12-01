@@ -98,6 +98,9 @@ class SettingsActivity : BaseActivity() {
         // 설정 화면 방문 플래그 저장
         prefsManager.hasVisitedSettings = true
 
+        // Header setup
+        findViewById<TextView>(R.id.headerTitle).text = getString(R.string.settings_title)
+
         // View 초기화
         backButton = findViewById(R.id.backButton)
         premiumBanner = findViewById(R.id.premiumBanner)

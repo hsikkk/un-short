@@ -87,14 +87,22 @@ class ReportActivity : BaseActivity() {
     }
 
     private fun initViews() {
+        // Header setup
+        findViewById<TextView>(R.id.headerTitle).text = getString(R.string.report_title)
+
         // Back button
         findViewById<ImageView>(R.id.backButton).setOnClickListener {
             finish()
         }
 
-        // Help button
-        findViewById<ImageView>(R.id.helpButton).setOnClickListener {
-            showReportHelpDialog()
+        // Right button (Help)
+        findViewById<ImageView>(R.id.rightButton).apply {
+            visibility = android.view.View.VISIBLE
+            setImageResource(R.drawable.ic_help)
+            contentDescription = getString(R.string.report_help_button)
+            setOnClickListener {
+                showReportHelpDialog()
+            }
         }
 
         // Chart

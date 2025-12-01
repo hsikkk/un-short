@@ -29,6 +29,9 @@ class SubscriptionManagementActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subscription_management)
 
+        // Header setup
+        findViewById<TextView>(R.id.headerTitle).text = getString(R.string.subscription_management_title)
+
         // View 초기화
         backButton = findViewById(R.id.backButton)
         subscriptionStatus = findViewById(R.id.subscriptionStatus)
