@@ -40,6 +40,18 @@
             android:textSize="18sp"
             android:fontFamily="@font/spoqa_sans_neo_medium"
             android:textColor="@color/gray_900" />
+
+        <!-- Help Button -->
+        <ImageView
+            android:id="@+id/helpButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_help"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/report_help_button" />
     </LinearLayout>
 
     <!-- Divider -->

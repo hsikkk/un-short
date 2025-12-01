@@ -92,6 +92,11 @@ class ReportActivity : BaseActivity() {
             finish()
         }
 
+        // Help button
+        findViewById<ImageView>(R.id.helpButton).setOnClickListener {
+            showReportHelpDialog()
+        }
+
         // Chart
         chartView = findViewById(R.id.chartView)
         hourlyChartView = findViewById(R.id.hourlyChartView)
@@ -459,5 +464,17 @@ class ReportActivity : BaseActivity() {
         if (!stats.isNullOrEmpty()) {
             hourlyChartView.setData(stats, currentHourlyMetric, selectedDate)
         }
+    }
+
+    private fun showReportHelpDialog() {
+        WarningDialog(
+            context = this,
+            titleResId = R.string.report_help_title,
+            messageResId = R.string.report_help_message,
+            positiveTextResId = R.string.report_help_confirm,
+            negativeTextResId = null,
+            canceledOnTouchOutside = true,
+            onPositive = {}
+        ).show()
     }
 }
