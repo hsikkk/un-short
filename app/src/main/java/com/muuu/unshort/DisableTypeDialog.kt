@@ -57,7 +57,6 @@ class DisableTypeDialog(
             android.view.ViewGroup.LayoutParams.WRAP_CONTENT
         )
         window?.setDimAmount(0.5f)
-        window?.setBackgroundDrawableResource(android.R.color.transparent)
 
         setCancelable(true)
         setCanceledOnTouchOutside(false)

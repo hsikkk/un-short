@@ -53,9 +53,6 @@ class WarningDialog(
         // Enable dimmed background
         window?.setDimAmount(0.5f)
 
-        // Transparent background for rounded corners
-        window?.setBackgroundDrawableResource(android.R.color.transparent)
-
         // Allow dismissal by back button
         setCancelable(true)
         setCanceledOnTouchOutside(canceledOnTouchOutside)
