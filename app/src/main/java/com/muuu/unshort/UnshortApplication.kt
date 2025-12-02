@@ -96,6 +96,9 @@ class UnshortApplication : Application() {
         )
         amplitude.setUserId(androidId)
 
+        // 권한 상태를 User Property로 설정
+        AnalyticsManager.updatePermissionUserProperties(applicationContext)
+
         Log.d(TAG, "Muuu Ad SDK initialized with debug mode: ${BuildConfig.DEBUG}")
         Log.d(TAG, "Amplitude initialized - API Key: ${BuildConfig.AMPLITUDE_API_KEY.take(8)}...")
         Log.d(TAG, "Debug mode: ${BuildConfig.DEBUG}")

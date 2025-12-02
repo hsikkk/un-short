@@ -121,6 +121,9 @@ class PermissionSetupActivity : BaseActivity() {
 
         // 완료 버튼 표시 업데이트
         permissionUIHelper.updateCompleteButton(completeButton)
+
+        // 권한 상태가 변경되었을 수 있으므로 User Property 업데이트
+        AnalyticsManager.updatePermissionUserProperties(this)
     }
 
     /**

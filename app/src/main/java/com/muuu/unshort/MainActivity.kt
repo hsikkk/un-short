@@ -277,6 +277,9 @@ class MainActivity : BaseActivity() {
             // 저장된 차단 상태 불러오기
             updateUI(prefsManager.isBlockingEnabled)
         }
+
+        // 권한 상태를 User Property로 업데이트
+        AnalyticsManager.updatePermissionUserProperties(this)
     }
 
     private fun updateSettingsBadgeVisibility() {
