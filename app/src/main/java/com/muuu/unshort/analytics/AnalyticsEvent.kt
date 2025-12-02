@@ -62,4 +62,8 @@ object AnalyticsEvent {
     // Premium Status
     const val PREMIUM_STATUS_ACTIVATED = "premium_status_activated"
     const val PREMIUM_STATUS_DEACTIVATED = "premium_status_deactivated"
+
+    // Screen Views
+    const val SETTINGS_SCREEN_VIEWED = "settings_screen_viewed"
+    const val REPORT_SCREEN_VIEWED = "report_screen_viewed"
 }

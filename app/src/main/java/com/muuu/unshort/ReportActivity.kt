@@ -9,6 +9,8 @@ import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.muuu.unshort.analytics.AnalyticsEvent
+import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.data.statistics.StatisticsRepository
 import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.ui.report.BarChartView
@@ -83,6 +85,16 @@ class ReportActivity : BaseActivity() {
         setupTabs()
         setupDateChips()
         observeData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // 리포트 화면 조회 추적
+        AnalyticsManager.trackEvent(
+            this,
+            AnalyticsEvent.REPORT_SCREEN_VIEWED
+        )
     }
 
     private fun initViews() {

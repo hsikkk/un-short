@@ -13,6 +13,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.muuu.unshort.admin.DeviceAdminManager
+import com.muuu.unshort.analytics.AnalyticsEvent
+import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.premium.PremiumManager
 
@@ -442,6 +444,13 @@ class SettingsActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        // 설정 화면 조회 추적
+        AnalyticsManager.trackEvent(
+            this,
+            AnalyticsEvent.SETTINGS_SCREEN_VIEWED
+        )
+
         // 설정 화면에서 돌아왔을 때 Device Admin 상태 업데이트
         updateDeviceAdminSwitchState()
 
