@@ -1,6 +1,7 @@
 package com.muuu.unshort
 
 import android.app.Application
+import android.provider.Settings
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -87,6 +88,13 @@ class UnshortApplication : Application() {
                 flushIntervalMillis = 50000,
             )
         )
+
+        // Android ID를 Amplitude user ID로 설정
+        val androidId = Settings.Secure.getString(
+            applicationContext.contentResolver,
+            Settings.Secure.ANDROID_ID
+        )
+        amplitude.setUserId(androidId)
 
         Log.d(TAG, "Muuu Ad SDK initialized with debug mode: ${BuildConfig.DEBUG}")
         Log.d(TAG, "Amplitude initialized - API Key: ${BuildConfig.AMPLITUDE_API_KEY.take(8)}...")
