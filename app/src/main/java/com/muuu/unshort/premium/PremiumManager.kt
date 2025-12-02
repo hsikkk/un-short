@@ -7,6 +7,8 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.muuu.unshort.BuildConfig
 import com.muuu.unshort.admin.DeviceAdminManager
+import com.muuu.unshort.analytics.AnalyticsEvent
+import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.promo.PromoCodeValidator
 import java.util.concurrent.TimeUnit
@@ -172,6 +174,23 @@ object PremiumManager {
             val wasPremium = isPremiumCache
             isPremiumCache = isPremium
 
+            // 프리미엄 상태 변경 추적
+            val eventName = if (isPremium) {
+                AnalyticsEvent.PREMIUM_STATUS_ACTIVATED
+            } else {
+                AnalyticsEvent.PREMIUM_STATUS_DEACTIVATED
+            }
+            AnalyticsManager.trackEvent(
+                appContext,
+                eventName,
+                mapOf(
+                    "premium_type" to if (isLifetimePremium()) "lifetime" else "google_play"
+                )
+            )
+
+            // 프리미엄 user property 업데이트
+            AnalyticsManager.updatePremiumUserProperties(appContext)
+
             // 프리미엄 → 무료 전환 시 (구독 해지)
             if (wasPremium && !isPremium) {
                 onPremiumDowngrade()
@@ -219,6 +238,12 @@ object PremiumManager {
         activity: Activity,
         onResult: (success: Boolean) -> Unit
     ) {
+        // 구매 시작 추적
+        AnalyticsManager.trackEvent(
+            activity,
+            AnalyticsEvent.PREMIUM_PURCHASE_STARTED
+        )
+
         provider.startPurchaseFlow(activity) { success ->
             if (success) {
                 updatePremiumStatus(true)

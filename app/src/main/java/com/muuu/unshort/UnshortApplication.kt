@@ -18,6 +18,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.muuu.ad.MuuuAdManagner
+import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.premium.PremiumManager
 
 class UnshortApplication : Application() {
@@ -98,6 +99,9 @@ class UnshortApplication : Application() {
 
         // 권한 상태를 User Property로 설정
         AnalyticsManager.updatePermissionUserProperties(applicationContext)
+
+        // 프리미엄 상태를 User Property로 설정
+        AnalyticsManager.updatePremiumUserProperties(applicationContext)
 
         Log.d(TAG, "Muuu Ad SDK initialized with debug mode: ${BuildConfig.DEBUG}")
         Log.d(TAG, "Amplitude initialized - API Key: ${BuildConfig.AMPLITUDE_API_KEY.take(8)}...")

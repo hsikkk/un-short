@@ -2,10 +2,11 @@ package com.muuu.unshort.analytics
 
 import android.content.Context
 import android.util.Log
-import com.amplitude.android.Identify
 import com.amplitude.core.events.BaseEvent
+import com.amplitude.core.events.Identify
 import com.muuu.unshort.PermissionUtils
 import com.muuu.unshort.UnshortApplication
+import com.muuu.unshort.premium.PremiumManager
 
 object AnalyticsManager {
 
@@ -52,5 +53,26 @@ object AnalyticsManager {
         UnshortApplication.amplitude.identify(identify)
 
         Log.d(TAG, "User properties updated - Accessibility: $hasAccessibility, Overlay: $hasOverlay")
+    }
+
+    /**
+     * 프리미엄 상태를 User Property로 설정
+     */
+    fun updatePremiumUserProperties(context: Context) {
+        val isPremium = PremiumManager.isPremium()
+        val premiumType = when {
+            !isPremium -> "none"
+            PremiumManager.isLifetimePremium() -> "lifetime"
+            else -> "google_play"
+        }
+
+        // Amplitude user properties 설정
+        val identify = Identify()
+            .set("is_premium", isPremium)
+            .set("premium_type", premiumType)
+
+        UnshortApplication.amplitude.identify(identify)
+
+        Log.d(TAG, "Premium user properties updated - isPremium: $isPremium, type: $premiumType")
     }
 }

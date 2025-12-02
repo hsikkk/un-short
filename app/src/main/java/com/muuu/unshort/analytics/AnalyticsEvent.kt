@@ -36,4 +36,30 @@ object AnalyticsEvent {
 
     // In-App Review
     const val REVIEW_PROMPT_SHOWN = "review_prompt_shown"
+
+    // Premium Feature Lock Interactions
+    const val PREMIUM_FEATURE_LOCK_CLICKED = "premium_feature_lock_clicked"
+
+    // Premium Upgrade Screen
+    const val PREMIUM_UPGRADE_SCREEN_VIEWED = "premium_upgrade_screen_viewed"
+    const val PREMIUM_UPGRADE_BUTTON_CLICKED = "premium_upgrade_button_clicked"
+
+    // Promo Code Flow
+    const val PROMO_CODE_DIALOG_OPENED = "promo_code_dialog_opened"
+    const val PROMO_CODE_SUBMITTED = "promo_code_submitted"
+    const val PROMO_CODE_REDEEMED_SUCCESS = "promo_code_redeemed_success"
+    const val PROMO_CODE_REDEEMED_FAILED = "promo_code_redeemed_failed"
+
+    // Google Play Purchase Flow
+    const val PREMIUM_PURCHASE_STARTED = "premium_purchase_started"
+    const val PREMIUM_PURCHASE_COMPLETED = "premium_purchase_completed"
+    const val PREMIUM_PURCHASE_FAILED = "premium_purchase_failed"
+    const val PREMIUM_PURCHASE_CANCELLED = "premium_purchase_cancelled"
+
+    // Subscription Management
+    const val SUBSCRIPTION_MANAGEMENT_OPENED = "subscription_management_opened"
+
+    // Premium Status
+    const val PREMIUM_STATUS_ACTIVATED = "premium_status_activated"
+    const val PREMIUM_STATUS_DEACTIVATED = "premium_status_deactivated"
 }
