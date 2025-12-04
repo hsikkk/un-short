@@ -15,6 +15,8 @@ import android.view.accessibility.AccessibilityNodeInfo
 import com.muuu.shortblock.service.blocking.*
 import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.data.statistics.StatisticsRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 
 /**
  * 쇼츠 차단 AccessibilityService
@@ -345,14 +347,10 @@ class ShortsBlockService : AccessibilityService() {
             return
         }
 
-        // 오버레이 권한 확인
-        if (!Settings.canDrawOverlays(this)) {
-            Log.w(TAG, "Overlay permission not granted")
-            requestOverlayPermission()
-            return
-        }
+        // Activity 방식으로 변경되어 SYSTEM_ALERT_WINDOW 권한 불필요
+        // (이전에는 WindowManager 오버레이를 사용했으나, 이제는 Activity를 사용)
 
-        Log.d(TAG, "Overlay permission granted, scheduling overlay with delay")
+        Log.d(TAG, "Scheduling activity launch with delay")
 
         val prevState = sessionState.getPreviousState(packageName)
 
@@ -608,8 +606,9 @@ class ShortsBlockService : AccessibilityService() {
     }
 
     /**
-     * 오버레이 권한 요청
+     * 오버레이 권한 요청 (더 이상 사용하지 않음 - Activity 방식으로 변경)
      */
+    @Deprecated("Activity 방식으로 변경되어 더 이상 필요 없음")
     private fun requestOverlayPermission() {
         val intent = Intent(
             Settings.ACTION_MANAGE_OVERLAY_PERMISSION,

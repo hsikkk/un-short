@@ -8,6 +8,7 @@ object AppConstants {
     const val ACTION_TIMER_CANCELLED = "com.muuu.unshort.TIMER_CANCELLED"
     const val ACTION_CLOSE_OVERLAY = "com.muuu.unshort.CLOSE_OVERLAY"
     const val ACTION_TIMER_FORCE_CLOSE = "com.muuu.unshort.TIMER_FORCE_CLOSE"
+    const val ACTION_WATCH_CONFIRMED = "com.muuu.unshort.WATCH_CONFIRMED"
 
     // SharedPreferences
     const val PREF_NAME = "app_prefs"

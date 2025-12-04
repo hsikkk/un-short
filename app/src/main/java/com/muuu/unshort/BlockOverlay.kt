@@ -26,6 +26,18 @@ import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.premium.PremiumManager
 
+/**
+ * @deprecated 오버레이 방식에서 Activity 방식으로 변경되었습니다.
+ * 새로운 구현은 [ShortsBlockOverlayActivity]를 사용하세요.
+ *
+ * 변경 이유: Activity 생명주기 관리 개선
+ * 변경 날짜: 2025-12-04
+ */
+@Deprecated(
+    message = "Activity 방식(ShortsBlockOverlayActivity)으로 변경되었습니다.",
+    replaceWith = ReplaceWith("ShortsBlockOverlayActivity"),
+    level = DeprecationLevel.WARNING
+)
 class BlockOverlay(private val context: Context) {
 
     private val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager

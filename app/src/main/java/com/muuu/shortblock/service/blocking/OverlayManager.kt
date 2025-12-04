@@ -7,13 +7,13 @@ import android.content.IntentFilter
 import android.os.Build
 import android.util.Log
 import com.muuu.unshort.AppConstants
-import com.muuu.unshort.BlockOverlay
 import com.muuu.unshort.OverlayType
+import com.muuu.unshort.ShortsBlockOverlayActivity
 
 /**
- * 오버레이 생명주기 관리자
+ * 차단 화면 Activity 관리자
  *
- * 앱별로 독립적인 오버레이 관리
+ * 앱별로 독립적인 차단 화면 Activity 관리
  */
 class OverlayManager(
     private val context: Context,
@@ -23,13 +23,13 @@ class OverlayManager(
 ) {
     private val TAG = "OverlayManager"
 
-    // 앱별 오버레이 저장
-    private val overlayByPackage = mutableMapOf<String, BlockOverlay>()
+    // 앱별 Activity 상태 저장
+    private val activityVisibleByPackage = mutableMapOf<String, Boolean>()
     private val sessionIdByPackage = mutableMapOf<String, String>()
     private val lastShownSessionIdByPackage = mutableMapOf<String, String>()
 
-    // 타이머 완료 브로드캐스트 수신
-    private val timerReceiver = object : BroadcastReceiver() {
+    // 브로드캐스트 수신 (타이머 완료, Activity 닫기, Watch 확인)
+    private val actionReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.action) {
                 AppConstants.ACTION_TIMER_COMPLETED -> {
@@ -47,10 +47,33 @@ class OverlayManager(
                 }
                 AppConstants.ACTION_CLOSE_OVERLAY -> {
                     Log.d(TAG, "Close overlay broadcast")
-                    // 모든 오버레이 닫기
-                    overlayByPackage.keys.toList().forEach { pkg ->
-                        hideOverlay(pkg)
+                    val sourcePackage = intent.getStringExtra("source_package")
+
+                    // 해당 패키지의 Activity 상태 클리어
+                    if (sourcePackage != null) {
+                        hideOverlay(sourcePackage)
+                    } else {
+                        // 모든 Activity 닫기
+                        activityVisibleByPackage.keys.toList().forEach { pkg ->
+                            hideOverlay(pkg)
+                        }
                     }
+
+                    // Skip 콜백 호출
+                    onSkip()
+                }
+                AppConstants.ACTION_WATCH_CONFIRMED -> {
+                    val sessionId = intent.getStringExtra("session_id") ?: ""
+                    val sourcePackage = intent.getStringExtra("source_package")
+                    Log.d(TAG, "Watch confirmed broadcast: session=$sessionId, source=$sourcePackage")
+
+                    // 해당 패키지의 Activity 상태 클리어
+                    if (sourcePackage != null) {
+                        hideOverlay(sourcePackage)
+                    }
+
+                    // Watch 콜백 호출
+                    onWatch()
                 }
             }
         }
@@ -63,16 +86,17 @@ class OverlayManager(
             val filter = IntentFilter().apply {
                 addAction(AppConstants.ACTION_TIMER_COMPLETED)
                 addAction(AppConstants.ACTION_CLOSE_OVERLAY)
+                addAction(AppConstants.ACTION_WATCH_CONFIRMED)
             }
 
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    context.registerReceiver(timerReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+                    context.registerReceiver(actionReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
                 } else {
-                    context.registerReceiver(timerReceiver, filter)
+                    context.registerReceiver(actionReceiver, filter)
                 }
                 isReceiverRegistered = true
-                Log.d(TAG, "Timer receiver registered")
+                Log.d(TAG, "Action receiver registered")
             } catch (e: Exception) {
                 Log.e(TAG, "Error registering receiver", e)
             }
@@ -80,99 +104,71 @@ class OverlayManager(
     }
 
     /**
-     * 오버레이 표시
+     * 차단 화면 Activity 표시
      */
     fun showOverlay(
         packageName: String,
         sessionId: String,
         overlayType: OverlayType = OverlayType.INITIAL
     ): String {
-        // 기존 오버레이 있으면 제거
-        overlayByPackage[packageName]?.let { existing ->
-            if (existing.isShowing()) {
-                Log.d(TAG, "[$packageName] Dismissing existing overlay to show new type: $overlayType")
-                existing.dismiss()
-            }
+        // 기존 Activity가 있으면 상태만 업데이트
+        if (activityVisibleByPackage[packageName] == true) {
+            Log.d(TAG, "[$packageName] Activity already visible - updating overlay type to: $overlayType")
+            // TODO: Activity에 브로드캐스트를 보내서 UI 업데이트
         }
 
         sessionIdByPackage[packageName] = sessionId
         lastShownSessionIdByPackage[packageName] = sessionId
 
         try {
-            val overlay = BlockOverlay(context)
+            // Activity 시작
+            val intent = Intent(context, ShortsBlockOverlayActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                        Intent.FLAG_ACTIVITY_SINGLE_TOP
+                putExtra(ShortsBlockOverlayActivity.EXTRA_SESSION_ID, sessionId)
+                putExtra(ShortsBlockOverlayActivity.EXTRA_SOURCE_PACKAGE, packageName)
+                putExtra(ShortsBlockOverlayActivity.EXTRA_OVERLAY_TYPE, overlayType.name)
+            }
 
-            overlay.show(
-                onDismiss = {
-                    Log.d(TAG, "[$packageName] Overlay dismissed")
-                    overlayByPackage.remove(packageName)
-                },
-                onComplete = {
-                    Log.d(TAG, "[$packageName] Timer completed")
-                    onTimerCompleted()
-                },
-                onSkip = {
-                    Log.d(TAG, "[$packageName] Skip button pressed")
-                    hideOverlay(packageName)
-                    onSkip()
-                },
-                onWatch = {
-                    Log.d(TAG, "[$packageName] Watch button pressed")
-                    hideOverlay(packageName)
-                    onWatch()
-                },
-                sessionId = sessionId,
-                sourcePackage = packageName,
-                overlayType = overlayType
-            )
+            context.startActivity(intent)
+            activityVisibleByPackage[packageName] = true
 
-            overlayByPackage[packageName] = overlay
-            Log.d(TAG, "[$packageName] Overlay shown: session=$sessionId, type=$overlayType")
+            Log.d(TAG, "[$packageName] Activity started: session=$sessionId, type=$overlayType")
         } catch (e: Exception) {
-            Log.e(TAG, "[$packageName] Failed to show overlay", e)
+            Log.e(TAG, "[$packageName] Failed to start activity", e)
         }
 
         return sessionId
     }
 
     /**
-     * 오버레이 숨김
+     * 차단 화면 Activity 숨김
      */
     fun hideOverlay(packageName: String) {
-        overlayByPackage[packageName]?.let { overlay ->
-            try {
-                if (overlay.isShowing()) {
-                    overlay.dismiss()
-                    Log.d(TAG, "[$packageName] Overlay dismissed")
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "[$packageName] Error dismissing overlay", e)
-            }
-        }
-
-        overlayByPackage.remove(packageName)
+        activityVisibleByPackage[packageName] = false
+        Log.d(TAG, "[$packageName] Activity hidden (state cleared)")
     }
 
     /**
-     * 오버레이 표시 여부
+     * 차단 화면 Activity 표시 여부
      */
     fun isOverlayVisible(packageName: String): Boolean {
-        return overlayByPackage[packageName]?.isShowing() == true
+        return activityVisibleByPackage[packageName] == true
     }
 
     /**
      * 정리
      */
     fun cleanup() {
-        // 모든 오버레이 제거
-        overlayByPackage.keys.toList().forEach { pkg ->
-            hideOverlay(pkg)
-        }
+        // 모든 Activity 상태 제거
+        activityVisibleByPackage.clear()
 
         if (isReceiverRegistered) {
             try {
-                context.unregisterReceiver(timerReceiver)
+                context.unregisterReceiver(actionReceiver)
                 isReceiverRegistered = false
-                Log.d(TAG, "Timer receiver unregistered")
+                Log.d(TAG, "Action receiver unregistered")
             } catch (e: IllegalArgumentException) {
                 Log.e(TAG, "Error unregistering receiver", e)
             }

@@ -77,6 +77,15 @@
             android:excludeFromRecents="true" />
 
         <activity
+            android:name=".ShortsBlockOverlayActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.muuu.unshort.overlay"
+            android:excludeFromRecents="true" />
+
+        <activity
             android:name=".timer.DisableConfirmTimerActivity"
             android:exported="false"
             android:theme="@style/AppTheme"
