@@ -375,17 +375,9 @@ class ShortsBlockService : AccessibilityService() {
                 if (!prevState.isBackground) {
                     Log.d(TAG, "First entry (from $prevState) - muting volume and attempting pauseMedia")
                     pauseMedia(packageName)
-                } else {
-                    Log.d(TAG, "Returned from background ($prevState) - skipping volume/pauseMedia")
                 }
 
-                // 오버레이 표시 (타입은 파라미터로 전달됨)
-                overlayManager.showOverlay(packageName, sessionId, overlayType)
-
-                // 포그라운드 체크 시작
-                startForegroundCheck()
-
-                pendingOverlayJob = null
+                showOverlayAndStartCheck(packageName, sessionId, overlayType)
             } catch (e: Exception) {
                 Log.e(TAG, "Error showing overlay", e)
                 pendingOverlayJob = null
@@ -411,6 +403,15 @@ class ShortsBlockService : AccessibilityService() {
             Log.d(TAG, "Cancelled pending overlay job")
             pendingOverlayJob = null
         }
+    }
+
+    /**
+     * 오버레이 표시 및 포그라운드 체크 시작
+     */
+    private fun showOverlayAndStartCheck(packageName: String, sessionId: String, overlayType: OverlayType) {
+        overlayManager.showOverlay(packageName, sessionId, overlayType)
+        startForegroundCheck()
+        pendingOverlayJob = null
     }
 
     /**
@@ -493,6 +494,7 @@ class ShortsBlockService : AccessibilityService() {
                 if (isPlaying) {
                     Log.d(TAG, "Media playing - pausing")
                     performTapGesture()
+                    while (isTargetAppPlayingMedia()){}
                 } else {
                     Log.d(TAG, "Media already paused - skipping tap")
                 }
