@@ -8,11 +8,13 @@ import com.muuu.unshort.OverlayType
  * 세션 상태 관리자 (Event-Driven State Machine)
  *
  * 앱별로 독립적인 상태 관리
+ * Activity 기반 3차원 상태 시스템 사용
  */
 class SessionStateManager(
     private val context: Context,
     private val isBlockingEnabled: () -> Boolean,
-    private val onSessionEnd: ((SessionEndInfo) -> Unit)? = null
+    private val onSessionEnd: ((SessionEndInfo) -> Unit)? = null,
+    private val onStateChanged: ((SessionState) -> Unit)? = null
 ) {
 
     private val TAG = "SessionStateManager"
@@ -22,17 +24,16 @@ class SessionStateManager(
      */
     data class SessionEndInfo(
         val packageName: String,
-        val previousState: ShortsSessionState,
-        val newState: ShortsSessionState,
+        val previousState: SessionState,
+        val newState: SessionState,
         val event: SessionEvent,
         val didWatch: Boolean,
         val watchStartTime: Long?,
         val watchDurationMs: Long?
     )
 
-    // 앱별 상태 저장
-    private val stateByPackage = mutableMapOf<String, ShortsSessionState>()
-    private val previousStateByPackage = mutableMapOf<String, ShortsSessionState>()
+    // 앱별 상태 저장 (새로운 SessionState 사용)
+    private val stateByPackage = mutableMapOf<String, SessionState>()
 
     // 앱별 시청 시간 추적
     private val watchTimeByPackage = mutableMapOf<String, WatchTimeTracker>()
@@ -43,206 +44,270 @@ class SessionStateManager(
     private val STABLE_THRESHOLD = 2
 
     /**
-     * 이벤트 처리
+     * 이벤트 처리 (단일 전이 함수)
      */
     fun handleEvent(event: SessionEvent, packageName: String) {
-        val current = stateByPackage[packageName] ?: ShortsSessionState.IDLE
-        previousStateByPackage[packageName] = current
+        val current = stateByPackage[packageName] ?: SessionState.IDLE
 
-        val newState = when (event) {
-            is SessionEvent.EnterShorts -> transitionOnEnterShorts(current, packageName)
-            is SessionEvent.ExitShorts -> transitionOnExitShorts(current, packageName)
-            is SessionEvent.EnterBackground -> transitionOnEnterBackground(current, packageName)
-            is SessionEvent.ReturnToShorts -> transitionOnReturnToShorts(current, packageName)
-            is SessionEvent.TimerCompleted -> transitionOnTimerCompleted(current)
-            is SessionEvent.WatchConfirmed -> transitionOnWatchConfirmed(current, packageName)
-            is SessionEvent.SkipConfirmed -> transitionOnSkipConfirmed(packageName)
-            is SessionEvent.ContentHashChanged -> {
-                handleContentHashChanged(event.hash, packageName)
-                return
-            }
-            is SessionEvent.Reset -> transitionOnReset(packageName)
+        // ContentHashChanged는 특수 처리 (상태 전이 없음, 스크롤 감지만)
+        if (event is SessionEvent.ContentHashChanged) {
+            handleContentHashChanged(event.hash, packageName)
+            return
         }
 
-        stateByPackage[packageName] = newState
+        val newState = computeNewState(current, event, packageName)
 
         if (current != newState) {
+            stateByPackage[packageName] = newState
             Log.d(TAG, "[$packageName] ${event::class.simpleName} | $current → $newState")
+            onStateChanged?.invoke(newState)
         }
+
+        // 시청 시간 추적 업데이트
+        updateWatchTimeTracking(current, newState, packageName)
 
         // 세션 종료 판단 및 콜백 호출
-        if (shouldRecordSession(current, newState, event)) {
-            val didWatch = current == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
-            val watchTracker = watchTimeByPackage[packageName]
+        handleSessionEnd(current, newState, event, packageName)
+    }
 
-            // 현재 시청 중이면 마지막 구간 추가
-            watchTracker?.pause()
+    /**
+     * 통합 상태 전이 함수
+     *
+     * 모든 이벤트에 대한 상태 전이를 한 곳에서 관리
+     */
+    private fun computeNewState(
+        current: SessionState,
+        event: SessionEvent,
+        packageName: String
+    ): SessionState {
+        return when (event) {
+            is SessionEvent.EnterShorts -> {
+                // 스크롤 데이터 초기화
+                scrollDataByPackage[packageName] = ScrollData()
 
-            onSessionEnd?.invoke(
-                SessionEndInfo(
-                    packageName = packageName,
-                    previousState = current,
-                    newState = newState,
-                    event = event,
-                    didWatch = didWatch,
-                    watchStartTime = watchTracker?.getWatchStartTime(),
-                    watchDurationMs = watchTracker?.getAccumulatedTime()
+                // 차단 OFF: 즉시 시청 허용
+                if (!isBlockingEnabled()) {
+                    Log.d(TAG, "[$packageName] Blocking disabled - allowing shorts")
+                    return current.copy(
+                        blockingStage = BlockingStage.WATCHING,
+                        shortsLocation = ShortsLocation.IN_SHORTS,
+                        sessionId = generateSessionId()
+                    )
+                }
+
+                // "첫 영상만 허용" 기능 확인
+                val prefsManager = com.muuu.unshort.prefs.PreferencesManager(context)
+                val blockScrolledOnly = prefsManager.isBlockScrolledOnly
+
+                // IDLE에서 진입 + 기능 활성화 → 첫 영상 허용
+                if (blockScrolledOnly && current.shortsLocation == ShortsLocation.OUTSIDE) {
+                    Log.d(TAG, "[$packageName] First shorts allowed (blockScrolledOnly)")
+                    return current.copy(
+                        blockingStage = BlockingStage.WATCHING,
+                        shortsLocation = ShortsLocation.IN_SHORTS,
+                        sessionId = generateSessionId()
+                    )
+                }
+
+                // 기본: 타이머 필요
+                Log.d(TAG, "[$packageName] Blocking shorts - need timer")
+                current.copy(
+                    blockingStage = BlockingStage.NEED_TIMER,
+                    shortsLocation = ShortsLocation.IN_SHORTS,
+                    sessionId = generateSessionId()
                 )
-            )
-            Log.d(TAG, "[$packageName] Session recorded: didWatch=$didWatch, duration=${watchTracker?.getAccumulatedTime()}ms")
+            }
 
-            // 시청 시간 초기화
-            watchTracker?.reset()
+            is SessionEvent.ExitShorts -> {
+                // 쇼츠 화면 이탈
+                scrollDataByPackage[packageName] = ScrollData()
+                current.copy(
+                    blockingStage = BlockingStage.NONE,
+                    shortsLocation = ShortsLocation.OUTSIDE,
+                    sessionId = null
+                )
+            }
+
+            is SessionEvent.ActivityStarted -> {
+                // Activity 시작
+                val newActivityState = when (event.type) {
+                    ActivityType.OVERLAY -> ActivityState.OVERLAY_RUNNING
+                    ActivityType.TIMER -> ActivityState.TIMER_RUNNING
+                }
+                current.copy(activityState = newActivityState)
+            }
+
+            is SessionEvent.ActivityDestroyed -> {
+                // Activity 종료
+                current.copy(activityState = ActivityState.NONE)
+            }
+
+            is SessionEvent.TimerCompleted -> {
+                // 타이머 완료
+                // sessionId 검증 (옵션)
+                if (event.sessionId != current.sessionId) {
+                    Log.w(TAG, "[$packageName] Timer sessionId mismatch: ${event.sessionId} vs ${current.sessionId}")
+                }
+
+                current.copy(
+                    blockingStage = BlockingStage.NEED_CONFIRMATION,
+                    activityState = ActivityState.OVERLAY_RUNNING
+                )
+            }
+
+            is SessionEvent.WatchConfirmed -> {
+                // "볼래요" 클릭
+                current.copy(
+                    blockingStage = BlockingStage.WATCHING,
+                    activityState = ActivityState.NONE
+                )
+            }
+
+            is SessionEvent.SkipConfirmed -> {
+                // "안볼래요" 클릭
+                scrollDataByPackage[packageName] = ScrollData()
+                current.copy(
+                    blockingStage = BlockingStage.NONE,
+                    shortsLocation = ShortsLocation.OUTSIDE,
+                    activityState = ActivityState.NONE,
+                    sessionId = null
+                )
+            }
+
+            is SessionEvent.Reset -> {
+                // 앱 이탈 또는 서비스 재시작
+                scrollDataByPackage[packageName] = ScrollData()
+                SessionState.IDLE
+            }
+
+            // Deprecated events (하위 호환성)
+            SessionEvent.EnterBackground -> {
+                @Suppress("DEPRECATION")
+                Log.w(TAG, "[$packageName] EnterBackground is deprecated - use ActivityStarted instead")
+                current
+            }
+
+            SessionEvent.ReturnToShorts -> {
+                @Suppress("DEPRECATION")
+                Log.w(TAG, "[$packageName] ReturnToShorts is deprecated - use ActivityDestroyed instead")
+                current
+            }
+
+            else -> {
+                Log.w(TAG, "[$packageName] Unknown event: $event")
+                current
+            }
         }
+    }
+
+    /**
+     * 시청 시간 추적 업데이트
+     */
+    private fun updateWatchTimeTracking(
+        previous: SessionState,
+        current: SessionState,
+        packageName: String
+    ) {
+        val tracker = watchTimeByPackage.getOrPut(packageName) { WatchTimeTracker() }
+
+        val wasWatching = previous.isWatching()
+        val isWatching = current.isWatching()
+
+        when {
+            // 시청 시작
+            !wasWatching && isWatching -> {
+                Log.d(TAG, "[$packageName] Watch started")
+                tracker.start()
+            }
+
+            // 시청 일시정지 (Activity 실행)
+            wasWatching && !isWatching && current.activityState != ActivityState.NONE -> {
+                Log.d(TAG, "[$packageName] Watch paused (Activity running)")
+                tracker.pause()
+            }
+
+            // 시청 재개 (Activity 종료)
+            !wasWatching && isWatching && previous.activityState != ActivityState.NONE -> {
+                Log.d(TAG, "[$packageName] Watch resumed (Activity destroyed)")
+                tracker.resume()
+            }
+
+            // 시청 종료
+            wasWatching && !isWatching -> {
+                Log.d(TAG, "[$packageName] Watch ended")
+                tracker.pause()
+            }
+        }
+    }
+
+    /**
+     * 세션 종료 처리
+     */
+    private fun handleSessionEnd(
+        previous: SessionState,
+        current: SessionState,
+        event: SessionEvent,
+        packageName: String
+    ) {
+        if (!shouldRecordSession(previous, current, event)) {
+            return
+        }
+
+        val didWatch = previous.blockingStage == BlockingStage.WATCHING
+        val watchTracker = watchTimeByPackage[packageName]
+
+        // 현재 시청 중이면 마지막 구간 추가
+        watchTracker?.pause()
+
+        onSessionEnd?.invoke(
+            SessionEndInfo(
+                packageName = packageName,
+                previousState = previous,
+                newState = current,
+                event = event,
+                didWatch = didWatch,
+                watchStartTime = watchTracker?.getWatchStartTime(),
+                watchDurationMs = watchTracker?.getAccumulatedTime()
+            )
+        )
+
+        Log.d(TAG, "[$packageName] Session recorded: didWatch=$didWatch, duration=${watchTracker?.getAccumulatedTime()}ms")
+
+        // 시청 시간 초기화
+        watchTracker?.reset()
     }
 
     /**
      * 세션 기록이 필요한 상태 전이인지 판단
      */
     private fun shouldRecordSession(
-        current: ShortsSessionState,
-        newState: ShortsSessionState,
+        previous: SessionState,
+        current: SessionState,
         event: SessionEvent
     ): Boolean {
         return when {
             // "안볼래요" 버튼
             event is SessionEvent.SkipConfirmed -> true
 
-            // 시청 중 쇼츠 화면 이탈 (같은 앱 내 다른 화면)
-            current == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
-                && newState == ShortsSessionState.IDLE
-                && event is SessionEvent.ExitShorts -> true
+            // 시청 중 쇼츠 화면 이탈
+            previous.blockingStage == BlockingStage.WATCHING &&
+            current.shortsLocation == ShortsLocation.OUTSIDE &&
+            event is SessionEvent.ExitShorts -> true
 
             // 앱 완전 이탈 (Reset 이벤트)
-            event is SessionEvent.Reset && current != ShortsSessionState.IDLE -> true
+            event is SessionEvent.Reset &&
+            previous.shortsLocation == ShortsLocation.IN_SHORTS -> true
 
             else -> false
         }
     }
 
-    // ========== Transition Methods ==========
-
-    private fun transitionOnEnterShorts(
-        current: ShortsSessionState,
-        packageName: String
-    ): ShortsSessionState {
-        // Initialize ScrollData for scroll detection
-        scrollDataByPackage[packageName] = ScrollData()
-
-        // 차단이 OFF일 때: 즉시 ALLOWED 상태로 전환 + 시청 시간 측정 시작
-        if (!isBlockingEnabled()) {
-            Log.d(TAG, "[$packageName] Blocking disabled - allowing shorts and starting watch time tracking")
-            val tracker = watchTimeByPackage.getOrPut(packageName) { WatchTimeTracker() }
-            tracker.start()
-            return ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
-        }
-
-        // Check if "block scrolled shorts only" feature is enabled
-        val prefsManager = com.muuu.unshort.prefs.PreferencesManager(context)
-        val blockScrolledOnly = prefsManager.isBlockScrolledOnly
-
-        // If coming from IDLE and feature is enabled → Allow first shorts
-        if (blockScrolledOnly && current == ShortsSessionState.IDLE) {
-            Log.d(TAG, "[$packageName] First shorts allowed - ScrollData initialized")
-            val tracker = watchTimeByPackage.getOrPut(packageName) { WatchTimeTracker() }
-            tracker.start()
-            return ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
-        }
-
-        // Default behavior: block and need timer
-        Log.d(TAG, "[$packageName] Blocking shorts - ScrollData initialized")
-        return ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
-    }
-
-    private fun transitionOnExitShorts(current: ShortsSessionState, packageName: String): ShortsSessionState {
-        scrollDataByPackage[packageName] = ScrollData()
-        // 시청 중이었으면 일시정지
-        if (current == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL) {
-            watchTimeByPackage[packageName]?.pause()
-        }
-        return ShortsSessionState.IDLE
-    }
-
-    private fun transitionOnEnterBackground(current: ShortsSessionState, packageName: String): ShortsSessionState {
-        // 시청 중이었으면 일시정지
-        if (current == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL) {
-            watchTimeByPackage[packageName]?.pause()
-        }
-
-        return when (current) {
-            ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER ->
-                ShortsSessionState.BACKGROUND_BLOCKED_NEED_TIMER
-            ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION ->
-                ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION
-            ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL ->
-                ShortsSessionState.BACKGROUND_ALLOWED_UNTIL_SCROLL
-            else -> current
-        }
-    }
-
-    private fun transitionOnReturnToShorts(current: ShortsSessionState, packageName: String): ShortsSessionState {
-        val newState = when (current) {
-            ShortsSessionState.BACKGROUND_BLOCKED_NEED_TIMER ->
-                ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
-            ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION ->
-                ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION
-            ShortsSessionState.BACKGROUND_ALLOWED_UNTIL_SCROLL ->
-                ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
-            ShortsSessionState.IDLE ->
-                ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
-            else -> current
-        }
-
-        // ALLOWED 상태로 복귀한 경우 시청 재개
-        if (newState == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL) {
-            watchTimeByPackage[packageName]?.resume()
-        }
-
-        return newState
-    }
-
-    private fun transitionOnTimerCompleted(current: ShortsSessionState) = when (current) {
-        ShortsSessionState.BACKGROUND_BLOCKED_NEED_TIMER ->
-            ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION
-        ShortsSessionState.IDLE ->
-            ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION
-        else -> {
-            Log.w(TAG, "Timer completed in unexpected state: $current")
-            ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION
-        }
-    }
-
-    private fun transitionOnWatchConfirmed(current: ShortsSessionState, packageName: String): ShortsSessionState {
-        return when (current) {
-            ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION -> {
-                // 시청 시작
-                val tracker = watchTimeByPackage.getOrPut(packageName) { WatchTimeTracker() }
-                tracker.start()
-                ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
-            }
-            else -> {
-                Log.w(TAG, "Watch confirmed in unexpected state: $current")
-                current
-            }
-        }
-    }
-
-    private fun transitionOnSkipConfirmed(packageName: String): ShortsSessionState {
-        scrollDataByPackage[packageName] = ScrollData()
-        return ShortsSessionState.IDLE
-    }
-
-    private fun transitionOnReset(packageName: String): ShortsSessionState {
-        scrollDataByPackage[packageName] = ScrollData()
-        return ShortsSessionState.IDLE
-    }
-
     /**
-     * 콘텐츠 해시 변경 처리
+     * 콘텐츠 해시 변경 처리 (스크롤 감지)
      */
     private fun handleContentHashChanged(newHash: Int, packageName: String) {
         val scrollData = scrollDataByPackage.getOrPut(packageName) { ScrollData() }
-        val current = stateByPackage[packageName] ?: ShortsSessionState.IDLE
+        val current = stateByPackage[packageName] ?: SessionState.IDLE
 
         Log.d(TAG, "[$packageName] ContentHash: new=$newHash, old=${scrollData.hash}, stableCount=${scrollData.stableCount}")
 
@@ -256,18 +321,18 @@ class SessionStateManager(
 
         Log.d(TAG, "[$packageName] Hash changed! scrollDetected=$scrollDetected (stableCount=${scrollData.stableCount}, threshold=$STABLE_THRESHOLD)")
 
-        if (scrollDetected && current == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL) {
+        if (scrollDetected && current.blockingStage == BlockingStage.WATCHING) {
             Log.d(TAG, "[$packageName] Scroll detected: ${scrollData.hash} → $newHash")
-            previousStateByPackage[packageName] = current
 
             // 세션 기록 먼저 수행 (스크롤 = 시청 완료)
             val watchTracker = watchTimeByPackage[packageName]
             watchTracker?.pause()
 
-            // 세션 종료 정보 먼저 수집 (reset 전에)
+            // 세션 종료 정보 수집
+            val previousState = current
             val sessionEndInfo = SessionEndInfo(
                 packageName = packageName,
-                previousState = current,
+                previousState = previousState,
                 newState = current, // 임시, 아래서 업데이트
                 event = SessionEvent.ContentHashChanged(newHash),
                 didWatch = true,
@@ -276,59 +341,80 @@ class SessionStateManager(
             )
             Log.d(TAG, "[$packageName] Session recorded: didWatch=true (scroll), duration=${watchTracker?.getAccumulatedTime()}ms")
 
-            // 항상 reset (차단 상태 무관)
+            // 시청 시간 초기화
             watchTracker?.reset()
 
             // 차단 상태에 따라 다음 상태 결정
             val newState = if (!isBlockingEnabled()) {
                 // 차단 OFF: 즉시 새 세션 시작 (ALLOWED 상태 유지)
-                Log.d(TAG, "[$packageName] Blocking disabled - staying in ALLOWED state after scroll, starting new session from 0")
+                Log.d(TAG, "[$packageName] Blocking disabled - staying in WATCHING state after scroll, starting new session")
                 val tracker = watchTimeByPackage.getOrPut(packageName) { WatchTimeTracker() }
                 tracker.start()
-                ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
+                current.copy(sessionId = generateSessionId())
             } else {
                 // 차단 ON: 새 영상이므로 다시 차단 필요
-                Log.d(TAG, "[$packageName] Scroll event | $current → IN_SHORTS_BLOCKED_NEED_TIMER (new video)")
-                ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER
+                Log.d(TAG, "[$packageName] Scroll event | $current → NEED_TIMER (new video)")
+                current.copy(
+                    blockingStage = BlockingStage.NEED_TIMER,
+                    activityState = ActivityState.NONE,
+                    sessionId = generateSessionId()
+                )
             }
 
             stateByPackage[packageName] = newState
+            onStateChanged?.invoke(newState)
 
             // 세션 종료 콜백 호출 (올바른 newState로)
             onSessionEnd?.invoke(sessionEndInfo.copy(newState = newState))
         } else {
-            Log.d(TAG, "[$packageName] Scroll not triggered: scrollDetected=$scrollDetected, current=$current")
+            Log.d(TAG, "[$packageName] Scroll not triggered: scrollDetected=$scrollDetected, current=${current.blockingStage}")
         }
 
         scrollData.hash = newHash
         scrollData.stableCount = 0
     }
 
+    /**
+     * 세션 ID 생성
+     */
+    private fun generateSessionId(): String {
+        return "session_${System.currentTimeMillis()}_${(Math.random() * 10000).toInt()}"
+    }
+
     // ========== Query Methods ==========
 
-    fun getOverlayType(packageName: String): OverlayType? {
-        return when (stateByPackage[packageName] ?: ShortsSessionState.IDLE) {
-            ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER -> OverlayType.INITIAL
-            ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION -> OverlayType.CONFIRMATION
-            else -> null
-        }
+    /**
+     * 현재 상태 조회
+     */
+    fun getCurrentState(packageName: String): SessionState {
+        return stateByPackage[packageName] ?: SessionState.IDLE
     }
 
-    fun getCurrentState(packageName: String): ShortsSessionState {
-        return stateByPackage[packageName] ?: ShortsSessionState.IDLE
-    }
-
-    fun getPreviousState(packageName: String): ShortsSessionState {
-        return previousStateByPackage[packageName] ?: ShortsSessionState.IDLE
-    }
-
+    /**
+     * 오버레이 표시 필요 여부
+     */
     fun needsOverlay(packageName: String): Boolean {
-        val state = stateByPackage[packageName] ?: ShortsSessionState.IDLE
-        return state == ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER ||
-               state == ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION
+        return getCurrentState(packageName).needsOverlay()
     }
 
+    /**
+     * 오버레이 타입 조회
+     */
+    fun getOverlayType(packageName: String): OverlayType? {
+        return getCurrentState(packageName).getOverlayType()
+    }
+
+    /**
+     * 시청 허용 여부
+     */
     fun isAllowed(packageName: String): Boolean {
-        return stateByPackage[packageName] == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL
+        return getCurrentState(packageName).isWatching()
+    }
+
+    /**
+     * 미디어 일시정지 필요 여부
+     */
+    fun shouldPauseMedia(packageName: String): Boolean {
+        return getCurrentState(packageName).shouldPauseMedia()
     }
 }

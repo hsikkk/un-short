@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import com.muuu.unshort.AppConstants
 import com.muuu.unshort.R
+import com.muuu.unshort.ShortsBlockService
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
 
@@ -33,6 +34,16 @@ class ShortsBlockTimerActivity : BaseTimerActivity() {
 
         super.onCreate(savedInstanceState)
 
+        // Notify SessionStateManager that Timer Activity started
+        ShortsBlockService.instance?.getSessionStateManager()?.handleEvent(
+            com.muuu.shortblock.service.blocking.SessionEvent.ActivityStarted(
+                com.muuu.shortblock.service.blocking.ActivityType.TIMER,
+                currentSessionId
+            ),
+            sourcePackageName
+        )
+        Log.d(TAG, "Timer Activity started event sent: session=$currentSessionId")
+
         // Track timer activity opened
         AnalyticsManager.trackEvent(this, AnalyticsEvent.TIMER_ACTIVITY_OPENED)
     }
@@ -47,10 +58,17 @@ class ShortsBlockTimerActivity : BaseTimerActivity() {
         // Track analytics
         AnalyticsManager.trackEvent(this, AnalyticsEvent.TIMER_COMPLETED)
 
+        // Notify SessionStateManager about timer completion
+        ShortsBlockService.instance?.getSessionStateManager()?.handleEvent(
+            com.muuu.shortblock.service.blocking.SessionEvent.TimerCompleted(currentSessionId),
+            sourcePackageName
+        )
+        Log.d(TAG, "Timer completed event sent: session=$currentSessionId")
+
         // 결과 반환 (Overlay Activity로)
         setResult(RESULT_OK)
 
-        // Broadcast도 유지 (AccessibilityService용)
+        // Broadcast도 유지 (하위 호환성 및 OverlayManager용)
         val intent = Intent(AppConstants.ACTION_TIMER_COMPLETED)
         intent.setPackage(packageName)
         intent.putExtra("session_id", currentSessionId)

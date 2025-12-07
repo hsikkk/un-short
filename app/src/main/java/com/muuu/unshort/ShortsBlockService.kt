@@ -30,6 +30,16 @@ import kotlinx.coroutines.delay
  */
 class ShortsBlockService : AccessibilityService() {
 
+    companion object {
+        /**
+         * Service instance (Activity에서 접근 가능)
+         *
+         * Service가 실행되지 않은 경우 null
+         */
+        var instance: ShortsBlockService? = null
+            private set
+    }
+
     private val TAG = "ShortsBlockService"
 
     // 새로운 컴포넌트들
@@ -49,7 +59,6 @@ class ShortsBlockService : AccessibilityService() {
     // 포그라운드 앱 추적
     private var lastForegroundPackage: String = ""
     private val handler = android.os.Handler(android.os.Looper.getMainLooper())
-    private var foregroundCheckRunnable: Runnable? = null
     private var pendingOverlayJob: Runnable? = null
 
     // Fresh start 감지용
@@ -68,6 +77,9 @@ class ShortsBlockService : AccessibilityService() {
         super.onServiceConnected()
         Log.d(TAG, "Service connected")
 
+        // Service instance 설정
+        instance = this
+
         // Managers 초기화
         prefsManager = PreferencesManager(this)
         statisticsRepository = StatisticsRepository(this)
@@ -84,9 +96,7 @@ class ShortsBlockService : AccessibilityService() {
                 // 타이머 완료 플래그 설정 (통계 기록용)
                 currentTimerCompleted = true
 
-                // 타이머 완료 → 확인 필요 상태로 전이
-                sessionState.handleEvent(SessionEvent.TimerCompleted, currentPackage)
-                stopForegroundCheck()
+                // Note: TimerCompleted event is now sent by TimerActivity directly
             },
             onSkip = {
                 // "안볼래요" 버튼 - 뒤로 가기
@@ -111,7 +121,6 @@ class ShortsBlockService : AccessibilityService() {
                 Log.d(TAG, "Watch button pressed - allowing watch")
 
                 sessionState.handleEvent(SessionEvent.WatchConfirmed, currentPackage)
-                stopForegroundCheck()
 
                 prefsManager.isAllowedUntilScroll = true
 
@@ -126,12 +135,6 @@ class ShortsBlockService : AccessibilityService() {
         // 서비스 재시작 시 이전 세션 데이터 클리어
         clearStaleSessionData()
 
-        // Persisted allowed state 복원
-        if (prefsManager.isAllowedUntilScroll) {
-            Log.d(TAG, "Restoring allowed state from SharedPreferences")
-            sessionState.handleEvent(SessionEvent.TimerCompleted, packageName)  // 복원
-        }
-
         // 30일 이전 통계 데이터 정리
         statisticsRepository.cleanOldData()
 
@@ -145,45 +148,9 @@ class ShortsBlockService : AccessibilityService() {
         val packageName = event.packageName?.toString() ?: return
         currentPackage = packageName  // 현재 패키지 저장
 
-        // 차단 비활성화 시 오버레이만 제거하고 세션 추적은 계속
-        if (!prefsManager.isBlockingEnabled) {
-            if (overlayManager.isOverlayVisible(packageName)) {
-                cancelPendingOverlay()
-                overlayManager.hideOverlay(packageName)
-            }
-            // return 제거 - 세션 추적 계속 진행
-        }
-
         // 이벤트 로깅
         Log.d(TAG, "=== Event: ${event.eventType}, Package: $packageName ===")
         Log.d(TAG, "Current state: ${sessionState.getCurrentState(packageName)}")
-
-        // 오버레이 표시 중 포그라운드 앱 변경 감지
-        if (overlayManager.isOverlayVisible(packageName)) {
-            val currentForegroundPackage = rootInActiveWindow?.packageName?.toString()
-
-            if (currentForegroundPackage != null && currentForegroundPackage != lastForegroundPackage) {
-                lastForegroundPackage = currentForegroundPackage
-
-                // 차단 대상 앱이 아닌 앱으로 전환
-                if (currentForegroundPackage !in AppBlockingRegistry.TARGET_PACKAGES) {
-                    Log.d(TAG, "Foreground changed to $currentForegroundPackage, dismissing overlay")
-                    handleLeavingTargetApp(currentForegroundPackage)
-                    return
-                }
-            }
-        }
-
-        // TYPE_WINDOW_STATE_CHANGED 이벤트로 앱 전환 감지
-        if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-            Log.d(TAG, "Window state changed: $packageName")
-
-            if (packageName !in AppBlockingRegistry.TARGET_PACKAGES && overlayManager.isOverlayVisible(packageName)) {
-                Log.d(TAG, "Left target app to $packageName, dismissing overlay")
-                handleLeavingTargetApp(packageName)
-                return
-            }
-        }
 
         // 차단 대상 앱이 아니면 무시
         if (packageName !in AppBlockingRegistry.TARGET_PACKAGES) {
@@ -217,19 +184,17 @@ class ShortsBlockService : AccessibilityService() {
     ) {
         val currentState = sessionState.getCurrentState(packageName)
 
-        when (currentState) {
-            // IDLE 상태
-            ShortsSessionState.IDLE -> {
+        when {
+            // IDLE 상태 (쇼츠 화면 밖)
+            currentState.shortsLocation == ShortsLocation.OUTSIDE -> {
                 if (isInShortsScreen) {
                     sessionState.handleEvent(SessionEvent.EnterShorts, packageName)
                     appStartTime = System.currentTimeMillis()
                 }
             }
 
-            // Foreground 쇼츠 상태
-            ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER,
-            ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION,
-            ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL -> {
+            // IN_SHORTS 상태 (모든 blocking stage)
+            currentState.shortsLocation == ShortsLocation.IN_SHORTS -> {
                 if (!isInShortsScreen) {
                     // 쇼츠 이탈 - 어디로 갔는지 확인
                     val foregroundPkg = rootInActiveWindow?.packageName?.toString()
@@ -240,24 +205,23 @@ class ShortsBlockService : AccessibilityService() {
                             Log.d(TAG, "Exited shorts within same app")
                             sessionState.handleEvent(SessionEvent.ExitShorts, packageName)
                         }
-                        // 다른 앱 = Background 전환
+                        // 다른 앱 = Background 전환 (deprecated event)
                         else -> {
                             Log.d(TAG, "Exited shorts to other app/home - entering background")
+                            @Suppress("DEPRECATION")
                             sessionState.handleEvent(SessionEvent.EnterBackground, packageName)
                         }
                     }
 
                     cancelPendingOverlay()
                     restoreVolume(packageName)
-
-                    overlayManager.hideOverlay(packageName)
                 } else {
                     // 쇼츠 화면 내에서 콘텐츠 변화 감지
                     Log.d(TAG, "Still in shorts, state=$currentState, checking for scroll...")
 
-                    // 스크롤 감지 (ALLOWED 상태에서만)
-                    if (currentState == ShortsSessionState.IN_SHORTS_ALLOWED_UNTIL_SCROLL) {
-                        Log.d(TAG, "ALLOWED state - generating content hash")
+                    // 스크롤 감지 (WATCHING 상태에서만)
+                    if (currentState.isWatching()) {
+                        Log.d(TAG, "WATCHING state - generating content hash")
                         val hash = hashGenerator.generateContentHash(rootNode, appConfig.hashConfig)
                         Log.d(TAG, "Generated hash: $hash")
 
@@ -269,7 +233,7 @@ class ShortsBlockService : AccessibilityService() {
                             val newState = sessionState.getCurrentState(packageName)
                             Log.d(TAG, "State after hash event: $newState")
 
-                            if (newState == ShortsSessionState.IN_SHORTS_BLOCKED_NEED_CONFIRMATION) {
+                            if (newState.blockingStage == BlockingStage.NEED_CONFIRMATION) {
                                 Log.d(TAG, "Scroll detected - clearing state")
 
                                 prefsManager.clearCompletedSessionId()
@@ -284,14 +248,7 @@ class ShortsBlockService : AccessibilityService() {
                 }
             }
 
-            // Background 상태에서 쇼츠 복귀
-            ShortsSessionState.BACKGROUND_BLOCKED_NEED_TIMER,
-            ShortsSessionState.BACKGROUND_BLOCKED_NEED_CONFIRMATION,
-            ShortsSessionState.BACKGROUND_ALLOWED_UNTIL_SCROLL -> {
-                if (isInShortsScreen) {
-                    sessionState.handleEvent(SessionEvent.ReturnToShorts, packageName)
-                }
-            }
+            // Note: BACKGROUND states are deprecated - Activity lifecycle handles this now
         }
     }
 
@@ -302,7 +259,7 @@ class ShortsBlockService : AccessibilityService() {
         val overlayType = sessionState.getOverlayType(packageName)
 
         // 차단이 활성화되어 있고, 오버레이가 필요한 경우에만 표시
-        if (prefsManager.isBlockingEnabled && overlayType != null && !overlayManager.isOverlayVisible(packageName)) {
+        if (prefsManager.isBlockingEnabled && overlayType != null) {
             // 오버레이 표시 필요
             Log.d(TAG, "State requires overlay: $overlayType")
             showBlockOverlay(packageName, overlayType)
@@ -318,7 +275,6 @@ class ShortsBlockService : AccessibilityService() {
      */
     private fun handleLeavingTargetApp(targetPackageName: String? = null) {
         cancelPendingOverlay()
-        overlayManager.hideOverlay(packageName)
         restoreVolume(packageName)
 
         // 우리 앱으로 전환된 경우 체크 (세션 기록은 SessionStateManager에서 처리)
@@ -347,20 +303,14 @@ class ShortsBlockService : AccessibilityService() {
             return
         }
 
-        // 이미 오버레이가 표시 중이면 스킵
-        if (overlayManager.isOverlayVisible(packageName)) {
-            Log.d(TAG, "Overlay already visible - skipping")
-            return
-        }
-
-        // Activity 방식으로 변경되어 SYSTEM_ALERT_WINDOW 권한 불필요
+        // Activity 방식 - singleTask launchMode로 중복 인스턴스 방지
         // (이전에는 WindowManager 오버레이를 사용했으나, 이제는 Activity를 사용)
 
         Log.d(TAG, "Scheduling activity launch with delay")
 
-        val prevState = sessionState.getPreviousState(packageName)
-
-        if (!prevState.isBackground) {
+        // Activity가 실행 중이 아니면 볼륨 저장 및 음소거
+        val currentState = sessionState.getCurrentState(packageName)
+        if (currentState.activityState == ActivityState.NONE) {
             saveAndMuteVolume(packageName)
         }
 
@@ -378,10 +328,9 @@ class ShortsBlockService : AccessibilityService() {
                 prefsManager.currentSessionId = sessionId
                 Log.d(TAG, "Session created: $sessionId")
 
-                if (!prevState.isBackground) {
-                    Log.d(TAG, "First entry (from $prevState) - muting volume and attempting pauseMedia")
-                    pauseMedia(packageName)
-                }
+                // 미디어 일시정지 시도 (pauseMedia 내부에서 상태 체크)
+                Log.d(TAG, "Attempting pauseMedia")
+                pauseMedia(packageName)
 
                 showOverlayAndStartCheck(packageName, sessionId, overlayType)
             } catch (e: Exception) {
@@ -416,65 +365,9 @@ class ShortsBlockService : AccessibilityService() {
      */
     private fun showOverlayAndStartCheck(packageName: String, sessionId: String, overlayType: OverlayType) {
         overlayManager.showOverlay(packageName, sessionId, overlayType)
-        startForegroundCheck()
         pendingOverlayJob = null
     }
 
-    /**
-     * 포그라운드 체크 시작
-     */
-    private fun startForegroundCheck() {
-        stopForegroundCheck()
-
-        foregroundCheckRunnable = object : Runnable {
-            override fun run() {
-                try {
-                    val currentForegroundPackage = rootInActiveWindow?.packageName?.toString()
-
-                    if (currentForegroundPackage != null) {
-                        when {
-                            // 차단 대상 앱으로 전환 (쇼츠 복귀 가능)
-                            currentForegroundPackage in AppBlockingRegistry.TARGET_PACKAGES -> {
-                                // 계속 체크 (쇼츠 복귀 감지는 handleStateTransitions에서 처리)
-                            }
-                            // 우리 앱 (TimerActivity 등) - Background 상태로 전이
-                            currentForegroundPackage == packageName -> {
-                                Log.d(TAG, "Switched to our app ($currentForegroundPackage) - entering background")
-                                sessionState.handleEvent(SessionEvent.EnterBackground, packageName)
-                                overlayManager.hideOverlay(packageName)
-                            }
-                            // 다른 앱 - Background 상태로 전이
-                            else -> {
-                                Log.d(TAG, "Switched to other app ($currentForegroundPackage) - entering background")
-                                sessionState.handleEvent(SessionEvent.EnterBackground, packageName)
-                                overlayManager.hideOverlay(packageName)
-                                stopForegroundCheck()
-                                return
-                            }
-                        }
-                    }
-
-                    handler.postDelayed(this, 500)
-                } catch (e: Exception) {
-                    Log.d(TAG, "Error in foreground check", e)
-                }
-            }
-        }
-
-        handler.post(foregroundCheckRunnable!!)
-        Log.d(TAG, "Started foreground check")
-    }
-
-    /**
-     * 포그라운드 체크 중지
-     */
-    private fun stopForegroundCheck() {
-        foregroundCheckRunnable?.let {
-            handler.removeCallbacks(it)
-            foregroundCheckRunnable = null
-            Log.d(TAG, "Stopped foreground check")
-        }
-    }
 
     /**
      * 미디어 일시정지
@@ -484,16 +377,15 @@ class ShortsBlockService : AccessibilityService() {
             Log.d(TAG, "pauseMedia called for $packageName")
 
             val state = sessionState.getCurrentState(packageName)
-            val prevState = sessionState.getPreviousState(packageName)
 
-            // Background 복귀면 스킵 (이미 일시정지 상태)
-            if (prevState.isBackground) {
-                Log.d(TAG, "From background ($prevState) - skipping pause")
+            // Activity 실행 중이면 일시정지 필요
+            if (!state.shouldPauseMedia()) {
+                Log.d(TAG, "No Activity running - skipping pause")
                 return
             }
 
             // 첫 진입(NEED_TIMER)일 때만 pause 시도
-            if (state == ShortsSessionState.IN_SHORTS_BLOCKED_NEED_TIMER) {
+            if (state.blockingStage == BlockingStage.NEED_TIMER) {
                 val isPlaying = isTargetAppPlayingMedia()
                 Log.d(TAG, "NEED_TIMER state, playing=$isPlaying")
 
@@ -505,7 +397,7 @@ class ShortsBlockService : AccessibilityService() {
                     Log.d(TAG, "Media already paused - skipping tap")
                 }
             } else {
-                Log.d(TAG, "Not NEED_TIMER state ($state) - skipping pause")
+                Log.d(TAG, "Not NEED_TIMER state (${state.blockingStage}) - skipping pause")
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error pausing media", e)
@@ -680,6 +572,9 @@ class ShortsBlockService : AccessibilityService() {
     override fun onDestroy() {
         super.onDestroy()
 
+        // Service instance 해제
+        instance = null
+
         // Screen state receiver 해제
         unregisterScreenStateReceiver()
 
@@ -690,10 +585,14 @@ class ShortsBlockService : AccessibilityService() {
         savedVolumeByPackage.clear()
 
         cancelPendingOverlay()
-        stopForegroundCheck()
         overlayManager.cleanup()
         Log.d(TAG, "Service destroyed")
     }
+
+    /**
+     * SessionStateManager 접근자 (Activity에서 사용)
+     */
+    fun getSessionStateManager(): SessionStateManager = sessionState
 
     /**
      * Screen state receiver 등록
@@ -763,29 +662,19 @@ class ShortsBlockService : AccessibilityService() {
         }
 
         private fun handleScreenStateChange(trigger: String) {
-            // 오버레이가 표시 중일 때만 처리
-            if (overlayManager.isOverlayVisible(currentPackage)) {
-                Log.d(TAG, "[$trigger] Overlay visible - hiding and transitioning to background")
+            Log.d(TAG, "[$trigger] Screen state changed - transitioning to background")
 
-                // Pending overlay job 취소
-                cancelPendingOverlay()
+            // Pending overlay job 취소
+            cancelPendingOverlay()
 
-                // 오버레이 숨김
-                overlayManager.hideOverlay(currentPackage)
+            // 볼륨 복원
+            restoreVolume(currentPackage)
 
-                // 볼륨 복원
-                restoreVolume(currentPackage)
+            // Note: EnterBackground is deprecated, Activity lifecycle events handle state now
+            @Suppress("DEPRECATION")
+            sessionState.handleEvent(SessionEvent.EnterBackground, currentPackage)
 
-                // Background 상태로 전이
-                sessionState.handleEvent(SessionEvent.EnterBackground, currentPackage)
-
-                // Foreground check 중지
-                stopForegroundCheck()
-
-                Log.d(TAG, "[$trigger] Overlay hidden and state transitioned to background")
-            } else {
-                Log.d(TAG, "[$trigger] No overlay visible - ignoring")
-            }
+            Log.d(TAG, "[$trigger] State transitioned to background")
         }
     }
 

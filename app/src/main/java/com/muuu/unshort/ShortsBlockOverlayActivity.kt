@@ -53,6 +53,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
 
     // State
     private lateinit var prefsManager: PreferencesManager
+    private lateinit var sessionStateManager: com.muuu.shortblock.service.blocking.SessionStateManager
     private var currentSessionId: String = ""
     private var sourcePackageName: String = ""
     private var overlayType: OverlayType = OverlayType.INITIAL
@@ -113,6 +114,10 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         // Initialize PreferencesManager
         prefsManager = PreferencesManager(this)
 
+        // Initialize SessionStateManager from Service
+        sessionStateManager = ShortsBlockService.instance?.getSessionStateManager()
+            ?: throw IllegalStateException("ShortsBlockService is not running")
+
         // Initialize views
         initViews()
 
@@ -127,6 +132,16 @@ class ShortsBlockOverlayActivity : BaseActivity() {
 
         // Register timer receiver
         registerTimerReceiver()
+
+        // Notify SessionStateManager that Activity started
+        sessionStateManager.handleEvent(
+            com.muuu.shortblock.service.blocking.SessionEvent.ActivityStarted(
+                com.muuu.shortblock.service.blocking.ActivityType.OVERLAY,
+                currentSessionId
+            ),
+            sourcePackageName
+        )
+        Log.d(TAG, "Activity started event sent: session=$currentSessionId")
 
         // Track analytics
         AnalyticsManager.trackEvent(
@@ -364,6 +379,32 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
+        // Sync from SessionState
+        val currentState = sessionStateManager.getCurrentState(sourcePackageName)
+        Log.d(TAG, "onResume: syncing from SessionState: $currentState")
+
+        when (currentState.blockingStage) {
+            com.muuu.shortblock.service.blocking.BlockingStage.NEED_CONFIRMATION -> {
+                if (overlayType != OverlayType.CONFIRMATION) {
+                    Log.d(TAG, "State changed to NEED_CONFIRMATION - updating UI")
+                    overlayType = OverlayType.CONFIRMATION
+                    updateUI()
+                }
+            }
+            com.muuu.shortblock.service.blocking.BlockingStage.NEED_TIMER -> {
+                if (overlayType != OverlayType.INITIAL) {
+                    Log.d(TAG, "State changed to NEED_TIMER - updating UI")
+                    overlayType = OverlayType.INITIAL
+                    updateUI()
+                }
+            }
+            else -> {
+                Log.d(TAG, "State is ${currentState.blockingStage} - finishing activity")
+                finishAndRemoveTask()
+                return
+            }
+        }
+
         // Hide system UI
         hideSystemUI()
     }
@@ -394,6 +435,15 @@ class ShortsBlockOverlayActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+
+        // Notify SessionStateManager that Activity destroyed
+        ShortsBlockService.instance?.getSessionStateManager()?.handleEvent(
+            com.muuu.shortblock.service.blocking.SessionEvent.ActivityDestroyed(
+                com.muuu.shortblock.service.blocking.ActivityType.OVERLAY
+            ),
+            sourcePackageName
+        )
+        Log.d(TAG, "Activity destroyed event sent")
 
         // Unregister timer receiver
         if (isReceiverRegistered) {

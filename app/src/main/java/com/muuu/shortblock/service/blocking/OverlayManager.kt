@@ -23,8 +23,7 @@ class OverlayManager(
 ) {
     private val TAG = "OverlayManager"
 
-    // 앱별 Activity 상태 저장
-    private val activityVisibleByPackage = mutableMapOf<String, Boolean>()
+    // 앱별 세션 ID 저장
     private val sessionIdByPackage = mutableMapOf<String, String>()
     private val lastShownSessionIdByPackage = mutableMapOf<String, String>()
 
@@ -47,17 +46,6 @@ class OverlayManager(
                 }
                 AppConstants.ACTION_CLOSE_OVERLAY -> {
                     Log.d(TAG, "Close overlay broadcast")
-                    val sourcePackage = intent.getStringExtra("source_package")
-
-                    // 해당 패키지의 Activity 상태 클리어
-                    if (sourcePackage != null) {
-                        hideOverlay(sourcePackage)
-                    } else {
-                        // 모든 Activity 닫기
-                        activityVisibleByPackage.keys.toList().forEach { pkg ->
-                            hideOverlay(pkg)
-                        }
-                    }
 
                     // Skip 콜백 호출
                     onSkip()
@@ -67,12 +55,7 @@ class OverlayManager(
                     val sourcePackage = intent.getStringExtra("source_package")
                     Log.d(TAG, "Watch confirmed broadcast: session=$sessionId, source=$sourcePackage")
 
-                    // 해당 패키지의 Activity 상태 클리어
-                    if (sourcePackage != null) {
-                        hideOverlay(sourcePackage)
-                    }
-
-                    // Watch 콜백 호출
+                    // Watch 콜백 호출하여 상태 전이
                     onWatch()
                 }
             }
@@ -105,23 +88,19 @@ class OverlayManager(
 
     /**
      * 차단 화면 Activity 표시
+     *
+     * singleTask launchMode로 중복 인스턴스 방지
      */
     fun showOverlay(
         packageName: String,
         sessionId: String,
         overlayType: OverlayType = OverlayType.INITIAL
     ): String {
-        // 기존 Activity가 있으면 상태만 업데이트
-        if (activityVisibleByPackage[packageName] == true) {
-            Log.d(TAG, "[$packageName] Activity already visible - updating overlay type to: $overlayType")
-            // TODO: Activity에 브로드캐스트를 보내서 UI 업데이트
-        }
-
         sessionIdByPackage[packageName] = sessionId
         lastShownSessionIdByPackage[packageName] = sessionId
 
         try {
-            // Activity 시작
+            // Activity 시작 (singleTask로 중복 방지)
             val intent = Intent(context, ShortsBlockOverlayActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                         Intent.FLAG_ACTIVITY_CLEAR_TOP or
@@ -132,7 +111,6 @@ class OverlayManager(
             }
 
             context.startActivity(intent)
-            activityVisibleByPackage[packageName] = true
 
             Log.d(TAG, "[$packageName] Activity started: session=$sessionId, type=$overlayType")
         } catch (e: Exception) {
@@ -143,26 +121,9 @@ class OverlayManager(
     }
 
     /**
-     * 차단 화면 Activity 숨김
-     */
-    fun hideOverlay(packageName: String) {
-        activityVisibleByPackage[packageName] = false
-        Log.d(TAG, "[$packageName] Activity hidden (state cleared)")
-    }
-
-    /**
-     * 차단 화면 Activity 표시 여부
-     */
-    fun isOverlayVisible(packageName: String): Boolean {
-        return activityVisibleByPackage[packageName] == true
-    }
-
-    /**
      * 정리
      */
     fun cleanup() {
-        // 모든 Activity 상태 제거
-        activityVisibleByPackage.clear()
 
         if (isReceiverRegistered) {
             try {
