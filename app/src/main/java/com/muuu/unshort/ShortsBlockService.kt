@@ -378,12 +378,6 @@ class ShortsBlockService : AccessibilityService() {
 
             val state = sessionState.getCurrentState(packageName)
 
-            // Activity 실행 중이면 일시정지 필요
-            if (!state.shouldPauseMedia()) {
-                Log.d(TAG, "No Activity running - skipping pause")
-                return
-            }
-
             // 첫 진입(NEED_TIMER)일 때만 pause 시도
             if (state.blockingStage == BlockingStage.NEED_TIMER) {
                 val isPlaying = isTargetAppPlayingMedia()
