@@ -42,21 +42,30 @@ class ShortsBlockTimerActivity : BaseTimerActivity() {
         if (currentSessionId.isNotEmpty()) {
             prefsManager.completedSessionId = currentSessionId
             Log.d(TAG, "Timer completed for session: $currentSessionId")
-
-            // Send broadcast to notify OverlayManager
-            val intent = Intent(AppConstants.ACTION_TIMER_COMPLETED)
-            intent.setPackage(packageName)
-            intent.putExtra("session_id", currentSessionId)
-            sendBroadcast(intent)
-            Log.d(TAG, "Timer completed broadcast sent for session: $currentSessionId")
         }
 
         // Track analytics
         AnalyticsManager.trackEvent(this, AnalyticsEvent.TIMER_COMPLETED)
+
+        // 결과 반환 (Overlay Activity로)
+        setResult(RESULT_OK)
+
+        // Broadcast도 유지 (AccessibilityService용)
+        val intent = Intent(AppConstants.ACTION_TIMER_COMPLETED)
+        intent.setPackage(packageName)
+        intent.putExtra("session_id", currentSessionId)
+        sendBroadcast(intent)
+        Log.d(TAG, "Timer completed broadcast sent for session: $currentSessionId")
+
+        // Activity 종료하여 Overlay로 복귀
+        finish()
     }
 
     override fun onSkipClicked() {
-        // Send broadcast to close overlay and return to source app
+        // 취소 결과 반환
+        setResult(RESULT_CANCELED)
+
+        // Broadcast 전송
         val intent = Intent(AppConstants.ACTION_CLOSE_OVERLAY)
         intent.setPackage(packageName)
         intent.putExtra("source_package", sourcePackageName)

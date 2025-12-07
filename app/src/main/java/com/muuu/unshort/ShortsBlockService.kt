@@ -61,6 +61,9 @@ class ShortsBlockService : AccessibilityService() {
     // 현재 세션이 스크롤 후 재진입인지 추적 (통계 기록용)
     private var isCurrentSessionFromScroll: Boolean = false
 
+    // Skip 후 재차단 방지 쿨다운 (밀리초)
+    private var skipCooldownUntil: Long = 0
+
     // Screen state receiver
     private var screenStateReceiver: ScreenStateReceiver? = null
 
@@ -90,7 +93,7 @@ class ShortsBlockService : AccessibilityService() {
             },
             onSkip = {
                 // "안볼래요" 버튼 - 뒤로 가기
-                Log.d(TAG, "Skip button pressed - performing back action")
+                Log.d(TAG, "Skip button pressed - performing back action after overlay dismissal")
 
                 restoreVolume(currentPackage)
                 sessionState.handleEvent(SessionEvent.SkipConfirmed, currentPackage)
@@ -98,7 +101,15 @@ class ShortsBlockService : AccessibilityService() {
                 prefsManager.clearCompletedSessionId()
                 prefsManager.clearAllowedUntilScroll()
 
-                performGlobalBackAction()
+                // Skip 후 2초간 재차단 방지
+                skipCooldownUntil = System.currentTimeMillis() + 2000
+                Log.d(TAG, "Skip cooldown set - blocking prevented for 2 seconds")
+
+                // Overlay Activity가 완전히 종료되고 쇼츠로 복귀한 후 back key 수행
+                handler.postDelayed({
+                    Log.d(TAG, "Performing back action to close shorts")
+                    performGlobalBackAction()
+                }, 300)
             },
             onWatch = {
                 // "볼래요" 버튼 - 시청 허용 상태로 전이
@@ -215,6 +226,12 @@ class ShortsBlockService : AccessibilityService() {
             // IDLE 상태
             ShortsSessionState.IDLE -> {
                 if (isInShortsScreen) {
+                    // Skip 후 쿨다운 체크
+                    if (System.currentTimeMillis() < skipCooldownUntil) {
+                        Log.d(TAG, "Skip cooldown active - ignoring EnterShorts event")
+                        return
+                    }
+
                     sessionState.handleEvent(SessionEvent.EnterShorts, packageName)
                     appStartTime = System.currentTimeMillis()
                 }

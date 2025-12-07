@@ -15,6 +15,7 @@ import android.view.WindowManager
 import android.webkit.WebView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import com.muuu.affiliate.AffiliateProviderFactory
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
@@ -55,6 +56,22 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     private var currentSessionId: String = ""
     private var sourcePackageName: String = ""
     private var overlayType: OverlayType = OverlayType.INITIAL
+
+    // Activity Result API for timer completion
+    private val timerLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            // 타이머 완료
+            Log.d(TAG, "Timer completed - switching to CONFIRMATION mode")
+            overlayType = OverlayType.CONFIRMATION
+            updateUI()
+        } else {
+            // 타이머 취소 또는 실패
+            Log.d(TAG, "Timer cancelled")
+            finishAndRemoveTask()
+        }
+    }
 
     // Receiver for timer completion
     private val timerReceiver = object : BroadcastReceiver() {
@@ -260,16 +277,16 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     }
 
     private fun handleStartTimer() {
-        // Start ShortsBlockTimerActivity
+        // Timer Activity 시작 (result 기대)
         val intent = Intent(this, com.muuu.unshort.timer.ShortsBlockTimerActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("session_id", currentSessionId)
             putExtra("source_package", sourcePackageName)
         }
-        startActivity(intent)
 
-        // Finish this activity (timer activity will take over)
-        finish()
+        // Activity를 background로 이동 (finish 제거)
+        timerLauncher.launch(intent)
+
+        Log.d(TAG, "Timer activity launched, overlay moved to background")
     }
 
     private fun setupTipMessage() {
