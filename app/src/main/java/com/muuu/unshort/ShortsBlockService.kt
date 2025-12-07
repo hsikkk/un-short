@@ -61,9 +61,6 @@ class ShortsBlockService : AccessibilityService() {
     // 현재 세션이 스크롤 후 재진입인지 추적 (통계 기록용)
     private var isCurrentSessionFromScroll: Boolean = false
 
-    // Skip 후 재차단 방지 쿨다운 (밀리초)
-    private var skipCooldownUntil: Long = 0
-
     // Screen state receiver
     private var screenStateReceiver: ScreenStateReceiver? = null
 
@@ -101,8 +98,6 @@ class ShortsBlockService : AccessibilityService() {
                 prefsManager.clearCompletedSessionId()
                 prefsManager.clearAllowedUntilScroll()
 
-                // Skip 후 2초간 재차단 방지
-                skipCooldownUntil = System.currentTimeMillis() + 2000
                 Log.d(TAG, "Skip cooldown set - blocking prevented for 2 seconds")
 
                 // Overlay Activity가 완전히 종료되고 쇼츠로 복귀한 후 back key 수행
@@ -226,12 +221,6 @@ class ShortsBlockService : AccessibilityService() {
             // IDLE 상태
             ShortsSessionState.IDLE -> {
                 if (isInShortsScreen) {
-                    // Skip 후 쿨다운 체크
-                    if (System.currentTimeMillis() < skipCooldownUntil) {
-                        Log.d(TAG, "Skip cooldown active - ignoring EnterShorts event")
-                        return
-                    }
-
                     sessionState.handleEvent(SessionEvent.EnterShorts, packageName)
                     appStartTime = System.currentTimeMillis()
                 }
@@ -405,7 +394,7 @@ class ShortsBlockService : AccessibilityService() {
 
         // Fresh start 후 500ms 이내면 500ms 딜레이, 이후는 300ms
         val timeSinceStart = System.currentTimeMillis() - appStartTime
-        val delay = if (timeSinceStart < 500) 500L else 300L
+        val delay = if (timeSinceStart < 500) 300L else 100L
 
         handler.postDelayed(pendingOverlayJob!!, delay)
         Log.d(TAG, "Overlay job scheduled with ${delay}ms delay")
