@@ -70,9 +70,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             overlayType = OverlayType.CONFIRMATION
             updateUI()
         } else {
-            // 타이머 취소 또는 실패
             Log.d(TAG, "Timer cancelled")
-            finishAndRemoveTask()
         }
     }
 

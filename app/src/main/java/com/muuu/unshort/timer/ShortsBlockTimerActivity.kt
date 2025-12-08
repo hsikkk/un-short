@@ -74,39 +74,15 @@ class ShortsBlockTimerActivity : BaseTimerActivity() {
         intent.putExtra("session_id", currentSessionId)
         sendBroadcast(intent)
         Log.d(TAG, "Timer completed broadcast sent for session: $currentSessionId")
-
-        // Activity 종료하여 Overlay로 복귀
-        finish()
     }
 
     override fun onSkipClicked() {
         // 취소 결과 반환
         setResult(RESULT_CANCELED)
-
-        // Broadcast 전송
-        val intent = Intent(AppConstants.ACTION_CLOSE_OVERLAY)
-        intent.setPackage(packageName)
-        intent.putExtra("source_package", sourcePackageName)
-        sendBroadcast(intent)
-        Log.d(TAG, "Skip clicked - broadcast sent to close overlay")
-
-        returnToSourceApp()
+        finish()
     }
 
     override fun onContinueClicked() {
-        returnToSourceApp()
-    }
-
-    private fun returnToSourceApp() {
-        Log.d(TAG, "Returning to source app: $sourcePackageName")
-
-        // Move this task to back and finish
-        moveTaskToBack(true)
-
-        // Finish this activity and all activities in this task
-        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
-            finishAndRemoveTask()
-            Log.d(TAG, "finishAndRemoveTask() called")
-        }, 100)
+        finish()
     }
 }
