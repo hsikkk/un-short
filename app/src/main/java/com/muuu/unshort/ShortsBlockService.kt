@@ -1,6 +1,7 @@
 package com.muuu.unshort
 
 import android.accessibilityservice.AccessibilityService
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -53,11 +54,6 @@ class ShortsBlockService : AccessibilityService() {
     // 현재 처리 중인 패키지
     private var currentPackage: String = ""
 
-    // 앱별 볼륨 저장
-    private val savedVolumeByPackage = mutableMapOf<String, Int>()
-
-    // 포그라운드 앱 추적
-    private var lastForegroundPackage: String = ""
     private val handler = android.os.Handler(android.os.Looper.getMainLooper())
     private var pendingOverlayJob: Runnable? = null
 
@@ -75,9 +71,6 @@ class ShortsBlockService : AccessibilityService() {
 
     // Overlay action receiver
     private var overlayActionReceiver: OverlayActionReceiver? = null
-
-    // resumeMedia 실행 중 accessibility event 무시용 플래그
-    private var isResumingMedia = false
 
     override fun onServiceConnected() {
         super.onServiceConnected()
@@ -123,12 +116,6 @@ class ShortsBlockService : AccessibilityService() {
 
         val packageName = event.packageName?.toString() ?: return
         currentPackage = packageName  // 현재 패키지 저장
-
-        // resumeMedia() 실행 중이면 이벤트 무시
-        if (isResumingMedia) {
-            Log.d(TAG, "Ignoring accessibility event during resumeMedia")
-            return
-        }
 
         // 이벤트 로깅
         Log.d(TAG, "=== Event: ${event.eventType}, Package: $packageName ===")
@@ -196,13 +183,12 @@ class ShortsBlockService : AccessibilityService() {
                     }
 
                     cancelPendingOverlay()
-                    restoreVolume(packageName)
                 } else {
                     // 쇼츠 화면 내에서 콘텐츠 변화 감지
                     Log.d(TAG, "Still in shorts, state=$currentState, checking for scroll...")
 
-                    // 스크롤 감지 (WATCHING 상태에서만, resumeMedia 실행 중 제외)
-                    if (currentState.isWatching() && !isResumingMedia) {
+                    // 스크롤 감지 (WATCHING 상태에서만)
+                    if (currentState.isWatching()) {
                         Log.d(TAG, "WATCHING state - generating content hash")
                         val hash = hashGenerator.generateContentHash(rootNode, appConfig.hashConfig)
                         Log.d(TAG, "Generated hash: $hash")
@@ -224,8 +210,6 @@ class ShortsBlockService : AccessibilityService() {
                         } else {
                             Log.w(TAG, "Hash is 0 - skipping")
                         }
-                    } else if (isResumingMedia) {
-                        Log.d(TAG, "Skipping hash generation during resumeMedia")
                     } else {
                         Log.d(TAG, "Not in ALLOWED state ($currentState) - skipping scroll detection")
                     }
@@ -253,29 +237,6 @@ class ShortsBlockService : AccessibilityService() {
     }
 
     /**
-     * 차단 대상 앱을 벗어났을 때 처리
-     *
-     * @param targetPackageName 이동한 대상 앱의 패키지명 (null이면 알 수 없음)
-     */
-    private fun handleLeavingTargetApp(targetPackageName: String? = null) {
-        cancelPendingOverlay()
-        restoreVolume(packageName)
-
-        // 우리 앱으로 전환된 경우 체크 (세션 기록은 SessionStateManager에서 처리)
-        if (targetPackageName == this.packageName) {
-            Log.d(TAG, "Switched to our app")
-        }
-
-        sessionState.handleEvent(SessionEvent.Reset, packageName)
-
-        // SharedPreferences 클리어
-        prefsManager.clearCompletedSessionId()
-        prefsManager.clearAllowedUntilScroll()
-
-        Log.d(TAG, "Cleared all state - left shorts app")
-    }
-
-    /**
      * 오버레이 표시
      */
     private fun showBlockOverlay(packageName: String, overlayType: OverlayType) {
@@ -291,12 +252,6 @@ class ShortsBlockService : AccessibilityService() {
         // (이전에는 WindowManager 오버레이를 사용했으나, 이제는 Activity를 사용)
 
         Log.d(TAG, "Scheduling activity launch with delay")
-
-        // Activity가 실행 중이 아니면 볼륨 저장 및 음소거
-        val currentState = sessionState.getCurrentState(packageName)
-        if (currentState.activityState == ActivityState.NONE) {
-            saveAndMuteVolume(packageName)
-        }
 
         // 딜레이 후 오버레이 표시
         pendingOverlayJob = Runnable {
@@ -320,8 +275,6 @@ class ShortsBlockService : AccessibilityService() {
             } catch (e: Exception) {
                 Log.e(TAG, "Error showing overlay", e)
                 pendingOverlayJob = null
-
-                restoreVolume(packageName)
             }
         }
 
@@ -425,20 +378,15 @@ class ShortsBlockService : AccessibilityService() {
                 return
             }
 
-            // 플래그 설정: accessibility event 무시 시작
-            isResumingMedia = true
-
             // 미디어가 일시정지 상태면 탭하여 재생
             Log.d(TAG, "Media paused, sending tap gesture to resume")
             performTapGesture()
 
             // 1000ms 후 플래그 자동 해제 (tap gesture로 인한 지연된 이벤트 무시)
             handler.postDelayed({
-                isResumingMedia = false
                 Log.d(TAG, "resumeMedia completed, accepting accessibility events again")
             }, 1000)
         } catch (e: Exception) {
-            isResumingMedia = false  // 에러 시에도 플래그 해제
             Log.e(TAG, "Error resuming media", e)
         }
     }
@@ -520,39 +468,6 @@ class ShortsBlockService : AccessibilityService() {
         Log.d(TAG, "Stale session data cleared")
     }
 
-    /**
-     * 볼륨 저장 및 음소거
-     */
-    private fun saveAndMuteVolume(packageName: String) {
-        try {
-            val audioManager = getSystemService(AUDIO_SERVICE) as? AudioManager
-            audioManager?.let {
-                val currentVolume = it.getStreamVolume(AudioManager.STREAM_MUSIC)
-                savedVolumeByPackage[packageName] = currentVolume
-                it.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0)
-                Log.d(TAG, "[$packageName] Volume saved ($currentVolume) and muted")
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "[$packageName] Error muting volume", e)
-        }
-    }
-
-    /**
-     * 볼륨 복원
-     */
-    private fun restoreVolume(packageName: String) {
-        savedVolumeByPackage[packageName]?.let { savedVolume ->
-            try {
-                val audioManager = getSystemService(AUDIO_SERVICE) as? AudioManager
-                audioManager?.setStreamVolume(AudioManager.STREAM_MUSIC, savedVolume, 0)
-                Log.d(TAG, "[$packageName] Volume restored to $savedVolume")
-            } catch (e: Exception) {
-                Log.e(TAG, "[$packageName] Error restoring volume", e)
-            }
-            savedVolumeByPackage.remove(packageName)
-        }
-    }
-
     override fun onInterrupt() {
         Log.d(TAG, "Service interrupted")
     }
@@ -566,12 +481,6 @@ class ShortsBlockService : AccessibilityService() {
         // Receivers 해제
         unregisterScreenStateReceiver()
         unregisterOverlayActionReceiver()
-
-        // 모든 저장된 볼륨 복원
-        savedVolumeByPackage.keys.toList().forEach { pkg ->
-            restoreVolume(pkg)
-        }
-        savedVolumeByPackage.clear()
 
         cancelPendingOverlay()
         overlayManager.cleanup()
@@ -619,6 +528,7 @@ class ShortsBlockService : AccessibilityService() {
     /**
      * Overlay action receiver 등록
      */
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     private fun registerOverlayActionReceiver() {
         try {
             overlayActionReceiver = OverlayActionReceiver()
@@ -692,9 +602,6 @@ class ShortsBlockService : AccessibilityService() {
             // Pending overlay job 취소
             cancelPendingOverlay()
 
-            // 볼륨 복원
-            restoreVolume(currentPackage)
-
             // Note: EnterBackground is deprecated, Activity lifecycle events handle state now
             @Suppress("DEPRECATION")
             sessionState.handleEvent(SessionEvent.EnterBackground, currentPackage)
@@ -715,7 +622,6 @@ class ShortsBlockService : AccessibilityService() {
                     val sourcePackage = intent.getStringExtra("source_package") ?: currentPackage
                     Log.d(TAG, "Skip button pressed - performing back action after overlay dismissal")
 
-                    restoreVolume(sourcePackage)
                     sessionState.handleEvent(SessionEvent.SkipConfirmed, sourcePackage)
 
                     prefsManager.clearCompletedSessionId()
@@ -740,7 +646,6 @@ class ShortsBlockService : AccessibilityService() {
                     prefsManager.isAllowedUntilScroll = true
 
                     handler.postDelayed({
-                        restoreVolume(sourcePackage)
                         resumeMedia()
                     }, 400)  // Activity 완전 제거 보장
                 }
