@@ -54,7 +54,6 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     private var nativeAdView: com.muuu.ad.view.MuuuNativeAdView? = null
 
     // State
-    private lateinit var prefsManager: PreferencesManager
     private lateinit var sessionStateManager: com.muuu.shortblock.service.blocking.SessionStateManager
     private var currentSessionId: String = ""
     private var sourcePackageName: String = ""
@@ -110,9 +109,6 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         setupScreenKeepOn()
 
         setContentView(R.layout.overlay_flip_phone)
-
-        // Initialize PreferencesManager
-        prefsManager = PreferencesManager(this)
 
         // Initialize SessionStateManager from Service
         sessionStateManager = ShortsBlockService.instance?.getSessionStateManager()
@@ -385,27 +381,6 @@ class ShortsBlockOverlayActivity : BaseActivity() {
                 finishAndRemoveTask()
                 return
             }
-        }
-
-        // Hide system UI
-        hideSystemUI()
-    }
-
-    private fun hideSystemUI() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            // API 30+ : WindowInsetsController 사용
-            window.insetsController?.apply {
-                hide(WindowInsets.Type.systemBars())
-                systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            }
-        } else {
-            // API 26-29 : systemUiVisibility 사용
-            @Suppress("DEPRECATION")
-            window.decorView.systemUiVisibility = (
-                    View.SYSTEM_UI_FLAG_FULLSCREEN or
-                            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
-                            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    )
         }
     }
 
