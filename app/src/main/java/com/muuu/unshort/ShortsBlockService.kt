@@ -50,6 +50,8 @@ class ShortsBlockService : AccessibilityService() {
     private lateinit var overlayManager: OverlayManager
     private lateinit var prefsManager: PreferencesManager
     private lateinit var statisticsRepository: StatisticsRepository
+    private lateinit var usageMonitor: ShortsUsageMonitor
+    private lateinit var reminderNotifier: BlockingReminderNotifier
 
     // 현재 처리 중인 패키지
     private var currentPackage: String = ""
@@ -99,6 +101,19 @@ class ShortsBlockService : AccessibilityService() {
             }
         )
         overlayManager.initialize()
+
+        // ReminderNotifier 초기화
+        reminderNotifier = BlockingReminderNotifier(this)
+
+        // UsageMonitor 초기화
+        usageMonitor = ShortsUsageMonitor(
+            context = this,
+            prefsManager = prefsManager,
+            onThresholdExceeded = {
+                // 임계값 초과 시 알림 발송
+                reminderNotifier.sendReminderNotification()
+            }
+        )
 
         // 서비스 재시작 시 이전 세션 데이터 클리어
         clearStaleSessionData()
@@ -159,6 +174,9 @@ class ShortsBlockService : AccessibilityService() {
                 if (isInShortsScreen) {
                     sessionState.handleEvent(SessionEvent.EnterShorts, packageName)
                     appStartTime = System.currentTimeMillis()
+
+                    // 쇼츠 진입 시 연속 시청 체크
+                    usageMonitor.checkOnEnterShorts()
                 }
             }
 

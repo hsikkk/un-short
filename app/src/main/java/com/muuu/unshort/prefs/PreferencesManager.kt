@@ -164,6 +164,58 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(AppConstants.PREF_HAS_ASKED_NOTIFICATION_PERMISSION, false)
         set(value) = prefs.edit().putBoolean(AppConstants.PREF_HAS_ASKED_NOTIFICATION_PERMISSION, value).apply()
 
+    // ========== Blocking Reminder Notification ==========
+
+    /**
+     * 차단 권유 알림 활성화 여부
+     */
+    var isReminderNotificationsEnabled: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_REMINDER_NOTIFICATIONS_ENABLED, true)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_REMINDER_NOTIFICATIONS_ENABLED, value).apply()
+
+    /**
+     * 마지막 알림 발송 시각 (epoch milliseconds)
+     */
+    var lastReminderTimestamp: Long
+        get() = prefs.getLong(AppConstants.PREF_LAST_REMINDER_TIMESTAMP, 0L)
+        set(value) = prefs.edit().putLong(AppConstants.PREF_LAST_REMINDER_TIMESTAMP, value).apply()
+
+    /**
+     * 알림 쿨다운 시간 (분 단위, 기본 60분)
+     */
+    var reminderCooldownMinutes: Int
+        get() = prefs.getInt(AppConstants.PREF_REMINDER_COOLDOWN_MINUTES, 60)
+        set(value) = prefs.edit().putInt(AppConstants.PREF_REMINDER_COOLDOWN_MINUTES, value).apply()
+
+    /**
+     * 연속 시청 감지 기준 시간 (분 단위, 기본 10분)
+     * 이 시간 내의 총 시청 시간을 확인
+     */
+    var reminderWindowMinutes: Int
+        get() = prefs.getInt(AppConstants.PREF_REMINDER_THRESHOLD_MINUTES, 10)
+        set(value) = prefs.edit().putInt(AppConstants.PREF_REMINDER_THRESHOLD_MINUTES, value).apply()
+
+    /**
+     * 연속 시청 감지 임계값 (분 단위, 기본 7분)
+     * reminderWindowMinutes 내에 이 시간 이상 시청하면 알림
+     */
+    var reminderThresholdMinutes: Int
+        get() = prefs.getInt(AppConstants.PREF_REMINDER_WATCH_THRESHOLD_MINUTES, 7)
+        set(value) = prefs.edit().putInt(AppConstants.PREF_REMINDER_WATCH_THRESHOLD_MINUTES, value).apply()
+
+    /**
+     * 알림을 보낼 수 있는 상태인지 확인 (쿨다운 체크)
+     */
+    fun canSendReminderNotification(): Boolean {
+        if (!isReminderNotificationsEnabled) return false
+
+        val lastTimestamp = lastReminderTimestamp
+        if (lastTimestamp == 0L) return true
+
+        val cooldownMs = reminderCooldownMinutes * 60 * 1000L
+        return System.currentTimeMillis() - lastTimestamp >= cooldownMs
+    }
+
     // ========== Batch Operations ==========
 
     /**

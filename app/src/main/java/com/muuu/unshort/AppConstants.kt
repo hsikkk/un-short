@@ -57,6 +57,14 @@ object AppConstants {
     const val PREF_REDEEMED_PROMO_CODE = "redeemed_promo_code"
     const val PREF_REDEEMED_AT = "redeemed_at"
 
+    // Blocking Reminder Notification
+    const val ACTION_BLOCKING_REMINDER = "com.muuu.unshort.BLOCKING_REMINDER"
+    const val PREF_REMINDER_NOTIFICATIONS_ENABLED = "reminder_notifications_enabled"
+    const val PREF_LAST_REMINDER_TIMESTAMP = "last_reminder_timestamp"
+    const val PREF_REMINDER_COOLDOWN_MINUTES = "reminder_cooldown_minutes"
+    const val PREF_REMINDER_THRESHOLD_MINUTES = "reminder_threshold_minutes"  // 기준 시간 (10분)
+    const val PREF_REMINDER_WATCH_THRESHOLD_MINUTES = "reminder_watch_threshold_minutes"  // 시청 임계값 (7분)
+
     // Remote Config Keys
     const val RC_SHOW_AFFILIATE_BANNER = "show_affiliate_banner"
 }
