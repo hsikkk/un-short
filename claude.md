@@ -74,7 +74,7 @@
 
    - **차단 대상 앱 안내 카드**
      - 심플한 불렛 리스트
-     - YouTube Shorts, Instagram Reels, TikTok
+     - YouTube Shorts, Instagram Reels
 
 #### 오버레이 차단 화면
 1. **전면 반투명 배경** (`overlay_background` #F0000000)

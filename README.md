@@ -1,6 +1,6 @@
 # un:short - 쇼츠 폼 차단 앱
 
-YouTube Shorts, Instagram Reels, TikTok 등 중독성 있는 쇼츠 콘텐츠를 볼 때 **폰을 뒤집어서 30초 기다리게** 만드는 안드로이드 앱입니다.
+YouTube Shorts, Instagram Reels 등 중독성 있는 쇼츠 콘텐츠를 볼 때 **폰을 뒤집어서 30초 기다리게** 만드는 안드로이드 앱입니다.
 
 ## 핵심 기능
 
@@ -10,11 +10,10 @@ YouTube Shorts, Instagram Reels, TikTok 등 중독성 있는 쇼츠 콘텐츠를
 - **차단 대상 앱**:
   - YouTube Shorts
   - Instagram Reels
-  - TikTok
 
 ## 작동 방식
 
-1. 사용자가 YouTube, Instagram, TikTok 앱 실행
+1. 사용자가 YouTube, Instagram 앱 실행
 2. 쇼츠/릴스 화면 진입 시 앱이 자동 감지
 3. 전체 화면 오버레이 표시
 4. **폰을 뒤집어야** 30초 타이머 시작
@@ -84,7 +83,7 @@ app/src/main/
 
 ### ShortsBlockService.kt
 - AccessibilityService 상속
-- YouTube/Instagram/TikTok 앱 모니터링
+- YouTube/Instagram 앱 모니터링
 - View ID와 텍스트 기반으로 쇼츠 화면 감지
 - 감지 시 BlockOverlay 표시
 
