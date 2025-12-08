@@ -224,7 +224,11 @@ class ShortsBlockService : AccessibilityService() {
 
                                 prefsManager.clearCompletedSessionId()
                                 prefsManager.clearAllowedUntilScroll()
+
+                                // 스크롤로 새 영상 진입 시에도 연속 시청 체크
                             }
+
+                            usageMonitor.checkOnEnterShorts()
                         } else {
                             Log.w(TAG, "Hash is 0 - skipping")
                         }
