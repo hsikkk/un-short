@@ -1,23 +1,38 @@
 package com.muuu.unshort
 
 import android.accessibilityservice.AccessibilityService
+import android.accessibilityservice.GestureDescription
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Path
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
-import com.muuu.shortblock.service.blocking.*
-import com.muuu.unshort.prefs.PreferencesManager
+import com.muuu.unshort.service.blocking.AppBlockingConfig
+import com.muuu.unshort.service.blocking.AppBlockingRegistry
+import com.muuu.unshort.service.blocking.BlockingStage
+import com.muuu.unshort.service.blocking.ContentHashGenerator
+import com.muuu.unshort.service.blocking.OverlayManager
+import com.muuu.unshort.service.blocking.SessionEvent
+import com.muuu.unshort.service.blocking.SessionStateManager
+import com.muuu.unshort.service.blocking.ShortsDetectionEngine
+import com.muuu.unshort.service.blocking.ShortsLocation
+import com.muuu.unshort.service.blocking.ShortsUsageMonitor
+import com.muuu.unshort.config.AppConstants
+import com.muuu.unshort.config.OverlayType
 import com.muuu.unshort.data.statistics.StatisticsRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
+import com.muuu.unshort.prefs.PreferencesManager
+import com.muuu.unshort.util.BlockingReminderNotifier
+import java.util.UUID
 
 /**
  * 쇼츠 차단 AccessibilityService
@@ -56,7 +71,7 @@ class ShortsBlockService : AccessibilityService() {
     // 현재 처리 중인 패키지
     private var currentPackage: String = ""
 
-    private val handler = android.os.Handler(android.os.Looper.getMainLooper())
+    private val handler = Handler(Looper.getMainLooper())
     private var pendingOverlayJob: Runnable? = null
 
     // Fresh start 감지용
@@ -90,34 +105,34 @@ class ShortsBlockService : AccessibilityService() {
 
         // UsageMonitor 초기화
         usageMonitor = ShortsUsageMonitor(
-            context = this,
-            prefsManager = prefsManager,
-            onThresholdExceeded = {
-                // 임계값 초과 시 알림 발송
-                reminderNotifier.sendReminderNotification()
-            }
+          context = this,
+          prefsManager = prefsManager,
+          onThresholdExceeded = {
+            // 임계값 초과 시 알림 발송
+            reminderNotifier.sendReminderNotification()
+          }
         )
 
         // SessionStateManager 초기화 (usageMonitor 의존)
         sessionState = SessionStateManager(
-            context = this,
-            isBlockingEnabled = { prefsManager.isBlockingEnabled },
-            onSessionEnd = { info -> recordSessionFromStateTransition(info) },
-            onScrollDetected = { packageName ->
-                // 스크롤 감지 시 연속 시청 체크
-                usageMonitor.checkOnEnterShorts()
-            }
+          context = this,
+          isBlockingEnabled = { prefsManager.isBlockingEnabled },
+          onSessionEnd = { info -> recordSessionFromStateTransition(info) },
+          onScrollDetected = { packageName ->
+            // 스크롤 감지 시 연속 시청 체크
+            usageMonitor.checkOnEnterShorts()
+          }
         )
 
         // OverlayManager 초기화
         overlayManager = OverlayManager(
-            context = this,
-            onTimerCompleted = {
-                // 타이머 완료 플래그 설정 (통계 기록용)
-                currentTimerCompleted = true
+          context = this,
+          onTimerCompleted = {
+            // 타이머 완료 플래그 설정 (통계 기록용)
+            currentTimerCompleted = true
 
-                // Note: TimerCompleted event is now sent by TimerActivity directly
-            }
+            // Note: TimerCompleted event is now sent by TimerActivity directly
+          }
         )
         overlayManager.initialize()
 
@@ -167,10 +182,10 @@ class ShortsBlockService : AccessibilityService() {
      * 상태 전이 처리
      */
     private fun handleStateTransitions(
-        isInShortsScreen: Boolean,
-        packageName: String,
-        rootNode: AccessibilityNodeInfo,
-        appConfig: AppBlockingConfig
+      isInShortsScreen: Boolean,
+      packageName: String,
+      rootNode: AccessibilityNodeInfo,
+      appConfig: AppBlockingConfig
     ) {
         val currentState = sessionState.getCurrentState(packageName)
 
@@ -287,7 +302,7 @@ class ShortsBlockService : AccessibilityService() {
                 Log.d(TAG, "Session from scroll: $isCurrentSessionFromScroll")
 
                 // 세션 ID 생성
-                val sessionId = java.util.UUID.randomUUID().toString()
+                val sessionId = UUID.randomUUID().toString()
                 prefsManager.currentSessionId = sessionId
                 Log.d(TAG, "Session created: $sessionId")
 
@@ -429,24 +444,24 @@ class ShortsBlockService : AccessibilityService() {
         val centerY = displayMetrics.heightPixels / 2f
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val path = android.accessibilityservice.GestureDescription.StrokeDescription(
-                android.graphics.Path().apply {
+            val path = GestureDescription.StrokeDescription(
+                Path().apply {
                     moveTo(centerX, centerY)
                     lineTo(centerX, centerY)
                 },
                 0,
                 100
             )
-            val gesture = android.accessibilityservice.GestureDescription.Builder()
+            val gesture = GestureDescription.Builder()
                 .addStroke(path)
                 .build()
 
             dispatchGesture(gesture, object : GestureResultCallback() {
-                override fun onCompleted(gestureDescription: android.accessibilityservice.GestureDescription?) {
+                override fun onCompleted(gestureDescription: GestureDescription?) {
                     Log.d(TAG, "Tap gesture completed")
                 }
 
-                override fun onCancelled(gestureDescription: android.accessibilityservice.GestureDescription?) {
+                override fun onCancelled(gestureDescription: GestureDescription?) {
                     Log.d(TAG, "Tap gesture cancelled")
                 }
             }, null)
@@ -476,13 +491,13 @@ class ShortsBlockService : AccessibilityService() {
     @Deprecated("Activity 방식으로 변경되어 더 이상 필요 없음")
     private fun requestOverlayPermission() {
         val intent = Intent(
-            Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-            Uri.parse("package:$packageName")
+          Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+          Uri.parse("package:$packageName")
         )
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }
-    
+
     /**
      * 오래된 세션 데이터 클리어
      */
@@ -566,7 +581,7 @@ class ShortsBlockService : AccessibilityService() {
                 addAction(AppConstants.ACTION_WATCH_CONFIRMED)
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                registerReceiver(overlayActionReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+                registerReceiver(overlayActionReceiver, filter, RECEIVER_NOT_EXPORTED)
             } else {
                 registerReceiver(overlayActionReceiver, filter)
             }

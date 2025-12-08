@@ -20,6 +20,7 @@ import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.muuu.ad.MuuuAdManagner
 import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.premium.PremiumManager
+import com.muuu.unshort.R
 
 class UnshortApplication : Application() {
 

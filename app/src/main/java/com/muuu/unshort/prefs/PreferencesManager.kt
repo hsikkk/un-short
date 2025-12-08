@@ -2,7 +2,7 @@ package com.muuu.unshort.prefs
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.muuu.unshort.AppConstants
+import com.muuu.unshort.config.AppConstants
 
 /**
  * Centralized manager for SharedPreferences access

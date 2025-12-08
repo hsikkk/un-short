@@ -40,7 +40,7 @@
         tools:replace="android:allowBackup">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -50,19 +50,19 @@
         </activity>
 
         <activity
-            android:name=".OnboardingActivity"
+            android:name=".ui.activity.OnboardingActivity"
             android:exported="false"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.activity.SettingsActivity"
             android:exported="false"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".PermissionSetupActivity"
+            android:name=".ui.activity.PermissionSetupActivity"
             android:exported="false"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
@@ -77,7 +77,7 @@
             android:excludeFromRecents="true" />
 
         <activity
-            android:name=".ShortsBlockOverlayActivity"
+            android:name=".ui.activity.ShortsBlockOverlayActivity"
             android:exported="false"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
@@ -86,25 +86,25 @@
             android:excludeFromRecents="true" />
 
         <activity
-            android:name=".timer.DisableConfirmTimerActivity"
+            android:name=".ui.timer.DisableConfirmTimerActivity"
             android:exported="false"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".PremiumUpgradeActivity"
+            android:name=".ui.activity.PremiumUpgradeActivity"
             android:exported="false"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".SubscriptionManagementActivity"
+            android:name=".ui.activity.SubscriptionManagementActivity"
             android:exported="false"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ReportActivity"
+            android:name=".ui.activity.ReportActivity"
             android:exported="true"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
@@ -123,7 +123,7 @@
         </service>
 
         <receiver
-            android:name=".AppRestartReceiver"
+            android:name=".receiver.AppRestartReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -149,7 +149,7 @@
 
         <!-- Temporary Disable Expiration Receiver -->
         <receiver
-            android:name=".TempDisableReceiver"
+            android:name=".receiver.TempDisableReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -159,7 +159,7 @@
 
         <!-- Daily Report Notification Receiver -->
         <receiver
-            android:name=".DailyReportReceiver"
+            android:name=".receiver.DailyReportReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

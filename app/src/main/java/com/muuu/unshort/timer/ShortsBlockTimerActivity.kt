@@ -3,7 +3,9 @@ package com.muuu.unshort.timer
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import com.muuu.unshort.AppConstants
+import com.muuu.unshort.service.blocking.ActivityType
+import com.muuu.unshort.service.blocking.SessionEvent
+import com.muuu.unshort.config.AppConstants
 import com.muuu.unshort.R
 import com.muuu.unshort.ShortsBlockService
 import com.muuu.unshort.analytics.AnalyticsEvent
@@ -36,8 +38,8 @@ class ShortsBlockTimerActivity : BaseTimerActivity() {
 
         // Notify SessionStateManager that Timer Activity started
         ShortsBlockService.instance?.getSessionStateManager()?.handleEvent(
-            com.muuu.shortblock.service.blocking.SessionEvent.ActivityStarted(
-                com.muuu.shortblock.service.blocking.ActivityType.TIMER,
+            SessionEvent.ActivityStarted(
+                ActivityType.TIMER,
                 currentSessionId
             ),
             sourcePackageName
@@ -60,7 +62,7 @@ class ShortsBlockTimerActivity : BaseTimerActivity() {
 
         // Notify SessionStateManager about timer completion
         ShortsBlockService.instance?.getSessionStateManager()?.handleEvent(
-            com.muuu.shortblock.service.blocking.SessionEvent.TimerCompleted(currentSessionId),
+            SessionEvent.TimerCompleted(currentSessionId),
             sourcePackageName
         )
         Log.d(TAG, "Timer completed event sent: session=$currentSessionId")

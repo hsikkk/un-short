@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.amplitude.core.events.BaseEvent
 import com.amplitude.core.events.Identify
-import com.muuu.unshort.PermissionUtils
+import com.muuu.unshort.util.PermissionUtils
 import com.muuu.unshort.UnshortApplication
 import com.muuu.unshort.premium.PremiumManager
 

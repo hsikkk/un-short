@@ -27,10 +27,10 @@ import com.muuu.ad.core.model.MuuuBannerSize
 import com.muuu.ad.core.model.nativetemplate.MuuuNativeAdTemplate
 import com.muuu.ad.view.MuuuBannerAdView
 import com.muuu.ad.view.MuuuNativeAdView
-import com.muuu.unshort.AdConfig
-import com.muuu.unshort.AppConstants
-import com.muuu.unshort.BaseActivity
-import com.muuu.unshort.FlipDetector
+import com.muuu.unshort.config.AdConfig
+import com.muuu.unshort.config.AppConstants
+import com.muuu.unshort.ui.activity.BaseActivity
+import com.muuu.unshort.util.FlipDetector
 import com.muuu.unshort.R
 import com.muuu.unshort.ad.AdManager
 import com.muuu.unshort.prefs.PreferencesManager
