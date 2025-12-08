@@ -14,7 +14,8 @@ class SessionStateManager(
     private val context: Context,
     private val isBlockingEnabled: () -> Boolean,
     private val onSessionEnd: ((SessionEndInfo) -> Unit)? = null,
-    private val onStateChanged: ((SessionState) -> Unit)? = null
+    private val onStateChanged: ((SessionState) -> Unit)? = null,
+    private val onScrollDetected: ((String) -> Unit)? = null  // 스크롤 감지 콜백
 ) {
 
     private val TAG = "SessionStateManager"
@@ -323,6 +324,9 @@ class SessionStateManager(
 
         if (scrollDetected && current.blockingStage == BlockingStage.WATCHING) {
             Log.d(TAG, "[$packageName] Scroll detected: ${scrollData.hash} → $newHash")
+
+            // 스크롤 감지 콜백 호출
+            onScrollDetected?.invoke(packageName)
 
             // 세션 기록 먼저 수행 (스크롤 = 시청 완료)
             val watchTracker = watchTimeByPackage[packageName]

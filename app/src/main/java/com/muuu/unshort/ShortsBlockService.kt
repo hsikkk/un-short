@@ -84,23 +84,6 @@ class ShortsBlockService : AccessibilityService() {
         // Managers 초기화
         prefsManager = PreferencesManager(this)
         statisticsRepository = StatisticsRepository(this)
-        sessionState = SessionStateManager(
-            context = this,
-            isBlockingEnabled = { prefsManager.isBlockingEnabled },
-            onSessionEnd = { info -> recordSessionFromStateTransition(info) }
-        )
-
-        // OverlayManager 초기화
-        overlayManager = OverlayManager(
-            context = this,
-            onTimerCompleted = {
-                // 타이머 완료 플래그 설정 (통계 기록용)
-                currentTimerCompleted = true
-
-                // Note: TimerCompleted event is now sent by TimerActivity directly
-            }
-        )
-        overlayManager.initialize()
 
         // ReminderNotifier 초기화
         reminderNotifier = BlockingReminderNotifier(this)
@@ -114,6 +97,29 @@ class ShortsBlockService : AccessibilityService() {
                 reminderNotifier.sendReminderNotification()
             }
         )
+
+        // SessionStateManager 초기화 (usageMonitor 의존)
+        sessionState = SessionStateManager(
+            context = this,
+            isBlockingEnabled = { prefsManager.isBlockingEnabled },
+            onSessionEnd = { info -> recordSessionFromStateTransition(info) },
+            onScrollDetected = { packageName ->
+                // 스크롤 감지 시 연속 시청 체크
+                usageMonitor.checkOnEnterShorts()
+            }
+        )
+
+        // OverlayManager 초기화
+        overlayManager = OverlayManager(
+            context = this,
+            onTimerCompleted = {
+                // 타이머 완료 플래그 설정 (통계 기록용)
+                currentTimerCompleted = true
+
+                // Note: TimerCompleted event is now sent by TimerActivity directly
+            }
+        )
+        overlayManager.initialize()
 
         // 서비스 재시작 시 이전 세션 데이터 클리어
         clearStaleSessionData()
@@ -224,11 +230,7 @@ class ShortsBlockService : AccessibilityService() {
 
                                 prefsManager.clearCompletedSessionId()
                                 prefsManager.clearAllowedUntilScroll()
-
-                                // 스크롤로 새 영상 진입 시에도 연속 시청 체크
                             }
-
-                            usageMonitor.checkOnEnterShorts()
                         } else {
                             Log.w(TAG, "Hash is 0 - skipping")
                         }
