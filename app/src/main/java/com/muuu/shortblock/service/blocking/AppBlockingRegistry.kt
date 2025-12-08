@@ -47,7 +47,8 @@ data class AppBlockingConfig(
     val iconResId: Int,  // 아이콘 리소스 ID
     val viewIdDetectors: List<ViewIdDetector>,
     val textDetectors: List<TextDetector>,
-    val hashConfig: HashConfig
+    val hashConfig: HashConfig,
+    val controlsMedia: Boolean = false  // 미디어 일시정지/재생 제어 여부 (기본값: false)
 )
 
 /**
@@ -126,7 +127,8 @@ object AppBlockingRegistry {
             },
             excludeBoundsRight = 1200,  // 우측 사이드바 제외 (좋아요/댓글/공유 버튼)
             includeContentDescription = false  // YouTube만 제외 (UI 버튼 변화로 인한 오감지 방지)
-        )
+        ),
+        controlsMedia = true  // YouTube만 미디어 제어 활성화
     )
 
     val INSTAGRAM = AppBlockingConfig(

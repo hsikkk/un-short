@@ -267,9 +267,14 @@ class ShortsBlockService : AccessibilityService() {
                 prefsManager.currentSessionId = sessionId
                 Log.d(TAG, "Session created: $sessionId")
 
-                // 미디어 일시정지 시도 (pauseMedia 내부에서 상태 체크)
-                Log.d(TAG, "Attempting pauseMedia")
-                pauseMedia(packageName)
+                // 미디어 일시정지 시도 (앱 설정에 따라)
+                val appConfig = AppBlockingRegistry.getConfigByPackageName(packageName)
+                if (appConfig?.controlsMedia == true) {
+                    Log.d(TAG, "Attempting pauseMedia (controlsMedia=true)")
+                    pauseMedia(packageName)
+                } else {
+                    Log.d(TAG, "Skipping pauseMedia (controlsMedia=false or config not found)")
+                }
 
                 showOverlayAndStartCheck(packageName, sessionId, overlayType)
             } catch (e: Exception) {
@@ -645,9 +650,15 @@ class ShortsBlockService : AccessibilityService() {
 
                     prefsManager.isAllowedUntilScroll = true
 
-                    handler.postDelayed({
-                        resumeMedia()
-                    }, 400)  // Activity 완전 제거 보장
+                    // 미디어 재생 재개 (앱 설정에 따라)
+                    val appConfig = AppBlockingRegistry.getConfigByPackageName(sourcePackage)
+                    if (appConfig?.controlsMedia == true) {
+                        handler.postDelayed({
+                            resumeMedia()
+                        }, 400)  // Activity 완전 제거 보장
+                    } else {
+                        Log.d(TAG, "Skipping resumeMedia (controlsMedia=false or config not found)")
+                    }
                 }
             }
         }
