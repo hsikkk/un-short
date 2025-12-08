@@ -73,6 +73,12 @@ class ShortsBlockService : AccessibilityService() {
     // Screen state receiver
     private var screenStateReceiver: ScreenStateReceiver? = null
 
+    // Overlay action receiver
+    private var overlayActionReceiver: OverlayActionReceiver? = null
+
+    // resumeMedia 실행 중 accessibility event 무시용 플래그
+    private var isResumingMedia = false
+
     override fun onServiceConnected() {
         super.onServiceConnected()
         Log.d(TAG, "Service connected")
@@ -97,37 +103,6 @@ class ShortsBlockService : AccessibilityService() {
                 currentTimerCompleted = true
 
                 // Note: TimerCompleted event is now sent by TimerActivity directly
-            },
-            onSkip = {
-                // "안볼래요" 버튼 - 뒤로 가기
-                Log.d(TAG, "Skip button pressed - performing back action after overlay dismissal")
-
-                restoreVolume(currentPackage)
-                sessionState.handleEvent(SessionEvent.SkipConfirmed, currentPackage)
-
-                prefsManager.clearCompletedSessionId()
-                prefsManager.clearAllowedUntilScroll()
-
-                Log.d(TAG, "Skip cooldown set - blocking prevented for 2 seconds")
-
-                // Overlay Activity가 완전히 종료되고 쇼츠로 복귀한 후 back key 수행
-                handler.postDelayed({
-                    Log.d(TAG, "Performing back action to close shorts")
-                    performGlobalBackAction()
-                }, 300)
-            },
-            onWatch = {
-                // "볼래요" 버튼 - 시청 허용 상태로 전이
-                Log.d(TAG, "Watch button pressed - allowing watch")
-
-                sessionState.handleEvent(SessionEvent.WatchConfirmed, currentPackage)
-
-                prefsManager.isAllowedUntilScroll = true
-
-                handler.postDelayed({
-                    restoreVolume(currentPackage)
-                    resumeMedia()
-                }, 100)
             }
         )
         overlayManager.initialize()
@@ -138,8 +113,9 @@ class ShortsBlockService : AccessibilityService() {
         // 30일 이전 통계 데이터 정리
         statisticsRepository.cleanOldData()
 
-        // Screen state receiver 등록
+        // Receivers 등록
         registerScreenStateReceiver()
+        registerOverlayActionReceiver()
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
@@ -147,6 +123,12 @@ class ShortsBlockService : AccessibilityService() {
 
         val packageName = event.packageName?.toString() ?: return
         currentPackage = packageName  // 현재 패키지 저장
+
+        // resumeMedia() 실행 중이면 이벤트 무시
+        if (isResumingMedia) {
+            Log.d(TAG, "Ignoring accessibility event during resumeMedia")
+            return
+        }
 
         // 이벤트 로깅
         Log.d(TAG, "=== Event: ${event.eventType}, Package: $packageName ===")
@@ -219,8 +201,8 @@ class ShortsBlockService : AccessibilityService() {
                     // 쇼츠 화면 내에서 콘텐츠 변화 감지
                     Log.d(TAG, "Still in shorts, state=$currentState, checking for scroll...")
 
-                    // 스크롤 감지 (WATCHING 상태에서만)
-                    if (currentState.isWatching()) {
+                    // 스크롤 감지 (WATCHING 상태에서만, resumeMedia 실행 중 제외)
+                    if (currentState.isWatching() && !isResumingMedia) {
                         Log.d(TAG, "WATCHING state - generating content hash")
                         val hash = hashGenerator.generateContentHash(rootNode, appConfig.hashConfig)
                         Log.d(TAG, "Generated hash: $hash")
@@ -242,6 +224,8 @@ class ShortsBlockService : AccessibilityService() {
                         } else {
                             Log.w(TAG, "Hash is 0 - skipping")
                         }
+                    } else if (isResumingMedia) {
+                        Log.d(TAG, "Skipping hash generation during resumeMedia")
                     } else {
                         Log.d(TAG, "Not in ALLOWED state ($currentState) - skipping scroll detection")
                     }
@@ -441,10 +425,20 @@ class ShortsBlockService : AccessibilityService() {
                 return
             }
 
+            // 플래그 설정: accessibility event 무시 시작
+            isResumingMedia = true
+
             // 미디어가 일시정지 상태면 탭하여 재생
             Log.d(TAG, "Media paused, sending tap gesture to resume")
             performTapGesture()
+
+            // 1000ms 후 플래그 자동 해제 (tap gesture로 인한 지연된 이벤트 무시)
+            handler.postDelayed({
+                isResumingMedia = false
+                Log.d(TAG, "resumeMedia completed, accepting accessibility events again")
+            }, 1000)
         } catch (e: Exception) {
+            isResumingMedia = false  // 에러 시에도 플래그 해제
             Log.e(TAG, "Error resuming media", e)
         }
     }
@@ -569,8 +563,9 @@ class ShortsBlockService : AccessibilityService() {
         // Service instance 해제
         instance = null
 
-        // Screen state receiver 해제
+        // Receivers 해제
         unregisterScreenStateReceiver()
+        unregisterOverlayActionReceiver()
 
         // 모든 저장된 볼륨 복원
         savedVolumeByPackage.keys.toList().forEach { pkg ->
@@ -622,6 +617,42 @@ class ShortsBlockService : AccessibilityService() {
     }
 
     /**
+     * Overlay action receiver 등록
+     */
+    private fun registerOverlayActionReceiver() {
+        try {
+            overlayActionReceiver = OverlayActionReceiver()
+            val filter = IntentFilter().apply {
+                addAction(AppConstants.ACTION_CLOSE_OVERLAY)
+                addAction(AppConstants.ACTION_WATCH_CONFIRMED)
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                registerReceiver(overlayActionReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+            } else {
+                registerReceiver(overlayActionReceiver, filter)
+            }
+            Log.d(TAG, "OverlayActionReceiver registered")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error registering OverlayActionReceiver", e)
+        }
+    }
+
+    /**
+     * Overlay action receiver 해제
+     */
+    private fun unregisterOverlayActionReceiver() {
+        try {
+            overlayActionReceiver?.let {
+                unregisterReceiver(it)
+                overlayActionReceiver = null
+                Log.d(TAG, "OverlayActionReceiver unregistered")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error unregistering OverlayActionReceiver", e)
+        }
+    }
+
+    /**
      * 화면 상태 변화 감지 BroadcastReceiver
      * - 화면 꺼짐 (ACTION_SCREEN_OFF)
      * - 화면 잠금 해제 (ACTION_USER_PRESENT)
@@ -669,6 +700,51 @@ class ShortsBlockService : AccessibilityService() {
             sessionState.handleEvent(SessionEvent.EnterBackground, currentPackage)
 
             Log.d(TAG, "[$trigger] State transitioned to background")
+        }
+    }
+
+    /**
+     * 오버레이 액션 BroadcastReceiver
+     * - 안볼래요 버튼 (ACTION_CLOSE_OVERLAY)
+     * - 볼래요 버튼 (ACTION_WATCH_CONFIRMED)
+     */
+    private inner class OverlayActionReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (intent?.action) {
+                AppConstants.ACTION_CLOSE_OVERLAY -> {
+                    val sourcePackage = intent.getStringExtra("source_package") ?: currentPackage
+                    Log.d(TAG, "Skip button pressed - performing back action after overlay dismissal")
+
+                    restoreVolume(sourcePackage)
+                    sessionState.handleEvent(SessionEvent.SkipConfirmed, sourcePackage)
+
+                    prefsManager.clearCompletedSessionId()
+                    prefsManager.clearAllowedUntilScroll()
+
+                    Log.d(TAG, "Skip cooldown set - blocking prevented for 2 seconds")
+
+                    // Overlay Activity가 완전히 종료되고 쇼츠로 복귀한 후 back key 수행
+                    handler.postDelayed({
+                        Log.d(TAG, "Performing back action to close shorts")
+                        performGlobalBackAction()
+                    }, 300)
+                }
+                AppConstants.ACTION_WATCH_CONFIRMED -> {
+                    val sessionId = intent.getStringExtra("session_id") ?: ""
+                    val sourcePackage = intent.getStringExtra("source_package") ?: currentPackage
+                    Log.d(TAG, "Watch button pressed - allowing watch (session=$sessionId)")
+
+                    // WatchConfirmed 이벤트 전송 (상태 전이 + scrollData 초기화)
+                    sessionState.handleEvent(SessionEvent.WatchConfirmed, sourcePackage)
+
+                    prefsManager.isAllowedUntilScroll = true
+
+                    handler.postDelayed({
+                        restoreVolume(sourcePackage)
+                        resumeMedia()
+                    }, 400)  // Activity 완전 제거 보장
+                }
+            }
         }
     }
 

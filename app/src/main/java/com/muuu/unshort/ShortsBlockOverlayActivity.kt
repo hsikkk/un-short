@@ -269,37 +269,25 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     }
 
     private fun handleSkip() {
-        // Directly update SessionStateManager to ensure proper order
-        sessionStateManager.handleEvent(
-            com.muuu.shortblock.service.blocking.SessionEvent.SkipConfirmed,
-            sourcePackageName
-        )
-        Log.d(TAG, "SkipConfirmed event sent directly to SessionStateManager")
-
-        // Also send broadcast for backward compatibility (triggers back action)
+        // Send broadcast to ShortsBlockService
         val intent = Intent(AppConstants.ACTION_CLOSE_OVERLAY)
         intent.setPackage(packageName)
         intent.putExtra("source_package", sourcePackageName)
         sendBroadcast(intent)
+        Log.d(TAG, "Skip button clicked - broadcast sent")
 
         // Finish this activity (ActivityDestroyed will be sent in onDestroy)
         finishAndRemoveTask()
     }
 
     private fun handleWatch() {
-        // Directly update SessionStateManager to ensure proper order
-        sessionStateManager.handleEvent(
-            com.muuu.shortblock.service.blocking.SessionEvent.WatchConfirmed,
-            sourcePackageName
-        )
-        Log.d(TAG, "WatchConfirmed event sent directly to SessionStateManager")
-
-        // Also send broadcast for backward compatibility
+        // Send broadcast to ShortsBlockService
         val intent = Intent(AppConstants.ACTION_WATCH_CONFIRMED)
         intent.setPackage(packageName)
         intent.putExtra("session_id", currentSessionId)
         intent.putExtra("source_package", sourcePackageName)
         sendBroadcast(intent)
+        Log.d(TAG, "Watch button clicked - broadcast sent")
 
         // Finish this activity (ActivityDestroyed will be sent in onDestroy)
         finishAndRemoveTask()

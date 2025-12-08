@@ -158,8 +158,8 @@ class SessionStateManager(
             is SessionEvent.WatchConfirmed -> {
                 // "볼래요" 클릭
                 current.copy(
-                    blockingStage = BlockingStage.WATCHING,
-                    activityState = ActivityState.NONE
+                    blockingStage = BlockingStage.WATCHING
+                    // activityState는 ActivityDestroyed에서만 변경
                 )
             }
 
@@ -169,7 +169,7 @@ class SessionStateManager(
                 current.copy(
                     blockingStage = BlockingStage.NONE,
                     shortsLocation = ShortsLocation.OUTSIDE,
-                    activityState = ActivityState.NONE,
+                    // activityState는 ActivityDestroyed에서만 변경
                     sessionId = null
                 )
             }

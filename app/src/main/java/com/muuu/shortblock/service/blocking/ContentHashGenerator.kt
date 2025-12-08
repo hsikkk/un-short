@@ -95,22 +95,9 @@ class ContentHashGenerator {
             }
         }
 
-        // ContentDescription 수집
-        node.contentDescription?.toString()?.let { desc ->
-            if (desc.isNotEmpty() && desc.length > 5) {
-                // textValidator로 유효성 검증
-                if (config.textValidator(desc)) {
-                    // Excluded text 패턴 체크
-                    val shouldExclude = config.excludedTextPatterns.any { pattern ->
-                        pattern.matches(desc)
-                    }
-
-                    if (!shouldExclude) {
-                        contentBuilder.append(desc).append("|")
-                    }
-                }
-            }
-        }
+        // ContentDescription 수집 제거 (버튼 설명 등 UI 요소 제외)
+        // contentDescription은 주로 접근성용으로 실제 콘텐츠가 아님
+        // 예: "동영상에 좋아요 표시", "동영상 공유" 등
 
         // 자식 노드 재귀 탐색
         for (i in 0 until node.childCount) {

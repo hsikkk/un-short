@@ -17,9 +17,7 @@ import com.muuu.unshort.ShortsBlockOverlayActivity
  */
 class OverlayManager(
     private val context: Context,
-    private val onTimerCompleted: () -> Unit,
-    private val onSkip: () -> Unit,
-    private val onWatch: () -> Unit
+    private val onTimerCompleted: () -> Unit
 ) {
     private val TAG = "OverlayManager"
 
@@ -45,18 +43,12 @@ class OverlayManager(
                     }
                 }
                 AppConstants.ACTION_CLOSE_OVERLAY -> {
-                    Log.d(TAG, "Close overlay broadcast")
-
-                    // Skip 콜백 호출
-                    onSkip()
+                    Log.d(TAG, "Close overlay broadcast (handled by ShortsBlockService)")
                 }
                 AppConstants.ACTION_WATCH_CONFIRMED -> {
                     val sessionId = intent.getStringExtra("session_id") ?: ""
                     val sourcePackage = intent.getStringExtra("source_package")
-                    Log.d(TAG, "Watch confirmed broadcast: session=$sessionId, source=$sourcePackage")
-
-                    // Watch 콜백 호출하여 상태 전이
-                    onWatch()
+                    Log.d(TAG, "Watch confirmed broadcast: session=$sessionId, source=$sourcePackage (handled by ShortsBlockService)")
                 }
             }
         }
