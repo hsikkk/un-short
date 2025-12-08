@@ -12,8 +12,7 @@ platform :android do
   desc "Build a release AAB"
   lane :build_release do
     gradle(
-      task: "bundle",
-      build_type: "Release",
+      task: "clean bundleRelease",
       print_command: true
     )
   end
@@ -21,8 +20,7 @@ platform :android do
   desc "Build a debug APK"
   lane :build_debug do
     gradle(
-      task: "assemble",
-      build_type: "Debug"
+      task: "clean assembleDebug"
     )
   end
 
@@ -39,7 +37,7 @@ platform :android do
       aab: lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH],
       skip_upload_screenshots: true,
       skip_upload_images: true,
-      skip_upload_metadata: false
+      skip_upload_metadata: true
     )
 
     UI.success("✅ Successfully deployed to Internal Testing track!")
@@ -54,7 +52,7 @@ platform :android do
       aab: lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH],
       skip_upload_screenshots: true,
       skip_upload_images: true,
-      skip_upload_metadata: false
+      skip_upload_metadata: true
     )
 
     UI.success("✅ Successfully deployed to Beta track!")
@@ -69,8 +67,7 @@ platform :android do
       aab: lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH],
       skip_upload_screenshots: false,
       skip_upload_images: false,
-      skip_upload_metadata: true,
-      rollout: "0.1" # 10% 단계적 출시로 시작
+      skip_upload_metadata: true
     )
 
     UI.success("✅ Successfully deployed to Production track!")
