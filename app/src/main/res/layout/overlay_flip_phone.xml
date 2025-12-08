@@ -8,49 +8,22 @@
     android:clickable="true"
     android:focusable="true">
 
-    <!-- Tip Message (Top) -->
-    <LinearLayout
-        android:id="@+id/tipContainer"
-        android:layout_width="0dp"
+    <!-- Native Ad Container (Top) -->
+    <FrameLayout
+        android:id="@+id/nativeAdContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="32dp"
-        android:orientation="horizontal"
-        android:gravity="start|center_vertical"
+        android:background="#000000"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Tip Badge -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tip"
-            android:textSize="11sp"
-            android:textColor="#FFFFFF"
-            android:fontFamily="@font/spoqa_sans_neo_medium"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:background="@drawable/tip_badge_background"
-            android:layout_marginEnd="8dp" />
+        <FrameLayout
+            android:id="@+id/nativeAd"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
 
-        <!-- Tip Message -->
-        <TextView
-            android:id="@+id/tipMessage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Tip message"
-            android:textSize="13sp"
-            android:textColor="#FFFFFF"
-            android:alpha="0.4"
-            android:fontFamily="@font/spoqa_sans_neo_light"
-            android:gravity="start" />
-
-    </LinearLayout>
+    </FrameLayout>
 
     <!-- Main Message -->
     <TextView
@@ -79,7 +52,7 @@
         android:orientation="vertical"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="36dp"
         app:layout_constraintBottom_toTopOf="@id/brandWatermark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -138,31 +111,35 @@
 
     </LinearLayout>
 
-    <!-- Affiliate Banner Container -->
-    <LinearLayout
-        android:id="@+id/affiliateBannerContainer"
-        android:layout_width="wrap_content"
+    <!-- AdMob Banner Ad Container -->
+    <FrameLayout
+        android:id="@+id/adViewContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:visibility="gone"
+        android:background="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <FrameLayout
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+    </FrameLayout>
+    
     <!-- Brand Watermark -->
     <TextView
-        android:id="@+id/brandWatermark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
-        android:text="@string/app_name"
-        android:textSize="14sp"
-        android:textColor="#4A4A4A"
-        android:fontFamily="@font/spoqa_sans_neo_light"
-        android:letterSpacing="0.05"
-        app:layout_constraintBottom_toBottomOf="@id/affiliateBannerContainer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+      android:id="@+id/brandWatermark"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="88dp"
+      android:text="@string/app_name"
+      android:textSize="14sp"
+      android:textColor="#4A4A4A"
+      android:fontFamily="@font/spoqa_sans_neo_light"
+      android:letterSpacing="0.05"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

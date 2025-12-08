@@ -34,6 +34,16 @@ object AdConfig {
      */
     const val MREC_EXIT = "ca-app-pub-4831094849543419/3738648618"
 
+    /**
+     * 오버레이 화면 상단 네이티브 광고
+     */
+    const val NATIVE_OVERLAY_TOP = "ca-app-pub-4831094849543419/3693164547"
+
+    /**
+     * 오버레이 화면 하단 배너 광고
+     */
+    const val BANNER_OVERLAY_BOTTOM = "ca-app-pub-4831094849543419/6918271296"
+
 
     // 향후 다른 광고 단위 ID 추가 예시:
     // const val BANNER_SETTINGS = "ca-app-pub-xxxxx/xxxxx"

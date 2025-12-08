@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -12,15 +11,19 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
-import android.webkit.WebView
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import com.muuu.affiliate.AffiliateProviderFactory
+import com.muuu.ad.core.adunit.MuuuBannerAdUnit
+import com.muuu.ad.core.adunit.MuuuNativeAdUnit
+import com.muuu.ad.core.model.MuuuBannerSize
+import com.muuu.ad.core.model.nativetemplate.MuuuNativeAdTemplate
+import com.muuu.unshort.ad.AdManager
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.prefs.PreferencesManager
-import com.muuu.unshort.premium.PremiumManager
 
 /**
  * 쇼츠 차단 오버레이 Activity
@@ -46,10 +49,9 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     private lateinit var watchButton: TextView
     private lateinit var startTimerButton: TextView
     private lateinit var mainMessage: TextView
-    private lateinit var tipMessage: TextView
     private lateinit var buttonContainer: LinearLayout
-    private lateinit var affiliateBannerContainer: LinearLayout
-    private lateinit var brandWatermark: TextView
+    private var bannerAdView: com.muuu.ad.view.MuuuBannerAdView? = null
+    private var nativeAdView: com.muuu.ad.view.MuuuNativeAdView? = null
 
     // State
     private lateinit var prefsManager: PreferencesManager
@@ -107,7 +109,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         Log.d(TAG, "onCreate: session=$currentSessionId, source=$sourcePackageName, type=$overlayType")
 
         // Setup fullscreen flags
-        setupFullscreen()
+        setupScreenKeepOn()
 
         setContentView(R.layout.overlay_flip_phone)
 
@@ -121,17 +123,22 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         // Initialize views
         initViews()
 
-        // Setup Tip message
-        setupTipMessage()
-
-        // Setup Affiliate banner
-        setupAffiliateBanner()
+        // Setup Ads
+        setupAds()
 
         // Update UI based on overlay type
         updateUI()
 
         // Register timer receiver
         registerTimerReceiver()
+
+        // Disable back button (최신 API 사용)
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Do nothing - 뒤로가기 버튼 무시 (차단 강제성 유지)
+                Log.d(TAG, "Back button pressed - ignored")
+            }
+        })
 
         // Notify SessionStateManager that Activity started
         sessionStateManager.handleEvent(
@@ -154,7 +161,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         )
     }
 
-    private fun setupFullscreen() {
+    private fun setupScreenKeepOn() {
         // Keep screen on
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
@@ -169,9 +176,6 @@ class ShortsBlockOverlayActivity : BaseActivity() {
                         WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
             )
         }
-
-        // Fullscreen mode
-        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }
 
     private fun initViews() {
@@ -179,10 +183,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         watchButton = findViewById(R.id.watchButton)
         startTimerButton = findViewById(R.id.startTimerButton)
         mainMessage = findViewById(R.id.mainMessage)
-        tipMessage = findViewById(R.id.tipMessage)
         buttonContainer = findViewById(R.id.buttonContainer)
-        affiliateBannerContainer = findViewById(R.id.affiliateBannerContainer)
-        brandWatermark = findViewById(R.id.brandWatermark)
 
         // Setup button listeners
         skipButton.setOnClickListener {
@@ -306,56 +307,37 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         Log.d(TAG, "Timer activity launched, overlay moved to background")
     }
 
-    private fun setupTipMessage() {
-        val tips = resources.getStringArray(R.array.overlay_tips)
-        val randomIndex = tips.indices.random()
-        val message = tips[randomIndex]
-
-        tipMessage.text = message
-        Log.d(TAG, "Tip message set: $message")
-    }
-
-    private fun setupAffiliateBanner() {
-        try {
-            // RemoteConfig + Premium check
-            val showAffiliateBanner = UnshortApplication.remoteConfig.getBoolean(AppConstants.RC_SHOW_AFFILIATE_BANNER)
-
-            if (!showAffiliateBanner || PremiumManager.isPremium()) {
-                affiliateBannerContainer.visibility = View.GONE
-                brandWatermark.visibility = View.VISIBLE
-                Log.d(TAG, "Affiliate banner hidden - RemoteConfig: $showAffiliateBanner, Premium: ${PremiumManager.isPremium()}")
-                return
-            }
-
-            // Affiliate Provider로부터 배너 뷰 생성
-            val provider = AffiliateProviderFactory.create(
-                context = this,
-                onLinkClick = { url ->
-                    // Affiliate 링크 클릭 시 Analytics 트래킹
-                    AnalyticsManager.trackEvent(this, AnalyticsEvent.AFFILIATE_PRODUCT_CLICKED)
-                    Log.d(TAG, "Affiliate link clicked: $url")
-
-                    // Finish activity
-                    finishAndRemoveTask()
-                }
+    private fun setupAds() {
+        // 네이티브 광고 (상단)
+        val nativeAdContainer = findViewById<FrameLayout>(R.id.nativeAd)
+        nativeAdView = AdManager.setupNativeAd(
+            context = this,
+            container = nativeAdContainer,
+            adUnit = MuuuNativeAdUnit(
+                key = AdConfig.NATIVE_OVERLAY_TOP,
+                placement = "overlay_screen_top",
+                refreshInterval = 4
+            ),
+            template = MuuuNativeAdTemplate.Line(
+                backgroundColor = getColor(R.color.primary_dark),
+                contentColor = getColor(R.color.white),
+                adMarkLabelBackgroundColor = getColor(R.color.gray_700),
+                adMarkLabelTextColor = getColor(R.color.white)
             )
-            val bannerView = provider.createBannerView(this)
+        )
 
-            // 컨테이너에 배너 추가
-            affiliateBannerContainer.removeAllViews()
-            affiliateBannerContainer.addView(bannerView)
-            affiliateBannerContainer.visibility = View.VISIBLE
-
-            // Affiliate 배너가 있으면 워터마크 숨김
-            brandWatermark.visibility = View.INVISIBLE
-
-            Log.d(TAG, "Affiliate banner loaded successfully")
-
-        } catch (e: Exception) {
-            Log.e(TAG, "Error loading affiliate banner", e)
-            affiliateBannerContainer.visibility = View.GONE
-            brandWatermark.visibility = View.VISIBLE
-        }
+        // 배너 광고 (하단)
+        val adViewContainer = findViewById<FrameLayout>(R.id.adView)
+        bannerAdView = AdManager.setupBannerAd(
+            context = this,
+            container = adViewContainer,
+            adUnit = MuuuBannerAdUnit(
+                key = AdConfig.BANNER_OVERLAY_BOTTOM,
+                placement = "overlay_screen_bottom",
+                bannerSize = MuuuBannerSize.Banner,
+                refreshInterval = 4
+            )
+        )
     }
 
     private fun registerTimerReceiver() {
@@ -429,12 +411,6 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        // Disable back button
-        Log.d(TAG, "Back button pressed - ignored")
-        // Do nothing (차단 강제성 유지)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
 
@@ -455,17 +431,6 @@ class ShortsBlockOverlayActivity : BaseActivity() {
                 Log.d(TAG, "Timer receiver unregistered")
             } catch (e: IllegalArgumentException) {
                 Log.e(TAG, "Error unregistering receiver", e)
-            }
-        }
-
-        // Clean up WebView
-        if (::affiliateBannerContainer.isInitialized) {
-            for (i in 0 until affiliateBannerContainer.childCount) {
-                val child = affiliateBannerContainer.getChildAt(i)
-                if (child is WebView) {
-                    child.loadUrl("about:blank")
-                    child.destroy()
-                }
             }
         }
 
