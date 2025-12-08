@@ -33,7 +33,8 @@ data class HashConfig(
     val excludedTextPatterns: List<Regex>,
     val maxDepth: Int = 8,
     val textValidator: (String) -> Boolean,  // 앱별 텍스트 검증 함수
-    val excludeBoundsRight: Int? = null  // 우측 x 좌표 이상인 노드 제외 (null이면 제한 없음)
+    val excludeBoundsRight: Int? = null,  // 우측 x 좌표 이상인 노드 제외 (null이면 제한 없음)
+    val includeContentDescription: Boolean = true  // contentDescription 포함 여부 (기본값 true)
 )
 
 /**
@@ -123,7 +124,8 @@ object AppBlockingRegistry {
                 // YouTube: 콜론/슬래시만 있는 텍스트 제외
                 text.length > 2 && !text.all { it.isDigit() || it == ':' || it == '/' }
             },
-            excludeBoundsRight = 1200  // 우측 사이드바 제외 (좋아요/댓글/공유 버튼)
+            excludeBoundsRight = 1200,  // 우측 사이드바 제외 (좋아요/댓글/공유 버튼)
+            includeContentDescription = false  // YouTube만 제외 (UI 버튼 변화로 인한 오감지 방지)
         )
     )
 
