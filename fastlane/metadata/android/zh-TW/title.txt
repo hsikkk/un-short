@@ -1,1 +1,1 @@
-un:short - 封鎖短影音
+un:short - 短影片成癮攔截器
