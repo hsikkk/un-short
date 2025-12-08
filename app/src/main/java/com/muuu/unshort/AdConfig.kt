@@ -37,7 +37,7 @@ object AdConfig {
     /**
      * 오버레이 화면 상단 네이티브 광고
      */
-    const val NATIVE_OVERLAY_TOP = "ca-app-pub-4831094849543419/3693164547"
+    const val NATIVE_OVERLAY_TOP = "ca-app-pub-4831094849543419/1907926690"
 
     /**
      * 오버레이 화면 하단 배너 광고
