@@ -86,6 +86,7 @@ class MainActivity : BaseActivity() {
     private var bannerAdView: MuuuBannerAdView? = null
     private lateinit var prefsManager: PreferencesManager
     private lateinit var blockedAppsContainer: LinearLayout
+    private lateinit var loadingOverlay: FrameLayout
 
     // 3단계 보호 플로우 헬퍼
     private lateinit var protectionHelper: ThreeStepProtectionHelper
@@ -204,6 +205,7 @@ class MainActivity : BaseActivity() {
         statisticsBadge = findViewById(R.id.statisticsBadge)
         premiumBadge = findViewById(R.id.premiumBadge)
         blockedAppsContainer = findViewById(R.id.blockedAppsContainer)
+        loadingOverlay = findViewById(R.id.loadingOverlay)
 
         // 설치된 앱만 동적으로 생성하여 표시
         populateBlockedApps()
@@ -472,7 +474,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showInterstitialAdForDisable() {
-        //TODO: 로딩
+        showLoading()
 
         MuuuInterstitialAdLoader(
             context = this,
@@ -484,7 +486,7 @@ class MainActivity : BaseActivity() {
             setListener(
                 object : MuuuInterstitialAdLoaderListener {
                     override fun onAdLoadFail(err: MuuuAdLoadError) {
-                        //TODO: 로딩 해제
+                        hideLoading()
                     }
 
                     override fun onAdLoadSuccess(
@@ -492,18 +494,19 @@ class MainActivity : BaseActivity() {
                         adInfo: MuuuAdInfo
                     ) {
                         ad.setListener(object : MuuuInterstitialAdListener {
-                            override fun onDismiss(adInfo: MuuuAdInfo) {
-                                onAdCompleted()
-                            }
+                            override fun onDismiss(adInfo: MuuuAdInfo) {}
 
                             override fun onFailedToShow(
                                 adInfo: MuuuAdInfo,
                                 error: MuuuAdDisplayFailError
                             ) {
-                                //TODO: 로딩 해제
+                                hideLoading()
                             }
 
-                            override fun onShown(adInfo: MuuuAdInfo) {}
+                            override fun onShown(adInfo: MuuuAdInfo) {
+                                hideLoading()
+                                onAdCompleted()
+                            }
                         })
 
                         ad.show(this@MainActivity)
@@ -518,6 +521,14 @@ class MainActivity : BaseActivity() {
     private fun onAdCompleted() {
         // 광고 시청 완료 후 해제 타입 선택
         showDisableTypeDialog()
+    }
+
+    private fun showLoading() {
+        loadingOverlay.visibility = View.VISIBLE
+    }
+
+    private fun hideLoading() {
+        loadingOverlay.visibility = View.GONE
     }
 
     private fun showDisableTypeDialog() {

@@ -198,6 +198,9 @@
     <!-- Legacy (deprecated) -->
     <string name="timer_required_confirm">Start timer</string>
 
+    <!-- Loading Dialog -->
+    <string name="loading_ad">Loading ad...</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">Disable deletion protection?</string>
     <string name="device_admin_disable_message">You may disable impulsively. Really disable?</string>
