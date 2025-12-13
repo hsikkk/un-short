@@ -199,6 +199,13 @@
     <!-- Legacy (deprecated) -->
     <string name="timer_required_confirm">タイマーを開始</string>
 
+    <!-- Loading Dialog -->
+    <string name="loading_ad">広告を読み込み中...</string>
+
+    <!-- Ad Error Messages -->
+    <string name="ad_load_failed">広告の読み込みに失敗しました。もう一度お試しください。</string>
+    <string name="ad_display_failed">広告の表示に失敗しました。もう一度お試しください。</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">削除保護を無効にしますか?</string>
     <string name="device_admin_disable_message">衝動的に無効にする可能性があります。本当に無効にしますか?</string>

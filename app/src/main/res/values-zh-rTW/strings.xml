@@ -199,6 +199,13 @@
     <!-- Legacy (deprecated) -->
     <string name="timer_required_confirm">開始計時</string>
 
+    <!-- Loading Dialog -->
+    <string name="loading_ad">正在載入廣告...</string>
+
+    <!-- Ad Error Messages -->
+    <string name="ad_load_failed">載入廣告失敗。請重試。</string>
+    <string name="ad_display_failed">顯示廣告失敗。請重試。</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">停用刪除保護?</string>
     <string name="device_admin_disable_message">你可能會衝動停用。真的要停用嗎?</string>

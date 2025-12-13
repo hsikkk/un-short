@@ -199,6 +199,13 @@
     <!-- Legacy (deprecated) -->
     <string name="timer_required_confirm">Démarrer la minuterie</string>
 
+    <!-- Loading Dialog -->
+    <string name="loading_ad">Chargement de l\'annonce...</string>
+
+    <!-- Ad Error Messages -->
+    <string name="ad_load_failed">Échec du chargement de l\'annonce. Veuillez réessayer.</string>
+    <string name="ad_display_failed">Échec de l\'affichage de l\'annonce. Veuillez réessayer.</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">Désactiver la protection contre la suppression ?</string>
     <string name="device_admin_disable_message">Vous pourriez désactiver impulsivement. Vraiment désactiver ?</string>

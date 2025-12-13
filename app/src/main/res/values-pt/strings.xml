@@ -199,6 +199,13 @@
     <!-- Legacy (deprecated) -->
     <string name="timer_required_confirm">Iniciar temporizador</string>
 
+    <!-- Loading Dialog -->
+    <string name="loading_ad">Carregando anúncio...</string>
+
+    <!-- Ad Error Messages -->
+    <string name="ad_load_failed">Falha ao carregar anúncio. Tente novamente.</string>
+    <string name="ad_display_failed">Falha ao exibir anúncio. Tente novamente.</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">Desativar proteção contra exclusão?</string>
     <string name="device_admin_disable_message">Você pode desativar impulsivamente. Realmente desativar?</string>

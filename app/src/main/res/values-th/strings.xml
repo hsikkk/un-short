@@ -199,6 +199,13 @@
     <!-- Legacy (deprecated) -->
     <string name="timer_required_confirm">เริ่มตัวจับเวลา</string>
 
+    <!-- Loading Dialog -->
+    <string name="loading_ad">กำลังโหลดโฆษณา...</string>
+
+    <!-- Ad Error Messages -->
+    <string name="ad_load_failed">โหลดโฆษณาไม่สำเร็จ กรุณาลองอีกครั้ง</string>
+    <string name="ad_display_failed">แสดงโฆษณาไม่สำเร็จ กรุณาลองอีกครั้ง</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">ปิดการป้องกันการลบ?</string>
     <string name="device_admin_disable_message">คุณอาจปิดโดยไม่ไตร่ตรอง ปิดจริงๆ หรอ?</string>

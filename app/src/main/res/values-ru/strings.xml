@@ -199,6 +199,13 @@
     <!-- Legacy (deprecated) -->
     <string name="timer_required_confirm">Запустить таймер</string>
 
+    <!-- Loading Dialog -->
+    <string name="loading_ad">Загрузка рекламы...</string>
+
+    <!-- Ad Error Messages -->
+    <string name="ad_load_failed">Не удалось загрузить рекламу. Попробуйте еще раз.</string>
+    <string name="ad_display_failed">Не удалось показать рекламу. Попробуйте еще раз.</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">Отключить защиту от удаления?</string>
     <string name="device_admin_disable_message">Вы можете отключить импульсивно. Действительно отключить?</string>

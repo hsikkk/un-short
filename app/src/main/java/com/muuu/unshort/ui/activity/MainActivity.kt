@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
@@ -487,6 +488,11 @@ class MainActivity : BaseActivity() {
                 object : MuuuInterstitialAdLoaderListener {
                     override fun onAdLoadFail(err: MuuuAdLoadError) {
                         hideLoading()
+                        Toast.makeText(
+                            this@MainActivity,
+                            getString(R.string.ad_load_failed),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
 
                     override fun onAdLoadSuccess(
@@ -501,6 +507,11 @@ class MainActivity : BaseActivity() {
                                 error: MuuuAdDisplayFailError
                             ) {
                                 hideLoading()
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    getString(R.string.ad_display_failed),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
 
                             override fun onShown(adInfo: MuuuAdInfo) {

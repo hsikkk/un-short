@@ -199,6 +199,13 @@
     <!-- Legacy (deprecated) -->
     <string name="timer_required_confirm">بدء المؤقت</string>
 
+    <!-- Loading Dialog -->
+    <string name="loading_ad">جاري تحميل الإعلان...</string>
+
+    <!-- Ad Error Messages -->
+    <string name="ad_load_failed">فشل تحميل الإعلان. يرجى المحاولة مرة أخرى.</string>
+    <string name="ad_display_failed">فشل عرض الإعلان. يرجى المحاولة مرة أخرى.</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">تعطيل حماية الحذف؟</string>
     <string name="device_admin_disable_message">قد تعطل بشكل اندفاعي. هل تريد حقاً التعطيل؟</string>

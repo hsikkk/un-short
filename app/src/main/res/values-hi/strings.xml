@@ -193,8 +193,16 @@
     <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
     <string name="timer_required_title">हाल ही में Shorts एक्सेस का पता चला</string>
     <string name="timer_required_message">आपने पिछले 10 मिनट में Shorts तक पहुंचने का प्रयास किया। ब्लॉकिंग को अक्षम करने के लिए, कृपया पहले टाइमर पूरा करें।</string>
-    <string name="timer_required_confirm">टाइमर शुरू करें</string>
+    <string name="timer_required_start_timer">टाइमर शुरू करें</string>
+    <string name="timer_required_watch_ad">विज्ञापन देखें और अक्षम करें</string>
     <string name="timer_required_cancel">रद्द करें</string>
+
+    <!-- Loading Dialog -->
+    <string name="loading_ad">विज्ञापन लोड हो रहा है...</string>
+
+    <!-- Ad Error Messages -->
+    <string name="ad_load_failed">विज्ञापन लोड करने में विफल। कृपया पुनः प्रयास करें।</string>
+    <string name="ad_display_failed">विज्ञापन प्रदर्शित करने में विफल। कृपया पुनः प्रयास करें।</string>
 
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">हटाने की सुरक्षा अक्षम करें?</string>

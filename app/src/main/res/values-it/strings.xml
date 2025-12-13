@@ -199,6 +199,13 @@
     <!-- Legacy (deprecated) -->
     <string name="timer_required_confirm">Avvia timer</string>
 
+    <!-- Loading Dialog -->
+    <string name="loading_ad">Caricamento annuncio...</string>
+
+    <!-- Ad Error Messages -->
+    <string name="ad_load_failed">Caricamento annuncio non riuscito. Riprova.</string>
+    <string name="ad_display_failed">Visualizzazione annuncio non riuscita. Riprova.</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">Disattivare la protezione dalla cancellazione?</string>
     <string name="device_admin_disable_message">Potresti disattivare impulsivamente. Davvero disattivare?</string>

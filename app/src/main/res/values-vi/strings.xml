@@ -199,6 +199,13 @@
     <!-- Legacy (deprecated) -->
     <string name="timer_required_confirm">Bắt đầu bộ đếm thời gian</string>
 
+    <!-- Loading Dialog -->
+    <string name="loading_ad">Đang tải quảng cáo...</string>
+
+    <!-- Ad Error Messages -->
+    <string name="ad_load_failed">Không tải được quảng cáo. Vui lòng thử lại.</string>
+    <string name="ad_display_failed">Không hiển thị được quảng cáo. Vui lòng thử lại.</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">Tắt bảo vệ xóa?</string>
     <string name="device_admin_disable_message">Bạn có thể tắt bốc đồng. Thực sự tắt?</string>

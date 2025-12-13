@@ -193,8 +193,16 @@
     <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
     <string name="timer_required_title">Son Shorts erişimi tespit edildi</string>
     <string name="timer_required_message">Son 10 dakika içinde Shorts\'a erişmeyi denediniz. Engellemeyi devre dışı bırakmak için lütfen önce zamanlayıcıyı tamamlayın.</string>
-    <string name="timer_required_confirm">Zamanlayıcıyı başlat</string>
+    <string name="timer_required_start_timer">Zamanlayıcıyı başlat</string>
+    <string name="timer_required_watch_ad">Reklam izleyerek devre dışı bırak</string>
     <string name="timer_required_cancel">İptal</string>
+
+    <!-- Loading Dialog -->
+    <string name="loading_ad">Reklam yükleniyor...</string>
+
+    <!-- Ad Error Messages -->
+    <string name="ad_load_failed">Reklam yüklenemedi. Lütfen tekrar deneyin.</string>
+    <string name="ad_display_failed">Reklam gösterilemedi. Lütfen tekrar deneyin.</string>
 
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">Silme korumasını devre dışı bırak?</string>
