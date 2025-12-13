@@ -193,8 +193,11 @@
     <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
     <string name="timer_required_title">ตรวจพบการเข้าถึง Shorts เมื่อเร็วๆ นี้</string>
     <string name="timer_required_message">คุณพยายามเข้าถึง Shorts ในช่วง 10 นาทีที่ผ่านมา หากต้องการปิดการบล็อก กรุณาทำตัวจับเวลาให้เสร็จก่อน</string>
-    <string name="timer_required_confirm">เริ่มตัวจับเวลา</string>
+    <string name="timer_required_start_timer">เริ่มตัวจับเวลา</string>
+    <string name="timer_required_watch_ad">ดูโฆษณาเพื่อปิด</string>
     <string name="timer_required_cancel">ยกเลิก</string>
+    <!-- Legacy (deprecated) -->
+    <string name="timer_required_confirm">เริ่มตัวจับเวลา</string>
 
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">ปิดการป้องกันการลบ?</string>

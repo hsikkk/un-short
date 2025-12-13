@@ -45,6 +45,11 @@ object AdConfig {
      */
     const val BANNER_OVERLAY_BOTTOM = "ca-app-pub-4831094849543419/6918271296"
 
+    /**
+     * 즉시 차단 인터스티셜
+     */
+    const val INTERSTITIAL_TURN_OFF = "ca-app-pub-4831094849543419/5244119557"
+
 
     // 향후 다른 광고 단위 ID 추가 예시:
     // const val BANNER_SETTINGS = "ca-app-pub-xxxxx/xxxxx"

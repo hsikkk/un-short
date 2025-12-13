@@ -193,8 +193,11 @@
     <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
     <string name="timer_required_title">檢測到最近的短影片訪問</string>
     <string name="timer_required_message">您在過去10分鐘內嘗試訪問短影片。要停用封鎖，請先完成計時器。</string>
-    <string name="timer_required_confirm">開始計時</string>
+    <string name="timer_required_start_timer">開始計時</string>
+    <string name="timer_required_watch_ad">觀看廣告解除</string>
     <string name="timer_required_cancel">取消</string>
+    <!-- Legacy (deprecated) -->
+    <string name="timer_required_confirm">開始計時</string>
 
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">停用刪除保護?</string>

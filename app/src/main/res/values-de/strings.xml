@@ -193,8 +193,11 @@
     <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
     <string name="timer_required_title">Kürzlicher Shorts-Zugriff erkannt</string>
     <string name="timer_required_message">Sie haben in den letzten 10 Minuten versucht, auf Shorts zuzugreifen. Um die Blockierung zu deaktivieren, schließen Sie bitte zuerst den Timer ab.</string>
-    <string name="timer_required_confirm">Timer starten</string>
+    <string name="timer_required_start_timer">Timer starten</string>
+    <string name="timer_required_watch_ad">Werbung ansehen zum Deaktivieren</string>
     <string name="timer_required_cancel">Abbrechen</string>
+    <!-- Legacy (deprecated) -->
+    <string name="timer_required_confirm">Timer starten</string>
 
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">Löschschutz deaktivieren?</string>

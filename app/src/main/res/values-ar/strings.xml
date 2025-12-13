@@ -193,8 +193,11 @@
     <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
     <string name="timer_required_title">تم اكتشاف وصول حديث إلى Shorts</string>
     <string name="timer_required_message">حاولت الوصول إلى Shorts خلال الـ 10 دقائق الماضية. لتعطيل الحظر، يرجى إكمال المؤقت أولاً.</string>
-    <string name="timer_required_confirm">بدء المؤقت</string>
+    <string name="timer_required_start_timer">بدء المؤقت</string>
+    <string name="timer_required_watch_ad">مشاهدة الإعلان للتعطيل</string>
     <string name="timer_required_cancel">إلغاء</string>
+    <!-- Legacy (deprecated) -->
+    <string name="timer_required_confirm">بدء المؤقت</string>
 
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">تعطيل حماية الحذف؟</string>

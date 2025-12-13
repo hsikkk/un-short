@@ -193,8 +193,11 @@
     <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
     <string name="timer_required_title">Accesso recente a Shorts rilevato</string>
     <string name="timer_required_message">Hai tentato di accedere agli Shorts negli ultimi 10 minuti. Per disattivare il blocco, completa prima il timer.</string>
-    <string name="timer_required_confirm">Avvia timer</string>
+    <string name="timer_required_start_timer">Avvia timer</string>
+    <string name="timer_required_watch_ad">Guarda l\'annuncio per disattivare</string>
     <string name="timer_required_cancel">Annulla</string>
+    <!-- Legacy (deprecated) -->
+    <string name="timer_required_confirm">Avvia timer</string>
 
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">Disattivare la protezione dalla cancellazione?</string>

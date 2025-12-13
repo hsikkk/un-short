@@ -187,8 +187,11 @@
     <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
     <string name="timer_required_title">최근 쇼츠 접근 감지</string>
     <string name="timer_required_message">최근 10분 내에 쇼츠 접근을 시도했습니다. 기능을 해제하려면 타이머를 완료해주세요.</string>
-    <string name="timer_required_confirm">타이머 시작</string>
+    <string name="timer_required_start_timer">타이머 시작</string>
+    <string name="timer_required_watch_ad">광고 보고 해제</string>
     <string name="timer_required_cancel">취소</string>
+    <!-- Legacy (deprecated) -->
+    <string name="timer_required_confirm">타이머 시작</string>
 
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">삭제 방지를 비활성화하시겠어요?</string>

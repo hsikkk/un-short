@@ -30,7 +30,15 @@ import kotlinx.coroutines.withContext
 import java.util.Calendar
 import com.muuu.ad.view.MuuuBannerAdView
 import com.muuu.ad.core.adunit.MuuuBannerAdUnit
+import com.muuu.ad.core.adunit.MuuuInterstitialAdUnit
+import com.muuu.ad.core.listener.MuuuInterstitialAdListener
+import com.muuu.ad.core.listener.MuuuInterstitialAdLoaderListener
+import com.muuu.ad.core.model.MuuuAdDisplayFailError
+import com.muuu.ad.core.model.MuuuAdInfo
+import com.muuu.ad.core.model.MuuuAdLoadError
 import com.muuu.ad.core.model.MuuuBannerSize
+import com.muuu.ad.core.model.MuuuInterstitialAd
+import com.muuu.ad.loader.MuuuInterstitialAdLoader
 import com.muuu.unshort.ad.AdManager
 import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.premium.PremiumManager
@@ -44,6 +52,7 @@ import com.muuu.unshort.config.AdConfig
 import com.muuu.unshort.util.InAppReviewHelper
 import com.muuu.unshort.ui.activity.MainActivity
 import com.muuu.unshort.ui.dialog.DisableTypeDialog
+import com.muuu.unshort.ui.dialog.TimerRequiredDialog
 import com.muuu.unshort.receiver.TempDisableReceiver
 import com.muuu.unshort.ui.activity.SettingsActivity
 import com.muuu.unshort.util.PermissionUtils
@@ -445,22 +454,70 @@ class MainActivity : BaseActivity() {
 
     private fun showTimerRequiredDialog() {
         // 최근 10분 내 진입 시도가 있어 타이머 완료 필요
-        WarningDialog(
+        TimerRequiredDialog(
             context = this,
-            titleResId = R.string.timer_required_title,
-            messageResId = R.string.timer_required_message,
-            positiveTextResId = R.string.timer_required_confirm,
-            negativeTextResId = R.string.timer_required_cancel,
-            onPositive = {
+            onWatchAd = {
+                showInterstitialAdForDisable()
+            },
+            onStartTimer = {
                 // 타이머 시작
                 val intent = Intent(this, com.muuu.unshort.timer.DisableConfirmTimerActivity::class.java)
                 disableConfirmTimerLauncher.launch(intent)
             },
-            onNegative = {
+            onCancel = {
                 // 취소 - UI 복원
                 updateUI(true, animate = false)
             }
         ).show()
+    }
+
+    private fun showInterstitialAdForDisable() {
+        //TODO: 로딩
+
+        MuuuInterstitialAdLoader(
+            context = this,
+            adUnit = MuuuInterstitialAdUnit(
+                key = AdConfig.INTERSTITIAL_TURN_OFF,
+                placement = "interstitial_turn_off"
+            )
+        ).apply {
+            setListener(
+                object : MuuuInterstitialAdLoaderListener {
+                    override fun onAdLoadFail(err: MuuuAdLoadError) {
+                        //TODO: 로딩 해제
+                    }
+
+                    override fun onAdLoadSuccess(
+                        ad: MuuuInterstitialAd,
+                        adInfo: MuuuAdInfo
+                    ) {
+                        ad.setListener(object : MuuuInterstitialAdListener {
+                            override fun onDismiss(adInfo: MuuuAdInfo) {
+                                onAdCompleted()
+                            }
+
+                            override fun onFailedToShow(
+                                adInfo: MuuuAdInfo,
+                                error: MuuuAdDisplayFailError
+                            ) {
+                                //TODO: 로딩 해제
+                            }
+
+                            override fun onShown(adInfo: MuuuAdInfo) {}
+                        })
+
+                        ad.show(this@MainActivity)
+                    }
+                }
+            )
+
+            load()
+        }
+    }
+
+    private fun onAdCompleted() {
+        // 광고 시청 완료 후 해제 타입 선택
+        showDisableTypeDialog()
     }
 
     private fun showDisableTypeDialog() {

@@ -193,8 +193,11 @@
     <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
     <string name="timer_required_title">最近のショート動画アクセスを検出</string>
     <string name="timer_required_message">過去10分以内にショート動画にアクセスしようとしました。ブロックを解除するには、まずタイマーを完了してください。</string>
-    <string name="timer_required_confirm">タイマーを開始</string>
+    <string name="timer_required_start_timer">タイマーを開始</string>
+    <string name="timer_required_watch_ad">広告を見て解除</string>
     <string name="timer_required_cancel">キャンセル</string>
+    <!-- Legacy (deprecated) -->
+    <string name="timer_required_confirm">タイマーを開始</string>
 
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">削除保護を無効にしますか?</string>

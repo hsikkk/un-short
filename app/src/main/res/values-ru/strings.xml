@@ -193,8 +193,11 @@
     <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
     <string name="timer_required_title">Обнаружен недавний доступ к Shorts</string>
     <string name="timer_required_message">Вы пытались получить доступ к Shorts в течение последних 10 минут. Чтобы отключить блокировку, сначала завершите таймер.</string>
-    <string name="timer_required_confirm">Запустить таймер</string>
+    <string name="timer_required_start_timer">Запустить таймер</string>
+    <string name="timer_required_watch_ad">Посмотреть рекламу для отключения</string>
     <string name="timer_required_cancel">Отмена</string>
+    <!-- Legacy (deprecated) -->
+    <string name="timer_required_confirm">Запустить таймер</string>
 
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">Отключить защиту от удаления?</string>
