@@ -15,17 +15,19 @@ import com.muuu.unshort.R
  * 최근 10분 내 쇼츠 접근 시도가 있을 때 표시
  * 3가지 옵션 제공:
  * 1. 타이머 시작
- * 2. 광고 보고 해제
+ * 2. 광고 보고 해제 (프리미엄 유저는 숨김)
  * 3. 취소
  *
  * @param context Context
+ * @param showAdButton 광고 보기 버튼 표시 여부 (프리미엄 유저는 false)
  * @param onWatchAd 광고 보기 버튼 클릭 콜백
  * @param onStartTimer 타이머 시작 버튼 클릭 콜백
  * @param onCancel 취소 버튼 클릭 콜백
  */
 class TimerRequiredDialog(
     context: Context,
-    private val onWatchAd: () -> Unit,
+    private val showAdButton: Boolean = true,
+    private val onWatchAd: () -> Unit = {},
     private val onStartTimer: () -> Unit,
     private val onCancel: () -> Unit
 ) : Dialog(context) {
@@ -71,6 +73,11 @@ class TimerRequiredDialog(
         btnStartTimer.setText(R.string.timer_required_start_timer)
         btnWatchAd.setText(R.string.timer_required_watch_ad)
         btnCancel.setText(R.string.timer_required_cancel)
+
+        // 프리미엄 유저는 광고 버튼 숨김
+        if (!showAdButton) {
+            btnWatchAd.visibility = android.view.View.GONE
+        }
 
         // Button listeners
         btnStartTimer.setOnClickListener {

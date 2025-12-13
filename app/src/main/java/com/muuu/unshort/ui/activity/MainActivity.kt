@@ -463,6 +463,7 @@ class MainActivity : BaseActivity() {
         // 최근 10분 내 진입 시도가 있어 타이머 완료 필요
         TimerRequiredDialog(
             context = this,
+            showAdButton = !PremiumManager.isPremium(), // 프리미엄 유저는 광고 버튼 숨김
             onWatchAd = {
                 showInterstitialAdForDisable()
             },
