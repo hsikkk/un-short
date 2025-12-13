@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.WindowInsets
@@ -69,6 +71,8 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     private var sourcePackageName: String = ""
     private var overlayType: OverlayType = OverlayType.INITIAL
     private var isTimerActivityLaunched: Boolean = false
+    private var skipButtonCountdown: Int = 2
+    private val handler = Handler(Looper.getMainLooper())
 
     // Activity Result API for timer completion
     private val timerLauncher = registerForActivityResult(
@@ -165,6 +169,9 @@ class ShortsBlockOverlayActivity : BaseActivity() {
                 AnalyticsEvent.OVERLAY_SHOWN_BEFORE_TIMER
             }
         )
+
+        // Start skip button countdown
+        startSkipButtonCountdown()
     }
 
     private fun setupScreenKeepOn() {
@@ -208,6 +215,43 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             Log.d(TAG, "Start timer button clicked")
             AnalyticsManager.trackEvent(this, AnalyticsEvent.OVERLAY_BUTTON_START_TIMER)
             handleStartTimer()
+        }
+    }
+
+    private fun startSkipButtonCountdown() {
+        // Only start countdown for INITIAL overlay (before timer)
+        if (overlayType != OverlayType.INITIAL) {
+            return
+        }
+
+        skipButtonCountdown = 2
+        skipButton.isEnabled = false
+        skipButton.alpha = 0.5f
+
+        updateSkipButtonText()
+
+        handler.postDelayed({
+            skipButtonCountdown = 1
+            updateSkipButtonText()
+
+            handler.postDelayed({
+                skipButtonCountdown = 0
+                skipButton.isEnabled = true
+                skipButton.alpha = 1.0f
+                updateSkipButtonText()
+            }, 1000)
+        }, 1000)
+    }
+
+    private fun updateSkipButtonText() {
+        when {
+            skipButtonCountdown > 0 -> {
+                // TODO: [i18n] strings.xml로 이동 필요
+                skipButton.text = "${skipButtonCountdown}초 후 닫기 가능"
+            }
+            else -> {
+                skipButton.text = getString(R.string.block_button_close)
+            }
         }
     }
 
@@ -412,6 +456,9 @@ class ShortsBlockOverlayActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+
+        // Remove all pending handler callbacks
+        handler.removeCallbacksAndMessages(null)
 
         // Notify SessionStateManager that Activity destroyed
         ShortsBlockService.instance?.getSessionStateManager()?.handleEvent(
