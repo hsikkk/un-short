@@ -68,11 +68,13 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     private var currentSessionId: String = ""
     private var sourcePackageName: String = ""
     private var overlayType: OverlayType = OverlayType.INITIAL
+    private var isTimerActivityLaunched: Boolean = false
 
     // Activity Result API for timer completion
     private val timerLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
+        isTimerActivityLaunched = false
         if (result.resultCode == RESULT_OK) {
             // 타이머 완료
             Log.d(TAG, "Timer completed - switching to CONFIRMATION mode")
@@ -306,6 +308,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         }
 
         // Activity를 background로 이동 (finish 제거)
+        isTimerActivityLaunched = true
         timerLauncher.launch(intent)
 
         Log.d(TAG, "Timer activity launched, overlay moved to background")
@@ -391,6 +394,19 @@ class ShortsBlockOverlayActivity : BaseActivity() {
                 finishAndRemoveTask()
                 return
             }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        // 타이머 Activity가 실행 중이 아니면 Activity를 종료
+        // (홈키, 다른 앱으로 전환 등의 경우)
+        if (!isTimerActivityLaunched) {
+            Log.d(TAG, "onStop: timer not launched - finishing activity")
+            finish()
+        } else {
+            Log.d(TAG, "onStop: timer launched - keeping activity alive")
         }
     }
 

@@ -102,12 +102,14 @@ data class SessionState(
      *
      * 조건:
      * - 쇼츠 화면에 있고
-     * - Activity가 실행 중이 아니고
+     * - 오버레이가 이미 떠있지 않고 (중복 방지)
      * - 타이머 필요 또는 확인 필요 단계
+     *
+     * 참고: 타이머가 백그라운드에서 진행 중일 때도 오버레이를 띄워서 쇼츠 접근 차단
      */
     fun needsOverlay(): Boolean =
         shortsLocation == ShortsLocation.IN_SHORTS &&
-        activityState == ActivityState.NONE &&
+        activityState != ActivityState.OVERLAY_RUNNING &&
         (blockingStage == BlockingStage.NEED_TIMER ||
          blockingStage == BlockingStage.NEED_CONFIRMATION)
 
