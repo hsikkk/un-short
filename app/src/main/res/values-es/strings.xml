@@ -190,6 +190,12 @@
     <string name="disable_dialog_cancel">Cancelar</string>
     <string name="disable_dialog_confirm">Confirmar</string>
 
+    <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
+    <string name="timer_required_title">Acceso reciente a Shorts detectado</string>
+    <string name="timer_required_message">Intentaste acceder a Shorts en los últimos 10 minutos. Para desactivar el bloqueo, primero completa el temporizador.</string>
+    <string name="timer_required_confirm">Iniciar temporizador</string>
+    <string name="timer_required_cancel">Cancelar</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">¿Desactivar protección contra eliminación?</string>
     <string name="device_admin_disable_message">Podrías desactivar impulsivamente. ¿Realmente desactivar?</string>

@@ -22,6 +22,9 @@ import androidx.activity.OnBackPressedCallback
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.data.statistics.StatisticsRepository
+import com.muuu.unshort.data.statistics.AppDatabase
+import com.muuu.unshort.ui.dialog.WarningDialog
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Calendar
@@ -108,8 +111,13 @@ class MainActivity : BaseActivity() {
         disableConfirmTimerLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
-            // Helper에게 결과 전달 (저장된 config와 action 사용)
-            protectionHelper.handleTimerResult(result.resultCode)
+            if (result.resultCode == RESULT_OK) {
+                // 타이머 완료 - 해제 타입 선택
+                showDisableTypeDialog()
+            } else {
+                // 타이머 취소 - UI 복원
+                updateUI(true, animate = false)
+            }
         }
 
         protectionHelper.registerTimerLauncher(disableConfirmTimerLauncher)
@@ -214,14 +222,27 @@ class MainActivity : BaseActivity() {
             val currentState = prefsManager.isBlockingEnabled
             val newState = !currentState
 
-            // If turning OFF, show disable type dialog
+            // If turning OFF, check recent shorts attempts
             if (currentState && !newState) {
-                if (prefsManager.isPreventImpulsiveDisable) {
-                    // Show 3-step protection flow first
-                    showDisableConfirmDialog()
-                } else {
-                    // Show disable type dialog directly
-                    showDisableTypeDialog()
+                // 최근 10분 내 쇼츠 진입 시도 확인
+                lifecycleScope.launch {
+                    val now = System.currentTimeMillis()
+                    val tenMinutesAgo = now - (10 * 60 * 1000)
+                    val repository = StatisticsRepository(this@MainActivity)
+                    val recentAttempts = repository.getSessionCountForDate(tenMinutesAgo, now)
+
+                    withContext(Dispatchers.Main) {
+                        if (recentAttempts > 0) {
+                            // 최근 10분 내 진입 시도 있음 - 타이머 필요
+                            showTimerRequiredDialog()
+                        } else if (prefsManager.isPreventImpulsiveDisable) {
+                            // Show 3-step protection flow first
+                            showDisableConfirmDialog()
+                        } else {
+                            // 진입 시도 없음 - 바로 해제 타입 선택
+                            showDisableTypeDialog()
+                        }
+                    }
                 }
             } else {
                 // Turning ON - proceed immediately
@@ -420,6 +441,26 @@ class MainActivity : BaseActivity() {
                 showDisableTypeDialog()
             }
         )
+    }
+
+    private fun showTimerRequiredDialog() {
+        // 최근 10분 내 진입 시도가 있어 타이머 완료 필요
+        WarningDialog(
+            context = this,
+            titleResId = R.string.timer_required_title,
+            messageResId = R.string.timer_required_message,
+            positiveTextResId = R.string.timer_required_confirm,
+            negativeTextResId = R.string.timer_required_cancel,
+            onPositive = {
+                // 타이머 시작
+                val intent = Intent(this, com.muuu.unshort.timer.DisableConfirmTimerActivity::class.java)
+                disableConfirmTimerLauncher.launch(intent)
+            },
+            onNegative = {
+                // 취소 - UI 복원
+                updateUI(true, animate = false)
+            }
+        ).show()
     }
 
     private fun showDisableTypeDialog() {

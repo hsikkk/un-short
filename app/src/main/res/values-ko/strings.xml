@@ -184,6 +184,12 @@
     <string name="disable_dialog_cancel">취소</string>
     <string name="disable_dialog_confirm">확인</string>
 
+    <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
+    <string name="timer_required_title">최근 쇼츠 접근 감지</string>
+    <string name="timer_required_message">최근 10분 내에 쇼츠 접근을 시도했습니다. 기능을 해제하려면 타이머를 완료해주세요.</string>
+    <string name="timer_required_confirm">타이머 시작</string>
+    <string name="timer_required_cancel">취소</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">삭제 방지를 비활성화하시겠어요?</string>
     <string name="device_admin_disable_message">충동적으로 비활성화할 수 있습니다. 정말 비활성화하시겠어요?</string>

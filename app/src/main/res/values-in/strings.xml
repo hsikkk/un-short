@@ -192,6 +192,12 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="disable_dialog_cancel">Batal</string>
     <string name="disable_dialog_confirm">Konfirmasi</string>
 
+    <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
+    <string name="timer_required_title">Akses Shorts terbaru terdeteksi</string>
+    <string name="timer_required_message">Anda mencoba mengakses Shorts dalam 10 menit terakhir. Untuk menonaktifkan pemblokiran, harap selesaikan timer terlebih dahulu.</string>
+    <string name="timer_required_confirm">Mulai timer</string>
+    <string name="timer_required_cancel">Batal</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">Nonaktifkan perlindungan penghapusan?</string>
     <string name="device_admin_disable_message">Anda mungkin menonaktifkan secara impulsif. Benar-benar nonaktifkan?</string>

@@ -80,7 +80,7 @@
             android:excludeFromRecents="true" />
 
         <activity
-            android:name=".ui.timer.DisableConfirmTimerActivity"
+            android:name=".timer.DisableConfirmTimerActivity"
             android:exported="false"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />

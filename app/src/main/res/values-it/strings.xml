@@ -190,6 +190,12 @@
     <string name="disable_dialog_cancel">Annulla</string>
     <string name="disable_dialog_confirm">Conferma</string>
 
+    <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
+    <string name="timer_required_title">Accesso recente a Shorts rilevato</string>
+    <string name="timer_required_message">Hai tentato di accedere agli Shorts negli ultimi 10 minuti. Per disattivare il blocco, completa prima il timer.</string>
+    <string name="timer_required_confirm">Avvia timer</string>
+    <string name="timer_required_cancel">Annulla</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">Disattivare la protezione dalla cancellazione?</string>
     <string name="device_admin_disable_message">Potresti disattivare impulsivamente. Davvero disattivare?</string>

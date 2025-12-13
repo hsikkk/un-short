@@ -189,6 +189,12 @@
     <string name="disable_dialog_cancel">Cancel</string>
     <string name="disable_dialog_confirm">Confirm</string>
 
+    <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
+    <string name="timer_required_title">Recent shorts access detected</string>
+    <string name="timer_required_message">You attempted to access shorts within the last 10 minutes. To disable blocking, please complete the timer first.</string>
+    <string name="timer_required_confirm">Start timer</string>
+    <string name="timer_required_cancel">Cancel</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">Disable deletion protection?</string>
     <string name="device_admin_disable_message">You may disable impulsively. Really disable?</string>

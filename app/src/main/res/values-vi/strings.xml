@@ -190,6 +190,12 @@
     <string name="disable_dialog_cancel">Hủy</string>
     <string name="disable_dialog_confirm">Xác nhận</string>
 
+    <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
+    <string name="timer_required_title">Phát hiện truy cập Shorts gần đây</string>
+    <string name="timer_required_message">Bạn đã cố gắng truy cập Shorts trong 10 phút qua. Để tắt chặn, vui lòng hoàn thành bộ đếm thời gian trước.</string>
+    <string name="timer_required_confirm">Bắt đầu bộ đếm thời gian</string>
+    <string name="timer_required_cancel">Hủy</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">Tắt bảo vệ xóa?</string>
     <string name="device_admin_disable_message">Bạn có thể tắt bốc đồng. Thực sự tắt?</string>

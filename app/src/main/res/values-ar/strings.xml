@@ -190,6 +190,12 @@
     <string name="disable_dialog_cancel">إلغاء</string>
     <string name="disable_dialog_confirm">تأكيد</string>
 
+    <!-- Timer Required Dialog (when disabling within 10 minutes of shorts attempt) -->
+    <string name="timer_required_title">تم اكتشاف وصول حديث إلى Shorts</string>
+    <string name="timer_required_message">حاولت الوصول إلى Shorts خلال الـ 10 دقائق الماضية. لتعطيل الحظر، يرجى إكمال المؤقت أولاً.</string>
+    <string name="timer_required_confirm">بدء المؤقت</string>
+    <string name="timer_required_cancel">إلغاء</string>
+
     <!-- Device Admin Disable Dialog -->
     <string name="device_admin_disable_title">تعطيل حماية الحذف؟</string>
     <string name="device_admin_disable_message">قد تعطل بشكل اندفاعي. هل تريد حقاً التعطيل؟</string>
