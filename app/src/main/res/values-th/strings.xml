@@ -121,16 +121,6 @@
     <!-- Ads -->
     <string name="ad">โฆษณา</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_page1_title">หลุดพ้นจาก\nการติดวิดีโอสั้น</string>
-    <string name="onboarding_page1_subtitle">นิสัยเล็กๆ สำหรับการบริโภคอย่างมีสติ</string>
-    <string name="onboarding_page2_title">ถ้าอยากดูวิดีโอสั้น\nลองหยุดคิดก่อน</string>
-    <string name="onboarding_page3_title">ถ้ายังอยากดู\nหยุดพักสักครู่</string>
-    <string name="onboarding_page4_title">สุดท้าย\nคิดอีกครั้ง</string>
-    <string name="onboarding_page5_title">พร้อมเริ่มแล้วหรือยัง?</string>
-    <string name="onboarding_page5_subtitle">เริ่มต้นการเดินทางสู่\nการบริโภคสื่ออย่างมีสติกับ un:short</string>
-    <string name="onboarding_start_button">เริ่มต้น</string>
-    <string name="onboarding_skip">ข้าม</string>
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">เวลาหน่วง</string>

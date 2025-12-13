@@ -11,7 +11,7 @@ import com.muuu.unshort.util.InAppReviewHelper
 /**
  * Google Play In-App Review 관리
  *
- * 온보딩 완료 후 7일 경과 시 리뷰 요청 (1회만)
+ * 앱 설치 후 7일 경과 시 리뷰 요청 (1회만)
  */
 class InAppReviewHelper(private val activity: Activity) {
 
@@ -32,15 +32,15 @@ class InAppReviewHelper(private val activity: Activity) {
             return
         }
 
-        // 온보딩 완료 시점 확인
-        val completedAt = prefsManager.onboardingCompletedAt
-        if (completedAt == 0L) {
-            // 아직 온보딩 완료 시점이 기록되지 않음 (구버전 사용자)
+        // 앱 설치 시점 확인
+        val installedAt = prefsManager.appInstalledAt
+        if (installedAt == 0L) {
+            // 아직 설치 시점이 기록되지 않음 (구버전 사용자)
             return
         }
 
         // 7일 경과 확인
-        val elapsedMs = System.currentTimeMillis() - completedAt
+        val elapsedMs = System.currentTimeMillis() - installedAt
         if (elapsedMs < REVIEW_DELAY_MS) {
             return
         }

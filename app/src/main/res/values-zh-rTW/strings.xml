@@ -121,16 +121,6 @@
     <!-- Ads -->
     <string name="ad">廣告</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_page1_title">擺脫\n短影音成癮</string>
-    <string name="onboarding_page1_subtitle">有意識消費的小習慣</string>
-    <string name="onboarding_page2_title">如果你想看短影音,\n先停下來想一想</string>
-    <string name="onboarding_page3_title">如果你還想看,\n稍作停頓</string>
-    <string name="onboarding_page4_title">最後,\n再想一次</string>
-    <string name="onboarding_page5_title">準備好開始了嗎?</string>
-    <string name="onboarding_page5_subtitle">與un:short一起\n開始有意識的媒體消費之旅</string>
-    <string name="onboarding_start_button">開始</string>
-    <string name="onboarding_skip">跳過</string>
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">延遲時間</string>

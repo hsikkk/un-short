@@ -121,16 +121,6 @@
     <!-- Ads -->
     <string name="ad">QUẢNG CÁO</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_page1_title">Thoát khỏi\nsự nghiện dạng ngắn</string>
-    <string name="onboarding_page1_subtitle">Thói quen nhỏ cho việc tiêu thụ có chủ đích</string>
-    <string name="onboarding_page2_title">Nếu bạn muốn xem shorts,\nhãy dành thời gian suy nghĩ</string>
-    <string name="onboarding_page3_title">Nếu bạn vẫn muốn xem,\nhãy dừng lại ngắn</string>
-    <string name="onboarding_page4_title">Cuối cùng,\nhãy suy nghĩ thêm một lần</string>
-    <string name="onboarding_page5_title">Sẵn sàng bắt đầu?</string>
-    <string name="onboarding_page5_subtitle">Bắt đầu hành trình của bạn hướng tới\nviệc tiêu thụ phương tiện có chủ đích với un:short</string>
-    <string name="onboarding_start_button">Bắt đầu</string>
-    <string name="onboarding_skip">Bỏ qua</string>
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">Thời gian trì hoãn</string>

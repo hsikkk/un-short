@@ -121,16 +121,6 @@
     <!-- Ads -->
     <string name="ad">ANÚNCIO</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_page1_title">Liberte-se do\nvício em conteúdo curto</string>
-    <string name="onboarding_page1_subtitle">Pequenos hábitos para consumo intencional</string>
-    <string name="onboarding_page2_title">Se você quer assistir shorts,\ntire um momento para pensar</string>
-    <string name="onboarding_page3_title">Se ainda quiser assistir,\nfaça uma breve pausa</string>
-    <string name="onboarding_page4_title">Por fim,\npense mais uma vez</string>
-    <string name="onboarding_page5_title">Pronto para começar?</string>
-    <string name="onboarding_page5_subtitle">Inicie sua jornada rumo ao\nconsumo consciente de mídia com un:short</string>
-    <string name="onboarding_start_button">Começar</string>
-    <string name="onboarding_skip">Pular</string>
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">Tempo de espera</string>

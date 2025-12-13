@@ -121,16 +121,6 @@
     <!-- Ads -->
     <string name="ad">広告</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_page1_title">ショート動画依存から\n抜け出しましょう</string>
-    <string name="onboarding_page1_subtitle">意識的な消費のための小さな習慣</string>
-    <string name="onboarding_page2_title">ショート動画を見たいなら、\n一度考えてみましょう</string>
-    <string name="onboarding_page3_title">それでも見たいなら、\n少し一時停止しましょう</string>
-    <string name="onboarding_page4_title">最後に、\nもう一度考えましょう</string>
-    <string name="onboarding_page5_title">始める準備はできましたか?</string>
-    <string name="onboarding_page5_subtitle">un:shortで\n意識的なメディア消費への旅を始めましょう</string>
-    <string name="onboarding_start_button">始める</string>
-    <string name="onboarding_skip">スキップ</string>
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">遅延時間</string>

@@ -38,12 +38,6 @@ class AppRestartReceiver : BroadcastReceiver() {
     private fun handleAppRestart(context: Context) {
         val prefsManager = PreferencesManager(context)
 
-        // Check if onboarding is completed
-        if (!prefsManager.isOnboardingCompleted) {
-            Log.d(TAG, "Onboarding not completed, skipping service restart")
-            return
-        }
-
         // Check if permissions are granted
         val hasAccessibilityPermission = PermissionUtils.isAccessibilityServiceEnabled(context)
         val hasOverlayPermission = PermissionUtils.canDrawOverlays(context)

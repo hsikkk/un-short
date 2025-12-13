@@ -121,16 +121,6 @@
     <!-- Ads -->
     <string name="ad">PUB</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_page1_title">Libérez-vous de\nl\'addiction aux formats courts</string>
-    <string name="onboarding_page1_subtitle">De petites habitudes pour une consommation intentionnelle</string>
-    <string name="onboarding_page2_title">Si vous voulez regarder des shorts,\nprenez un moment pour réfléchir</string>
-    <string name="onboarding_page3_title">Si vous voulez toujours regarder,\nfaites une brève pause</string>
-    <string name="onboarding_page4_title">Enfin,\nréfléchissez encore une fois</string>
-    <string name="onboarding_page5_title">Prêt à commencer ?</string>
-    <string name="onboarding_page5_subtitle">Commencez votre voyage vers\nune consommation média réfléchie avec un:short</string>
-    <string name="onboarding_start_button">Commencer</string>
-    <string name="onboarding_skip">Passer</string>
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">Temps d\'attente</string>

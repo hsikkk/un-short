@@ -121,16 +121,6 @@
     <!-- Ads -->
     <string name="ad">إعلان</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_page1_title">تحرر من\nإدمان المحتوى القصير</string>
-    <string name="onboarding_page1_subtitle">عادات صغيرة للاستهلاك المقصود</string>
-    <string name="onboarding_page2_title">إذا كنت تريد مشاهدة shorts،\nخذ لحظة للتفكير</string>
-    <string name="onboarding_page3_title">إذا كنت لا تزال تريد المشاهدة،\nخذ وقفة قصيرة</string>
-    <string name="onboarding_page4_title">أخيراً،\nفكر مرة أخرى</string>
-    <string name="onboarding_page5_title">هل أنت مستعد للبدء؟</string>
-    <string name="onboarding_page5_subtitle">ابدأ رحلتك نحو\nاستهلاك إعلامي واعٍ مع un:short</string>
-    <string name="onboarding_start_button">ابدأ</string>
-    <string name="onboarding_skip">تخطي</string>
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">وقت التأخير</string>

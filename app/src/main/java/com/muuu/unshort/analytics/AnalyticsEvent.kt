@@ -8,10 +8,6 @@ object AnalyticsEvent {
     const val BLOCKING_ENABLED = "blocking_enabled"
     const val BLOCKING_DISABLED = "blocking_disabled"
 
-    // Onboarding
-    const val ONBOARDING_STARTED = "onboarding_started"
-    const val ONBOARDING_COMPLETED = "onboarding_completed"
-
     // Privacy Consent
     const val PRIVACY_CONSENT_ACCEPTED = "privacy_consent_accepted"
 

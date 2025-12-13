@@ -14,12 +14,9 @@ object AppConstants {
     // SharedPreferences
     const val PREF_NAME = "app_prefs"
 
-    // Onboarding
-    const val PREF_ONBOARDING_COMPLETED = "onboarding_completed"
-
     // In-App Review
-    const val PREF_ONBOARDING_COMPLETED_AT = "onboarding_completed_at"
     const val PREF_REVIEW_PROMPTED = "review_prompted"
+    const val PREF_APP_INSTALLED_AT = "app_installed_at"
 
     // Blocking
     const val PREF_BLOCKING_ENABLED = "blocking_enabled"

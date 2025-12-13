@@ -32,7 +32,6 @@ import com.muuu.unshort.ad.AdManager
 import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.premium.PremiumManager
 import com.muuu.unshort.service.blocking.AppBlockingRegistry
-import com.muuu.unshort.ui.activity.OnboardingActivity
 import com.muuu.unshort.ui.activity.ReportActivity
 import com.muuu.unshort.util.NotificationPermissionHelper
 import com.muuu.unshort.util.ThreeStepProtectionHelper
@@ -131,13 +130,9 @@ class MainActivity : BaseActivity() {
         // Initialize in-app review helper
         inAppReviewHelper = InAppReviewHelper(this)
 
-        // 온보딩 체크
-        if (!prefsManager.isOnboardingCompleted) {
-            // 온보딩 화면으로 이동
-            val intent = Intent(this, OnboardingActivity::class.java)
-            startActivity(intent)
-            finish()
-            return
+        // Record app installed time (first launch only)
+        if (prefsManager.appInstalledAt == 0L) {
+            prefsManager.appInstalledAt = System.currentTimeMillis()
         }
 
         setContentView(R.layout.activity_main)

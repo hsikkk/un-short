@@ -121,16 +121,6 @@
     <!-- Ads -->
     <string name="ad">REKLAM</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_page1_title">Kısa içerik\nbağımlılığından kurtulun</string>
-    <string name="onboarding_page1_subtitle">Bilinçli tüketim için küçük alışkanlıklar</string>
-    <string name="onboarding_page2_title">Shorts izlemek istiyorsanız,\nbir an için düşünün</string>
-    <string name="onboarding_page3_title">Hâlâ izlemek istiyorsanız,\nkısa bir mola verin</string>
-    <string name="onboarding_page4_title">Son olarak,\nbir kez daha düşünün</string>
-    <string name="onboarding_page5_title">Başlamaya hazır mısınız?</string>
-    <string name="onboarding_page5_subtitle">un:short ile bilinçli medya tüketimine\ndoğru yolculuğunuza başlayın</string>
-    <string name="onboarding_start_button">Başla</string>
-    <string name="onboarding_skip">Atla</string>
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">Gecikme süresi</string>

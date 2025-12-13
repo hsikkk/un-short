@@ -121,16 +121,6 @@
     <!-- Ads -->
     <string name="ad">WERBUNG</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_page1_title">Befreien Sie sich von\nKurzformat-Sucht</string>
-    <string name="onboarding_page1_subtitle">Kleine Gewohnheiten für bewussten Konsum</string>
-    <string name="onboarding_page2_title">Wenn Sie Shorts ansehen möchten,\nnehmen Sie sich einen Moment zum Nachdenken</string>
-    <string name="onboarding_page3_title">Wenn Sie immer noch ansehen möchten,\nmachen Sie eine kurze Pause</string>
-    <string name="onboarding_page4_title">Abschließend,\ndenken Sie noch einmal nach</string>
-    <string name="onboarding_page5_title">Bereit anzufangen?</string>
-    <string name="onboarding_page5_subtitle">Beginnen Sie Ihre Reise zu\nbewusstem Medienkonsum mit un:short</string>
-    <string name="onboarding_start_button">Loslegen</string>
-    <string name="onboarding_skip">Überspringen</string>
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">Wartezeit</string>

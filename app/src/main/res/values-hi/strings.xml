@@ -121,16 +121,6 @@
     <!-- Ads -->
     <string name="ad">विज्ञापन</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_page1_title">छोटे कंटेंट की लत से\nमुक्त हो जाएं</string>
-    <string name="onboarding_page1_subtitle">सोच-समझकर उपभोग के लिए छोटी आदतें</string>
-    <string name="onboarding_page2_title">यदि आप Shorts देखना चाहते हैं,\nतो एक पल सोचें</string>
-    <string name="onboarding_page3_title">यदि आप फिर भी देखना चाहते हैं,\nतो एक संक्षिप्त विराम लें</string>
-    <string name="onboarding_page4_title">अंत में,\nएक बार फिर सोचें</string>
-    <string name="onboarding_page5_title">शुरू करने के लिए तैयार हैं?</string>
-    <string name="onboarding_page5_subtitle">un:short के साथ सोच-समझकर\nमीडिया उपभोग की दिशा में अपनी यात्रा शुरू करें</string>
-    <string name="onboarding_start_button">शुरू करें</string>
-    <string name="onboarding_skip">छोड़ें</string>
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">विलंब समय</string>

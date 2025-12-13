@@ -123,16 +123,6 @@ apakah Anda benar-benar perlu shorts?</string>
     <!-- Ads -->
     <string name="ad">IKLAN</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_page1_title">Lepaskan dari\nkecanduan bentuk pendek</string>
-    <string name="onboarding_page1_subtitle">Kebiasaan kecil untuk konsumsi yang disengaja</string>
-    <string name="onboarding_page2_title">Jika Anda ingin menonton shorts,\nluangkan waktu untuk berpikir</string>
-    <string name="onboarding_page3_title">Jika Anda masih ingin menonton,\nberhenti sejenak</string>
-    <string name="onboarding_page4_title">Akhirnya,\npikirkan sekali lagi</string>
-    <string name="onboarding_page5_title">Siap Untuk Memulai?</string>
-    <string name="onboarding_page5_subtitle">Mulai perjalanan Anda menuju\nkonsumsi media yang sadar dengan un:short</string>
-    <string name="onboarding_start_button">Mulai</string>
-    <string name="onboarding_skip">Lewati</string>
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">Waktu Tunda</string>

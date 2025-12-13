@@ -121,16 +121,6 @@
     <!-- Ads -->
     <string name="ad">РЕКЛАМА</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_page1_title">Избавьтесь от\nзависимости от короткого контента</string>
-    <string name="onboarding_page1_subtitle">Маленькие привычки для осознанного потребления</string>
-    <string name="onboarding_page2_title">Если хотите смотреть shorts,\nостановитесь, чтобы подумать</string>
-    <string name="onboarding_page3_title">Если всё ещё хотите смотреть,\nсделайте короткую паузу</string>
-    <string name="onboarding_page4_title">Наконец,\nподумайте ещё раз</string>
-    <string name="onboarding_page5_title">Готовы начать?</string>
-    <string name="onboarding_page5_subtitle">Начните своё путешествие к\nосознанному потреблению медиа с un:short</string>
-    <string name="onboarding_start_button">Начать</string>
-    <string name="onboarding_skip">Пропустить</string>
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">Время задержки</string>

@@ -121,17 +121,6 @@
     <!-- Ads -->
     <string name="ad">AD</string>
 
-    <!-- Onboarding -->
-    <string name="onboarding_page1_title">Break free from\nshort-form addiction</string>
-    <string name="onboarding_page1_subtitle">Small habits for intentional consumption</string>
-    <string name="onboarding_page2_title">If you want to watch shorts,\ntake a moment to think</string>
-    <string name="onboarding_page3_title">If you still want to watch,\ntake a brief pause</string>
-    <string name="onboarding_page4_title">Finally,\nthink once more</string>
-    <string name="onboarding_page5_title">Ready to Get Started?</string>
-    <string name="onboarding_page5_subtitle">Begin your journey towards\nmindful media consumption with un:short</string>
-    <string name="onboarding_start_button">Get Started</string>
-    <string name="onboarding_skip">Skip</string>
-
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">Delay Time</string>
     <string name="delay_time_desc">Set wait time before accessing shorts</string>
