@@ -159,6 +159,10 @@ class MainActivity : BaseActivity() {
         // 백버튼 처리 - 종료 확인 다이얼로그
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                // 로딩 중에는 뒤로가기 무시
+                if (loadingOverlay.visibility == View.VISIBLE) {
+                    return
+                }
                 showExitConfirmDialog()
             }
         })
