@@ -73,6 +73,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     private var isTimerActivityLaunched: Boolean = false
     private var skipButtonCountdown: Int = 2
     private val handler = Handler(Looper.getMainLooper())
+    private var activityCreatedTime: Long = 0
 
     // Activity Result API for timer completion
     private val timerLauncher = registerForActivityResult(
@@ -111,6 +112,9 @@ class ShortsBlockOverlayActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Record activity creation time
+        activityCreatedTime = System.currentTimeMillis()
 
         // Get extras from intent
         currentSessionId = intent.getStringExtra(EXTRA_SESSION_ID) ?: ""
@@ -169,9 +173,6 @@ class ShortsBlockOverlayActivity : BaseActivity() {
                 AnalyticsEvent.OVERLAY_SHOWN_BEFORE_TIMER
             }
         )
-
-        // Start skip button countdown
-        startSkipButtonCountdown()
     }
 
     private fun setupScreenKeepOn() {
@@ -335,6 +336,16 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     }
 
     private fun handleStartTimer() {
+        // Ignore button clicks within 1 second of activity creation
+        val timeSinceCreation = System.currentTimeMillis() - activityCreatedTime
+        if (timeSinceCreation < 1000) {
+            Log.d(TAG, "Timer button clicked too early (${timeSinceCreation}ms) - ignoring")
+            return
+        }
+
+        // Cancel any pending handler callbacks (e.g., skip button countdown)
+        handler.removeCallbacksAndMessages(null)
+
         // Timer Activity 시작 (result 기대)
         val intent = Intent(this, com.muuu.unshort.timer.ShortsBlockTimerActivity::class.java).apply {
             putExtra("session_id", currentSessionId)
@@ -428,6 +439,11 @@ class ShortsBlockOverlayActivity : BaseActivity() {
                 finishAndRemoveTask()
                 return
             }
+        }
+
+        // Resume skip button countdown if in INITIAL state (e.g., returning from timer)
+        if (overlayType == OverlayType.INITIAL && skipButtonCountdown != 0) {
+            startSkipButtonCountdown()
         }
     }
 
