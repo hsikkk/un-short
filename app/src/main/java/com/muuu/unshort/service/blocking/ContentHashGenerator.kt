@@ -11,6 +11,7 @@ import android.view.accessibility.AccessibilityNodeInfo
 class ContentHashGenerator {
 
     private val TAG = "ContentHashGenerator"
+    private val stableExtractor = StableContentExtractor()  // 안정적인 콘텐츠 추출기
 
     /**
      * 주어진 노드에서 콘텐츠 해시 생성
@@ -19,7 +20,18 @@ class ContentHashGenerator {
         rootNode: AccessibilityNodeInfo,
         config: HashConfig
     ): Int {
-        // 컨테이너 노드 찾기
+        // YouTube의 경우 안정적인 콘텐츠 추출 사용
+        if (config.useStableExtractor && config.containerViewId?.contains("youtube") == true) {
+            val stableContent = stableExtractor.extractYouTubeContent(rootNode)
+            val hash = stableContent.hashCode()
+
+            Log.d(TAG, "Using stable extractor - hash: $hash (content length: ${stableContent.length})")
+            Log.d(TAG, "Stable content: $stableContent")
+
+            return hash
+        }
+
+        // 기존 방식 (다른 앱들을 위해 유지)
         val targetNode = if (config.containerViewId != null) {
             rootNode.findAccessibilityNodeInfosByViewId(config.containerViewId)?.firstOrNull() ?: rootNode
         } else {

@@ -34,7 +34,8 @@ data class HashConfig(
     val maxDepth: Int = 8,
     val textValidator: (String) -> Boolean,  // 앱별 텍스트 검증 함수
     val excludeBoundsRight: Int? = null,  // 우측 x 좌표 이상인 노드 제외 (null이면 제한 없음)
-    val includeContentDescription: Boolean = true  // contentDescription 포함 여부 (기본값 true)
+    val includeContentDescription: Boolean = true,  // contentDescription 포함 여부 (기본값 true)
+    val useStableExtractor: Boolean = false  // 안정적인 콘텐츠 추출 사용 여부 (YouTube만 true)
 )
 
 /**
@@ -126,7 +127,8 @@ object AppBlockingRegistry {
                 text.length > 2 && !text.all { it.isDigit() || it == ':' || it == '/' }
             },
             excludeBoundsRight = 1200,  // 우측 사이드바 제외 (좋아요/댓글/공유 버튼)
-            includeContentDescription = false  // YouTube만 제외 (UI 버튼 변화로 인한 오감지 방지)
+            includeContentDescription = false,  // YouTube만 제외 (UI 버튼 변화로 인한 오감지 방지)
+            useStableExtractor = true  // 안정적인 콘텐츠 추출 활성화 (UI 변경 오감지 방지)
         ),
         controlsMedia = true  // YouTube만 미디어 제어 활성화
     )
