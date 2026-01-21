@@ -1,3 +1,8 @@
+---
+name: release
+description: Android 앱의 버전 관리 및 프로덕션 배포를 위한 완전한 릴리스 워크플로우
+---
+
 # Release Skill
 
 프로덕션 배포를 위한 완전한 릴리스 워크플로우를 실행합니다.
