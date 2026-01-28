@@ -99,7 +99,7 @@ dependencies {
     implementation("com.amplitude:analytics-android:1.22.4")
 
     // Muuu Ad SDK
-    implementation("com.muuu:ad:0.1.0")
+    implementation("com.muuu:ad:v0.1.1")
 
     // Google Play Billing Library
     implementation("com.android.billingclient:billing-ktx:7.1.1")
