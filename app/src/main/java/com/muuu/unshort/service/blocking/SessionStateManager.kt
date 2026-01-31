@@ -55,6 +55,12 @@ class SessionStateManager(
 
         // ContentHashChanged는 특수 처리 (상태 전이 없음, 스크롤 감지만)
         if (event is SessionEvent.ContentHashChanged) {
+            // Activity 실행 중(백그라운드)이면 ContentHashChanged 무시
+            // 백그라운드에서 돌아올 때 UI 재로드로 인한 오감지 방지
+            if (current.activityState != ActivityState.NONE) {
+                Log.d(TAG, "[$packageName] Activity running (${current.activityState}) - ignoring ContentHashChanged")
+                return
+            }
             handleContentHashChanged(event.hash, event.fingerprint, packageName)
             return
         }
@@ -143,7 +149,10 @@ class SessionStateManager(
             }
 
             is SessionEvent.ActivityDestroyed -> {
-                // Activity 종료
+                // Activity 종료 (백그라운드에서 복귀)
+                // 백그라운드 복귀 시 UI 재로드를 위해 scrollData 리셋
+                scrollDataByPackage[packageName] = ScrollData()
+                Log.d(TAG, "[$packageName] Activity destroyed - reset scrollData for UI reload")
                 current.copy(activityState = ActivityState.NONE)
             }
 
