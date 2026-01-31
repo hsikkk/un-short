@@ -14,6 +14,16 @@ class ContentHashGenerator {
     private val stableExtractor = StableContentExtractor()  // 안정적인 콘텐츠 추출기
 
     /**
+     * YouTube Shorts의 콘텐츠 핑거프린트 생성 (유사도 비교용)
+     *
+     * @param rootNode 루트 노드
+     * @return 제목/채널/설명을 개별 해시로 가진 핑거프린트
+     */
+    fun generateContentFingerprint(rootNode: AccessibilityNodeInfo): ContentFingerprint {
+        return stableExtractor.extractYouTubeFingerprint(rootNode)
+    }
+
+    /**
      * 주어진 노드에서 콘텐츠 해시 생성
      */
     fun generateContentHash(

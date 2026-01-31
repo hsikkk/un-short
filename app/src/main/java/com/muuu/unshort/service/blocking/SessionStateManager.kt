@@ -44,6 +44,9 @@ class SessionStateManager(
     private val scrollDataByPackage = mutableMapOf<String, ScrollData>()
     private val STABLE_THRESHOLD = 2
 
+    // 앱별 콘텐츠 핑거프린트 (유사도 비교용)
+    private val fingerprintByPackage = mutableMapOf<String, ContentFingerprint>()
+
     /**
      * 이벤트 처리 (단일 전이 함수)
      */
@@ -52,7 +55,7 @@ class SessionStateManager(
 
         // ContentHashChanged는 특수 처리 (상태 전이 없음, 스크롤 감지만)
         if (event is SessionEvent.ContentHashChanged) {
-            handleContentHashChanged(event.hash, packageName)
+            handleContentHashChanged(event.hash, event.fingerprint, packageName)
             return
         }
 
@@ -122,6 +125,7 @@ class SessionStateManager(
             is SessionEvent.ExitShorts -> {
                 // 쇼츠 화면 이탈
                 scrollDataByPackage[packageName] = ScrollData()
+                fingerprintByPackage.remove(packageName)
                 current.copy(
                     blockingStage = BlockingStage.NONE,
                     shortsLocation = ShortsLocation.OUTSIDE,
@@ -167,6 +171,7 @@ class SessionStateManager(
             is SessionEvent.SkipConfirmed -> {
                 // "안볼래요" 클릭
                 scrollDataByPackage[packageName] = ScrollData()
+                fingerprintByPackage.remove(packageName)
                 current.copy(
                     blockingStage = BlockingStage.NONE,
                     shortsLocation = ShortsLocation.OUTSIDE,
@@ -178,6 +183,7 @@ class SessionStateManager(
             is SessionEvent.Reset -> {
                 // 앱 이탈 또는 서비스 재시작
                 scrollDataByPackage[packageName] = ScrollData()
+                fingerprintByPackage.remove(packageName)
                 SessionState.IDLE
             }
 
@@ -306,7 +312,7 @@ class SessionStateManager(
     /**
      * 콘텐츠 해시 변경 처리 (스크롤 감지)
      */
-    private fun handleContentHashChanged(newHash: Int, packageName: String) {
+    private fun handleContentHashChanged(newHash: Int, newFingerprint: ContentFingerprint?, packageName: String) {
         val scrollData = scrollDataByPackage.getOrPut(packageName) { ScrollData() }
         val current = stateByPackage[packageName] ?: SessionState.IDLE
 
@@ -316,6 +322,37 @@ class SessionStateManager(
             scrollData.stableCount++
             Log.d(TAG, "[$packageName] Same hash, stableCount=${scrollData.stableCount}")
             return
+        }
+
+        // 핑거프린트 유사도 비교 (YouTube의 경우)
+        if (newFingerprint != null) {
+            val oldFingerprint = fingerprintByPackage[packageName]
+
+            // 새 핑거프린트가 유효하지 않은 경우 (재생 완료/일시정지로 UI 사라짐)
+            if (!newFingerprint.isValid()) {
+                Log.d(TAG, "[$packageName] New fingerprint is invalid (title=${newFingerprint.titleHash}, channel=${newFingerprint.channelHash}, desc=${newFingerprint.descriptionHash}) - skipping fingerprint check, using hash-based detection")
+                // 핑거프린트 비교 스킵, 해시 기반 스크롤 감지로 진행
+            } else if (oldFingerprint != null && oldFingerprint.isValid()) {
+                // 둘 다 유효한 경우에만 유사도 비교
+                val similarity = newFingerprint.similarityWith(oldFingerprint)
+                Log.d(TAG, "[$packageName] Fingerprint similarity: $similarity (title=${newFingerprint.titleHash == oldFingerprint.titleHash}, channel=${newFingerprint.channelHash == oldFingerprint.channelHash}, desc=${newFingerprint.descriptionHash == oldFingerprint.descriptionHash})")
+
+                if (newFingerprint.isSimilarTo(oldFingerprint)) {
+                    Log.d(TAG, "[$packageName] Content is similar (${similarity * 100}%) - UI change detected, ignoring scroll")
+                    // 동일 콘텐츠로 판단 - 해시만 업데이트하고 스크롤 처리 안 함
+                    scrollData.hash = newHash
+                    scrollData.stableCount = 0
+                    fingerprintByPackage[packageName] = newFingerprint
+                    return
+                }
+
+                Log.d(TAG, "[$packageName] Content is different (similarity: ${similarity * 100}%) - new shorts detected")
+                fingerprintByPackage[packageName] = newFingerprint
+            } else {
+                // 이전 핑거프린트가 없거나 무효 - 새 유효한 핑거프린트 저장
+                Log.d(TAG, "[$packageName] Saving new valid fingerprint (old was ${if (oldFingerprint == null) "null" else "invalid"})")
+                fingerprintByPackage[packageName] = newFingerprint
+            }
         }
 
         val scrollDetected = scrollData.stableCount >= STABLE_THRESHOLD

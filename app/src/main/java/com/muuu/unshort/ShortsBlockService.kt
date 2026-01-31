@@ -233,8 +233,15 @@ class ShortsBlockService : AccessibilityService() {
                         Log.d(TAG, "Generated hash: $hash")
 
                         if (hash != 0) {
-                            Log.d(TAG, "Sending ContentHashChanged event")
-                            sessionState.handleEvent(SessionEvent.ContentHashChanged(hash), packageName)
+                            // YouTube의 경우 핑거프린트도 함께 생성 (유사도 비교용)
+                            val fingerprint = if (packageName == "com.google.android.youtube") {
+                                hashGenerator.generateContentFingerprint(rootNode)
+                            } else {
+                                null
+                            }
+
+                            Log.d(TAG, "Sending ContentHashChanged event with fingerprint: $fingerprint")
+                            sessionState.handleEvent(SessionEvent.ContentHashChanged(hash, fingerprint), packageName)
 
                             // 상태가 변경되었으면 스크롤 발생
                             val newState = sessionState.getCurrentState(packageName)

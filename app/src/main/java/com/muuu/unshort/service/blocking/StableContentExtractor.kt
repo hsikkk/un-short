@@ -4,6 +4,51 @@ import android.util.Log
 import android.view.accessibility.AccessibilityNodeInfo
 
 /**
+ * 콘텐츠 핑거프린트 (제목/채널/설명을 개별 해시로 분리)
+ *
+ * UI 변경에도 동일 콘텐츠를 인식하기 위한 구조
+ */
+data class ContentFingerprint(
+    val titleHash: Int,
+    val channelHash: Int,
+    val descriptionHash: Int
+) {
+    /**
+     * 핑거프린트가 유효한지 확인
+     *
+     * 재생 완료/일시정지 시 UI 요소가 사라져 빈 문자열(해시=0)이 추출되는 경우를 방지
+     * 최소 2개 이상의 필드가 유효해야 함 (제목+채널 또는 제목+설명)
+     */
+    fun isValid(): Boolean {
+        var validCount = 0
+        if (titleHash != 0) validCount++
+        if (channelHash != 0) validCount++
+        if (descriptionHash != 0) validCount++
+        return validCount >= 2
+    }
+
+    /**
+     * 다른 핑거프린트와의 유사도 계산
+     *
+     * @return 0.0 ~ 1.0 (0: 완전히 다름, 1.0: 완전히 같음)
+     */
+    fun similarityWith(other: ContentFingerprint): Float {
+        var matches = 0
+        if (titleHash == other.titleHash) matches++
+        if (channelHash == other.channelHash) matches++
+        if (descriptionHash == other.descriptionHash) matches++
+        return matches / 3f
+    }
+
+    /**
+     * 2/3 이상 일치하는지 확인 (동일 콘텐츠 판별 기준)
+     */
+    fun isSimilarTo(other: ContentFingerprint): Boolean {
+        return similarityWith(other) >= 0.67f  // 2/3 이상
+    }
+}
+
+/**
  * 안정적인 콘텐츠 추출기 (YouTube Shorts 전용)
  *
  * UI 요소를 완전히 배제하고, 제목/채널명/설명 등 핵심 콘텐츠만 추출
@@ -11,6 +56,62 @@ import android.view.accessibility.AccessibilityNodeInfo
 class StableContentExtractor {
 
     private val TAG = "StableContentExtractor"
+
+    /**
+     * YouTube Shorts의 콘텐츠 핑거프린트 추출 (유사도 비교용)
+     *
+     * @param rootNode 루트 노드
+     * @return 제목/채널/설명을 개별 해시로 가진 핑거프린트
+     */
+    fun extractYouTubeFingerprint(rootNode: AccessibilityNodeInfo): ContentFingerprint {
+        // 1. 컨테이너 찾기
+        val container = rootNode.findAccessibilityNodeInfosByViewId(
+            "com.google.android.youtube:id/reel_player_page_container"
+        )?.firstOrNull() ?: rootNode
+
+        // 2. 개별 필드 추출
+        val title = extractFromViewIds(container, listOf(
+            "com.google.android.youtube:id/reel_player_title",
+            "com.google.android.youtube:id/video_title"
+        ))
+
+        val channel = extractFromViewIds(container, listOf(
+            "com.google.android.youtube:id/reel_player_channel_name",
+            "com.google.android.youtube:id/channel_name"
+        ))
+
+        val description = extractFromViewIds(container, listOf(
+            "com.google.android.youtube:id/reel_player_description"
+        ))
+
+        // 3. 각 필드의 해시 생성
+        val titleHash = title.trim().hashCode()
+        val channelHash = channel.trim().hashCode()
+        val descriptionHash = description.trim().hashCode()
+
+        Log.d(TAG, "Fingerprint extracted - title: '$title' (hash: $titleHash)")
+        Log.d(TAG, "Fingerprint extracted - channel: '$channel' (hash: $channelHash)")
+        Log.d(TAG, "Fingerprint extracted - desc: '$description' (hash: $descriptionHash)")
+
+        return ContentFingerprint(titleHash, channelHash, descriptionHash)
+    }
+
+    /**
+     * 여러 View ID에서 텍스트 추출 (첫 번째로 찾은 것 반환)
+     */
+    private fun extractFromViewIds(container: AccessibilityNodeInfo, viewIds: List<String>): String {
+        for (viewId in viewIds) {
+            val nodes = container.findAccessibilityNodeInfosByViewId(viewId)
+            nodes?.forEach { node ->
+                val text = node.text?.toString() ?: ""
+                node.recycle()
+                if (text.isNotEmpty() && text.length > 2) {
+                    return text
+                }
+            }
+        }
+        return ""
+    }
 
     /**
      * YouTube Shorts의 안정적인 콘텐츠 추출

@@ -76,8 +76,14 @@ sealed interface SessionEvent {
 
     /**
      * 콘텐츠 해시 변경 (스크롤 감지용)
+     *
+     * @param hash 콘텐츠 전체 해시
+     * @param fingerprint 콘텐츠 핑거프린트 (유사도 비교용, 옵셔널)
      */
-    data class ContentHashChanged(val hash: Int) : SessionEvent
+    data class ContentHashChanged(
+        val hash: Int,
+        val fingerprint: ContentFingerprint? = null
+    ) : SessionEvent
 
     /**
      * 세션 리셋 (앱 종료, 서비스 재시작 등)
