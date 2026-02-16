@@ -484,4 +484,17 @@ class StatisticsRepository(context: Context) {
             set(java.util.Calendar.MILLISECOND, 0)
         }.timeInMillis
     }
+
+    /**
+     * 특정 앱의 최근 N분 이내 차단 시도 개수
+     *
+     * @param packageName 앱 패키지명
+     * @param minutes 확인할 시간 범위 (분)
+     * @return 차단 시도 개수
+     */
+    suspend fun getRecentSessionCountByApp(packageName: String, minutes: Int): Int {
+        val now = System.currentTimeMillis()
+        val startTime = now - (minutes * 60 * 1000L)
+        return dao.getSessionCountByPackageBetween(packageName, startTime, now)
+    }
 }

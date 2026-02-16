@@ -43,6 +43,13 @@
     <string name="app_blocking_settings_notice">* Seules les applications installées sont affichées</string>
     <string name="app_blocking_settings_close">Fermer</string>
     <string name="app_blocking_settings_no_apps">Aucune application installée</string>
+
+    <!-- App Blocking Disable Warning -->
+    <string name="app_disable_warning_title">Accès récent aux shorts détecté</string>
+    <string name="app_disable_warning_message">Vous avez tenté d\'accéder à %1$s dans les 10 dernières minutes. Pour désactiver le blocage, vous devez terminer un minuteur de 60 secondes.</string>
+    <string name="app_disable_confirm">Démarrer le minuteur</string>
+    <string name="app_disable_cancel">Maintenir le blocage</string>
+
     <string name="stats_watch_time">Temps de visionnage</string>
     <string name="stats_entry_count">Entrées</string>
     <string name="stats_consumption_count">Regardés</string>

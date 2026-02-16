@@ -221,4 +221,25 @@ interface ShortsSessionDao {
         val watchedCount: Int,
         val totalWatchTimeMs: Long
     )
+
+    /**
+     * 특정 앱의 특정 기간 내 세션 개수 조회
+     *
+     * @param packageName 앱 패키지명
+     * @param startTime 시작 시각 (밀리초)
+     * @param endTime 종료 시각 (밀리초)
+     * @return 세션 개수
+     */
+    @Query("""
+        SELECT COUNT(*)
+        FROM shorts_sessions
+        WHERE packageName = :packageName
+          AND timestamp >= :startTime
+          AND timestamp < :endTime
+    """)
+    suspend fun getSessionCountByPackageBetween(
+        packageName: String,
+        startTime: Long,
+        endTime: Long
+    ): Int
 }

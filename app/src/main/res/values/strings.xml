@@ -366,6 +366,12 @@
     <string name="app_blocking_settings_close">Close</string>
     <string name="app_blocking_settings_no_apps">No apps installed</string>
 
+    <!-- App Blocking Disable Warning -->
+    <string name="app_disable_warning_title">Recent shorts access detected</string>
+    <string name="app_disable_warning_message">You attempted to access %1$s within the last 10 minutes. To disable blocking, you must complete a 60-second timer.</string>
+    <string name="app_disable_confirm">Start timer</string>
+    <string name="app_disable_cancel">Keep blocking</string>
+
     <!-- TikTok -->
     <string name="tiktok_shorts">TikTok Shorts</string>
     <string name="tiktok_short_name">TikTok</string>

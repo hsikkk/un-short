@@ -43,6 +43,13 @@
     <string name="app_blocking_settings_notice">* Показаны только установленные приложения</string>
     <string name="app_blocking_settings_close">Закрыть</string>
     <string name="app_blocking_settings_no_apps">Нет установленных приложений</string>
+
+    <!-- App Blocking Disable Warning -->
+    <string name="app_disable_warning_title">Обнаружен недавний доступ к shorts</string>
+    <string name="app_disable_warning_message">Вы пытались получить доступ к %1$s в течение последних 10 минут. Чтобы отключить блокировку, необходимо завершить 60-секундный таймер.</string>
+    <string name="app_disable_confirm">Запустить таймер</string>
+    <string name="app_disable_cancel">Сохранить блокировку</string>
+
     <string name="stats_watch_time">Время просмотра</string>
     <string name="stats_entry_count">Входы</string>
     <string name="stats_consumption_count">Просмотрено</string>

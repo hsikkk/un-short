@@ -19,6 +19,7 @@ import com.muuu.unshort.R
  * @param context Context
  * @param titleResId 제목 문자열 리소스 ID
  * @param messageResId 메시지 문자열 리소스 ID
+ * @param messageArgs 메시지 포맷팅 인자 (String.format 사용)
  * @param positiveTextResId 확인 버튼 텍스트 리소스 ID
  * @param negativeTextResId 취소 버튼 텍스트 리소스 ID (null이면 버튼 숨김)
  * @param canceledOnTouchOutside 바깥 영역 터치 시 닫기 여부 (기본값: false)
@@ -29,6 +30,7 @@ class WarningDialog(
     context: Context,
     private val titleResId: Int,
     private val messageResId: Int,
+    private val messageArgs: Array<Any>? = null,
     private val positiveTextResId: Int,
     private val negativeTextResId: Int? = null,
     private val canceledOnTouchOutside: Boolean = false,
@@ -72,7 +74,14 @@ class WarningDialog(
 
         // Set texts
         dialogTitle.setText(titleResId)
-        dialogMessage.setText(messageResId)
+
+        // Set message with formatting if args provided
+        if (messageArgs != null) {
+            dialogMessage.text = context.getString(messageResId, *messageArgs)
+        } else {
+            dialogMessage.setText(messageResId)
+        }
+
         btnPositive.setText(positiveTextResId)
 
         // Negative button (optional)

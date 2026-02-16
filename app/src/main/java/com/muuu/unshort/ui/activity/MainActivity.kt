@@ -94,6 +94,11 @@ class MainActivity : BaseActivity() {
     private lateinit var protectionHelper: ThreeStepProtectionHelper
     private lateinit var disableConfirmTimerLauncher: ActivityResultLauncher<Intent>
 
+    // 앱별 차단 해제 타이머
+    private lateinit var appDisableTimerLauncher: ActivityResultLauncher<Intent>
+    private var pendingDisablePackageName: String? = null
+    private var appBlockingSettingsDialog: com.muuu.unshort.ui.dialog.AppBlockingSettingsDialog? = null
+
     // 노티피케이션 권한 Helper
     private lateinit var notificationPermissionHelper: NotificationPermissionHelper
 
@@ -133,6 +138,26 @@ class MainActivity : BaseActivity() {
         }
 
         protectionHelper.registerTimerLauncher(disableConfirmTimerLauncher)
+
+        // Register activity result launcher for app-specific disable timer
+        appDisableTimerLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                // 타이머 완료 - 앱별 차단 해제
+                pendingDisablePackageName?.let { packageName ->
+                    prefsManager.setAppBlockingEnabled(packageName, false)
+                    populateBlockedApps()
+                    // 다이얼로그가 떠있다면 스위치 갱신
+                    appBlockingSettingsDialog?.refreshSwitches()
+                    Log.d("MainActivity", "App blocking disabled for $packageName after timer")
+                }
+            } else {
+                // 타이머 취소 - 아무 작업 안함
+                Log.d("MainActivity", "App disable timer cancelled")
+            }
+            pendingDisablePackageName = null
+        }
 
         // Initialize notification permission helper
         notificationPermissionHelper = NotificationPermissionHelper(this, prefsManager)
@@ -803,13 +828,32 @@ class MainActivity : BaseActivity() {
      * 차단 앱 설정 다이얼로그 표시
      */
     private fun showAppBlockingSettingsDialog() {
-        com.muuu.unshort.ui.dialog.AppBlockingSettingsDialog(
-            context = this,
+        appBlockingSettingsDialog = com.muuu.unshort.ui.dialog.AppBlockingSettingsDialog(
+            activity = this,
             onSettingsChanged = {
                 // 설정 변경 시 아이콘 리스트 새로고침
                 populateBlockedApps()
+                appBlockingSettingsDialog = null
+            },
+            onRequestTimer = { packageName ->
+                // 타이머 시작 요청
+                startAppDisableTimer(packageName)
             }
-        ).show()
+        )
+        appBlockingSettingsDialog?.show()
+    }
+
+    /**
+     * 앱별 차단 해제 타이머 시작
+     *
+     * @param packageName 차단 해제할 앱의 패키지명
+     */
+    fun startAppDisableTimer(packageName: String) {
+        pendingDisablePackageName = packageName
+        // 설정 변경과 동일한 60초 타이머 사용
+        val intent = Intent(this, com.muuu.unshort.timer.DisableConfirmTimerActivity::class.java)
+        appDisableTimerLauncher.launch(intent)
+        Log.d("MainActivity", "Starting 60s app disable timer for $packageName")
     }
 
 }
