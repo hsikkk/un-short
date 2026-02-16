@@ -257,6 +257,12 @@
     <string name="premium_upgrade_button">อัปเกรดทันที</string>
     <string name="premium_upgrade_coming_soon">ระบบชำระเงินเร็วๆ นี้!</string>
 
+    <!-- Premium Upgrade Buttons -->
+    <string name="premium_button_with_trial">เริ่มทดลองใช้ฟรี %d วัน</string>
+    <string name="premium_button_without_trial">เริ่มต้นที่ %s/เดือน</string>
+    <string name="premium_button_loading">กำลังโหลดราคา…</string>
+    <string name="premium_button_fallback">เริ่มต้น Premium</string>
+
     <!-- Subscription Management -->
     <string name="subscription_management">จัดการการสมัครสมาชิก</string>
     <string name="subscription_management_desc">จัดการหรือยกเลิกการสมัครสมาชิก</string>

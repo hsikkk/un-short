@@ -255,6 +255,12 @@
     <string name="premium_upgrade_button">Şimdi yükselt</string>
     <string name="premium_upgrade_coming_soon">Ödeme sistemi yakında geliyor!</string>
 
+    <!-- Premium Upgrade Buttons -->
+    <string name="premium_button_with_trial">%d günlük ücretsiz denemeyi başlat</string>
+    <string name="premium_button_without_trial">%s/ay\'dan başlat</string>
+    <string name="premium_button_loading">Fiyat yükleniyor…</string>
+    <string name="premium_button_fallback">Premium\'ı başlat</string>
+
     <!-- Subscription Management -->
     <string name="subscription_management">Aboneliği yönet</string>
     <string name="subscription_management_desc">Aboneliğinizi yönetin veya iptal edin</string>

@@ -257,6 +257,12 @@
     <string name="premium_upgrade_button">Nâng cấp ngay</string>
     <string name="premium_upgrade_coming_soon">Hệ thống thanh toán sắp ra mắt!</string>
 
+    <!-- Premium Upgrade Buttons -->
+    <string name="premium_button_with_trial">Bắt đầu dùng thử miễn phí %d ngày</string>
+    <string name="premium_button_without_trial">Bắt đầu từ %s/tháng</string>
+    <string name="premium_button_loading">Đang tải giá…</string>
+    <string name="premium_button_fallback">Bắt đầu Premium</string>
+
     <!-- Subscription Management -->
     <string name="subscription_management">Quản lý đăng ký</string>
     <string name="subscription_management_desc">Quản lý hoặc hủy đăng ký của bạn</string>

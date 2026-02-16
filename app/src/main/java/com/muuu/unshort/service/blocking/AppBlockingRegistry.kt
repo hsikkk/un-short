@@ -24,6 +24,14 @@ enum class SearchType {
 }
 
 /**
+ * 차단 종료 시 수행할 액션
+ */
+enum class ExitAction {
+    BACK,  // 백버튼 (기본값, YouTube/Instagram 등)
+    HOME   // 홈버튼 (TikTok 등 백버튼이 작동하지 않는 앱)
+}
+
+/**
  * 콘텐츠 해시 생성을 위한 설정
  */
 data class HashConfig(
@@ -49,7 +57,8 @@ data class AppBlockingConfig(
     val viewIdDetectors: List<ViewIdDetector>,
     val textDetectors: List<TextDetector>,
     val hashConfig: HashConfig,
-    val controlsMedia: Boolean = false  // 미디어 일시정지/재생 제어 여부 (기본값: false)
+    val controlsMedia: Boolean = false,  // 미디어 일시정지/재생 제어 여부 (기본값: false)
+    val exitAction: ExitAction = ExitAction.BACK  // 차단 종료 시 수행할 액션 (기본값: BACK)
 )
 
 /**
@@ -307,8 +316,113 @@ object AppBlockingRegistry {
         )
     )
 
-    // TikTok은 추후 추가 예정
-    // val TIKTOK = AppBlockingConfig(...)
+    val TIKTOK = AppBlockingConfig(
+        packageName = "com.zhiliaoapp.musically",
+        displayName = "TikTok Shorts",
+        shortName = "TikTok",
+        iconResId = R.drawable.ic_tiktok,
+        viewIdDetectors = listOf(
+            ViewIdDetector("com.zhiliaoapp.musically:id/video_view_pager"),
+            ViewIdDetector("com.zhiliaoapp.musically:id/viewpager")
+        ),
+        textDetectors = listOf(
+            TextDetector(
+                text = "For You",
+                requiresSelection = true,
+                searchType = SearchType.TEXT
+            ),
+            TextDetector(
+                text = "Following",
+                requiresSelection = false,
+                searchType = SearchType.TEXT
+            )
+        ),
+        hashConfig = HashConfig(
+            containerViewId = "com.zhiliaoapp.musically:id/video_view_pager",
+            includedViewIdPatterns = listOf(
+                "username",
+                "title",
+                "caption",
+                "description",
+                "text_content",
+                "author"
+            ),
+            excludedViewIdPatterns = listOf(
+                "comment",
+                "like",
+                "share",
+                "button",
+                "progress",
+                "time",
+                "duration",
+                "player_control",
+                "action"
+            ),
+            excludedTextPatterns = listOf(
+                Regex("^\\d+[KMB]?$"),          // 1K, 10M, 100B
+                Regex("^\\d+\\.\\d+[KMB]?$")    // 1.2K, 3.5M
+            ),
+            maxDepth = 8,
+            textValidator = { text ->
+                text.length > 2 && !text.all { it.isDigit() || it == ',' || it == '.' }
+            }
+        ),
+        exitAction = ExitAction.HOME  // TikTok은 백버튼으로 나가지지 않으므로 홈버튼 사용
+    )
+
+    val TIKTOK_TRILL = AppBlockingConfig(
+        packageName = "com.ss.android.ugc.trill",
+        displayName = "TikTok Shorts",
+        shortName = "TikTok",
+        iconResId = R.drawable.ic_tiktok,
+        viewIdDetectors = listOf(
+            ViewIdDetector("com.ss.android.ugc.trill:id/video_view_pager"),
+            ViewIdDetector("com.ss.android.ugc.trill:id/viewpager")
+        ),
+        textDetectors = listOf(
+            TextDetector(
+                text = "For You",
+                requiresSelection = true,
+                searchType = SearchType.TEXT
+            ),
+            TextDetector(
+                text = "Following",
+                requiresSelection = false,
+                searchType = SearchType.TEXT
+            )
+        ),
+        hashConfig = HashConfig(
+            containerViewId = "com.ss.android.ugc.trill:id/video_view_pager",
+            includedViewIdPatterns = listOf(
+                "username",
+                "title",
+                "caption",
+                "description",
+                "text_content",
+                "author"
+            ),
+            excludedViewIdPatterns = listOf(
+                "comment",
+                "like",
+                "share",
+                "button",
+                "progress",
+                "time",
+                "duration",
+                "player_control",
+                "action"
+            ),
+            excludedTextPatterns = listOf(
+                Regex("^\\d+[KMB]?$"),          // 1K, 10M, 100B
+                Regex("^\\d+\\.\\d+[KMB]?$")    // 1.2K, 3.5M
+            ),
+            maxDepth = 8,
+            textValidator = { text ->
+                text.length > 2 && !text.all { it.isDigit() || it == ',' || it == '.' }
+            }
+        ),
+        exitAction = ExitAction.HOME  // TikTok은 백버튼으로 나가지지 않으므로 홈버튼 사용
+    )
 
     /**
      * 모든 앱 설정 리스트
@@ -317,7 +431,9 @@ object AppBlockingRegistry {
         YOUTUBE,
         INSTAGRAM,
         FACEBOOK,
-        NAVER
+        NAVER,
+        TIKTOK,
+        TIKTOK_TRILL
     )
 
     /**

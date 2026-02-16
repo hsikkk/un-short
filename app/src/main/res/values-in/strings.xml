@@ -257,6 +257,12 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="premium_upgrade_button">Tingkatkan Sekarang</string>
     <string name="premium_upgrade_coming_soon">Sistem pembayaran segera hadir!</string>
 
+    <!-- Premium Upgrade Buttons -->
+    <string name="premium_button_with_trial">Mulai uji coba gratis %d hari</string>
+    <string name="premium_button_without_trial">Mulai dari %s/bulan</string>
+    <string name="premium_button_loading">Memuat harga…</string>
+    <string name="premium_button_fallback">Mulai Premium</string>
+
     <!-- Subscription Management -->
     <string name="subscription_management">Kelola Langganan</string>
     <string name="subscription_management_desc">Kelola atau batalkan langganan Anda</string>

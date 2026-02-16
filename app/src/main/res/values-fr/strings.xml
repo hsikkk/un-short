@@ -257,6 +257,12 @@
     <string name="premium_upgrade_button">Mettre à niveau maintenant</string>
     <string name="premium_upgrade_coming_soon">Système de paiement bientôt disponible !</string>
 
+    <!-- Premium Upgrade Buttons -->
+    <string name="premium_button_with_trial">Commencer l\'essai gratuit de %d jours</string>
+    <string name="premium_button_without_trial">Commencer à %s/mois</string>
+    <string name="premium_button_loading">Chargement du prix…</string>
+    <string name="premium_button_fallback">Commencer Premium</string>
+
     <!-- Subscription Management -->
     <string name="subscription_management">Gérer l\'abonnement</string>
     <string name="subscription_management_desc">Gérer ou annuler votre abonnement</string>

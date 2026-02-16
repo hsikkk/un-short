@@ -485,6 +485,23 @@
                     android:layout_marginEnd="12dp"
                     android:textAllCaps="true" />
 
+                <!-- Settings Button -->
+                <TextView
+                    android:id="@+id/blockedAppsSettingsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_blocking_settings"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/spoqa_sans_neo_medium"
+                    android:textColor="#000000"
+                    android:alpha="0.4"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp"
+                    android:layout_marginEnd="12dp" />
+
                 <!-- 가로 스크롤 앱 리스트 컨테이너 -->
                 <HorizontalScrollView
                     android:layout_width="0dp"

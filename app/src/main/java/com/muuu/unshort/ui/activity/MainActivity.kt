@@ -87,6 +87,7 @@ class MainActivity : BaseActivity() {
     private var bannerAdView: MuuuBannerAdView? = null
     private lateinit var prefsManager: PreferencesManager
     private lateinit var blockedAppsContainer: LinearLayout
+    private lateinit var blockedAppsSettingsButton: TextView
     private lateinit var loadingOverlay: FrameLayout
 
     // 3단계 보호 플로우 헬퍼
@@ -210,6 +211,7 @@ class MainActivity : BaseActivity() {
         statisticsBadge = findViewById(R.id.statisticsBadge)
         premiumBadge = findViewById(R.id.premiumBadge)
         blockedAppsContainer = findViewById(R.id.blockedAppsContainer)
+        blockedAppsSettingsButton = findViewById(R.id.blockedAppsSettingsButton)
         loadingOverlay = findViewById(R.id.loadingOverlay)
 
         // 설치된 앱만 동적으로 생성하여 표시
@@ -225,6 +227,11 @@ class MainActivity : BaseActivity() {
         findViewById<ImageView>(R.id.statsButton).setOnClickListener {
             val intent = Intent(this, ReportActivity::class.java)
             startActivity(intent)
+        }
+
+        // 차단 앱 설정 버튼 클릭 리스너
+        blockedAppsSettingsButton.setOnClickListener {
+            showAppBlockingSettingsDialog()
         }
 
         // 설정 버튼 클릭 리스너
@@ -640,9 +647,10 @@ class MainActivity : BaseActivity() {
         // 컨테이너 초기화
         blockedAppsContainer.removeAllViews()
 
-        // 설치된 앱만 필터링
+        // 설치된 앱 중 활성화된 앱만 필터링
         val installedConfigs = AppBlockingRegistry.ALL_CONFIGS
             .filter { isAppInstalled(it.packageName) }
+            .filter { prefsManager.isAppBlockingEnabled(it.packageName) }
 
         // 각 앱에 대해 View 동적 생성
         installedConfigs.forEachIndexed { index, config ->
@@ -787,6 +795,19 @@ class MainActivity : BaseActivity() {
             },
             onCancel = {
                 // 아무것도 하지 않음 (다이얼로그 닫기)
+            }
+        ).show()
+    }
+
+    /**
+     * 차단 앱 설정 다이얼로그 표시
+     */
+    private fun showAppBlockingSettingsDialog() {
+        com.muuu.unshort.ui.dialog.AppBlockingSettingsDialog(
+            context = this,
+            onSettingsChanged = {
+                // 설정 변경 시 아이콘 리스트 새로고침
+                populateBlockedApps()
             }
         ).show()
     }

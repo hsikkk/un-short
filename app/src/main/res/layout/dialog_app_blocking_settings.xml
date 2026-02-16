@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Apps Container -->
+    <LinearLayout
+        android:id="@+id/appsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <!-- Notice Text -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/app_blocking_settings_notice"
+        android:textSize="12sp"
+        android:fontFamily="@font/spoqa_sans_neo_light"
+        android:textColor="#9E9E9E"
+        android:alpha="0.7" />
+
+</LinearLayout>

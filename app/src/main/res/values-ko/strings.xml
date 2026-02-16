@@ -251,6 +251,12 @@
     <string name="premium_upgrade_button">지금 업그레이드</string>
     <string name="premium_upgrade_coming_soon">결제 시스템 준비 중입니다. 곧 만나요!</string>
 
+    <!-- Premium Upgrade Buttons -->
+    <string name="premium_button_with_trial">%d일 무료체험 시작하기</string>
+    <string name="premium_button_without_trial">월 %s로 시작하기</string>
+    <string name="premium_button_loading">가격 확인 중…</string>
+    <string name="premium_button_fallback">프리미엄 시작하기</string>
+
     <!-- Subscription Management -->
     <string name="subscription_management">구독 관리</string>
 

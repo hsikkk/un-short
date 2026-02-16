@@ -223,4 +223,40 @@ class PreferencesManager(context: Context) {
             apply()
         }
     }
+
+    // ========== Per-App Blocking Settings ==========
+
+    /**
+     * 특정 앱의 차단 활성화 상태 가져오기
+     *
+     * @param packageName 앱 패키지명
+     * @return 차단 활성화 여부 (기본값: true)
+     */
+    fun isAppBlockingEnabled(packageName: String): Boolean {
+        val key = "blocking_enabled_$packageName"
+        return prefs.getBoolean(key, true)
+    }
+
+    /**
+     * 특정 앱의 차단 활성화 상태 설정
+     *
+     * @param packageName 앱 패키지명
+     * @param enabled 차단 활성화 여부
+     */
+    fun setAppBlockingEnabled(packageName: String, enabled: Boolean) {
+        val key = "blocking_enabled_$packageName"
+        prefs.edit().putBoolean(key, enabled).apply()
+    }
+
+    /**
+     * 차단이 활성화된 앱 패키지 목록 가져오기
+     *
+     * @return 활성화된 앱 패키지명 Set
+     */
+    fun getEnabledAppPackages(): Set<String> {
+        return com.muuu.unshort.service.blocking.AppBlockingRegistry.ALL_CONFIGS
+            .filter { isAppBlockingEnabled(it.packageName) }
+            .map { it.packageName }
+            .toSet()
+    }
 }

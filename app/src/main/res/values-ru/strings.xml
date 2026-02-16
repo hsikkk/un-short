@@ -257,6 +257,12 @@
     <string name="premium_upgrade_button">Обновить сейчас</string>
     <string name="premium_upgrade_coming_soon">Платёжная система скоро!</string>
 
+    <!-- Premium Upgrade Buttons -->
+    <string name="premium_button_with_trial">Начать %d-дневную бесплатную пробную версию</string>
+    <string name="premium_button_without_trial">Начать с %s/месяц</string>
+    <string name="premium_button_loading">Загрузка цены…</string>
+    <string name="premium_button_fallback">Начать Premium</string>
+
     <!-- Subscription Management -->
     <string name="subscription_management">Управление подпиской</string>
     <string name="subscription_management_desc">Управлять или отменить вашу подписку</string>

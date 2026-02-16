@@ -257,6 +257,12 @@
     <string name="premium_upgrade_button">立即升级</string>
     <string name="premium_upgrade_coming_soon">支付系统即将推出!</string>
 
+    <!-- Premium Upgrade Buttons -->
+    <string name="premium_button_with_trial">开始%d天免费试用</string>
+    <string name="premium_button_without_trial">每月%s起</string>
+    <string name="premium_button_loading">加载价格中…</string>
+    <string name="premium_button_fallback">开始使用高级版</string>
+
     <!-- Subscription Management -->
     <string name="subscription_management">管理订阅</string>
     <string name="subscription_management_desc">管理或取消订阅</string>

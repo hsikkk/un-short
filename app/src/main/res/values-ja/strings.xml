@@ -257,6 +257,12 @@
     <string name="premium_upgrade_button">今すぐアップグレード</string>
     <string name="premium_upgrade_coming_soon">決済システムは近日公開!</string>
 
+    <!-- Premium Upgrade Buttons -->
+    <string name="premium_button_with_trial">%d日間無料トライアル開始</string>
+    <string name="premium_button_without_trial">月%sで開始</string>
+    <string name="premium_button_loading">価格確認中…</string>
+    <string name="premium_button_fallback">プレミアム開始</string>
+
     <!-- Subscription Management -->
     <string name="subscription_management">サブスクリプション管理</string>
     <string name="subscription_management_desc">サブスクリプションを管理またはキャンセル</string>

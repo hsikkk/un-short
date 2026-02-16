@@ -157,8 +157,23 @@ class ShortsBlockService : AccessibilityService() {
         Log.d(TAG, "=== Event: ${event.eventType}, Package: $packageName ===")
         Log.d(TAG, "Current state: ${sessionState.getCurrentState(packageName)}")
 
+        // TikTok 디버깅: trill 또는 tiktok 포함된 패키지는 모두 로깅
+        if (packageName.contains("trill", ignoreCase = true) ||
+            packageName.contains("tiktok", ignoreCase = true) ||
+            packageName.contains("aweme", ignoreCase = true)) {
+            Log.e(TAG, "!!! TIKTOK DETECTED: $packageName !!!")
+            Log.e(TAG, "!!! In TARGET_PACKAGES: ${packageName in AppBlockingRegistry.TARGET_PACKAGES}")
+            Log.e(TAG, "!!! TARGET_PACKAGES: ${AppBlockingRegistry.TARGET_PACKAGES}")
+        }
+
         // 차단 대상 앱이 아니면 무시
         if (packageName !in AppBlockingRegistry.TARGET_PACKAGES) {
+            return
+        }
+
+        // 해당 앱의 차단이 비활성화되어 있으면 무시
+        if (!prefsManager.isAppBlockingEnabled(packageName)) {
+            Log.d(TAG, "App blocking disabled for $packageName - ignoring")
             return
         }
 
@@ -680,10 +695,27 @@ class ShortsBlockService : AccessibilityService() {
 
                     Log.d(TAG, "Skip cooldown set - blocking prevented for 2 seconds")
 
-                    // Overlay Activity가 완전히 종료되고 쇼츠로 복귀한 후 back key 수행
+                    // Overlay Activity가 완전히 종료되고 쇼츠로 복귀한 후 액션 수행
                     handler.postDelayed({
-                        Log.d(TAG, "Performing back action to close shorts")
-                        performGlobalBackAction()
+                        // 앱별 설정에 따라 적절한 종료 액션 수행
+                        val appConfig = AppBlockingRegistry.getConfigByPackageName(sourcePackage)
+                        val exitAction = appConfig?.exitAction ?: com.muuu.unshort.service.blocking.ExitAction.BACK
+
+                        when (exitAction) {
+                            com.muuu.unshort.service.blocking.ExitAction.HOME -> {
+                                Log.d(TAG, "Performing home action for $sourcePackage")
+                                val homePerformed = performGlobalAction(GLOBAL_ACTION_HOME)
+                                if (homePerformed) {
+                                    Log.d(TAG, "Home action completed successfully")
+                                } else {
+                                    Log.w(TAG, "Home action failed")
+                                }
+                            }
+                            com.muuu.unshort.service.blocking.ExitAction.BACK -> {
+                                Log.d(TAG, "Performing back action to close shorts")
+                                performGlobalBackAction()
+                            }
+                        }
                     }, 300)
                 }
                 AppConstants.ACTION_WATCH_CONFIRMED -> {

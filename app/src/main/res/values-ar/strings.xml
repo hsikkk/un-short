@@ -257,6 +257,12 @@
     <string name="premium_upgrade_button">الترقية الآن</string>
     <string name="premium_upgrade_coming_soon">نظام الدفع قريباً!</string>
 
+    <!-- Premium Upgrade Buttons -->
+    <string name="premium_button_with_trial">ابدأ تجربة مجانية لمدة %d أيام</string>
+    <string name="premium_button_without_trial">ابدأ من %s/شهر</string>
+    <string name="premium_button_loading">جاري تحميل السعر…</string>
+    <string name="premium_button_fallback">ابدأ Premium</string>
+
     <!-- Subscription Management -->
     <string name="subscription_management">إدارة الاشتراك</string>
     <string name="subscription_management_desc">إدارة أو إلغاء اشتراكك</string>

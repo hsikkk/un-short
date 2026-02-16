@@ -256,6 +256,12 @@
     <string name="premium_upgrade_button">Upgrade Now</string>
     <string name="premium_upgrade_coming_soon">Payment system coming soon!</string>
 
+    <!-- Premium Upgrade Buttons -->
+    <string name="premium_button_with_trial">Start %d-Day Free Trial</string>
+    <string name="premium_button_without_trial">Start at %s/month</string>
+    <string name="premium_button_loading">Loading pricing…</string>
+    <string name="premium_button_fallback">Start Premium</string>
+
     <!-- Subscription Management -->
     <string name="subscription_management">Manage Subscription</string>
     <string name="subscription_management_desc">Manage or cancel your subscription</string>
@@ -352,5 +358,16 @@
     <string name="daily_report_notification_title">Today\'s Shorts Blocking</string>
     <string name="daily_report_channel_name">Daily Report</string>
     <string name="daily_report_channel_desc">Daily shorts blocking statistics notification</string>
+
+    <!-- App Blocking Settings -->
+    <string name="app_blocking_settings">App Settings</string>
+    <string name="app_blocking_settings_title">Blocked Apps Settings</string>
+    <string name="app_blocking_settings_notice">* Only installed apps are shown</string>
+    <string name="app_blocking_settings_close">Close</string>
+    <string name="app_blocking_settings_no_apps">No apps installed</string>
+
+    <!-- TikTok -->
+    <string name="tiktok_shorts">TikTok Shorts</string>
+    <string name="tiktok_short_name">TikTok</string>
 
 </resources>
