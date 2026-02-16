@@ -38,6 +38,11 @@
     <string name="app_facebook_reels">Facebook Reels</string>
     <string name="app_naver_shorts">Naver Shorts</string>
     <string name="blocked_apps_notice">• 僅顯示已安裝的應用程式\n• 某些應用程式版本可能無法封鎖</string>
+    <string name="app_blocking_settings">應用程式設定</string>
+    <string name="app_blocking_settings_title">封鎖應用程式設定</string>
+    <string name="app_blocking_settings_notice">* 僅顯示已安裝的應用程式</string>
+    <string name="app_blocking_settings_close">關閉</string>
+    <string name="app_blocking_settings_no_apps">沒有已安裝的應用程式</string>
     <string name="stats_watch_time">觀看時間</string>
     <string name="stats_entry_count">進入</string>
     <string name="stats_consumption_count">已觀看</string>

@@ -87,7 +87,7 @@ class MainActivity : BaseActivity() {
     private var bannerAdView: MuuuBannerAdView? = null
     private lateinit var prefsManager: PreferencesManager
     private lateinit var blockedAppsContainer: LinearLayout
-    private lateinit var blockedAppsSettingsButton: TextView
+    private lateinit var blockedAppsSettingsButton: ImageView
     private lateinit var loadingOverlay: FrameLayout
 
     // 3단계 보호 플로우 헬퍼

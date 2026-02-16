@@ -74,7 +74,16 @@ class AppBlockingSettingsDialog(
         }
 
         appIcon.setImageDrawable(icon)
-        appName.text = config.displayName
+
+        // Get actual app name from PackageManager
+        appName.text = try {
+            context.packageManager.getApplicationLabel(
+                context.packageManager.getApplicationInfo(config.packageName, 0)
+            ).toString()
+        } catch (e: Exception) {
+            config.displayName
+        }
+
         appSwitch.isChecked = prefsManager.isAppBlockingEnabled(config.packageName)
 
         // Handle toggle

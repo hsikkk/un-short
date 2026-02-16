@@ -38,6 +38,11 @@
     <string name="app_facebook_reels">Facebook Reels</string>
     <string name="app_naver_shorts">Naver Shorts</string>
     <string name="blocked_apps_notice">• Solo se muestran las aplicaciones instaladas\n• Algunas versiones de aplicaciones pueden no bloquearse</string>
+    <string name="app_blocking_settings">Configuración de aplicaciones</string>
+    <string name="app_blocking_settings_title">Configuración de aplicaciones bloqueadas</string>
+    <string name="app_blocking_settings_notice">* Solo se muestran las aplicaciones instaladas</string>
+    <string name="app_blocking_settings_close">Cerrar</string>
+    <string name="app_blocking_settings_no_apps">No hay aplicaciones instaladas</string>
     <string name="stats_watch_time">Tiempo de visualización</string>
     <string name="stats_entry_count">Entradas</string>
     <string name="stats_consumption_count">Visto</string>
