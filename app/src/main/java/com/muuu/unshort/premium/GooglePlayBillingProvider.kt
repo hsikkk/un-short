@@ -341,15 +341,41 @@ class GooglePlayBillingProvider(
 
                 billingClient?.queryPurchasesAsync(params) { billingResult, purchasesList ->
                     if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                        Log.d(TAG, "Query purchases success. Total purchases: ${purchasesList.size}")
+
+                        // 모든 구매 상태 로깅
+                        purchasesList.forEach { purchase ->
+                            Log.d(TAG, "Purchase found: " +
+                                "products=${purchase.products}, " +
+                                "state=${purchase.purchaseState}, " +
+                                "autoRenewing=${purchase.isAutoRenewing}, " +
+                                "acknowledged=${purchase.isAcknowledged}")
+                        }
+
                         // 활성 구독 찾기
                         val activePurchase = purchasesList.firstOrNull { purchase ->
                             purchase.products.contains(PREMIUM_PRODUCT_ID) &&
-                            purchase.purchaseState == Purchase.PurchaseState.PURCHASED
+                            purchase.purchaseState == Purchase.PurchaseState.PURCHASED &&
+                            purchase.isAutoRenewing  // 자동 갱신 중인 구독만 인정
                         }
 
                         currentPurchase = activePurchase
                         isPremiumCache = activePurchase != null
-                        Log.d(TAG, "Premium status: $isPremiumCache")
+
+                        if (activePurchase != null) {
+                            Log.d(TAG, "Premium status: ACTIVE (autoRenewing)")
+                        } else {
+                            val canceledPurchase = purchasesList.firstOrNull { purchase ->
+                                purchase.products.contains(PREMIUM_PRODUCT_ID) &&
+                                purchase.purchaseState == Purchase.PurchaseState.PURCHASED &&
+                                !purchase.isAutoRenewing
+                            }
+                            if (canceledPurchase != null) {
+                                Log.w(TAG, "Premium status: CANCELED (not auto-renewing, will expire)")
+                            } else {
+                                Log.d(TAG, "Premium status: INACTIVE (no active subscription)")
+                            }
+                        }
                     } else {
                         Log.e(TAG, "Failed to query purchases: ${billingResult.debugMessage}")
                     }
