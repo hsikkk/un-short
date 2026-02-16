@@ -28,6 +28,17 @@ data class SubscriptionInfo(
 )
 
 /**
+ * 가격 정보 (UI 표시용)
+ */
+data class PriceInfo(
+    val formattedPrice: String,      // "₩5,500"
+    val hasFreeTrial: Boolean,       // 무료 체험 여부
+    val trialDays: Int?,              // 7 또는 null
+    val offerToken: String,           // 구매 시 사용할 토큰
+    val productDetails: ProductDetails
+)
+
+/**
  * Google Play Billing 기반 프리미엄 제공자
  *
  * 책임:
@@ -59,6 +70,11 @@ class GooglePlayBillingProvider(
 
     // 구매 플로우 콜백
     private var purchaseFlowCallback: ((Boolean) -> Unit)? = null
+
+    // 가격 정보 캐싱 (24시간 유효)
+    private var cachedPriceInfo: PriceInfo? = null
+    private var lastPriceQueryTime: Long = 0L
+    private val PRICE_CACHE_DURATION = 24 * 60 * 60 * 1000L
 
     init {
         initializeBillingClient()
@@ -145,9 +161,16 @@ class GooglePlayBillingProvider(
                 billingClient?.queryProductDetailsAsync(params) { billingResult, productDetailsList ->
                     if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && productDetailsList.isNotEmpty()) {
                         val productDetails = productDetailsList.first()
+                        val offers = productDetails.subscriptionOfferDetails
 
-                        // 구독 오퍼 선택 (첫 번째 오퍼 사용)
-                        val offerToken = productDetails.subscriptionOfferDetails?.firstOrNull()?.offerToken
+                        // 구독 오퍼 선택 (무료 체험 오퍼 우선)
+                        val selectedOffer = offers?.find { offer ->
+                            offer.pricingPhases.pricingPhaseList.any { phase ->
+                                phase.priceAmountMicros == 0L
+                            }
+                        } ?: offers?.firstOrNull()
+
+                        val offerToken = selectedOffer?.offerToken
 
                         if (offerToken != null) {
                             launchBillingFlow(activity, productDetails, offerToken)
@@ -490,6 +513,116 @@ class GooglePlayBillingProvider(
             // Play Store 앱이 없는 경우 등 에러 처리
             Log.e(TAG, "Failed to open subscription management", e)
         }
+    }
+
+    /**
+     * 가격 정보 쿼리 (Public API)
+     *
+     * UI 표시용 가격 정보 조회
+     * 24시간 캐싱으로 API 호출 최소화
+     *
+     * @param onResult 가격 정보 콜백 (null = 로드 실패)
+     */
+    fun queryPriceInfo(onResult: (PriceInfo?) -> Unit) {
+        // 캐시 확인
+        if (cachedPriceInfo != null &&
+            System.currentTimeMillis() - lastPriceQueryTime < PRICE_CACHE_DURATION) {
+            onResult(cachedPriceInfo)
+            return
+        }
+
+        scope.launch {
+            try {
+                if (!ensureConnected()) {
+                    withContext(Dispatchers.Main) {
+                        onResult(null)
+                    }
+                    return@launch
+                }
+
+                // Product details 쿼리
+                val productList = listOf(
+                    QueryProductDetailsParams.Product.newBuilder()
+                        .setProductId(PREMIUM_PRODUCT_ID)
+                        .setProductType(BillingClient.ProductType.SUBS)
+                        .build()
+                )
+
+                val params = QueryProductDetailsParams.newBuilder()
+                    .setProductList(productList)
+                    .build()
+
+                billingClient?.queryProductDetailsAsync(params) { billingResult, productDetailsList ->
+                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK &&
+                        productDetailsList.isNotEmpty()) {
+
+                        val productDetails = productDetailsList.first()
+                        val priceInfo = extractPriceInfo(productDetails)
+
+                        if (priceInfo != null) {
+                            cachedPriceInfo = priceInfo
+                            lastPriceQueryTime = System.currentTimeMillis()
+                        }
+
+                        onResult(priceInfo)
+                    } else {
+                        Log.e(TAG, "Failed to query price: ${billingResult.debugMessage}")
+                        scope.launch(Dispatchers.Main) {
+                            onResult(null)
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error querying price", e)
+                scope.launch(Dispatchers.Main) {
+                    onResult(null)
+                }
+            }
+        }
+    }
+
+    /**
+     * 가격 정보 추출 헬퍼
+     *
+     * ProductDetails에서 무료 체험 및 가격 정보 추출
+     *
+     * @param productDetails Google Play ProductDetails
+     * @return PriceInfo or null
+     */
+    private fun extractPriceInfo(productDetails: ProductDetails): PriceInfo? {
+        val offers = productDetails.subscriptionOfferDetails ?: return null
+
+        // 무료 체험 오퍼 우선 선택
+        val selectedOffer = offers.find { offer ->
+            offer.pricingPhases.pricingPhaseList.any { phase ->
+                phase.priceAmountMicros == 0L
+            }
+        } ?: offers.firstOrNull() ?: return null
+
+        val pricingPhases = selectedOffer.pricingPhases.pricingPhaseList
+
+        // 무료 체험 정보 추출
+        val trialPhase = pricingPhases.firstOrNull { it.priceAmountMicros == 0L }
+        val hasFreeTrial = trialPhase != null
+        val trialDays = when (trialPhase?.billingPeriod) {
+            "P7D" -> 7
+            "P14D" -> 14
+            "P30D" -> 30
+            else -> null
+        }
+
+        // 정기 결제 가격 추출
+        val recurringPhase = pricingPhases.lastOrNull {
+            it.priceAmountMicros > 0
+        } ?: return null
+
+        return PriceInfo(
+            formattedPrice = recurringPhase.formattedPrice,
+            hasFreeTrial = hasFreeTrial,
+            trialDays = trialDays,
+            offerToken = selectedOffer.offerToken,
+            productDetails = productDetails
+        )
     }
 
     /**

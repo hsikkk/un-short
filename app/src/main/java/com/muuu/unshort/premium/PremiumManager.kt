@@ -327,5 +327,19 @@ object PremiumManager {
     fun isLifetimePremium(): Boolean {
         return lifetimeProvider.isPremium()
     }
+
+    /**
+     * 가격 정보 조회 (UI 표시용)
+     *
+     * @param onResult 가격 정보 콜백 (null = 로드 실패)
+     */
+    fun queryPriceInfo(onResult: (PriceInfo?) -> Unit) {
+        val currentProvider = provider
+        if (currentProvider is GooglePlayBillingProvider) {
+            currentProvider.queryPriceInfo(onResult)
+        } else {
+            onResult(null)
+        }
+    }
 }
 

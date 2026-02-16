@@ -36,6 +36,9 @@ class PremiumUpgradeActivity : BaseActivity() {
         upgradeButton = findViewById(R.id.upgradeButton)
         promoCodeButton = findViewById(R.id.promoCodeButton)
 
+        // 가격 정보 로드
+        loadPricing()
+
         // 닫기 버튼
         closeButton.setOnClickListener {
             finish()
@@ -88,5 +91,40 @@ class PremiumUpgradeActivity : BaseActivity() {
             finish()
         }
         dialog.show()
+    }
+
+    /**
+     * 가격 정보 로드 및 버튼 업데이트
+     */
+    private fun loadPricing() {
+        // 로딩 상태
+        upgradeButton.apply {
+            text = getString(R.string.premium_button_loading)
+            isEnabled = false
+        }
+
+        PremiumManager.queryPriceInfo { priceInfo ->
+            runOnUiThread {
+                val buttonText = when {
+                    priceInfo == null -> {
+                        // Fallback: 가격 로드 실패
+                        getString(R.string.premium_button_fallback)
+                    }
+                    priceInfo.hasFreeTrial -> {
+                        // 무료 체험 가능
+                        getString(R.string.premium_button_with_trial, priceInfo.trialDays ?: 7)
+                    }
+                    else -> {
+                        // 무료 체험 없음 (가격 표시)
+                        getString(R.string.premium_button_without_trial, priceInfo.formattedPrice)
+                    }
+                }
+
+                upgradeButton.apply {
+                    text = buttonText
+                    isEnabled = true
+                }
+            }
+        }
     }
 }
