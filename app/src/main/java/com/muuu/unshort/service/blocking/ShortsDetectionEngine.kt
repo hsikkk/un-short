@@ -14,6 +14,7 @@ import android.view.accessibility.AccessibilityNodeInfo
 class ShortsDetectionEngine {
 
     private val TAG = "ShortsDetectionEngine"
+    private val MAX_TREE_DEPTH = 30
 
     /**
      * 주어진 노드에서 쇼츠 화면 여부 감지
@@ -84,12 +85,15 @@ class ShortsDetectionEngine {
     }
 
     /**
-     * 텍스트로 노드 검색 (재귀)
+     * 텍스트로 노드 검색 (재귀, 깊이 제한)
      */
     private fun findNodesByText(
         node: AccessibilityNodeInfo,
-        searchText: String
+        searchText: String,
+        depth: Int = 0
     ): List<AccessibilityNodeInfo> {
+        if (depth > MAX_TREE_DEPTH) return emptyList()
+
         val results = mutableListOf<AccessibilityNodeInfo>()
 
         // 현재 노드 체크
@@ -101,7 +105,7 @@ class ShortsDetectionEngine {
         // 자식 노드 재귀 탐색
         for (i in 0 until node.childCount) {
             node.getChild(i)?.let { child ->
-                results.addAll(findNodesByText(child, searchText))
+                results.addAll(findNodesByText(child, searchText, depth + 1))
                 child.recycle()
             }
         }
@@ -110,12 +114,15 @@ class ShortsDetectionEngine {
     }
 
     /**
-     * ContentDescription으로 노드 검색 (재귀)
+     * ContentDescription으로 노드 검색 (재귀, 깊이 제한)
      */
     private fun findNodesByContentDescription(
         node: AccessibilityNodeInfo,
-        searchText: String
+        searchText: String,
+        depth: Int = 0
     ): List<AccessibilityNodeInfo> {
+        if (depth > MAX_TREE_DEPTH) return emptyList()
+
         val results = mutableListOf<AccessibilityNodeInfo>()
 
         // 현재 노드 체크
@@ -127,7 +134,7 @@ class ShortsDetectionEngine {
         // 자식 노드 재귀 탐색
         for (i in 0 until node.childCount) {
             node.getChild(i)?.let { child ->
-                results.addAll(findNodesByContentDescription(child, searchText))
+                results.addAll(findNodesByContentDescription(child, searchText, depth + 1))
                 child.recycle()
             }
         }
