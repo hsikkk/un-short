@@ -35,9 +35,16 @@ class ShortsDetectionEngine {
             val found = findNodesByViewId(node, detector.viewId)
             Log.d(TAG, "[${config.displayName}] Found ${found.size} nodes for View ID: ${detector.viewId}")
             if (found.isNotEmpty()) {
-                Log.d(TAG, "[${config.displayName}] ✓ Detected via View ID: ${detector.viewId}")
+                // 실제로 화면에 보이는 노드만 유효한 감지로 처리
+                val visibleNodes = found.filter { it.isVisibleToUser }
+                Log.d(TAG, "[${config.displayName}] Visible nodes: ${visibleNodes.size}/${found.size} for View ID: ${detector.viewId}")
                 found.forEach { it.recycle() }
-                return true
+                if (visibleNodes.isNotEmpty()) {
+                    Log.d(TAG, "[${config.displayName}] ✓ Detected via View ID: ${detector.viewId}")
+                    return true
+                } else {
+                    Log.d(TAG, "[${config.displayName}] ✗ View ID found but not visible to user: ${detector.viewId}")
+                }
             }
         }
 
