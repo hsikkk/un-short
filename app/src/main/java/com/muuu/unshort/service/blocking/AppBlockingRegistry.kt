@@ -313,7 +313,8 @@ object AppBlockingRegistry {
             textValidator = { text ->
                 text.length > 2 && !text.all { it.isDigit() || it == ',' || it == '.' }
             }
-        )
+        ),
+        controlsMedia = true
     )
 
     val TIKTOK = AppBlockingConfig(
