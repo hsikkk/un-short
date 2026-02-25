@@ -54,6 +54,10 @@ class ShortsBlockService : AccessibilityService() {
          */
         var instance: ShortsBlockService? = null
             private set
+
+        private const val MAX_AUTO_EXIT_ATTEMPTS = 5
+        private const val AUTO_EXIT_FALLBACK_DELAY = 500L
+        private const val AUTO_EXIT_COOLDOWN_MS = 2000L
     }
 
     private val TAG = "ShortsBlockService"
@@ -82,6 +86,13 @@ class ShortsBlockService : AccessibilityService() {
 
     // 현재 세션이 스크롤 후 재진입인지 추적 (통계 기록용)
     private var isCurrentSessionFromScroll: Boolean = false
+
+    // Skip 후 쇼츠 완전 이탈까지 반복 back press 상태
+    private var isAutoExitingShorts = false
+    private var autoExitAttempts = 0
+    private var autoExitPendingRunnable: Runnable? = null
+    // Auto-exit 완료 후 쿨다운 (과도기 화면에서 false positive 방지)
+    private var autoExitCooldownUntil: Long = 0
 
     // Screen state receiver
     private var screenStateReceiver: ScreenStateReceiver? = null
@@ -153,6 +164,30 @@ class ShortsBlockService : AccessibilityService() {
         val packageName = event.packageName?.toString() ?: return
         currentPackage = packageName  // 현재 패키지 저장
 
+        // Skip 후 반복 back press 진행 중: 쇼츠 이탈 감지만 수행 (오버레이/상태 전이는 스킵)
+        if (isAutoExitingShorts) {
+            if (packageName !in AppBlockingRegistry.TARGET_PACKAGES) return
+            val appConfig = AppBlockingRegistry.getConfigByPackageName(packageName) ?: return
+            val rootNode = rootInActiveWindow ?: return
+            val stillInShorts = detectionEngine.detectShortsScreen(rootNode, appConfig)
+
+            if (!stillInShorts) {
+                Log.d(TAG, "Auto-exit: shorts exited (event-driven), clearing flag")
+                cancelAutoExit()
+            } else if (autoExitAttempts < MAX_AUTO_EXIT_ATTEMPTS) {
+                // 이벤트가 왔는데 아직 쇼츠 안이면 다시 back
+                autoExitAttempts++
+                Log.d(TAG, "Auto-exit: still in shorts (event-driven), back press attempt $autoExitAttempts/$MAX_AUTO_EXIT_ATTEMPTS")
+                cancelPendingAutoExitFallback()
+                performGlobalBackAction()
+                scheduleAutoExitFallback(packageName, appConfig)
+            } else {
+                Log.w(TAG, "Auto-exit: max attempts reached (event-driven), giving up")
+                cancelAutoExit()
+            }
+            return
+        }
+
         // 이벤트 로깅
         Log.d(TAG, "=== Event: ${event.eventType}, Package: $packageName ===")
         Log.d(TAG, "Current state: ${sessionState.getCurrentState(packageName)}")
@@ -174,6 +209,12 @@ class ShortsBlockService : AccessibilityService() {
         // 해당 앱의 차단이 비활성화되어 있으면 무시
         if (!prefsManager.isAppBlockingEnabled(packageName)) {
             Log.d(TAG, "App blocking disabled for $packageName - ignoring")
+            return
+        }
+
+        // Auto-exit 쿨다운 중이면 스킵 (back press 직후 과도기 화면에서 false positive 방지)
+        if (System.currentTimeMillis() < autoExitCooldownUntil) {
+            Log.d(TAG, "Auto-exit cooldown active, skipping event processing")
             return
         }
 
@@ -508,6 +549,80 @@ class ShortsBlockService : AccessibilityService() {
     }
 
     /**
+     * Skip 후 첫 back press 실행 + fallback 타이머 시작
+     *
+     * 이벤트 기반(onAccessibilityEvent)과 타이머 기반(fallback) 두 경로로 쇼츠 이탈을 감지한다.
+     * - 이벤트 기반: onAccessibilityEvent에서 쇼츠 이탈 감지 시 즉시 back press 또는 종료
+     * - 타이머 기반: 이벤트가 안 오는 경우를 대비한 fallback (500ms 후 직접 체크)
+     */
+    private fun startAutoExitShorts(
+        sourcePackage: String,
+        appConfig: AppBlockingConfig
+    ) {
+        isAutoExitingShorts = true
+        autoExitAttempts = 1
+        Log.d(TAG, "Auto-exit: starting, first back press (attempt 1/$MAX_AUTO_EXIT_ATTEMPTS)")
+        performGlobalBackAction()
+        scheduleAutoExitFallback(sourcePackage, appConfig)
+    }
+
+    /**
+     * Fallback 타이머: onAccessibilityEvent가 오지 않을 경우를 대비하여
+     * 직접 rootInActiveWindow를 폴링한다.
+     */
+    private fun scheduleAutoExitFallback(
+        sourcePackage: String,
+        appConfig: AppBlockingConfig
+    ) {
+        cancelPendingAutoExitFallback()
+        val runnable = Runnable {
+            if (!isAutoExitingShorts) return@Runnable
+
+            try {
+                val rootNode = rootInActiveWindow
+                if (rootNode != null) {
+                    val stillInShorts = detectionEngine.detectShortsScreen(rootNode, appConfig)
+                    if (stillInShorts) {
+                        if (autoExitAttempts < MAX_AUTO_EXIT_ATTEMPTS) {
+                            autoExitAttempts++
+                            Log.d(TAG, "Auto-exit: still in shorts (fallback), back press attempt $autoExitAttempts/$MAX_AUTO_EXIT_ATTEMPTS")
+                            performGlobalBackAction()
+                            scheduleAutoExitFallback(sourcePackage, appConfig)
+                        } else {
+                            Log.w(TAG, "Auto-exit: max attempts reached (fallback), giving up")
+                            cancelAutoExit()
+                        }
+                    } else {
+                        Log.d(TAG, "Auto-exit: shorts exited (fallback)")
+                        cancelAutoExit()
+                    }
+                } else {
+                    Log.d(TAG, "Auto-exit: root node null (fallback), assuming exited")
+                    cancelAutoExit()
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Auto-exit fallback error", e)
+                cancelAutoExit()
+            }
+        }
+        autoExitPendingRunnable = runnable
+        handler.postDelayed(runnable, AUTO_EXIT_FALLBACK_DELAY)
+    }
+
+    private fun cancelPendingAutoExitFallback() {
+        autoExitPendingRunnable?.let { handler.removeCallbacks(it) }
+        autoExitPendingRunnable = null
+    }
+
+    private fun cancelAutoExit() {
+        isAutoExitingShorts = false
+        autoExitAttempts = 0
+        cancelPendingAutoExitFallback()
+        // 쿨다운: 과도기 화면에서 false positive로 오버레이 재표시 방지
+        autoExitCooldownUntil = System.currentTimeMillis() + AUTO_EXIT_COOLDOWN_MS
+    }
+
+    /**
      * 오버레이 권한 요청 (더 이상 사용하지 않음 - Activity 방식으로 변경)
      */
     @Deprecated("Activity 방식으로 변경되어 더 이상 필요 없음")
@@ -712,8 +827,12 @@ class ShortsBlockService : AccessibilityService() {
                                 }
                             }
                             com.muuu.unshort.service.blocking.ExitAction.BACK -> {
-                                Log.d(TAG, "Performing back action to close shorts")
-                                performGlobalBackAction()
+                                Log.d(TAG, "Performing repeated back action until shorts exit")
+                                if (appConfig != null) {
+                                    startAutoExitShorts(sourcePackage, appConfig)
+                                } else {
+                                    performGlobalBackAction()
+                                }
                             }
                         }
                     }, 300)
