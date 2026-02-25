@@ -33,19 +33,47 @@ class SessionStateManager(
         val watchDurationMs: Long?
     )
 
-    // 앱별 상태 저장 (새로운 SessionState 사용)
-    private val stateByPackage = mutableMapOf<String, SessionState>()
+    companion object {
+        private const val MAX_CACHED_APPS = 10  // 최근 사용된 앱만 유지하여 메모리 누수 방지
+    }
 
-    // 앱별 시청 시간 추적
-    private val watchTimeByPackage = mutableMapOf<String, WatchTimeTracker>()
+    // 앱별 상태 저장 (LRU 캐시, 최대 10개 앱)
+    private val stateByPackage = object : LinkedHashMap<String, SessionState>(
+        MAX_CACHED_APPS + 1, 0.75f, true
+    ) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, SessionState>?): Boolean {
+            return size > MAX_CACHED_APPS
+        }
+    }
+
+    // 앱별 시청 시간 추적 (LRU 캐시, 최대 10개 앱)
+    private val watchTimeByPackage = object : LinkedHashMap<String, WatchTimeTracker>(
+        MAX_CACHED_APPS + 1, 0.75f, true
+    ) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, WatchTimeTracker>?): Boolean {
+            return size > MAX_CACHED_APPS
+        }
+    }
 
     // 앱별 스크롤 감지 데이터
     private data class ScrollData(var hash: Int = 0, var stableCount: Int = 0)
-    private val scrollDataByPackage = mutableMapOf<String, ScrollData>()
+    private val scrollDataByPackage = object : LinkedHashMap<String, ScrollData>(
+        MAX_CACHED_APPS + 1, 0.75f, true
+    ) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, ScrollData>?): Boolean {
+            return size > MAX_CACHED_APPS
+        }
+    }
     private val STABLE_THRESHOLD = 2
 
-    // 앱별 콘텐츠 핑거프린트 (유사도 비교용)
-    private val fingerprintByPackage = mutableMapOf<String, ContentFingerprint>()
+    // 앱별 콘텐츠 핑거프린트 (유사도 비교용, LRU 캐시)
+    private val fingerprintByPackage = object : LinkedHashMap<String, ContentFingerprint>(
+        MAX_CACHED_APPS + 1, 0.75f, true
+    ) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, ContentFingerprint>?): Boolean {
+            return size > MAX_CACHED_APPS
+        }
+    }
 
     /**
      * 이벤트 처리 (단일 전이 함수)

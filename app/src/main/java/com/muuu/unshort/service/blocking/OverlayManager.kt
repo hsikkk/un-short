@@ -22,9 +22,26 @@ class OverlayManager(
 ) {
     private val TAG = "OverlayManager"
 
-    // 앱별 세션 ID 저장
-    private val sessionIdByPackage = mutableMapOf<String, String>()
-    private val lastShownSessionIdByPackage = mutableMapOf<String, String>()
+    companion object {
+        private const val MAX_CACHED_APPS = 10  // 최근 사용된 앱만 유지하여 메모리 누수 방지
+    }
+
+    // 앱별 세션 ID 저장 (LRU 캐시, 최대 10개 앱)
+    private val sessionIdByPackage = object : LinkedHashMap<String, String>(
+        MAX_CACHED_APPS + 1, 0.75f, true
+    ) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, String>?): Boolean {
+            return size > MAX_CACHED_APPS
+        }
+    }
+
+    private val lastShownSessionIdByPackage = object : LinkedHashMap<String, String>(
+        MAX_CACHED_APPS + 1, 0.75f, true
+    ) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, String>?): Boolean {
+            return size > MAX_CACHED_APPS
+        }
+    }
 
     // 브로드캐스트 수신 (타이머 완료, Activity 닫기, Watch 확인)
     private val actionReceiver = object : BroadcastReceiver() {
