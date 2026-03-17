@@ -153,6 +153,17 @@
             </intent-filter>
         </receiver>
 
+        <!-- Sleep Mode Receiver -->
+        <receiver
+            android:name=".receiver.SleepModeReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.muuu.unshort.SLEEP_MODE_START" />
+                <action android:name="com.muuu.unshort.SLEEP_MODE_END" />
+            </intent-filter>
+        </receiver>
+
         <!-- Daily Report Notification Receiver -->
         <receiver
             android:name=".receiver.DailyReportReceiver"

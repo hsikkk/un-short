@@ -23,7 +23,7 @@
     <!-- Timer Screen -->
     <string name="timer_instruction_title">एक पल लें</string>
     <string name="timer_instruction_message_onboarding">अपना फोन पलटें और सोचें कि\nक्या आपको वाकई देखने की ज़रूरत है</string>
-    <string name="timer_instruction_message_full">अपना फोन पलटें और 30 सेकंड प्रतीक्षा करें।\nक्या आप 30 मिनट में इस चयन पर पछताएंगे?\nअभी आपको वाकई क्या चाहिए?</string>
+    <string name="timer_instruction_message_full">अपना फोन पलटें और %d सेकंड प्रतीक्षा करें।\nक्या आप 30 मिनट में इस चयन पर पछताएंगे?\nअभी आपको वाकई क्या चाहिए?</string>
 
     <!-- Main Activity -->
     <string name="main_subtitle">छोटे कंटेंट से मुक्त हो जाएं।\nसोच-समझकर उपभोग के लिए छोटी आदतें।</string>

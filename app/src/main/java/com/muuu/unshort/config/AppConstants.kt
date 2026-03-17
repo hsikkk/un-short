@@ -63,6 +63,16 @@ object AppConstants {
     const val PREF_REMINDER_THRESHOLD_MINUTES = "reminder_threshold_minutes"  // 기준 시간 (10분)
     const val PREF_REMINDER_WATCH_THRESHOLD_MINUTES = "reminder_watch_threshold_minutes"  // 시청 임계값 (7분)
 
+    // Sleep Mode
+    const val ACTION_SLEEP_MODE_START = "com.muuu.unshort.SLEEP_MODE_START"
+    const val ACTION_SLEEP_MODE_END = "com.muuu.unshort.SLEEP_MODE_END"
+    const val PREF_BLOCKING_BEFORE_SLEEP = "blocking_before_sleep"
+    const val PREF_SLEEP_MODE_ENABLED = "sleep_mode_enabled"
+    const val PREF_SLEEP_START_HOUR = "sleep_start_hour"
+    const val PREF_SLEEP_START_MINUTE = "sleep_start_minute"
+    const val PREF_SLEEP_END_HOUR = "sleep_end_hour"
+    const val PREF_SLEEP_END_MINUTE = "sleep_end_minute"
+
     // Remote Config Keys
     const val RC_SHOW_AFFILIATE_BANNER = "show_affiliate_banner"
 }

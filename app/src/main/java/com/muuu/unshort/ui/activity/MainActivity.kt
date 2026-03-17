@@ -2,6 +2,7 @@ package com.muuu.unshort.ui.activity
 
 import android.animation.ValueAnimator
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -50,6 +51,7 @@ import com.muuu.unshort.util.ThreeStepProtectionHelper
 import com.muuu.unshort.util.WarningConfig
 import com.muuu.unshort.util.ConfirmConfig
 import com.muuu.unshort.config.AdConfig
+import com.muuu.unshort.config.AppConstants
 import com.muuu.unshort.util.InAppReviewHelper
 import com.muuu.unshort.ui.activity.MainActivity
 import com.muuu.unshort.ui.dialog.DisableTypeDialog
@@ -104,6 +106,14 @@ class MainActivity : BaseActivity() {
 
     // In-App Review Helper
     private lateinit var inAppReviewHelper: InAppReviewHelper
+
+    // SharedPreferences 변경 리스너 (SleepModeReceiver 등 외부에서 변경 시 즉시 반영)
+    private val prefChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key == AppConstants.PREF_BLOCKING_ENABLED) {
+            checkPermissionsAndUpdateUI()
+            updateSleepModeLabel()
+        }
+    }
 
     // 일시 해제 상태 업데이트용 핸들러
     private val tempDisableHandler = Handler(Looper.getMainLooper())
@@ -270,8 +280,12 @@ class MainActivity : BaseActivity() {
             val currentState = prefsManager.isBlockingEnabled
             val newState = !currentState
 
-            // If turning OFF, check recent shorts attempts
+            // If turning OFF, check sleep mode first
             if (currentState && !newState) {
+                if (prefsManager.isSleepTime()) {
+                    showSleepModeBlockDialog()
+                    return@setOnClickListener
+                }
                 // 최근 10분 내 쇼츠 진입 시도 확인
                 lifecycleScope.launch {
                     val now = System.currentTimeMillis()
@@ -327,6 +341,7 @@ class MainActivity : BaseActivity() {
         updateStatisticsBadgeVisibility()
         updatePremiumBadgeVisibility()
         updateStatisticsSummary()
+        updateSleepModeLabel()
         // 앱 설치/삭제 상황 반영
         populateBlockedApps()
 
@@ -334,12 +349,20 @@ class MainActivity : BaseActivity() {
         if (prefsManager.isTemporarilyDisabled()) {
             tempDisableHandler.post(tempDisableUpdateRunnable)
         }
+
+        // SharedPreferences 변경 리스너 등록
+        getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
+            .registerOnSharedPreferenceChangeListener(prefChangeListener)
     }
 
     override fun onPause() {
         super.onPause()
         // 일시 해제 상태 업데이트 중지
         tempDisableHandler.removeCallbacks(tempDisableUpdateRunnable)
+
+        // SharedPreferences 변경 리스너 해제
+        getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
+            .unregisterOnSharedPreferenceChangeListener(prefChangeListener)
     }
 
     private fun checkPermissionsAndUpdateUI() {
@@ -807,6 +830,30 @@ class MainActivity : BaseActivity() {
             minutes == 0 -> "$hours$hourUnit"
             else -> "$hours$hourUnit $minutes$minuteUnit"
         }
+    }
+
+    private fun updateSleepModeLabel() {
+        if (prefsManager.isSleepTime()) {
+            statusLabel.text = getString(R.string.sleep_mode_active_label)
+            powerIcon.setImageResource(R.drawable.ic_moon)
+            DrawableCompat.setTint(
+                DrawableCompat.wrap(powerIcon.drawable),
+                Color.parseColor("#F59E0B")
+            )
+        } else {
+            powerIcon.setImageResource(R.drawable.ic_power)
+            updateUI(prefsManager.isBlockingEnabled)
+        }
+    }
+
+    private fun showSleepModeBlockDialog() {
+        WarningDialog(
+            context = this,
+            titleResId = R.string.sleep_mode_dialog_title,
+            messageResId = R.string.sleep_mode_dialog_message,
+            positiveTextResId = R.string.sleep_mode_dialog_confirm,
+            onPositive = { }
+        ).show()
     }
 
     /**

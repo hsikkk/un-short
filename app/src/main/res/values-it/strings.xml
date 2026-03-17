@@ -23,7 +23,7 @@
     <!-- Timer Screen -->
     <string name="timer_instruction_title">Prenditi un momento</string>
     <string name="timer_instruction_message_onboarding">Gira il telefono e pensa se\ndevi davvero guardare</string>
-    <string name="timer_instruction_message_full">Gira il telefono e aspetta 30 secondi.\nTi pentirai di questa scelta tra 30 minuti?\nDi cosa hai davvero bisogno adesso?</string>
+    <string name="timer_instruction_message_full">Gira il telefono e aspetta %d secondi.\nTi pentirai di questa scelta tra 30 minuti?\nDi cosa hai davvero bisogno adesso?</string>
 
     <!-- Main Activity -->
     <string name="main_subtitle">Liberati dai contenuti brevi.\nPiccole abitudini per un consumo consapevole.</string>

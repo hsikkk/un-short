@@ -99,10 +99,15 @@ class TempDisableReceiver : BroadcastReceiver() {
             return
         }
 
-        // Clear temp disable state and re-enable blocking
+        // Clear temp disable state
         prefsManager.clearTempDisable()
-        prefsManager.isBlockingEnabled = true
 
-        Log.d(TAG, "Temporary disable expired, blocking re-enabled")
+        if (prefsManager.isSleepTime()) {
+            prefsManager.blockingBeforeSleep = true
+            Log.d(TAG, "Temporary disable expired during sleep mode, updated blockingBeforeSleep to true")
+        } else {
+            prefsManager.isBlockingEnabled = true
+            Log.d(TAG, "Temporary disable expired, blocking re-enabled")
+        }
     }
 }

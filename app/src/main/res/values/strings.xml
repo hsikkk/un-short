@@ -23,7 +23,7 @@
     <!-- Timer Screen -->
     <string name="timer_instruction_title">Take a moment</string>
     <string name="timer_instruction_message_onboarding">Flip your phone and think about\nwhether you really need to watch</string>
-    <string name="timer_instruction_message_full">Flip your phone and wait 30 seconds.\nWill you regret this choice in 30 minutes?\nWhat do you truly need right now?</string>
+    <string name="timer_instruction_message_full">Flip your phone and wait %d seconds.\nWill you regret this choice in 30 minutes?\nWhat do you truly need right now?</string>
 
     <!-- Main Activity -->
     <string name="main_subtitle">Break free from short-form content.\nSmall habits for mindful consumption.</string>
@@ -374,6 +374,25 @@
     <string name="app_disable_warning_message">You attempted to access %1$s within the last 10 minutes. To disable blocking, you must complete a 60-second timer.</string>
     <string name="app_disable_confirm">Start timer</string>
     <string name="app_disable_cancel">Keep blocking</string>
+
+    <!-- Sleep Mode -->
+    <string name="settings_section_sleep_mode">Sleep Mode</string>
+    <string name="settings_sleep_mode_title">Sleep Mode Settings</string>
+    <string name="settings_sleep_mode_desc">Automatically enforces and strengthens blocking at set times</string>
+    <string name="settings_sleep_bedtime">Bedtime</string>
+    <string name="settings_sleep_wakeup">Wake up</string>
+    <string name="sleep_mode_dialog_title">Sleep Mode Active</string>
+    <string name="sleep_mode_dialog_message">Sleep mode cannot be disabled while active.</string>
+    <string name="sleep_mode_dialog_confirm">OK</string>
+    <string name="sleep_mode_active_label">Sleep Mode Active</string>
+    <string name="sleep_mode_badge">Sleep Mode 🌙</string>
+    <string name="sleep_mode_timer_notice">Sleep mode: wait time fixed to 60 seconds</string>
+    <string name="sleep_mode_motivation">It\'s time to sleep.\nClose your eyes and rest.</string>
+    <string name="settings_sleep_start_time_title">Bedtime</string>
+    <string name="settings_sleep_start_time_desc">When sleep mode starts</string>
+    <string name="settings_sleep_end_time_title">Wake-up Time</string>
+    <string name="settings_sleep_end_time_desc">When sleep mode ends</string>
+    <string name="sleep_mode_invalid_time">Bedtime and wake up time cannot be the same</string>
 
     <!-- TikTok -->
     <string name="tiktok_shorts">TikTok Shorts</string>

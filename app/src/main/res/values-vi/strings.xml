@@ -23,7 +23,7 @@
     <!-- Timer Screen -->
     <string name="timer_instruction_title">Dành một chút thời gian</string>
     <string name="timer_instruction_message_onboarding">Lật điện thoại và suy nghĩ xem\nbạn có thực sự cần xem không</string>
-    <string name="timer_instruction_message_full">Lật điện thoại và đợi 30 giây.\nBạn sẽ hối hận về lựa chọn này trong 30 phút nữa không?\nBạn thực sự cần gì ngay bây giờ?</string>
+    <string name="timer_instruction_message_full">Lật điện thoại và đợi %d giây.\nBạn sẽ hối hận về lựa chọn này trong 30 phút nữa không?\nBạn thực sự cần gì ngay bây giờ?</string>
 
     <!-- Main Activity -->
     <string name="main_subtitle">Thoát khỏi nội dung dạng ngắn.\nThói quen nhỏ cho việc tiêu thụ có chủ đích.</string>

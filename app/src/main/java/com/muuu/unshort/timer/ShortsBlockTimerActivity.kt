@@ -8,6 +8,7 @@ import com.muuu.unshort.service.blocking.SessionEvent
 import com.muuu.unshort.config.AppConstants
 import com.muuu.unshort.R
 import com.muuu.unshort.ShortsBlockService
+import android.view.View
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
 
@@ -26,7 +27,9 @@ class ShortsBlockTimerActivity : BaseTimerActivity() {
 
     override fun getLayoutResourceId(): Int = R.layout.activity_timer
 
-    override fun provideTimerDuration(): Int = prefsManager.waitTime
+    override fun provideTimerDuration(): Int {
+        return if (prefsManager.isSleepTime()) 60 else prefsManager.waitTime
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Get session ID and source package from intent
@@ -48,6 +51,10 @@ class ShortsBlockTimerActivity : BaseTimerActivity() {
 
         // Track timer activity opened
         AnalyticsManager.trackEvent(this, AnalyticsEvent.TIMER_ACTIVITY_OPENED)
+
+        if (prefsManager.isSleepTime()) {
+            findViewById<View>(R.id.sleepModeBadge)?.visibility = View.VISIBLE
+        }
     }
 
     override fun onTimerCompleted() {

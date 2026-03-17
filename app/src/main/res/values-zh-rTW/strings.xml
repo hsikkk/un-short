@@ -23,7 +23,7 @@
     <!-- Timer Screen -->
     <string name="timer_instruction_title">停下來想一想</string>
     <string name="timer_instruction_message_onboarding">翻轉手機並思考一下\n你是否真的需要觀看</string>
-    <string name="timer_instruction_message_full">翻轉手機並等待30秒。\n30分鐘後你會後悔這個選擇嗎?\n你現在真正需要的是什麼?</string>
+    <string name="timer_instruction_message_full">翻轉手機並等待%d秒。\n30分鐘後你會後悔這個選擇嗎?\n你現在真正需要的是什麼?</string>
 
     <!-- Main Activity -->
     <string name="main_subtitle">擺脫短影音內容。\n有意識消費的小習慣。</string>

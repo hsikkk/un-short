@@ -25,7 +25,7 @@ apakah Anda benar-benar perlu shorts?</string>
     <!-- Timer Screen -->
     <string name="timer_instruction_title">Luangkan waktu sejenak</string>
     <string name="timer_instruction_message_onboarding">Balik ponsel Anda dan pikirkan\napakah Anda benar-benar perlu menonton</string>
-    <string name="timer_instruction_message_full">Balik ponsel Anda dan tunggu 30 detik.\nApakah Anda akan menyesal dengan pilihan ini dalam 30 menit?\nApa yang benar-benar Anda butuhkan sekarang?</string>
+    <string name="timer_instruction_message_full">Balik ponsel Anda dan tunggu %d detik.\nApakah Anda akan menyesal dengan pilihan ini dalam 30 menit?\nApa yang benar-benar Anda butuhkan sekarang?</string>
 
     <!-- Main Activity -->
     <string name="main_subtitle">Lepaskan dari konten bentuk pendek.\nKebiasaan kecil untuk konsumsi yang sadar.</string>

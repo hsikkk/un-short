@@ -8,6 +8,7 @@ import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.util.PermissionUtils
 import com.muuu.unshort.receiver.DailyReportReceiver
 import com.muuu.unshort.receiver.AppRestartReceiver
+import com.muuu.unshort.receiver.SleepModeReceiver
 
 /**
  * BroadcastReceiver for handling app updates and device boot
@@ -56,6 +57,12 @@ class AppRestartReceiver : BroadcastReceiver() {
             if (prefsManager.isDailyNotificationsEnabled) {
                 DailyReportReceiver.scheduleDailyReport(context)
                 Log.d(TAG, "Scheduled daily report notification")
+            }
+
+            // Schedule sleep mode alarms (only if enabled)
+            if (prefsManager.isSleepModeEnabled) {
+                SleepModeReceiver.scheduleAlarms(context)
+                Log.d(TAG, "Scheduled sleep mode alarms")
             }
         } else {
             Log.d(TAG, "Missing permissions - Accessibility: $hasAccessibilityPermission, Overlay: $hasOverlayPermission")

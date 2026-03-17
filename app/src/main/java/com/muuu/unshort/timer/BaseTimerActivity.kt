@@ -178,6 +178,11 @@ abstract class BaseTimerActivity : BaseActivity() {
         timerText.text = timerDuration.toString()
         progressBar.max = timerDuration * 100
         progressBar.progress = timerDuration * 100
+
+        // instruction 메시지에 타이머 초 값 동적 반영
+        findViewById<TextView>(R.id.instructionMessage)?.let {
+            it.text = getString(R.string.timer_instruction_message_full, timerDuration)
+        }
     }
 
     protected open fun onContinueClicked() {

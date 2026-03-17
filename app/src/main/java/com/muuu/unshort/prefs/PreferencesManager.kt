@@ -210,6 +210,61 @@ class PreferencesManager(context: Context) {
         return System.currentTimeMillis() - lastTimestamp >= cooldownMs
     }
 
+    // ========== Sleep Mode ==========
+
+    var blockingBeforeSleep: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_BLOCKING_BEFORE_SLEEP, true)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_BLOCKING_BEFORE_SLEEP, value).apply()
+
+    var isSleepModeEnabled: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_SLEEP_MODE_ENABLED, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_SLEEP_MODE_ENABLED, value).apply()
+
+    var sleepStartHour: Int
+        get() = prefs.getInt(AppConstants.PREF_SLEEP_START_HOUR, 22)
+        set(value) = prefs.edit().putInt(AppConstants.PREF_SLEEP_START_HOUR, value).apply()
+
+    var sleepStartMinute: Int
+        get() = prefs.getInt(AppConstants.PREF_SLEEP_START_MINUTE, 0)
+        set(value) = prefs.edit().putInt(AppConstants.PREF_SLEEP_START_MINUTE, value).apply()
+
+    var sleepEndHour: Int
+        get() = prefs.getInt(AppConstants.PREF_SLEEP_END_HOUR, 6)
+        set(value) = prefs.edit().putInt(AppConstants.PREF_SLEEP_END_HOUR, value).apply()
+
+    var sleepEndMinute: Int
+        get() = prefs.getInt(AppConstants.PREF_SLEEP_END_MINUTE, 0)
+        set(value) = prefs.edit().putInt(AppConstants.PREF_SLEEP_END_MINUTE, value).apply()
+
+    /**
+     * 현재 시간이 수면 시간대인지 판단
+     *
+     * 자정을 넘기는 경우(예: 22:00~06:00)와
+     * 같은 날인 경우(예: 01:00~06:00) 모두 처리
+     */
+    fun isSleepTime(): Boolean {
+        if (!isSleepModeEnabled) return false
+
+        val now = java.time.LocalTime.now()
+        val start = java.time.LocalTime.of(sleepStartHour, sleepStartMinute)
+        val end = java.time.LocalTime.of(sleepEndHour, sleepEndMinute)
+
+        return if (start > end) {
+            now >= start || now < end
+        } else if (start == end) {
+            false
+        } else {
+            now in start..<end
+        }
+    }
+
+    /**
+     * 수면 시간대의 표시용 문자열 반환 (예: "22:00~06:00")
+     */
+    fun getSleepTimeDisplayString(): String {
+        return String.format("%02d:%02d~%02d:%02d", sleepStartHour, sleepStartMinute, sleepEndHour, sleepEndMinute)
+    }
+
     // ========== Batch Operations ==========
 
     /**

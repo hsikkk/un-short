@@ -23,7 +23,7 @@
     <!-- Timer Screen -->
     <string name="timer_instruction_title">خذ لحظة</string>
     <string name="timer_instruction_message_onboarding">اقلب هاتفك وفكر فيما إذا كنت\nتحتاج حقاً للمشاهدة</string>
-    <string name="timer_instruction_message_full">اقلب هاتفك وانتظر 30 ثانية.\nهل ستندم على هذا الاختيار بعد 30 دقيقة؟\nما الذي تحتاجه حقاً الآن؟</string>
+    <string name="timer_instruction_message_full">اقلب هاتفك وانتظر %d ثانية.\nهل ستندم على هذا الاختيار بعد 30 دقيقة؟\nما الذي تحتاجه حقاً الآن؟</string>
 
     <!-- Main Activity -->
     <string name="main_subtitle">تحرر من المحتوى القصير.\nعادات صغيرة للاستهلاك الواعي.</string>

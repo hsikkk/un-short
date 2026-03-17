@@ -23,7 +23,7 @@
     <!-- Timer Screen -->
     <string name="timer_instruction_title">少し考えましょう</string>
     <string name="timer_instruction_message_onboarding">スマホを裏返して、\n本当に見る必要があるか考えてください</string>
-    <string name="timer_instruction_message_full">スマホを裏返して30秒待ってください。\n30分後にこの選択を後悔しますか?\n今、本当に必要なものは何ですか?</string>
+    <string name="timer_instruction_message_full">スマホを裏返して%d秒待ってください。\n30分後にこの選択を後悔しますか?\n今、本当に必要なものは何ですか?</string>
 
     <!-- Main Activity -->
     <string name="main_subtitle">ショート動画から抜け出しましょう。\n意識的な消費のための小さな習慣。</string>

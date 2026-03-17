@@ -65,6 +65,9 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     private var bannerAdView: com.muuu.ad.view.MuuuBannerAdView? = null
     private var nativeAdView: com.muuu.ad.view.MuuuNativeAdView? = null
 
+    // Utils
+    private lateinit var prefsManager: PreferencesManager
+
     // State
     private lateinit var sessionStateManager: com.muuu.unshort.service.blocking.SessionStateManager
     private var currentSessionId: String = ""
@@ -115,6 +118,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
 
         // Record activity creation time
         activityCreatedTime = System.currentTimeMillis()
+        prefsManager = PreferencesManager(this)
 
         // Get extras from intent
         currentSessionId = intent.getStringExtra(EXTRA_SESSION_ID) ?: ""
@@ -142,6 +146,10 @@ class ShortsBlockOverlayActivity : BaseActivity() {
 
         // Update UI based on overlay type
         updateUI()
+
+        if (prefsManager.isSleepTime()) {
+            mainMessage.text = getString(R.string.sleep_mode_motivation)
+        }
 
         // Register timer receiver
         registerTimerReceiver()

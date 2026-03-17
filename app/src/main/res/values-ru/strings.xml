@@ -23,7 +23,7 @@
     <!-- Timer Screen -->
     <string name="timer_instruction_title">Остановитесь на мгновение</string>
     <string name="timer_instruction_message_onboarding">Переверните телефон и подумайте,\nдействительно ли вам нужно смотреть</string>
-    <string name="timer_instruction_message_full">Переверните телефон и подождите 30 секунд.\nПожалеете ли вы об этом выборе через 30 минут?\nЧто вам действительно нужно сейчас?</string>
+    <string name="timer_instruction_message_full">Переверните телефон и подождите %d секунд.\nПожалеете ли вы об этом выборе через 30 минут?\nЧто вам действительно нужно сейчас?</string>
 
     <!-- Main Activity -->
     <string name="main_subtitle">Избавьтесь от короткого контента.\nМаленькие привычки для осознанного потребления.</string>

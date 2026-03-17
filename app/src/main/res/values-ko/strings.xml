@@ -23,7 +23,7 @@
     <!-- Timer Screen -->
     <string name="timer_instruction_title">잠시 생각해보기</string>
     <string name="timer_instruction_message_onboarding">폰을 뒤집고 진짜 봐야 하는지\n생각해보세요</string>
-    <string name="timer_instruction_message_full">폰을 뒤집고 30초만 기다려주세요.\n30분 후 당신은 이 선택을 후회하지 않을까요?\n지금 당신에게 정말 필요한 건 무엇인가요?</string>
+    <string name="timer_instruction_message_full">폰을 뒤집고 %d초만 기다려주세요.\n30분 후 당신은 이 선택을 후회하지 않을까요?\n지금 당신에게 정말 필요한 건 무엇인가요?</string>
 
     <!-- Main Activity -->
     <string name="main_subtitle">쇼츠 콘텐츠에서 벗어나세요.\n의도적인 소비를 위한 작은 습관.</string>
@@ -76,9 +76,9 @@
     <string name="settings_haptic_title">햅틱 피드백</string>
     <string name="settings_haptic_desc">타이머 완료 시 진동 알림</string>
     <string name="settings_daily_notification_title">일일 리포트 알림</string>
-    <string name="settings_daily_notification_desc">매일 쇼츠 차단 리포트를 알림으로 받습니다</string>
+    <string name="settings_daily_notification_desc">매일 쇼츠 차단 리포트를 알림으로 수신</string>
     <string name="settings_notification_time_title">알림 시간</string>
-    <string name="settings_notification_time_desc">리포트를 받을 시간을 설정합니다</string>
+    <string name="settings_notification_time_desc">리포트 수신 시간 설정</string>
     <string name="settings_block_scrolled_title">스크롤한 쇼츠만 차단</string>
     <string name="settings_block_scrolled_desc">첫 번째 쇼츠는 허용, 스크롤 시 차단</string>
     <string name="settings_prevent_disable_title">충동적 차단 비활성화 방지</string>
@@ -357,6 +357,25 @@
     <string name="exit_dialog_message">정말 종료하시겠어요?</string>
     <string name="exit_dialog_confirm">종료</string>
     <string name="exit_dialog_cancel">취소</string>
+
+    <!-- Sleep Mode -->
+    <string name="settings_section_sleep_mode">수면 모드</string>
+    <string name="settings_sleep_mode_title">수면 모드 설정</string>
+    <string name="settings_sleep_mode_desc">설정된 시간에 차단 실행 및 강화</string>
+    <string name="settings_sleep_bedtime">취침</string>
+    <string name="settings_sleep_wakeup">기상</string>
+    <string name="sleep_mode_dialog_title">수면 모드 실행 중</string>
+    <string name="sleep_mode_dialog_message">수면 모드 실행 중에는 해제할 수 없습니다.</string>
+    <string name="sleep_mode_dialog_confirm">확인</string>
+    <string name="sleep_mode_active_label">수면 모드 실행 중</string>
+    <string name="sleep_mode_badge">수면 모드 🌙</string>
+    <string name="sleep_mode_timer_notice">수면 모드로 인해 대기 필요 시간이 60초로 고정됩니다</string>
+    <string name="sleep_mode_motivation">지금은 잘 시간이에요.\n눈을 감고 쉬어보세요.</string>
+    <string name="settings_sleep_start_time_title">취침 시간</string>
+    <string name="settings_sleep_start_time_desc">수면 모드 시작 시간</string>
+    <string name="settings_sleep_end_time_title">기상 시간</string>
+    <string name="settings_sleep_end_time_desc">수면 모드 종료 시간</string>
+    <string name="sleep_mode_invalid_time">취침 시간과 기상 시간은 같을 수 없습니다</string>
 
     <!-- Daily Report Notification -->
     <string name="daily_report_notification_message">오늘 하루 리포트를 확인해보세요 ✨</string>

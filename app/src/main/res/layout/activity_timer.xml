@@ -46,6 +46,22 @@
             android:layout_height="240dp"
             android:layout_marginBottom="40dp">
 
+            <!-- Sleep Mode Badge (inside circle, above timer number) -->
+            <TextView
+                android:id="@+id/sleepModeBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_marginTop="48dp"
+                android:text="@string/sleep_mode_badge"
+                android:textSize="12sp"
+                android:textColor="#C4B5FD"
+                android:fontFamily="@font/spoqa_sans_neo_medium"
+                android:background="@drawable/flip_indicator_dark"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:visibility="gone" />
+
             <!-- Progress Ring -->
             <ProgressBar
                 android:id="@+id/progressRing"
@@ -119,6 +135,7 @@
             <!-- Description -->
             <!-- CSS: font-size: 14px, color: #8A8A8A (dark mode), line-height: 1.5 -->
             <TextView
+                android:id="@+id/instructionMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/timer_instruction_message_full"

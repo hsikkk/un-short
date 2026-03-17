@@ -23,11 +23,13 @@ import com.muuu.unshort.ui.activity.SubscriptionManagementActivity
 import com.muuu.unshort.ui.activity.SettingsActivity
 import com.muuu.unshort.ui.activity.BaseActivity
 import com.muuu.unshort.receiver.DailyReportReceiver
+import com.muuu.unshort.receiver.SleepModeReceiver
 import com.muuu.unshort.util.ThreeStepProtectionHelper
 import com.muuu.unshort.util.WarningConfig
 import com.muuu.unshort.util.ConfirmConfig
 import com.muuu.unshort.BuildConfig
 import com.muuu.unshort.R
+import com.muuu.unshort.ui.dialog.WarningDialog
 
 class SettingsActivity : BaseActivity() {
 
@@ -60,6 +62,14 @@ class SettingsActivity : BaseActivity() {
     private lateinit var dailyNotificationSwitch: Switch
     private lateinit var dailyNotificationTimeItem: LinearLayout
     private lateinit var dailyNotificationTimeValue: TextView
+
+    // Sleep Mode
+    private lateinit var sleepModeItem: LinearLayout
+    private lateinit var sleepModeSwitch: Switch
+    private lateinit var sleepStartTimeItem: LinearLayout
+    private lateinit var sleepStartTimeValue: TextView
+    private lateinit var sleepEndTimeItem: LinearLayout
+    private lateinit var sleepEndTimeValue: TextView
 
     private lateinit var deviceAdminManager: DeviceAdminManager
     private lateinit var prefsManager: PreferencesManager
@@ -145,6 +155,14 @@ class SettingsActivity : BaseActivity() {
         dailyNotificationTimeItem = findViewById(R.id.dailyNotificationTimeItem)
         dailyNotificationTimeValue = findViewById(R.id.dailyNotificationTimeValue)
 
+        // Sleep Mode
+        sleepModeItem = findViewById(R.id.sleepModeItem)
+        sleepModeSwitch = findViewById(R.id.sleepModeSwitch)
+        sleepStartTimeItem = findViewById(R.id.sleepStartTimeItem)
+        sleepStartTimeValue = findViewById(R.id.sleepStartTimeValue)
+        sleepEndTimeItem = findViewById(R.id.sleepEndTimeItem)
+        sleepEndTimeValue = findViewById(R.id.sleepEndTimeValue)
+
         // 버전 정보 설정
         try {
             val pInfo = packageManager.getPackageInfo(packageName, 0)
@@ -221,6 +239,9 @@ class SettingsActivity : BaseActivity() {
                 deviceAdminSwitch.isChecked = !deviceAdminSwitch.isChecked
             }
         }
+
+        // 수면 모드 초기화
+        setupSleepMode()
 
         // 뒤로 가기 버튼
         backButton.setOnClickListener {
@@ -656,6 +677,95 @@ class SettingsActivity : BaseActivity() {
         )
 
         timePicker.show()
+    }
+
+    private fun setupSleepMode() {
+        sleepModeSwitch.isChecked = prefsManager.isSleepModeEnabled
+        updateSleepTimeVisibility(prefsManager.isSleepModeEnabled)
+        updateSleepTimeDisplay()
+
+        sleepModeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (!isChecked && prefsManager.isSleepTime()) {
+                sleepModeSwitch.isChecked = true
+                showSleepModeActiveDialog()
+                return@setOnCheckedChangeListener
+            }
+            prefsManager.isSleepModeEnabled = isChecked
+            updateSleepTimeVisibility(isChecked)
+
+            if (isChecked) {
+                SleepModeReceiver.scheduleAlarms(this)
+            } else {
+                SleepModeReceiver.cancelAlarms(this)
+            }
+        }
+
+        sleepModeItem.setOnClickListener {
+            sleepModeSwitch.isChecked = !sleepModeSwitch.isChecked
+        }
+
+        sleepStartTimeItem.setOnClickListener {
+            showSleepTimePicker(isStartTime = true)
+        }
+
+        sleepEndTimeItem.setOnClickListener {
+            showSleepTimePicker(isStartTime = false)
+        }
+    }
+
+    private fun showSleepModeActiveDialog() {
+        WarningDialog(
+            context = this,
+            titleResId = R.string.sleep_mode_dialog_title,
+            messageResId = R.string.sleep_mode_dialog_message,
+            positiveTextResId = R.string.sleep_mode_dialog_confirm,
+            onPositive = { }
+        ).show()
+    }
+
+    private fun updateSleepTimeVisibility(isEnabled: Boolean) {
+        val visibility = if (isEnabled) View.VISIBLE else View.GONE
+        sleepStartTimeItem.visibility = visibility
+        sleepEndTimeItem.visibility = visibility
+    }
+
+    private fun updateSleepTimeDisplay() {
+        sleepStartTimeValue.text = String.format("%02d:%02d", prefsManager.sleepStartHour, prefsManager.sleepStartMinute)
+        sleepEndTimeValue.text = String.format("%02d:%02d", prefsManager.sleepEndHour, prefsManager.sleepEndMinute)
+    }
+
+    private fun showSleepTimePicker(isStartTime: Boolean) {
+        val currentHour = if (isStartTime) prefsManager.sleepStartHour else prefsManager.sleepEndHour
+        val currentMinute = if (isStartTime) prefsManager.sleepStartMinute else prefsManager.sleepEndMinute
+
+        TimePickerDialog(
+            this,
+            { _, hourOfDay, minute ->
+                if (isStartTime) {
+                    if (hourOfDay == prefsManager.sleepEndHour && minute == prefsManager.sleepEndMinute) {
+                        Toast.makeText(this, getString(R.string.sleep_mode_invalid_time), Toast.LENGTH_SHORT).show()
+                        return@TimePickerDialog
+                    }
+                    prefsManager.sleepStartHour = hourOfDay
+                    prefsManager.sleepStartMinute = minute
+                } else {
+                    if (hourOfDay == prefsManager.sleepStartHour && minute == prefsManager.sleepStartMinute) {
+                        Toast.makeText(this, getString(R.string.sleep_mode_invalid_time), Toast.LENGTH_SHORT).show()
+                        return@TimePickerDialog
+                    }
+                    prefsManager.sleepEndHour = hourOfDay
+                    prefsManager.sleepEndMinute = minute
+                }
+                updateSleepTimeDisplay()
+
+                if (prefsManager.isSleepModeEnabled) {
+                    SleepModeReceiver.scheduleAlarms(this)
+                }
+            },
+            currentHour,
+            currentMinute,
+            true
+        ).show()
     }
 
     companion object {

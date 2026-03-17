@@ -271,6 +271,179 @@
                 android:alpha="0.05" />
 
             <!-- ============================================ -->
+            <!-- Section: 수면 모드 -->
+            <!-- ============================================ -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_section_sleep_mode"
+                android:textSize="@dimen/text_caption"
+                android:textColor="#000000"
+                android:alpha="0.5"
+                android:fontFamily="@font/spoqa_sans_neo"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="12dp"
+                android:letterSpacing="0.02" />
+
+            <!-- 수면 시간 차단 토글 -->
+            <LinearLayout
+                android:id="@+id/sleepModeItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="16dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_sleep_mode_title"
+                        android:textSize="@dimen/text_body"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/spoqa_sans_neo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_sleep_mode_desc"
+                        android:textSize="@dimen/text_caption"
+                        android:textColor="#000000"
+                        android:alpha="0.5"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/sleepModeSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false" />
+
+            </LinearLayout>
+
+            <!-- 취침 시간 (토글 ON 시 노출) -->
+            <LinearLayout
+                android:id="@+id/sleepStartTimeItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="16dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_sleep_start_time_title"
+                        android:textSize="@dimen/text_body"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/spoqa_sans_neo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_sleep_start_time_desc"
+                        android:textSize="@dimen/text_caption"
+                        android:textColor="#000000"
+                        android:alpha="0.5"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/sleepStartTimeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="22:00"
+                    android:textSize="@dimen/text_body"
+                    android:textColor="#000000"
+                    android:alpha="0.5"
+                    android:fontFamily="@font/spoqa_sans_neo" />
+
+            </LinearLayout>
+
+            <!-- 기상 시간 (토글 ON 시 노출) -->
+            <LinearLayout
+                android:id="@+id/sleepEndTimeItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="16dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_sleep_end_time_title"
+                        android:textSize="@dimen/text_body"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/spoqa_sans_neo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_sleep_end_time_desc"
+                        android:textSize="@dimen/text_caption"
+                        android:textColor="#000000"
+                        android:alpha="0.5"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/sleepEndTimeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="06:00"
+                    android:textSize="@dimen/text_body"
+                    android:textColor="#000000"
+                    android:alpha="0.5"
+                    android:fontFamily="@font/spoqa_sans_neo" />
+
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="#000000"
+                android:alpha="0.05" />
+
+            <!-- ============================================ -->
             <!-- Section: 알림 -->
             <!-- ============================================ -->
 
