@@ -188,6 +188,9 @@ class ShortsBlockService : AccessibilityService() {
             return
         }
 
+        // 이벤트 상세 로깅 (뷰 변화 모니터링)
+        logAccessibilityEventDetails(event, packageName)
+
         // 이벤트 로깅
         Log.d(TAG, "=== Event: ${event.eventType}, Package: $packageName ===")
         Log.d(TAG, "Current state: ${sessionState.getCurrentState(packageName)}")
@@ -232,6 +235,73 @@ class ShortsBlockService : AccessibilityService() {
 
         // 상태에 따른 액션 수행
         handleStateActions(packageName)
+    }
+
+    /**
+     * AccessibilityEvent 상세 로깅 (뷰 변화 모니터링용)
+     *
+     * YouTube pause 등 UI 변화로 인한 false positive 디버깅을 위해
+     * 이벤트 타입, 소스 정보, 변경된 내용을 상세히 기록
+     */
+    private fun logAccessibilityEventDetails(event: AccessibilityEvent, packageName: String) {
+        if (packageName !in AppBlockingRegistry.TARGET_PACKAGES) return
+
+        val eventTypeName = when (event.eventType) {
+            AccessibilityEvent.TYPE_VIEW_CLICKED -> "VIEW_CLICKED"
+            AccessibilityEvent.TYPE_VIEW_LONG_CLICKED -> "VIEW_LONG_CLICKED"
+            AccessibilityEvent.TYPE_VIEW_SELECTED -> "VIEW_SELECTED"
+            AccessibilityEvent.TYPE_VIEW_FOCUSED -> "VIEW_FOCUSED"
+            AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED -> "VIEW_TEXT_CHANGED"
+            AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> "WINDOW_STATE_CHANGED"
+            AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -> "WINDOW_CONTENT_CHANGED"
+            AccessibilityEvent.TYPE_VIEW_SCROLLED -> "VIEW_SCROLLED"
+            AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED -> "NOTIFICATION_STATE_CHANGED"
+            AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED -> "VIEW_TEXT_SELECTION_CHANGED"
+            AccessibilityEvent.TYPE_ANNOUNCEMENT -> "ANNOUNCEMENT"
+            AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED -> "VIEW_ACCESSIBILITY_FOCUSED"
+            AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED -> "VIEW_ACCESSIBILITY_FOCUS_CLEARED"
+            AccessibilityEvent.TYPE_WINDOWS_CHANGED -> "WINDOWS_CHANGED"
+            else -> "UNKNOWN(${event.eventType})"
+        }
+
+        val sourceViewId = event.source?.viewIdResourceName ?: "null"
+        val sourceClassName = event.className?.toString() ?: "null"
+        val sourceText = event.text?.joinToString(", ") ?: "null"
+        val contentDesc = event.contentDescription?.toString() ?: "null"
+
+        Log.d(TAG, "┌─── AccessibilityEvent Detail ───")
+        Log.d(TAG, "│ Type: $eventTypeName (${event.eventType})")
+        Log.d(TAG, "│ Package: $packageName")
+        Log.d(TAG, "│ ClassName: $sourceClassName")
+        Log.d(TAG, "│ ViewId: $sourceViewId")
+        Log.d(TAG, "│ Text: $sourceText")
+        Log.d(TAG, "│ ContentDesc: $contentDesc")
+
+        if (event.eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
+            val contentChangeTypes = event.contentChangeTypes
+            val changeTypeNames = mutableListOf<String>()
+            if (contentChangeTypes and AccessibilityEvent.CONTENT_CHANGE_TYPE_SUBTREE != 0) changeTypeNames.add("SUBTREE")
+            if (contentChangeTypes and AccessibilityEvent.CONTENT_CHANGE_TYPE_TEXT != 0) changeTypeNames.add("TEXT")
+            if (contentChangeTypes and AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION != 0) changeTypeNames.add("CONTENT_DESCRIPTION")
+            if (contentChangeTypes and AccessibilityEvent.CONTENT_CHANGE_TYPE_STATE_DESCRIPTION != 0) changeTypeNames.add("STATE_DESCRIPTION")
+            if (contentChangeTypes and AccessibilityEvent.CONTENT_CHANGE_TYPE_UNDEFINED != 0) changeTypeNames.add("UNDEFINED")
+            if (changeTypeNames.isEmpty()) changeTypeNames.add("NONE($contentChangeTypes)")
+            Log.d(TAG, "│ ContentChangeTypes: ${changeTypeNames.joinToString(", ")}")
+        }
+
+        if (event.eventType == AccessibilityEvent.TYPE_VIEW_SCROLLED) {
+            Log.d(TAG, "│ ScrollX: ${event.scrollX}, ScrollY: ${event.scrollY}")
+            Log.d(TAG, "│ FromIndex: ${event.fromIndex}, ToIndex: ${event.toIndex}")
+            Log.d(TAG, "│ ItemCount: ${event.itemCount}")
+        }
+
+        if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
+            Log.d(TAG, "│ WindowId: ${event.windowId}")
+        }
+
+        event.source?.recycle()
+
+        Log.d(TAG, "└─────────────────────────────────")
     }
 
     /**

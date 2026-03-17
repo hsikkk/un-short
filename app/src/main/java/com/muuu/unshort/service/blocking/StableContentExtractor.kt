@@ -64,37 +64,126 @@ class StableContentExtractor {
      * @return 제목/채널/설명을 개별 해시로 가진 핑거프린트
      */
     fun extractYouTubeFingerprint(rootNode: AccessibilityNodeInfo): ContentFingerprint {
-        // 1. 컨테이너 찾기
         val container = rootNode.findAccessibilityNodeInfosByViewId(
             "com.google.android.youtube:id/reel_player_page_container"
         )?.firstOrNull() ?: rootNode
 
-        // 2. 개별 필드 추출
-        val title = extractFromViewIds(container, listOf(
+        // 1차: View ID 기반 추출 (기존 방식)
+        var title = extractFromViewIds(container, listOf(
             "com.google.android.youtube:id/reel_player_title",
             "com.google.android.youtube:id/video_title"
         ))
-
-        val channel = extractFromViewIds(container, listOf(
+        var channel = extractFromViewIds(container, listOf(
             "com.google.android.youtube:id/reel_player_channel_name",
             "com.google.android.youtube:id/channel_name"
         ))
-
-        val description = extractFromViewIds(container, listOf(
+        var description = extractFromViewIds(container, listOf(
             "com.google.android.youtube:id/reel_player_description"
         ))
 
-        // 3. 각 필드의 해시 생성
+        // 2차: View ID로 못 찾으면 contentDescription 패턴 기반 추출
+        if (title.isEmpty() && channel.isEmpty()) {
+            Log.d(TAG, "View ID extraction failed, falling back to contentDescription")
+            val allDescs = mutableListOf<String>()
+            collectContentDescriptions(container, allDescs, depth = 0, maxDepth = 8)
+            Log.d(TAG, "Collected ${allDescs.size} contentDescriptions: $allDescs")
+
+            // 채널: "구독합니다" 패턴에서 @채널명 추출
+            for (desc in allDescs) {
+                if (desc.contains("구독합니다") && desc.contains("@")) {
+                    channel = extractChannelFromDesc(desc)
+                    if (channel.isNotEmpty()) {
+                        Log.d(TAG, "  [DESC] Channel: '$channel'")
+                        break
+                    }
+                }
+            }
+
+            // 제목: UI 요소를 제외한 contentDescription 중 제목 후보 탐색
+            for (desc in allDescs) {
+                if (isContentTitle(desc)) {
+                    title = desc
+                    Log.d(TAG, "  [DESC] Title: '$title'")
+                    break
+                }
+            }
+        }
+
         val titleHash = title.trim().hashCode()
         val channelHash = channel.trim().hashCode()
         val descriptionHash = description.trim().hashCode()
 
-        Log.d(TAG, "Fingerprint extracted - title: '$title' (hash: $titleHash)")
-        Log.d(TAG, "Fingerprint extracted - channel: '$channel' (hash: $channelHash)")
-        Log.d(TAG, "Fingerprint extracted - desc: '$description' (hash: $descriptionHash)")
+        Log.d(TAG, "Fingerprint - title: '$title' (hash: $titleHash)")
+        Log.d(TAG, "Fingerprint - channel: '$channel' (hash: $channelHash)")
+        Log.d(TAG, "Fingerprint - desc: '$description' (hash: $descriptionHash)")
 
         return ContentFingerprint(titleHash, channelHash, descriptionHash)
     }
+
+    /**
+     * 노드 트리에서 모든 contentDescription을 수집
+     */
+    private fun collectContentDescriptions(
+        node: AccessibilityNodeInfo,
+        result: MutableList<String>,
+        depth: Int,
+        maxDepth: Int
+    ) {
+        if (depth > maxDepth) return
+
+        node.contentDescription?.toString()?.let { desc ->
+            if (desc.isNotEmpty()) {
+                result.add(desc)
+            }
+        }
+
+        for (i in 0 until node.childCount) {
+            node.getChild(i)?.let { child ->
+                collectContentDescriptions(child, result, depth + 1, maxDepth)
+                child.recycle()
+            }
+        }
+    }
+
+    /**
+     * contentDescription이 제목인지 판별
+     *
+     * UI 요소(좋아요, 댓글, 공유 등)를 제외하고
+     * 콘텐츠 제목으로 판별 가능한 패턴만 허용
+     */
+    private fun isContentTitle(desc: String): Boolean {
+        if (desc.length <= 3) return false
+
+        val uiPatterns = listOf(
+            "좋아요", "싫어요", "댓글", "공유", "리믹스",
+            "구독", "사운드", "동영상", "더보기", "라이브",
+            "검색", "알림", "설정", "메뉴", "닫기", "뒤로",
+            "탐색", "홈", "보관함", "Shorts", "shorts"
+        )
+
+        return uiPatterns.none { desc.contains(it, ignoreCase = true) }
+    }
+
+    /**
+     * "구독합니다" contentDescription에서 "@채널명" 추출
+     */
+    private fun extractChannelFromDesc(desc: String): String {
+        // "@XXX을(를) 구독합니다." 패턴
+        val atIndex = desc.indexOf("@")
+        if (atIndex >= 0) {
+            val endPatterns = listOf("을(를)", "을 ", "를 ", " 구독")
+            for (pattern in endPatterns) {
+                val endIndex = desc.indexOf(pattern, atIndex)
+                if (endIndex > atIndex) {
+                    return desc.substring(atIndex, endIndex)
+                }
+            }
+            // 패턴이 없으면 @ 이후 전체
+            return desc.substring(atIndex).trim()
+        }
+        return ""
+    }
+
 
     /**
      * 여러 View ID에서 텍스트 추출 (첫 번째로 찾은 것 반환)
