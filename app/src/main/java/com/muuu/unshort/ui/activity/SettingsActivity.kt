@@ -26,6 +26,7 @@ import com.muuu.unshort.receiver.DailyReportReceiver
 import com.muuu.unshort.util.ThreeStepProtectionHelper
 import com.muuu.unshort.util.WarningConfig
 import com.muuu.unshort.util.ConfirmConfig
+import com.muuu.unshort.BuildConfig
 import com.muuu.unshort.R
 
 class SettingsActivity : BaseActivity() {
@@ -247,10 +248,12 @@ class SettingsActivity : BaseActivity() {
 
         // 피드백 보내기
         feedbackItem.setOnClickListener {
+            val appInfo = "\n\n---\nApp: ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})\nDevice: ${android.os.Build.MODEL} (Android ${android.os.Build.VERSION.RELEASE})"
             val intent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:")
                 putExtra(Intent.EXTRA_EMAIL, arrayOf("devmuuu@gmail.com"))
                 putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject))
+                putExtra(Intent.EXTRA_TEXT, appInfo)
             }
             try {
                 startActivity(intent)
