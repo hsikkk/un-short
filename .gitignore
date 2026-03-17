@@ -30,3 +30,6 @@ fastlane/test_output
 fastlane/README.md
 *.json.key
 **/play-store-credentials.json
+
+# OMC
+.omc/
