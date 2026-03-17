@@ -878,7 +878,9 @@ class ShortsBlockService : AccessibilityService() {
                     prefsManager.clearCompletedSessionId()
                     prefsManager.clearAllowedUntilScroll()
 
-                    Log.d(TAG, "Skip cooldown set - blocking prevented for 2 seconds")
+                    // 딜레이 동안 이벤트 처리를 차단하여 쇼츠 재감지 방지
+                    autoExitCooldownUntil = System.currentTimeMillis() + AUTO_EXIT_COOLDOWN_MS
+                    Log.d(TAG, "Skip cooldown set - autoExitCooldownUntil for ${AUTO_EXIT_COOLDOWN_MS}ms")
 
                     // Overlay Activity가 완전히 종료되고 쇼츠로 복귀한 후 액션 수행
                     handler.postDelayed({
