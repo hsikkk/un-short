@@ -32,7 +32,7 @@ description: Android 앱의 버전 관리 및 프로덕션 배포를 위한 완�
      - patch: `chore: bump version to X.X.X (versionCode) - patch release`
      - code: `chore: bump version code to versionCode`
    - versionName이 변경된 경우 Git 태그를 생성합니다:
-     - 태그명: `vX.X.X` (예: `v1.3.4`)
+     - 태그명: `X.X.X` (예: `1.3.4`)
      - 태그 메시지: `Release vX.X.X (build versionCode)`
 
 5. **Production 배포**
@@ -45,7 +45,7 @@ description: Android 앱의 버전 관리 및 프로덕션 배포를 위한 완�
 6. **완료 안내**
    - 릴리스 완료 후 사용자에게 다음 단계를 안내합니다:
      - `git push origin main`
-     - `git push origin vX.X.X` (태그가 생성된 경우)
+     - `git push origin X.X.X` (태그가 생성된 경우)
 
 ## 중요 사항
 
