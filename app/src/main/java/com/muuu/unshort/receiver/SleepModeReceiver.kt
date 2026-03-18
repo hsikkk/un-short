@@ -166,10 +166,10 @@ class SleepModeReceiver : BroadcastReceiver() {
                 if (!prefsManager.isSleepModeEnabled) return
 
                 val previousState = prefsManager.blockingBeforeSleep
-                if (!previousState) {
+                if (!previousState && !prefsManager.isDailyLimitExceededToday) {
                     prefsManager.isBlockingEnabled = false
                 }
-                Log.d(TAG, "Sleep mode ended. Restored blocking to: $previousState")
+                Log.d(TAG, "Sleep mode ended. Restored blocking to: $previousState (dailyLimitExceeded=${prefsManager.isDailyLimitExceededToday})")
 
                 scheduleAlarms(context)
             }

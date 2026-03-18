@@ -71,6 +71,8 @@ class ShortsBlockService : AccessibilityService() {
     private lateinit var statisticsRepository: StatisticsRepository
     private lateinit var usageMonitor: ShortsUsageMonitor
     private lateinit var reminderNotifier: BlockingReminderNotifier
+    private lateinit var dailyLimitManager: com.muuu.unshort.service.dailylimit.DailyLimitManager
+    private lateinit var dailyLimitNotifier: com.muuu.unshort.util.DailyLimitNotifier
 
     // 현재 처리 중인 패키지
     private var currentPackage: String = ""
@@ -123,6 +125,27 @@ class ShortsBlockService : AccessibilityService() {
             reminderNotifier.sendReminderNotification()
           }
         )
+
+        // DailyLimit 초기화
+        dailyLimitNotifier = com.muuu.unshort.util.DailyLimitNotifier(this)
+        dailyLimitManager = com.muuu.unshort.service.dailylimit.DailyLimitManager(
+            context = this,
+            prefsManager = prefsManager,
+            statisticsRepository = statisticsRepository,
+            onWarningThreshold = { dailyLimitNotifier.sendWarningNotification() },
+            onLimitExceeded = {
+                prefsManager.isBlockingEnabled = true
+                dailyLimitNotifier.sendLimitExceededNotification()
+            },
+            onMonitoringUpdate = { currentMs, limitMs ->
+                dailyLimitNotifier.updateMonitoringNotification(currentMs, limitMs)
+            }
+        )
+
+        // Daily limit reset 알람 스케줄
+        if (prefsManager.isDailyLimitEnabled) {
+            com.muuu.unshort.receiver.DailyLimitResetReceiver.scheduleReset(this)
+        }
 
         // SessionStateManager 초기화 (usageMonitor 의존)
         sessionState = SessionStateManager(
@@ -954,6 +977,9 @@ class ShortsBlockService : AccessibilityService() {
         )
 
         Log.d(TAG, "Session recorded: didWatch=${info.didWatch}, duration=${info.watchDurationMs}ms")
+
+        // 일일 제한 체크 (방금 기록한 세션의 duration을 전달하여 race condition 방지)
+        dailyLimitManager.checkAfterSessionEnd(info.watchDurationMs)
 
         currentTimerCompleted = false
         isCurrentSessionFromScroll = false

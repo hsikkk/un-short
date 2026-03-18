@@ -397,4 +397,35 @@
     <string name="changelog_subtitle">Check out what\'s new</string>
     <string name="changelog_confirm">OK</string>
 
+    <!-- Daily Limit -->
+    <string name="settings_section_daily_limit">Daily Limit</string>
+    <string name="settings_daily_limit_title">Daily Time Limit</string>
+    <string name="settings_daily_limit_desc">Limit daily viewing time and auto-block when exceeded</string>
+    <string name="daily_limit_bottom_sheet_title">Daily Time Limit</string>
+    <string name="daily_limit_toggle_label">Enable daily limit</string>
+    <string name="daily_limit_presets">Quick Presets</string>
+    <string name="daily_limit_done">Done</string>
+    <string name="daily_limit_value_format">%d min</string>
+    <string name="daily_limit_warning_title">80%% Warning</string>
+    <string name="daily_limit_warning_desc">Notify when 80%% of limit is reached</string>
+    <string name="daily_limit_monitor_title">Always-on Monitoring</string>
+    <string name="daily_limit_monitor_desc">Show viewing time in status bar</string>
+    <string name="daily_limit_notif_warning_title">Used 80%% of daily shorts limit.</string>
+    <string name="daily_limit_notif_warning_message">Auto-block will activate when fully used.</string>
+    <string name="daily_limit_notif_exceeded_title">Daily limit exceeded</string>
+    <string name="daily_limit_notif_exceeded_message">Auto-block has been activated.</string>
+    <string name="daily_limit_notif_monitor_title">Shorts today: %d min</string>
+    <string name="daily_limit_notif_monitor_text">%d/%d</string>
+    <string name="daily_limit_notif_monitor_exceeded">%d/%d | Daily limit exceeded</string>
+    <string name="daily_limit_channel_name">Daily Limit Notifications</string>
+    <string name="daily_limit_channel_desc">Warnings and alerts for daily viewing time limit</string>
+    <string name="daily_limit_monitor_channel_name">Viewing Time Monitor</string>
+    <string name="daily_limit_monitor_channel_desc">Shows today\'s shorts viewing time in status bar</string>
+    <string name="daily_limit_locked_title">Cannot disable blocking</string>
+    <string name="daily_limit_locked_message">Daily limit exceeded. Blocking stays active until midnight.</string>
+    <string name="daily_limit_change_title">Change limit time</string>
+    <string name="daily_limit_change_message">You\'ve already watched over 80%% of today\'s limit. The change will apply starting tomorrow.</string>
+    <string name="daily_limit_range_min">15 min</string>
+    <string name="daily_limit_range_max">240 min</string>
+
 </resources>

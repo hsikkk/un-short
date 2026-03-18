@@ -396,4 +396,35 @@
     <string name="changelog_subtitle">Посмотрите, что нового</string>
     <string name="changelog_confirm">ОК</string>
 
+    <!-- Daily Limit -->
+    <string name="settings_section_daily_limit">Дневной лимит</string>
+    <string name="settings_daily_limit_title">Дневной лимит времени</string>
+    <string name="settings_daily_limit_desc">Ограничьте ежедневное время просмотра и автоматически блокируйте при превышении</string>
+    <string name="daily_limit_bottom_sheet_title">Дневной лимит времени</string>
+    <string name="daily_limit_toggle_label">Использовать дневной лимит</string>
+    <string name="daily_limit_presets">Быстрый выбор</string>
+    <string name="daily_limit_done">Готово</string>
+    <string name="daily_limit_value_format">%d мин</string>
+    <string name="daily_limit_warning_title">Предупреждение при 80%%</string>
+    <string name="daily_limit_warning_desc">Уведомление при достижении 80%% лимита</string>
+    <string name="daily_limit_monitor_title">Постоянное уведомление мониторинга</string>
+    <string name="daily_limit_monitor_desc">Отображать время просмотра в строке состояния</string>
+    <string name="daily_limit_notif_warning_title">Вы использовали 80%% дневного лимита Shorts.</string>
+    <string name="daily_limit_notif_warning_message">При полном исчерпании блокировка включится автоматически.</string>
+    <string name="daily_limit_notif_exceeded_title">Дневной лимит превышен</string>
+    <string name="daily_limit_notif_exceeded_message">Блокировка включена автоматически.</string>
+    <string name="daily_limit_notif_monitor_title">Просмотр Shorts сегодня: %d мин</string>
+    <string name="daily_limit_notif_monitor_text">%d/%d</string>
+    <string name="daily_limit_notif_monitor_exceeded">%d/%d | Дневной лимит превышен</string>
+    <string name="daily_limit_channel_name">Уведомления дневного лимита</string>
+    <string name="daily_limit_channel_desc">Предупреждения и уведомления о превышении дневного лимита просмотра</string>
+    <string name="daily_limit_monitor_channel_name">Мониторинг времени просмотра</string>
+    <string name="daily_limit_monitor_channel_desc">Отображать время просмотра Shorts сегодня в строке состояния</string>
+    <string name="daily_limit_locked_title">Разблокировка невозможна</string>
+    <string name="daily_limit_locked_message">Дневной лимит превышен; блокировка сохраняется до полуночи.</string>
+    <string name="daily_limit_change_title">Изменить лимит времени</string>
+    <string name="daily_limit_change_message">Сегодня вы уже просмотрели более 80%% своего лимита. Изменение вступит в силу завтра.</string>
+    <string name="daily_limit_range_min">15 мин</string>
+    <string name="daily_limit_range_max">240 мин</string>
+
 </resources>

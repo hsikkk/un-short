@@ -286,8 +286,12 @@ class MainActivity : BaseActivity() {
             val currentState = prefsManager.isBlockingEnabled
             val newState = !currentState
 
-            // If turning OFF, check sleep mode first
+            // If turning OFF, check daily limit lock first
             if (currentState && !newState) {
+                if (prefsManager.isDailyLimitExceededToday) {
+                    showDailyLimitLockedDialog()
+                    return@setOnClickListener
+                }
                 if (prefsManager.isSleepTime()) {
                     showSleepModeBlockDialog()
                     return@setOnClickListener
@@ -611,7 +615,19 @@ class MainActivity : BaseActivity() {
         loadingOverlay.visibility = View.GONE
     }
 
+    private fun showDailyLimitLockedDialog() {
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle(getString(R.string.daily_limit_locked_title))
+            .setMessage(getString(R.string.daily_limit_locked_message))
+            .setPositiveButton(getString(R.string.changelog_confirm), null)
+            .show()
+    }
+
     private fun showDisableTypeDialog() {
+        if (prefsManager.isDailyLimitExceededToday) {
+            showDailyLimitLockedDialog()
+            return
+        }
         DisableTypeDialog(
             context = this,
             onPermanentDisable = {

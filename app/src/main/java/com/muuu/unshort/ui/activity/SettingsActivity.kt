@@ -30,6 +30,7 @@ import com.muuu.unshort.util.ConfirmConfig
 import com.muuu.unshort.BuildConfig
 import com.muuu.unshort.R
 import com.muuu.unshort.ui.dialog.WarningDialog
+import kotlinx.coroutines.launch
 
 class SettingsActivity : BaseActivity() {
 
@@ -62,6 +63,15 @@ class SettingsActivity : BaseActivity() {
     private lateinit var dailyNotificationSwitch: Switch
     private lateinit var dailyNotificationTimeItem: LinearLayout
     private lateinit var dailyNotificationTimeValue: TextView
+
+    // Daily Limit
+    private lateinit var dailyLimitItem: LinearLayout
+    private lateinit var dailyLimitValue: TextView
+    private lateinit var dailyLimitProBadge: TextView
+    private lateinit var dailyLimitWarningItem: LinearLayout
+    private lateinit var dailyLimitWarningSwitch: Switch
+    private lateinit var dailyLimitMonitorItem: LinearLayout
+    private lateinit var dailyLimitMonitorSwitch: Switch
 
     // Sleep Mode
     private lateinit var sleepModeItem: LinearLayout
@@ -151,6 +161,15 @@ class SettingsActivity : BaseActivity() {
         dailyNotificationTimeItem = findViewById(R.id.dailyNotificationTimeItem)
         dailyNotificationTimeValue = findViewById(R.id.dailyNotificationTimeValue)
 
+        // Daily Limit
+        dailyLimitItem = findViewById(R.id.dailyLimitItem)
+        dailyLimitValue = findViewById(R.id.dailyLimitValue)
+        dailyLimitProBadge = findViewById(R.id.dailyLimitProBadge)
+        dailyLimitWarningItem = findViewById(R.id.dailyLimitWarningItem)
+        dailyLimitWarningSwitch = findViewById(R.id.dailyLimitWarningSwitch)
+        dailyLimitMonitorItem = findViewById(R.id.dailyLimitMonitorItem)
+        dailyLimitMonitorSwitch = findViewById(R.id.dailyLimitMonitorSwitch)
+
         // Sleep Mode
         sleepModeItem = findViewById(R.id.sleepModeItem)
         sleepModeValue = findViewById(R.id.sleepModeValue)
@@ -231,6 +250,9 @@ class SettingsActivity : BaseActivity() {
                 deviceAdminSwitch.isChecked = !deviceAdminSwitch.isChecked
             }
         }
+
+        // 일일 제한 초기화
+        setupDailyLimit()
 
         // 수면 모드 초기화
         setupSleepMode()
@@ -424,6 +446,11 @@ class SettingsActivity : BaseActivity() {
         deviceAdminSwitch.visibility = if (isPremium) android.view.View.VISIBLE else android.view.View.GONE
         deviceAdminProBadge.visibility = if (isPremium) android.view.View.GONE else android.view.View.VISIBLE
         deviceAdminItem.alpha = premiumAlpha
+
+        // 일일 제한
+        dailyLimitValue.visibility = if (isPremium) android.view.View.VISIBLE else android.view.View.GONE
+        dailyLimitProBadge.visibility = if (isPremium) android.view.View.GONE else android.view.View.VISIBLE
+        dailyLimitItem.alpha = premiumAlpha
     }
 
     /**
@@ -669,6 +696,163 @@ class SettingsActivity : BaseActivity() {
         )
 
         timePicker.show()
+    }
+
+    private fun setupDailyLimit() {
+        updateDailyLimitDisplay()
+
+        dailyLimitWarningSwitch.isChecked = prefsManager.isDailyLimitWarningEnabled
+        dailyLimitMonitorSwitch.isChecked = prefsManager.isDailyLimitMonitorEnabled
+
+        dailyLimitItem.setOnClickListener {
+            if (!PremiumManager.isPremium()) {
+                startActivity(Intent(this, PremiumUpgradeActivity::class.java))
+                return@setOnClickListener
+            }
+            showDailyLimitBottomSheet()
+        }
+
+        // 80% 경고 토글
+        dailyLimitWarningSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prefsManager.isDailyLimitWarningEnabled = isChecked
+        }
+        dailyLimitWarningItem.setOnClickListener {
+            dailyLimitWarningSwitch.isChecked = !dailyLimitWarningSwitch.isChecked
+        }
+
+        // 모니터링 토글
+        dailyLimitMonitorSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prefsManager.isDailyLimitMonitorEnabled = isChecked
+            if (isChecked) {
+                val notifier = com.muuu.unshort.util.DailyLimitNotifier(this)
+                val limitMs = prefsManager.dailyLimitMinutes * 60 * 1000L
+                kotlinx.coroutines.MainScope().launch {
+                    val stats = com.muuu.unshort.data.statistics.StatisticsRepository(this@SettingsActivity).getTodayStats()
+                    notifier.updateMonitoringNotification(stats.watchTimeMs, limitMs)
+                }
+            } else {
+                val nm = getSystemService(NOTIFICATION_SERVICE) as android.app.NotificationManager
+                nm.cancel(com.muuu.unshort.config.AppConstants.NOTIFICATION_ID_DAILY_LIMIT_MONITOR)
+            }
+        }
+        dailyLimitMonitorItem.setOnClickListener {
+            dailyLimitMonitorSwitch.isChecked = !dailyLimitMonitorSwitch.isChecked
+        }
+
+        updateDailyLimitSubItems()
+    }
+
+    private fun updateDailyLimitSubItems() {
+        val visible = if (prefsManager.isDailyLimitEnabled) View.VISIBLE else View.GONE
+        dailyLimitWarningItem.visibility = visible
+        dailyLimitMonitorItem.visibility = visible
+    }
+
+    private fun updateDailyLimitDisplay() {
+        if (prefsManager.isDailyLimitEnabled) {
+            dailyLimitValue.text = getString(R.string.daily_limit_value_format, prefsManager.dailyLimitMinutes)
+        } else {
+            dailyLimitValue.text = getString(R.string.sleep_mode_not_set)
+        }
+    }
+
+    private fun showDailyLimitBottomSheet() {
+        val bottomSheetDialog = BottomSheetDialog(this)
+        val view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_daily_limit, null)
+
+        val toggle = view.findViewById<Switch>(R.id.dailyLimitToggle)
+        val valueText = view.findViewById<TextView>(R.id.dailyLimitValueText)
+        val seekBar = view.findViewById<SeekBar>(R.id.dailyLimitSeekBar)
+        val doneButton = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.dailyLimitDoneButton)
+        val preset30 = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.preset30)
+        val preset60 = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.preset60)
+        val preset120 = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.preset120)
+
+        var tempEnabled = prefsManager.isDailyLimitEnabled
+        var tempMinutes = prefsManager.dailyLimitMinutes
+
+        fun minutesToProgress(minutes: Int): Int = (minutes / 15).coerceIn(1, 16)
+        fun progressToMinutes(progress: Int): Int = progress * 15
+
+        fun updateDisplay() {
+            valueText.text = getString(R.string.daily_limit_value_format, tempMinutes)
+        }
+
+        toggle.isChecked = tempEnabled
+        seekBar.progress = minutesToProgress(tempMinutes)
+        updateDisplay()
+
+        toggle.setOnCheckedChangeListener { _, isChecked ->
+            tempEnabled = isChecked
+        }
+
+        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                tempMinutes = progressToMinutes(progress)
+                updateDisplay()
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+
+        preset30.setOnClickListener {
+            tempMinutes = 30; seekBar.progress = minutesToProgress(30); updateDisplay()
+        }
+        preset60.setOnClickListener {
+            tempMinutes = 60; seekBar.progress = minutesToProgress(60); updateDisplay()
+        }
+        preset120.setOnClickListener {
+            tempMinutes = 120; seekBar.progress = minutesToProgress(120); updateDisplay()
+        }
+
+        fun applySettings() {
+            val wasEnabled = prefsManager.isDailyLimitEnabled
+            prefsManager.isDailyLimitEnabled = tempEnabled
+            prefsManager.dailyLimitMinutes = tempMinutes
+
+            if (tempEnabled) {
+                com.muuu.unshort.receiver.DailyLimitResetReceiver.scheduleReset(this@SettingsActivity)
+            } else {
+                com.muuu.unshort.receiver.DailyLimitResetReceiver.cancelReset(this@SettingsActivity)
+                val nm = getSystemService(NOTIFICATION_SERVICE) as android.app.NotificationManager
+                nm.cancel(com.muuu.unshort.config.AppConstants.NOTIFICATION_ID_DAILY_LIMIT_MONITOR)
+            }
+
+            updateDailyLimitDisplay()
+            updateDailyLimitSubItems()
+            bottomSheetDialog.dismiss()
+        }
+
+        doneButton.setOnClickListener {
+            val oldMinutes = prefsManager.dailyLimitMinutes
+            val minutesChanged = tempEnabled && tempMinutes != oldMinutes && prefsManager.isDailyLimitEnabled
+
+            if (minutesChanged) {
+                kotlinx.coroutines.MainScope().launch {
+                    val stats = com.muuu.unshort.data.statistics.StatisticsRepository(this@SettingsActivity).getTodayStats()
+                    val currentLimitMs = oldMinutes * 60 * 1000L
+                    val watchedRatio = if (currentLimitMs > 0) stats.watchTimeMs.toDouble() / currentLimitMs else 0.0
+
+                    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                        if (watchedRatio >= 0.8) {
+                            androidx.appcompat.app.AlertDialog.Builder(this@SettingsActivity)
+                                .setTitle(getString(R.string.daily_limit_change_title))
+                                .setMessage(getString(R.string.daily_limit_change_message))
+                                .setPositiveButton(getString(R.string.changelog_confirm)) { _, _ -> applySettings() }
+                                .setNegativeButton(getString(android.R.string.cancel), null)
+                                .show()
+                        } else {
+                            applySettings()
+                        }
+                    }
+                }
+            } else {
+                applySettings()
+            }
+        }
+
+        bottomSheetDialog.setContentView(view)
+        bottomSheetDialog.show()
     }
 
     private fun setupSleepMode() {

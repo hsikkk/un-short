@@ -396,4 +396,35 @@
     <string name="changelog_subtitle">查看最新变化</string>
     <string name="changelog_confirm">好的</string>
 
+    <!-- Daily Limit -->
+    <string name="settings_section_daily_limit">每日限制</string>
+    <string name="settings_daily_limit_title">每日限制时间</string>
+    <string name="settings_daily_limit_desc">限制每日观看时间，超时自动屏蔽</string>
+    <string name="daily_limit_bottom_sheet_title">每日限制时间</string>
+    <string name="daily_limit_toggle_label">启用每日限制</string>
+    <string name="daily_limit_presets">快速选择</string>
+    <string name="daily_limit_done">完成</string>
+    <string name="daily_limit_value_format">%d分钟</string>
+    <string name="daily_limit_warning_title">80%%警告通知</string>
+    <string name="daily_limit_warning_desc">达到限制的80%%时通知</string>
+    <string name="daily_limit_monitor_title">常驻监控通知</string>
+    <string name="daily_limit_monitor_desc">在状态栏显示观看时间</string>
+    <string name="daily_limit_notif_warning_title">已使用每日短视频限制时间的80%%。</string>
+    <string name="daily_limit_notif_warning_message">用完后将自动启用屏蔽。</string>
+    <string name="daily_limit_notif_exceeded_title">每日限制已超</string>
+    <string name="daily_limit_notif_exceeded_message">已自动启用屏蔽。</string>
+    <string name="daily_limit_notif_monitor_title">今日短视频观看：%d分钟</string>
+    <string name="daily_limit_notif_monitor_text">%d/%d</string>
+    <string name="daily_limit_notif_monitor_exceeded">%d/%d | 每日限制已超</string>
+    <string name="daily_limit_channel_name">每日限制通知</string>
+    <string name="daily_limit_channel_desc">每日观看时间限制警告和超时通知</string>
+    <string name="daily_limit_monitor_channel_name">观看时间监控</string>
+    <string name="daily_limit_monitor_channel_desc">在状态栏显示今日短视频观看时间</string>
+    <string name="daily_limit_locked_title">无法关闭屏蔽</string>
+    <string name="daily_limit_locked_message">每日限制时间已超，屏蔽将持续到午夜。</string>
+    <string name="daily_limit_change_title">更改限制时间</string>
+    <string name="daily_limit_change_message">今天已观看超过限制时间的80%%。更改将从明天开始生效。</string>
+    <string name="daily_limit_range_min">15分钟</string>
+    <string name="daily_limit_range_max">240分钟</string>
+
 </resources>

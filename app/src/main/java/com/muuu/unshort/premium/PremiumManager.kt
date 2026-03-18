@@ -223,6 +223,15 @@ object PremiumManager {
             prefsManager.isBlockScrolledOnly = false
             prefsManager.isPreventImpulsiveDisable = false
 
+            // 일일 제한 기능 비활성화
+            prefsManager.isDailyLimitEnabled = false
+            prefsManager.isDailyLimitMonitorEnabled = false
+            prefsManager.clearDailyLimitDailyState()
+            com.muuu.unshort.receiver.DailyLimitResetReceiver.cancelReset(appContext)
+            // 모니터링 알림 제거
+            val notificationManager = appContext.getSystemService(android.content.Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
+            notificationManager.cancel(com.muuu.unshort.config.AppConstants.NOTIFICATION_ID_DAILY_LIMIT_MONITOR)
+
         } catch (e: Exception) {
             // 실패 시 무시 (치명적이지 않음)
         }

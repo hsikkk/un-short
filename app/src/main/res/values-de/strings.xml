@@ -396,4 +396,35 @@
     <string name="changelog_subtitle">Entdecke, was neu ist</string>
     <string name="changelog_confirm">OK</string>
 
+    <!-- Daily Limit -->
+    <string name="settings_section_daily_limit">Tageslimit</string>
+    <string name="settings_daily_limit_title">Tägliche Zeitbegrenzung</string>
+    <string name="settings_daily_limit_desc">Begrenzen Sie die tägliche Sehdauer und blockieren Sie automatisch bei Überschreitung</string>
+    <string name="daily_limit_bottom_sheet_title">Tägliche Zeitbegrenzung</string>
+    <string name="daily_limit_toggle_label">Tageslimit verwenden</string>
+    <string name="daily_limit_presets">Schnellauswahl</string>
+    <string name="daily_limit_done">Fertig</string>
+    <string name="daily_limit_value_format">%d Min.</string>
+    <string name="daily_limit_warning_title">80%%-Warnung</string>
+    <string name="daily_limit_warning_desc">Benachrichtigung bei Erreichen von 80%% des Limits</string>
+    <string name="daily_limit_monitor_title">Dauerhafte Überwachungsbenachrichtigung</string>
+    <string name="daily_limit_monitor_desc">Sehdauer in der Statusleiste anzeigen</string>
+    <string name="daily_limit_notif_warning_title">Sie haben 80%% Ihres täglichen Shorts-Limits verbraucht.</string>
+    <string name="daily_limit_notif_warning_message">Bei vollständiger Ausschöpfung wird automatisch blockiert.</string>
+    <string name="daily_limit_notif_exceeded_title">Tageslimit überschritten</string>
+    <string name="daily_limit_notif_exceeded_message">Die Sperre wurde automatisch aktiviert.</string>
+    <string name="daily_limit_notif_monitor_title">Heute gesehene Shorts: %d Min.</string>
+    <string name="daily_limit_notif_monitor_text">%d/%d</string>
+    <string name="daily_limit_notif_monitor_exceeded">%d/%d | Tageslimit überschritten</string>
+    <string name="daily_limit_channel_name">Tageslimit-Benachrichtigungen</string>
+    <string name="daily_limit_channel_desc">Warnungen und Überschreitungsbenachrichtigungen für das tägliche Sehlimit</string>
+    <string name="daily_limit_monitor_channel_name">Sehdauer-Überwachung</string>
+    <string name="daily_limit_monitor_channel_desc">Heutige Shorts-Sehdauer in der Statusleiste anzeigen</string>
+    <string name="daily_limit_locked_title">Entsperren nicht möglich</string>
+    <string name="daily_limit_locked_message">Das Tageslimit wurde überschritten; die Sperre bleibt bis Mitternacht aktiv.</string>
+    <string name="daily_limit_change_title">Zeitlimit ändern</string>
+    <string name="daily_limit_change_message">Sie haben heute bereits mehr als 80%% Ihres Limits gesehen. Die Änderung gilt ab morgen.</string>
+    <string name="daily_limit_range_min">15 Min.</string>
+    <string name="daily_limit_range_max">240 Min.</string>
+
 </resources>

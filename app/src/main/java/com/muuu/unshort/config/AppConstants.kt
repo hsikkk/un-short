@@ -73,6 +73,17 @@ object AppConstants {
     const val PREF_SLEEP_END_HOUR = "sleep_end_hour"
     const val PREF_SLEEP_END_MINUTE = "sleep_end_minute"
 
+    // Daily Limit
+    const val NOTIFICATION_ID_DAILY_LIMIT = 1003
+    const val NOTIFICATION_ID_DAILY_LIMIT_MONITOR = 1004
+    const val PREF_DAILY_LIMIT_ENABLED = "daily_limit_enabled"
+    const val PREF_DAILY_LIMIT_MINUTES = "daily_limit_minutes"
+    const val PREF_DAILY_LIMIT_WARNING_ENABLED = "daily_limit_warning_enabled"
+    const val PREF_DAILY_LIMIT_MONITOR_ENABLED = "daily_limit_monitor_enabled"
+    const val PREF_DAILY_LIMIT_EXCEEDED_TODAY = "daily_limit_exceeded_today"
+    const val PREF_DAILY_LIMIT_WARNING_SENT_TODAY = "daily_limit_warning_sent_today"
+    const val ACTION_DAILY_LIMIT_RESET = "com.muuu.unshort.DAILY_LIMIT_RESET"
+
     // Changelog
     const val PREF_LAST_SEEN_VERSION_CODE = "last_seen_version_code"
 

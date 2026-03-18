@@ -397,4 +397,35 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="changelog_subtitle">Lihat apa yang baru</string>
     <string name="changelog_confirm">Oke</string>
 
+    <!-- Daily Limit -->
+    <string name="settings_section_daily_limit">Batas harian</string>
+    <string name="settings_daily_limit_title">Batas waktu harian</string>
+    <string name="settings_daily_limit_desc">Batasi waktu menonton harian dan blokir otomatis saat terlampaui</string>
+    <string name="daily_limit_bottom_sheet_title">Batas waktu harian</string>
+    <string name="daily_limit_toggle_label">Gunakan batas harian</string>
+    <string name="daily_limit_presets">Pilihan cepat</string>
+    <string name="daily_limit_done">Selesai</string>
+    <string name="daily_limit_value_format">%d menit</string>
+    <string name="daily_limit_warning_title">Peringatan 80%%</string>
+    <string name="daily_limit_warning_desc">Notifikasi saat mencapai 80%% batas</string>
+    <string name="daily_limit_monitor_title">Notifikasi pemantauan berkelanjutan</string>
+    <string name="daily_limit_monitor_desc">Tampilkan waktu menonton di bilah status</string>
+    <string name="daily_limit_notif_warning_title">Anda telah menggunakan 80%% batas Shorts harian Anda.</string>
+    <string name="daily_limit_notif_warning_message">Saat habis, pemblokiran akan aktif otomatis.</string>
+    <string name="daily_limit_notif_exceeded_title">Batas harian terlampaui</string>
+    <string name="daily_limit_notif_exceeded_message">Pemblokiran telah aktif secara otomatis.</string>
+    <string name="daily_limit_notif_monitor_title">Shorts ditonton hari ini: %d menit</string>
+    <string name="daily_limit_notif_monitor_text">%d/%d</string>
+    <string name="daily_limit_notif_monitor_exceeded">%d/%d | Batas harian terlampaui</string>
+    <string name="daily_limit_channel_name">Notifikasi batas harian</string>
+    <string name="daily_limit_channel_desc">Peringatan batas dan notifikasi kelebihan waktu menonton harian</string>
+    <string name="daily_limit_monitor_channel_name">Pemantauan waktu menonton</string>
+    <string name="daily_limit_monitor_channel_desc">Tampilkan waktu menonton Shorts hari ini di bilah status</string>
+    <string name="daily_limit_locked_title">Tidak dapat membuka blokir</string>
+    <string name="daily_limit_locked_message">Batas harian telah terlampaui; pemblokiran tetap aktif hingga tengah malam.</string>
+    <string name="daily_limit_change_title">Ubah batas waktu</string>
+    <string name="daily_limit_change_message">Anda sudah menonton lebih dari 80%% batas Anda hari ini. Perubahan akan berlaku mulai besok.</string>
+    <string name="daily_limit_range_min">15 menit</string>
+    <string name="daily_limit_range_max">240 menit</string>
+
 </resources>

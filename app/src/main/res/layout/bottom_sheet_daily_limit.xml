@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- 제목 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/daily_limit_bottom_sheet_title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/spoqa_sans_neo_bold"
+        android:textColor="@color/gray_900"
+        android:layout_marginBottom="24dp" />
+
+    <!-- ON/OFF 토글 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingVertical="12dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/daily_limit_toggle_label"
+            android:textSize="16sp"
+            android:fontFamily="@font/spoqa_sans_neo"
+            android:textColor="@color/gray_900" />
+
+        <Switch
+            android:id="@+id/dailyLimitToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false" />
+
+    </LinearLayout>
+
+    <!-- 구분선 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="8dp"
+        android:background="#000000"
+        android:alpha="0.08" />
+
+    <!-- 현재 값 표시 -->
+    <TextView
+        android:id="@+id/dailyLimitValueText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/daily_limit_value_format"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/spoqa_sans_neo_bold"
+        android:textColor="@color/accent_purple"
+        android:gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <!-- SeekBar -->
+    <SeekBar
+        android:id="@+id/dailyLimitSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:min="1"
+        android:max="16"
+        android:progress="4"
+        android:progressTint="@color/accent_purple"
+        android:thumbTint="@color/accent_purple"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 범위 표시 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="24dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/daily_limit_range_min"
+            android:textSize="13sp"
+            android:fontFamily="@font/spoqa_sans_neo_regular"
+            android:textColor="@color/gray_500"
+            android:gravity="start" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/daily_limit_range_max"
+            android:textSize="13sp"
+            android:fontFamily="@font/spoqa_sans_neo_regular"
+            android:textColor="@color/gray_500"
+            android:gravity="end" />
+    </LinearLayout>
+
+    <!-- 프리셋 버튼 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/daily_limit_presets"
+        android:textSize="14sp"
+        android:fontFamily="@font/spoqa_sans_neo_medium"
+        android:textColor="@color/gray_700"
+        android:layout_marginBottom="12dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="24dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/preset30"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="30분"
+            android:textSize="14sp"
+            android:fontFamily="@font/spoqa_sans_neo_medium"
+            app:strokeColor="@color/gray_300"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/preset60"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="60분"
+            android:textSize="14sp"
+            android:fontFamily="@font/spoqa_sans_neo_medium"
+            app:strokeColor="@color/gray_300"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/preset120"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="120분"
+            android:textSize="14sp"
+            android:fontFamily="@font/spoqa_sans_neo_medium"
+            app:strokeColor="@color/gray_300"
+            app:strokeWidth="1dp" />
+
+    </LinearLayout>
+
+    <!-- 완료 버튼 -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dailyLimitDoneButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="@string/daily_limit_done"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/spoqa_sans_neo_bold"
+        app:backgroundTint="@color/accent_purple"
+        android:textColor="@color/white" />
+
+</LinearLayout>

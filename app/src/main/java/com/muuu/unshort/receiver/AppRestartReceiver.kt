@@ -64,6 +64,12 @@ class AppRestartReceiver : BroadcastReceiver() {
                 SleepModeReceiver.scheduleAlarms(context)
                 Log.d(TAG, "Scheduled sleep mode alarms")
             }
+
+            // Schedule daily limit reset (only if enabled)
+            if (prefsManager.isDailyLimitEnabled) {
+                DailyLimitResetReceiver.scheduleReset(context)
+                Log.d(TAG, "Scheduled daily limit reset alarm")
+            }
         } else {
             Log.d(TAG, "Missing permissions - Accessibility: $hasAccessibilityPermission, Overlay: $hasOverlayPermission")
         }

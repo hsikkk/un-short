@@ -396,4 +396,35 @@
     <string name="changelog_subtitle">اكتشف ما الجديد</string>
     <string name="changelog_confirm">حسناً</string>
 
+    <!-- Daily Limit -->
+    <string name="settings_section_daily_limit">الحد اليومي</string>
+    <string name="settings_daily_limit_title">وقت الحد اليومي</string>
+    <string name="settings_daily_limit_desc">حدد وقت المشاهدة اليومي وقم بالحجب التلقائي عند تجاوزه</string>
+    <string name="daily_limit_bottom_sheet_title">وقت الحد اليومي</string>
+    <string name="daily_limit_toggle_label">استخدام الحد اليومي</string>
+    <string name="daily_limit_presets">اختيار سريع</string>
+    <string name="daily_limit_done">تم</string>
+    <string name="daily_limit_value_format">%d دقيقة</string>
+    <string name="daily_limit_warning_title">تنبيه 80%%</string>
+    <string name="daily_limit_warning_desc">إشعار عند الوصول إلى 80%% من الحد</string>
+    <string name="daily_limit_monitor_title">إشعار المراقبة المستمرة</string>
+    <string name="daily_limit_monitor_desc">عرض وقت المشاهدة في شريط الحالة</string>
+    <string name="daily_limit_notif_warning_title">لقد استخدمت 80%% من حدك اليومي للـ Shorts.</string>
+    <string name="daily_limit_notif_warning_message">عند الاستنفاد الكامل، سيتم تفعيل الحجب تلقائياً.</string>
+    <string name="daily_limit_notif_exceeded_title">تم تجاوز الحد اليومي</string>
+    <string name="daily_limit_notif_exceeded_message">تم تفعيل الحجب تلقائياً.</string>
+    <string name="daily_limit_notif_monitor_title">مشاهدة Shorts اليوم: %d دقيقة</string>
+    <string name="daily_limit_notif_monitor_text">%d/%d</string>
+    <string name="daily_limit_notif_monitor_exceeded">%d/%d | تم تجاوز الحد اليومي</string>
+    <string name="daily_limit_channel_name">إشعارات الحد اليومي</string>
+    <string name="daily_limit_channel_desc">تنبيهات الحد اليومي وتجاوز وقت المشاهدة</string>
+    <string name="daily_limit_monitor_channel_name">مراقبة وقت المشاهدة</string>
+    <string name="daily_limit_monitor_channel_desc">عرض وقت مشاهدة Shorts اليوم في شريط الحالة</string>
+    <string name="daily_limit_locked_title">تعذّر إلغاء الحجب</string>
+    <string name="daily_limit_locked_message">تم تجاوز الحد اليومي؛ يستمر الحجب حتى منتصف الليل.</string>
+    <string name="daily_limit_change_title">تغيير وقت الحد</string>
+    <string name="daily_limit_change_message">لقد شاهدت بالفعل أكثر من 80%% من حدك اليوم. سيُطبَّق التغيير ابتداءً من الغد.</string>
+    <string name="daily_limit_range_min">15 دقيقة</string>
+    <string name="daily_limit_range_max">240 دقيقة</string>
+
 </resources>

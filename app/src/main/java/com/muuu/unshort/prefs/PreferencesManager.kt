@@ -265,6 +265,40 @@ class PreferencesManager(context: Context) {
         return String.format("%02d:%02d~%02d:%02d", sleepStartHour, sleepStartMinute, sleepEndHour, sleepEndMinute)
     }
 
+    // ========== Daily Limit ==========
+
+    var isDailyLimitEnabled: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_DAILY_LIMIT_ENABLED, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_DAILY_LIMIT_ENABLED, value).apply()
+
+    var dailyLimitMinutes: Int
+        get() = prefs.getInt(AppConstants.PREF_DAILY_LIMIT_MINUTES, 60)
+        set(value) = prefs.edit().putInt(AppConstants.PREF_DAILY_LIMIT_MINUTES, value).apply()
+
+    var isDailyLimitWarningEnabled: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_DAILY_LIMIT_WARNING_ENABLED, true)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_DAILY_LIMIT_WARNING_ENABLED, value).apply()
+
+    var isDailyLimitMonitorEnabled: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_DAILY_LIMIT_MONITOR_ENABLED, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_DAILY_LIMIT_MONITOR_ENABLED, value).apply()
+
+    var isDailyLimitExceededToday: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_DAILY_LIMIT_EXCEEDED_TODAY, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_DAILY_LIMIT_EXCEEDED_TODAY, value).apply()
+
+    var isDailyLimitWarningSentToday: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_DAILY_LIMIT_WARNING_SENT_TODAY, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_DAILY_LIMIT_WARNING_SENT_TODAY, value).apply()
+
+    fun clearDailyLimitDailyState() {
+        prefs.edit().apply {
+            remove(AppConstants.PREF_DAILY_LIMIT_EXCEEDED_TODAY)
+            remove(AppConstants.PREF_DAILY_LIMIT_WARNING_SENT_TODAY)
+            apply()
+        }
+    }
+
     // ========== Changelog ==========
 
     var lastSeenVersionCode: Int

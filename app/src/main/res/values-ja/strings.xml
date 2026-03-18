@@ -396,4 +396,35 @@
     <string name="changelog_subtitle">新機能・変更点を確認</string>
     <string name="changelog_confirm">OK</string>
 
+    <!-- Daily Limit -->
+    <string name="settings_section_daily_limit">日次制限</string>
+    <string name="settings_daily_limit_title">1日の制限時間</string>
+    <string name="settings_daily_limit_desc">1日の視聴時間を制限し、超過時に自動ブロック</string>
+    <string name="daily_limit_bottom_sheet_title">1日の制限時間</string>
+    <string name="daily_limit_toggle_label">日次制限を使用</string>
+    <string name="daily_limit_presets">クイック選択</string>
+    <string name="daily_limit_done">完了</string>
+    <string name="daily_limit_value_format">%d分</string>
+    <string name="daily_limit_warning_title">80%%警告通知</string>
+    <string name="daily_limit_warning_desc">制限の80%%到達時に通知</string>
+    <string name="daily_limit_monitor_title">常時モニタリング通知</string>
+    <string name="daily_limit_monitor_desc">ステータスバーに視聴時間を表示</string>
+    <string name="daily_limit_notif_warning_title">ショート動画の1日制限時間の80%%を使用しました。</string>
+    <string name="daily_limit_notif_warning_message">すべて使い切ると自動的にブロックされます。</string>
+    <string name="daily_limit_notif_exceeded_title">日次制限超過</string>
+    <string name="daily_limit_notif_exceeded_message">自動的にブロックが実行されます。</string>
+    <string name="daily_limit_notif_monitor_title">今日のショート視聴: %d分</string>
+    <string name="daily_limit_notif_monitor_text">%d/%d</string>
+    <string name="daily_limit_notif_monitor_exceeded">%d/%d | 日次制限超過</string>
+    <string name="daily_limit_channel_name">日次制限通知</string>
+    <string name="daily_limit_channel_desc">1日の視聴時間制限の警告と超過通知</string>
+    <string name="daily_limit_monitor_channel_name">視聴時間モニタリング</string>
+    <string name="daily_limit_monitor_channel_desc">今日のショート動画視聴時間をステータスバーに表示</string>
+    <string name="daily_limit_locked_title">ブロック解除不可</string>
+    <string name="daily_limit_locked_message">日次制限時間を超過したため、深夜までブロックが維持されます。</string>
+    <string name="daily_limit_change_title">制限時間変更</string>
+    <string name="daily_limit_change_message">今日すでに制限時間の80%%以上を視聴しました。変更は明日から適用されます。</string>
+    <string name="daily_limit_range_min">15分</string>
+    <string name="daily_limit_range_max">240分</string>
+
 </resources>

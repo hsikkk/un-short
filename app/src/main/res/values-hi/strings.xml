@@ -395,4 +395,35 @@
     <string name="changelog_subtitle">नया क्या है देखें</string>
     <string name="changelog_confirm">ठीक है</string>
 
+    <!-- Daily Limit -->
+    <string name="settings_section_daily_limit">दैनिक सीमा</string>
+    <string name="settings_daily_limit_title">दैनिक समय सीमा</string>
+    <string name="settings_daily_limit_desc">दैनिक देखने का समय सीमित करें और अधिक होने पर स्वतः ब्लॉक करें</string>
+    <string name="daily_limit_bottom_sheet_title">दैनिक समय सीमा</string>
+    <string name="daily_limit_toggle_label">दैनिक सीमा उपयोग करें</string>
+    <string name="daily_limit_presets">त्वरित चयन</string>
+    <string name="daily_limit_done">पूर्ण</string>
+    <string name="daily_limit_value_format">%d मिनट</string>
+    <string name="daily_limit_warning_title">80%% चेतावनी सूचना</string>
+    <string name="daily_limit_warning_desc">सीमा का 80%% पहुंचने पर सूचना</string>
+    <string name="daily_limit_monitor_title">निरंतर निगरानी सूचना</string>
+    <string name="daily_limit_monitor_desc">स्टेटस बार में देखने का समय दिखाएं</string>
+    <string name="daily_limit_notif_warning_title">आपने अपनी Shorts की दैनिक सीमा का 80%% उपयोग कर लिया है।</string>
+    <string name="daily_limit_notif_warning_message">पूरी तरह समाप्त होने पर ब्लॉक स्वतः सक्रिय हो जाएगा।</string>
+    <string name="daily_limit_notif_exceeded_title">दैनिक सीमा पार हो गई</string>
+    <string name="daily_limit_notif_exceeded_message">ब्लॉक स्वतः सक्रिय हो गया है।</string>
+    <string name="daily_limit_notif_monitor_title">आज Shorts देखना: %d मिनट</string>
+    <string name="daily_limit_notif_monitor_text">%d/%d</string>
+    <string name="daily_limit_notif_monitor_exceeded">%d/%d | दैनिक सीमा पार</string>
+    <string name="daily_limit_channel_name">दैनिक सीमा सूचनाएं</string>
+    <string name="daily_limit_channel_desc">दैनिक देखने की समय सीमा चेतावनी और अधिक होने की सूचनाएं</string>
+    <string name="daily_limit_monitor_channel_name">देखने के समय की निगरानी</string>
+    <string name="daily_limit_monitor_channel_desc">आज के Shorts देखने का समय स्टेटस बार में दिखाएं</string>
+    <string name="daily_limit_locked_title">अनब्लॉक करना संभव नहीं</string>
+    <string name="daily_limit_locked_message">दैनिक सीमा पार हो गई है; ब्लॉक मध्यरात्रि तक बना रहेगा।</string>
+    <string name="daily_limit_change_title">समय सीमा बदलें</string>
+    <string name="daily_limit_change_message">आज आप पहले से ही अपनी सीमा का 80%% से अधिक देख चुके हैं। परिवर्तन कल से लागू होगा।</string>
+    <string name="daily_limit_range_min">15 मिनट</string>
+    <string name="daily_limit_range_max">240 मिनट</string>
+
 </resources>

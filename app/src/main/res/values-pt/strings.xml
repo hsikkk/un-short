@@ -396,4 +396,35 @@
     <string name="changelog_subtitle">Confira as novidades</string>
     <string name="changelog_confirm">OK</string>
 
+    <!-- Daily Limit -->
+    <string name="settings_section_daily_limit">Limite diário</string>
+    <string name="settings_daily_limit_title">Tempo limite diário</string>
+    <string name="settings_daily_limit_desc">Limite o tempo de visualização diário e bloqueie automaticamente ao exceder</string>
+    <string name="daily_limit_bottom_sheet_title">Tempo limite diário</string>
+    <string name="daily_limit_toggle_label">Usar limite diário</string>
+    <string name="daily_limit_presets">Seleção rápida</string>
+    <string name="daily_limit_done">Concluir</string>
+    <string name="daily_limit_value_format">%d min</string>
+    <string name="daily_limit_warning_title">Aviso de 80%%</string>
+    <string name="daily_limit_warning_desc">Notificação ao atingir 80%% do limite</string>
+    <string name="daily_limit_monitor_title">Notificação de monitoramento contínuo</string>
+    <string name="daily_limit_monitor_desc">Exibe o tempo de visualização na barra de status</string>
+    <string name="daily_limit_notif_warning_title">Você usou 80%% do seu limite diário de Shorts.</string>
+    <string name="daily_limit_notif_warning_message">Ao esgotar, o bloqueio será ativado automaticamente.</string>
+    <string name="daily_limit_notif_exceeded_title">Limite diário excedido</string>
+    <string name="daily_limit_notif_exceeded_message">O bloqueio foi ativado automaticamente.</string>
+    <string name="daily_limit_notif_monitor_title">Shorts assistidos hoje: %d min</string>
+    <string name="daily_limit_notif_monitor_text">%d/%d</string>
+    <string name="daily_limit_notif_monitor_exceeded">%d/%d | Limite diário excedido</string>
+    <string name="daily_limit_channel_name">Notificações de limite diário</string>
+    <string name="daily_limit_channel_desc">Avisos de limite e excesso do tempo de visualização diário</string>
+    <string name="daily_limit_monitor_channel_name">Monitoramento de tempo de visualização</string>
+    <string name="daily_limit_monitor_channel_desc">Exibe o tempo de Shorts de hoje na barra de status</string>
+    <string name="daily_limit_locked_title">Não é possível desbloquear</string>
+    <string name="daily_limit_locked_message">O limite diário foi excedido; o bloqueio permanece até meia-noite.</string>
+    <string name="daily_limit_change_title">Alterar tempo limite</string>
+    <string name="daily_limit_change_message">Você já assistiu mais de 80%% do seu limite hoje. A alteração entrará em vigor amanhã.</string>
+    <string name="daily_limit_range_min">15 min</string>
+    <string name="daily_limit_range_max">240 min</string>
+
 </resources>

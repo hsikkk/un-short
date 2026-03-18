@@ -396,4 +396,35 @@
     <string name="changelog_subtitle">Xem những điểm mới</string>
     <string name="changelog_confirm">Đồng ý</string>
 
+    <!-- Daily Limit -->
+    <string name="settings_section_daily_limit">Giới hạn hàng ngày</string>
+    <string name="settings_daily_limit_title">Thời gian giới hạn hàng ngày</string>
+    <string name="settings_daily_limit_desc">Giới hạn thời gian xem mỗi ngày và tự động chặn khi vượt quá</string>
+    <string name="daily_limit_bottom_sheet_title">Thời gian giới hạn hàng ngày</string>
+    <string name="daily_limit_toggle_label">Sử dụng giới hạn hàng ngày</string>
+    <string name="daily_limit_presets">Chọn nhanh</string>
+    <string name="daily_limit_done">Xong</string>
+    <string name="daily_limit_value_format">%d phút</string>
+    <string name="daily_limit_warning_title">Cảnh báo 80%%</string>
+    <string name="daily_limit_warning_desc">Thông báo khi đạt 80%% giới hạn</string>
+    <string name="daily_limit_monitor_title">Thông báo theo dõi liên tục</string>
+    <string name="daily_limit_monitor_desc">Hiển thị thời gian xem trên thanh trạng thái</string>
+    <string name="daily_limit_notif_warning_title">Bạn đã dùng 80%% giới hạn Shorts hàng ngày.</string>
+    <string name="daily_limit_notif_warning_message">Khi hết, chặn sẽ tự động kích hoạt.</string>
+    <string name="daily_limit_notif_exceeded_title">Đã vượt giới hạn hàng ngày</string>
+    <string name="daily_limit_notif_exceeded_message">Chặn đã được kích hoạt tự động.</string>
+    <string name="daily_limit_notif_monitor_title">Xem Shorts hôm nay: %d phút</string>
+    <string name="daily_limit_notif_monitor_text">%d/%d</string>
+    <string name="daily_limit_notif_monitor_exceeded">%d/%d | Đã vượt giới hạn hàng ngày</string>
+    <string name="daily_limit_channel_name">Thông báo giới hạn hàng ngày</string>
+    <string name="daily_limit_channel_desc">Cảnh báo và thông báo vượt quá thời gian xem hàng ngày</string>
+    <string name="daily_limit_monitor_channel_name">Theo dõi thời gian xem</string>
+    <string name="daily_limit_monitor_channel_desc">Hiển thị thời gian xem Shorts hôm nay trên thanh trạng thái</string>
+    <string name="daily_limit_locked_title">Không thể bỏ chặn</string>
+    <string name="daily_limit_locked_message">Đã vượt giới hạn hàng ngày; chặn sẽ duy trì cho đến nửa đêm.</string>
+    <string name="daily_limit_change_title">Thay đổi thời gian giới hạn</string>
+    <string name="daily_limit_change_message">Hôm nay bạn đã xem hơn 80%% giới hạn của mình. Thay đổi sẽ có hiệu lực từ ngày mai.</string>
+    <string name="daily_limit_range_min">15 phút</string>
+    <string name="daily_limit_range_max">240 phút</string>
+
 </resources>

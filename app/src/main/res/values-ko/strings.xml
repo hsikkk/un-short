@@ -397,4 +397,35 @@
     <string name="changelog_subtitle">새로운 변경사항을 확인해보세요</string>
     <string name="changelog_confirm">확인</string>
 
+    <!-- Daily Limit -->
+    <string name="settings_section_daily_limit">일일 제한</string>
+    <string name="settings_daily_limit_title">일일 제한 시간</string>
+    <string name="settings_daily_limit_desc">하루 시청 시간을 제한하고 초과 시 자동 차단</string>
+    <string name="daily_limit_bottom_sheet_title">일일 제한 시간</string>
+    <string name="daily_limit_toggle_label">일일 제한 사용</string>
+    <string name="daily_limit_presets">빠른 선택</string>
+    <string name="daily_limit_done">완료</string>
+    <string name="daily_limit_value_format">%d분</string>
+    <string name="daily_limit_warning_title">80%% 경고 알림</string>
+    <string name="daily_limit_warning_desc">제한의 80%% 도달 시 알림</string>
+    <string name="daily_limit_monitor_title">상시 모니터링 알림</string>
+    <string name="daily_limit_monitor_desc">상태바에 시청 시간 표시</string>
+    <string name="daily_limit_notif_warning_title">쇼츠 일일 제한 시간 80%% 사용했어요.</string>
+    <string name="daily_limit_notif_warning_message">모두 소진 시 자동으로 차단이 실행됩니다.</string>
+    <string name="daily_limit_notif_exceeded_title">일일 제한 초과</string>
+    <string name="daily_limit_notif_exceeded_message">자동으로 차단이 실행됩니다.</string>
+    <string name="daily_limit_notif_monitor_title">오늘 쇼츠 시청: %d분</string>
+    <string name="daily_limit_notif_monitor_text">%d/%d</string>
+    <string name="daily_limit_notif_monitor_exceeded">%d/%d | 일일 제한 초과</string>
+    <string name="daily_limit_channel_name">일일 제한 알림</string>
+    <string name="daily_limit_channel_desc">일일 시청 시간 제한 경고 및 초과 알림</string>
+    <string name="daily_limit_monitor_channel_name">시청 시간 모니터링</string>
+    <string name="daily_limit_monitor_channel_desc">오늘의 쇼츠 시청 시간을 상태바에 표시</string>
+    <string name="daily_limit_locked_title">차단 해제 불가</string>
+    <string name="daily_limit_locked_message">일일 제한 시간을 초과하여 자정까지 차단이 유지됩니다.</string>
+    <string name="daily_limit_change_title">제한 시간 변경</string>
+    <string name="daily_limit_change_message">오늘 이미 제한 시간의 80%% 이상을 시청했어요. 변경된 시간은 내일부터 적용됩니다.</string>
+    <string name="daily_limit_range_min">15분</string>
+    <string name="daily_limit_range_max">240분</string>
+
 </resources>

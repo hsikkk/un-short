@@ -174,6 +174,16 @@
             </intent-filter>
         </receiver>
 
+        <!-- Daily Limit Reset Receiver -->
+        <receiver
+            android:name=".receiver.DailyLimitResetReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.muuu.unshort.DAILY_LIMIT_RESET" />
+            </intent-filter>
+        </receiver>
+
         <!-- AdMob App ID -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
