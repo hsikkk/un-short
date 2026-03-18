@@ -391,4 +391,9 @@
     <string name="sleep_mode_confirm_activate_positive">تفعيل</string>
     <string name="report_daily_analysis">التحليل اليومي</string>
 
+    <!-- Changelog -->
+    <string name="changelog_title">تحديث v%s</string>
+    <string name="changelog_subtitle">اكتشف ما الجديد</string>
+    <string name="changelog_confirm">حسناً</string>
+
 </resources>

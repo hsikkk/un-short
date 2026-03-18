@@ -390,4 +390,9 @@
     <string name="report_daily_analysis">दैनिक विश्लेषण</string>
     <string name="timer_required_confirm">टाइमर शुरू करें</string>
 
+    <!-- Changelog -->
+    <string name="changelog_title">v%s अपडेट</string>
+    <string name="changelog_subtitle">नया क्या है देखें</string>
+    <string name="changelog_confirm">ठीक है</string>
+
 </resources>

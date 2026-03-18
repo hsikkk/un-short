@@ -25,7 +25,12 @@ description: Android 앱의 버전 관리 및 프로덕션 배포를 위한 완�
      - `versionName`은 선택한 타입에 따라 증가 (code 타입은 제외)
    - `app/build.gradle.kts` 파일을 수정합니다.
 
-4. **Git 커밋 및 태그**
+4. **Changelog 검증 및 추가**
+   - `app/src/main/java/com/muuu/unshort/changelog/ChangelogData.kt`의 `ChangelogRegistry`에서 bump된 versionCode에 해당하는 항목이 있는지 확인
+   - 없으면 `/changelog` skill을 실행하여 changelog를 먼저 추가한 후 계속 진행
+   - 있으면 통과
+
+5. **Git 커밋 및 태그**
    - 변경사항을 커밋합니다:
      - major: `chore: bump version to X.X.X (versionCode) - major release`
      - minor: `chore: bump version to X.X.X (versionCode) - minor release`
@@ -35,14 +40,14 @@ description: Android 앱의 버전 관리 및 프로덕션 배포를 위한 완�
      - 태그명: `X.X.X` (예: `1.3.4`)
      - 태그 메시지: `Release vX.X.X (build versionCode)`
 
-5. **Production 배포**
+6. **Production 배포**
    - Fastlane `production` lane을 실행합니다:
      ```bash
      fastlane production
      ```
    - 이미 설정된 대로 100% 롤아웃, 메타데이터/스크린샷 업로드 없이 진행됩니다.
 
-6. **완료 안내**
+7. **완료 안내**
    - 릴리스 완료 후 사용자에게 다음 단계를 안내합니다:
      - `git push origin main`
      - `git push origin X.X.X` (태그가 생성된 경우)

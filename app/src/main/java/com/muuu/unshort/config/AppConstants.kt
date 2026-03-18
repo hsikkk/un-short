@@ -73,6 +73,9 @@ object AppConstants {
     const val PREF_SLEEP_END_HOUR = "sleep_end_hour"
     const val PREF_SLEEP_END_MINUTE = "sleep_end_minute"
 
+    // Changelog
+    const val PREF_LAST_SEEN_VERSION_CODE = "last_seen_version_code"
+
     // Remote Config Keys
     const val RC_SHOW_AFFILIATE_BANNER = "show_affiliate_banner"
 }

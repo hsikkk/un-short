@@ -391,4 +391,9 @@
     <string name="sleep_mode_confirm_activate_positive">有効化</string>
     <string name="report_daily_analysis">日別分析</string>
 
+    <!-- Changelog -->
+    <string name="changelog_title">v%s アップデート</string>
+    <string name="changelog_subtitle">新機能・変更点を確認</string>
+    <string name="changelog_confirm">OK</string>
+
 </resources>

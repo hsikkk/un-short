@@ -391,4 +391,9 @@
     <string name="sleep_mode_confirm_activate_positive">Attiva</string>
     <string name="report_daily_analysis">ANALISI GIORNALIERA</string>
 
+    <!-- Changelog -->
+    <string name="changelog_title">Aggiornamento v%s</string>
+    <string name="changelog_subtitle">Scopri le novità</string>
+    <string name="changelog_confirm">OK</string>
+
 </resources>

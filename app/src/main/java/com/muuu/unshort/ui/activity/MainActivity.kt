@@ -62,7 +62,10 @@ import com.muuu.unshort.util.PermissionUtils
 import com.muuu.unshort.ui.activity.BaseActivity
 import com.muuu.unshort.receiver.DailyReportReceiver
 import com.muuu.unshort.ui.dialog.ExitConfirmationDialog
+import com.muuu.unshort.ui.dialog.ChangelogBottomSheet
+import com.muuu.unshort.changelog.ChangelogRegistry
 import com.muuu.unshort.ui.activity.PermissionSetupActivity
+import com.muuu.unshort.BuildConfig
 import com.muuu.unshort.R
 
 class MainActivity : BaseActivity() {
@@ -188,6 +191,9 @@ class MainActivity : BaseActivity() {
         // Record app installed time (first launch only)
         if (prefsManager.appInstalledAt == 0L) {
             prefsManager.appInstalledAt = System.currentTimeMillis()
+            prefsManager.markChangelogSeen(BuildConfig.VERSION_CODE)
+        } else if (prefsManager.lastSeenVersionCode == 0) {
+            prefsManager.lastSeenVersionCode = BuildConfig.VERSION_CODE - 1
         }
 
         setContentView(R.layout.activity_main)
@@ -353,6 +359,9 @@ class MainActivity : BaseActivity() {
         // SharedPreferences 변경 리스너 등록
         getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
             .registerOnSharedPreferenceChangeListener(prefChangeListener)
+
+        // 업데이트 후 첫 실행 시 changelog 표시
+        showChangelogIfNeeded()
     }
 
     override fun onPause() {
@@ -854,6 +863,18 @@ class MainActivity : BaseActivity() {
             positiveTextResId = R.string.sleep_mode_dialog_confirm,
             onPositive = { }
         ).show()
+    }
+
+    private fun showChangelogIfNeeded() {
+        if (prefsManager.shouldShowChangelog(BuildConfig.VERSION_CODE)) {
+            val changelog = ChangelogRegistry.getChangelogForVersion(BuildConfig.VERSION_CODE)
+                ?: ChangelogRegistry.getLatestChangelog()
+                ?: return
+
+            ChangelogBottomSheet.show(this, changelog) {
+                prefsManager.markChangelogSeen(BuildConfig.VERSION_CODE)
+            }
+        }
     }
 
     /**

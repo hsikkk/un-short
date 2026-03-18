@@ -1,0 +1,30 @@
+package com.muuu.unshort.changelog
+
+import androidx.annotation.StringRes
+import com.muuu.unshort.R
+
+data class ChangelogEntry(
+    val versionCode: Int,
+    val versionName: String,
+    @StringRes val changes: List<Int>
+)
+
+/**
+ * 버전별 changelog를 관리하는 레지스트리
+ *
+ * 새 버전 출시 시 changelogs 리스트 상단에 항목을 추가하면 된다.
+ * changes에는 string resource ID 리스트를 넣어 다국어를 자동 지원한다.
+ */
+object ChangelogRegistry {
+
+    private val changelogs = listOf<ChangelogEntry>(
+    )
+
+    fun getChangelogForVersion(versionCode: Int): ChangelogEntry? {
+        return changelogs.find { it.versionCode == versionCode }
+    }
+
+    fun getLatestChangelog(): ChangelogEntry? {
+        return changelogs.firstOrNull()
+    }
+}

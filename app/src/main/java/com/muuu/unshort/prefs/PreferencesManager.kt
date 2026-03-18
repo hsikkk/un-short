@@ -265,6 +265,21 @@ class PreferencesManager(context: Context) {
         return String.format("%02d:%02d~%02d:%02d", sleepStartHour, sleepStartMinute, sleepEndHour, sleepEndMinute)
     }
 
+    // ========== Changelog ==========
+
+    var lastSeenVersionCode: Int
+        get() = prefs.getInt(AppConstants.PREF_LAST_SEEN_VERSION_CODE, 0)
+        set(value) = prefs.edit().putInt(AppConstants.PREF_LAST_SEEN_VERSION_CODE, value).apply()
+
+    fun shouldShowChangelog(currentVersionCode: Int): Boolean {
+        val lastSeen = lastSeenVersionCode
+        return lastSeen > 0 && currentVersionCode > lastSeen
+    }
+
+    fun markChangelogSeen(currentVersionCode: Int) {
+        lastSeenVersionCode = currentVersionCode
+    }
+
     // ========== Batch Operations ==========
 
     /**
