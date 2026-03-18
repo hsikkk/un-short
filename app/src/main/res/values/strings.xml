@@ -393,6 +393,12 @@
     <string name="settings_sleep_end_time_title">Wake-up Time</string>
     <string name="settings_sleep_end_time_desc">When sleep mode ends</string>
     <string name="sleep_mode_invalid_time">Bedtime and wake up time cannot be the same</string>
+    <string name="sleep_mode_not_set">Not set</string>
+    <string name="sleep_mode_toggle_label">Auto-block during sleep</string>
+    <string name="sleep_mode_save">Save</string>
+    <string name="sleep_mode_confirm_activate_title">Activate Sleep Mode Now</string>
+    <string name="sleep_mode_confirm_activate_message">Sleep mode will activate immediately.\nBlocking cannot be disabled until wake-up time.</string>
+    <string name="sleep_mode_confirm_activate_positive">Activate</string>
 
     <!-- TikTok -->
     <string name="tiktok_shorts">TikTok Shorts</string>

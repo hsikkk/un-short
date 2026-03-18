@@ -376,6 +376,12 @@
     <string name="settings_sleep_end_time_title">기상 시간</string>
     <string name="settings_sleep_end_time_desc">수면 모드 종료 시간</string>
     <string name="sleep_mode_invalid_time">취침 시간과 기상 시간은 같을 수 없습니다</string>
+    <string name="sleep_mode_not_set">설정 안됨</string>
+    <string name="sleep_mode_toggle_label">수면 모드 자동 차단</string>
+    <string name="sleep_mode_save">저장</string>
+    <string name="sleep_mode_confirm_activate_title">수면 모드 즉시 실행</string>
+    <string name="sleep_mode_confirm_activate_message">수면 모드가 바로 실행됩니다.\n기상 시간까지 차단 해제가 불가합니다.</string>
+    <string name="sleep_mode_confirm_activate_positive">실행</string>
 
     <!-- Daily Report Notification -->
     <string name="daily_report_notification_message">오늘 하루 리포트를 확인해보세요 ✨</string>

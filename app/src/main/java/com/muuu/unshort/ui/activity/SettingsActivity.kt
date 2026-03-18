@@ -65,11 +65,7 @@ class SettingsActivity : BaseActivity() {
 
     // Sleep Mode
     private lateinit var sleepModeItem: LinearLayout
-    private lateinit var sleepModeSwitch: Switch
-    private lateinit var sleepStartTimeItem: LinearLayout
-    private lateinit var sleepStartTimeValue: TextView
-    private lateinit var sleepEndTimeItem: LinearLayout
-    private lateinit var sleepEndTimeValue: TextView
+    private lateinit var sleepModeValue: TextView
 
     private lateinit var deviceAdminManager: DeviceAdminManager
     private lateinit var prefsManager: PreferencesManager
@@ -157,11 +153,7 @@ class SettingsActivity : BaseActivity() {
 
         // Sleep Mode
         sleepModeItem = findViewById(R.id.sleepModeItem)
-        sleepModeSwitch = findViewById(R.id.sleepModeSwitch)
-        sleepStartTimeItem = findViewById(R.id.sleepStartTimeItem)
-        sleepStartTimeValue = findViewById(R.id.sleepStartTimeValue)
-        sleepEndTimeItem = findViewById(R.id.sleepEndTimeItem)
-        sleepEndTimeValue = findViewById(R.id.sleepEndTimeValue)
+        sleepModeValue = findViewById(R.id.sleepModeValue)
 
         // 버전 정보 설정
         try {
@@ -680,40 +672,144 @@ class SettingsActivity : BaseActivity() {
     }
 
     private fun setupSleepMode() {
-        sleepModeSwitch.isChecked = prefsManager.isSleepModeEnabled
-        updateSleepTimeVisibility(prefsManager.isSleepModeEnabled)
-        updateSleepTimeDisplay()
-
-        sleepModeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (!isChecked && prefsManager.isSleepTime()) {
-                sleepModeSwitch.isChecked = true
-                showSleepModeActiveDialog()
-                return@setOnCheckedChangeListener
-            }
-            prefsManager.isSleepModeEnabled = isChecked
-            updateSleepTimeVisibility(isChecked)
-
-            if (isChecked) {
-                SleepModeReceiver.scheduleAlarms(this)
-            } else {
-                SleepModeReceiver.cancelAlarms(this)
-            }
-        }
+        updateSleepModeDisplay()
 
         sleepModeItem.setOnClickListener {
-            sleepModeSwitch.isChecked = !sleepModeSwitch.isChecked
-        }
-
-        sleepStartTimeItem.setOnClickListener {
-            showSleepTimePicker(isStartTime = true)
-        }
-
-        sleepEndTimeItem.setOnClickListener {
-            showSleepTimePicker(isStartTime = false)
+            if (prefsManager.isSleepModeEnabled && prefsManager.isSleepTime()) {
+                showSleepModeDeactivateWarning()
+                return@setOnClickListener
+            }
+            showSleepModeBottomSheet()
         }
     }
 
-    private fun showSleepModeActiveDialog() {
+    private fun updateSleepModeDisplay() {
+        if (prefsManager.isSleepModeEnabled) {
+            sleepModeValue.text = prefsManager.getSleepTimeDisplayString()
+        } else {
+            sleepModeValue.text = getString(R.string.sleep_mode_not_set)
+        }
+    }
+
+    private fun showSleepModeBottomSheet() {
+        val bottomSheetDialog = BottomSheetDialog(this)
+        val view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_sleep_mode, null)
+
+        val toggle = view.findViewById<Switch>(R.id.sleepModeToggle)
+        val startTimeText = view.findViewById<TextView>(R.id.sleepStartTimeText)
+        val endTimeText = view.findViewById<TextView>(R.id.sleepEndTimeText)
+        val startTimeRow = view.findViewById<View>(R.id.sleepStartTimeRow)
+        val endTimeRow = view.findViewById<View>(R.id.sleepEndTimeRow)
+        val saveButton = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.sleepModeSaveButton)
+
+        var tempEnabled = prefsManager.isSleepModeEnabled
+        var tempStartHour = prefsManager.sleepStartHour
+        var tempStartMinute = prefsManager.sleepStartMinute
+        var tempEndHour = prefsManager.sleepEndHour
+        var tempEndMinute = prefsManager.sleepEndMinute
+
+        fun updateTimeTexts() {
+            startTimeText.text = String.format("%02d:%02d", tempStartHour, tempStartMinute)
+            endTimeText.text = String.format("%02d:%02d", tempEndHour, tempEndMinute)
+        }
+
+        toggle.isChecked = tempEnabled
+        updateTimeTexts()
+
+        toggle.setOnCheckedChangeListener { _, isChecked ->
+            tempEnabled = isChecked
+        }
+
+        startTimeRow.setOnClickListener {
+            TimePickerDialog(
+                this,
+                { _, hourOfDay, minute ->
+                    if (hourOfDay == tempEndHour && minute == tempEndMinute) {
+                        Toast.makeText(this, getString(R.string.sleep_mode_invalid_time), Toast.LENGTH_SHORT).show()
+                        return@TimePickerDialog
+                    }
+                    tempStartHour = hourOfDay
+                    tempStartMinute = minute
+                    updateTimeTexts()
+                },
+                tempStartHour,
+                tempStartMinute,
+                true
+            ).show()
+        }
+
+        endTimeRow.setOnClickListener {
+            TimePickerDialog(
+                this,
+                { _, hourOfDay, minute ->
+                    if (hourOfDay == tempStartHour && minute == tempStartMinute) {
+                        Toast.makeText(this, getString(R.string.sleep_mode_invalid_time), Toast.LENGTH_SHORT).show()
+                        return@TimePickerDialog
+                    }
+                    tempEndHour = hourOfDay
+                    tempEndMinute = minute
+                    updateTimeTexts()
+                },
+                tempEndHour,
+                tempEndMinute,
+                true
+            ).show()
+        }
+
+        saveButton.setOnClickListener {
+            val wasEnabled = prefsManager.isSleepModeEnabled
+
+            if (tempEnabled) {
+                val now = java.time.LocalTime.now()
+                val start = java.time.LocalTime.of(tempStartHour, tempStartMinute)
+                val end = java.time.LocalTime.of(tempEndHour, tempEndMinute)
+                val isCurrentlyInSleepTime = if (start > end) {
+                    now >= start || now < end
+                } else if (start == end) {
+                    false
+                } else {
+                    now in start..<end
+                }
+
+                if (isCurrentlyInSleepTime && (!wasEnabled || !prefsManager.isSleepTime())) {
+                    showSleepModeActivateConfirmDialog(
+                        tempStartHour, tempStartMinute,
+                        tempEndHour, tempEndMinute,
+                        bottomSheetDialog
+                    )
+                    return@setOnClickListener
+                }
+            }
+
+            applySleepModeSettings(
+                tempEnabled,
+                tempStartHour, tempStartMinute,
+                tempEndHour, tempEndMinute
+            )
+            bottomSheetDialog.dismiss()
+        }
+
+        bottomSheetDialog.setContentView(view)
+        bottomSheetDialog.show()
+    }
+
+    private fun showSleepModeActivateConfirmDialog(
+        startHour: Int, startMinute: Int,
+        endHour: Int, endMinute: Int,
+        bottomSheetDialog: BottomSheetDialog
+    ) {
+        android.app.AlertDialog.Builder(this)
+            .setTitle(R.string.sleep_mode_confirm_activate_title)
+            .setMessage(R.string.sleep_mode_confirm_activate_message)
+            .setPositiveButton(R.string.sleep_mode_confirm_activate_positive) { _, _ ->
+                applySleepModeSettings(true, startHour, startMinute, endHour, endMinute)
+                bottomSheetDialog.dismiss()
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
+    private fun showSleepModeDeactivateWarning() {
         WarningDialog(
             context = this,
             titleResId = R.string.sleep_mode_dialog_title,
@@ -723,49 +819,24 @@ class SettingsActivity : BaseActivity() {
         ).show()
     }
 
-    private fun updateSleepTimeVisibility(isEnabled: Boolean) {
-        val visibility = if (isEnabled) View.VISIBLE else View.GONE
-        sleepStartTimeItem.visibility = visibility
-        sleepEndTimeItem.visibility = visibility
-    }
+    private fun applySleepModeSettings(
+        enabled: Boolean,
+        startHour: Int, startMinute: Int,
+        endHour: Int, endMinute: Int
+    ) {
+        prefsManager.isSleepModeEnabled = enabled
+        prefsManager.sleepStartHour = startHour
+        prefsManager.sleepStartMinute = startMinute
+        prefsManager.sleepEndHour = endHour
+        prefsManager.sleepEndMinute = endMinute
 
-    private fun updateSleepTimeDisplay() {
-        sleepStartTimeValue.text = String.format("%02d:%02d", prefsManager.sleepStartHour, prefsManager.sleepStartMinute)
-        sleepEndTimeValue.text = String.format("%02d:%02d", prefsManager.sleepEndHour, prefsManager.sleepEndMinute)
-    }
+        if (enabled) {
+            SleepModeReceiver.scheduleAlarms(this)
+        } else {
+            SleepModeReceiver.cancelAlarms(this)
+        }
 
-    private fun showSleepTimePicker(isStartTime: Boolean) {
-        val currentHour = if (isStartTime) prefsManager.sleepStartHour else prefsManager.sleepEndHour
-        val currentMinute = if (isStartTime) prefsManager.sleepStartMinute else prefsManager.sleepEndMinute
-
-        TimePickerDialog(
-            this,
-            { _, hourOfDay, minute ->
-                if (isStartTime) {
-                    if (hourOfDay == prefsManager.sleepEndHour && minute == prefsManager.sleepEndMinute) {
-                        Toast.makeText(this, getString(R.string.sleep_mode_invalid_time), Toast.LENGTH_SHORT).show()
-                        return@TimePickerDialog
-                    }
-                    prefsManager.sleepStartHour = hourOfDay
-                    prefsManager.sleepStartMinute = minute
-                } else {
-                    if (hourOfDay == prefsManager.sleepStartHour && minute == prefsManager.sleepStartMinute) {
-                        Toast.makeText(this, getString(R.string.sleep_mode_invalid_time), Toast.LENGTH_SHORT).show()
-                        return@TimePickerDialog
-                    }
-                    prefsManager.sleepEndHour = hourOfDay
-                    prefsManager.sleepEndMinute = minute
-                }
-                updateSleepTimeDisplay()
-
-                if (prefsManager.isSleepModeEnabled) {
-                    SleepModeReceiver.scheduleAlarms(this)
-                }
-            },
-            currentHour,
-            currentMinute,
-            true
-        ).show()
+        updateSleepModeDisplay()
     }
 
     companion object {
