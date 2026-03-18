@@ -63,7 +63,6 @@
 
     <!-- Settings Tip Banner -->
     <string name="settings_tip_message">Nhấn vào menu [⋮] ở góc trên bên phải để khám phá thêm tính năng</string>
-    <string name="settings_tip_button">Đi →</string>
 
     <!-- Settings Activity -->
     <string name="settings_title">Cài đặt</string>
@@ -129,10 +128,6 @@
     <string name="timer_breathe_message">Hít thở sâu</string>
     <string name="timer_skip_button">Hủy</string>
     <string name="timer_continue_button">Quay lại</string>
-
-    <!-- Ads -->
-    <string name="ad">QUẢNG CÁO</string>
-
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">Thời gian trì hoãn</string>
@@ -277,7 +272,6 @@
 
     <!-- Subscription Management -->
     <string name="subscription_management">Quản lý đăng ký</string>
-    <string name="subscription_management_desc">Quản lý hoặc hủy đăng ký của bạn</string>
 
     <!-- Subscription Management Activity -->
     <string name="subscription_management_title">Đăng ký</string>
@@ -346,9 +340,6 @@
     <string name="report_hourly_analysis">PHÂN TÍCH THEO GIỜ</string>
     <string name="report_detail">CHI TIẾT</string>
     <string name="report_app_analysis">PHÂN TÍCH THEO ỨNG DỤNG</string>
-    <string name="report_attempts">Lần Truy Cập</string>
-    <string name="report_watched">Đã Xem</string>
-    <string name="report_watch_time">Thời Gian Xem</string>
     <string name="report_today_label">Hôm Nay</string>
     <string name="report_block_rate">Tỷ lệ chặn</string>
     <string name="report_empty_detail">Không xem video ngắn nào</string>
@@ -373,5 +364,31 @@
     <string name="daily_report_notification_title">Chặn Shorts hôm nay</string>
     <string name="daily_report_channel_name">Báo cáo hàng ngày</string>
     <string name="daily_report_channel_desc">Thông báo thống kê chặn Shorts hàng ngày</string>
+
+    <!-- Sleep Mode -->
+    <string name="settings_section_sleep_mode">Chế độ ngủ</string>
+    <string name="settings_sleep_mode_title">Cài đặt chế độ ngủ</string>
+    <string name="settings_sleep_mode_desc">Tự động chặn và tăng cường vào thời gian đã đặt</string>
+    <string name="settings_sleep_bedtime">Giờ ngủ</string>
+    <string name="settings_sleep_wakeup">Giờ thức</string>
+    <string name="settings_sleep_start_time_title">Giờ đi ngủ</string>
+    <string name="settings_sleep_start_time_desc">Thời gian bắt đầu chế độ ngủ</string>
+    <string name="settings_sleep_end_time_title">Giờ thức dậy</string>
+    <string name="settings_sleep_end_time_desc">Thời gian kết thúc chế độ ngủ</string>
+    <string name="sleep_mode_dialog_title">Chế độ ngủ đang hoạt động</string>
+    <string name="sleep_mode_dialog_message">Không thể tắt trong chế độ ngủ.</string>
+    <string name="sleep_mode_dialog_confirm">OK</string>
+    <string name="sleep_mode_active_label">Chế độ ngủ đang hoạt động</string>
+    <string name="sleep_mode_badge">Chế độ ngủ 🌙</string>
+    <string name="sleep_mode_timer_notice">Chế độ ngủ: thời gian chờ cố định 60 giây</string>
+    <string name="sleep_mode_motivation">Đã đến giờ ngủ.\nNhắm mắt và nghỉ ngơi nhé.</string>
+    <string name="sleep_mode_invalid_time">Giờ ngủ và giờ thức không được trùng nhau</string>
+    <string name="sleep_mode_not_set">Chưa cài đặt</string>
+    <string name="sleep_mode_toggle_label">Tự động chặn khi ngủ</string>
+    <string name="sleep_mode_save">Lưu</string>
+    <string name="sleep_mode_confirm_activate_title">Kích hoạt chế độ ngủ ngay</string>
+    <string name="sleep_mode_confirm_activate_message">Chế độ ngủ sẽ được kích hoạt ngay lập tức.\nKhông thể bỏ chặn cho đến giờ thức dậy.</string>
+    <string name="sleep_mode_confirm_activate_positive">Kích hoạt</string>
+    <string name="report_daily_analysis">PHÂN TÍCH HÀNG NGÀY</string>
 
 </resources>

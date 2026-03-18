@@ -63,7 +63,6 @@
 
     <!-- Settings Tip Banner -->
     <string name="settings_tip_message">แตะเมนู [⋮] ที่มุมบนขวาเพื่อสำรวจฟีเจอร์เพิ่มเติม</string>
-    <string name="settings_tip_button">ไป →</string>
 
     <!-- Settings Activity -->
     <string name="settings_title">การตั้งค่า</string>
@@ -129,10 +128,6 @@
     <string name="timer_breathe_message">หายใจลึกๆ</string>
     <string name="timer_skip_button">ยกเลิก</string>
     <string name="timer_continue_button">กลับ</string>
-
-    <!-- Ads -->
-    <string name="ad">โฆษณา</string>
-
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">เวลาหน่วง</string>
@@ -277,7 +272,6 @@
 
     <!-- Subscription Management -->
     <string name="subscription_management">จัดการการสมัครสมาชิก</string>
-    <string name="subscription_management_desc">จัดการหรือยกเลิกการสมัครสมาชิก</string>
 
     <!-- Subscription Management Activity -->
     <string name="subscription_management_title">การสมัครสมาชิก</string>
@@ -346,9 +340,6 @@
     <string name="report_hourly_analysis">การวิเคราะห์รายชั่วโมง</string>
     <string name="report_detail">รายละเอียด</string>
     <string name="report_app_analysis">การวิเคราะห์ตามแอป</string>
-    <string name="report_attempts">การเข้า</string>
-    <string name="report_watched">ดูแล้ว</string>
-    <string name="report_watch_time">เวลาดู</string>
     <string name="report_today_label">วันนี้</string>
     <string name="report_block_rate">อัตราการบล็อก</string>
     <string name="report_empty_detail">ไม่ได้ดูวิดีโอสั้น</string>
@@ -373,5 +364,31 @@
     <string name="daily_report_notification_title">การบล็อก Shorts วันนี้</string>
     <string name="daily_report_channel_name">รายงานประจำวัน</string>
     <string name="daily_report_channel_desc">การแจ้งเตือนสถิติการบล็อก Shorts รายวัน</string>
+
+    <!-- Sleep Mode -->
+    <string name="settings_section_sleep_mode">โหมดนอน</string>
+    <string name="settings_sleep_mode_title">ตั้งค่าโหมดนอน</string>
+    <string name="settings_sleep_mode_desc">บล็อกอัตโนมัติและเข้มงวดขึ้นในเวลาที่กำหนด</string>
+    <string name="settings_sleep_bedtime">เวลานอน</string>
+    <string name="settings_sleep_wakeup">เวลาตื่น</string>
+    <string name="settings_sleep_start_time_title">เวลานอน</string>
+    <string name="settings_sleep_start_time_desc">เวลาเริ่มโหมดนอน</string>
+    <string name="settings_sleep_end_time_title">เวลาตื่น</string>
+    <string name="settings_sleep_end_time_desc">เวลาสิ้นสุดโหมดนอน</string>
+    <string name="sleep_mode_dialog_title">โหมดนอนทำงานอยู่</string>
+    <string name="sleep_mode_dialog_message">ไม่สามารถปิดใช้งานขณะอยู่ในโหมดนอน</string>
+    <string name="sleep_mode_dialog_confirm">ตกลง</string>
+    <string name="sleep_mode_active_label">โหมดนอนทำงานอยู่</string>
+    <string name="sleep_mode_badge">โหมดนอน 🌙</string>
+    <string name="sleep_mode_timer_notice">โหมดนอน: เวลารอถูกกำหนดเป็น 60 วินาที</string>
+    <string name="sleep_mode_motivation">ถึงเวลานอนแล้ว\nหลับตาและพักผ่อนเถอะ</string>
+    <string name="sleep_mode_invalid_time">เวลานอนและเวลาตื่นไม่สามารถเหมือนกันได้</string>
+    <string name="sleep_mode_not_set">ยังไม่ตั้งค่า</string>
+    <string name="sleep_mode_toggle_label">บล็อกอัตโนมัติขณะนอน</string>
+    <string name="sleep_mode_save">บันทึก</string>
+    <string name="sleep_mode_confirm_activate_title">เปิดใช้โหมดนอนทันที</string>
+    <string name="sleep_mode_confirm_activate_message">โหมดนอนจะเปิดใช้งานทันที\nไม่สามารถปลดบล็อกได้จนกว่าจะถึงเวลาตื่น</string>
+    <string name="sleep_mode_confirm_activate_positive">เปิดใช้</string>
+    <string name="report_daily_analysis">วิเคราะห์รายวัน</string>
 
 </resources>

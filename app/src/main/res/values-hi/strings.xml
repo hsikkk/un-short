@@ -63,7 +63,6 @@
 
     <!-- Settings Tip Banner -->
     <string name="settings_tip_message">अधिक सुविधाओं का पता लगाने के लिए ऊपर दाईं ओर [⋮] मेनू टैप करें</string>
-    <string name="settings_tip_button">जाएं →</string>
 
     <!-- Settings Activity -->
     <string name="settings_title">सेटिंग्स</string>
@@ -129,10 +128,6 @@
     <string name="timer_breathe_message">एक गहरी सांस लें</string>
     <string name="timer_skip_button">रद्द करें</string>
     <string name="timer_continue_button">वापस जाएं</string>
-
-    <!-- Ads -->
-    <string name="ad">विज्ञापन</string>
-
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">विलंब समय</string>
@@ -275,7 +270,6 @@
 
     <!-- Subscription Management -->
     <string name="subscription_management">सदस्यता प्रबंधित करें</string>
-    <string name="subscription_management_desc">अपनी सदस्यता को प्रबंधित या रद्द करें</string>
 
     <!-- Subscription Management Activity -->
     <string name="subscription_management_title">सदस्यता</string>
@@ -344,9 +338,6 @@
     <string name="report_hourly_analysis">घंटे के अनुसार विश्लेषण</string>
     <string name="report_detail">विवरण</string>
     <string name="report_app_analysis">ऐप के अनुसार विश्लेषण</string>
-    <string name="report_attempts">प्रवेश</string>
-    <string name="report_watched">देखा गया</string>
-    <string name="report_watch_time">देखने का समय</string>
     <string name="report_today_label">आज</string>
     <string name="report_block_rate">ब्लॉक दर</string>
     <string name="report_empty_detail">कोई शॉर्ट्स नहीं देखा</string>
@@ -371,5 +362,32 @@
     <string name="daily_report_notification_title">आज का शॉर्ट्स ब्लॉकिंग</string>
     <string name="daily_report_channel_name">दैनिक रिपोर्ट</string>
     <string name="daily_report_channel_desc">दैनिक शॉर्ट्स ब्लॉकिंग आंकड़े सूचना</string>
+
+    <!-- Sleep Mode -->
+    <string name="settings_section_sleep_mode">स्लीप मोड</string>
+    <string name="settings_sleep_mode_title">स्लीप मोड सेटिंग्स</string>
+    <string name="settings_sleep_mode_desc">निर्धारित समय पर स्वचालित रूप से ब्लॉकिंग लागू और मजबूत करें</string>
+    <string name="settings_sleep_bedtime">सोने का समय</string>
+    <string name="settings_sleep_wakeup">जागने का समय</string>
+    <string name="settings_sleep_start_time_title">सोने का समय</string>
+    <string name="settings_sleep_start_time_desc">स्लीप मोड शुरू होने का समय</string>
+    <string name="settings_sleep_end_time_title">जागने का समय</string>
+    <string name="settings_sleep_end_time_desc">स्लीप मोड समाप्त होने का समय</string>
+    <string name="sleep_mode_dialog_title">स्लीप मोड सक्रिय</string>
+    <string name="sleep_mode_dialog_message">स्लीप मोड के दौरान निष्क्रिय नहीं किया जा सकता।</string>
+    <string name="sleep_mode_dialog_confirm">ठीक है</string>
+    <string name="sleep_mode_active_label">स्लीप मोड सक्रिय</string>
+    <string name="sleep_mode_badge">स्लीप मोड 🌙</string>
+    <string name="sleep_mode_timer_notice">स्लीप मोड: प्रतीक्षा समय 60 सेकंड पर निश्चित</string>
+    <string name="sleep_mode_motivation">अब सोने का समय है।\nआँखें बंद करें और आराम करें।</string>
+    <string name="sleep_mode_invalid_time">सोने और जागने का समय एक जैसा नहीं हो सकता</string>
+    <string name="sleep_mode_not_set">सेट नहीं</string>
+    <string name="sleep_mode_toggle_label">नींद के दौरान स्वचालित ब्लॉक</string>
+    <string name="sleep_mode_save">सहेजें</string>
+    <string name="sleep_mode_confirm_activate_title">अभी स्लीप मोड सक्रिय करें</string>
+    <string name="sleep_mode_confirm_activate_message">स्लीप मोड तुरंत सक्रिय हो जाएगा।\nजागने के समय तक ब्लॉक हटाया नहीं जा सकता।</string>
+    <string name="sleep_mode_confirm_activate_positive">सक्रिय करें</string>
+    <string name="report_daily_analysis">दैनिक विश्लेषण</string>
+    <string name="timer_required_confirm">टाइमर शुरू करें</string>
 
 </resources>

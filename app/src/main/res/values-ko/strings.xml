@@ -383,6 +383,9 @@
     <string name="sleep_mode_confirm_activate_message">수면 모드가 바로 실행됩니다.\n기상 시간까지 차단 해제가 불가합니다.</string>
     <string name="sleep_mode_confirm_activate_positive">실행</string>
 
+    <!-- Report -->
+    <string name="report_daily_analysis">일별 분석</string>
+
     <!-- Daily Report Notification -->
     <string name="daily_report_notification_message">오늘 하루 리포트를 확인해보세요 ✨</string>
     <string name="daily_report_notification_title">오늘의 쇼츠 차단</string>

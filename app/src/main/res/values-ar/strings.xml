@@ -63,7 +63,6 @@
 
     <!-- Settings Tip Banner -->
     <string name="settings_tip_message">انقر على قائمة [⋮] في الزاوية العلوية اليمنى لاستكشاف المزيد من الميزات</string>
-    <string name="settings_tip_button">انتقل →</string>
 
     <!-- Settings Activity -->
     <string name="settings_title">الإعدادات</string>
@@ -129,10 +128,6 @@
     <string name="timer_breathe_message">خذ نفساً عميقاً</string>
     <string name="timer_skip_button">إلغاء</string>
     <string name="timer_continue_button">رجوع</string>
-
-    <!-- Ads -->
-    <string name="ad">إعلان</string>
-
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">وقت التأخير</string>
@@ -277,7 +272,6 @@
 
     <!-- Subscription Management -->
     <string name="subscription_management">إدارة الاشتراك</string>
-    <string name="subscription_management_desc">إدارة أو إلغاء اشتراكك</string>
 
     <!-- Subscription Management Activity -->
     <string name="subscription_management_title">الاشتراك</string>
@@ -346,9 +340,6 @@
     <string name="report_hourly_analysis">التحليل الساعي</string>
     <string name="report_detail">التفاصيل</string>
     <string name="report_app_analysis">التحليل حسب التطبيق</string>
-    <string name="report_attempts">الدخول</string>
-    <string name="report_watched">تمت المشاهدة</string>
-    <string name="report_watch_time">وقت المشاهدة</string>
     <string name="report_today_label">اليوم</string>
     <string name="report_block_rate">معدل الحظر</string>
     <string name="report_empty_detail">لم تشاهد مقاطع فيديو قصيرة</string>
@@ -373,5 +364,31 @@
     <string name="daily_report_notification_title">حظر الفيديوهات القصيرة اليوم</string>
     <string name="daily_report_channel_name">تقرير يومي</string>
     <string name="daily_report_channel_desc">إشعار إحصائيات حظر الفيديوهات القصيرة اليومية</string>
+
+    <!-- Sleep Mode -->
+    <string name="settings_section_sleep_mode">وضع النوم</string>
+    <string name="settings_sleep_mode_title">إعدادات وضع النوم</string>
+    <string name="settings_sleep_mode_desc">حظر تلقائي معزز في الأوقات المحددة</string>
+    <string name="settings_sleep_bedtime">وقت النوم</string>
+    <string name="settings_sleep_wakeup">الاستيقاظ</string>
+    <string name="settings_sleep_start_time_title">وقت النوم</string>
+    <string name="settings_sleep_start_time_desc">وقت بدء وضع النوم</string>
+    <string name="settings_sleep_end_time_title">وقت الاستيقاظ</string>
+    <string name="settings_sleep_end_time_desc">وقت انتهاء وضع النوم</string>
+    <string name="sleep_mode_dialog_title">وضع النوم نشط</string>
+    <string name="sleep_mode_dialog_message">لا يمكن إلغاء التفعيل أثناء وضع النوم.</string>
+    <string name="sleep_mode_dialog_confirm">حسناً</string>
+    <string name="sleep_mode_active_label">وضع النوم نشط</string>
+    <string name="sleep_mode_badge">وضع النوم 🌙</string>
+    <string name="sleep_mode_timer_notice">وضع النوم: وقت الانتظار ثابت عند 60 ثانية</string>
+    <string name="sleep_mode_motivation">حان وقت النوم.\nأغلق عينيك واسترح.</string>
+    <string name="sleep_mode_invalid_time">لا يمكن أن يكون وقت النوم والاستيقاظ متطابقين</string>
+    <string name="sleep_mode_not_set">غير مضبوط</string>
+    <string name="sleep_mode_toggle_label">حظر تلقائي أثناء النوم</string>
+    <string name="sleep_mode_save">حفظ</string>
+    <string name="sleep_mode_confirm_activate_title">تفعيل وضع النوم الآن</string>
+    <string name="sleep_mode_confirm_activate_message">سيتم تفعيل وضع النوم فوراً.\nلا يمكن إلغاء الحظر حتى وقت الاستيقاظ.</string>
+    <string name="sleep_mode_confirm_activate_positive">تفعيل</string>
+    <string name="report_daily_analysis">التحليل اليومي</string>
 
 </resources>

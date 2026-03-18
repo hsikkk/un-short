@@ -63,7 +63,6 @@
 
     <!-- Settings Tip Banner -->
     <string name="settings_tip_message">Tippen Sie auf das [⋮] Menü oben rechts, um weitere Funktionen zu erkunden</string>
-    <string name="settings_tip_button">Weiter →</string>
 
     <!-- Settings Activity -->
     <string name="settings_title">Einstellungen</string>
@@ -129,10 +128,6 @@
     <string name="timer_breathe_message">Atmen Sie tief durch</string>
     <string name="timer_skip_button">Abbrechen</string>
     <string name="timer_continue_button">Zurück</string>
-
-    <!-- Ads -->
-    <string name="ad">WERBUNG</string>
-
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">Wartezeit</string>
@@ -277,7 +272,6 @@
 
     <!-- Subscription Management -->
     <string name="subscription_management">Abonnement verwalten</string>
-    <string name="subscription_management_desc">Ihr Abonnement verwalten oder kündigen</string>
 
     <!-- Subscription Management Activity -->
     <string name="subscription_management_title">Abonnement</string>
@@ -346,9 +340,6 @@
     <string name="report_hourly_analysis">STUNDENANALYSE</string>
     <string name="report_detail">DETAILS</string>
     <string name="report_app_analysis">APP-ANALYSE</string>
-    <string name="report_attempts">Zugriff</string>
-    <string name="report_watched">Angesehen</string>
-    <string name="report_watch_time">Wiedergabezeit</string>
     <string name="report_today_label">Heute</string>
     <string name="report_block_rate">Blockierungsrate</string>
     <string name="report_empty_detail">Keine Kurzvideos angesehen</string>
@@ -373,5 +364,31 @@
     <string name="daily_report_notification_title">Heutige Shorts-Blockierung</string>
     <string name="daily_report_channel_name">Tagesbericht</string>
     <string name="daily_report_channel_desc">Tägliche Benachrichtigung über Shorts-Blockierungsstatistiken</string>
+
+    <!-- Sleep Mode -->
+    <string name="settings_section_sleep_mode">Schlafmodus</string>
+    <string name="settings_sleep_mode_title">Schlafmodus-Einstellungen</string>
+    <string name="settings_sleep_mode_desc">Automatische Blockierung zu festgelegten Zeiten</string>
+    <string name="settings_sleep_bedtime">Schlafenszeit</string>
+    <string name="settings_sleep_wakeup">Aufwachen</string>
+    <string name="settings_sleep_start_time_title">Schlafenszeit</string>
+    <string name="settings_sleep_start_time_desc">Startzeit des Schlafmodus</string>
+    <string name="settings_sleep_end_time_title">Aufwachzeit</string>
+    <string name="settings_sleep_end_time_desc">Endzeit des Schlafmodus</string>
+    <string name="sleep_mode_dialog_title">Schlafmodus aktiv</string>
+    <string name="sleep_mode_dialog_message">Der Schlafmodus kann während der Aktivität nicht deaktiviert werden.</string>
+    <string name="sleep_mode_dialog_confirm">OK</string>
+    <string name="sleep_mode_active_label">Schlafmodus aktiv</string>
+    <string name="sleep_mode_badge">Schlafmodus 🌙</string>
+    <string name="sleep_mode_timer_notice">Schlafmodus: Wartezeit auf 60 Sekunden festgelegt</string>
+    <string name="sleep_mode_motivation">Es ist Zeit zu schlafen.\nSchließe die Augen und ruhe dich aus.</string>
+    <string name="sleep_mode_invalid_time">Schlafens- und Aufwachzeit dürfen nicht gleich sein</string>
+    <string name="sleep_mode_not_set">Nicht eingestellt</string>
+    <string name="sleep_mode_toggle_label">Automatische Blockierung im Schlaf</string>
+    <string name="sleep_mode_save">Speichern</string>
+    <string name="sleep_mode_confirm_activate_title">Schlafmodus jetzt aktivieren</string>
+    <string name="sleep_mode_confirm_activate_message">Der Schlafmodus wird sofort aktiviert.\nBis zur Aufwachzeit kann die Blockierung nicht aufgehoben werden.</string>
+    <string name="sleep_mode_confirm_activate_positive">Aktivieren</string>
+    <string name="report_daily_analysis">TAGESANALYSE</string>
 
 </resources>

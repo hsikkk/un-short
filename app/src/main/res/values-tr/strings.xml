@@ -63,7 +63,6 @@
 
     <!-- Settings Tip Banner -->
     <string name="settings_tip_message">Daha fazla özelliği keşfetmek için sağ üstteki [⋮] menüsüne dokunun</string>
-    <string name="settings_tip_button">Git →</string>
 
     <!-- Settings Activity -->
     <string name="settings_title">Ayarlar</string>
@@ -129,10 +128,6 @@
     <string name="timer_breathe_message">Derin bir nefes alın</string>
     <string name="timer_skip_button">İptal</string>
     <string name="timer_continue_button">Geri Dön</string>
-
-    <!-- Ads -->
-    <string name="ad">REKLAM</string>
-
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">Gecikme süresi</string>
@@ -275,7 +270,6 @@
 
     <!-- Subscription Management -->
     <string name="subscription_management">Aboneliği yönet</string>
-    <string name="subscription_management_desc">Aboneliğinizi yönetin veya iptal edin</string>
 
     <!-- Subscription Management Activity -->
     <string name="subscription_management_title">Abonelik</string>
@@ -344,9 +338,6 @@
     <string name="report_hourly_analysis">SAATLİK ANALİZ</string>
     <string name="report_detail">DETAY</string>
     <string name="report_app_analysis">UYGULAMA ANALİZİ</string>
-    <string name="report_attempts">Giriş</string>
-    <string name="report_watched">İzlendi</string>
-    <string name="report_watch_time">İzleme Süresi</string>
     <string name="report_today_label">Bugün</string>
     <string name="report_block_rate">Engelleme oranı</string>
     <string name="report_empty_detail">Kısa video izlenmedi</string>
@@ -371,5 +362,32 @@
     <string name="daily_report_notification_title">Bugünün Shorts Engelleme</string>
     <string name="daily_report_channel_name">Günlük Rapor</string>
     <string name="daily_report_channel_desc">Günlük Shorts engelleme istatistikleri bildirimi</string>
+
+    <!-- Sleep Mode -->
+    <string name="settings_section_sleep_mode">Uyku modu</string>
+    <string name="settings_sleep_mode_title">Uyku modu ayarları</string>
+    <string name="settings_sleep_mode_desc">Belirlenen saatlerde otomatik güçlendirilmiş engelleme</string>
+    <string name="settings_sleep_bedtime">Yatma saati</string>
+    <string name="settings_sleep_wakeup">Uyanma</string>
+    <string name="settings_sleep_start_time_title">Yatma saati</string>
+    <string name="settings_sleep_start_time_desc">Uyku modu başlangıç saati</string>
+    <string name="settings_sleep_end_time_title">Uyanma saati</string>
+    <string name="settings_sleep_end_time_desc">Uyku modu bitiş saati</string>
+    <string name="sleep_mode_dialog_title">Uyku modu aktif</string>
+    <string name="sleep_mode_dialog_message">Uyku modu sırasında devre dışı bırakılamaz.</string>
+    <string name="sleep_mode_dialog_confirm">Tamam</string>
+    <string name="sleep_mode_active_label">Uyku modu aktif</string>
+    <string name="sleep_mode_badge">Uyku modu 🌙</string>
+    <string name="sleep_mode_timer_notice">Uyku modu: bekleme süresi 60 saniye olarak sabitlendi</string>
+    <string name="sleep_mode_motivation">Uyuma zamanı.\nGözlerini kapat ve dinlen.</string>
+    <string name="sleep_mode_invalid_time">Yatma ve uyanma saati aynı olamaz</string>
+    <string name="sleep_mode_not_set">Ayarlanmadı</string>
+    <string name="sleep_mode_toggle_label">Uyku sırasında otomatik engelleme</string>
+    <string name="sleep_mode_save">Kaydet</string>
+    <string name="sleep_mode_confirm_activate_title">Uyku modunu şimdi etkinleştir</string>
+    <string name="sleep_mode_confirm_activate_message">Uyku modu hemen etkinleştirilecek.\nUyanma saatine kadar engelleme kaldırılamaz.</string>
+    <string name="sleep_mode_confirm_activate_positive">Etkinleştir</string>
+    <string name="report_daily_analysis">GÜNLÜK ANALİZ</string>
+    <string name="timer_required_confirm">Zamanlayıcıyı başlat</string>
 
 </resources>

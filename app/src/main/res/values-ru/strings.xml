@@ -63,7 +63,6 @@
 
     <!-- Settings Tip Banner -->
     <string name="settings_tip_message">Нажмите на меню [⋮] в правом верхнем углу, чтобы изучить больше функций</string>
-    <string name="settings_tip_button">Перейти →</string>
 
     <!-- Settings Activity -->
     <string name="settings_title">Настройки</string>
@@ -129,10 +128,6 @@
     <string name="timer_breathe_message">Сделайте глубокий вдох</string>
     <string name="timer_skip_button">Отмена</string>
     <string name="timer_continue_button">Назад</string>
-
-    <!-- Ads -->
-    <string name="ad">РЕКЛАМА</string>
-
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">Время задержки</string>
@@ -277,7 +272,6 @@
 
     <!-- Subscription Management -->
     <string name="subscription_management">Управление подпиской</string>
-    <string name="subscription_management_desc">Управлять или отменить вашу подписку</string>
 
     <!-- Subscription Management Activity -->
     <string name="subscription_management_title">Подписка</string>
@@ -346,9 +340,6 @@
     <string name="report_hourly_analysis">ПОЧАСОВОЙ АНАЛИЗ</string>
     <string name="report_detail">ПОДРОБНОСТИ</string>
     <string name="report_app_analysis">АНАЛИЗ ПО ПРИЛОЖЕНИЯМ</string>
-    <string name="report_attempts">Вход</string>
-    <string name="report_watched">Просмотрено</string>
-    <string name="report_watch_time">Время Просмотра</string>
     <string name="report_today_label">Сегодня</string>
     <string name="report_block_rate">Степень блокировки</string>
     <string name="report_empty_detail">Короткие видео не просматривались</string>
@@ -373,5 +364,31 @@
     <string name="daily_report_notification_title">Сегодняшняя блокировка Shorts</string>
     <string name="daily_report_channel_name">Ежедневный отчет</string>
     <string name="daily_report_channel_desc">Уведомление о статистике блокировки Shorts</string>
+
+    <!-- Sleep Mode -->
+    <string name="settings_section_sleep_mode">Режим сна</string>
+    <string name="settings_sleep_mode_title">Настройки режима сна</string>
+    <string name="settings_sleep_mode_desc">Автоматическая усиленная блокировка в заданное время</string>
+    <string name="settings_sleep_bedtime">Отбой</string>
+    <string name="settings_sleep_wakeup">Подъём</string>
+    <string name="settings_sleep_start_time_title">Время отбоя</string>
+    <string name="settings_sleep_start_time_desc">Время начала режима сна</string>
+    <string name="settings_sleep_end_time_title">Время подъёма</string>
+    <string name="settings_sleep_end_time_desc">Время окончания режима сна</string>
+    <string name="sleep_mode_dialog_title">Режим сна активен</string>
+    <string name="sleep_mode_dialog_message">Невозможно отключить во время режима сна.</string>
+    <string name="sleep_mode_dialog_confirm">ОК</string>
+    <string name="sleep_mode_active_label">Режим сна активен</string>
+    <string name="sleep_mode_badge">Режим сна 🌙</string>
+    <string name="sleep_mode_timer_notice">Режим сна: время ожидания зафиксировано на 60 секунд</string>
+    <string name="sleep_mode_motivation">Пора спать.\nЗакройте глаза и отдохните.</string>
+    <string name="sleep_mode_invalid_time">Время отбоя и подъёма не могут совпадать</string>
+    <string name="sleep_mode_not_set">Не настроено</string>
+    <string name="sleep_mode_toggle_label">Автоблокировка во время сна</string>
+    <string name="sleep_mode_save">Сохранить</string>
+    <string name="sleep_mode_confirm_activate_title">Активировать режим сна сейчас</string>
+    <string name="sleep_mode_confirm_activate_message">Режим сна активируется немедленно.\nРазблокировка невозможна до времени подъёма.</string>
+    <string name="sleep_mode_confirm_activate_positive">Активировать</string>
+    <string name="report_daily_analysis">ЕЖЕДНЕВНЫЙ АНАЛИЗ</string>
 
 </resources>

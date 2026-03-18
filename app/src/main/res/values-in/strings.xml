@@ -65,7 +65,6 @@ apakah Anda benar-benar perlu shorts?</string>
 
     <!-- Settings Tip Banner -->
     <string name="settings_tip_message">Ketuk menu [⋮] di kanan atas untuk menjelajahi lebih banyak fitur</string>
-    <string name="settings_tip_button">Pergi →</string>
 
     <!-- Settings Activity -->
     <string name="settings_title">Pengaturan</string>
@@ -131,10 +130,6 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="timer_breathe_message">Tarik napas dalam</string>
     <string name="timer_skip_button">Batal</string>
     <string name="timer_continue_button">Kembali</string>
-
-    <!-- Ads -->
-    <string name="ad">IKLAN</string>
-
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">Waktu Tunda</string>
@@ -277,7 +272,6 @@ apakah Anda benar-benar perlu shorts?</string>
 
     <!-- Subscription Management -->
     <string name="subscription_management">Kelola Langganan</string>
-    <string name="subscription_management_desc">Kelola atau batalkan langganan Anda</string>
 
     <!-- Subscription Management Activity -->
     <string name="subscription_management_title">Langganan</string>
@@ -346,9 +340,6 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="report_hourly_analysis">ANALISIS PER JAM</string>
     <string name="report_detail">DETAIL</string>
     <string name="report_app_analysis">ANALISIS PER APLIKASI</string>
-    <string name="report_attempts">Masuk</string>
-    <string name="report_watched">Ditonton</string>
-    <string name="report_watch_time">Waktu Tonton</string>
     <string name="report_today_label">Hari Ini</string>
     <string name="report_block_rate">Tingkat pemblokiran</string>
     <string name="report_empty_detail">Tidak ada video pendek yang ditonton</string>
@@ -373,5 +364,32 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="daily_report_notification_title">Pemblokiran Shorts Hari Ini</string>
     <string name="daily_report_channel_name">Laporan Harian</string>
     <string name="daily_report_channel_desc">Notifikasi statistik pemblokiran Shorts harian</string>
+
+    <!-- Sleep Mode -->
+    <string name="settings_section_sleep_mode">Mode tidur</string>
+    <string name="settings_sleep_mode_title">Pengaturan mode tidur</string>
+    <string name="settings_sleep_mode_desc">Pemblokiran otomatis dan diperkuat pada waktu yang ditentukan</string>
+    <string name="settings_sleep_bedtime">Waktu tidur</string>
+    <string name="settings_sleep_wakeup">Bangun</string>
+    <string name="settings_sleep_start_time_title">Waktu tidur</string>
+    <string name="settings_sleep_start_time_desc">Waktu mulai mode tidur</string>
+    <string name="settings_sleep_end_time_title">Waktu bangun</string>
+    <string name="settings_sleep_end_time_desc">Waktu berakhir mode tidur</string>
+    <string name="sleep_mode_dialog_title">Mode tidur aktif</string>
+    <string name="sleep_mode_dialog_message">Tidak dapat dinonaktifkan selama mode tidur.</string>
+    <string name="sleep_mode_dialog_confirm">OK</string>
+    <string name="sleep_mode_active_label">Mode tidur aktif</string>
+    <string name="sleep_mode_badge">Mode tidur 🌙</string>
+    <string name="sleep_mode_timer_notice">Mode tidur: waktu tunggu ditetapkan 60 detik</string>
+    <string name="sleep_mode_motivation">Sekarang waktunya tidur.\nPejamkan mata dan istirahatlah.</string>
+    <string name="sleep_mode_invalid_time">Waktu tidur dan bangun tidak boleh sama</string>
+    <string name="sleep_mode_not_set">Belum diatur</string>
+    <string name="sleep_mode_toggle_label">Blokir otomatis saat tidur</string>
+    <string name="sleep_mode_save">Simpan</string>
+    <string name="sleep_mode_confirm_activate_title">Aktifkan mode tidur sekarang</string>
+    <string name="sleep_mode_confirm_activate_message">Mode tidur akan segera aktif.\nPemblokiran tidak dapat dibatalkan sampai waktu bangun.</string>
+    <string name="sleep_mode_confirm_activate_positive">Aktifkan</string>
+    <string name="report_daily_analysis">ANALISIS HARIAN</string>
+    <string name="timer_required_confirm">Mulai timer</string>
 
 </resources>

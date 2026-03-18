@@ -63,7 +63,6 @@
 
     <!-- Settings Tip Banner -->
     <string name="settings_tip_message">右上の[⋮]メニューをタップして、さらに機能を探しましょう</string>
-    <string name="settings_tip_button">移動 →</string>
 
     <!-- Settings Activity -->
     <string name="settings_title">設定</string>
@@ -129,10 +128,6 @@
     <string name="timer_breathe_message">深呼吸しましょう</string>
     <string name="timer_skip_button">キャンセル</string>
     <string name="timer_continue_button">戻る</string>
-
-    <!-- Ads -->
-    <string name="ad">広告</string>
-
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">遅延時間</string>
@@ -277,7 +272,6 @@
 
     <!-- Subscription Management -->
     <string name="subscription_management">サブスクリプション管理</string>
-    <string name="subscription_management_desc">サブスクリプションを管理またはキャンセル</string>
 
     <!-- Subscription Management Activity -->
     <string name="subscription_management_title">サブスクリプション</string>
@@ -346,9 +340,6 @@
     <string name="report_hourly_analysis">時間帯別分析</string>
     <string name="report_detail">詳細</string>
     <string name="report_app_analysis">アプリ別分析</string>
-    <string name="report_attempts">進入</string>
-    <string name="report_watched">視聴済み</string>
-    <string name="report_watch_time">視聴時間</string>
     <string name="report_today_label">今日</string>
     <string name="report_block_rate">ブロック率</string>
     <string name="report_empty_detail">ショート動画を視聴していません</string>
@@ -373,5 +364,31 @@
     <string name="daily_report_notification_title">今日のショート動画ブロック</string>
     <string name="daily_report_channel_name">日次レポート</string>
     <string name="daily_report_channel_desc">毎日のショート動画ブロック統計通知</string>
+
+    <!-- Sleep Mode -->
+    <string name="settings_section_sleep_mode">スリープモード</string>
+    <string name="settings_sleep_mode_title">スリープモード設定</string>
+    <string name="settings_sleep_mode_desc">設定された時間にブロックを自動実行・強化</string>
+    <string name="settings_sleep_bedtime">就寝</string>
+    <string name="settings_sleep_wakeup">起床</string>
+    <string name="settings_sleep_start_time_title">就寝時間</string>
+    <string name="settings_sleep_start_time_desc">スリープモード開始時間</string>
+    <string name="settings_sleep_end_time_title">起床時間</string>
+    <string name="settings_sleep_end_time_desc">スリープモード終了時間</string>
+    <string name="sleep_mode_dialog_title">スリープモード実行中</string>
+    <string name="sleep_mode_dialog_message">スリープモード中は解除できません。</string>
+    <string name="sleep_mode_dialog_confirm">OK</string>
+    <string name="sleep_mode_active_label">スリープモード実行中</string>
+    <string name="sleep_mode_badge">スリープモード 🌙</string>
+    <string name="sleep_mode_timer_notice">スリープモード：待機時間が60秒に固定されます</string>
+    <string name="sleep_mode_motivation">今は寝る時間です。\n目を閉じて休みましょう。</string>
+    <string name="sleep_mode_invalid_time">就寝時間と起床時間は同じにできません</string>
+    <string name="sleep_mode_not_set">未設定</string>
+    <string name="sleep_mode_toggle_label">スリープ中の自動ブロック</string>
+    <string name="sleep_mode_save">保存</string>
+    <string name="sleep_mode_confirm_activate_title">スリープモードを今すぐ有効化</string>
+    <string name="sleep_mode_confirm_activate_message">スリープモードがすぐに有効になります。\n起床時間までブロック解除できません。</string>
+    <string name="sleep_mode_confirm_activate_positive">有効化</string>
+    <string name="report_daily_analysis">日別分析</string>
 
 </resources>

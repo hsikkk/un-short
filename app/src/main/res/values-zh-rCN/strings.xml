@@ -63,7 +63,6 @@
 
     <!-- Settings Tip Banner -->
     <string name="settings_tip_message">点击右上角的[⋮]菜单以探索更多功能</string>
-    <string name="settings_tip_button">前往 →</string>
 
     <!-- Settings Activity -->
     <string name="settings_title">设置</string>
@@ -129,10 +128,6 @@
     <string name="timer_breathe_message">深呼吸</string>
     <string name="timer_skip_button">取消</string>
     <string name="timer_continue_button">返回</string>
-
-    <!-- Ads -->
-    <string name="ad">广告</string>
-
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">延迟时间</string>
@@ -277,7 +272,6 @@
 
     <!-- Subscription Management -->
     <string name="subscription_management">管理订阅</string>
-    <string name="subscription_management_desc">管理或取消订阅</string>
 
     <!-- Subscription Management Activity -->
     <string name="subscription_management_title">订阅</string>
@@ -346,9 +340,6 @@
     <string name="report_hourly_analysis">按时段分析</string>
     <string name="report_detail">详情</string>
     <string name="report_app_analysis">按应用分析</string>
-    <string name="report_attempts">进入</string>
-    <string name="report_watched">已观看</string>
-    <string name="report_watch_time">观看时间</string>
     <string name="report_today_label">今天</string>
     <string name="report_block_rate">拦截率</string>
     <string name="report_empty_detail">没有观看短视频</string>
@@ -373,5 +364,31 @@
     <string name="daily_report_notification_title">今日短视频拦截</string>
     <string name="daily_report_channel_name">每日报告</string>
     <string name="daily_report_channel_desc">每日短视频拦截统计通知</string>
+
+    <!-- Sleep Mode -->
+    <string name="settings_section_sleep_mode">睡眠模式</string>
+    <string name="settings_sleep_mode_title">睡眠模式设置</string>
+    <string name="settings_sleep_mode_desc">在设定时间自动执行并加强屏蔽</string>
+    <string name="settings_sleep_bedtime">就寝</string>
+    <string name="settings_sleep_wakeup">起床</string>
+    <string name="settings_sleep_start_time_title">就寝时间</string>
+    <string name="settings_sleep_start_time_desc">睡眠模式开始时间</string>
+    <string name="settings_sleep_end_time_title">起床时间</string>
+    <string name="settings_sleep_end_time_desc">睡眠模式结束时间</string>
+    <string name="sleep_mode_dialog_title">睡眠模式运行中</string>
+    <string name="sleep_mode_dialog_message">睡眠模式运行中无法解除。</string>
+    <string name="sleep_mode_dialog_confirm">确定</string>
+    <string name="sleep_mode_active_label">睡眠模式运行中</string>
+    <string name="sleep_mode_badge">睡眠模式 🌙</string>
+    <string name="sleep_mode_timer_notice">睡眠模式：等待时间固定为60秒</string>
+    <string name="sleep_mode_motivation">现在是睡觉时间。\n闭上眼睛休息吧。</string>
+    <string name="sleep_mode_invalid_time">就寝时间和起床时间不能相同</string>
+    <string name="sleep_mode_not_set">未设置</string>
+    <string name="sleep_mode_toggle_label">睡眠时自动屏蔽</string>
+    <string name="sleep_mode_save">保存</string>
+    <string name="sleep_mode_confirm_activate_title">立即启用睡眠模式</string>
+    <string name="sleep_mode_confirm_activate_message">睡眠模式将立即启用。\n在起床时间之前无法解除屏蔽。</string>
+    <string name="sleep_mode_confirm_activate_positive">启用</string>
+    <string name="report_daily_analysis">每日分析</string>
 
 </resources>

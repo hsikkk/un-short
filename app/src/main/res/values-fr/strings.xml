@@ -63,7 +63,6 @@
 
     <!-- Settings Tip Banner -->
     <string name="settings_tip_message">Appuyez sur le menu [⋮] en haut à droite pour explorer plus de fonctionnalités</string>
-    <string name="settings_tip_button">Aller →</string>
 
     <!-- Settings Activity -->
     <string name="settings_title">Paramètres</string>
@@ -129,10 +128,6 @@
     <string name="timer_breathe_message">Respirez profondément</string>
     <string name="timer_skip_button">Annuler</string>
     <string name="timer_continue_button">Retour</string>
-
-    <!-- Ads -->
-    <string name="ad">PUB</string>
-
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">Temps d\'attente</string>
@@ -277,7 +272,6 @@
 
     <!-- Subscription Management -->
     <string name="subscription_management">Gérer l\'abonnement</string>
-    <string name="subscription_management_desc">Gérer ou annuler votre abonnement</string>
 
     <!-- Subscription Management Activity -->
     <string name="subscription_management_title">Abonnement</string>
@@ -346,9 +340,6 @@
     <string name="report_hourly_analysis">ANALYSE HORAIRE</string>
     <string name="report_detail">DÉTAIL</string>
     <string name="report_app_analysis">ANALYSE PAR APPLICATION</string>
-    <string name="report_attempts">Entrée</string>
-    <string name="report_watched">Regardés</string>
-    <string name="report_watch_time">Temps de Visionnage</string>
     <string name="report_today_label">Aujourd\'hui</string>
     <string name="report_block_rate">Taux de blocage</string>
     <string name="report_empty_detail">Aucune courte vidéo regardée</string>
@@ -373,5 +364,31 @@
     <string name="daily_report_notification_title">Blocage de Shorts d\'aujourd\'hui</string>
     <string name="daily_report_channel_name">Rapport quotidien</string>
     <string name="daily_report_channel_desc">Notification des statistiques quotidiennes de blocage de Shorts</string>
+
+    <!-- Sleep Mode -->
+    <string name="settings_section_sleep_mode">Mode sommeil</string>
+    <string name="settings_sleep_mode_title">Paramètres du mode sommeil</string>
+    <string name="settings_sleep_mode_desc">Blocage automatique renforcé aux heures définies</string>
+    <string name="settings_sleep_bedtime">Coucher</string>
+    <string name="settings_sleep_wakeup">Réveil</string>
+    <string name="settings_sleep_start_time_title">Heure du coucher</string>
+    <string name="settings_sleep_start_time_desc">Heure de début du mode sommeil</string>
+    <string name="settings_sleep_end_time_title">Heure du réveil</string>
+    <string name="settings_sleep_end_time_desc">Heure de fin du mode sommeil</string>
+    <string name="sleep_mode_dialog_title">Mode sommeil actif</string>
+    <string name="sleep_mode_dialog_message">Impossible de désactiver pendant le mode sommeil.</string>
+    <string name="sleep_mode_dialog_confirm">OK</string>
+    <string name="sleep_mode_active_label">Mode sommeil actif</string>
+    <string name="sleep_mode_badge">Mode sommeil 🌙</string>
+    <string name="sleep_mode_timer_notice">Mode sommeil : temps d\'attente fixé à 60 secondes</string>
+    <string name="sleep_mode_motivation">C\'est l\'heure de dormir.\nFermez les yeux et reposez-vous.</string>
+    <string name="sleep_mode_invalid_time">L\'heure du coucher et du réveil ne peuvent pas être identiques</string>
+    <string name="sleep_mode_not_set">Non configuré</string>
+    <string name="sleep_mode_toggle_label">Blocage automatique pendant le sommeil</string>
+    <string name="sleep_mode_save">Enregistrer</string>
+    <string name="sleep_mode_confirm_activate_title">Activer le mode sommeil maintenant</string>
+    <string name="sleep_mode_confirm_activate_message">Le mode sommeil sera activé immédiatement.\nLe déblocage est impossible jusqu\'à l\'heure du réveil.</string>
+    <string name="sleep_mode_confirm_activate_positive">Activer</string>
+    <string name="report_daily_analysis">ANALYSE QUOTIDIENNE</string>
 
 </resources>

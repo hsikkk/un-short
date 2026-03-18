@@ -51,7 +51,6 @@
 
     <!-- Settings Tip Banner -->
     <string name="settings_tip_message">Tap the [⋮] menu at the top right to explore more features</string>
-    <string name="settings_tip_button">Go →</string>
 
     <!-- Settings Activity -->
     <string name="settings_title">Settings</string>
@@ -117,9 +116,6 @@
     <string name="timer_breathe_message">Take a deep breath</string>
     <string name="timer_skip_button">Cancel</string>
     <string name="timer_continue_button">Go Back</string>
-
-    <!-- Ads -->
-    <string name="ad">AD</string>
 
     <!-- Delay Time Bottom Sheet -->
     <string name="delay_time_title">Delay Time</string>
@@ -264,7 +260,6 @@
 
     <!-- Subscription Management -->
     <string name="subscription_management">Manage Subscription</string>
-    <string name="subscription_management_desc">Manage or cancel your subscription</string>
 
     <!-- Subscription Management Activity -->
     <string name="subscription_management_title">Subscription</string>
@@ -334,10 +329,7 @@
     <string name="report_hourly_analysis">HOURLY ANALYSIS</string>
     <string name="report_detail">DETAIL</string>
     <string name="report_app_analysis">APP ANALYSIS</string>
-    <string name="report_attempts">Attempts</string>
-    <string name="report_watched">Watched</string>
-    <string name="report_watch_time">Watch Time</string>
-    <string name="report_today_label">오늘</string>
+    <string name="report_today_label">Today</string>
     <string name="report_block_rate">Block Rate</string>
     <string name="report_empty_detail">No shorts watched</string>
     <string name="report_previous_date">Previous date</string>
@@ -399,9 +391,5 @@
     <string name="sleep_mode_confirm_activate_title">Activate Sleep Mode Now</string>
     <string name="sleep_mode_confirm_activate_message">Sleep mode will activate immediately.\nBlocking cannot be disabled until wake-up time.</string>
     <string name="sleep_mode_confirm_activate_positive">Activate</string>
-
-    <!-- TikTok -->
-    <string name="tiktok_shorts">TikTok Shorts</string>
-    <string name="tiktok_short_name">TikTok</string>
 
 </resources>
