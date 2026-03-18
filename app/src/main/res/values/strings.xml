@@ -427,5 +427,7 @@
     <string name="daily_limit_change_message">You\'ve already watched over 80%% of today\'s limit. The change will apply starting tomorrow.</string>
     <string name="daily_limit_range_min">15 min</string>
     <string name="daily_limit_range_max">240 min</string>
+    <string name="premium_feature_daily_limit_title">Daily Time Limit</string>
+    <string name="premium_feature_daily_limit_desc">Set daily viewing limit and auto-block when exceeded</string>
 
 </resources>

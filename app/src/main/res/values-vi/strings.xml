@@ -427,4 +427,7 @@
     <string name="daily_limit_range_min">15 phút</string>
     <string name="daily_limit_range_max">240 phút</string>
 
+    <string name="premium_feature_daily_limit_title">Giới hạn thời gian hàng ngày</string>
+    <string name="premium_feature_daily_limit_desc">Giới hạn thời gian xem hàng ngày và tự động chặn khi vượt quá</string>
+
 </resources>

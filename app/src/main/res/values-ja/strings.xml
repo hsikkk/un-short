@@ -427,4 +427,7 @@
     <string name="daily_limit_range_min">15分</string>
     <string name="daily_limit_range_max">240分</string>
 
+    <string name="premium_feature_daily_limit_title">1日の制限時間</string>
+    <string name="premium_feature_daily_limit_desc">1日の視聴時間を制限し、超過時に自動ブロック</string>
+
 </resources>

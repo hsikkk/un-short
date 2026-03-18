@@ -427,4 +427,7 @@
     <string name="daily_limit_range_min">15 นาที</string>
     <string name="daily_limit_range_max">240 นาที</string>
 
+    <string name="premium_feature_daily_limit_title">จำกัดเวลารายวัน</string>
+    <string name="premium_feature_daily_limit_desc">จำกัดเวลาดูรายวันและบล็อกอัตโนมัติเมื่อเกินกำหนด</string>
+
 </resources>

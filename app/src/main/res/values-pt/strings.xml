@@ -427,4 +427,7 @@
     <string name="daily_limit_range_min">15 min</string>
     <string name="daily_limit_range_max">240 min</string>
 
+    <string name="premium_feature_daily_limit_title">Limite de tempo diário</string>
+    <string name="premium_feature_daily_limit_desc">Limite o tempo de visualização diário e bloqueie automaticamente ao exceder</string>
+
 </resources>

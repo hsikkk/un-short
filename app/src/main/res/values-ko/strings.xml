@@ -428,4 +428,7 @@
     <string name="daily_limit_range_min">15분</string>
     <string name="daily_limit_range_max">240분</string>
 
+    <string name="premium_feature_daily_limit_title">일일 제한 시간</string>
+    <string name="premium_feature_daily_limit_desc">하루 시청 시간을 제한하고 초과 시 자동 차단</string>
+
 </resources>

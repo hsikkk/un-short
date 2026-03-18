@@ -427,4 +427,7 @@
     <string name="daily_limit_range_min">15分鐘</string>
     <string name="daily_limit_range_max">240分鐘</string>
 
+    <string name="premium_feature_daily_limit_title">每日限制時間</string>
+    <string name="premium_feature_daily_limit_desc">限制每日觀看時間，超時自動封鎖</string>
+
 </resources>

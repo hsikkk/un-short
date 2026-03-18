@@ -426,4 +426,7 @@
     <string name="daily_limit_range_min">15 मिनट</string>
     <string name="daily_limit_range_max">240 मिनट</string>
 
+    <string name="premium_feature_daily_limit_title">दैनिक समय सीमा</string>
+    <string name="premium_feature_daily_limit_desc">दैनिक देखने का समय सीमित करें और सीमा पार होने पर स्वचालित ब्लॉक</string>
+
 </resources>

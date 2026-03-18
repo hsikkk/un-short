@@ -724,12 +724,7 @@ class SettingsActivity : BaseActivity() {
         dailyLimitMonitorSwitch.setOnCheckedChangeListener { _, isChecked ->
             prefsManager.isDailyLimitMonitorEnabled = isChecked
             if (isChecked) {
-                val notifier = com.muuu.unshort.util.DailyLimitNotifier(this)
-                val limitMs = prefsManager.dailyLimitMinutes * 60 * 1000L
-                kotlinx.coroutines.MainScope().launch {
-                    val stats = com.muuu.unshort.data.statistics.StatisticsRepository(this@SettingsActivity).getTodayStats()
-                    notifier.updateMonitoringNotification(stats.watchTimeMs, limitMs)
-                }
+                showDailyLimitMonitoringNotification(prefsManager.dailyLimitMinutes)
             } else {
                 val nm = getSystemService(NOTIFICATION_SERVICE) as android.app.NotificationManager
                 nm.cancel(com.muuu.unshort.config.AppConstants.NOTIFICATION_ID_DAILY_LIMIT_MONITOR)
@@ -740,6 +735,15 @@ class SettingsActivity : BaseActivity() {
         }
 
         updateDailyLimitSubItems()
+    }
+
+    private fun showDailyLimitMonitoringNotification(limitMinutes: Int) {
+        val notifier = com.muuu.unshort.util.DailyLimitNotifier(this)
+        val limitMs = limitMinutes * 60 * 1000L
+        kotlinx.coroutines.MainScope().launch {
+            val stats = com.muuu.unshort.data.statistics.StatisticsRepository(this@SettingsActivity).getTodayStats()
+            notifier.updateMonitoringNotification(stats.watchTimeMs, limitMs)
+        }
     }
 
     private fun updateDailyLimitSubItems() {
@@ -812,6 +816,10 @@ class SettingsActivity : BaseActivity() {
 
             if (tempEnabled) {
                 com.muuu.unshort.receiver.DailyLimitResetReceiver.scheduleReset(this@SettingsActivity)
+                // 모니터링 알림이 ON이면 즉시 표시
+                if (prefsManager.isDailyLimitMonitorEnabled) {
+                    showDailyLimitMonitoringNotification(tempMinutes)
+                }
             } else {
                 com.muuu.unshort.receiver.DailyLimitResetReceiver.cancelReset(this@SettingsActivity)
                 val nm = getSystemService(NOTIFICATION_SERVICE) as android.app.NotificationManager

@@ -428,4 +428,7 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="daily_limit_range_min">15 menit</string>
     <string name="daily_limit_range_max">240 menit</string>
 
+    <string name="premium_feature_daily_limit_title">Batas waktu harian</string>
+    <string name="premium_feature_daily_limit_desc">Batasi waktu menonton harian dan blokir otomatis saat melebihi batas</string>
+
 </resources>

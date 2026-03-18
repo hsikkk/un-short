@@ -427,4 +427,7 @@
     <string name="daily_limit_range_min">15 мин</string>
     <string name="daily_limit_range_max">240 мин</string>
 
+    <string name="premium_feature_daily_limit_title">Дневной лимит времени</string>
+    <string name="premium_feature_daily_limit_desc">Ограничение ежедневного времени просмотра с автоблокировкой при превышении</string>
+
 </resources>

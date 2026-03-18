@@ -427,4 +427,7 @@
     <string name="daily_limit_range_min">15 دقيقة</string>
     <string name="daily_limit_range_max">240 دقيقة</string>
 
+    <string name="premium_feature_daily_limit_title">حد الوقت اليومي</string>
+    <string name="premium_feature_daily_limit_desc">تحديد وقت المشاهدة اليومي والحظر التلقائي عند التجاوز</string>
+
 </resources>

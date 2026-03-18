@@ -426,4 +426,7 @@
     <string name="daily_limit_range_min">15 dk</string>
     <string name="daily_limit_range_max">240 dk</string>
 
+    <string name="premium_feature_daily_limit_title">Günlük süre limiti</string>
+    <string name="premium_feature_daily_limit_desc">Günlük izleme süresini sınırlayın ve aşıldığında otomatik engelleme</string>
+
 </resources>
