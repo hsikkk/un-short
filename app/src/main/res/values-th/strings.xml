@@ -395,6 +395,9 @@
     <string name="changelog_title">อัปเดต v%s</string>
     <string name="changelog_subtitle">ดูสิ่งใหม่ที่เพิ่มเข้ามา</string>
     <string name="changelog_confirm">ตกลง</string>
+    <string name="changelog_v1_5_0_item1">เพิ่มฟีเจอร์จำกัดเวลาใช้งานรายวัน</string>
+    <string name="changelog_v1_5_0_item2">เพิ่มโหมดนอนหลับ</string>
+    <string name="changelog_v1_5_0_item3">แก้ไขข้อผิดพลาดและปรับปรุงความเสถียร</string>
 
     <!-- Daily Limit -->
     <string name="settings_section_daily_limit">จำกัดรายวัน</string>

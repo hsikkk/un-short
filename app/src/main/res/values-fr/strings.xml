@@ -395,6 +395,9 @@
     <string name="changelog_title">Mise à jour v%s</string>
     <string name="changelog_subtitle">Découvrez les nouveautés</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_5_0_item1">Ajout de la limite de temps quotidienne</string>
+    <string name="changelog_v1_5_0_item2">Ajout du mode sommeil</string>
+    <string name="changelog_v1_5_0_item3">Corrections de bugs et améliorations de la stabilité</string>
 
     <!-- Daily Limit -->
     <string name="settings_section_daily_limit">Limite quotidienne</string>

@@ -18,6 +18,15 @@ data class ChangelogEntry(
 object ChangelogRegistry {
 
     private val changelogs = listOf<ChangelogEntry>(
+        ChangelogEntry(
+            versionCode = 25,
+            versionName = "1.5.0",
+            changes = listOf(
+                R.string.changelog_v1_5_0_item1,
+                R.string.changelog_v1_5_0_item2,
+                R.string.changelog_v1_5_0_item3
+            )
+        )
     )
 
     fun getChangelogForVersion(versionCode: Int): ChangelogEntry? {

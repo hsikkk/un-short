@@ -394,6 +394,9 @@
     <string name="changelog_title">v%s Güncellemesi</string>
     <string name="changelog_subtitle">Yeniliklere göz atın</string>
     <string name="changelog_confirm">Tamam</string>
+    <string name="changelog_v1_5_0_item1">Günlük süre sınırı özelliği eklendi</string>
+    <string name="changelog_v1_5_0_item2">Uyku modu eklendi</string>
+    <string name="changelog_v1_5_0_item3">Hata düzeltmeleri ve kararlılık iyileştirmeleri</string>
 
     <!-- Daily Limit -->
     <string name="settings_section_daily_limit">Günlük limit</string>

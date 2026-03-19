@@ -396,6 +396,9 @@
     <string name="changelog_title">v%s 업데이트</string>
     <string name="changelog_subtitle">새로운 변경사항을 확인해보세요</string>
     <string name="changelog_confirm">확인</string>
+    <string name="changelog_v1_5_0_item1">일일 제한 시간 기능 추가</string>
+    <string name="changelog_v1_5_0_item2">수면 모드 추가</string>
+    <string name="changelog_v1_5_0_item3">버그 수정 및 안정성 개선</string>
 
     <!-- Daily Limit -->
     <string name="settings_section_daily_limit">일일 제한</string>

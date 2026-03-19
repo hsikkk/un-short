@@ -395,6 +395,9 @@
     <string name="changelog_title">v%s Update</string>
     <string name="changelog_subtitle">Entdecke, was neu ist</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_5_0_item1">Tägliches Zeitlimit hinzugefügt</string>
+    <string name="changelog_v1_5_0_item2">Schlafmodus hinzugefügt</string>
+    <string name="changelog_v1_5_0_item3">Fehlerbehebungen und Stabilitätsverbesserungen</string>
 
     <!-- Daily Limit -->
     <string name="settings_section_daily_limit">Tageslimit</string>

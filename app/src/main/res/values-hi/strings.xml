@@ -394,6 +394,9 @@
     <string name="changelog_title">v%s अपडेट</string>
     <string name="changelog_subtitle">नया क्या है देखें</string>
     <string name="changelog_confirm">ठीक है</string>
+    <string name="changelog_v1_5_0_item1">दैनिक समय सीमा सुविधा जोड़ी गई</string>
+    <string name="changelog_v1_5_0_item2">स्लीप मोड जोड़ा गया</string>
+    <string name="changelog_v1_5_0_item3">बग फिक्स और स्थिरता में सुधार</string>
 
     <!-- Daily Limit -->
     <string name="settings_section_daily_limit">दैनिक सीमा</string>
