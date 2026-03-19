@@ -66,7 +66,8 @@ class SettingsActivity : BaseActivity() {
 
     // Daily Limit
     private lateinit var dailyLimitItem: LinearLayout
-    private lateinit var dailyLimitValue: TextView
+    private lateinit var dailyLimitDesc: TextView
+    private lateinit var dailyLimitSwitch: Switch
     private lateinit var dailyLimitProBadge: TextView
     private lateinit var dailyLimitWarningItem: LinearLayout
     private lateinit var dailyLimitWarningSwitch: Switch
@@ -75,7 +76,8 @@ class SettingsActivity : BaseActivity() {
 
     // Sleep Mode
     private lateinit var sleepModeItem: LinearLayout
-    private lateinit var sleepModeValue: TextView
+    private lateinit var sleepModeDesc: TextView
+    private lateinit var sleepModeSwitch: Switch
 
     private lateinit var deviceAdminManager: DeviceAdminManager
     private lateinit var prefsManager: PreferencesManager
@@ -163,7 +165,8 @@ class SettingsActivity : BaseActivity() {
 
         // Daily Limit
         dailyLimitItem = findViewById(R.id.dailyLimitItem)
-        dailyLimitValue = findViewById(R.id.dailyLimitValue)
+        dailyLimitDesc = findViewById(R.id.dailyLimitDesc)
+        dailyLimitSwitch = findViewById(R.id.dailyLimitSwitch)
         dailyLimitProBadge = findViewById(R.id.dailyLimitProBadge)
         dailyLimitWarningItem = findViewById(R.id.dailyLimitWarningItem)
         dailyLimitWarningSwitch = findViewById(R.id.dailyLimitWarningSwitch)
@@ -172,7 +175,8 @@ class SettingsActivity : BaseActivity() {
 
         // Sleep Mode
         sleepModeItem = findViewById(R.id.sleepModeItem)
-        sleepModeValue = findViewById(R.id.sleepModeValue)
+        sleepModeDesc = findViewById(R.id.sleepModeDesc)
+        sleepModeSwitch = findViewById(R.id.sleepModeSwitch)
 
         // 버전 정보 설정
         try {
@@ -448,7 +452,7 @@ class SettingsActivity : BaseActivity() {
         deviceAdminItem.alpha = premiumAlpha
 
         // 일일 제한
-        dailyLimitValue.visibility = if (isPremium) android.view.View.VISIBLE else android.view.View.GONE
+        dailyLimitSwitch.visibility = if (isPremium) android.view.View.VISIBLE else android.view.View.GONE
         dailyLimitProBadge.visibility = if (isPremium) android.view.View.GONE else android.view.View.VISIBLE
         dailyLimitItem.alpha = premiumAlpha
     }
@@ -701,15 +705,41 @@ class SettingsActivity : BaseActivity() {
     private fun setupDailyLimit() {
         updateDailyLimitDisplay()
 
+        dailyLimitSwitch.isChecked = prefsManager.isDailyLimitEnabled
         dailyLimitWarningSwitch.isChecked = prefsManager.isDailyLimitWarningEnabled
         dailyLimitMonitorSwitch.isChecked = prefsManager.isDailyLimitMonitorEnabled
+
+        dailyLimitSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (!PremiumManager.isPremium()) {
+                dailyLimitSwitch.isChecked = false
+                return@setOnCheckedChangeListener
+            }
+            prefsManager.isDailyLimitEnabled = isChecked
+            updateDailyLimitDisplay()
+            updateDailyLimitSubItems()
+
+            if (isChecked) {
+                com.muuu.unshort.receiver.DailyLimitResetReceiver.scheduleReset(this)
+                if (prefsManager.isDailyLimitMonitorEnabled) {
+                    showDailyLimitMonitoringNotification(prefsManager.dailyLimitMinutes)
+                }
+            } else {
+                com.muuu.unshort.receiver.DailyLimitResetReceiver.cancelReset(this)
+                val nm = getSystemService(NOTIFICATION_SERVICE) as android.app.NotificationManager
+                nm.cancel(com.muuu.unshort.config.AppConstants.NOTIFICATION_ID_DAILY_LIMIT_MONITOR)
+            }
+        }
 
         dailyLimitItem.setOnClickListener {
             if (!PremiumManager.isPremium()) {
                 startActivity(Intent(this, PremiumUpgradeActivity::class.java))
                 return@setOnClickListener
             }
-            showDailyLimitBottomSheet()
+            if (prefsManager.isDailyLimitEnabled) {
+                showDailyLimitBottomSheet()
+            } else {
+                dailyLimitSwitch.isChecked = true
+            }
         }
 
         // 80% 경고 토글
@@ -754,9 +784,9 @@ class SettingsActivity : BaseActivity() {
 
     private fun updateDailyLimitDisplay() {
         if (prefsManager.isDailyLimitEnabled) {
-            dailyLimitValue.text = getString(R.string.daily_limit_value_format, prefsManager.dailyLimitMinutes)
+            dailyLimitDesc.text = getString(R.string.daily_limit_value_format, prefsManager.dailyLimitMinutes)
         } else {
-            dailyLimitValue.text = getString(R.string.sleep_mode_not_set)
+            dailyLimitDesc.text = getString(R.string.settings_daily_limit_desc)
         }
     }
 
@@ -764,7 +794,6 @@ class SettingsActivity : BaseActivity() {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_daily_limit, null)
 
-        val toggle = view.findViewById<Switch>(R.id.dailyLimitToggle)
         val valueText = view.findViewById<TextView>(R.id.dailyLimitValueText)
         val seekBar = view.findViewById<SeekBar>(R.id.dailyLimitSeekBar)
         val doneButton = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.dailyLimitDoneButton)
@@ -772,7 +801,6 @@ class SettingsActivity : BaseActivity() {
         val preset60 = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.preset60)
         val preset120 = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.preset120)
 
-        var tempEnabled = prefsManager.isDailyLimitEnabled
         var tempMinutes = prefsManager.dailyLimitMinutes
 
         fun minutesToProgress(minutes: Int): Int = (minutes / 15).coerceIn(1, 16)
@@ -782,13 +810,8 @@ class SettingsActivity : BaseActivity() {
             valueText.text = getString(R.string.daily_limit_value_format, tempMinutes)
         }
 
-        toggle.isChecked = tempEnabled
         seekBar.progress = minutesToProgress(tempMinutes)
         updateDisplay()
-
-        toggle.setOnCheckedChangeListener { _, isChecked ->
-            tempEnabled = isChecked
-        }
 
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -810,32 +833,20 @@ class SettingsActivity : BaseActivity() {
         }
 
         fun applySettings() {
-            val wasEnabled = prefsManager.isDailyLimitEnabled
-            prefsManager.isDailyLimitEnabled = tempEnabled
             prefsManager.dailyLimitMinutes = tempMinutes
 
-            if (tempEnabled) {
-                com.muuu.unshort.receiver.DailyLimitResetReceiver.scheduleReset(this@SettingsActivity)
-                // 모니터링 알림이 ON이면 즉시 표시
-                if (prefsManager.isDailyLimitMonitorEnabled) {
-                    showDailyLimitMonitoringNotification(tempMinutes)
-                }
-            } else {
-                com.muuu.unshort.receiver.DailyLimitResetReceiver.cancelReset(this@SettingsActivity)
-                val nm = getSystemService(NOTIFICATION_SERVICE) as android.app.NotificationManager
-                nm.cancel(com.muuu.unshort.config.AppConstants.NOTIFICATION_ID_DAILY_LIMIT_MONITOR)
+            if (prefsManager.isDailyLimitMonitorEnabled) {
+                showDailyLimitMonitoringNotification(tempMinutes)
             }
 
             updateDailyLimitDisplay()
-            updateDailyLimitSubItems()
             bottomSheetDialog.dismiss()
         }
 
         doneButton.setOnClickListener {
             val oldMinutes = prefsManager.dailyLimitMinutes
-            val minutesChanged = tempEnabled && tempMinutes != oldMinutes && prefsManager.isDailyLimitEnabled
 
-            if (minutesChanged) {
+            if (tempMinutes != oldMinutes) {
                 kotlinx.coroutines.MainScope().launch {
                     val stats = com.muuu.unshort.data.statistics.StatisticsRepository(this@SettingsActivity).getTodayStats()
                     val currentLimitMs = oldMinutes * 60 * 1000L
@@ -865,21 +876,26 @@ class SettingsActivity : BaseActivity() {
 
     private fun setupSleepMode() {
         updateSleepModeDisplay()
+        syncSleepModeSwitch(prefsManager.isSleepModeEnabled)
 
         sleepModeItem.setOnClickListener {
-            if (prefsManager.isSleepModeEnabled && prefsManager.isSleepTime()) {
-                showSleepModeDeactivateWarning()
-                return@setOnClickListener
+            if (prefsManager.isSleepModeEnabled) {
+                if (prefsManager.isSleepTime()) {
+                    showSleepModeDeactivateWarning()
+                    return@setOnClickListener
+                }
+                showSleepModeBottomSheet()
+            } else {
+                sleepModeSwitch.isChecked = true
             }
-            showSleepModeBottomSheet()
         }
     }
 
     private fun updateSleepModeDisplay() {
         if (prefsManager.isSleepModeEnabled) {
-            sleepModeValue.text = prefsManager.getSleepTimeDisplayString()
+            sleepModeDesc.text = prefsManager.getSleepTimeDisplayString()
         } else {
-            sleepModeValue.text = getString(R.string.sleep_mode_not_set)
+            sleepModeDesc.text = getString(R.string.settings_sleep_mode_desc)
         }
     }
 
@@ -887,14 +903,12 @@ class SettingsActivity : BaseActivity() {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_sleep_mode, null)
 
-        val toggle = view.findViewById<Switch>(R.id.sleepModeToggle)
         val startTimeText = view.findViewById<TextView>(R.id.sleepStartTimeText)
         val endTimeText = view.findViewById<TextView>(R.id.sleepEndTimeText)
         val startTimeRow = view.findViewById<View>(R.id.sleepStartTimeRow)
         val endTimeRow = view.findViewById<View>(R.id.sleepEndTimeRow)
         val saveButton = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.sleepModeSaveButton)
 
-        var tempEnabled = prefsManager.isSleepModeEnabled
         var tempStartHour = prefsManager.sleepStartHour
         var tempStartMinute = prefsManager.sleepStartMinute
         var tempEndHour = prefsManager.sleepEndHour
@@ -905,12 +919,7 @@ class SettingsActivity : BaseActivity() {
             endTimeText.text = String.format("%02d:%02d", tempEndHour, tempEndMinute)
         }
 
-        toggle.isChecked = tempEnabled
         updateTimeTexts()
-
-        toggle.setOnCheckedChangeListener { _, isChecked ->
-            tempEnabled = isChecked
-        }
 
         startTimeRow.setOnClickListener {
             TimePickerDialog(
@@ -951,34 +960,40 @@ class SettingsActivity : BaseActivity() {
         saveButton.setOnClickListener {
             val wasEnabled = prefsManager.isSleepModeEnabled
 
-            if (tempEnabled) {
-                val now = java.time.LocalTime.now()
-                val start = java.time.LocalTime.of(tempStartHour, tempStartMinute)
-                val end = java.time.LocalTime.of(tempEndHour, tempEndMinute)
-                val isCurrentlyInSleepTime = if (start > end) {
-                    now >= start || now < end
-                } else if (start == end) {
-                    false
-                } else {
-                    now in start..<end
-                }
+            val now = java.time.LocalTime.now()
+            val start = java.time.LocalTime.of(tempStartHour, tempStartMinute)
+            val end = java.time.LocalTime.of(tempEndHour, tempEndMinute)
+            val isCurrentlyInSleepTime = if (start > end) {
+                now >= start || now < end
+            } else if (start == end) {
+                false
+            } else {
+                now in start..<end
+            }
 
-                if (isCurrentlyInSleepTime && (!wasEnabled || !prefsManager.isSleepTime())) {
-                    showSleepModeActivateConfirmDialog(
-                        tempStartHour, tempStartMinute,
-                        tempEndHour, tempEndMinute,
-                        bottomSheetDialog
-                    )
-                    return@setOnClickListener
-                }
+            if (isCurrentlyInSleepTime && (!wasEnabled || !prefsManager.isSleepTime())) {
+                showSleepModeActivateConfirmDialog(
+                    tempStartHour, tempStartMinute,
+                    tempEndHour, tempEndMinute,
+                    bottomSheetDialog
+                )
+                return@setOnClickListener
             }
 
             applySleepModeSettings(
-                tempEnabled,
+                true,
                 tempStartHour, tempStartMinute,
                 tempEndHour, tempEndMinute
             )
             bottomSheetDialog.dismiss()
+        }
+
+        // 저장 안 하고 닫으면 토글 복원
+        val wasEnabled = prefsManager.isSleepModeEnabled
+        bottomSheetDialog.setOnDismissListener {
+            if (!prefsManager.isSleepModeEnabled && !wasEnabled) {
+                syncSleepModeSwitch(false)
+            }
         }
 
         bottomSheetDialog.setContentView(view)
@@ -1029,6 +1044,24 @@ class SettingsActivity : BaseActivity() {
         }
 
         updateSleepModeDisplay()
+        syncSleepModeSwitch(enabled)
+    }
+
+    private fun syncSleepModeSwitch(enabled: Boolean) {
+        sleepModeSwitch.setOnCheckedChangeListener(null)
+        sleepModeSwitch.isChecked = enabled
+        sleepModeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                showSleepModeBottomSheet()
+            } else {
+                if (prefsManager.isSleepModeEnabled && prefsManager.isSleepTime()) {
+                    sleepModeSwitch.isChecked = true
+                    showSleepModeDeactivateWarning()
+                    return@setOnCheckedChangeListener
+                }
+                applySleepModeSettings(false, prefsManager.sleepStartHour, prefsManager.sleepStartMinute, prefsManager.sleepEndHour, prefsManager.sleepEndMinute)
+            }
+        }
     }
 
     companion object {

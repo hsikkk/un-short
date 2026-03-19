@@ -315,6 +315,7 @@
                         android:fontFamily="@font/spoqa_sans_neo" />
 
                     <TextView
+                        android:id="@+id/sleepModeDesc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_sleep_mode_desc"
@@ -325,15 +326,11 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/sleepModeValue"
+                <Switch
+                    android:id="@+id/sleepModeSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sleep_mode_not_set"
-                    android:textSize="@dimen/text_caption"
-                    android:textColor="#000000"
-                    android:alpha="0.6"
-                    android:layout_marginEnd="8dp" />
+                    android:layout_marginStart="16dp" />
 
             </LinearLayout>
 
@@ -390,6 +387,7 @@
                         android:fontFamily="@font/spoqa_sans_neo" />
 
                     <TextView
+                        android:id="@+id/dailyLimitDesc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_daily_limit_desc"
@@ -414,15 +412,11 @@
                     android:paddingVertical="4dp"
                     android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/dailyLimitValue"
+                <Switch
+                    android:id="@+id/dailyLimitSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sleep_mode_not_set"
-                    android:textSize="@dimen/text_caption"
-                    android:textColor="#000000"
-                    android:alpha="0.6"
-                    android:layout_marginEnd="8dp" />
+                    android:layout_marginStart="16dp" />
 
             </LinearLayout>
 
