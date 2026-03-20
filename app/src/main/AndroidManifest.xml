@@ -87,6 +87,7 @@
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
 
+
         <activity
             android:name=".ui.activity.PremiumUpgradeActivity"
             android:exported="false"

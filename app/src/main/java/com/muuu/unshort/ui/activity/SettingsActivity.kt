@@ -709,26 +709,7 @@ class SettingsActivity : BaseActivity() {
         dailyLimitWarningSwitch.isChecked = prefsManager.isDailyLimitWarningEnabled
         dailyLimitMonitorSwitch.isChecked = prefsManager.isDailyLimitMonitorEnabled
 
-        dailyLimitSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (!PremiumManager.isPremium()) {
-                dailyLimitSwitch.isChecked = false
-                return@setOnCheckedChangeListener
-            }
-            prefsManager.isDailyLimitEnabled = isChecked
-            updateDailyLimitDisplay()
-            updateDailyLimitSubItems()
-
-            if (isChecked) {
-                com.muuu.unshort.receiver.DailyLimitResetReceiver.scheduleReset(this)
-                if (prefsManager.isDailyLimitMonitorEnabled) {
-                    showDailyLimitMonitoringNotification(prefsManager.dailyLimitMinutes)
-                }
-            } else {
-                com.muuu.unshort.receiver.DailyLimitResetReceiver.cancelReset(this)
-                val nm = getSystemService(NOTIFICATION_SERVICE) as android.app.NotificationManager
-                nm.cancel(com.muuu.unshort.config.AppConstants.NOTIFICATION_ID_DAILY_LIMIT_MONITOR)
-            }
-        }
+        setupDailyLimitSwitchListener()
 
         dailyLimitItem.setOnClickListener {
             if (!PremiumManager.isPremium()) {
@@ -1017,13 +998,79 @@ class SettingsActivity : BaseActivity() {
     }
 
     private fun showSleepModeDeactivateWarning() {
-        WarningDialog(
-            context = this,
-            titleResId = R.string.sleep_mode_dialog_title,
-            messageResId = R.string.sleep_mode_dialog_message,
-            positiveTextResId = R.string.sleep_mode_dialog_confirm,
-            onPositive = { }
-        ).show()
+        protectionHelper.start(
+            warningConfig = WarningConfig(
+                titleResId = R.string.disable_warning_title,
+                messageResId = R.string.disable_warning_message,
+                positiveTextResId = R.string.disable_warning_confirm,
+                negativeTextResId = R.string.disable_warning_cancel
+            ),
+            confirmConfig = ConfirmConfig(
+                titleResId = R.string.prevent_impulsive_disable_off_title,
+                messageResId = R.string.prevent_impulsive_disable_off_message,
+                requiredPhraseResId = R.string.prevent_impulsive_disable_off_phrase,
+                onCancel = { },
+                onWarningCancel = { }
+            ),
+            finalAction = {
+                applySleepModeSettings(
+                    false,
+                    prefsManager.sleepStartHour,
+                    prefsManager.sleepStartMinute,
+                    prefsManager.sleepEndHour,
+                    prefsManager.sleepEndMinute
+                )
+            }
+        )
+    }
+
+    private fun setupDailyLimitSwitchListener() {
+        dailyLimitSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (!PremiumManager.isPremium()) {
+                dailyLimitSwitch.isChecked = false
+                return@setOnCheckedChangeListener
+            }
+
+            if (isChecked) {
+                prefsManager.isDailyLimitEnabled = true
+                updateDailyLimitDisplay()
+                updateDailyLimitSubItems()
+                com.muuu.unshort.receiver.DailyLimitResetReceiver.scheduleReset(this)
+                if (prefsManager.isDailyLimitMonitorEnabled) {
+                    showDailyLimitMonitoringNotification(prefsManager.dailyLimitMinutes)
+                }
+            } else {
+                dailyLimitSwitch.setOnCheckedChangeListener(null)
+                dailyLimitSwitch.isChecked = true
+                setupDailyLimitSwitchListener()
+                protectionHelper.start(
+                    warningConfig = WarningConfig(
+                        titleResId = R.string.disable_warning_title,
+                        messageResId = R.string.disable_warning_message,
+                        positiveTextResId = R.string.disable_warning_confirm,
+                        negativeTextResId = R.string.disable_warning_cancel
+                    ),
+                    confirmConfig = ConfirmConfig(
+                        titleResId = R.string.prevent_impulsive_disable_off_title,
+                        messageResId = R.string.prevent_impulsive_disable_off_message,
+                        requiredPhraseResId = R.string.prevent_impulsive_disable_off_phrase,
+                        onCancel = { },
+                        onWarningCancel = { }
+                    ),
+                    finalAction = {
+                        prefsManager.isDailyLimitEnabled = false
+                        updateDailyLimitDisplay()
+                        updateDailyLimitSubItems()
+                        com.muuu.unshort.receiver.DailyLimitResetReceiver.cancelReset(this)
+                        val nm = getSystemService(NOTIFICATION_SERVICE) as android.app.NotificationManager
+                        nm.cancel(com.muuu.unshort.config.AppConstants.NOTIFICATION_ID_DAILY_LIMIT_MONITOR)
+                        dailyLimitSwitch.setOnCheckedChangeListener(null)
+                        dailyLimitSwitch.isChecked = false
+                        setupDailyLimitSwitchListener()
+                    }
+                )
+            }
+        }
     }
 
     private fun applySleepModeSettings(
