@@ -407,8 +407,8 @@
     <string name="daily_limit_presets">Hızlı seçim</string>
     <string name="daily_limit_done">Tamam</string>
     <string name="daily_limit_value_format">%d dk</string>
-    <string name="daily_limit_warning_title">%%80 uyarı bildirimi</string>
-    <string name="daily_limit_warning_desc">Limitin %%80\'ine ulaşıldığında bildirim</string>
+    <string name="daily_limit_warning_title">%80 uyarı bildirimi</string>
+    <string name="daily_limit_warning_desc">Limitin %80\'ine ulaşıldığında bildirim</string>
     <string name="daily_limit_monitor_title">Sürekli izleme bildirimi</string>
     <string name="daily_limit_monitor_desc">İzleme süresini durum çubuğunda göster</string>
     <string name="daily_limit_notif_warning_title">Günlük Shorts limitinizin %%80\'ini kullandınız.</string>

@@ -408,8 +408,8 @@
     <string name="daily_limit_presets">اختيار سريع</string>
     <string name="daily_limit_done">تم</string>
     <string name="daily_limit_value_format">%d دقيقة</string>
-    <string name="daily_limit_warning_title">تنبيه 80%%</string>
-    <string name="daily_limit_warning_desc">إشعار عند الوصول إلى 80%% من الحد</string>
+    <string name="daily_limit_warning_title">تنبيه 80%</string>
+    <string name="daily_limit_warning_desc">إشعار عند الوصول إلى 80% من الحد</string>
     <string name="daily_limit_monitor_title">إشعار المراقبة المستمرة</string>
     <string name="daily_limit_monitor_desc">عرض وقت المشاهدة في شريط الحالة</string>
     <string name="daily_limit_notif_warning_title">لقد استخدمت 80%% من حدك اليومي للـ Shorts.</string>

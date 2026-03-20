@@ -408,8 +408,8 @@
     <string name="daily_limit_presets">Быстрый выбор</string>
     <string name="daily_limit_done">Готово</string>
     <string name="daily_limit_value_format">%d мин</string>
-    <string name="daily_limit_warning_title">Предупреждение при 80%%</string>
-    <string name="daily_limit_warning_desc">Уведомление при достижении 80%% лимита</string>
+    <string name="daily_limit_warning_title">Предупреждение при 80%</string>
+    <string name="daily_limit_warning_desc">Уведомление при достижении 80% лимита</string>
     <string name="daily_limit_monitor_title">Постоянное уведомление мониторинга</string>
     <string name="daily_limit_monitor_desc">Отображать время просмотра в строке состояния</string>
     <string name="daily_limit_notif_warning_title">Вы использовали 80%% дневного лимита Shorts.</string>

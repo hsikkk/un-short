@@ -409,8 +409,8 @@
     <string name="daily_limit_presets">Quick Presets</string>
     <string name="daily_limit_done">Done</string>
     <string name="daily_limit_value_format">%d min</string>
-    <string name="daily_limit_warning_title">80%% Warning</string>
-    <string name="daily_limit_warning_desc">Notify when 80%% of limit is reached</string>
+    <string name="daily_limit_warning_title">80% Warning</string>
+    <string name="daily_limit_warning_desc">Notify when 80% of limit is reached</string>
     <string name="daily_limit_monitor_title">Always-on Monitoring</string>
     <string name="daily_limit_monitor_desc">Show viewing time in status bar</string>
     <string name="daily_limit_notif_warning_title">Used 80%% of daily shorts limit.</string>

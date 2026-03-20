@@ -407,8 +407,8 @@
     <string name="daily_limit_presets">त्वरित चयन</string>
     <string name="daily_limit_done">पूर्ण</string>
     <string name="daily_limit_value_format">%d मिनट</string>
-    <string name="daily_limit_warning_title">80%% चेतावनी सूचना</string>
-    <string name="daily_limit_warning_desc">सीमा का 80%% पहुंचने पर सूचना</string>
+    <string name="daily_limit_warning_title">80% चेतावनी सूचना</string>
+    <string name="daily_limit_warning_desc">सीमा का 80% पहुंचने पर सूचना</string>
     <string name="daily_limit_monitor_title">निरंतर निगरानी सूचना</string>
     <string name="daily_limit_monitor_desc">स्टेटस बार में देखने का समय दिखाएं</string>
     <string name="daily_limit_notif_warning_title">आपने अपनी Shorts की दैनिक सीमा का 80%% उपयोग कर लिया है।</string>

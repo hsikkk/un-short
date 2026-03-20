@@ -408,8 +408,8 @@
     <string name="daily_limit_presets">Schnellauswahl</string>
     <string name="daily_limit_done">Fertig</string>
     <string name="daily_limit_value_format">%d Min.</string>
-    <string name="daily_limit_warning_title">80%%-Warnung</string>
-    <string name="daily_limit_warning_desc">Benachrichtigung bei Erreichen von 80%% des Limits</string>
+    <string name="daily_limit_warning_title">80%-Warnung</string>
+    <string name="daily_limit_warning_desc">Benachrichtigung bei Erreichen von 80% des Limits</string>
     <string name="daily_limit_monitor_title">Dauerhafte Überwachungsbenachrichtigung</string>
     <string name="daily_limit_monitor_desc">Sehdauer in der Statusleiste anzeigen</string>
     <string name="daily_limit_notif_warning_title">Sie haben 80%% Ihres täglichen Shorts-Limits verbraucht.</string>

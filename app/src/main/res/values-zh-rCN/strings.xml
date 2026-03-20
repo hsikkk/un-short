@@ -408,8 +408,8 @@
     <string name="daily_limit_presets">快速选择</string>
     <string name="daily_limit_done">完成</string>
     <string name="daily_limit_value_format">%d分钟</string>
-    <string name="daily_limit_warning_title">80%%警告通知</string>
-    <string name="daily_limit_warning_desc">达到限制的80%%时通知</string>
+    <string name="daily_limit_warning_title">80%警告通知</string>
+    <string name="daily_limit_warning_desc">达到限制的80%时通知</string>
     <string name="daily_limit_monitor_title">常驻监控通知</string>
     <string name="daily_limit_monitor_desc">在状态栏显示观看时间</string>
     <string name="daily_limit_notif_warning_title">已使用每日短视频限制时间的80%%。</string>

@@ -408,8 +408,8 @@
     <string name="daily_limit_presets">Chọn nhanh</string>
     <string name="daily_limit_done">Xong</string>
     <string name="daily_limit_value_format">%d phút</string>
-    <string name="daily_limit_warning_title">Cảnh báo 80%%</string>
-    <string name="daily_limit_warning_desc">Thông báo khi đạt 80%% giới hạn</string>
+    <string name="daily_limit_warning_title">Cảnh báo 80%</string>
+    <string name="daily_limit_warning_desc">Thông báo khi đạt 80% giới hạn</string>
     <string name="daily_limit_monitor_title">Thông báo theo dõi liên tục</string>
     <string name="daily_limit_monitor_desc">Hiển thị thời gian xem trên thanh trạng thái</string>
     <string name="daily_limit_notif_warning_title">Bạn đã dùng 80%% giới hạn Shorts hàng ngày.</string>

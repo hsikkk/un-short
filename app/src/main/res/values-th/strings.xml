@@ -408,8 +408,8 @@
     <string name="daily_limit_presets">เลือกด่วน</string>
     <string name="daily_limit_done">เสร็จสิ้น</string>
     <string name="daily_limit_value_format">%d นาที</string>
-    <string name="daily_limit_warning_title">การแจ้งเตือน 80%%</string>
-    <string name="daily_limit_warning_desc">แจ้งเตือนเมื่อถึง 80%% ของขีดจำกัด</string>
+    <string name="daily_limit_warning_title">การแจ้งเตือน 80%</string>
+    <string name="daily_limit_warning_desc">แจ้งเตือนเมื่อถึง 80% ของขีดจำกัด</string>
     <string name="daily_limit_monitor_title">การแจ้งเตือนติดตามตลอดเวลา</string>
     <string name="daily_limit_monitor_desc">แสดงเวลาดูในแถบสถานะ</string>
     <string name="daily_limit_notif_warning_title">คุณใช้เวลาจำกัด Shorts รายวันไปแล้ว 80%%</string>

@@ -409,8 +409,8 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="daily_limit_presets">Pilihan cepat</string>
     <string name="daily_limit_done">Selesai</string>
     <string name="daily_limit_value_format">%d menit</string>
-    <string name="daily_limit_warning_title">Peringatan 80%%</string>
-    <string name="daily_limit_warning_desc">Notifikasi saat mencapai 80%% batas</string>
+    <string name="daily_limit_warning_title">Peringatan 80%</string>
+    <string name="daily_limit_warning_desc">Notifikasi saat mencapai 80% batas</string>
     <string name="daily_limit_monitor_title">Notifikasi pemantauan berkelanjutan</string>
     <string name="daily_limit_monitor_desc">Tampilkan waktu menonton di bilah status</string>
     <string name="daily_limit_notif_warning_title">Anda telah menggunakan 80%% batas Shorts harian Anda.</string>

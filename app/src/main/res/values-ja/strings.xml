@@ -408,8 +408,8 @@
     <string name="daily_limit_presets">クイック選択</string>
     <string name="daily_limit_done">完了</string>
     <string name="daily_limit_value_format">%d分</string>
-    <string name="daily_limit_warning_title">80%%警告通知</string>
-    <string name="daily_limit_warning_desc">制限の80%%到達時に通知</string>
+    <string name="daily_limit_warning_title">80%警告通知</string>
+    <string name="daily_limit_warning_desc">制限の80%到達時に通知</string>
     <string name="daily_limit_monitor_title">常時モニタリング通知</string>
     <string name="daily_limit_monitor_desc">ステータスバーに視聴時間を表示</string>
     <string name="daily_limit_notif_warning_title">ショート動画の1日制限時間の80%%を使用しました。</string>

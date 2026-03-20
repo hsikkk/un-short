@@ -409,8 +409,8 @@
     <string name="daily_limit_presets">빠른 선택</string>
     <string name="daily_limit_done">완료</string>
     <string name="daily_limit_value_format">%d분</string>
-    <string name="daily_limit_warning_title">80%% 경고 알림</string>
-    <string name="daily_limit_warning_desc">제한의 80%% 도달 시 알림</string>
+    <string name="daily_limit_warning_title">80% 경고 알림</string>
+    <string name="daily_limit_warning_desc">제한의 80% 도달 시 알림</string>
     <string name="daily_limit_monitor_title">상시 모니터링 알림</string>
     <string name="daily_limit_monitor_desc">상태바에 시청 시간 표시</string>
     <string name="daily_limit_notif_warning_title">쇼츠 일일 제한 시간 80%% 사용했어요.</string>

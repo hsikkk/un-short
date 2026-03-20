@@ -408,8 +408,8 @@
     <string name="daily_limit_presets">Sélection rapide</string>
     <string name="daily_limit_done">Terminer</string>
     <string name="daily_limit_value_format">%d min</string>
-    <string name="daily_limit_warning_title">Alerte à 80%%</string>
-    <string name="daily_limit_warning_desc">Notification à l\'atteinte de 80%% de la limite</string>
+    <string name="daily_limit_warning_title">Alerte à 80%</string>
+    <string name="daily_limit_warning_desc">Notification à l\'atteinte de 80% de la limite</string>
     <string name="daily_limit_monitor_title">Notification de surveillance permanente</string>
     <string name="daily_limit_monitor_desc">Affiche le temps de visionnage dans la barre d\'état</string>
     <string name="daily_limit_notif_warning_title">Vous avez utilisé 80%% de votre limite quotidienne de Shorts.</string>
