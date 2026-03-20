@@ -395,6 +395,8 @@
     <string name="changelog_title">تحديث v%s</string>
     <string name="changelog_subtitle">اكتشف ما الجديد</string>
     <string name="changelog_confirm">حسناً</string>
+    <string name="changelog_v1_5_1_item1">إضافة إلغاء طارئ لوضع النوم والحد اليومي</string>
+    <string name="changelog_v1_5_1_item2">إصلاح الأخطاء وتحسين الاستقرار</string>
     <string name="changelog_v1_5_0_item1">إضافة ميزة حد الوقت اليومي</string>
     <string name="changelog_v1_5_0_item2">إضافة وضع النوم</string>
     <string name="changelog_v1_5_0_item3">إصلاح الأخطاء وتحسين الاستقرار</string>

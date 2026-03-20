@@ -394,6 +394,8 @@
     <string name="changelog_title">v%s Güncellemesi</string>
     <string name="changelog_subtitle">Yeniliklere göz atın</string>
     <string name="changelog_confirm">Tamam</string>
+    <string name="changelog_v1_5_1_item1">Uyku modu ve günlük limit için acil devre dışı bırakma eklendi</string>
+    <string name="changelog_v1_5_1_item2">Hata düzeltmeleri ve kararlılık iyileştirmeleri</string>
     <string name="changelog_v1_5_0_item1">Günlük süre sınırı özelliği eklendi</string>
     <string name="changelog_v1_5_0_item2">Uyku modu eklendi</string>
     <string name="changelog_v1_5_0_item3">Hata düzeltmeleri ve kararlılık iyileştirmeleri</string>

@@ -395,6 +395,8 @@
     <string name="changelog_title">v%s 更新</string>
     <string name="changelog_subtitle">查看最新變更</string>
     <string name="changelog_confirm">確定</string>
+    <string name="changelog_v1_5_1_item1">新增睡眠模式及每日限制緊急解除功能</string>
+    <string name="changelog_v1_5_1_item2">錯誤修復及穩定性改善</string>
     <string name="changelog_v1_5_0_item1">新增每日使用時間限制功能</string>
     <string name="changelog_v1_5_0_item2">新增睡眠模式</string>
     <string name="changelog_v1_5_0_item3">修復錯誤並提升穩定性</string>

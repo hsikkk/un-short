@@ -395,6 +395,8 @@
     <string name="changelog_title">Обновление v%s</string>
     <string name="changelog_subtitle">Посмотрите, что нового</string>
     <string name="changelog_confirm">ОК</string>
+    <string name="changelog_v1_5_1_item1">Добавлено экстренное отключение режима сна и дневного лимита</string>
+    <string name="changelog_v1_5_1_item2">Исправление ошибок и улучшение стабильности</string>
     <string name="changelog_v1_5_0_item1">Добавлен дневной лимит времени</string>
     <string name="changelog_v1_5_0_item2">Добавлен режим сна</string>
     <string name="changelog_v1_5_0_item3">Исправление ошибок и улучшение стабильности</string>

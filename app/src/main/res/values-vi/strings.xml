@@ -395,6 +395,8 @@
     <string name="changelog_title">Cập nhật v%s</string>
     <string name="changelog_subtitle">Xem những điểm mới</string>
     <string name="changelog_confirm">Đồng ý</string>
+    <string name="changelog_v1_5_1_item1">Thêm tính năng tắt khẩn cấp chế độ ngủ và giới hạn hàng ngày</string>
+    <string name="changelog_v1_5_1_item2">Sửa lỗi và cải thiện độ ổn định</string>
     <string name="changelog_v1_5_0_item1">Thêm tính năng giới hạn thời gian hàng ngày</string>
     <string name="changelog_v1_5_0_item2">Thêm chế độ ngủ</string>
     <string name="changelog_v1_5_0_item3">Sửa lỗi và cải thiện độ ổn định</string>
