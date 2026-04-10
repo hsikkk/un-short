@@ -435,5 +435,12 @@
 
     <string name="premium_feature_daily_limit_title">일일 제한 시간</string>
     <string name="premium_feature_daily_limit_desc">하루 시청 시간을 제한하고 초과 시 자동 차단</string>
+    <string name="settings_custom_message_title">차단 화면 문구 변경</string>
+    <string name="settings_custom_message_desc">차단 화면에 표시되는 문구 변경</string>
+    <string name="custom_message_before_timer_label">타이머 시작 전</string>
+    <string name="custom_message_after_timer_label">타이머 완료 후</string>
+    <string name="custom_message_reset">기본값으로 초기화</string>
+    <string name="custom_message_hint_before">예: 지금 이 순간, 쇼츠가 정말 필요할까요?</string>
+    <string name="custom_message_hint_after">예: 여기까지 기다렸네요. 정말로 볼 건가요?</string>
 
 </resources>

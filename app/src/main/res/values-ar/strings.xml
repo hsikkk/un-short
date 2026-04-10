@@ -434,5 +434,12 @@
 
     <string name="premium_feature_daily_limit_title">حد الوقت اليومي</string>
     <string name="premium_feature_daily_limit_desc">تحديد وقت المشاهدة اليومي والحظر التلقائي عند التجاوز</string>
+    <string name="settings_custom_message_title">تخصيص رسالة الحظر</string>
+    <string name="settings_custom_message_desc">تغيير الرسالة المعروضة على شاشة الحظر</string>
+    <string name="custom_message_before_timer_label">قبل المؤقت</string>
+    <string name="custom_message_after_timer_label">بعد المؤقت</string>
+    <string name="custom_message_reset">إعادة تعيين إلى الافتراضي</string>
+    <string name="custom_message_hint_before">مثال: هل تحتاج حقًا إلى مقاطع قصيرة الآن؟</string>
+    <string name="custom_message_hint_after">مثال: لقد انتظرت كل هذا الوقت. هل لا تزال تريد المشاهدة؟</string>
 
 </resources>

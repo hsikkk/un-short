@@ -434,5 +434,12 @@
 
     <string name="premium_feature_daily_limit_title">Tägliches Zeitlimit</string>
     <string name="premium_feature_daily_limit_desc">Tägliche Betrachtungszeit begrenzen und bei Überschreitung automatisch blockieren</string>
+    <string name="settings_custom_message_title">Blockbildschirm-Nachricht anpassen</string>
+    <string name="settings_custom_message_desc">Ändern Sie die angezeigte Nachricht auf dem Blockbildschirm</string>
+    <string name="custom_message_before_timer_label">Vor dem Timer</string>
+    <string name="custom_message_after_timer_label">Nach dem Timer</string>
+    <string name="custom_message_reset">Auf Standard zurücksetzen</string>
+    <string name="custom_message_hint_before">z.B. Brauchst du jetzt wirklich Shorts?</string>
+    <string name="custom_message_hint_after">z.B. Du hast so lange gewartet. Willst du trotzdem schauen?</string>
 
 </resources>

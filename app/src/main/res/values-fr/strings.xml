@@ -434,5 +434,12 @@
 
     <string name="premium_feature_daily_limit_title">Limite de temps quotidienne</string>
     <string name="premium_feature_daily_limit_desc">Limitez le temps de visionnage quotidien et bloquez automatiquement en cas de dépassement</string>
+    <string name="settings_custom_message_title">Personnaliser le message de blocage</string>
+    <string name="settings_custom_message_desc">Modifier le message affiché sur l\'écran de blocage</string>
+    <string name="custom_message_before_timer_label">Avant le minuteur</string>
+    <string name="custom_message_after_timer_label">Après le minuteur</string>
+    <string name="custom_message_reset">Réinitialiser par défaut</string>
+    <string name="custom_message_hint_before">ex : Avez-vous vraiment besoin de shorts maintenant ?</string>
+    <string name="custom_message_hint_after">ex : Vous avez attendu jusque-là. Voulez-vous encore regarder ?</string>
 
 </resources>

@@ -434,5 +434,12 @@
 
     <string name="premium_feature_daily_limit_title">每日限制時間</string>
     <string name="premium_feature_daily_limit_desc">限制每日觀看時間，超時自動封鎖</string>
+    <string name="settings_custom_message_title">自訂攔截訊息</string>
+    <string name="settings_custom_message_desc">更改攔截畫面上顯示的訊息</string>
+    <string name="custom_message_before_timer_label">計時器開始前</string>
+    <string name="custom_message_after_timer_label">計時器完成後</string>
+    <string name="custom_message_reset">恢復預設</string>
+    <string name="custom_message_hint_before">例：現在真的需要看短影片嗎？</string>
+    <string name="custom_message_hint_after">例：已經等了這麼久，還要看嗎？</string>
 
 </resources>

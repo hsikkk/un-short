@@ -434,5 +434,12 @@
 
     <string name="premium_feature_daily_limit_title">1日の制限時間</string>
     <string name="premium_feature_daily_limit_desc">1日の視聴時間を制限し、超過時に自動ブロック</string>
+    <string name="settings_custom_message_title">ブロック画面のメッセージ変更</string>
+    <string name="settings_custom_message_desc">ブロック画面に表示されるメッセージを変更します</string>
+    <string name="custom_message_before_timer_label">タイマー開始前</string>
+    <string name="custom_message_after_timer_label">タイマー完了後</string>
+    <string name="custom_message_reset">デフォルトに戻す</string>
+    <string name="custom_message_hint_before">例: 今、本当にショート動画が必要ですか？</string>
+    <string name="custom_message_hint_after">例: ここまで待ちました。本当に見ますか？</string>
 
 </resources>

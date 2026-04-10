@@ -435,5 +435,12 @@ apakah Anda benar-benar perlu shorts?</string>
 
     <string name="premium_feature_daily_limit_title">Batas waktu harian</string>
     <string name="premium_feature_daily_limit_desc">Batasi waktu menonton harian dan blokir otomatis saat melebihi batas</string>
+    <string name="settings_custom_message_title">Sesuaikan pesan pemblokiran</string>
+    <string name="settings_custom_message_desc">Ubah pesan yang ditampilkan di layar pemblokiran</string>
+    <string name="custom_message_before_timer_label">Sebelum timer</string>
+    <string name="custom_message_after_timer_label">Setelah timer</string>
+    <string name="custom_message_reset">Atur ulang ke default</string>
+    <string name="custom_message_hint_before">cth: Apakah Anda benar-benar butuh shorts sekarang?</string>
+    <string name="custom_message_hint_after">cth: Anda sudah menunggu sejauh ini. Masih ingin menonton?</string>
 
 </resources>

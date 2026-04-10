@@ -434,5 +434,12 @@
 
     <string name="premium_feature_daily_limit_title">Giới hạn thời gian hàng ngày</string>
     <string name="premium_feature_daily_limit_desc">Giới hạn thời gian xem hàng ngày và tự động chặn khi vượt quá</string>
+    <string name="settings_custom_message_title">Tùy chỉnh thông báo chặn</string>
+    <string name="settings_custom_message_desc">Thay đổi thông báo hiển thị trên màn hình chặn</string>
+    <string name="custom_message_before_timer_label">Trước bộ đếm</string>
+    <string name="custom_message_after_timer_label">Sau bộ đếm</string>
+    <string name="custom_message_reset">Đặt lại mặc định</string>
+    <string name="custom_message_hint_before">VD: Bạn có thực sự cần xem shorts ngay bây giờ không?</string>
+    <string name="custom_message_hint_after">VD: Bạn đã đợi đến đây rồi. Vẫn muốn xem chứ?</string>
 
 </resources>

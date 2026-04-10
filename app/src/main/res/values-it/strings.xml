@@ -434,5 +434,12 @@
 
     <string name="premium_feature_daily_limit_title">Limite di tempo giornaliero</string>
     <string name="premium_feature_daily_limit_desc">Limita il tempo di visualizzazione giornaliero e blocca automaticamente al superamento</string>
+    <string name="settings_custom_message_title">Personalizza messaggio di blocco</string>
+    <string name="settings_custom_message_desc">Modifica il messaggio mostrato nella schermata di blocco</string>
+    <string name="custom_message_before_timer_label">Prima del timer</string>
+    <string name="custom_message_after_timer_label">Dopo il timer</string>
+    <string name="custom_message_reset">Ripristina predefinito</string>
+    <string name="custom_message_hint_before">es: Hai davvero bisogno di shorts adesso?</string>
+    <string name="custom_message_hint_after">es: Hai aspettato fin qui. Vuoi ancora guardare?</string>
 
 </resources>

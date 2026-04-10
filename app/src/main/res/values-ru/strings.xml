@@ -434,5 +434,12 @@
 
     <string name="premium_feature_daily_limit_title">Дневной лимит времени</string>
     <string name="premium_feature_daily_limit_desc">Ограничение ежедневного времени просмотра с автоблокировкой при превышении</string>
+    <string name="settings_custom_message_title">Настроить сообщение блокировки</string>
+    <string name="settings_custom_message_desc">Изменить сообщение на экране блокировки</string>
+    <string name="custom_message_before_timer_label">До таймера</string>
+    <string name="custom_message_after_timer_label">После таймера</string>
+    <string name="custom_message_reset">Сбросить по умолчанию</string>
+    <string name="custom_message_hint_before">напр.: Вам действительно нужны шортсы сейчас?</string>
+    <string name="custom_message_hint_after">напр.: Вы ждали до сих пор. Всё ещё хотите смотреть?</string>
 
 </resources>

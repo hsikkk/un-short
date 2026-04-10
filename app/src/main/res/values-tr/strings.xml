@@ -433,5 +433,12 @@
 
     <string name="premium_feature_daily_limit_title">Günlük süre limiti</string>
     <string name="premium_feature_daily_limit_desc">Günlük izleme süresini sınırlayın ve aşıldığında otomatik engelleme</string>
+    <string name="settings_custom_message_title">Engelleme mesajını özelleştir</string>
+    <string name="settings_custom_message_desc">Engelleme ekranında gösterilen mesajı değiştirin</string>
+    <string name="custom_message_before_timer_label">Zamanlayıcıdan önce</string>
+    <string name="custom_message_after_timer_label">Zamanlayıcıdan sonra</string>
+    <string name="custom_message_reset">Varsayılana sıfırla</string>
+    <string name="custom_message_hint_before">ör: Şu an gerçekten shorts izlemeniz gerekiyor mu?</string>
+    <string name="custom_message_hint_after">ör: Buraya kadar beklediniz. Hâlâ izlemek istiyor musunuz?</string>
 
 </resources>

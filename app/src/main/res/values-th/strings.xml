@@ -434,5 +434,12 @@
 
     <string name="premium_feature_daily_limit_title">จำกัดเวลารายวัน</string>
     <string name="premium_feature_daily_limit_desc">จำกัดเวลาดูรายวันและบล็อกอัตโนมัติเมื่อเกินกำหนด</string>
+    <string name="settings_custom_message_title">ปรับแต่งข้อความบล็อก</string>
+    <string name="settings_custom_message_desc">เปลี่ยนข้อความที่แสดงบนหน้าจอบล็อก</string>
+    <string name="custom_message_before_timer_label">ก่อนตั้งเวลา</string>
+    <string name="custom_message_after_timer_label">หลังตั้งเวลาเสร็จ</string>
+    <string name="custom_message_reset">รีเซ็ตเป็นค่าเริ่มต้น</string>
+    <string name="custom_message_hint_before">เช่น: ตอนนี้คุณต้องการดูชอร์ตจริงๆ หรือ?</string>
+    <string name="custom_message_hint_after">เช่น: คุณรอมาถึงตรงนี้แล้ว ยังอยากดูอยู่ไหม?</string>
 
 </resources>

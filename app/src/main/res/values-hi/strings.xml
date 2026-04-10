@@ -433,5 +433,12 @@
 
     <string name="premium_feature_daily_limit_title">दैनिक समय सीमा</string>
     <string name="premium_feature_daily_limit_desc">दैनिक देखने का समय सीमित करें और सीमा पार होने पर स्वचालित ब्लॉक</string>
+    <string name="settings_custom_message_title">ब्लॉक स्क्रीन संदेश बदलें</string>
+    <string name="settings_custom_message_desc">ब्लॉक स्क्रीन पर दिखाए जाने वाले संदेश को बदलें</string>
+    <string name="custom_message_before_timer_label">टाइमर शुरू होने से पहले</string>
+    <string name="custom_message_after_timer_label">टाइमर पूरा होने के बाद</string>
+    <string name="custom_message_reset">डिफ़ॉल्ट पर रीसेट करें</string>
+    <string name="custom_message_hint_before">उदा: क्या आपको अभी सच में शॉर्ट्स की ज़रूरत है?</string>
+    <string name="custom_message_hint_after">उदा: आपने इतना इंतज़ार किया। अभी भी देखना चाहते हैं?</string>
 
 </resources>

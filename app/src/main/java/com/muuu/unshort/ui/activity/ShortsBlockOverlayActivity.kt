@@ -31,7 +31,6 @@ import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.config.AdConfig
 import com.muuu.unshort.config.OverlayType
-import com.muuu.unshort.ui.activity.ShortsBlockOverlayActivity
 import com.muuu.unshort.ui.activity.BaseActivity
 import com.muuu.unshort.config.AppConstants
 import com.muuu.unshort.R
@@ -52,7 +51,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         const val EXTRA_SESSION_ID = "session_id"
         const val EXTRA_SOURCE_PACKAGE = "source_package"
         const val EXTRA_OVERLAY_TYPE = "overlay_type"
-    }
+}
 
     override fun isLightStatusBar(): Boolean = false
 
@@ -287,7 +286,9 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             watchParams.topMargin = resources.displayMetrics.density.toInt() * 12
             buttonContainer.addView(watchButton, watchParams)
 
-            mainMessage.text = getString(R.string.block_message_after_timer)
+            mainMessage.text = prefsManager.customMessageAfterTimer.ifEmpty {
+                getString(R.string.block_message_after_timer)
+            }
         } else {
             // Timer not completed - show INITIAL buttons
             startTimerButton.visibility = View.VISIBLE
@@ -314,7 +315,9 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             skipParams.topMargin = resources.displayMetrics.density.toInt() * 12
             buttonContainer.addView(skipButton, skipParams)
 
-            mainMessage.text = getString(R.string.block_message_before_timer)
+            mainMessage.text = prefsManager.customMessageBeforeTimer.ifEmpty {
+                getString(R.string.block_message_before_timer)
+            }
         }
     }
 

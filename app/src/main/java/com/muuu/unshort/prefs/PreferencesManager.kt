@@ -92,6 +92,16 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(AppConstants.PREF_PREVENT_IMPULSIVE_DISABLE, false)
         set(value) = prefs.edit().putBoolean(AppConstants.PREF_PREVENT_IMPULSIVE_DISABLE, value).apply()
 
+    // ========== Custom Block Messages ==========
+
+    var customMessageBeforeTimer: String
+        get() = prefs.getString(AppConstants.PREF_CUSTOM_MESSAGE_BEFORE_TIMER, "") ?: ""
+        set(value) = prefs.edit().putString(AppConstants.PREF_CUSTOM_MESSAGE_BEFORE_TIMER, value).apply()
+
+    var customMessageAfterTimer: String
+        get() = prefs.getString(AppConstants.PREF_CUSTOM_MESSAGE_AFTER_TIMER, "") ?: ""
+        set(value) = prefs.edit().putString(AppConstants.PREF_CUSTOM_MESSAGE_AFTER_TIMER, value).apply()
+
     // ========== Session ==========
 
     var currentSessionId: String?

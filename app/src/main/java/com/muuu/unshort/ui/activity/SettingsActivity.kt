@@ -57,6 +57,8 @@ class SettingsActivity : BaseActivity() {
     private lateinit var allowFirstProBadge: TextView
     private lateinit var preventDisableProBadge: TextView
     private lateinit var deviceAdminProBadge: TextView
+    private lateinit var customMessageItem: LinearLayout
+    private lateinit var customMessageProBadge: TextView
 
     // Notification Settings
     private lateinit var dailyNotificationItem: LinearLayout
@@ -156,6 +158,8 @@ class SettingsActivity : BaseActivity() {
         allowFirstProBadge = findViewById(R.id.allowFirstProBadge)
         preventDisableProBadge = findViewById(R.id.preventDisableProBadge)
         deviceAdminProBadge = findViewById(R.id.deviceAdminProBadge)
+        customMessageItem = findViewById(R.id.customMessageItem)
+        customMessageProBadge = findViewById(R.id.customMessageProBadge)
 
         // Notification Settings
         dailyNotificationItem = findViewById(R.id.dailyNotificationItem)
@@ -283,6 +287,11 @@ class SettingsActivity : BaseActivity() {
         // 대기 시간 설정
         waitTimeItem.setOnClickListener {
             showWaitTimeBottomSheet()
+        }
+
+        // 차단 화면 문구 변경
+        customMessageItem.setOnClickListener {
+            showCustomMessageBottomSheet()
         }
 
         // 피드백 보내기
@@ -416,6 +425,46 @@ class SettingsActivity : BaseActivity() {
         bottomSheetDialog.show()
     }
 
+    private fun showCustomMessageBottomSheet() {
+        if (!PremiumManager.isPremium()) {
+            startActivity(Intent(this, PremiumUpgradeActivity::class.java))
+            return
+        }
+
+        val bottomSheetDialog = BottomSheetDialog(this)
+        val view = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_custom_message, null)
+
+        val editBefore = view.findViewById<EditText>(R.id.editBeforeTimer)
+        val editAfter = view.findViewById<EditText>(R.id.editAfterTimer)
+        val resetButton = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.resetButton)
+        val doneButton = view.findViewById<com.google.android.material.button.MaterialButton>(R.id.doneButton)
+
+        val currentBefore = prefsManager.customMessageBeforeTimer
+        val currentAfter = prefsManager.customMessageAfterTimer
+        if (currentBefore.isNotEmpty()) editBefore.setText(currentBefore)
+        if (currentAfter.isNotEmpty()) editAfter.setText(currentAfter)
+
+        resetButton.setOnClickListener {
+            editBefore.text.clear()
+            editAfter.text.clear()
+        }
+
+        doneButton.setOnClickListener {
+            prefsManager.customMessageBeforeTimer = editBefore.text.toString().trim()
+            prefsManager.customMessageAfterTimer = editAfter.text.toString().trim()
+            bottomSheetDialog.dismiss()
+        }
+
+        bottomSheetDialog.setContentView(view)
+        bottomSheetDialog.setOnShowListener {
+            @Suppress("DEPRECATION")
+            bottomSheetDialog.window?.setSoftInputMode(
+                android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+            )
+        }
+        bottomSheetDialog.show()
+    }
+
     /**
      * 프리미엄 UI 업데이트
      */
@@ -435,6 +484,10 @@ class SettingsActivity : BaseActivity() {
         waitTimeValue.visibility = if (isPremium) android.view.View.VISIBLE else android.view.View.GONE
         waitTimeProBadge.visibility = if (isPremium) android.view.View.GONE else android.view.View.VISIBLE
         waitTimeItem.alpha = premiumAlpha
+
+        // 차단 화면 문구 변경
+        customMessageProBadge.visibility = if (isPremium) android.view.View.GONE else android.view.View.VISIBLE
+        customMessageItem.alpha = premiumAlpha
 
         // 스크롤한 쇼츠만 차단
         allowFirstSwitch.visibility = if (isPremium) android.view.View.VISIBLE else android.view.View.GONE
