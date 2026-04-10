@@ -367,8 +367,15 @@ class SessionStateManager(
 
             // 새 핑거프린트가 유효하지 않은 경우 (재생 완료/일시정지로 UI 사라짐)
             if (!newFingerprint.isValid()) {
-                Log.d(TAG, "[$packageName] New fingerprint is invalid (title=${newFingerprint.titleHash}, channel=${newFingerprint.channelHash}, desc=${newFingerprint.descriptionHash}) - skipping fingerprint check, using hash-based detection")
-                // 핑거프린트 비교 스킵, 해시 기반 스크롤 감지로 진행
+                if (oldFingerprint != null && oldFingerprint.isValid()) {
+                    // 이전에 유효한 핑거프린트가 있었는데 지금 무효 = UI 전환 중 (pause/replay)
+                    Log.d(TAG, "[$packageName] Fingerprint became invalid (UI transition, prev was valid) - skipping scroll detection")
+                    scrollData.hash = newHash
+                    scrollData.stableCount = 0
+                    return
+                }
+                // 이전 핑거프린트도 없거나 무효 = 추출 자체가 깨짐 → 해시 기반 감지로 폴스루
+                Log.d(TAG, "[$packageName] Fingerprint invalid, no valid previous - using hash-based detection")
             } else if (oldFingerprint != null && oldFingerprint.isValid()) {
                 // 둘 다 유효한 경우에만 유사도 비교
                 val similarity = newFingerprint.similarityWith(oldFingerprint)
