@@ -395,6 +395,8 @@
     <string name="changelog_title">v%s 更新</string>
     <string name="changelog_subtitle">查看最新变化</string>
     <string name="changelog_confirm">好的</string>
+    <string name="changelog_v1_6_0_item1">自定义拦截屏幕文字 (PRO)</string>
+    <string name="changelog_v1_6_0_item2">修复错误并提升稳定性</string>
     <string name="changelog_v1_5_1_item1">添加睡眠模式和每日限制紧急解除功能</string>
     <string name="changelog_v1_5_1_item2">错误修复和稳定性改进</string>
     <string name="changelog_v1_5_0_item1">新增每日使用时间限制功能</string>

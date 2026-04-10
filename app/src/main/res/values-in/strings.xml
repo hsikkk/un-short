@@ -396,6 +396,8 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="changelog_title">Pembaruan v%s</string>
     <string name="changelog_subtitle">Lihat apa yang baru</string>
     <string name="changelog_confirm">Oke</string>
+    <string name="changelog_v1_6_0_item1">Kustomisasi pesan layar pemblokiran (PRO)</string>
+    <string name="changelog_v1_6_0_item2">Perbaikan bug dan peningkatan stabilitas</string>
     <string name="changelog_v1_5_1_item1">Menambahkan penonaktifan darurat untuk mode tidur dan batas harian</string>
     <string name="changelog_v1_5_1_item2">Perbaikan bug dan peningkatan stabilitas</string>
     <string name="changelog_v1_5_0_item1">Fitur batas waktu harian ditambahkan</string>

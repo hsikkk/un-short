@@ -395,6 +395,8 @@
     <string name="changelog_title">v%s Update</string>
     <string name="changelog_subtitle">Entdecke, was neu ist</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_6_0_item1">Blockbildschirm-Nachrichten anpassen (PRO)</string>
+    <string name="changelog_v1_6_0_item2">Fehlerbehebungen und Stabilitätsverbesserungen</string>
     <string name="changelog_v1_5_1_item1">Notfall-Deaktivierung für Schlafmodus und Tageslimit hinzugefügt</string>
     <string name="changelog_v1_5_1_item2">Fehlerbehebungen und Stabilitätsverbesserungen</string>
     <string name="changelog_v1_5_0_item1">Tägliches Zeitlimit hinzugefügt</string>

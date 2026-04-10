@@ -395,6 +395,8 @@
     <string name="changelog_title">Actualización v%s</string>
     <string name="changelog_subtitle">Descubre las novedades</string>
     <string name="changelog_confirm">Aceptar</string>
+    <string name="changelog_v1_6_0_item1">Personalizar mensajes de bloqueo (PRO)</string>
+    <string name="changelog_v1_6_0_item2">Correcciones de errores y mejoras de estabilidad</string>
     <string name="changelog_v1_5_1_item1">Desactivación de emergencia del modo sueño y límite diario</string>
     <string name="changelog_v1_5_1_item2">Corrección de errores y mejoras de estabilidad</string>
     <string name="changelog_v1_5_0_item1">Función de límite de tiempo diario añadida</string>
