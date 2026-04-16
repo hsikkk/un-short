@@ -17,7 +17,7 @@ dependencyResolutionManagement {
             url = uri("https://maven.pkg.github.com/hsikkk/ad")
             credentials {
                 username = "hsikkk"
-                password = "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"
+                password = "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"
             }
         }
     }

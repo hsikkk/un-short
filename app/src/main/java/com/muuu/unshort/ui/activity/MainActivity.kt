@@ -30,6 +30,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Calendar
+import com.muuu.ad.MuuuAdManagner
+import com.muuu.ad.consent.ConsentResult
 import com.muuu.ad.view.MuuuBannerAdView
 import com.muuu.ad.core.adunit.MuuuBannerAdUnit
 import com.muuu.ad.core.adunit.MuuuInterstitialAdUnit
@@ -220,18 +222,15 @@ class MainActivity : BaseActivity() {
         // Request notification permission for Android 13+ (once only)
         notificationPermissionHelper.requestPermission(skipIfAsked = true)
 
-        // 광고 설정 (AdManager가 프리미엄 체크 및 자동 제거 처리)
-        val adViewContainer = findViewById<FrameLayout>(R.id.adView)
-        bannerAdView = AdManager.setupBannerAd(
-            context = this,
-            container = adViewContainer,
-            adUnit = MuuuBannerAdUnit(
-                key = AdConfig.BANNER_HOME_BOTTOM,
-                placement = "main_screen_bottom",
-                bannerSize = MuuuBannerSize.Banner,
-                refreshInterval = 7
-            )
-        )
+        // CMP 동의 요청 후 광고 로드
+        MuuuAdManagner.requestConsent(this) { result, error ->
+            when (result) {
+                ConsentResult.OBTAINED -> Log.d("MainActivity", "Consent obtained")
+                ConsentResult.NOT_REQUIRED -> Log.d("MainActivity", "Consent not required")
+                ConsentResult.ERROR -> Log.e("MainActivity", "Consent error: $error")
+            }
+            setupBannerAd()
+        }
 
         // View 초기화
         toggleArea = findViewById(R.id.toggleArea)
@@ -376,6 +375,20 @@ class MainActivity : BaseActivity() {
         // SharedPreferences 변경 리스너 해제
         getSharedPreferences(AppConstants.PREF_NAME, MODE_PRIVATE)
             .unregisterOnSharedPreferenceChangeListener(prefChangeListener)
+    }
+
+    private fun setupBannerAd() {
+        val adViewContainer = findViewById<FrameLayout>(R.id.adView)
+        bannerAdView = AdManager.setupBannerAd(
+            context = this,
+            container = adViewContainer,
+            adUnit = MuuuBannerAdUnit(
+                key = AdConfig.BANNER_HOME_BOTTOM,
+                placement = "main_screen_bottom",
+                bannerSize = MuuuBannerSize.Banner,
+                refreshInterval = 7
+            )
+        )
     }
 
     private fun checkPermissionsAndUpdateUI() {
