@@ -396,6 +396,7 @@
     <string name="changelog_title">v%s 업데이트</string>
     <string name="changelog_subtitle">새로운 변경사항을 확인해보세요</string>
     <string name="changelog_confirm">확인</string>
+    <string name="changelog_v1_6_1_item1">광고 프라이버시 규정 준수 개선 (GDPR)</string>
     <string name="changelog_v1_6_0_item1">차단 화면 문구 커스터마이징 (PRO)</string>
     <string name="changelog_v1_6_0_item2">버그 수정 및 안정성 개선</string>
     <string name="changelog_v1_5_1_item1">수면 모드, 일일 제한 긴급 해제 기능 추가</string>
