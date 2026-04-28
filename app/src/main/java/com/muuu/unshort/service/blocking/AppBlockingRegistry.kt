@@ -32,6 +32,20 @@ enum class ExitAction {
 }
 
 /**
+ * 미디어 일시정지가 적용되었음을 UI에서 확인하는 인디케이터
+ *
+ * 탭 제스처 후 다음 AccessibilityEvent에서 이 노드 중 하나라도 보이면 "정지 완료"로 판단.
+ * polling 없이 이벤트 기반으로 동작하므로 binder 호출 비용을 최소화한다.
+ *
+ * @param contentDescriptions 일시정지 시 화면에 노출되는 contentDescription 후보 (부분 매칭, 대소문자 무시)
+ * @param viewIds 일시정지 시 화면에 노출되는 viewId 후보 (정확 매칭)
+ */
+data class PauseIndicator(
+    val contentDescriptions: List<String> = emptyList(),
+    val viewIds: List<String> = emptyList()
+)
+
+/**
  * 콘텐츠 해시 생성을 위한 설정
  */
 data class HashConfig(
@@ -58,7 +72,8 @@ data class AppBlockingConfig(
     val textDetectors: List<TextDetector>,
     val hashConfig: HashConfig,
     val controlsMedia: Boolean = false,  // 미디어 일시정지/재생 제어 여부 (기본값: false)
-    val exitAction: ExitAction = ExitAction.BACK  // 차단 종료 시 수행할 액션 (기본값: BACK)
+    val exitAction: ExitAction = ExitAction.BACK,  // 차단 종료 시 수행할 액션 (기본값: BACK)
+    val pauseIndicator: PauseIndicator? = null  // 일시정지 적용 확인용 UI 인디케이터 (controlsMedia=true 앱에 권장)
 )
 
 /**
@@ -139,7 +154,11 @@ object AppBlockingRegistry {
             includeContentDescription = false,  // YouTube만 제외 (UI 버튼 변화로 인한 오감지 방지)
             useStableExtractor = true  // 안정적인 콘텐츠 추출 활성화 (UI 변경 오감지 방지)
         ),
-        controlsMedia = true  // YouTube만 미디어 제어 활성화
+        controlsMedia = true,  // YouTube만 미디어 제어 활성화
+        pauseIndicator = PauseIndicator(
+            // 일시정지 시 화면 중앙에 재생 버튼이 노출됨 (한국어/영어 모두 대응)
+            contentDescriptions = listOf("동영상 재생", "Play video")
+        )
     )
 
     val INSTAGRAM = AppBlockingConfig(
@@ -314,7 +333,11 @@ object AppBlockingRegistry {
                 text.length > 2 && !text.all { it.isDigit() || it == ',' || it == '.' }
             }
         ),
-        controlsMedia = true
+        controlsMedia = true,
+        pauseIndicator = PauseIndicator(
+            // 일시정지 시 영상 중앙에 재생 버튼이 표시됨 (재생 중에는 숨겨짐)
+            viewIds = listOf("com.nhn.android.search:id/play_control_button")
+        )
     )
 
     val TIKTOK = AppBlockingConfig(

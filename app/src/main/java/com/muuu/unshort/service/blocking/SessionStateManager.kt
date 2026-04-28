@@ -77,7 +77,10 @@ class SessionStateManager(
 
     /**
      * 이벤트 처리 (단일 전이 함수)
+     *
+     * 내부 LinkedHashMap이 스레드 안전하지 않으므로 @Synchronized로 보호
      */
+    @Synchronized
     fun handleEvent(event: SessionEvent, packageName: String) {
         val current = stateByPackage[packageName] ?: SessionState.IDLE
 
@@ -471,6 +474,7 @@ class SessionStateManager(
     /**
      * 현재 상태 조회
      */
+    @Synchronized
     fun getCurrentState(packageName: String): SessionState {
         return stateByPackage[packageName] ?: SessionState.IDLE
     }
@@ -478,6 +482,7 @@ class SessionStateManager(
     /**
      * 오버레이 표시 필요 여부
      */
+    @Synchronized
     fun needsOverlay(packageName: String): Boolean {
         return getCurrentState(packageName).needsOverlay()
     }
@@ -485,6 +490,7 @@ class SessionStateManager(
     /**
      * 오버레이 타입 조회
      */
+    @Synchronized
     fun getOverlayType(packageName: String): OverlayType? {
         return getCurrentState(packageName).getOverlayType()
     }
@@ -492,6 +498,7 @@ class SessionStateManager(
     /**
      * 시청 허용 여부
      */
+    @Synchronized
     fun isAllowed(packageName: String): Boolean {
         return getCurrentState(packageName).isWatching()
     }
@@ -499,6 +506,7 @@ class SessionStateManager(
     /**
      * 미디어 일시정지 필요 여부
      */
+    @Synchronized
     fun shouldPauseMedia(packageName: String): Boolean {
         return getCurrentState(packageName).shouldPauseMedia()
     }

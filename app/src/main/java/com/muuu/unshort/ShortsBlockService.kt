@@ -12,6 +12,7 @@ import android.media.AudioManager
 import android.net.Uri
 import android.os.Build
 import android.os.Handler
+import android.os.HandlerThread
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
@@ -80,6 +81,33 @@ class ShortsBlockService : AccessibilityService() {
     private val handler = Handler(Looper.getMainLooper())
     private var pendingOverlayJob: Runnable? = null
 
+    /**
+     * 액세서빌리티 트리 순회/해시 등 무거운 binder 호출을 처리하는 백그라운드 스레드
+     *
+     * 메인 스레드에서 처리 시 ANR 발생 (rootInActiveWindow + 재귀 트리 순회 = 수십 ms 이상)
+     */
+    private var processingThread: HandlerThread? = null
+    private var processingHandler: Handler? = null
+
+    private val PAUSE_MEDIA_TIMEOUT_MS = 1500L       // 미디어 정지 대기 최대 시간
+    private val PAUSE_MEDIA_SETTLE_DELAY_MS = 200L   // 정지 확인 후 시스템 안정화 대기
+    private val PAUSE_MEDIA_PRE_TAP_DELAY_MS = 500L  // 인디케이터 미정의 앱(Naver 등)에서 탭 전 대기 (UI 안정화)
+
+    /**
+     * 진행 중인 pause UI 확인 요청
+     *
+     * 탭 후 다음 AccessibilityEvent에서 pauseIndicator가 발견되면 onConfirmed() 콜백 호출
+     */
+    @Volatile
+    private var pendingPauseConfirmation: PauseConfirmation? = null
+
+    private data class PauseConfirmation(
+        val packageName: String,
+        val indicator: com.muuu.unshort.service.blocking.PauseIndicator,
+        val onConfirmed: () -> Unit,
+        val timeoutRunnable: Runnable
+    )
+
     // Fresh start 감지용
     private var appStartTime: Long = 0
 
@@ -105,6 +133,12 @@ class ShortsBlockService : AccessibilityService() {
     override fun onServiceConnected() {
         super.onServiceConnected()
         Log.d(TAG, "Service connected")
+
+        // 백그라운드 처리 스레드 시작 (ANR 방지: 트리 순회/해시 등 무거운 작업 전용)
+        processingThread = HandlerThread("ShortsBlock-Processing").apply {
+            start()
+        }
+        processingHandler = Handler(processingThread!!.looper)
 
         // Service instance 설정
         instance = this
@@ -187,6 +221,34 @@ class ShortsBlockService : AccessibilityService() {
         val packageName = event.packageName?.toString() ?: return
         currentPackage = packageName  // 현재 패키지 저장
 
+        // 이벤트 객체는 메서드 반환 후 재활용되므로 필요한 정보만 추출 (event.eventType은 primitive)
+        val eventType = event.eventType
+        val eventTimestamp = System.currentTimeMillis()
+
+        // 이벤트 상세 로깅 (뷰 변화 모니터링) - 메인 스레드에서 가벼운 정보만 추출
+        logAccessibilityEventDetails(event, packageName)
+
+        // 무거운 작업(rootInActiveWindow, 트리 순회, 해시)은 백그라운드 스레드로 위임
+        val worker = processingHandler ?: return
+        worker.post {
+            processAccessibilityEvent(packageName, eventType, eventTimestamp)
+        }
+    }
+
+    /**
+     * 백그라운드 스레드에서 실행되는 액세서빌리티 이벤트 처리
+     *
+     * 메인 스레드 ANR 방지를 위해 다음 작업을 워커 스레드로 분리:
+     * - rootInActiveWindow (binder call)
+     * - detectionEngine.detectShortsScreen (재귀 트리 순회)
+     * - hashGenerator.generateContentHash (재귀 트리 순회)
+     * - sessionState.handleEvent (@Synchronized로 보호됨)
+     */
+    private fun processAccessibilityEvent(
+        packageName: String,
+        eventType: Int,
+        eventTimestamp: Long
+    ) {
         // Skip 후 반복 back press 진행 중: 쇼츠 이탈 감지만 수행 (오버레이/상태 전이는 스킵)
         if (isAutoExitingShorts) {
             if (packageName !in AppBlockingRegistry.TARGET_PACKAGES) return
@@ -198,7 +260,6 @@ class ShortsBlockService : AccessibilityService() {
                 Log.d(TAG, "Auto-exit: shorts exited (event-driven), clearing flag")
                 cancelAutoExit()
             } else if (autoExitAttempts < MAX_AUTO_EXIT_ATTEMPTS) {
-                // 이벤트가 왔는데 아직 쇼츠 안이면 다시 back
                 autoExitAttempts++
                 Log.d(TAG, "Auto-exit: still in shorts (event-driven), back press attempt $autoExitAttempts/$MAX_AUTO_EXIT_ATTEMPTS")
                 cancelPendingAutoExitFallback()
@@ -211,52 +272,51 @@ class ShortsBlockService : AccessibilityService() {
             return
         }
 
-        // 이벤트 상세 로깅 (뷰 변화 모니터링)
-        logAccessibilityEventDetails(event, packageName)
-
-        // 이벤트 로깅
-        Log.d(TAG, "=== Event: ${event.eventType}, Package: $packageName ===")
+        Log.d(TAG, "=== Event: $eventType, Package: $packageName ===")
         Log.d(TAG, "Current state: ${sessionState.getCurrentState(packageName)}")
 
-        // TikTok 디버깅: trill 또는 tiktok 포함된 패키지는 모두 로깅
+        // TikTok 디버깅
         if (packageName.contains("trill", ignoreCase = true) ||
             packageName.contains("tiktok", ignoreCase = true) ||
             packageName.contains("aweme", ignoreCase = true)) {
             Log.e(TAG, "!!! TIKTOK DETECTED: $packageName !!!")
             Log.e(TAG, "!!! In TARGET_PACKAGES: ${packageName in AppBlockingRegistry.TARGET_PACKAGES}")
-            Log.e(TAG, "!!! TARGET_PACKAGES: ${AppBlockingRegistry.TARGET_PACKAGES}")
         }
 
-        // 차단 대상 앱이 아니면 무시
-        if (packageName !in AppBlockingRegistry.TARGET_PACKAGES) {
-            return
-        }
+        if (packageName !in AppBlockingRegistry.TARGET_PACKAGES) return
 
-        // 해당 앱의 차단이 비활성화되어 있으면 무시
         if (!prefsManager.isAppBlockingEnabled(packageName)) {
             Log.d(TAG, "App blocking disabled for $packageName - ignoring")
             return
         }
 
-        // Auto-exit 쿨다운 중이면 스킵 (back press 직후 과도기 화면에서 false positive 방지)
         if (System.currentTimeMillis() < autoExitCooldownUntil) {
             Log.d(TAG, "Auto-exit cooldown active, skipping event processing")
             return
         }
 
-        // 앱 설정 가져오기
         val appConfig = AppBlockingRegistry.getConfigByPackageName(packageName) ?: return
         val rootNode = rootInActiveWindow ?: return
 
-        // 쇼츠 화면 감지
+        // pause UI 인디케이터 검사 (이벤트 기반 미디어 정지 확인)
+        // 탭 후 도착한 첫 이벤트에서 인디케이터가 보이면 정지 적용으로 판단
+        val pauseConfirmation = pendingPauseConfirmation
+        if (pauseConfirmation != null && pauseConfirmation.packageName == packageName) {
+            if (isPauseIndicatorVisible(rootNode, pauseConfirmation.indicator)) {
+                Log.d(TAG, "Pause UI confirmed via accessibility event for $packageName")
+                processingHandler?.removeCallbacks(pauseConfirmation.timeoutRunnable)
+                pendingPauseConfirmation = null
+                processingHandler?.postDelayed({
+                    pauseConfirmation.onConfirmed()
+                }, PAUSE_MEDIA_SETTLE_DELAY_MS)
+            }
+        }
+
         val isInShortsScreen = detectionEngine.detectShortsScreen(rootNode, appConfig)
         val currentState = sessionState.getCurrentState(packageName)
         Log.d(TAG, ">>> isShorts=$isInShortsScreen, currentState=$currentState")
 
-        // 상태 전이 처리
         handleStateTransitions(isInShortsScreen, packageName, rootNode, appConfig)
-
-        // 상태에 따른 액션 수행
         handleStateActions(packageName)
     }
 
@@ -433,6 +493,9 @@ class ShortsBlockService : AccessibilityService() {
 
     /**
      * 오버레이 표시
+     *
+     * 워커 스레드에서 실행되므로 pauseMedia는 동기적으로 미디어 정지를 대기할 수 있다.
+     * (메인 스레드 차단 없음 → ANR 방지)
      */
     private fun showBlockOverlay(packageName: String, overlayType: OverlayType) {
         Log.d(TAG, "showBlockOverlay() called for $packageName with type: $overlayType")
@@ -443,46 +506,67 @@ class ShortsBlockService : AccessibilityService() {
             return
         }
 
-        // Activity 방식 - singleTask launchMode로 중복 인스턴스 방지
-        // (이전에는 WindowManager 오버레이를 사용했으나, 이제는 Activity를 사용)
+        val worker = processingHandler ?: return
 
-        Log.d(TAG, "Scheduling activity launch with delay")
+        Log.d(TAG, "Scheduling activity launch with delay (on worker thread)")
 
-        // 딜레이 후 오버레이 표시
+        // 딜레이 후 오버레이 표시 - 워커 스레드에서 실행
+        // 미디어 정지가 필요한 앱은 pauseIndicator 기반 이벤트 콜백 후 오버레이 표시 (비동기)
         pendingOverlayJob = Runnable {
             try {
                 Log.d(TAG, "Executing pending overlay job for $packageName")
 
-                // 현재 세션이 스크롤 후 재진입인지 확인 (통계 기록용)
                 isCurrentSessionFromScroll = prefsManager.isAllowedUntilScroll
                 Log.d(TAG, "Session from scroll: $isCurrentSessionFromScroll")
 
-                // 세션 ID 생성
                 val sessionId = UUID.randomUUID().toString()
                 prefsManager.currentSessionId = sessionId
                 Log.d(TAG, "Session created: $sessionId")
 
-                // 미디어 일시정지 시도 (앱 설정에 따라)
-                val appConfig = AppBlockingRegistry.getConfigByPackageName(packageName)
-                if (appConfig?.controlsMedia == true) {
-                    Log.d(TAG, "Attempting pauseMedia (controlsMedia=true)")
-                    pauseMedia(packageName)
-                } else {
-                    Log.d(TAG, "Skipping pauseMedia (controlsMedia=false or config not found)")
+                val showOverlayAction = {
+                    try {
+                        showOverlayAndStartCheck(packageName, sessionId, overlayType)
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Error showing overlay action", e)
+                        pendingOverlayJob = null
+                    }
                 }
 
-                showOverlayAndStartCheck(packageName, sessionId, overlayType)
+                val appConfig = AppBlockingRegistry.getConfigByPackageName(packageName)
+                if (appConfig?.controlsMedia == true) {
+                    val indicator = appConfig.pauseIndicator
+                    if (indicator != null) {
+                        Log.d(TAG, "Pausing media and awaiting UI indicator")
+                        pauseAndAwaitUiConfirmation(packageName, indicator) {
+                            showOverlayAction()
+                        }
+                    } else {
+                        // pauseIndicator 미정의 앱(예: Naver): 무조건 탭 (audio 체크 신뢰 불가)
+                        // Naver Shorts는 무음/짧은 무음 구간이 있어 isMusicActive로는 재생 여부 판별 불가
+                        // → 항상 탭하여 일시정지 보장
+                        Log.d(TAG, "Pause without indicator - always tap (audio check unreliable)")
+                        processingHandler?.postDelayed({
+                            handler.post { performTapGesture() }
+                            processingHandler?.postDelayed({
+                                showOverlayAction()
+                            }, PAUSE_MEDIA_SETTLE_DELAY_MS)
+                        }, PAUSE_MEDIA_PRE_TAP_DELAY_MS)
+                    }
+                } else {
+                    Log.d(TAG, "Skipping media pause (controlsMedia=false or config not found)")
+                    showOverlayAction()
+                }
             } catch (e: Exception) {
                 Log.e(TAG, "Error showing overlay", e)
                 pendingOverlayJob = null
             }
         }
 
-        // Fresh start 후 500ms 이내면 500ms 딜레이, 이후는 300ms
+        // Fresh start 후 500ms 이내면 300ms 딜레이, 이후는 100ms
         val timeSinceStart = System.currentTimeMillis() - appStartTime
         val delay = if (timeSinceStart < 500) 300L else 100L
 
-        handler.postDelayed(pendingOverlayJob!!, delay)
+        worker.postDelayed(pendingOverlayJob!!, delay)
         Log.d(TAG, "Overlay job scheduled with ${delay}ms delay")
     }
 
@@ -491,6 +575,8 @@ class ShortsBlockService : AccessibilityService() {
      */
     private fun cancelPendingOverlay() {
         pendingOverlayJob?.let {
+            // 워커/메인 양쪽에서 안전하게 제거
+            processingHandler?.removeCallbacks(it)
             handler.removeCallbacks(it)
             Log.d(TAG, "Cancelled pending overlay job")
             pendingOverlayJob = null
@@ -507,32 +593,124 @@ class ShortsBlockService : AccessibilityService() {
 
 
     /**
-     * 미디어 일시정지
+     * 단일 탭 후 pauseIndicator UI가 노출될 때까지 대기 (이벤트 기반, 비동기 콜백)
+     *
+     * 흐름:
+     * 1. 이미 정지 상태면 즉시 onConfirmed() 호출
+     * 2. 탭 제스처 1회 dispatch (toggle이므로 절대 재탭 금지)
+     * 3. pendingPauseConfirmation 등록 → 다음 AccessibilityEvent에서 인디케이터 검색
+     * 4. processAccessibilityEvent가 인디케이터를 발견하면 onConfirmed() 호출 + settle delay
+     * 5. PAUSE_MEDIA_TIMEOUT_MS 내에 못 찾으면 timeout으로 onConfirmed() 호출
+     *
+     * 메인 스레드 차단 없음 + polling 없음 → ANR 안전
      */
-    private fun pauseMedia(packageName: String) {
-        try {
-            Log.d(TAG, "pauseMedia called for $packageName")
-
-            val state = sessionState.getCurrentState(packageName)
-
-            // 첫 진입(NEED_TIMER)일 때만 pause 시도
-            if (state.blockingStage == BlockingStage.NEED_TIMER) {
-                val isPlaying = isTargetAppPlayingMedia()
-                Log.d(TAG, "NEED_TIMER state, playing=$isPlaying")
-
-                if (isPlaying) {
-                    Log.d(TAG, "Media playing - pausing")
-                    performTapGesture()
-                    while (isTargetAppPlayingMedia()){}
-                } else {
-                    Log.d(TAG, "Media already paused - skipping tap")
-                }
-            } else {
-                Log.d(TAG, "Not NEED_TIMER state (${state.blockingStage}) - skipping pause")
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error pausing media", e)
+    private fun pauseAndAwaitUiConfirmation(
+        packageName: String,
+        indicator: com.muuu.unshort.service.blocking.PauseIndicator,
+        onConfirmed: () -> Unit
+    ) {
+        val worker = processingHandler ?: run {
+            onConfirmed()
+            return
         }
+
+        val state = sessionState.getCurrentState(packageName)
+        if (state.blockingStage != BlockingStage.NEED_TIMER) {
+            Log.d(TAG, "Not NEED_TIMER state (${state.blockingStage}) - skipping pause")
+            onConfirmed()
+            return
+        }
+
+        if (!isTargetAppPlayingMedia()) {
+            Log.d(TAG, "Media already paused - skipping tap")
+            onConfirmed()
+            return
+        }
+
+        // 이전 대기 취소
+        cancelPendingPauseConfirmation()
+
+        val timeoutRunnable = Runnable {
+            val pc = pendingPauseConfirmation
+            if (pc != null && pc.packageName == packageName) {
+                Log.w(TAG, "pauseAndAwaitUiConfirmation: timeout - proceeding without UI confirmation")
+                pendingPauseConfirmation = null
+                pc.onConfirmed()
+            }
+        }
+
+        pendingPauseConfirmation = PauseConfirmation(
+            packageName = packageName,
+            indicator = indicator,
+            onConfirmed = onConfirmed,
+            timeoutRunnable = timeoutRunnable
+        )
+
+        Log.d(TAG, "Media playing - sending single tap to pause, awaiting UI indicator")
+        // 탭 제스처는 메인 스레드에서 dispatch (시스템 요구사항)
+        handler.post { performTapGesture() }
+
+        // 타임아웃 안전장치
+        worker.postDelayed(timeoutRunnable, PAUSE_MEDIA_TIMEOUT_MS)
+    }
+
+    /**
+     * 진행 중인 pause UI 확인 대기 취소
+     */
+    private fun cancelPendingPauseConfirmation() {
+        val pc = pendingPauseConfirmation ?: return
+        processingHandler?.removeCallbacks(pc.timeoutRunnable)
+        pendingPauseConfirmation = null
+    }
+
+    /**
+     * rootNode에서 pauseIndicator 일치 노드가 존재하는지 검사
+     */
+    private fun isPauseIndicatorVisible(
+        rootNode: AccessibilityNodeInfo,
+        indicator: com.muuu.unshort.service.blocking.PauseIndicator
+    ): Boolean {
+        // viewId 기반 매칭 (정확)
+        for (viewId in indicator.viewIds) {
+            val nodes = rootNode.findAccessibilityNodeInfosByViewId(viewId) ?: continue
+            val visible = nodes.any { it.isVisibleToUser }
+            nodes.forEach { @Suppress("DEPRECATION") it.recycle() }
+            if (visible) return true
+        }
+
+        // contentDescription 기반 매칭 (부분, 대소문자 무시)
+        for (desc in indicator.contentDescriptions) {
+            if (findVisibleNodeByContentDescription(rootNode, desc, 0)) return true
+        }
+
+        return false
+    }
+
+    /**
+     * contentDescription에 target이 포함된 가시 노드를 재귀 검색 (깊이 30 제한)
+     */
+    private fun findVisibleNodeByContentDescription(
+        node: AccessibilityNodeInfo,
+        target: String,
+        depth: Int
+    ): Boolean {
+        if (depth > 30) return false
+
+        val desc = node.contentDescription?.toString()
+        if (desc != null && desc.contains(target, ignoreCase = true) && node.isVisibleToUser) {
+            return true
+        }
+
+        for (i in 0 until node.childCount) {
+            val child = node.getChild(i) ?: continue
+            try {
+                if (findVisibleNodeByContentDescription(child, target, depth + 1)) return true
+            } finally {
+                @Suppress("DEPRECATION")
+                child.recycle()
+            }
+        }
+        return false
     }
 
     /**
@@ -662,6 +840,8 @@ class ShortsBlockService : AccessibilityService() {
     /**
      * Fallback 타이머: onAccessibilityEvent가 오지 않을 경우를 대비하여
      * 직접 rootInActiveWindow를 폴링한다.
+     *
+     * 트리 순회는 무거운 binder 호출이므로 워커 스레드에서 실행
      */
     private fun scheduleAutoExitFallback(
         sourcePackage: String,
@@ -671,32 +851,44 @@ class ShortsBlockService : AccessibilityService() {
         val runnable = Runnable {
             if (!isAutoExitingShorts) return@Runnable
 
-            try {
-                val rootNode = rootInActiveWindow
-                if (rootNode != null) {
-                    val stillInShorts = detectionEngine.detectShortsScreen(rootNode, appConfig)
-                    if (stillInShorts) {
-                        if (autoExitAttempts < MAX_AUTO_EXIT_ATTEMPTS) {
-                            autoExitAttempts++
-                            Log.d(TAG, "Auto-exit: still in shorts (fallback), back press attempt $autoExitAttempts/$MAX_AUTO_EXIT_ATTEMPTS")
-                            performGlobalBackAction()
-                            scheduleAutoExitFallback(sourcePackage, appConfig)
+            // 트리 순회는 워커 스레드에서 실행하여 메인 스레드 ANR 방지
+            val worker = processingHandler
+            if (worker == null) {
+                cancelAutoExit()
+                return@Runnable
+            }
+
+            worker.post {
+                try {
+                    if (!isAutoExitingShorts) return@post
+
+                    val rootNode = rootInActiveWindow
+                    if (rootNode != null) {
+                        val stillInShorts = detectionEngine.detectShortsScreen(rootNode, appConfig)
+                        if (stillInShorts) {
+                            if (autoExitAttempts < MAX_AUTO_EXIT_ATTEMPTS) {
+                                autoExitAttempts++
+                                Log.d(TAG, "Auto-exit: still in shorts (fallback), back press attempt $autoExitAttempts/$MAX_AUTO_EXIT_ATTEMPTS")
+                                handler.post { performGlobalBackAction() }
+                                scheduleAutoExitFallback(sourcePackage, appConfig)
+                            } else {
+                                Log.w(TAG, "Auto-exit: max attempts reached (fallback), giving up")
+                                cancelAutoExit()
+                            }
                         } else {
-                            Log.w(TAG, "Auto-exit: max attempts reached (fallback), giving up")
+                            Log.d(TAG, "Auto-exit: shorts exited (fallback)")
                             cancelAutoExit()
                         }
                     } else {
-                        Log.d(TAG, "Auto-exit: shorts exited (fallback)")
+                        Log.d(TAG, "Auto-exit: root node null (fallback), assuming exited")
                         cancelAutoExit()
                     }
-                } else {
-                    Log.d(TAG, "Auto-exit: root node null (fallback), assuming exited")
+                } catch (e: Exception) {
+                    Log.e(TAG, "Auto-exit fallback worker error", e)
                     cancelAutoExit()
                 }
-            } catch (e: Exception) {
-                Log.e(TAG, "Auto-exit fallback error", e)
-                cancelAutoExit()
             }
+            return@Runnable
         }
         autoExitPendingRunnable = runnable
         handler.postDelayed(runnable, AUTO_EXIT_FALLBACK_DELAY)
@@ -758,6 +950,13 @@ class ShortsBlockService : AccessibilityService() {
 
         cancelPendingOverlay()
         overlayManager.cleanup()
+
+        // 백그라운드 스레드 종료 (남은 작업 마무리 후 안전하게 종료)
+        processingHandler?.removeCallbacksAndMessages(null)
+        processingThread?.quitSafely()
+        processingHandler = null
+        processingThread = null
+
         Log.d(TAG, "Service destroyed")
     }
 
