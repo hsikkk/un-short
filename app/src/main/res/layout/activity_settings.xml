@@ -839,6 +839,96 @@
                 android:background="#000000"
                 android:alpha="0.05" />
 
+            <!-- Section: 고급 기능 (베타) -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_section_advanced"
+                android:textSize="@dimen/text_caption"
+                android:textColor="#000000"
+                android:alpha="0.5"
+                android:fontFamily="@font/spoqa_sans_neo"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="12dp"
+                android:letterSpacing="0.02" />
+
+            <!-- 피드 차단 (베타) 진입 -->
+            <LinearLayout
+                android:id="@+id/feedBlockSettingsItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="16dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/feed_block_settings_title"
+                            android:textSize="@dimen/text_body"
+                            android:textColor="#000000"
+                            android:fontFamily="@font/spoqa_sans_neo" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="BETA"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/spoqa_sans_neo_bold"
+                            android:textColor="@color/white"
+                            android:background="@drawable/bg_pro_badge"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="4dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/feed_block_settings_subtitle"
+                        android:textSize="@dimen/text_caption"
+                        android:textColor="#000000"
+                        android:alpha="0.5"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textSize="20sp"
+                    android:textColor="#000000"
+                    android:alpha="0.3" />
+
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="#000000"
+                android:alpha="0.05" />
+
             <!-- Section: 기타 -->
             <TextView
                 android:layout_width="match_parent"

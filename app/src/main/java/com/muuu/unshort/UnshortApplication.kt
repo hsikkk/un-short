@@ -1,6 +1,8 @@
 package com.muuu.unshort
 
 import android.app.Application
+import android.content.ComponentName
+import android.content.pm.PackageManager
 import android.provider.Settings
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -108,6 +110,14 @@ class UnshortApplication : Application() {
         Log.d(TAG, "Amplitude initialized - API Key: ${BuildConfig.AMPLITUDE_API_KEY.take(8)}...")
         Log.d(TAG, "Debug mode: ${BuildConfig.DEBUG}")
 
+        // FeedBlockService 컴포넌트가 어떤 이유로 DISABLED 되어 있으면 항상 ENABLED로 복구.
+        // 매니페스트는 enabled="true"이지만, setComponentEnabledSetting(DISABLED)이 한 번
+        // 호출되면 시스템이 영구 저장하여 재설치 후에도 잔존하는 케이스가 있다. DISABLED
+        // 상태에서는 시스템이 service를 "not installed"로 판정 → 시스템 접근성 UI에서 사라지고
+        // bind 거부됨. prefs와 무관하게 항상 ENABLED를 보장하고, 실제 동작 여부는
+        // FeedBlockService.onAccessibilityEvent에서 prefsManager.isBetaEnabled로 통제한다.
+        ensureFeedBlockServiceEnabled()
+
         // 앱 Foreground/Background 감지
         ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onStart(owner: LifecycleOwner) {
@@ -117,5 +127,27 @@ class UnshortApplication : Application() {
                 Log.d(TAG, "App moved to foreground - syncing premium status")
             }
         })
+    }
+
+    private fun ensureFeedBlockServiceEnabled() {
+        try {
+            val component = ComponentName(
+                this,
+                com.muuu.unshort.feedblock.FeedBlockService::class.java
+            )
+            val current = packageManager.getComponentEnabledSetting(component)
+            if (current == PackageManager.COMPONENT_ENABLED_STATE_ENABLED ||
+                current == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
+                return
+            }
+            packageManager.setComponentEnabledSetting(
+                component,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP
+            )
+            Log.d(TAG, "FeedBlockService component re-enabled (was state=$current)")
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to enable FeedBlockService component", e)
+        }
     }
 }

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="24dp"
+    android:paddingBottom="16dp">
+
+    <!-- 타이틀 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/feed_block_settings_title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/spoqa_sans_neo_bold"
+        android:textColor="@color/gray_900"
+        android:paddingHorizontal="24dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/feed_block_settings_subtitle"
+        android:textSize="14sp"
+        android:fontFamily="@font/spoqa_sans_neo"
+        android:textColor="@color/gray_500"
+        android:layout_marginTop="4dp"
+        android:paddingHorizontal="24dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="#000000"
+        android:alpha="0.08" />
+
+    <!-- Section: 베타 기능 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/feed_block_section_beta"
+        android:textSize="@dimen/text_caption"
+        android:textColor="#000000"
+        android:alpha="0.5"
+        android:fontFamily="@font/spoqa_sans_neo"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="8dp"
+        android:letterSpacing="0.02" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="12dp"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/feed_block_beta_toggle_label"
+                android:textSize="@dimen/text_body"
+                android:textColor="#000000"
+                android:fontFamily="@font/spoqa_sans_neo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/feed_block_beta_toggle_caption"
+                android:textSize="@dimen/text_caption"
+                android:textColor="#000000"
+                android:alpha="0.5"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/betaToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- 차단 대상 앱 섹션: 베타 활성 상태에서만 표시 -->
+    <LinearLayout
+        android:id="@+id/targetAppsSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="#000000"
+            android:alpha="0.05" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/feed_block_targets_label"
+            android:textSize="@dimen/text_caption"
+            android:textColor="#000000"
+            android:alpha="0.5"
+            android:fontFamily="@font/spoqa_sans_neo"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="8dp"
+            android:letterSpacing="0.02" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/feed_block_target_instagram"
+                android:textSize="@dimen/text_body"
+                android:textColor="#000000"
+                android:fontFamily="@font/spoqa_sans_neo" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/instagramToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/feed_block_target_youtube"
+                android:textSize="@dimen/text_body"
+                android:textColor="#000000"
+                android:fontFamily="@font/spoqa_sans_neo" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/youtubeToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/feed_block_target_threads"
+                android:textSize="@dimen/text_body"
+                android:textColor="#000000"
+                android:fontFamily="@font/spoqa_sans_neo" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/threadsToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/feed_block_target_facebook"
+                android:textSize="@dimen/text_body"
+                android:textColor="#000000"
+                android:fontFamily="@font/spoqa_sans_neo" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/facebookToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

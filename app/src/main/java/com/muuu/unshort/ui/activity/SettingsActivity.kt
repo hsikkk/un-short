@@ -48,6 +48,7 @@ class SettingsActivity : BaseActivity() {
     private lateinit var preventDisableItem: LinearLayout
     private lateinit var deviceAdminSwitch: Switch
     private lateinit var deviceAdminItem: LinearLayout
+    private lateinit var feedBlockSettingsItem: LinearLayout
     private lateinit var feedbackItem: LinearLayout
     private lateinit var shareItem: LinearLayout
     private lateinit var reviewItem: LinearLayout
@@ -149,6 +150,7 @@ class SettingsActivity : BaseActivity() {
         preventDisableItem = findViewById(R.id.preventDisableItem)
         deviceAdminSwitch = findViewById(R.id.deviceAdminSwitch)
         deviceAdminItem = findViewById(R.id.deviceAdminItem)
+        feedBlockSettingsItem = findViewById(R.id.feedBlockSettingsItem)
         feedbackItem = findViewById(R.id.feedbackItem)
         shareItem = findViewById(R.id.shareItem)
         reviewItem = findViewById(R.id.reviewItem)
@@ -257,6 +259,11 @@ class SettingsActivity : BaseActivity() {
             } else {
                 deviceAdminSwitch.isChecked = !deviceAdminSwitch.isChecked
             }
+        }
+
+        // 피드 차단 (베타) 진입 - BottomSheet
+        feedBlockSettingsItem.setOnClickListener {
+            com.muuu.unshort.feedblock.settings.AdvancedSettingsBottomSheet.show(this)
         }
 
         // 일일 제한 초기화

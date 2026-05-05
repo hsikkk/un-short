@@ -22,6 +22,7 @@
     <queries>
         <package android:name="com.google.android.youtube" />
         <package android:name="com.instagram.android" />
+        <package android:name="com.instagram.barcelona" />
         <package android:name="com.facebook.katana" />
         <package android:name="com.nhn.android.search" />
         <package android:name="com.zhiliaoapp.musically" />
@@ -117,6 +118,30 @@
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service_config" />
+        </service>
+
+        <!-- Feed Block (Beta) - PRD v1.3 -->
+        <activity
+            android:name=".feedblock.overlay.FeedBlockOverlayActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.muuu.unshort.feedblock.overlay"
+            android:excludeFromRecents="true" />
+
+        <service
+            android:name=".feedblock.FeedBlockService"
+            android:enabled="true"
+            android:exported="false"
+            android:label="@string/feed_block_service_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/feed_block_service_config" />
         </service>
 
         <receiver
