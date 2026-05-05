@@ -112,13 +112,13 @@
     <string name="permission_enable_permission">권한 활성화</string>
 
     <!-- Manufacturer-specific Accessibility Guides -->
-    <string name="permission_accessibility_guide_samsung">💡 [설치된 앱]에서 un:short를 찾으세요</string>
-    <string name="permission_accessibility_guide_lg">💡 [고급 설정]에서 un:short를 찾으세요</string>
-    <string name="permission_accessibility_guide_xiaomi">💡 [다운로드한 서비스]에서 un:short를 찾으세요</string>
-    <string name="permission_accessibility_guide_huawei">💡 [다운로드한 서비스]에서 un:short를 찾으세요</string>
-    <string name="permission_accessibility_guide_oppo">💡 [설치된 서비스]에서 un:short를 찾으세요</string>
-    <string name="permission_accessibility_guide_vivo">💡 [설치된 서비스]에서 un:short를 찾으세요</string>
-    <string name="permission_accessibility_guide_default">💡 un:short를 찾아서 활성화하세요</string>
+    <string name="permission_accessibility_guide_samsung">💡 [설치된 앱]에서 %1$s을(를) 찾으세요</string>
+    <string name="permission_accessibility_guide_lg">💡 [고급 설정]에서 %1$s을(를) 찾으세요</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 [다운로드한 서비스]에서 %1$s을(를) 찾으세요</string>
+    <string name="permission_accessibility_guide_huawei">💡 [다운로드한 서비스]에서 %1$s을(를) 찾으세요</string>
+    <string name="permission_accessibility_guide_oppo">💡 [설치된 서비스]에서 %1$s을(를) 찾으세요</string>
+    <string name="permission_accessibility_guide_vivo">💡 [설치된 서비스]에서 %1$s을(를) 찾으세요</string>
+    <string name="permission_accessibility_guide_default">💡 %1$s을(를) 찾아서 활성화하세요</string>
 
     <!-- Timer Activity -->
     <string name="timer_seconds_unit">seconds</string>
@@ -445,5 +445,47 @@
     <string name="custom_message_reset">기본값으로 초기화</string>
     <string name="custom_message_hint_before">예: 지금 이 순간, 쇼츠가 정말 필요할까요?</string>
     <string name="custom_message_hint_after">예: 여기까지 기다렸네요. 정말로 볼 건가요?</string>
+
+    <!-- Feed Block (Beta) - PRD v1.3 -->
+    <string name="settings_section_advanced">고급 기능</string>
+    <string name="feed_block_service_label">FeedBlock (un:short)</string>
+    <string name="feed_block_service_description">피드 진입 시 의도 확인 화면을 표시합니다 (베타)</string>
+
+    <!-- 차단 오버레이 메시지 -->
+    <string name="feed_block_overlay_message">%1$s\n계속하시겠어요?</string>
+    <string name="feed_block_overlay_continue">계속</string>
+    <string name="feed_block_overlay_continue_countdown">계속 (%1$d)</string>
+    <string name="feed_block_overlay_stop">닫기</string>
+
+    <string name="feed_block_settings_title">피드 차단 (베타)</string>
+    <string name="feed_block_settings_subtitle">피드 진입 시 의도 확인 화면 표시</string>
+    <string name="feed_block_section_beta">베타 기능</string>
+    <string name="feed_block_section_permission">권한</string>
+    <string name="feed_block_section_threshold">임계값</string>
+    <string name="feed_block_beta_toggle_label">피드 차단 활성화</string>
+    <string name="feed_block_beta_toggle_caption">별도 접근성 권한이 필요합니다</string>
+    <string name="feed_block_permission_label">접근성 권한</string>
+    <string name="feed_block_permission_active">활성 상태</string>
+    <string name="feed_block_permission_inactive">비활성 상태 (설정에서 활성화 필요)</string>
+    <string name="feed_block_open_accessibility_settings">접근성 설정 열기</string>
+    <string name="feed_block_targets_label">차단 대상 앱</string>
+    <string name="feed_block_target_instagram">Instagram 홈피드</string>
+    <string name="feed_block_target_youtube">YouTube 홈피드</string>
+    <string name="feed_block_target_threads">Threads 홈피드</string>
+    <string name="feed_block_target_facebook">Facebook 뉴스피드</string>
+    <string name="feed_block_scroll_label">누적 스크롤 임계값</string>
+    <string name="feed_block_scroll_value">화면 높이 × %1$d배</string>
+    <string name="feed_block_time_label">누적 시간 임계값</string>
+    <string name="feed_block_time_value">%1$d분</string>
+
+    <string name="feed_block_onboarding_title">피드 차단 (베타)</string>
+    <string name="feed_block_onboarding_message">쇼츠 차단과 달리 피드는 임계값(누적 거리/시간) 도달 시 알림을 표시합니다.\n\n별도 접근성 권한이 필요해요.\n언제든 OFF 가능합니다.</string>
+    <string name="feed_block_onboarding_continue">계속</string>
+    <string name="feed_block_onboarding_cancel">취소</string>
+
+    <string name="feed_block_permission_dialog_title">접근성 권한 활성화</string>
+    <string name="feed_block_permission_dialog_message">다음 단계에서 \"FeedBlock (un:short)\" 항목을 활성화해주세요.</string>
+
+    <string name="feed_block_permission_lost_toast">피드 차단이 시스템 설정에서 비활성화되었어요</string>
 
 </resources>

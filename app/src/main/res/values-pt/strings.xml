@@ -114,13 +114,13 @@
     <string name="permission_enable_permission">Ativar permissão</string>
 
     <!-- Manufacturer-specific Accessibility Guides -->
-    <string name="permission_accessibility_guide_samsung">💡 Procure por [Apps instalados] → un:short</string>
-    <string name="permission_accessibility_guide_lg">💡 Procure por [Configurações avançadas] → un:short</string>
-    <string name="permission_accessibility_guide_xiaomi">💡 Procure por [Serviços baixados] → un:short</string>
-    <string name="permission_accessibility_guide_huawei">💡 Procure por [Serviços baixados] → un:short</string>
-    <string name="permission_accessibility_guide_oppo">💡 Procure por [Serviços instalados] → un:short</string>
-    <string name="permission_accessibility_guide_vivo">💡 Procure por [Serviços instalados] → un:short</string>
-    <string name="permission_accessibility_guide_default">💡 Encontre un:short e ative-o</string>
+    <string name="permission_accessibility_guide_samsung">💡 Procure por [Apps instalados] → %1$s</string>
+    <string name="permission_accessibility_guide_lg">💡 Procure por [Configurações avançadas] → %1$s</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 Procure por [Serviços baixados] → %1$s</string>
+    <string name="permission_accessibility_guide_huawei">💡 Procure por [Serviços baixados] → %1$s</string>
+    <string name="permission_accessibility_guide_oppo">💡 Procure por [Serviços instalados] → %1$s</string>
+    <string name="permission_accessibility_guide_vivo">💡 Procure por [Serviços instalados] → %1$s</string>
+    <string name="permission_accessibility_guide_default">💡 Encontre %1$s e ative-o</string>
 
     <!-- Timer Activity -->
     <string name="timer_seconds_unit">segundos</string>
@@ -444,5 +444,47 @@
     <string name="custom_message_reset">Restaurar padrão</string>
     <string name="custom_message_hint_before">ex: Você realmente precisa de shorts agora?</string>
     <string name="custom_message_hint_after">ex: Você esperou até aqui. Ainda quer assistir?</string>
+
+    <!-- Feed Block (Beta) - PRD v1.3 -->
+    <string name="settings_section_advanced">Avançado</string>
+    <string name="feed_block_service_label">FeedBlock (un:short)</string>
+    <string name="feed_block_service_description">Mostra uma tela de confirmação ao entrar em um feed (Beta)</string>
+
+    <!-- Block overlay messages -->
+    <string name="feed_block_overlay_message">%1$s\nContinuar?</string>
+    <string name="feed_block_overlay_continue">Continuar</string>
+    <string name="feed_block_overlay_continue_countdown">Continuar (%1$d)</string>
+    <string name="feed_block_overlay_stop">Fechar</string>
+
+    <string name="feed_block_settings_title">Bloqueio de feed (Beta)</string>
+    <string name="feed_block_settings_subtitle">Mostrar tela de confirmação ao entrar em feeds</string>
+    <string name="feed_block_section_beta">Recurso beta</string>
+    <string name="feed_block_section_permission">Permissão</string>
+    <string name="feed_block_section_threshold">Limite</string>
+    <string name="feed_block_beta_toggle_label">Ativar bloqueio de feed</string>
+    <string name="feed_block_beta_toggle_caption">Requer uma permissão de acessibilidade separada</string>
+    <string name="feed_block_permission_label">Permissão de acessibilidade</string>
+    <string name="feed_block_permission_active">Ativo</string>
+    <string name="feed_block_permission_inactive">Inativo (ativar nas Configurações)</string>
+    <string name="feed_block_open_accessibility_settings">Abrir configurações de acessibilidade</string>
+    <string name="feed_block_targets_label">Apps alvo</string>
+    <string name="feed_block_target_instagram">Feed inicial do Instagram</string>
+    <string name="feed_block_target_youtube">Feed inicial do YouTube</string>
+    <string name="feed_block_target_threads">Feed inicial do Threads</string>
+    <string name="feed_block_target_facebook">Feed de notícias do Facebook</string>
+    <string name="feed_block_scroll_label">Limite de rolagem</string>
+    <string name="feed_block_scroll_value">Altura da tela × %1$d</string>
+    <string name="feed_block_time_label">Limite de tempo</string>
+    <string name="feed_block_time_value">%1$d min</string>
+
+    <string name="feed_block_onboarding_title">Bloqueio de feed (Beta)</string>
+    <string name="feed_block_onboarding_message">Diferente do bloqueio de Shorts, o Bloqueio de feed mostra um alerta quando os limites (distância/tempo acumulados) são atingidos.\n\nRequer uma permissão de acessibilidade separada.\nVocê pode desativá-lo a qualquer momento.</string>
+    <string name="feed_block_onboarding_continue">Continuar</string>
+    <string name="feed_block_onboarding_cancel">Cancelar</string>
+
+    <string name="feed_block_permission_dialog_title">Ativar permissão de acessibilidade</string>
+    <string name="feed_block_permission_dialog_message">Ative \"FeedBlock (un:short)\" na próxima etapa.</string>
+
+    <string name="feed_block_permission_lost_toast">O Bloqueio de feed foi desativado nas configurações do sistema</string>
 
 </resources>

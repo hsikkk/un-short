@@ -114,13 +114,13 @@
     <string name="permission_enable_permission">अनुमति सक्षम करें</string>
 
     <!-- Manufacturer-specific Accessibility Guides -->
-    <string name="permission_accessibility_guide_samsung">💡 [इंस्टॉल किए गए ऐप्स] → un:short ढूंढें</string>
-    <string name="permission_accessibility_guide_lg">💡 [उन्नत सेटिंग्स] → un:short ढूंढें</string>
-    <string name="permission_accessibility_guide_xiaomi">💡 [डाउनलोड की गई सेवाएं] → un:short ढूंढें</string>
-    <string name="permission_accessibility_guide_huawei">💡 [डाउनलोड की गई सेवाएं] → un:short ढूंढें</string>
-    <string name="permission_accessibility_guide_oppo">💡 [इंस्टॉल की गई सेवाएं] → un:short ढूंढें</string>
-    <string name="permission_accessibility_guide_vivo">💡 [इंस्टॉल की गई सेवाएं] → un:short ढूंढें</string>
-    <string name="permission_accessibility_guide_default">💡 un:short ढूंढें और इसे चालू करें</string>
+    <string name="permission_accessibility_guide_samsung">💡 [इंस्टॉल किए गए ऐप्स] → %1$s ढूंढें</string>
+    <string name="permission_accessibility_guide_lg">💡 [उन्नत सेटिंग्स] → %1$s ढूंढें</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 [डाउनलोड की गई सेवाएं] → %1$s ढूंढें</string>
+    <string name="permission_accessibility_guide_huawei">💡 [डाउनलोड की गई सेवाएं] → %1$s ढूंढें</string>
+    <string name="permission_accessibility_guide_oppo">💡 [इंस्टॉल की गई सेवाएं] → %1$s ढूंढें</string>
+    <string name="permission_accessibility_guide_vivo">💡 [इंस्टॉल की गई सेवाएं] → %1$s ढूंढें</string>
+    <string name="permission_accessibility_guide_default">💡 %1$s ढूंढें और इसे चालू करें</string>
 
     <!-- Timer Activity -->
     <string name="timer_seconds_unit">सेकंड</string>
@@ -443,5 +443,47 @@
     <string name="custom_message_reset">डिफ़ॉल्ट पर रीसेट करें</string>
     <string name="custom_message_hint_before">उदा: क्या आपको अभी सच में शॉर्ट्स की ज़रूरत है?</string>
     <string name="custom_message_hint_after">उदा: आपने इतना इंतज़ार किया। अभी भी देखना चाहते हैं?</string>
+
+    <!-- Feed Block (Beta) - PRD v1.3 -->
+    <string name="settings_section_advanced">उन्नत</string>
+    <string name="feed_block_service_label">FeedBlock (un:short)</string>
+    <string name="feed_block_service_description">फ़ीड में प्रवेश करते समय इरादा-जांच स्क्रीन दिखाता है (बीटा)</string>
+
+    <!-- Block overlay messages -->
+    <string name="feed_block_overlay_message">%1$s\nजारी रखें?</string>
+    <string name="feed_block_overlay_continue">जारी रखें</string>
+    <string name="feed_block_overlay_continue_countdown">जारी रखें (%1$d)</string>
+    <string name="feed_block_overlay_stop">बंद करें</string>
+
+    <string name="feed_block_settings_title">फ़ीड ब्लॉक (बीटा)</string>
+    <string name="feed_block_settings_subtitle">फ़ीड में प्रवेश करते समय इरादा-जांच स्क्रीन दिखाएं</string>
+    <string name="feed_block_section_beta">बीटा सुविधा</string>
+    <string name="feed_block_section_permission">अनुमति</string>
+    <string name="feed_block_section_threshold">सीमा</string>
+    <string name="feed_block_beta_toggle_label">फ़ीड ब्लॉक सक्षम करें</string>
+    <string name="feed_block_beta_toggle_caption">अलग एक्सेसिबिलिटी अनुमति की आवश्यकता है</string>
+    <string name="feed_block_permission_label">एक्सेसिबिलिटी अनुमति</string>
+    <string name="feed_block_permission_active">सक्रिय</string>
+    <string name="feed_block_permission_inactive">निष्क्रिय (सेटिंग्स में सक्षम करें)</string>
+    <string name="feed_block_open_accessibility_settings">एक्सेसिबिलिटी सेटिंग्स खोलें</string>
+    <string name="feed_block_targets_label">लक्षित ऐप्स</string>
+    <string name="feed_block_target_instagram">Instagram होम फ़ीड</string>
+    <string name="feed_block_target_youtube">YouTube होम फ़ीड</string>
+    <string name="feed_block_target_threads">Threads होम फ़ीड</string>
+    <string name="feed_block_target_facebook">Facebook न्यूज़ फ़ीड</string>
+    <string name="feed_block_scroll_label">स्क्रॉल सीमा</string>
+    <string name="feed_block_scroll_value">स्क्रीन ऊंचाई × %1$d</string>
+    <string name="feed_block_time_label">समय सीमा</string>
+    <string name="feed_block_time_value">%1$d मिनट</string>
+
+    <string name="feed_block_onboarding_title">फ़ीड ब्लॉक (बीटा)</string>
+    <string name="feed_block_onboarding_message">Shorts ब्लॉक के विपरीत, फ़ीड ब्लॉक सीमा (संचयी दूरी/समय) पूरी होने पर अलर्ट दिखाता है।\n\nअलग एक्सेसिबिलिटी अनुमति की आवश्यकता है।\nइसे कभी भी बंद कर सकते हैं।</string>
+    <string name="feed_block_onboarding_continue">जारी रखें</string>
+    <string name="feed_block_onboarding_cancel">रद्द करें</string>
+
+    <string name="feed_block_permission_dialog_title">एक्सेसिबिलिटी अनुमति सक्षम करें</string>
+    <string name="feed_block_permission_dialog_message">कृपया अगले चरण में \"FeedBlock (un:short)\" को सक्षम करें।</string>
+
+    <string name="feed_block_permission_lost_toast">सिस्टम सेटिंग्स में फ़ीड ब्लॉक निष्क्रिय कर दिया गया</string>
 
 </resources>

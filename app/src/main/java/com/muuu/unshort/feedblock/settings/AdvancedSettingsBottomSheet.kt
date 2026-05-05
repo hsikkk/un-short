@@ -10,12 +10,14 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.muuu.unshort.R
 import com.muuu.unshort.feedblock.FeedBlockService
 import com.muuu.unshort.feedblock.prefs.FeedBlockPreferences
+import com.muuu.unshort.util.PermissionUtils
 
 /**
  * 피드 차단 (베타) 설정을 BottomSheet로 표시.
@@ -61,6 +63,19 @@ object AdvancedSettingsBottomSheet {
                             awaitingSystemPermissionGrant = true
                             prefs.isBetaEnabled = true
                             ensureFeedBlockServiceComponentEnabled(activity)
+                            // 제조사별 메뉴 경로가 다양하므로 시스템 접근성 진입 직전에
+                            // 토스트로 가이드를 띄워 사용자가 "FeedBlock (un:short)" 항목을
+                            // 쉽게 찾도록 한다 (ShortsBlockService 권한 흐름과 동일 패턴).
+                            if (PermissionUtils.needsAccessibilityGuide()) {
+                                Toast.makeText(
+                                    activity,
+                                    PermissionUtils.getAccessibilityGuide(
+                                        activity,
+                                        activity.getString(R.string.feed_block_service_label)
+                                    ),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
                             activity.startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
                         }
                         renderState()

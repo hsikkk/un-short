@@ -116,13 +116,13 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="permission_enable_permission">Aktifkan Izin</string>
 
     <!-- Manufacturer-specific Accessibility Guides -->
-    <string name="permission_accessibility_guide_samsung">💡 Cari [Aplikasi yang diinstal] → un:short</string>
-    <string name="permission_accessibility_guide_lg">💡 Cari [Pengaturan lanjutan] → un:short</string>
-    <string name="permission_accessibility_guide_xiaomi">💡 Cari [Layanan yang diunduh] → un:short</string>
-    <string name="permission_accessibility_guide_huawei">💡 Cari [Layanan yang diunduh] → un:short</string>
-    <string name="permission_accessibility_guide_oppo">💡 Cari [Layanan yang diinstal] → un:short</string>
-    <string name="permission_accessibility_guide_vivo">💡 Cari [Layanan yang diinstal] → un:short</string>
-    <string name="permission_accessibility_guide_default">💡 Temukan un:short dan nyalakan</string>
+    <string name="permission_accessibility_guide_samsung">💡 Cari [Aplikasi yang diinstal] → %1$s</string>
+    <string name="permission_accessibility_guide_lg">💡 Cari [Pengaturan lanjutan] → %1$s</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 Cari [Layanan yang diunduh] → %1$s</string>
+    <string name="permission_accessibility_guide_huawei">💡 Cari [Layanan yang diunduh] → %1$s</string>
+    <string name="permission_accessibility_guide_oppo">💡 Cari [Layanan yang diinstal] → %1$s</string>
+    <string name="permission_accessibility_guide_vivo">💡 Cari [Layanan yang diinstal] → %1$s</string>
+    <string name="permission_accessibility_guide_default">💡 Temukan %1$s dan nyalakan</string>
 
     <!-- Timer Activity -->
     <string name="timer_seconds_unit">detik</string>
@@ -445,5 +445,47 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="custom_message_reset">Atur ulang ke default</string>
     <string name="custom_message_hint_before">cth: Apakah Anda benar-benar butuh shorts sekarang?</string>
     <string name="custom_message_hint_after">cth: Anda sudah menunggu sejauh ini. Masih ingin menonton?</string>
+
+    <!-- Feed Block (Beta) - PRD v1.3 -->
+    <string name="settings_section_advanced">Lanjutan</string>
+    <string name="feed_block_service_label">FeedBlock (un:short)</string>
+    <string name="feed_block_service_description">Menampilkan layar konfirmasi niat saat masuk ke feed (Beta)</string>
+
+    <!-- Block overlay messages -->
+    <string name="feed_block_overlay_message">%1$s\nLanjutkan?</string>
+    <string name="feed_block_overlay_continue">Lanjutkan</string>
+    <string name="feed_block_overlay_continue_countdown">Lanjutkan (%1$d)</string>
+    <string name="feed_block_overlay_stop">Tutup</string>
+
+    <string name="feed_block_settings_title">Blokir Feed (Beta)</string>
+    <string name="feed_block_settings_subtitle">Tampilkan layar konfirmasi niat saat masuk ke feed</string>
+    <string name="feed_block_section_beta">Fitur beta</string>
+    <string name="feed_block_section_permission">Izin</string>
+    <string name="feed_block_section_threshold">Ambang batas</string>
+    <string name="feed_block_beta_toggle_label">Aktifkan blokir feed</string>
+    <string name="feed_block_beta_toggle_caption">Memerlukan izin aksesibilitas terpisah</string>
+    <string name="feed_block_permission_label">Izin aksesibilitas</string>
+    <string name="feed_block_permission_active">Aktif</string>
+    <string name="feed_block_permission_inactive">Tidak aktif (aktifkan di Pengaturan)</string>
+    <string name="feed_block_open_accessibility_settings">Buka pengaturan aksesibilitas</string>
+    <string name="feed_block_targets_label">Aplikasi target</string>
+    <string name="feed_block_target_instagram">Beranda Instagram</string>
+    <string name="feed_block_target_youtube">Beranda YouTube</string>
+    <string name="feed_block_target_threads">Beranda Threads</string>
+    <string name="feed_block_target_facebook">Kabar Berita Facebook</string>
+    <string name="feed_block_scroll_label">Ambang batas gulir</string>
+    <string name="feed_block_scroll_value">Tinggi layar × %1$d</string>
+    <string name="feed_block_time_label">Ambang batas waktu</string>
+    <string name="feed_block_time_value">%1$d menit</string>
+
+    <string name="feed_block_onboarding_title">Blokir Feed (Beta)</string>
+    <string name="feed_block_onboarding_message">Berbeda dari pemblokiran Shorts, Blokir Feed menampilkan peringatan saat ambang batas (jarak/waktu kumulatif) tercapai.\n\nMemerlukan izin aksesibilitas terpisah.\nDapat dimatikan kapan saja.</string>
+    <string name="feed_block_onboarding_continue">Lanjutkan</string>
+    <string name="feed_block_onboarding_cancel">Batal</string>
+
+    <string name="feed_block_permission_dialog_title">Aktifkan izin aksesibilitas</string>
+    <string name="feed_block_permission_dialog_message">Silakan aktifkan \"FeedBlock (un:short)\" pada langkah berikutnya.</string>
+
+    <string name="feed_block_permission_lost_toast">Blokir Feed dinonaktifkan di pengaturan sistem</string>
 
 </resources>

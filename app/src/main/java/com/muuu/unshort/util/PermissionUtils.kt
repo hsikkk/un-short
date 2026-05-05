@@ -62,15 +62,18 @@ object PermissionUtils {
     /**
      * 제조사별 접근성 설정 경로 안내 문구 가져오기
      */
-    fun getAccessibilityGuide(context: Context): String {
+    fun getAccessibilityGuide(
+        context: Context,
+        serviceLabel: String = "un:short"
+    ): String {
         return when (getManufacturer()) {
-            Manufacturer.SAMSUNG -> context.getString(R.string.permission_accessibility_guide_samsung)
-            Manufacturer.LG -> context.getString(R.string.permission_accessibility_guide_lg)
-            Manufacturer.XIAOMI -> context.getString(R.string.permission_accessibility_guide_xiaomi)
-            Manufacturer.HUAWEI -> context.getString(R.string.permission_accessibility_guide_huawei)
-            Manufacturer.OPPO -> context.getString(R.string.permission_accessibility_guide_oppo)
-            Manufacturer.VIVO -> context.getString(R.string.permission_accessibility_guide_vivo)
-            Manufacturer.OTHER -> context.getString(R.string.permission_accessibility_guide_default)
+            Manufacturer.SAMSUNG -> context.getString(R.string.permission_accessibility_guide_samsung, serviceLabel)
+            Manufacturer.LG -> context.getString(R.string.permission_accessibility_guide_lg, serviceLabel)
+            Manufacturer.XIAOMI -> context.getString(R.string.permission_accessibility_guide_xiaomi, serviceLabel)
+            Manufacturer.HUAWEI -> context.getString(R.string.permission_accessibility_guide_huawei, serviceLabel)
+            Manufacturer.OPPO -> context.getString(R.string.permission_accessibility_guide_oppo, serviceLabel)
+            Manufacturer.VIVO -> context.getString(R.string.permission_accessibility_guide_vivo, serviceLabel)
+            Manufacturer.OTHER -> context.getString(R.string.permission_accessibility_guide_default, serviceLabel)
         }
     }
 

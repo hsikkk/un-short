@@ -114,13 +114,13 @@
     <string name="permission_enable_permission">Bật quyền</string>
 
     <!-- Manufacturer-specific Accessibility Guides -->
-    <string name="permission_accessibility_guide_samsung">💡 Tìm [Ứng dụng đã cài đặt] → un:short</string>
-    <string name="permission_accessibility_guide_lg">💡 Tìm [Cài đặt nâng cao] → un:short</string>
-    <string name="permission_accessibility_guide_xiaomi">💡 Tìm [Dịch vụ đã tải xuống] → un:short</string>
-    <string name="permission_accessibility_guide_huawei">💡 Tìm [Dịch vụ đã tải xuống] → un:short</string>
-    <string name="permission_accessibility_guide_oppo">💡 Tìm [Dịch vụ đã cài đặt] → un:short</string>
-    <string name="permission_accessibility_guide_vivo">💡 Tìm [Dịch vụ đã cài đặt] → un:short</string>
-    <string name="permission_accessibility_guide_default">💡 Tìm un:short và bật nó</string>
+    <string name="permission_accessibility_guide_samsung">💡 Tìm [Ứng dụng đã cài đặt] → %1$s</string>
+    <string name="permission_accessibility_guide_lg">💡 Tìm [Cài đặt nâng cao] → %1$s</string>
+    <string name="permission_accessibility_guide_xiaomi">💡 Tìm [Dịch vụ đã tải xuống] → %1$s</string>
+    <string name="permission_accessibility_guide_huawei">💡 Tìm [Dịch vụ đã tải xuống] → %1$s</string>
+    <string name="permission_accessibility_guide_oppo">💡 Tìm [Dịch vụ đã cài đặt] → %1$s</string>
+    <string name="permission_accessibility_guide_vivo">💡 Tìm [Dịch vụ đã cài đặt] → %1$s</string>
+    <string name="permission_accessibility_guide_default">💡 Tìm %1$s và bật nó</string>
 
     <!-- Timer Activity -->
     <string name="timer_seconds_unit">giây</string>
@@ -444,5 +444,47 @@
     <string name="custom_message_reset">Đặt lại mặc định</string>
     <string name="custom_message_hint_before">VD: Bạn có thực sự cần xem shorts ngay bây giờ không?</string>
     <string name="custom_message_hint_after">VD: Bạn đã đợi đến đây rồi. Vẫn muốn xem chứ?</string>
+
+    <!-- Feed Block (Beta) - PRD v1.3 -->
+    <string name="settings_section_advanced">Nâng cao</string>
+    <string name="feed_block_service_label">FeedBlock (un:short)</string>
+    <string name="feed_block_service_description">Hiển thị màn hình xác nhận ý định khi vào nguồn cấp dữ liệu (Beta)</string>
+
+    <!-- Block overlay messages -->
+    <string name="feed_block_overlay_message">%1$s\nTiếp tục?</string>
+    <string name="feed_block_overlay_continue">Tiếp tục</string>
+    <string name="feed_block_overlay_continue_countdown">Tiếp tục (%1$d)</string>
+    <string name="feed_block_overlay_stop">Đóng</string>
+
+    <string name="feed_block_settings_title">Chặn nguồn cấp (Beta)</string>
+    <string name="feed_block_settings_subtitle">Hiển thị màn hình xác nhận khi vào nguồn cấp</string>
+    <string name="feed_block_section_beta">Tính năng beta</string>
+    <string name="feed_block_section_permission">Quyền</string>
+    <string name="feed_block_section_threshold">Ngưỡng</string>
+    <string name="feed_block_beta_toggle_label">Bật chặn nguồn cấp</string>
+    <string name="feed_block_beta_toggle_caption">Yêu cầu quyền trợ năng riêng</string>
+    <string name="feed_block_permission_label">Quyền trợ năng</string>
+    <string name="feed_block_permission_active">Đang bật</string>
+    <string name="feed_block_permission_inactive">Đang tắt (bật trong Cài đặt)</string>
+    <string name="feed_block_open_accessibility_settings">Mở cài đặt trợ năng</string>
+    <string name="feed_block_targets_label">Ứng dụng mục tiêu</string>
+    <string name="feed_block_target_instagram">Trang chủ Instagram</string>
+    <string name="feed_block_target_youtube">Trang chủ YouTube</string>
+    <string name="feed_block_target_threads">Trang chủ Threads</string>
+    <string name="feed_block_target_facebook">Bảng tin Facebook</string>
+    <string name="feed_block_scroll_label">Ngưỡng cuộn</string>
+    <string name="feed_block_scroll_value">Chiều cao màn hình × %1$d</string>
+    <string name="feed_block_time_label">Ngưỡng thời gian</string>
+    <string name="feed_block_time_value">%1$d phút</string>
+
+    <string name="feed_block_onboarding_title">Chặn nguồn cấp (Beta)</string>
+    <string name="feed_block_onboarding_message">Khác với chặn Shorts, Chặn nguồn cấp sẽ hiển thị thông báo khi đạt ngưỡng (khoảng cách/thời gian tích lũy).\n\nYêu cầu quyền trợ năng riêng.\nCó thể tắt bất kỳ lúc nào.</string>
+    <string name="feed_block_onboarding_continue">Tiếp tục</string>
+    <string name="feed_block_onboarding_cancel">Hủy</string>
+
+    <string name="feed_block_permission_dialog_title">Bật quyền trợ năng</string>
+    <string name="feed_block_permission_dialog_message">Vui lòng bật \"FeedBlock (un:short)\" ở bước tiếp theo.</string>
+
+    <string name="feed_block_permission_lost_toast">Chặn nguồn cấp đã bị tắt trong cài đặt hệ thống</string>
 
 </resources>
