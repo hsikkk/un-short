@@ -394,6 +394,8 @@
     <string name="changelog_title">v%s अपडेट</string>
     <string name="changelog_subtitle">नया क्या है देखें</string>
     <string name="changelog_confirm">ठीक है</string>
+    <string name="changelog_v1_7_0_item1">फीड ब्लॉक (बीटा) सुविधा जोड़ी गई</string>
+    <string name="changelog_v1_7_0_item2">स्थिरता में सुधार</string>
     <string name="changelog_v1_6_1_item1">विज्ञापन गोपनीयता अनुपालन में सुधार (GDPR)</string>
     <string name="changelog_v1_6_0_item1">ब्लॉक स्क्रीन संदेश कस्टमाइज़ करें (PRO)</string>
     <string name="changelog_v1_6_0_item2">बग फिक्स और स्थिरता में सुधार</string>

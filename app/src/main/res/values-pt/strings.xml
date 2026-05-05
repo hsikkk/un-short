@@ -395,6 +395,8 @@
     <string name="changelog_title">Atualização v%s</string>
     <string name="changelog_subtitle">Confira as novidades</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_7_0_item1">Adicionado bloqueio de feed (Beta)</string>
+    <string name="changelog_v1_7_0_item2">Melhorias de estabilidade</string>
     <string name="changelog_v1_6_1_item1">Melhoria na conformidade de privacidade de anúncios (GDPR)</string>
     <string name="changelog_v1_6_0_item1">Personalizar mensagens de bloqueio (PRO)</string>
     <string name="changelog_v1_6_0_item2">Correções de bugs e melhorias de estabilidade</string>

@@ -395,6 +395,8 @@
     <string name="changelog_title">Cập nhật v%s</string>
     <string name="changelog_subtitle">Xem những điểm mới</string>
     <string name="changelog_confirm">Đồng ý</string>
+    <string name="changelog_v1_7_0_item1">Thêm tính năng chặn Feed (Beta)</string>
+    <string name="changelog_v1_7_0_item2">Cải thiện độ ổn định</string>
     <string name="changelog_v1_6_1_item1">Cải thiện tuân thủ quyền riêng tư quảng cáo (GDPR)</string>
     <string name="changelog_v1_6_0_item1">Tùy chỉnh thông báo màn hình chặn (PRO)</string>
     <string name="changelog_v1_6_0_item2">Sửa lỗi và cải thiện độ ổn định</string>

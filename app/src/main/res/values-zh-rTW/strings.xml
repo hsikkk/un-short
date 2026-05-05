@@ -395,6 +395,8 @@
     <string name="changelog_title">v%s 更新</string>
     <string name="changelog_subtitle">查看最新變更</string>
     <string name="changelog_confirm">確定</string>
+    <string name="changelog_v1_7_0_item1">新增動態消息攔截功能（測試版）</string>
+    <string name="changelog_v1_7_0_item2">穩定性改善</string>
     <string name="changelog_v1_6_1_item1">改善廣告隱私合規性 (GDPR)</string>
     <string name="changelog_v1_6_0_item1">自訂攔截畫面文字 (PRO)</string>
     <string name="changelog_v1_6_0_item2">修復錯誤並提升穩定性</string>

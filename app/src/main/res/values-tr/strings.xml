@@ -394,6 +394,8 @@
     <string name="changelog_title">v%s Güncellemesi</string>
     <string name="changelog_subtitle">Yeniliklere göz atın</string>
     <string name="changelog_confirm">Tamam</string>
+    <string name="changelog_v1_7_0_item1">Akış Engelleme (Beta) özelliği eklendi</string>
+    <string name="changelog_v1_7_0_item2">Kararlılık iyileştirmeleri</string>
     <string name="changelog_v1_6_1_item1">Reklam gizlilik uyumluluğu iyileştirildi (GDPR)</string>
     <string name="changelog_v1_6_0_item1">Engelleme ekranı mesajlarını özelleştirin (PRO)</string>
     <string name="changelog_v1_6_0_item2">Hata düzeltmeleri ve kararlılık iyileştirmeleri</string>

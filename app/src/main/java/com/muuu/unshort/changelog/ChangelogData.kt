@@ -19,6 +19,14 @@ object ChangelogRegistry {
 
     private val changelogs = listOf<ChangelogEntry>(
         ChangelogEntry(
+            versionCode = 29,
+            versionName = "1.7.0",
+            changes = listOf(
+                R.string.changelog_v1_7_0_item1,
+                R.string.changelog_v1_7_0_item2
+            )
+        ),
+        ChangelogEntry(
             versionCode = 28,
             versionName = "1.6.1",
             changes = listOf(

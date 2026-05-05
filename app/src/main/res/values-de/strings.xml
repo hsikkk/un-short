@@ -395,6 +395,8 @@
     <string name="changelog_title">v%s Update</string>
     <string name="changelog_subtitle">Entdecke, was neu ist</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_7_0_item1">Feed-Blockierung (Beta) hinzugefügt</string>
+    <string name="changelog_v1_7_0_item2">Stabilitätsverbesserungen</string>
     <string name="changelog_v1_6_1_item1">Verbesserte Einhaltung der Werbedatenschutzrichtlinien (DSGVO)</string>
     <string name="changelog_v1_6_0_item1">Blockbildschirm-Nachrichten anpassen (PRO)</string>
     <string name="changelog_v1_6_0_item2">Fehlerbehebungen und Stabilitätsverbesserungen</string>

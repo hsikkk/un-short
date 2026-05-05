@@ -395,6 +395,8 @@
     <string name="changelog_title">Обновление v%s</string>
     <string name="changelog_subtitle">Посмотрите, что нового</string>
     <string name="changelog_confirm">ОК</string>
+    <string name="changelog_v1_7_0_item1">Добавлена блокировка ленты (бета)</string>
+    <string name="changelog_v1_7_0_item2">Улучшение стабильности</string>
     <string name="changelog_v1_6_1_item1">Улучшено соблюдение конфиденциальности рекламы (GDPR)</string>
     <string name="changelog_v1_6_0_item1">Настройка сообщений экрана блокировки (PRO)</string>
     <string name="changelog_v1_6_0_item2">Исправления ошибок и улучшение стабильности</string>

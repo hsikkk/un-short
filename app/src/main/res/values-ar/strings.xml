@@ -395,6 +395,8 @@
     <string name="changelog_title">تحديث v%s</string>
     <string name="changelog_subtitle">اكتشف ما الجديد</string>
     <string name="changelog_confirm">حسناً</string>
+    <string name="changelog_v1_7_0_item1">إضافة ميزة حظر الخلاصة (تجريبي)</string>
+    <string name="changelog_v1_7_0_item2">تحسينات في الاستقرار</string>
     <string name="changelog_v1_6_1_item1">تحسين الامتثال لخصوصية الإعلانات (GDPR)</string>
     <string name="changelog_v1_6_0_item1">تخصيص رسائل شاشة الحظر (PRO)</string>
     <string name="changelog_v1_6_0_item2">إصلاح الأخطاء وتحسين الاستقرار</string>

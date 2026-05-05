@@ -395,6 +395,8 @@
     <string name="changelog_title">อัปเดต v%s</string>
     <string name="changelog_subtitle">ดูสิ่งใหม่ที่เพิ่มเข้ามา</string>
     <string name="changelog_confirm">ตกลง</string>
+    <string name="changelog_v1_7_0_item1">เพิ่มฟีเจอร์บล็อกฟีด (เบต้า)</string>
+    <string name="changelog_v1_7_0_item2">ปรับปรุงความเสถียร</string>
     <string name="changelog_v1_6_1_item1">ปรับปรุงการปฏิบัติตามความเป็นส่วนตัวของโฆษณา (GDPR)</string>
     <string name="changelog_v1_6_0_item1">ปรับแต่งข้อความหน้าจอบล็อก (PRO)</string>
     <string name="changelog_v1_6_0_item2">แก้ไขข้อผิดพลาดและปรับปรุงความเสถียร</string>
