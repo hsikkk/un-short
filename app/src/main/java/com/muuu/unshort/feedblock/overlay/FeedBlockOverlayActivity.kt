@@ -11,7 +11,6 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import com.muuu.ad.core.adunit.MuuuBannerAdUnit
 import com.muuu.ad.core.adunit.MuuuNativeAdUnit
 import com.muuu.ad.core.model.MuuuBannerSize
@@ -22,6 +21,7 @@ import com.muuu.unshort.R
 import com.muuu.unshort.ad.AdManager
 import com.muuu.unshort.config.AdConfig
 import com.muuu.unshort.feedblock.FeedBlockService
+import com.muuu.unshort.ui.activity.BaseActivity
 
 /**
  * 피드 차단 오버레이 (베타)
@@ -31,7 +31,9 @@ import com.muuu.unshort.feedblock.FeedBlockService
  * - 계속 볼래요(OK): CONTINUE 브로드캐스트 → 세션 통과
  * - 그만 볼래요(Close): STOP 브로드캐스트 → HOME 강제 이탈
  */
-class FeedBlockOverlayActivity : AppCompatActivity() {
+class FeedBlockOverlayActivity : BaseActivity() {
+
+    override fun isLightStatusBar(): Boolean = false
 
     private lateinit var mainMessage: TextView
     private lateinit var continueButton: TextView
