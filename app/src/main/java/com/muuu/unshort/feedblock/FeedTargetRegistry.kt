@@ -21,9 +21,11 @@ object FeedTargetRegistry {
             "com.instagram.android:id/row_feed_view_group_buttons"
         ),
         homeTabViewId = "com.instagram.android:id/feed_tab",
+        // reels_tray_container(메인 피드 상단 스토리/릴스 트레이)는 메인 피드에서 항상 visible이라
+        // exclude에 두면 스크롤 전까지 detection이 차단됨. clips_viewer_view_pager(풀스크린 릴스
+        // 뷰어)만 exclude로 남겨 릴스 탭/뷰어와 메인 피드를 구분.
         excludeViewIds = listOf(
-            "com.instagram.android:id/clips_viewer_view_pager",
-            "com.instagram.android:id/reels_tray_container"
+            "com.instagram.android:id/clips_viewer_view_pager"
         )
     )
 
