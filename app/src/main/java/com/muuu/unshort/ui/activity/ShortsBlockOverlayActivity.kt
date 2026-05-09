@@ -18,17 +18,23 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import android.widget.Toast
 import com.muuu.ad.core.adunit.MuuuBannerAdUnit
 import com.muuu.ad.core.adunit.MuuuNativeAdUnit
+import com.muuu.ad.core.adunit.MuuuRewardedAdUnit
 import com.muuu.ad.core.model.MuuuBannerSize
 import com.muuu.ad.core.model.nativetemplate.MuuuNativeAdTemplate
 import com.muuu.unshort.service.blocking.ActivityType
 import com.muuu.unshort.service.blocking.SessionEvent
 import com.muuu.unshort.service.blocking.BlockingStage
 import com.muuu.unshort.ad.AdManager
+import com.muuu.unshort.ad.DailyUnblockQuotaManager
+import com.muuu.unshort.ad.RewardResult
+import com.muuu.unshort.ui.dialog.QuotaExhaustedDialog
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.prefs.PreferencesManager
+import com.muuu.unshort.premium.PremiumManager
 import com.muuu.unshort.config.AdConfig
 import com.muuu.unshort.config.OverlayType
 import com.muuu.unshort.ui.activity.BaseActivity
@@ -63,6 +69,12 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     private lateinit var buttonContainer: LinearLayout
     private var bannerAdView: com.muuu.ad.view.MuuuBannerAdView? = null
     private var nativeAdView: com.muuu.ad.view.MuuuNativeAdView? = null
+
+    // 바로 보기 — 클릭 진입 시 노출. N초 후 활성화 (skipButton 패턴)
+    private lateinit var instantUnblockButton: TextView
+    private var isFromScroll: Boolean = false
+    private var rewardedAdInProgress: Boolean = false
+    private var instantUnblockCountdown: Int = 2
 
     // Utils
     private lateinit var prefsManager: PreferencesManager
@@ -125,6 +137,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         overlayType = OverlayType.valueOf(
             intent.getStringExtra(EXTRA_OVERLAY_TYPE) ?: OverlayType.INITIAL.name
         )
+        isFromScroll = intent.getBooleanExtra(AppConstants.EXTRA_ENTRY_FROM_SCROLL, false)
 
         Log.d(TAG, "onCreate: session=$currentSessionId, source=$sourcePackageName, type=$overlayType")
 
@@ -145,6 +158,9 @@ class ShortsBlockOverlayActivity : BaseActivity() {
 
         // Update UI based on overlay type
         updateUI()
+
+        // Setup bottom action area (즉시 해제 / 광고 충전)
+        setupBottomActionUi()
 
         if (prefsManager.isSleepTime()) {
             mainMessage.text = getString(R.string.sleep_mode_motivation)
@@ -196,6 +212,8 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         mainMessage = findViewById(R.id.mainMessage)
         buttonContainer = findViewById(R.id.buttonContainer)
 
+        instantUnblockButton = findViewById(R.id.instantUnblockButton)
+
         // Setup button listeners
         skipButton.setOnClickListener {
             Log.d(TAG, "Skip button clicked")
@@ -213,6 +231,11 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             Log.d(TAG, "Start timer button clicked")
             AnalyticsManager.trackEvent(this, AnalyticsEvent.OVERLAY_BUTTON_START_TIMER)
             handleStartTimer()
+        }
+
+        instantUnblockButton.setOnClickListener {
+            Log.d(TAG, "Instant unblock button clicked")
+            onInstantUnblockClicked()
         }
     }
 
@@ -244,8 +267,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     private fun updateSkipButtonText() {
         when {
             skipButtonCountdown > 0 -> {
-                // TODO: [i18n] strings.xml로 이동 필요
-                skipButton.text = "${skipButtonCountdown}초 후 닫기 가능"
+                skipButton.text = getString(R.string.block_button_close_countdown, skipButtonCountdown)
             }
             else -> {
                 skipButton.text = getString(R.string.block_button_close)
@@ -263,7 +285,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             startTimerButton.visibility = View.GONE
             watchButton.visibility = View.VISIBLE
 
-            // Reorder buttons: skipButton first, then watchButton
+            // 순서: skipButton(메인 액션) → bottomAction → watchButton(가벼운 옵션)
             buttonContainer.removeAllViews()
 
             // Add skip button first (top position)
@@ -276,7 +298,16 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             )
             buttonContainer.addView(skipButton, skipParams)
 
-            // Add watch button second (bottom position)
+            // Add bottom action container (즉시 해제 / 광고 충전, skipButton 바로 아래)
+            // instantUnblockButton (마진 포함)
+            val instantParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            instantParams.topMargin = resources.displayMetrics.density.toInt() * 12
+            buttonContainer.addView(instantUnblockButton, instantParams)
+
+            // Add watch button last
             watchButton.setTextColor(0xFF8A8A8A.toInt())
             watchButton.setBackgroundResource(android.R.color.transparent)
             val watchParams = LinearLayout.LayoutParams(
@@ -295,17 +326,26 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             watchButton.visibility = View.GONE
             skipButton.text = getString(R.string.block_button_close)
 
-            // Reorder buttons: startTimerButton first, then skipButton
+            // 순서: startTimerButton(메인) → bottomAction(secondary) → skipButton(취소)
             buttonContainer.removeAllViews()
 
-            // Add start timer button first
+            // Add start timer button first ("한번 더 생각해보기")
             val startParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
             buttonContainer.addView(startTimerButton, startParams)
 
-            // Add skip button second
+            // Add bottom action container ("바로 보기 / 광고 보고 +N회") — 메인과 그만 닫기 사이
+            // instantUnblockButton (마진 포함)
+            val instantParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            instantParams.topMargin = resources.displayMetrics.density.toInt() * 12
+            buttonContainer.addView(instantUnblockButton, instantParams)
+
+            // Add skip button last ("그만 볼래요")
             skipButton.setTextColor(0xFF8A8A8A.toInt())
             skipButton.setBackgroundResource(android.R.color.transparent)
             val skipParams = LinearLayout.LayoutParams(
@@ -368,6 +408,143 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         timerLauncher.launch(intent)
 
         Log.d(TAG, "Timer activity launched, overlay moved to background")
+    }
+
+    /**
+     * 차단 화면 하단 "바로 보기" 노출 결정
+     *
+     * - 스크롤 진입: GONE
+     * - 클릭 진입: 노출 + N초 카운트다운
+     * 잔여 횟수 텍스트는 노출하지 않음. 한도 도달 시점도 별도 표기 X (클릭 시 다이얼로그로 처리).
+     */
+    private fun setupBottomActionUi() {
+        if (isFromScroll) {
+            instantUnblockButton.visibility = View.GONE
+            return
+        }
+        instantUnblockButton.visibility = View.VISIBLE
+        startInstantUnblockCountdown()
+    }
+
+    /**
+     * "바로 보기" N초 후 활성화 (skipButton과 동일 패턴)
+     */
+    private fun startInstantUnblockCountdown() {
+        instantUnblockCountdown = 2
+        instantUnblockButton.isEnabled = false
+        instantUnblockButton.alpha = 0.5f
+        updateInstantUnblockButtonText()
+
+        handler.postDelayed({
+            instantUnblockCountdown = 1
+            updateInstantUnblockButtonText()
+
+            handler.postDelayed({
+                instantUnblockCountdown = 0
+                instantUnblockButton.isEnabled = true
+                instantUnblockButton.alpha = 1.0f
+                updateInstantUnblockButtonText()
+            }, 1000)
+        }, 1000)
+    }
+
+    private fun updateInstantUnblockButtonText() {
+        instantUnblockButton.text = if (instantUnblockCountdown > 0) {
+            getString(R.string.instant_unblock_countdown, instantUnblockCountdown)
+        } else {
+            getString(R.string.instant_unblock_label)
+        }
+    }
+
+    /**
+     * "바로 보기" 클릭 시 분기:
+     *  - 한도 ≥ 1 또는 프리미엄 → 즉시 해제
+     *  - 한도 = 0 → 다이얼로그 (광고 / 프리미엄 / 닫기)
+     */
+    private fun onInstantUnblockClicked() {
+        val isPremium = PremiumManager.isPremium()
+        val remaining = DailyUnblockQuotaManager.getRemainingQuota(this)
+
+        if (isPremium || remaining >= 1) {
+            performInstantUnblock()
+        } else {
+            showQuotaExhaustedDialog()
+        }
+    }
+
+    private fun performInstantUnblock() {
+        DailyUnblockQuotaManager.consumeOnInstantUnblock(this)
+        AnalyticsManager.trackEvent(this, AnalyticsEvent.INSTANT_UNBLOCK_CLICKED)
+
+        val intent = Intent(AppConstants.ACTION_INSTANT_UNBLOCK)
+        intent.setPackage(packageName)
+        intent.putExtra("session_id", currentSessionId)
+        intent.putExtra("source_package", sourcePackageName)
+        sendBroadcast(intent)
+        Log.d(TAG, "Instant unblock - broadcast sent")
+
+        finishAndRemoveTask()
+    }
+
+    private fun showQuotaExhaustedDialog() {
+        AnalyticsManager.trackEvent(this, AnalyticsEvent.UNBLOCK_QUOTA_EXHAUSTED)
+
+        QuotaExhaustedDialog(
+            context = this,
+            rechargeAmount = AppConstants.DEFAULT_UNBLOCK_QUOTA_AD_RECHARGE_AMOUNT,
+            onWatchAd = { watchRewardedAdAndRecharge() },
+            onPremium = {
+                startActivity(Intent(this, PremiumUpgradeActivity::class.java))
+            },
+            onCancel = { /* dismiss */ }
+        ).show()
+    }
+
+    private fun watchRewardedAdAndRecharge() {
+        if (rewardedAdInProgress) return
+        rewardedAdInProgress = true
+
+        AnalyticsManager.trackEvent(this, AnalyticsEvent.AD_RECHARGE_CLICKED)
+
+        AdManager.setupRewardedAd(
+            activity = this,
+            adUnit = MuuuRewardedAdUnit(
+                key = AdConfig.REWARDED_UNBLOCK_QUOTA_RECHARGE,
+                placement = "rewarded_unblock_quota_recharge"
+            )
+        ) { result ->
+            rewardedAdInProgress = false
+            when (result) {
+                is RewardResult.Earned -> {
+                    val charged = DailyUnblockQuotaManager.rechargeFromAd(this)
+                    AnalyticsManager.trackEvent(
+                        this,
+                        AnalyticsEvent.AD_RECHARGE_QUOTA_ADDED,
+                        mapOf(
+                            "amount" to charged,
+                            "remaining_after" to DailyUnblockQuotaManager.getRemainingQuota(this)
+                        )
+                    )
+                    // 광고 시청 완료 → 즉시 해제로 이어짐 (한도 차감)
+                    performInstantUnblock()
+                }
+                is RewardResult.Failed -> {
+                    AnalyticsManager.trackEvent(this, AnalyticsEvent.AD_RECHARGE_AD_FAILED)
+                    Toast.makeText(
+                        this,
+                        getString(R.string.ad_recharge_load_failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is RewardResult.Cancelled -> {
+                    Log.d(TAG, "Rewarded ad cancelled (no reward)")
+                }
+                is RewardResult.NotApplicable -> {
+                    // 광고 시청 도중 프리미엄 활성화 등 → 즉시 해제
+                    performInstantUnblock()
+                }
+            }
+        }
     }
 
     private fun setupAds() {

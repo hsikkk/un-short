@@ -489,4 +489,19 @@
 
     <string name="feed_block_permission_lost_toast">บล็อกฟีดถูกปิดใช้งานในการตั้งค่าระบบ</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">ดูเลย</string>
+    <string name="instant_unblock_remaining">เหลือ %1$d ครั้งวันนี้</string>
+    <string name="instant_unblock_countdown">ดูเลย (พร้อมใช้ใน %1$d วิ.)</string>
+    <string name="block_button_close_countdown">แค่ปิด (พร้อมใช้ใน %1$d วิ.)</string>
+    <string name="quota_exhausted_message">ใช้สิทธิ์ปลดบล็อกทันทีของวันนี้หมดแล้ว</string>
+    <string name="quota_exhausted_dialog_title">ถึงขีดจำกัดของวันนี้แล้ว</string>
+    <string name="quota_exhausted_dialog_message">ดูโฆษณาสั้นๆ เพื่อใช้งานต่อ หรือปลดล็อกการใช้แบบไม่จำกัดด้วย Premium</string>
+    <string name="quota_exhausted_dialog_premium">ดู Premium</string>
+    <string name="quota_exhausted_dialog_cancel">ปิด</string>
+    <string name="ad_recharge_button">ดูโฆษณาเพื่อเพิ่ม +%1$d</string>
+    <string name="ad_recharge_load_failed">โหลดโฆษณาไม่ได้</string>
+    <string name="report_unblock_count_today">ปลดบล็อกวันนี้: %1$d ครั้ง</string>
+    <string name="report_ads_watched_today">ดูโฆษณาวันนี้: %1$d รายการ</string>
+
 </resources>

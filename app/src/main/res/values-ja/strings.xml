@@ -489,4 +489,19 @@
 
     <string name="feed_block_permission_lost_toast">フィードブロックがシステム設定で無効化されました</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">すぐ見る</string>
+    <string name="instant_unblock_remaining">今日あと%1$d回</string>
+    <string name="instant_unblock_countdown">すぐ見る (%1$d秒後)</string>
+    <string name="block_button_close_countdown">閉じるだけ (%1$d秒後)</string>
+    <string name="quota_exhausted_message">今日のすぐ見る回数を使い切りました</string>
+    <string name="quota_exhausted_dialog_title">今日の制限に達しました</string>
+    <string name="quota_exhausted_dialog_message">短い広告を見ると続けて使えます。広告なしで自由に使うならPremiumをご検討ください。</string>
+    <string name="quota_exhausted_dialog_premium">Premiumを見る</string>
+    <string name="quota_exhausted_dialog_cancel">閉じる</string>
+    <string name="ad_recharge_button">広告を見て+%1$d回追加</string>
+    <string name="ad_recharge_load_failed">広告を読み込めませんでした</string>
+    <string name="report_unblock_count_today">今日の解除: %1$d回</string>
+    <string name="report_ads_watched_today">今日の広告視聴: %1$d本</string>
+
 </resources>

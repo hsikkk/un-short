@@ -489,4 +489,19 @@
 
     <string name="feed_block_permission_lost_toast">Feed Block was disabled in system settings</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">Watch now</string>
+    <string name="instant_unblock_remaining">%1$d left today</string>
+    <string name="instant_unblock_countdown">Watch now (available in %1$ds)</string>
+    <string name="block_button_close_countdown">Close (available in %1$ds)</string>
+    <string name="quota_exhausted_message">You\'ve used today\'s instant unblocks</string>
+    <string name="quota_exhausted_dialog_title">You\'ve reached today\'s limit</string>
+    <string name="quota_exhausted_dialog_message">Watch a short ad to keep going, or unlock unlimited access with Premium.</string>
+    <string name="quota_exhausted_dialog_premium">See Premium</string>
+    <string name="quota_exhausted_dialog_cancel">Close</string>
+    <string name="ad_recharge_button">Watch ad for +%1$d more</string>
+    <string name="ad_recharge_load_failed">Couldn\'t load ad</string>
+    <string name="report_unblock_count_today">Unblocked today: %1$d</string>
+    <string name="report_ads_watched_today">Ads watched today: %1$d</string>
+
 </resources>

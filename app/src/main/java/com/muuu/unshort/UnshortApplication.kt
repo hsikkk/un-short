@@ -21,8 +21,11 @@ import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.muuu.ad.MuuuAdManagner
 import com.muuu.unshort.analytics.AnalyticsManager
+import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.premium.PremiumManager
+import com.muuu.unshort.receiver.DailyUnblockQuotaResetReceiver
 import com.muuu.unshort.R
+import java.time.LocalDate
 
 class UnshortApplication : Application() {
 
@@ -118,6 +121,9 @@ class UnshortApplication : Application() {
         // FeedBlockService.onAccessibilityEvent에서 prefsManager.isBetaEnabled로 통제한다.
         ensureFeedBlockServiceEnabled()
 
+        // 일일 즉시 해제 한도 시스템 초기화
+        initializeDailyUnblockQuota()
+
         // 앱 Foreground/Background 감지
         ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onStart(owner: LifecycleOwner) {
@@ -127,6 +133,26 @@ class UnshortApplication : Application() {
                 Log.d(TAG, "App moved to foreground - syncing premium status")
             }
         })
+    }
+
+    /**
+     * 일일 즉시 해제 한도 시스템 초기화
+     *
+     * - install date 최초 1회 기록 (신규 사용자 그레이스 기간 판정 기준)
+     * - 자정 자동 리셋 알람 등록 (Lazy 보정으로 이중 보강)
+     */
+    private fun initializeDailyUnblockQuota() {
+        try {
+            val prefsManager = PreferencesManager(this)
+            if (prefsManager.dailyUnblockQuotaInstallDate.isBlank()) {
+                prefsManager.dailyUnblockQuotaInstallDate = LocalDate.now().toString()
+                Log.d(TAG, "Daily unblock quota install date set: ${prefsManager.dailyUnblockQuotaInstallDate}")
+            }
+            DailyUnblockQuotaResetReceiver.scheduleReset(this)
+            Log.d(TAG, "Daily unblock quota reset alarm scheduled")
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to initialize daily unblock quota", e)
+        }
     }
 
     private fun ensureFeedBlockServiceEnabled() {

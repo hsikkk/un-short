@@ -7,4 +7,16 @@
         <key>show_affiliate_banner</key>
         <value>false</value>
     </entry>
+
+    <!-- 일일 즉시 해제 한도 (무조건 10회) -->
+    <entry>
+        <key>unblock_quota_daily_limit</key>
+        <value>10</value>
+    </entry>
+
+    <!-- 광고 1편 시청 시 한도 충전량 (기본 +3회) -->
+    <entry>
+        <key>unblock_quota_ad_recharge_amount</key>
+        <value>3</value>
+    </entry>
 </defaultsMap>

@@ -70,6 +70,10 @@ class AppRestartReceiver : BroadcastReceiver() {
                 DailyLimitResetReceiver.scheduleReset(context)
                 Log.d(TAG, "Scheduled daily limit reset alarm")
             }
+
+            // Schedule daily unblock quota reset (always — 한도 시스템은 기본 활성화)
+            DailyUnblockQuotaResetReceiver.scheduleReset(context)
+            Log.d(TAG, "Scheduled daily unblock quota reset alarm")
         } else {
             Log.d(TAG, "Missing permissions - Accessibility: $hasAccessibilityPermission, Overlay: $hasOverlayPermission")
         }

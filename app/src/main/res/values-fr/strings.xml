@@ -489,4 +489,19 @@
 
     <string name="feed_block_permission_lost_toast">Le blocage de flux a été désactivé dans les paramètres système</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">Voir maintenant</string>
+    <string name="instant_unblock_remaining">Il reste %1$d aujourd\'hui</string>
+    <string name="instant_unblock_countdown">Voir maintenant (disponible dans %1$d s)</string>
+    <string name="block_button_close_countdown">Juste fermer (disponible dans %1$d s)</string>
+    <string name="quota_exhausted_message">Vous avez utilisé vos déblocages immédiats du jour</string>
+    <string name="quota_exhausted_dialog_title">Vous avez atteint la limite du jour</string>
+    <string name="quota_exhausted_dialog_message">Regardez une courte pub pour continuer, ou profitez d\'un accès illimité avec Premium.</string>
+    <string name="quota_exhausted_dialog_premium">Découvrir Premium</string>
+    <string name="quota_exhausted_dialog_cancel">Fermer</string>
+    <string name="ad_recharge_button">Regarder une pub pour +%1$d</string>
+    <string name="ad_recharge_load_failed">Impossible de charger la publicité</string>
+    <string name="report_unblock_count_today">Débloqués aujourd\'hui : %1$d</string>
+    <string name="report_ads_watched_today">Publicités vues aujourd\'hui : %1$d</string>
+
 </resources>

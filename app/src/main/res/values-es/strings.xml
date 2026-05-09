@@ -489,4 +489,19 @@
 
     <string name="feed_block_permission_lost_toast">El bloqueo de feed se desactivó en los ajustes del sistema</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">Ver ahora</string>
+    <string name="instant_unblock_remaining">Quedan %1$d hoy</string>
+    <string name="instant_unblock_countdown">Ver ahora (disponible en %1$d s)</string>
+    <string name="block_button_close_countdown">Solo cerrar (disponible en %1$d s)</string>
+    <string name="quota_exhausted_message">Has usado tus desbloqueos instantáneos de hoy</string>
+    <string name="quota_exhausted_dialog_title">Has llegado al límite de hoy</string>
+    <string name="quota_exhausted_dialog_message">Mira un anuncio breve para continuar o consigue acceso ilimitado con Premium.</string>
+    <string name="quota_exhausted_dialog_premium">Descubrir Premium</string>
+    <string name="quota_exhausted_dialog_cancel">Cerrar</string>
+    <string name="ad_recharge_button">Ver anuncio para +%1$d más</string>
+    <string name="ad_recharge_load_failed">No se pudo cargar el anuncio</string>
+    <string name="report_unblock_count_today">Desbloqueados hoy: %1$d</string>
+    <string name="report_ads_watched_today">Anuncios vistos hoy: %1$d</string>
+
 </resources>

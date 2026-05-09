@@ -91,4 +91,22 @@ object AppConstants {
 
     // Remote Config Keys
     const val RC_SHOW_AFFILIATE_BANNER = "show_affiliate_banner"
+    const val RC_UNBLOCK_QUOTA_DAILY_LIMIT = "unblock_quota_daily_limit"
+    const val RC_UNBLOCK_QUOTA_AD_RECHARGE_AMOUNT = "unblock_quota_ad_recharge_amount"
+
+    // Daily Unblock Quota (즉시 해제 한도 시스템)
+    const val PREF_DAILY_UNBLOCK_QUOTA_REMAINING = "daily_unblock_quota_remaining"
+    const val PREF_DAILY_UNBLOCK_QUOTA_LAST_RESET_DATE = "daily_unblock_quota_last_reset_date"
+    const val PREF_DAILY_UNBLOCK_QUOTA_INSTALL_DATE = "daily_unblock_quota_install_date"
+    const val PREF_DAILY_UNBLOCK_TOTAL_TODAY = "daily_unblock_total_today"
+    const val PREF_DAILY_AD_WATCHED_TODAY = "daily_ad_watched_today"
+
+    // Daily Unblock Quota - Intent extras / Broadcast actions
+    const val EXTRA_ENTRY_FROM_SCROLL = "entry_from_scroll"
+    const val ACTION_INSTANT_UNBLOCK = "com.muuu.unshort.ACTION_INSTANT_UNBLOCK"
+    const val ACTION_DAILY_UNBLOCK_QUOTA_RESET = "com.muuu.unshort.DAILY_UNBLOCK_QUOTA_RESET"
+
+    // Daily Unblock Quota - 기본값
+    const val DEFAULT_UNBLOCK_QUOTA_DAILY_LIMIT = 10
+    const val DEFAULT_UNBLOCK_QUOTA_AD_RECHARGE_AMOUNT = 3
 }

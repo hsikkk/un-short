@@ -117,6 +117,11 @@ class ShortsBlockService : AccessibilityService() {
     // 현재 세션이 스크롤 후 재진입인지 추적 (통계 기록용)
     private var isCurrentSessionFromScroll: Boolean = false
 
+    // 차단 화면이 뜬 트리거 방식 (UI 분기용 — 통계용 isCurrentSessionFromScroll과 별개)
+    // - true: 스크롤로 인한 차단 (ContentHashChanged → NEED_CONFIRMATION 전이)
+    // - false: 외부 진입에 의한 차단 (EnterShorts → NEED_TIMER 전이) = 클릭 진입
+    private var lastBlockOriginScroll: Boolean = false
+
     // Skip 후 쇼츠 완전 이탈까지 반복 back press 상태
     private var isAutoExitingShorts = false
     private var autoExitAttempts = 0
@@ -402,6 +407,8 @@ class ShortsBlockService : AccessibilityService() {
             // IDLE 상태 (쇼츠 화면 밖)
             currentState.shortsLocation == ShortsLocation.OUTSIDE -> {
                 if (isInShortsScreen) {
+                    // OUTSIDE → IN_SHORTS = 외부에서 진입 (클릭 진입)
+                    lastBlockOriginScroll = false
                     sessionState.handleEvent(SessionEvent.EnterShorts, packageName)
                     appStartTime = System.currentTimeMillis()
 
@@ -456,11 +463,15 @@ class ShortsBlockService : AccessibilityService() {
                             val newState = sessionState.getCurrentState(packageName)
                             Log.d(TAG, "State after hash event: $newState")
 
-                            if (newState.blockingStage == BlockingStage.NEED_CONFIRMATION) {
+                            // 스크롤 감지 = WATCHING → NEED_TIMER 전이 (SessionStateManager.handleContentHashChanged 참고)
+                            if (newState.blockingStage == BlockingStage.NEED_TIMER) {
                                 Log.d(TAG, "Scroll detected - clearing state")
 
                                 prefsManager.clearCompletedSessionId()
                                 prefsManager.clearAllowedUntilScroll()
+
+                                // 스크롤로 인한 차단 (UI 분기용)
+                                lastBlockOriginScroll = true
                             }
                         } else {
                             Log.w(TAG, "Hash is 0 - skipping")
@@ -587,7 +598,11 @@ class ShortsBlockService : AccessibilityService() {
      * 오버레이 표시 및 포그라운드 체크 시작
      */
     private fun showOverlayAndStartCheck(packageName: String, sessionId: String, overlayType: OverlayType) {
-        overlayManager.showOverlay(packageName, sessionId, overlayType)
+        // 진입 방식 판단: SessionStateManager의 마지막 결정으로부터 동기화
+        // - lastBlockOriginScroll = true: 스크롤로 인한 차단 (ContentHashChanged → NEED_CONFIRMATION)
+        // - lastBlockOriginScroll = false: 외부 진입(EnterShorts → NEED_TIMER)
+        // 통계용 isCurrentSessionFromScroll(=isAllowedUntilScroll)은 클릭 진입 판단에 부적합하므로 사용 X.
+        overlayManager.showOverlay(packageName, sessionId, overlayType, lastBlockOriginScroll)
         pendingOverlayJob = null
     }
 
@@ -1008,6 +1023,7 @@ class ShortsBlockService : AccessibilityService() {
             val filter = IntentFilter().apply {
                 addAction(AppConstants.ACTION_CLOSE_OVERLAY)
                 addAction(AppConstants.ACTION_WATCH_CONFIRMED)
+                addAction(AppConstants.ACTION_INSTANT_UNBLOCK)
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 registerReceiver(overlayActionReceiver, filter, RECEIVER_NOT_EXPORTED)
@@ -1147,6 +1163,25 @@ class ShortsBlockService : AccessibilityService() {
                         handler.postDelayed({
                             resumeMedia()
                         }, 400)  // Activity 완전 제거 보장
+                    } else {
+                        Log.d(TAG, "Skipping resumeMedia (controlsMedia=false or config not found)")
+                    }
+                }
+                AppConstants.ACTION_INSTANT_UNBLOCK -> {
+                    val sessionId = intent.getStringExtra("session_id") ?: ""
+                    val sourcePackage = intent.getStringExtra("source_package") ?: currentPackage
+                    Log.d(TAG, "Instant unblock pressed - allowing watch immediately (session=$sessionId)")
+
+                    // ACTION_WATCH_CONFIRMED와 동일 처리. 한도 차감은 Activity가 이미 수행.
+                    sessionState.handleEvent(SessionEvent.WatchConfirmed, sourcePackage)
+
+                    prefsManager.isAllowedUntilScroll = true
+
+                    val appConfig = AppBlockingRegistry.getConfigByPackageName(sourcePackage)
+                    if (appConfig?.controlsMedia == true) {
+                        handler.postDelayed({
+                            resumeMedia()
+                        }, 400)
                     } else {
                         Log.d(TAG, "Skipping resumeMedia (controlsMedia=false or config not found)")
                     }

@@ -210,6 +210,16 @@
             </intent-filter>
         </receiver>
 
+        <!-- Daily Unblock Quota Reset Receiver (자정 한도 리셋) -->
+        <receiver
+            android:name=".receiver.DailyUnblockQuotaResetReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.muuu.unshort.DAILY_UNBLOCK_QUOTA_RESET" />
+            </intent-filter>
+        </receiver>
+
         <!-- AdMob App ID -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

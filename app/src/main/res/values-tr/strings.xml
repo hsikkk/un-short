@@ -488,4 +488,19 @@
 
     <string name="feed_block_permission_lost_toast">Akış engelleme sistem ayarlarından devre dışı bırakıldı</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">Şimdi izle</string>
+    <string name="instant_unblock_remaining">Bugün %1$d hak kaldı</string>
+    <string name="instant_unblock_countdown">Şimdi izle (%1$d sn sonra hazır)</string>
+    <string name="block_button_close_countdown">Sadece kapat (%1$d sn sonra hazır)</string>
+    <string name="quota_exhausted_message">Bugünkü anlık engel kaldırma haklarınız bitti</string>
+    <string name="quota_exhausted_dialog_title">Bugünkü hakkınız doldu</string>
+    <string name="quota_exhausted_dialog_message">Devam etmek için kısa bir reklam izleyin ya da Premium ile sınırsız erişimin keyfini çıkarın.</string>
+    <string name="quota_exhausted_dialog_premium">Premium\'u keşfet</string>
+    <string name="quota_exhausted_dialog_cancel">Kapat</string>
+    <string name="ad_recharge_button">Reklam izleyerek +%1$d ekle</string>
+    <string name="ad_recharge_load_failed">Reklam yüklenemedi</string>
+    <string name="report_unblock_count_today">Bugün engel kaldırılan: %1$d</string>
+    <string name="report_ads_watched_today">Bugün izlenen reklam: %1$d</string>
+
 </resources>

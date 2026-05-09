@@ -489,4 +489,19 @@
 
     <string name="feed_block_permission_lost_toast">تم تعطيل حظر التغذية من إعدادات النظام</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">شاهد الآن</string>
+    <string name="instant_unblock_remaining">متبقٍ %1$d اليوم</string>
+    <string name="instant_unblock_countdown">شاهد الآن (متاح بعد %1$d ثانية)</string>
+    <string name="block_button_close_countdown">أغلق فقط (متاح بعد %1$d ثانية)</string>
+    <string name="quota_exhausted_message">لقد استخدمت كل عمليات الفتح الفوري لهذا اليوم</string>
+    <string name="quota_exhausted_dialog_title">لقد بلغت حد اليوم</string>
+    <string name="quota_exhausted_dialog_message">شاهد إعلاناً قصيراً للمتابعة، أو احصل على وصول غير محدود مع Premium.</string>
+    <string name="quota_exhausted_dialog_premium">اكتشف Premium</string>
+    <string name="quota_exhausted_dialog_cancel">إغلاق</string>
+    <string name="ad_recharge_button">شاهد إعلاناً لإضافة +%1$d</string>
+    <string name="ad_recharge_load_failed">تعذّر تحميل الإعلان</string>
+    <string name="report_unblock_count_today">تم الفتح اليوم: %1$d</string>
+    <string name="report_ads_watched_today">إعلانات شوهدت اليوم: %1$d</string>
+
 </resources>

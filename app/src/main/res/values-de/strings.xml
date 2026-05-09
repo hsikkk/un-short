@@ -489,4 +489,19 @@
 
     <string name="feed_block_permission_lost_toast">Feed-Sperre wurde in den Systemeinstellungen deaktiviert</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">Jetzt ansehen</string>
+    <string name="instant_unblock_remaining">Heute noch %1$d übrig</string>
+    <string name="instant_unblock_countdown">Jetzt ansehen (in %1$ds verfügbar)</string>
+    <string name="block_button_close_countdown">Einfach schließen (in %1$ds verfügbar)</string>
+    <string name="quota_exhausted_message">Heutige Sofort-Freischaltungen aufgebraucht</string>
+    <string name="quota_exhausted_dialog_title">Tageslimit erreicht</string>
+    <string name="quota_exhausted_dialog_message">Sieh dir kurz eine Werbung an, um weiterzumachen, oder schalte mit Premium unbegrenzten Zugriff frei.</string>
+    <string name="quota_exhausted_dialog_premium">Premium entdecken</string>
+    <string name="quota_exhausted_dialog_cancel">Schließen</string>
+    <string name="ad_recharge_button">Werbung ansehen für +%1$d</string>
+    <string name="ad_recharge_load_failed">Werbung konnte nicht geladen werden</string>
+    <string name="report_unblock_count_today">Heute freigeschaltet: %1$d</string>
+    <string name="report_ads_watched_today">Heute gesehene Werbungen: %1$d</string>
+
 </resources>

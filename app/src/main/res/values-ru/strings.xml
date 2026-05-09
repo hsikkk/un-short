@@ -489,4 +489,19 @@
 
     <string name="feed_block_permission_lost_toast">Блокировка ленты отключена в настройках системы</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">Смотреть</string>
+    <string name="instant_unblock_remaining">Осталось %1$d на сегодня</string>
+    <string name="instant_unblock_countdown">Смотреть (через %1$d с)</string>
+    <string name="block_button_close_countdown">Просто закрыть (через %1$d с)</string>
+    <string name="quota_exhausted_message">Сегодняшние мгновенные разблокировки закончились</string>
+    <string name="quota_exhausted_dialog_title">Дневной лимит исчерпан</string>
+    <string name="quota_exhausted_dialog_message">Посмотрите короткую рекламу, чтобы продолжить, или получите безлимитный доступ с Premium.</string>
+    <string name="quota_exhausted_dialog_premium">Узнать о Premium</string>
+    <string name="quota_exhausted_dialog_cancel">Закрыть</string>
+    <string name="ad_recharge_button">Реклама за +%1$d</string>
+    <string name="ad_recharge_load_failed">Не удалось загрузить рекламу</string>
+    <string name="report_unblock_count_today">Разблокировок сегодня: %1$d</string>
+    <string name="report_ads_watched_today">Реклам просмотрено сегодня: %1$d</string>
+
 </resources>

@@ -309,6 +309,50 @@ class PreferencesManager(context: Context) {
         }
     }
 
+    // ========== Daily Unblock Quota (즉시 해제 한도) ==========
+
+    var dailyUnblockQuotaRemaining: Int
+        get() = prefs.getInt(
+            AppConstants.PREF_DAILY_UNBLOCK_QUOTA_REMAINING,
+            AppConstants.DEFAULT_UNBLOCK_QUOTA_DAILY_LIMIT
+        )
+        set(value) = prefs.edit()
+            .putInt(AppConstants.PREF_DAILY_UNBLOCK_QUOTA_REMAINING, value)
+            .apply()
+
+    var dailyUnblockQuotaLastResetDate: String
+        get() = prefs.getString(AppConstants.PREF_DAILY_UNBLOCK_QUOTA_LAST_RESET_DATE, "") ?: ""
+        set(value) = prefs.edit()
+            .putString(AppConstants.PREF_DAILY_UNBLOCK_QUOTA_LAST_RESET_DATE, value)
+            .apply()
+
+    var dailyUnblockQuotaInstallDate: String
+        get() = prefs.getString(AppConstants.PREF_DAILY_UNBLOCK_QUOTA_INSTALL_DATE, "") ?: ""
+        set(value) = prefs.edit()
+            .putString(AppConstants.PREF_DAILY_UNBLOCK_QUOTA_INSTALL_DATE, value)
+            .apply()
+
+    var dailyUnblockTotalToday: Int
+        get() = prefs.getInt(AppConstants.PREF_DAILY_UNBLOCK_TOTAL_TODAY, 0)
+        set(value) = prefs.edit()
+            .putInt(AppConstants.PREF_DAILY_UNBLOCK_TOTAL_TODAY, value)
+            .apply()
+
+    var dailyAdWatchedToday: Int
+        get() = prefs.getInt(AppConstants.PREF_DAILY_AD_WATCHED_TODAY, 0)
+        set(value) = prefs.edit()
+            .putInt(AppConstants.PREF_DAILY_AD_WATCHED_TODAY, value)
+            .apply()
+
+    fun clearDailyUnblockQuotaState() {
+        prefs.edit().apply {
+            remove(AppConstants.PREF_DAILY_UNBLOCK_QUOTA_REMAINING)
+            remove(AppConstants.PREF_DAILY_UNBLOCK_TOTAL_TODAY)
+            remove(AppConstants.PREF_DAILY_AD_WATCHED_TODAY)
+            apply()
+        }
+    }
+
     // ========== Changelog ==========
 
     var lastSeenVersionCode: Int

@@ -488,4 +488,19 @@
 
     <string name="feed_block_permission_lost_toast">सिस्टम सेटिंग्स में फ़ीड ब्लॉक निष्क्रिय कर दिया गया</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">अभी देखें</string>
+    <string name="instant_unblock_remaining">आज %1$d बचे</string>
+    <string name="instant_unblock_countdown">अभी देखें (%1$d सेकंड बाद उपलब्ध)</string>
+    <string name="block_button_close_countdown">बस बंद करें (%1$d सेकंड बाद उपलब्ध)</string>
+    <string name="quota_exhausted_message">आज की तत्काल अनब्लॉक सीमा खत्म हो गई</string>
+    <string name="quota_exhausted_dialog_title">आज की सीमा पूरी हो गई</string>
+    <string name="quota_exhausted_dialog_message">जारी रखने के लिए एक छोटा विज्ञापन देखें, या Premium के साथ असीमित पहुँच पाएं।</string>
+    <string name="quota_exhausted_dialog_premium">Premium देखें</string>
+    <string name="quota_exhausted_dialog_cancel">बंद करें</string>
+    <string name="ad_recharge_button">विज्ञापन देखकर +%1$d और पाएं</string>
+    <string name="ad_recharge_load_failed">विज्ञापन लोड नहीं हो सका</string>
+    <string name="report_unblock_count_today">आज अनब्लॉक: %1$d</string>
+    <string name="report_ads_watched_today">आज देखे गए विज्ञापन: %1$d</string>
+
 </resources>

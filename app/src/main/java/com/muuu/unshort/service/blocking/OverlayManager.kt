@@ -99,12 +99,15 @@ class OverlayManager(
     /**
      * 차단 화면 Activity 표시
      *
-     * singleTask launchMode로 중복 인스턴스 방지
+     * singleTask launchMode로 중복 인스턴스 방지.
+     *
+     * @param isFromScroll 스크롤로 진입한 세션인지 여부 (Activity 하단 영역 분기 판단용)
      */
     fun showOverlay(
         packageName: String,
         sessionId: String,
-        overlayType: OverlayType = OverlayType.INITIAL
+        overlayType: OverlayType = OverlayType.INITIAL,
+        isFromScroll: Boolean = false
     ): String {
         sessionIdByPackage[packageName] = sessionId
         lastShownSessionIdByPackage[packageName] = sessionId
@@ -118,11 +121,12 @@ class OverlayManager(
                 putExtra(ShortsBlockOverlayActivity.EXTRA_SESSION_ID, sessionId)
                 putExtra(ShortsBlockOverlayActivity.EXTRA_SOURCE_PACKAGE, packageName)
                 putExtra(ShortsBlockOverlayActivity.EXTRA_OVERLAY_TYPE, overlayType.name)
+                putExtra(AppConstants.EXTRA_ENTRY_FROM_SCROLL, isFromScroll)
             }
 
             context.startActivity(intent)
 
-            Log.d(TAG, "[$packageName] Activity started: session=$sessionId, type=$overlayType")
+            Log.d(TAG, "[$packageName] Activity started: session=$sessionId, type=$overlayType, fromScroll=$isFromScroll")
         } catch (e: Exception) {
             Log.e(TAG, "[$packageName] Failed to start activity", e)
         }

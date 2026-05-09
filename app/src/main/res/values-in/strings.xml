@@ -490,4 +490,19 @@ apakah Anda benar-benar perlu shorts?</string>
 
     <string name="feed_block_permission_lost_toast">Blokir Feed dinonaktifkan di pengaturan sistem</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">Tonton sekarang</string>
+    <string name="instant_unblock_remaining">Sisa %1$d hari ini</string>
+    <string name="instant_unblock_countdown">Tonton sekarang (tersedia dalam %1$d d)</string>
+    <string name="block_button_close_countdown">Tutup saja (tersedia dalam %1$d d)</string>
+    <string name="quota_exhausted_message">Buka instan hari ini sudah habis</string>
+    <string name="quota_exhausted_dialog_title">Batas hari ini sudah tercapai</string>
+    <string name="quota_exhausted_dialog_message">Tonton iklan singkat untuk lanjut, atau nikmati akses tanpa batas dengan Premium.</string>
+    <string name="quota_exhausted_dialog_premium">Lihat Premium</string>
+    <string name="quota_exhausted_dialog_cancel">Tutup</string>
+    <string name="ad_recharge_button">Tonton iklan untuk +%1$d</string>
+    <string name="ad_recharge_load_failed">Tidak dapat memuat iklan</string>
+    <string name="report_unblock_count_today">Dibuka hari ini: %1$d</string>
+    <string name="report_ads_watched_today">Iklan ditonton hari ini: %1$d</string>
+
 </resources>

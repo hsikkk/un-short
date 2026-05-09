@@ -50,9 +50,11 @@ object AdConfig {
      */
     const val INTERSTITIAL_TURN_OFF = "ca-app-pub-4831094849543419/5244119557"
 
-
-    // 향후 다른 광고 단위 ID 추가 예시:
-    // const val BANNER_SETTINGS = "ca-app-pub-xxxxx/xxxxx"
-    // const val INTERSTITIAL_AFTER_BLOCK = "ca-app-pub-xxxxx/xxxxx"
-    // const val REWARDED_PREMIUM_UNLOCK = "ca-app-pub-xxxxx/xxxxx"
+    /**
+     * 즉시 해제 한도 충전 리워드 광고
+     *
+     * 차단 화면 하단 "광고 보고 +N회" 버튼에서 사용.
+     * 시청 완료 시 DailyUnblockQuotaManager.rechargeFromAd로 한도 충전.
+     */
+    const val REWARDED_UNBLOCK_QUOTA_RECHARGE = "ca-app-pub-4831094849543419/6524697279"
 }

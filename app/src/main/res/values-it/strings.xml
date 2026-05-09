@@ -489,4 +489,19 @@
 
     <string name="feed_block_permission_lost_toast">Il blocco feed è stato disattivato nelle impostazioni di sistema</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">Guarda ora</string>
+    <string name="instant_unblock_remaining">Ne restano %1$d oggi</string>
+    <string name="instant_unblock_countdown">Guarda ora (disponibile tra %1$d s)</string>
+    <string name="block_button_close_countdown">Chiudi e basta (disponibile tra %1$d s)</string>
+    <string name="quota_exhausted_message">Hai esaurito gli sblocchi immediati di oggi</string>
+    <string name="quota_exhausted_dialog_title">Hai raggiunto il limite di oggi</string>
+    <string name="quota_exhausted_dialog_message">Guarda un breve annuncio per continuare oppure ottieni accesso illimitato con Premium.</string>
+    <string name="quota_exhausted_dialog_premium">Scopri Premium</string>
+    <string name="quota_exhausted_dialog_cancel">Chiudi</string>
+    <string name="ad_recharge_button">Guarda annuncio per +%1$d</string>
+    <string name="ad_recharge_load_failed">Impossibile caricare l\'annuncio</string>
+    <string name="report_unblock_count_today">Sbloccati oggi: %1$d</string>
+    <string name="report_ads_watched_today">Annunci visti oggi: %1$d</string>
+
 </resources>

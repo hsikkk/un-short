@@ -489,4 +489,19 @@
 
     <string name="feed_block_permission_lost_toast">Chặn nguồn cấp đã bị tắt trong cài đặt hệ thống</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">Xem ngay</string>
+    <string name="instant_unblock_remaining">Còn %1$d lần hôm nay</string>
+    <string name="instant_unblock_countdown">Xem ngay (sau %1$d giây)</string>
+    <string name="block_button_close_countdown">Chỉ đóng (sau %1$d giây)</string>
+    <string name="quota_exhausted_message">Bạn đã dùng hết lượt mở khóa nhanh hôm nay</string>
+    <string name="quota_exhausted_dialog_title">Bạn đã đạt giới hạn hôm nay</string>
+    <string name="quota_exhausted_dialog_message">Xem một quảng cáo ngắn để tiếp tục, hoặc sử dụng không giới hạn với Premium.</string>
+    <string name="quota_exhausted_dialog_premium">Khám phá Premium</string>
+    <string name="quota_exhausted_dialog_cancel">Đóng</string>
+    <string name="ad_recharge_button">Xem quảng cáo để thêm +%1$d</string>
+    <string name="ad_recharge_load_failed">Không tải được quảng cáo</string>
+    <string name="report_unblock_count_today">Mở khóa hôm nay: %1$d lần</string>
+    <string name="report_ads_watched_today">Quảng cáo đã xem hôm nay: %1$d</string>
+
 </resources>

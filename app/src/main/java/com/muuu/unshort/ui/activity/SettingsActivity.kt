@@ -212,27 +212,10 @@ class SettingsActivity : BaseActivity() {
             hapticSwitch.isChecked = !hapticSwitch.isChecked
         }
 
-        // 스크롤한 쇼츠만 차단 설정 초기화
-        allowFirstSwitch.isChecked = prefsManager.isBlockScrolledOnly
-
-        // 스크롤한 쇼츠만 차단 스위치 리스너
-        allowFirstSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (!PremiumManager.isPremium()) {
-                // 프리미엄 아니면 되돌리기
-                allowFirstSwitch.isChecked = false
-                return@setOnCheckedChangeListener
-            }
-            prefsManager.isBlockScrolledOnly = isChecked
-        }
-
-        // 스크롤한 쇼츠만 차단 아이템 클릭 시 처리
-        allowFirstItem.setOnClickListener {
-            if (!PremiumManager.isPremium()) {
-                startActivity(Intent(this, PremiumUpgradeActivity::class.java))
-            } else {
-                allowFirstSwitch.isChecked = !allowFirstSwitch.isChecked
-            }
-        }
+        // "스크롤한 쇼츠만 차단" 토글은 deprecate.
+        // 일일 즉시 해제 한도 시스템이 등가 효과(클릭 진입 시 "바로 보기"로 즉시 해제)를 자동 제공.
+        // 기존 사용자 데이터(prefsManager.isBlockScrolledOnly)는 SessionStateManager에서 그대로 사용.
+        allowFirstItem.visibility = View.GONE
 
         // 충동적 해제 방지 설정 초기화
         preventDisableSwitch.isChecked = prefsManager.isPreventImpulsiveDisable

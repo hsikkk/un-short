@@ -67,8 +67,8 @@
             android:textColor="#000000"
             android:fontFamily="@font/spoqa_sans_neo_bold"
             android:gravity="center"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
             android:background="@drawable/btn_timer_skip_white_solid"
             android:clickable="true"
             android:focusable="true"
@@ -84,8 +84,8 @@
             android:textColor="#000000"
             android:fontFamily="@font/spoqa_sans_neo_bold"
             android:gravity="center"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
             android:background="@drawable/btn_timer_skip_white_solid"
             android:clickable="true"
             android:focusable="true"
@@ -102,12 +102,31 @@
             android:textColor="#8A8A8A"
             android:fontFamily="@font/spoqa_sans_neo_light"
             android:gravity="center"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
             android:background="@android:color/transparent"
             android:clickable="true"
             android:focusable="true"
             android:visibility="visible" />
+
+        <!-- 바로 보기 (즉시 해제) — 클릭 진입 시 노출, white outline 스타일 (secondary)
+             N초 후 활성화 (skipButton과 동일 카운트다운 패턴)
+             한도 0 도달 시 클릭하면 다이얼로그(광고/프리미엄/닫기) 노출 -->
+        <TextView
+            android:id="@+id/instantUnblockButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/instant_unblock_label"
+            android:textSize="15sp"
+            android:textColor="#CCCCCC"
+            android:fontFamily="@font/spoqa_sans_neo_medium"
+            android:gravity="center"
+            android:paddingTop="18dp"
+            android:paddingBottom="18dp"
+            android:background="@drawable/btn_timer_outline_white"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone" />
 
     </LinearLayout>
 

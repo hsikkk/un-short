@@ -490,4 +490,19 @@
 
     <string name="feed_block_permission_lost_toast">피드 차단이 시스템 설정에서 비활성화되었어요</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">바로 보기</string>
+    <string name="instant_unblock_remaining">오늘 %1$d회 남음</string>
+    <string name="instant_unblock_countdown">바로 보기 (%1$d초 후 가능)</string>
+    <string name="block_button_close_countdown">그냥 닫기 (%1$d초 후 가능)</string>
+    <string name="quota_exhausted_message">오늘 한도를 다 썼어요</string>
+    <string name="quota_exhausted_dialog_title">오늘 한도를 다 썼어요</string>
+    <string name="quota_exhausted_dialog_message">광고를 잠깐 보면 다시 풀 수 있어요. 광고 없이 자유롭게 쓰고 싶다면 프리미엄을 살펴보세요.</string>
+    <string name="quota_exhausted_dialog_premium">프리미엄 알아보기</string>
+    <string name="quota_exhausted_dialog_cancel">닫기</string>
+    <string name="ad_recharge_button">광고 보고 %1$d회 추가</string>
+    <string name="ad_recharge_load_failed">광고를 불러올 수 없어요</string>
+    <string name="report_unblock_count_today">오늘 차단 해제: %1$d회</string>
+    <string name="report_ads_watched_today">오늘 광고 시청: %1$d편</string>
+
 </resources>

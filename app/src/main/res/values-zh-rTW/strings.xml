@@ -489,4 +489,19 @@
 
     <string name="feed_block_permission_lost_toast">動態消息封鎖已在系統設定中停用</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">立即觀看</string>
+    <string name="instant_unblock_remaining">今日剩餘 %1$d 次</string>
+    <string name="instant_unblock_countdown">立即觀看（%1$d 秒後可用）</string>
+    <string name="block_button_close_countdown">直接關閉（%1$d 秒後可用）</string>
+    <string name="quota_exhausted_message">今日的即時解鎖次數已用完</string>
+    <string name="quota_exhausted_dialog_title">今日次數已用完</string>
+    <string name="quota_exhausted_dialog_message">觀看一段短廣告即可繼續使用，或升級 Premium 享受無限制存取。</string>
+    <string name="quota_exhausted_dialog_premium">了解 Premium</string>
+    <string name="quota_exhausted_dialog_cancel">關閉</string>
+    <string name="ad_recharge_button">看廣告增加 %1$d 次</string>
+    <string name="ad_recharge_load_failed">無法載入廣告</string>
+    <string name="report_unblock_count_today">今日解鎖：%1$d 次</string>
+    <string name="report_ads_watched_today">今日觀看廣告：%1$d 個</string>
+
 </resources>

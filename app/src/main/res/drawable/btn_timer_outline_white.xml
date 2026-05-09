@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Outline White Button (검정 배경 위 secondary 액션용) -->
+<!-- background: transparent, stroke: 1.5dp #CCCCCC, border-radius: 12dp -->
+<!-- :pressed → background: rgba(255,255,255,0.08) -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#14FFFFFF" />
+            <stroke
+                android:width="1.5dp"
+                android:color="#CCCCCC" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent" />
+            <stroke
+                android:width="1.5dp"
+                android:color="#CCCCCC" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+</selector>

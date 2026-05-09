@@ -62,4 +62,16 @@ object AnalyticsEvent {
     // Screen Views
     const val SETTINGS_SCREEN_VIEWED = "settings_screen_viewed"
     const val REPORT_SCREEN_VIEWED = "report_screen_viewed"
+
+    // Daily Unblock Quota (즉시 해제 한도 시스템)
+    const val INSTANT_UNBLOCK_CLICKED = "instant_unblock_clicked"
+    const val UNBLOCK_QUOTA_CONSUMED = "unblock_quota_consumed"
+    const val UNBLOCK_QUOTA_EXHAUSTED = "unblock_quota_exhausted"
+    const val UNBLOCK_VIA_FRICTION_NO_CHARGE = "unblock_via_friction_no_charge"
+    const val AD_RECHARGE_CLICKED = "ad_recharge_clicked"
+    const val AD_RECHARGE_AD_LOADED = "ad_recharge_ad_loaded"
+    const val AD_RECHARGE_AD_FAILED = "ad_recharge_ad_failed"
+    const val AD_RECHARGE_AD_COMPLETED = "ad_recharge_ad_completed"
+    const val AD_RECHARGE_QUOTA_ADDED = "ad_recharge_quota_added"
+    const val DAILY_QUOTA_RESET = "daily_quota_reset"
 }

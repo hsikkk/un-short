@@ -489,4 +489,19 @@
 
     <string name="feed_block_permission_lost_toast">信息流屏蔽已在系统设置中被禁用</string>
 
+    <!-- Daily Unblock Quota -->
+    <string name="instant_unblock_label">立即观看</string>
+    <string name="instant_unblock_remaining">今日剩余 %1$d 次</string>
+    <string name="instant_unblock_countdown">立即观看（%1$d 秒后可用）</string>
+    <string name="block_button_close_countdown">直接关闭（%1$d 秒后可用）</string>
+    <string name="quota_exhausted_message">今日的即时解锁次数已用完</string>
+    <string name="quota_exhausted_dialog_title">今日次数已用完</string>
+    <string name="quota_exhausted_dialog_message">观看一个简短的广告即可继续使用，或升级 Premium 享受无限制访问。</string>
+    <string name="quota_exhausted_dialog_premium">了解 Premium</string>
+    <string name="quota_exhausted_dialog_cancel">关闭</string>
+    <string name="ad_recharge_button">看广告增加 %1$d 次</string>
+    <string name="ad_recharge_load_failed">无法加载广告</string>
+    <string name="report_unblock_count_today">今日解锁：%1$d 次</string>
+    <string name="report_ads_watched_today">今日观看广告：%1$d 个</string>
+
 </resources>
