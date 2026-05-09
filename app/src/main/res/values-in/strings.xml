@@ -396,6 +396,9 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="changelog_title">Pembaruan v%s</string>
     <string name="changelog_subtitle">Lihat apa yang baru</string>
     <string name="changelog_confirm">Oke</string>
+    <string name="changelog_v1_8_0_item1">Ditambahkan tampilan cepat untuk shorts yang dibuka dari tautan</string>
+    <string name="changelog_v1_8_0_item2">Stabilitas pemblokiran feed ditingkatkan</string>
+    <string name="changelog_v1_8_0_item3">Perbaikan bug lainnya</string>
     <string name="changelog_v1_7_0_item1">Menambahkan Pemblokiran Feed (Beta)</string>
     <string name="changelog_v1_7_0_item2">Peningkatan stabilitas</string>
     <string name="changelog_v1_6_1_item1">Peningkatan kepatuhan privasi iklan (GDPR)</string>

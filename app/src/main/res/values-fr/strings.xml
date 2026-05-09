@@ -395,6 +395,9 @@
     <string name="changelog_title">Mise à jour v%s</string>
     <string name="changelog_subtitle">Découvrez les nouveautés</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_8_0_item1">Aperçu rapide ajouté pour les shorts ouverts depuis des liens</string>
+    <string name="changelog_v1_8_0_item2">Stabilité du blocage de fil d\'actualité améliorée</string>
+    <string name="changelog_v1_8_0_item3">Autres corrections de bugs</string>
     <string name="changelog_v1_7_0_item1">Ajout du blocage de fil d\'actualité (Bêta)</string>
     <string name="changelog_v1_7_0_item2">Améliorations de la stabilité</string>
     <string name="changelog_v1_6_1_item1">Amélioration de la conformité publicitaire (RGPD)</string>

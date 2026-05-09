@@ -395,6 +395,9 @@
     <string name="changelog_title">Actualización v%s</string>
     <string name="changelog_subtitle">Descubre las novedades</string>
     <string name="changelog_confirm">Aceptar</string>
+    <string name="changelog_v1_8_0_item1">Añadida vista rápida para shorts abiertos desde enlaces</string>
+    <string name="changelog_v1_8_0_item2">Mejorada la estabilidad del bloqueo de feed</string>
+    <string name="changelog_v1_8_0_item3">Otras correcciones de errores</string>
     <string name="changelog_v1_7_0_item1">Añadido bloqueo de Feed (Beta)</string>
     <string name="changelog_v1_7_0_item2">Mejoras de estabilidad</string>
     <string name="changelog_v1_6_1_item1">Mejora del cumplimiento de privacidad publicitaria (RGPD)</string>

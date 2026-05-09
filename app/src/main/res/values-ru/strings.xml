@@ -395,6 +395,9 @@
     <string name="changelog_title">Обновление v%s</string>
     <string name="changelog_subtitle">Посмотрите, что нового</string>
     <string name="changelog_confirm">ОК</string>
+    <string name="changelog_v1_8_0_item1">Добавлен быстрый просмотр коротких видео, открытых по ссылкам</string>
+    <string name="changelog_v1_8_0_item2">Улучшена стабильность блокировки ленты</string>
+    <string name="changelog_v1_8_0_item3">Другие исправления ошибок</string>
     <string name="changelog_v1_7_0_item1">Добавлена блокировка ленты (бета)</string>
     <string name="changelog_v1_7_0_item2">Улучшение стабильности</string>
     <string name="changelog_v1_6_1_item1">Улучшено соблюдение конфиденциальности рекламы (GDPR)</string>

@@ -396,6 +396,9 @@
     <string name="changelog_title">v%s Update</string>
     <string name="changelog_subtitle">Check out what\'s new</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_8_0_item1">Added quick view for shorts opened from links</string>
+    <string name="changelog_v1_8_0_item2">Improved feed block stability</string>
+    <string name="changelog_v1_8_0_item3">Other bug fixes</string>
     <string name="changelog_v1_7_0_item1">Added Feed Block (Beta)</string>
     <string name="changelog_v1_7_0_item2">Stability improvements</string>
     <string name="changelog_v1_6_1_item1">Improved ad privacy compliance (GDPR)</string>

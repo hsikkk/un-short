@@ -395,6 +395,9 @@
     <string name="changelog_title">อัปเดต v%s</string>
     <string name="changelog_subtitle">ดูสิ่งใหม่ที่เพิ่มเข้ามา</string>
     <string name="changelog_confirm">ตกลง</string>
+    <string name="changelog_v1_8_0_item1">เพิ่มฟีเจอร์ดูอย่างรวดเร็วสำหรับ Shorts ที่เปิดจากลิงก์</string>
+    <string name="changelog_v1_8_0_item2">ปรับปรุงความเสถียรของการบล็อกฟีด</string>
+    <string name="changelog_v1_8_0_item3">แก้ไขข้อบกพร่องอื่นๆ</string>
     <string name="changelog_v1_7_0_item1">เพิ่มฟีเจอร์บล็อกฟีด (เบต้า)</string>
     <string name="changelog_v1_7_0_item2">ปรับปรุงความเสถียร</string>
     <string name="changelog_v1_6_1_item1">ปรับปรุงการปฏิบัติตามความเป็นส่วนตัวของโฆษณา (GDPR)</string>

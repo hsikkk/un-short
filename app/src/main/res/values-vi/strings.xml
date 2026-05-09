@@ -395,6 +395,9 @@
     <string name="changelog_title">Cập nhật v%s</string>
     <string name="changelog_subtitle">Xem những điểm mới</string>
     <string name="changelog_confirm">Đồng ý</string>
+    <string name="changelog_v1_8_0_item1">Thêm tính năng xem nhanh cho shorts được mở từ liên kết</string>
+    <string name="changelog_v1_8_0_item2">Cải thiện độ ổn định của chặn Feed</string>
+    <string name="changelog_v1_8_0_item3">Các sửa lỗi khác</string>
     <string name="changelog_v1_7_0_item1">Thêm tính năng chặn Feed (Beta)</string>
     <string name="changelog_v1_7_0_item2">Cải thiện độ ổn định</string>
     <string name="changelog_v1_6_1_item1">Cải thiện tuân thủ quyền riêng tư quảng cáo (GDPR)</string>

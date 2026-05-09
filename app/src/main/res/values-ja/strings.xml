@@ -395,6 +395,9 @@
     <string name="changelog_title">v%s アップデート</string>
     <string name="changelog_subtitle">新機能・変更点を確認</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_8_0_item1">リンクから開いたショート動画のクイックビュー機能を追加</string>
+    <string name="changelog_v1_8_0_item2">フィードブロックの安定性を改善</string>
+    <string name="changelog_v1_8_0_item3">その他のバグ修正</string>
     <string name="changelog_v1_7_0_item1">フィードブロック機能を追加（ベータ）</string>
     <string name="changelog_v1_7_0_item2">安定性の向上</string>
     <string name="changelog_v1_6_1_item1">広告プライバシー規制への対応を改善 (GDPR)</string>
