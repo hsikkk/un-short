@@ -7,5 +7,4 @@
     android:canPerformGestures="true"
     android:description="@string/feed_block_service_description"
     android:isAccessibilityTool="false"
-    android:notificationTimeout="100"
-    android:packageNames="com.instagram.android,com.google.android.youtube,com.instagram.barcelona,com.facebook.katana" />
+    android:notificationTimeout="100" />

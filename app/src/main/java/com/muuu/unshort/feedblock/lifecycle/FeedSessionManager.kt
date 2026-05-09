@@ -54,10 +54,13 @@ class FeedSessionManager(
     }
 
     /**
-     * 피드/앱 이탈 처리. Passed 상태에서 호출되면 Paused로 전이.
+     * 외부 앱(타깃 앱이 아닌 다른 앱)으로 이탈 처리.
+     *
+     * 같은 앱 내 화면 이동(피드 → 메시지 등)이나 unshort 자체 진입은 호출하지 않는다.
+     * Passed 상태에서 호출되면 Paused로 전이하여 grace 카운트를 시작한다.
      */
     @Synchronized
-    fun onExitFeed() {
+    fun onLeaveApp() {
         val now = System.currentTimeMillis()
         val current = state
         if (current is FeedSessionState.Passed) {
