@@ -443,6 +443,8 @@ apakah Anda benar-benar perlu shorts?</string>
 
     <string name="premium_feature_daily_limit_title">Batas waktu harian</string>
     <string name="premium_feature_daily_limit_desc">Batasi waktu menonton harian dan blokir otomatis saat melebihi batas</string>
+    <string name="premium_feature_instant_skip_title">Lewati layar pemblokiran seketika</string>
+    <string name="premium_feature_instant_skip_desc">Tutup atau tonton tanpa hitungan mundur</string>
     <string name="settings_custom_message_title">Sesuaikan pesan pemblokiran</string>
     <string name="settings_custom_message_desc">Ubah pesan yang ditampilkan di layar pemblokiran</string>
     <string name="custom_message_before_timer_label">Sebelum timer</string>

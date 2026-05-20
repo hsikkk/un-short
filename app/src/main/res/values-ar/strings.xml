@@ -442,6 +442,8 @@
 
     <string name="premium_feature_daily_limit_title">حد الوقت اليومي</string>
     <string name="premium_feature_daily_limit_desc">تحديد وقت المشاهدة اليومي والحظر التلقائي عند التجاوز</string>
+    <string name="premium_feature_instant_skip_title">تخطٍ فوري لشاشة الحظر</string>
+    <string name="premium_feature_instant_skip_desc">أغلق أو شاهد بدون انتظار العد التنازلي</string>
     <string name="settings_custom_message_title">تخصيص رسالة الحظر</string>
     <string name="settings_custom_message_desc">تغيير الرسالة المعروضة على شاشة الحظر</string>
     <string name="custom_message_before_timer_label">قبل المؤقت</string>

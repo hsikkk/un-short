@@ -442,6 +442,8 @@
 
     <string name="premium_feature_daily_limit_title">จำกัดเวลารายวัน</string>
     <string name="premium_feature_daily_limit_desc">จำกัดเวลาดูรายวันและบล็อกอัตโนมัติเมื่อเกินกำหนด</string>
+    <string name="premium_feature_instant_skip_title">ข้ามหน้าจอบล็อกทันที</string>
+    <string name="premium_feature_instant_skip_desc">ปิดหรือดูได้โดยไม่ต้องรอนับถอยหลัง</string>
     <string name="settings_custom_message_title">ปรับแต่งข้อความบล็อก</string>
     <string name="settings_custom_message_desc">เปลี่ยนข้อความที่แสดงบนหน้าจอบล็อก</string>
     <string name="custom_message_before_timer_label">ก่อนตั้งเวลา</string>

@@ -442,6 +442,8 @@
 
     <string name="premium_feature_daily_limit_title">Дневной лимит времени</string>
     <string name="premium_feature_daily_limit_desc">Ограничение ежедневного времени просмотра с автоблокировкой при превышении</string>
+    <string name="premium_feature_instant_skip_title">Мгновенный пропуск экрана блокировки</string>
+    <string name="premium_feature_instant_skip_desc">Закрыть или посмотреть без обратного отсчёта</string>
     <string name="settings_custom_message_title">Настроить сообщение блокировки</string>
     <string name="settings_custom_message_desc">Изменить сообщение на экране блокировки</string>
     <string name="custom_message_before_timer_label">До таймера</string>

@@ -442,6 +442,8 @@
 
     <string name="premium_feature_daily_limit_title">Giới hạn thời gian hàng ngày</string>
     <string name="premium_feature_daily_limit_desc">Giới hạn thời gian xem hàng ngày và tự động chặn khi vượt quá</string>
+    <string name="premium_feature_instant_skip_title">Bỏ qua màn hình chặn ngay lập tức</string>
+    <string name="premium_feature_instant_skip_desc">Đóng hoặc xem mà không cần đếm ngược</string>
     <string name="settings_custom_message_title">Tùy chỉnh thông báo chặn</string>
     <string name="settings_custom_message_desc">Thay đổi thông báo hiển thị trên màn hình chặn</string>
     <string name="custom_message_before_timer_label">Trước bộ đếm</string>

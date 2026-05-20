@@ -442,6 +442,8 @@
 
     <string name="premium_feature_daily_limit_title">1日の制限時間</string>
     <string name="premium_feature_daily_limit_desc">1日の視聴時間を制限し、超過時に自動ブロック</string>
+    <string name="premium_feature_instant_skip_title">ブロック画面の即時スキップ</string>
+    <string name="premium_feature_instant_skip_desc">カウントダウン待ちなしですぐ閉じる/見る</string>
     <string name="settings_custom_message_title">ブロック画面のメッセージ変更</string>
     <string name="settings_custom_message_desc">ブロック画面に表示されるメッセージを変更します</string>
     <string name="custom_message_before_timer_label">タイマー開始前</string>

@@ -442,6 +442,8 @@
 
     <string name="premium_feature_daily_limit_title">每日限制时间</string>
     <string name="premium_feature_daily_limit_desc">限制每日观看时间，超时自动屏蔽</string>
+    <string name="premium_feature_instant_skip_title">立即跳过屏蔽屏幕</string>
+    <string name="premium_feature_instant_skip_desc">无需倒计时即可关闭或观看</string>
     <string name="settings_custom_message_title">自定义拦截消息</string>
     <string name="settings_custom_message_desc">更改拦截屏幕上显示的消息</string>
     <string name="custom_message_before_timer_label">计时器开始前</string>

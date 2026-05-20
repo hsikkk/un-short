@@ -442,6 +442,8 @@
 
     <string name="premium_feature_daily_limit_title">Limite de temps quotidienne</string>
     <string name="premium_feature_daily_limit_desc">Limitez le temps de visionnage quotidien et bloquez automatiquement en cas de dépassement</string>
+    <string name="premium_feature_instant_skip_title">Passer instantanément l\'écran de blocage</string>
+    <string name="premium_feature_instant_skip_desc">Fermer ou regarder sans attendre le compte à rebours</string>
     <string name="settings_custom_message_title">Personnaliser le message de blocage</string>
     <string name="settings_custom_message_desc">Modifier le message affiché sur l\'écran de blocage</string>
     <string name="custom_message_before_timer_label">Avant le minuteur</string>

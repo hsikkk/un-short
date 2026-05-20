@@ -442,6 +442,8 @@
 
     <string name="premium_feature_daily_limit_title">Límite de tiempo diario</string>
     <string name="premium_feature_daily_limit_desc">Limita el tiempo de visualización diario y bloquea automáticamente al exceder</string>
+    <string name="premium_feature_instant_skip_title">Omitir al instante la pantalla de bloqueo</string>
+    <string name="premium_feature_instant_skip_desc">Cierra o mira sin esperar la cuenta regresiva</string>
     <string name="settings_custom_message_title">Personalizar mensaje de bloqueo</string>
     <string name="settings_custom_message_desc">Cambiar el mensaje mostrado en la pantalla de bloqueo</string>
     <string name="custom_message_before_timer_label">Antes del temporizador</string>

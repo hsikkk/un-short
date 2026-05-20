@@ -441,6 +441,8 @@
 
     <string name="premium_feature_daily_limit_title">Günlük süre limiti</string>
     <string name="premium_feature_daily_limit_desc">Günlük izleme süresini sınırlayın ve aşıldığında otomatik engelleme</string>
+    <string name="premium_feature_instant_skip_title">Engelleme ekranını anında geç</string>
+    <string name="premium_feature_instant_skip_desc">Geri sayım beklemeden kapat veya izle</string>
     <string name="settings_custom_message_title">Engelleme mesajını özelleştir</string>
     <string name="settings_custom_message_desc">Engelleme ekranında gösterilen mesajı değiştirin</string>
     <string name="custom_message_before_timer_label">Zamanlayıcıdan önce</string>

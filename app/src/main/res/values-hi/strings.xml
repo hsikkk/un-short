@@ -441,6 +441,8 @@
 
     <string name="premium_feature_daily_limit_title">दैनिक समय सीमा</string>
     <string name="premium_feature_daily_limit_desc">दैनिक देखने का समय सीमित करें और सीमा पार होने पर स्वचालित ब्लॉक</string>
+    <string name="premium_feature_instant_skip_title">ब्लॉक स्क्रीन तुरंत स्किप करें</string>
+    <string name="premium_feature_instant_skip_desc">काउंटडाउन का इंतज़ार किए बिना बंद करें या देखें</string>
     <string name="settings_custom_message_title">ब्लॉक स्क्रीन संदेश बदलें</string>
     <string name="settings_custom_message_desc">ब्लॉक स्क्रीन पर दिखाए जाने वाले संदेश को बदलें</string>
     <string name="custom_message_before_timer_label">टाइमर शुरू होने से पहले</string>
