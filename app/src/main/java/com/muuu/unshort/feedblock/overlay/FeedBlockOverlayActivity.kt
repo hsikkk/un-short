@@ -21,6 +21,7 @@ import com.muuu.unshort.R
 import com.muuu.unshort.ad.AdManager
 import com.muuu.unshort.config.AdConfig
 import com.muuu.unshort.feedblock.FeedBlockService
+import com.muuu.unshort.service.blocking.OverlayCountdownPolicy
 import com.muuu.unshort.ui.activity.BaseActivity
 
 /**
@@ -124,13 +125,20 @@ class FeedBlockOverlayActivity : BaseActivity() {
 
         buttonContainer.removeAllViews()
 
+        val delaySeconds = OverlayCountdownPolicy.resolveDelaySeconds(CONTINUE_DELAY_SECONDS)
         continueButton.visibility = View.VISIBLE
-        continueButton.isEnabled = false
-        continueButton.alpha = 0.5f
-        continueButton.text = getString(
-            R.string.feed_block_overlay_continue_countdown,
-            CONTINUE_DELAY_SECONDS
-        )
+        if (delaySeconds == 0) {
+            continueButton.isEnabled = true
+            continueButton.alpha = 1f
+            continueButton.text = getString(R.string.feed_block_overlay_continue)
+        } else {
+            continueButton.isEnabled = false
+            continueButton.alpha = 0.5f
+            continueButton.text = getString(
+                R.string.feed_block_overlay_continue_countdown,
+                delaySeconds
+            )
+        }
         buttonContainer.addView(
             continueButton,
             LinearLayout.LayoutParams(
@@ -153,8 +161,10 @@ class FeedBlockOverlayActivity : BaseActivity() {
         stopButton.setOnClickListener { handleStop() }
 
         countdownHandler.removeCallbacks(countdownTick)
-        continueDelaySecondsLeft = CONTINUE_DELAY_SECONDS
-        countdownHandler.post(countdownTick)
+        if (delaySeconds > 0) {
+            continueDelaySecondsLeft = delaySeconds
+            countdownHandler.post(countdownTick)
+        }
     }
 
     private fun handleContinue() {

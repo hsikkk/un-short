@@ -443,6 +443,8 @@
 
     <string name="premium_feature_daily_limit_title">일일 제한 시간</string>
     <string name="premium_feature_daily_limit_desc">하루 시청 시간을 제한하고 초과 시 자동 차단</string>
+    <string name="premium_feature_instant_skip_title">차단 화면 즉시 닫기</string>
+    <string name="premium_feature_instant_skip_desc">카운트다운 대기 없이 바로 닫거나 볼 수 있어요</string>
     <string name="settings_custom_message_title">차단 화면 문구 변경</string>
     <string name="settings_custom_message_desc">차단 화면에 표시되는 문구 변경</string>
     <string name="custom_message_before_timer_label">타이머 시작 전</string>

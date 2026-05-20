@@ -442,6 +442,8 @@
     <string name="daily_limit_range_max">240 min</string>
     <string name="premium_feature_daily_limit_title">Daily Time Limit</string>
     <string name="premium_feature_daily_limit_desc">Set daily viewing limit and auto-block when exceeded</string>
+    <string name="premium_feature_instant_skip_title">Instant Skip on Block Screen</string>
+    <string name="premium_feature_instant_skip_desc">Close or watch without the countdown delay</string>
     <string name="settings_custom_message_title">Customize block message</string>
     <string name="settings_custom_message_desc">Change the message shown on the block screen</string>
     <string name="custom_message_before_timer_label">Before timer</string>

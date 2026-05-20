@@ -57,6 +57,9 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         const val EXTRA_SESSION_ID = "session_id"
         const val EXTRA_SOURCE_PACKAGE = "source_package"
         const val EXTRA_OVERLAY_TYPE = "overlay_type"
+
+        private const val SKIP_BUTTON_DELAY_SECONDS = 2
+        private const val INSTANT_UNBLOCK_DELAY_SECONDS = 2
 }
 
     override fun isLightStatusBar(): Boolean = false
@@ -208,7 +211,8 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             "source_app" to AnalyticsManager.sourceAppOf(sourcePackageName),
             "entry_type" to if (isFromScroll) "scroll" else "click",
             "session_id" to currentSessionId,
-            "overlay_type" to overlayType.name
+            "overlay_type" to overlayType.name,
+            "is_premium" to PremiumManager.isPremium()
         ) + extra
     }
 
@@ -277,10 +281,19 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             return
         }
 
-        skipButtonCountdown = 2
+        val delaySeconds = com.muuu.unshort.service.blocking.OverlayCountdownPolicy
+            .resolveDelaySeconds(SKIP_BUTTON_DELAY_SECONDS)
+        skipButtonCountdown = delaySeconds
+
+        if (delaySeconds == 0) {
+            skipButton.isEnabled = true
+            skipButton.alpha = 1.0f
+            updateSkipButtonText()
+            return
+        }
+
         skipButton.isEnabled = false
         skipButton.alpha = 0.5f
-
         updateSkipButtonText()
 
         handler.postDelayed({
@@ -462,7 +475,17 @@ class ShortsBlockOverlayActivity : BaseActivity() {
      * "바로 보기" N초 후 활성화 (skipButton과 동일 패턴)
      */
     private fun startInstantUnblockCountdown() {
-        instantUnblockCountdown = 2
+        val delaySeconds = com.muuu.unshort.service.blocking.OverlayCountdownPolicy
+            .resolveDelaySeconds(INSTANT_UNBLOCK_DELAY_SECONDS)
+        instantUnblockCountdown = delaySeconds
+
+        if (delaySeconds == 0) {
+            instantUnblockButton.isEnabled = true
+            instantUnblockButton.alpha = 1.0f
+            updateInstantUnblockButtonText()
+            return
+        }
+
         instantUnblockButton.isEnabled = false
         instantUnblockButton.alpha = 0.5f
         updateInstantUnblockButtonText()
