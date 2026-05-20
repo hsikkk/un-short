@@ -395,6 +395,7 @@
     <string name="changelog_title">Mise à jour v%s</string>
     <string name="changelog_subtitle">Découvrez les nouveautés</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_8_1_item1">Premium : Fermez ou regardez instantanément sur les écrans de blocage, sans compte à rebours</string>
     <string name="changelog_v1_8_0_item1">Aperçu rapide ajouté pour les shorts ouverts depuis des liens</string>
     <string name="changelog_v1_8_0_item2">Stabilité du blocage de fil d\'actualité améliorée</string>
     <string name="changelog_v1_8_0_item3">Autres corrections de bugs</string>

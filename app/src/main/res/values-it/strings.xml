@@ -395,6 +395,7 @@
     <string name="changelog_title">Aggiornamento v%s</string>
     <string name="changelog_subtitle">Scopri le novità</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_8_1_item1">Premium: Chiudi o guarda istantaneamente sulle schermate di blocco, senza conto alla rovescia</string>
     <string name="changelog_v1_8_0_item1">Aggiunta visualizzazione rapida per shorts aperti da link</string>
     <string name="changelog_v1_8_0_item2">Migliorata la stabilità del blocco del feed</string>
     <string name="changelog_v1_8_0_item3">Altre correzioni di bug</string>

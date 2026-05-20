@@ -395,6 +395,7 @@
     <string name="changelog_title">v%s アップデート</string>
     <string name="changelog_subtitle">新機能・変更点を確認</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_8_1_item1">プレミアム: ブロック画面でカウントダウンなしですぐ閉じる/見る</string>
     <string name="changelog_v1_8_0_item1">リンクから開いたショート動画のクイックビュー機能を追加</string>
     <string name="changelog_v1_8_0_item2">フィードブロックの安定性を改善</string>
     <string name="changelog_v1_8_0_item3">その他のバグ修正</string>

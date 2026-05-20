@@ -394,6 +394,7 @@
     <string name="changelog_title">v%s Güncellemesi</string>
     <string name="changelog_subtitle">Yeniliklere göz atın</string>
     <string name="changelog_confirm">Tamam</string>
+    <string name="changelog_v1_8_1_item1">Premium: Engelleme ekranlarında geri sayım olmadan anında kapatın veya izleyin</string>
     <string name="changelog_v1_8_0_item1">Bağlantılardan açılan shorts için hızlı görüntüleme eklendi</string>
     <string name="changelog_v1_8_0_item2">Akış engelleme kararlılığı geliştirildi</string>
     <string name="changelog_v1_8_0_item3">Diğer hata düzeltmeleri</string>

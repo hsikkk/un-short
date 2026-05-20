@@ -395,6 +395,7 @@
     <string name="changelog_title">تحديث v%s</string>
     <string name="changelog_subtitle">اكتشف ما الجديد</string>
     <string name="changelog_confirm">حسناً</string>
+    <string name="changelog_v1_8_1_item1">Premium: أغلق أو شاهد فورًا في شاشات الحظر بدون عد تنازلي</string>
     <string name="changelog_v1_8_0_item1">إضافة ميزة العرض السريع للمقاطع القصيرة المفتوحة من الروابط</string>
     <string name="changelog_v1_8_0_item2">تحسين استقرار حظر الخلاصة</string>
     <string name="changelog_v1_8_0_item3">إصلاحات أخرى للأخطاء</string>

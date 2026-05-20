@@ -394,6 +394,7 @@
     <string name="changelog_title">v%s अपडेट</string>
     <string name="changelog_subtitle">नया क्या है देखें</string>
     <string name="changelog_confirm">ठीक है</string>
+    <string name="changelog_v1_8_1_item1">प्रीमियम: ब्लॉक स्क्रीन पर बिना काउंटडाउन तुरंत बंद करें या देखें</string>
     <string name="changelog_v1_8_0_item1">लिंक से खोले गए शॉर्ट्स के लिए त्वरित दृश्य जोड़ा गया</string>
     <string name="changelog_v1_8_0_item2">फीड ब्लॉक स्थिरता में सुधार</string>
     <string name="changelog_v1_8_0_item3">अन्य बग सुधार</string>
