@@ -8,6 +8,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.muuu.unshort.analytics.AnalyticsEvent
+import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.util.NotificationPermissionHelper
 
@@ -46,9 +48,22 @@ class NotificationPermissionHelper(
         ) { isGranted ->
             if (isGranted) {
                 Log.d(TAG, "Notification permission granted")
+                AnalyticsManager.trackEvent(
+                    activity,
+                    AnalyticsEvent.NOTIFICATION_PERMISSION_GRANTED
+                )
+                AnalyticsManager.trackEvent(
+                    activity,
+                    AnalyticsEvent.PERMISSION_GRANTED,
+                    mapOf("type" to "notification")
+                )
                 onPermissionGranted?.invoke()
             } else {
                 Log.d(TAG, "Notification permission denied")
+                AnalyticsManager.trackEvent(
+                    activity,
+                    AnalyticsEvent.NOTIFICATION_PERMISSION_DENIED
+                )
                 onPermissionDenied?.invoke()
             }
         }
@@ -97,6 +112,11 @@ class NotificationPermissionHelper(
         }
 
         // 권한 요청
+        AnalyticsManager.trackEvent(
+            activity,
+            AnalyticsEvent.NOTIFICATION_PERMISSION_REQUESTED,
+            mapOf("skip_if_asked" to skipIfAsked)
+        )
         permissionLauncher?.launch(Manifest.permission.POST_NOTIFICATIONS)
 
         // MainActivity는 플래그 저장

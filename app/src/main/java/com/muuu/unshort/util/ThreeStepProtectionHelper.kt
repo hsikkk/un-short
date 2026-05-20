@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+import com.muuu.unshort.timer.DisableConfirmTimerActivity
 import com.muuu.unshort.ui.dialog.WarningDialog
 import com.muuu.unshort.ui.activity.MainActivity
 import com.muuu.unshort.ui.dialog.DisableConfirmDialog
@@ -45,15 +46,18 @@ class ThreeStepProtectionHelper(
      * @param warningConfig 0단계 경고 다이얼로그 설정
      * @param confirmConfig 2단계 문구 입력 설정
      * @param finalAction 최종 실행할 액션
+     * @param protectionContext 어떤 보호 흐름인지 (analytics용)
      */
     fun start(
         warningConfig: WarningConfig,
         confirmConfig: ConfirmConfig,
-        finalAction: () -> Unit
+        finalAction: () -> Unit,
+        protectionContext: String = DisableConfirmTimerActivity.CONTEXT_UNKNOWN
     ) {
         // Config와 액션 저장 (Activity Result에서 사용)
         pendingConfirmConfig = confirmConfig
         pendingFinalAction = finalAction
+        pendingProtectionContext = protectionContext
 
         // 0단계: WarningDialog 표시
         showWarningDialog(warningConfig)
@@ -84,6 +88,7 @@ class ThreeStepProtectionHelper(
 
     private var pendingConfirmConfig: ConfirmConfig? = null
     private var pendingFinalAction: (() -> Unit)? = null
+    private var pendingProtectionContext: String = DisableConfirmTimerActivity.CONTEXT_UNKNOWN
 
     private fun showWarningDialog(config: WarningConfig) {
         val dialog = WarningDialog(
@@ -109,7 +114,7 @@ class ThreeStepProtectionHelper(
         val launcher = timerLauncher
             ?: throw IllegalStateException("Timer launcher not registered. Call registerTimerLauncher() first.")
 
-        val intent = Intent(activity, com.muuu.unshort.timer.DisableConfirmTimerActivity::class.java)
+        val intent = DisableConfirmTimerActivity.newIntent(activity, pendingProtectionContext)
         launcher.launch(intent)
     }
 
@@ -136,6 +141,7 @@ class ThreeStepProtectionHelper(
     private fun clearPending() {
         pendingConfirmConfig = null
         pendingFinalAction = null
+        pendingProtectionContext = DisableConfirmTimerActivity.CONTEXT_UNKNOWN
     }
 }
 

@@ -194,8 +194,28 @@ class ShortsBlockOverlayActivity : BaseActivity() {
                 AnalyticsEvent.OVERLAY_SHOWN_AFTER_TIMER
             } else {
                 AnalyticsEvent.OVERLAY_SHOWN_BEFORE_TIMER
-            }
+            },
+            overlayContextProperties()
         )
+    }
+
+    /**
+     * 오버레이 관련 이벤트에 공통으로 붙는 컨텍스트
+     */
+    private fun overlayContextProperties(extra: Map<String, Any?> = emptyMap()): Map<String, Any?> {
+        return mapOf(
+            "source_package" to sourcePackageName,
+            "source_app" to AnalyticsManager.sourceAppOf(sourcePackageName),
+            "entry_type" to if (isFromScroll) "scroll" else "click",
+            "session_id" to currentSessionId,
+            "overlay_type" to overlayType.name
+        ) + extra
+    }
+
+    private fun timeOnOverlayMs(): Long {
+        return if (activityCreatedTime > 0) {
+            System.currentTimeMillis() - activityCreatedTime
+        } else 0L
     }
 
     private fun setupScreenKeepOn() {
@@ -217,19 +237,31 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         // Setup button listeners
         skipButton.setOnClickListener {
             Log.d(TAG, "Skip button clicked")
-            AnalyticsManager.trackEvent(this, AnalyticsEvent.OVERLAY_BUTTON_SKIP)
+            AnalyticsManager.trackEvent(
+                this,
+                AnalyticsEvent.OVERLAY_BUTTON_SKIP,
+                overlayContextProperties(mapOf("time_on_overlay_ms" to timeOnOverlayMs()))
+            )
             handleSkip()
         }
 
         watchButton.setOnClickListener {
             Log.d(TAG, "Watch button clicked")
-            AnalyticsManager.trackEvent(this, AnalyticsEvent.OVERLAY_BUTTON_WATCH)
+            AnalyticsManager.trackEvent(
+                this,
+                AnalyticsEvent.OVERLAY_BUTTON_WATCH,
+                overlayContextProperties(mapOf("time_on_overlay_ms" to timeOnOverlayMs()))
+            )
             handleWatch()
         }
 
         startTimerButton.setOnClickListener {
             Log.d(TAG, "Start timer button clicked")
-            AnalyticsManager.trackEvent(this, AnalyticsEvent.OVERLAY_BUTTON_START_TIMER)
+            AnalyticsManager.trackEvent(
+                this,
+                AnalyticsEvent.OVERLAY_BUTTON_START_TIMER,
+                overlayContextProperties(mapOf("time_on_overlay_ms" to timeOnOverlayMs()))
+            )
             handleStartTimer()
         }
 
@@ -473,8 +505,26 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     }
 
     private fun performInstantUnblock() {
+        val isPremium = PremiumManager.isPremium()
+        val remainingBefore = DailyUnblockQuotaManager.getRemainingQuota(this)
         DailyUnblockQuotaManager.consumeOnInstantUnblock(this)
-        AnalyticsManager.trackEvent(this, AnalyticsEvent.INSTANT_UNBLOCK_CLICKED)
+        val remainingAfter = DailyUnblockQuotaManager.getRemainingQuota(this)
+        val totalTodayAfter = DailyUnblockQuotaManager.getTotalUnblockToday(this)
+
+        AnalyticsManager.trackEvent(
+            this,
+            AnalyticsEvent.INSTANT_UNBLOCK_CLICKED,
+            overlayContextProperties(
+                mapOf(
+                    "remaining_before" to remainingBefore,
+                    "remaining_after" to remainingAfter,
+                    "total_today_after" to totalTodayAfter,
+                    "via_friction_no_charge" to isPremium
+                )
+            )
+        )
+        // 누적 즉시해제 카운터 갱신
+        AnalyticsManager.incrementUnblockLifetimeAndUpdate(this)
 
         val intent = Intent(AppConstants.ACTION_INSTANT_UNBLOCK)
         intent.setPackage(packageName)
@@ -487,7 +537,16 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     }
 
     private fun showQuotaExhaustedDialog() {
-        AnalyticsManager.trackEvent(this, AnalyticsEvent.UNBLOCK_QUOTA_EXHAUSTED)
+        AnalyticsManager.trackEvent(
+            this,
+            AnalyticsEvent.UNBLOCK_QUOTA_EXHAUSTED,
+            overlayContextProperties(
+                mapOf(
+                    "total_today" to DailyUnblockQuotaManager.getTotalUnblockToday(this),
+                    "ads_watched_today" to DailyUnblockQuotaManager.getTotalAdsWatchedToday(this)
+                )
+            )
+        )
 
         QuotaExhaustedDialog(
             context = this,
@@ -504,7 +563,16 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         if (rewardedAdInProgress) return
         rewardedAdInProgress = true
 
-        AnalyticsManager.trackEvent(this, AnalyticsEvent.AD_RECHARGE_CLICKED)
+        AnalyticsManager.trackEvent(
+            this,
+            AnalyticsEvent.AD_RECHARGE_CLICKED,
+            overlayContextProperties(
+                mapOf(
+                    "placement" to "rewarded_unblock_quota_recharge",
+                    "ads_watched_today" to DailyUnblockQuotaManager.getTotalAdsWatchedToday(this)
+                )
+            )
+        )
 
         AdManager.setupRewardedAd(
             activity = this,
@@ -520,16 +588,26 @@ class ShortsBlockOverlayActivity : BaseActivity() {
                     AnalyticsManager.trackEvent(
                         this,
                         AnalyticsEvent.AD_RECHARGE_QUOTA_ADDED,
-                        mapOf(
-                            "amount" to charged,
-                            "remaining_after" to DailyUnblockQuotaManager.getRemainingQuota(this)
+                        overlayContextProperties(
+                            mapOf(
+                                "placement" to "rewarded_unblock_quota_recharge",
+                                "amount" to charged,
+                                "remaining_after" to DailyUnblockQuotaManager.getRemainingQuota(this),
+                                "ads_watched_today" to DailyUnblockQuotaManager.getTotalAdsWatchedToday(this)
+                            )
                         )
                     )
                     // 광고 시청 완료 → 즉시 해제로 이어짐 (한도 차감)
                     performInstantUnblock()
                 }
                 is RewardResult.Failed -> {
-                    AnalyticsManager.trackEvent(this, AnalyticsEvent.AD_RECHARGE_AD_FAILED)
+                    AnalyticsManager.trackEvent(
+                        this,
+                        AnalyticsEvent.AD_RECHARGE_AD_FAILED,
+                        overlayContextProperties(
+                            mapOf("placement" to "rewarded_unblock_quota_recharge")
+                        )
+                    )
                     Toast.makeText(
                         this,
                         getString(R.string.ad_recharge_load_failed),

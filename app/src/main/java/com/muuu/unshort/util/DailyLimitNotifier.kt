@@ -9,7 +9,12 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.muuu.unshort.R
+import com.muuu.unshort.analytics.AnalyticsEvent
+import com.muuu.unshort.analytics.AnalyticsManager
+import com.muuu.unshort.config.AppConstants
+import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.ui.activity.MainActivity
+import java.time.LocalDate
 
 /**
  * 일일 제한 시간 관련 알림 발송
@@ -38,7 +43,7 @@ class DailyLimitNotifier(private val context: Context) {
     }
 
     fun sendWarningNotification() {
-        val pendingIntent = createMainActivityPendingIntent()
+        val pendingIntent = createMainActivityPendingIntent(AppConstants.NOTIFICATION_TYPE_DAILY_LIMIT_WARNING)
 
         val title = context.getString(R.string.daily_limit_notif_warning_title)
         val message = context.getString(R.string.daily_limit_notif_warning_message)
@@ -53,11 +58,16 @@ class DailyLimitNotifier(private val context: Context) {
             .build()
 
         notificationManager.notify(NOTIFICATION_ID_LIMIT, notification)
+        AnalyticsManager.trackEvent(
+            context,
+            AnalyticsEvent.NOTIFICATION_SHOWN,
+            mapOf("type" to AppConstants.NOTIFICATION_TYPE_DAILY_LIMIT_WARNING)
+        )
         Log.d(TAG, "80% warning notification sent")
     }
 
     fun sendLimitExceededNotification() {
-        val pendingIntent = createMainActivityPendingIntent()
+        val pendingIntent = createMainActivityPendingIntent(AppConstants.NOTIFICATION_TYPE_DAILY_LIMIT_EXCEEDED)
 
         val title = context.getString(R.string.daily_limit_notif_exceeded_title)
         val message = context.getString(R.string.daily_limit_notif_exceeded_message)
@@ -72,6 +82,11 @@ class DailyLimitNotifier(private val context: Context) {
             .build()
 
         notificationManager.notify(NOTIFICATION_ID_LIMIT, notification)
+        AnalyticsManager.trackEvent(
+            context,
+            AnalyticsEvent.NOTIFICATION_SHOWN,
+            mapOf("type" to AppConstants.NOTIFICATION_TYPE_DAILY_LIMIT_EXCEEDED)
+        )
         Log.d(TAG, "Limit exceeded notification sent")
     }
 
@@ -81,7 +96,7 @@ class DailyLimitNotifier(private val context: Context) {
         val percentage = if (limitMs > 0) ((currentMs * 100) / limitMs).toInt() else 0
         val exceeded = currentMs >= limitMs
 
-        val pendingIntent = createMainActivityPendingIntent()
+        val pendingIntent = createMainActivityPendingIntent(AppConstants.NOTIFICATION_TYPE_DAILY_LIMIT_MONITOR)
 
         val title = context.getString(R.string.daily_limit_notif_monitor_title, currentMinutes)
 
@@ -103,6 +118,19 @@ class DailyLimitNotifier(private val context: Context) {
             .build()
 
         notificationManager.notify(NOTIFICATION_ID_MONITOR, notification)
+
+        // 모니터링 알림은 빈번하게 갱신되므로 일자별 1회만 trackEvent
+        val prefs = PreferencesManager(context)
+        val today = LocalDate.now().toString()
+        if (prefs.dailyLimitMonitorNotifiedDate != today) {
+            prefs.dailyLimitMonitorNotifiedDate = today
+            AnalyticsManager.trackEvent(
+                context,
+                AnalyticsEvent.NOTIFICATION_SHOWN,
+                mapOf("type" to AppConstants.NOTIFICATION_TYPE_DAILY_LIMIT_MONITOR)
+            )
+        }
+
         Log.d(TAG, "Monitoring notification updated: ${currentMinutes}min / ${limitMinutes}min ($percentage%)")
     }
 
@@ -111,13 +139,17 @@ class DailyLimitNotifier(private val context: Context) {
         Log.d(TAG, "Monitoring notification cancelled")
     }
 
-    private fun createMainActivityPendingIntent(): PendingIntent {
+    private fun createMainActivityPendingIntent(notificationType: String): PendingIntent {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra(AppConstants.EXTRA_LAUNCH_SOURCE, AppConstants.LAUNCH_SOURCE_NOTIFICATION)
+            putExtra(AppConstants.EXTRA_NOTIFICATION_TYPE, notificationType)
         }
+        // requestCode를 type별로 분리해야 PendingIntent extras가 갱신됨
+        val requestCode = notificationType.hashCode()
         return PendingIntent.getActivity(
             context,
-            0,
+            requestCode,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )

@@ -11,6 +11,8 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.muuu.unshort.R
+import com.muuu.unshort.analytics.AnalyticsEvent
+import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.config.AppConstants
 import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.ui.activity.ReportActivity
@@ -169,13 +171,15 @@ class DailyReportReceiver : BroadcastReceiver() {
         // Generate message
         val message = context.getString(R.string.daily_report_notification_message)
 
-        // Create intent to open ReportActivity
+        // Create intent to open ReportActivity (analytics 추적용 extras 포함)
         val intent = Intent(context, ReportActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra(AppConstants.EXTRA_ENTRY_SOURCE, AppConstants.ENTRY_SOURCE_NOTIFICATION)
+            putExtra(AppConstants.EXTRA_NOTIFICATION_TYPE, AppConstants.NOTIFICATION_TYPE_DAILY_REPORT)
         }
         val pendingIntent = PendingIntent.getActivity(
             context,
-            0,
+            NOTIFICATION_ID,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
@@ -193,6 +197,12 @@ class DailyReportReceiver : BroadcastReceiver() {
         // Send notification
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(NOTIFICATION_ID, notification)
+
+        AnalyticsManager.trackEvent(
+            context,
+            AnalyticsEvent.NOTIFICATION_SHOWN,
+            mapOf("type" to AppConstants.NOTIFICATION_TYPE_DAILY_REPORT)
+        )
     }
 
     private fun createNotificationChannel(context: Context) {

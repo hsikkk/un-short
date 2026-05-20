@@ -50,7 +50,11 @@ class ShortsBlockTimerActivity : BaseTimerActivity() {
         Log.d(TAG, "Timer Activity started event sent: session=$currentSessionId")
 
         // Track timer activity opened
-        AnalyticsManager.trackEvent(this, AnalyticsEvent.TIMER_ACTIVITY_OPENED)
+        AnalyticsManager.trackEvent(
+            this,
+            AnalyticsEvent.TIMER_ACTIVITY_OPENED,
+            timerContextProperties()
+        )
 
         if (prefsManager.isSleepTime()) {
             findViewById<View>(R.id.sleepModeBadge)?.visibility = View.VISIBLE
@@ -65,7 +69,11 @@ class ShortsBlockTimerActivity : BaseTimerActivity() {
         }
 
         // Track analytics
-        AnalyticsManager.trackEvent(this, AnalyticsEvent.TIMER_COMPLETED)
+        AnalyticsManager.trackEvent(
+            this,
+            AnalyticsEvent.TIMER_COMPLETED,
+            timerContextProperties()
+        )
 
         // Notify SessionStateManager about timer completion
         ShortsBlockService.instance?.getSessionStateManager()?.handleEvent(
@@ -94,4 +102,11 @@ class ShortsBlockTimerActivity : BaseTimerActivity() {
     override fun onContinueClicked() {
         finish()
     }
+
+    private fun timerContextProperties(): Map<String, Any?> = mapOf(
+        "source_package" to sourcePackageName,
+        "source_app" to AnalyticsManager.sourceAppOf(sourcePackageName),
+        "session_id" to currentSessionId,
+        "timer_duration_seconds" to provideTimerDuration()
+    )
 }

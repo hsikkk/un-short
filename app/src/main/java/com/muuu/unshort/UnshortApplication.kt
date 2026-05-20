@@ -103,6 +103,9 @@ class UnshortApplication : Application() {
         )
         amplitude.setUserId(androidId)
 
+        // 정적/장기 User Property 초기화
+        AnalyticsManager.initializeUserProperties(applicationContext)
+
         // 권한 상태를 User Property로 설정
         AnalyticsManager.updatePermissionUserProperties(applicationContext)
 

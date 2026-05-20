@@ -190,10 +190,12 @@ class MainActivity : BaseActivity() {
         // Initialize in-app review helper
         inAppReviewHelper = InAppReviewHelper(this)
 
-        // Record app installed time (first launch only)
-        if (prefsManager.appInstalledAt == 0L) {
+        // Record app installed time (first launch only) + FIRST_LAUNCH 트래킹
+        val isFirstLaunchEver = prefsManager.appInstalledAt == 0L
+        if (isFirstLaunchEver) {
             prefsManager.appInstalledAt = System.currentTimeMillis()
             prefsManager.markChangelogSeen(BuildConfig.VERSION_CODE)
+            AnalyticsManager.trackEvent(this, AnalyticsEvent.FIRST_LAUNCH)
         } else if (prefsManager.lastSeenVersionCode == 0) {
             prefsManager.lastSeenVersionCode = BuildConfig.VERSION_CODE - 1
         }
@@ -211,8 +213,38 @@ class MainActivity : BaseActivity() {
             }
         })
 
-        // Track app launch
-        AnalyticsManager.trackEvent(this, AnalyticsEvent.APP_LAUNCHED)
+        // Track app launch with context
+        val launchSource = intent?.getStringExtra(AppConstants.EXTRA_LAUNCH_SOURCE)
+            ?: AppConstants.LAUNCH_SOURCE_ICON
+        val notificationType = intent?.getStringExtra(AppConstants.EXTRA_NOTIFICATION_TYPE)
+        val today = java.time.LocalDate.now().toString()
+        val isFirstLaunchToday = prefsManager.lastFirstLaunchDate != today
+        if (isFirstLaunchToday) {
+            prefsManager.lastFirstLaunchDate = today
+        }
+        val daysSinceInstall = if (prefsManager.appInstalledAt > 0L) {
+            (System.currentTimeMillis() - prefsManager.appInstalledAt) / (24L * 60 * 60 * 1000)
+        } else 0L
+        AnalyticsManager.trackEvent(
+            this,
+            AnalyticsEvent.APP_LAUNCHED,
+            mapOf(
+                "launch_source" to launchSource,
+                "is_first_launch_today" to isFirstLaunchToday,
+                "days_since_install" to daysSinceInstall
+            )
+        )
+        // 알림 클릭으로 진입한 경우 1회 발화 (onCreate에서만 호출되므로 자연스럽게 보장됨)
+        if (launchSource == AppConstants.LAUNCH_SOURCE_NOTIFICATION && !notificationType.isNullOrEmpty()) {
+            AnalyticsManager.trackEvent(
+                this,
+                AnalyticsEvent.NOTIFICATION_CLICKED,
+                mapOf("type" to notificationType)
+            )
+            // intent extra 제거 - 동일 Activity instance에서 재진입 시 중복 방지
+            intent.removeExtra(AppConstants.EXTRA_NOTIFICATION_TYPE)
+            intent.removeExtra(AppConstants.EXTRA_LAUNCH_SOURCE)
+        }
 
         // Schedule daily report notification (only if enabled)
         if (prefsManager.isDailyNotificationsEnabled) {
@@ -305,7 +337,7 @@ class MainActivity : BaseActivity() {
                     withContext(Dispatchers.Main) {
                         if (recentAttempts > 0) {
                             // 최근 10분 내 진입 시도 있음 - 타이머 필요
-                            showTimerRequiredDialog()
+                            showTimerRequiredDialog(recentAttempts)
                         } else if (prefsManager.isPreventImpulsiveDisable) {
                             // Show 3-step protection flow first
                             showDisableConfirmDialog()
@@ -327,7 +359,8 @@ class MainActivity : BaseActivity() {
                 // Track blocking state change
                 AnalyticsManager.trackEvent(
                     this,
-                    AnalyticsEvent.BLOCKING_ENABLED
+                    AnalyticsEvent.BLOCKING_ENABLED,
+                    mapOf("trigger_source" to "main_toggle")
                 )
 
                 // UI 업데이트 (애니메이션 포함)
@@ -536,24 +569,48 @@ class MainActivity : BaseActivity() {
             finalAction = {
                 // 3단계 보호 플로우 완료 후 해제 타입 선택 다이얼로그 표시
                 showDisableTypeDialog()
-            }
+            },
+            protectionContext = com.muuu.unshort.timer.DisableConfirmTimerActivity.CONTEXT_MAIN_TOGGLE
         )
     }
 
-    private fun showTimerRequiredDialog() {
+    private fun showTimerRequiredDialog(recentAttempts: Int = 0) {
+        AnalyticsManager.trackEvent(
+            this,
+            AnalyticsEvent.TIMER_REQUIRED_DIALOG_SHOWN,
+            mapOf("recent_attempts_count" to recentAttempts)
+        )
         // 최근 10분 내 진입 시도가 있어 타이머 완료 필요
         TimerRequiredDialog(
             context = this,
             showAdButton = !PremiumManager.isPremium(), // 프리미엄 유저는 광고 버튼 숨김
             onWatchAd = {
+                AnalyticsManager.trackEvent(
+                    this,
+                    AnalyticsEvent.TIMER_REQUIRED_CHOICE,
+                    mapOf("choice" to "watch_ad")
+                )
                 showInterstitialAdForDisable()
             },
             onStartTimer = {
+                AnalyticsManager.trackEvent(
+                    this,
+                    AnalyticsEvent.TIMER_REQUIRED_CHOICE,
+                    mapOf("choice" to "start_timer")
+                )
                 // 타이머 시작
-                val intent = Intent(this, com.muuu.unshort.timer.DisableConfirmTimerActivity::class.java)
+                val intent = com.muuu.unshort.timer.DisableConfirmTimerActivity.newIntent(
+                    this,
+                    com.muuu.unshort.timer.DisableConfirmTimerActivity.CONTEXT_MAIN_TOGGLE
+                )
                 disableConfirmTimerLauncher.launch(intent)
             },
             onCancel = {
+                AnalyticsManager.trackEvent(
+                    this,
+                    AnalyticsEvent.TIMER_REQUIRED_CHOICE,
+                    mapOf("choice" to "cancel")
+                )
                 // 취소 - UI 복원
                 updateUI(true, animate = false)
             }
@@ -574,6 +631,11 @@ class MainActivity : BaseActivity() {
                 object : MuuuInterstitialAdLoaderListener {
                     override fun onAdLoadFail(err: MuuuAdLoadError) {
                         hideLoading()
+                        AnalyticsManager.trackEvent(
+                            this@MainActivity,
+                            AnalyticsEvent.INTERSTITIAL_AD_LOAD_FAILED,
+                            mapOf("placement" to "interstitial_turn_off")
+                        )
                         Toast.makeText(
                             this@MainActivity,
                             getString(R.string.ad_load_failed),
@@ -593,6 +655,11 @@ class MainActivity : BaseActivity() {
                                 error: MuuuAdDisplayFailError
                             ) {
                                 hideLoading()
+                                AnalyticsManager.trackEvent(
+                                    this@MainActivity,
+                                    AnalyticsEvent.INTERSTITIAL_AD_DISPLAY_FAILED,
+                                    mapOf("placement" to "interstitial_turn_off")
+                                )
                                 Toast.makeText(
                                     this@MainActivity,
                                     getString(R.string.ad_display_failed),
@@ -602,6 +669,11 @@ class MainActivity : BaseActivity() {
 
                             override fun onShown(adInfo: MuuuAdInfo) {
                                 hideLoading()
+                                AnalyticsManager.trackEvent(
+                                    this@MainActivity,
+                                    AnalyticsEvent.INTERSTITIAL_AD_SHOWN,
+                                    mapOf("placement" to "interstitial_turn_off")
+                                )
                                 onAdCompleted()
                             }
                         })
@@ -648,7 +720,14 @@ class MainActivity : BaseActivity() {
                 prefsManager.clearTempDisable()
                 TempDisableReceiver.cancelAlarm(this)
                 prefsManager.isBlockingEnabled = false
-                AnalyticsManager.trackEvent(this, AnalyticsEvent.BLOCKING_DISABLED)
+                AnalyticsManager.trackEvent(
+                    this,
+                    AnalyticsEvent.BLOCKING_DISABLED,
+                    mapOf(
+                        "trigger_source" to "main_toggle",
+                        "disable_type" to "permanent"
+                    )
+                )
                 updateUI(false, animate = true)
             },
             onTemporaryDisable = { durationMinutes ->
@@ -660,7 +739,15 @@ class MainActivity : BaseActivity() {
                 // 알람 스케줄링
                 TempDisableReceiver.scheduleReEnable(this, triggerAtMillis)
 
-                AnalyticsManager.trackEvent(this, AnalyticsEvent.BLOCKING_DISABLED)
+                AnalyticsManager.trackEvent(
+                    this,
+                    AnalyticsEvent.BLOCKING_DISABLED,
+                    mapOf(
+                        "trigger_source" to "main_toggle",
+                        "disable_type" to "temporary",
+                        "temp_duration_minutes" to durationMinutes
+                    )
+                )
                 updateUI(false, animate = true)
 
                 // 일시 해제 상태 업데이트 시작
@@ -948,7 +1035,10 @@ class MainActivity : BaseActivity() {
     fun startAppDisableTimer(packageName: String) {
         pendingDisablePackageName = packageName
         // 설정 변경과 동일한 60초 타이머 사용
-        val intent = Intent(this, com.muuu.unshort.timer.DisableConfirmTimerActivity::class.java)
+        val intent = com.muuu.unshort.timer.DisableConfirmTimerActivity.newIntent(
+            this,
+            com.muuu.unshort.timer.DisableConfirmTimerActivity.CONTEXT_APP_DISABLE
+        )
         appDisableTimerLauncher.launch(intent)
         Log.d("MainActivity", "Starting 60s app disable timer for $packageName")
     }

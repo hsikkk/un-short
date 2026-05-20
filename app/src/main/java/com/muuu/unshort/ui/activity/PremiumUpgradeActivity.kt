@@ -7,6 +7,7 @@ import android.widget.Toast
 import com.google.android.material.button.MaterialButton
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
+import com.muuu.unshort.config.AppConstants
 import com.muuu.unshort.premium.PremiumManager
 import com.muuu.unshort.promo.PromoCodeDialog
 import com.muuu.unshort.ui.activity.PremiumUpgradeActivity
@@ -27,9 +28,14 @@ class PremiumUpgradeActivity : BaseActivity() {
     private lateinit var upgradeButton: MaterialButton
     private lateinit var promoCodeButton: TextView
 
+    private var entrySource: String = AppConstants.ENTRY_SOURCE_DIRECT
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_premium_upgrade)
+
+        entrySource = intent?.getStringExtra(AppConstants.EXTRA_ENTRY_SOURCE)
+            ?: AppConstants.ENTRY_SOURCE_DIRECT
 
         // View 초기화
         closeButton = findViewById(R.id.closeButton)
@@ -49,13 +55,14 @@ class PremiumUpgradeActivity : BaseActivity() {
             // 업그레이드 버튼 클릭 추적
             AnalyticsManager.trackEvent(
                 this,
-                AnalyticsEvent.PREMIUM_UPGRADE_BUTTON_CLICKED
+                AnalyticsEvent.PREMIUM_UPGRADE_BUTTON_CLICKED,
+                mapOf("entry_source" to entrySource)
             )
 
             // PremiumManager를 통해 실제 구매 플로우 시작
             // Dummy: Toast + 즉시 성공
             // Google Play Billing: 실제 결제 화면
-            PremiumManager.showPremiumPurchase(this) { success ->
+            PremiumManager.showPremiumPurchase(this, entrySource) { success ->
                 if (success) {
                     Toast.makeText(this, "프리미엄 활성화!", Toast.LENGTH_SHORT).show()
                 }
@@ -68,7 +75,8 @@ class PremiumUpgradeActivity : BaseActivity() {
             // 프로모 코드 다이얼로그 오픈 추적
             AnalyticsManager.trackEvent(
                 this,
-                AnalyticsEvent.PROMO_CODE_DIALOG_OPENED
+                AnalyticsEvent.PROMO_CODE_DIALOG_OPENED,
+                mapOf("entry_source" to entrySource)
             )
 
             showPromoCodeDialog()
@@ -80,7 +88,8 @@ class PremiumUpgradeActivity : BaseActivity() {
         // 프리미엄 업그레이드 화면 조회 추적
         AnalyticsManager.trackEvent(
             this,
-            AnalyticsEvent.PREMIUM_UPGRADE_SCREEN_VIEWED
+            AnalyticsEvent.PREMIUM_UPGRADE_SCREEN_VIEWED,
+            mapOf("entry_source" to entrySource)
         )
     }
 

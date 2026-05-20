@@ -546,9 +546,12 @@ class SettingsActivity : BaseActivity() {
         super.onResume()
 
         // 설정 화면 조회 추적
+        val entrySource = intent?.getStringExtra(com.muuu.unshort.config.AppConstants.EXTRA_ENTRY_SOURCE)
+            ?: com.muuu.unshort.config.AppConstants.ENTRY_SOURCE_MAIN_BUTTON
         AnalyticsManager.trackEvent(
             this,
-            AnalyticsEvent.SETTINGS_SCREEN_VIEWED
+            AnalyticsEvent.SETTINGS_SCREEN_VIEWED,
+            mapOf("entry_source" to entrySource)
         )
 
         // 설정 화면에서 돌아왔을 때 Device Admin 상태 업데이트
@@ -596,7 +599,8 @@ class SettingsActivity : BaseActivity() {
             ),
             finalAction = {
                 deviceAdminManager.removeAdmin()
-            }
+            },
+            protectionContext = com.muuu.unshort.timer.DisableConfirmTimerActivity.CONTEXT_DEVICE_ADMIN_OFF
         )
     }
 
@@ -651,7 +655,8 @@ class SettingsActivity : BaseActivity() {
                 preventDisableSwitch.setOnCheckedChangeListener(null)
                 preventDisableSwitch.isChecked = false
                 setupPreventDisableListener()
-            }
+            },
+            protectionContext = com.muuu.unshort.timer.DisableConfirmTimerActivity.CONTEXT_PREVENT_DISABLE_OFF
         )
     }
 
@@ -1063,7 +1068,8 @@ class SettingsActivity : BaseActivity() {
                     prefsManager.sleepEndHour,
                     prefsManager.sleepEndMinute
                 )
-            }
+            },
+            protectionContext = com.muuu.unshort.timer.DisableConfirmTimerActivity.CONTEXT_SLEEP_MODE_OFF
         )
     }
 
@@ -1110,7 +1116,8 @@ class SettingsActivity : BaseActivity() {
                         dailyLimitSwitch.setOnCheckedChangeListener(null)
                         dailyLimitSwitch.isChecked = false
                         setupDailyLimitSwitchListener()
-                    }
+                    },
+                    protectionContext = com.muuu.unshort.timer.DisableConfirmTimerActivity.CONTEXT_DAILY_LIMIT_OFF
                 )
             }
         }

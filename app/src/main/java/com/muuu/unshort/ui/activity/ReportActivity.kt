@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
+import com.muuu.unshort.config.AppConstants
 import com.muuu.unshort.data.statistics.StatisticsRepository
 import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.ui.report.BarChartView
@@ -40,6 +41,8 @@ import com.muuu.unshort.R
 class ReportActivity : BaseActivity() {
 
     private val viewModel: ReportViewModel by viewModels()
+
+    private var notificationClickedTracked: Boolean = false
 
     private lateinit var chartViewPager: ViewPager2
     private lateinit var chartPagerAdapter: ChartPagerAdapter
@@ -95,11 +98,27 @@ class ReportActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        // 리포트 화면 조회 추적
+        val entrySource = intent?.getStringExtra(AppConstants.EXTRA_ENTRY_SOURCE)
+            ?: AppConstants.ENTRY_SOURCE_MAIN_BUTTON
         AnalyticsManager.trackEvent(
             this,
-            AnalyticsEvent.REPORT_SCREEN_VIEWED
+            AnalyticsEvent.REPORT_SCREEN_VIEWED,
+            mapOf("entry_source" to entrySource)
         )
+
+        // 알림 클릭으로 진입한 경우 NOTIFICATION_CLICKED 발화 (Activity 생애 1회만)
+        val notificationType = intent?.getStringExtra(AppConstants.EXTRA_NOTIFICATION_TYPE)
+        if (!notificationClickedTracked
+            && entrySource == AppConstants.ENTRY_SOURCE_NOTIFICATION
+            && !notificationType.isNullOrEmpty()
+        ) {
+            notificationClickedTracked = true
+            AnalyticsManager.trackEvent(
+                this,
+                AnalyticsEvent.NOTIFICATION_CLICKED,
+                mapOf("type" to notificationType)
+            )
+        }
     }
 
     private fun initViews() {

@@ -241,21 +241,36 @@ object PremiumManager {
      * 프리미엄 구매 화면 표시
      *
      * @param activity Activity 컨텍스트
+     * @param entrySource 진입 경로 (analytics용)
      * @param onResult 구매 결과 콜백 (성공: true, 실패/취소: false)
      */
     fun showPremiumPurchase(
         activity: Activity,
+        entrySource: String = com.muuu.unshort.config.AppConstants.ENTRY_SOURCE_DIRECT,
         onResult: (success: Boolean) -> Unit
     ) {
         // 구매 시작 추적
         AnalyticsManager.trackEvent(
             activity,
-            AnalyticsEvent.PREMIUM_PURCHASE_STARTED
+            AnalyticsEvent.PREMIUM_PURCHASE_STARTED,
+            mapOf("entry_source" to entrySource)
         )
 
         provider.startPurchaseFlow(activity) { success ->
             if (success) {
+                AnalyticsManager.trackEvent(
+                    activity,
+                    AnalyticsEvent.PREMIUM_PURCHASE_COMPLETED,
+                    mapOf("entry_source" to entrySource)
+                )
                 updatePremiumStatus(true)
+            } else {
+                // BillingClient에서 cancelled/failed 구분이 없어 통합 처리
+                AnalyticsManager.trackEvent(
+                    activity,
+                    AnalyticsEvent.PREMIUM_PURCHASE_FAILED,
+                    mapOf("entry_source" to entrySource)
+                )
             }
             onResult(success)
         }

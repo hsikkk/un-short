@@ -7,7 +7,9 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
+import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.util.PermissionUIHelper
 import com.muuu.unshort.ui.activity.MainActivity
 import com.muuu.unshort.util.PermissionUtils
@@ -29,16 +31,31 @@ class PermissionSetupActivity : BaseActivity() {
     private var overlayButton: Button? = null
     private var completeButton: Button? = null
     private lateinit var permissionUIHelper: PermissionUIHelper
+    private lateinit var prefsManager: PreferencesManager
     private var fromOnboarding = false
+
+    /**
+     * onResume 호출 진입 시점에 모든 권한이 이미 충족된 적이 있었는지.
+     * 새 권한 전환을 감지하기 위한 1회 latch.
+     */
+    private var onboardingCompletedTracked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_permission_setup)
 
         permissionUIHelper = PermissionUIHelper(this)
+        prefsManager = PreferencesManager(this)
 
         // 온보딩에서 진입했는지 확인
         fromOnboarding = intent.getBooleanExtra("from_onboarding", false)
+
+        // 진입 추적
+        AnalyticsManager.trackEvent(
+            this,
+            AnalyticsEvent.PERMISSION_SETUP_VIEWED,
+            mapOf("from_onboarding" to fromOnboarding)
+        )
 
         // View 초기화
         backButton = findViewById(R.id.backButton)
@@ -72,6 +89,11 @@ class PermissionSetupActivity : BaseActivity() {
 
         // 오버레이 설정 버튼
         overlayButton?.setOnClickListener {
+            AnalyticsManager.trackEvent(
+                this,
+                AnalyticsEvent.PERMISSION_SETTINGS_OPENED,
+                mapOf("type" to "overlay")
+            )
             PermissionUtils.openOverlaySettings(this)
         }
 
@@ -94,6 +116,7 @@ class PermissionSetupActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        detectPermissionTransitions()
         updatePermissionUI()
     }
 
@@ -135,12 +158,76 @@ class PermissionSetupActivity : BaseActivity() {
     }
 
     /**
+     * 직전 onResume과 비교하여 권한 전환을 감지하고 이벤트 발화.
+     * Settings 화면 갔다 돌아왔을 때 호출됨.
+     */
+    private fun detectPermissionTransitions() {
+        val accessibilityNow = PermissionUtils.isAccessibilityServiceEnabled(this)
+        val overlayNow = PermissionUtils.canDrawOverlays(this)
+
+        val accessibilityBefore = prefsManager.lastKnownAccessibilityPermission
+        val overlayBefore = prefsManager.lastKnownOverlayPermission
+
+        if (accessibilityBefore != accessibilityNow) {
+            val eventName = if (accessibilityNow) {
+                AnalyticsEvent.PERMISSION_GRANTED
+            } else {
+                AnalyticsEvent.PERMISSION_DENIED_RETURNED
+            }
+            AnalyticsManager.trackEvent(
+                this,
+                eventName,
+                mapOf(
+                    "type" to "accessibility",
+                    "from_onboarding" to fromOnboarding
+                )
+            )
+            prefsManager.lastKnownAccessibilityPermission = accessibilityNow
+        }
+
+        if (overlayBefore != overlayNow) {
+            val eventName = if (overlayNow) {
+                AnalyticsEvent.PERMISSION_GRANTED
+            } else {
+                AnalyticsEvent.PERMISSION_DENIED_RETURNED
+            }
+            AnalyticsManager.trackEvent(
+                this,
+                eventName,
+                mapOf(
+                    "type" to "overlay",
+                    "from_onboarding" to fromOnboarding
+                )
+            )
+            prefsManager.lastKnownOverlayPermission = overlayNow
+        }
+
+        // 모든 권한 충족 시 setup completed 1회 발화 + 온보딩 완료 마킹
+        if (accessibilityNow && overlayNow && !onboardingCompletedTracked) {
+            onboardingCompletedTracked = true
+            AnalyticsManager.trackEvent(
+                this,
+                AnalyticsEvent.PERMISSION_SETUP_COMPLETED,
+                mapOf("from_onboarding" to fromOnboarding)
+            )
+            AnalyticsManager.markOnboardingCompleted(this)
+        }
+    }
+
+    /**
      * 접근성 권한 동의 다이얼로그 표시 → 동의 → 설정 이동 + 토스트
      */
     private fun showAccessibilityConsentDialog() {
+        AnalyticsManager.trackEvent(this, AnalyticsEvent.ACCESSIBILITY_CONSENT_DIALOG_SHOWN)
         val dialog = PrivacyConsentDialog(
             context = this,
             onAgree = {
+                AnalyticsManager.trackEvent(this, AnalyticsEvent.ACCESSIBILITY_CONSENT_AGREED)
+                AnalyticsManager.trackEvent(
+                    this,
+                    AnalyticsEvent.PERMISSION_SETTINGS_OPENED,
+                    mapOf("type" to "accessibility")
+                )
                 // 제조사별 추가 안내가 필요한 경우에만 토스트 표시
                 if (PermissionUtils.needsAccessibilityGuide()) {
                     val guideText = PermissionUtils.getAccessibilityGuide(this)
@@ -150,7 +237,7 @@ class PermissionSetupActivity : BaseActivity() {
                 PermissionUtils.openAccessibilitySettings(this)
             },
             onExit = {
-                // 동의 거부 시 아무 것도 하지 않음
+                AnalyticsManager.trackEvent(this, AnalyticsEvent.ACCESSIBILITY_CONSENT_DECLINED)
             },
             exitButtonTextResId = R.string.privacy_btn_disagree
         )

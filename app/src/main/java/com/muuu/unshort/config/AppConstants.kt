@@ -109,4 +109,38 @@ object AppConstants {
     // Daily Unblock Quota - 기본값
     const val DEFAULT_UNBLOCK_QUOTA_DAILY_LIMIT = 10
     const val DEFAULT_UNBLOCK_QUOTA_AD_RECHARGE_AMOUNT = 3
+
+    // Analytics - lifetime / onboarding state
+    const val PREF_TOTAL_UNBLOCKS_LIFETIME = "total_unblocks_lifetime"
+    const val PREF_HAS_COMPLETED_ONBOARDING = "has_completed_onboarding"
+    const val PREF_LAST_FIRST_LAUNCH_DATE = "last_first_launch_date"
+    const val PREF_DAILY_LIMIT_MONITOR_NOTIFIED_DATE = "daily_limit_monitor_notified_date"
+    const val PREF_LAST_KNOWN_ACCESSIBILITY = "last_known_accessibility"
+    const val PREF_LAST_KNOWN_OVERLAY = "last_known_overlay"
+    const val PREF_LAST_KNOWN_NOTIFICATION = "last_known_notification"
+
+    // Analytics - intent extras
+    const val EXTRA_LAUNCH_SOURCE = "launch_source"
+    const val EXTRA_NOTIFICATION_TYPE = "notification_type"
+    const val EXTRA_ENTRY_SOURCE = "entry_source"
+
+    // launch_source values
+    const val LAUNCH_SOURCE_ICON = "icon"
+    const val LAUNCH_SOURCE_NOTIFICATION = "notification"
+
+    // notification_type values
+    const val NOTIFICATION_TYPE_DAILY_REPORT = "daily_report"
+    const val NOTIFICATION_TYPE_BLOCKING_REMINDER = "blocking_reminder"
+    const val NOTIFICATION_TYPE_DAILY_LIMIT_WARNING = "daily_limit_warning"
+    const val NOTIFICATION_TYPE_DAILY_LIMIT_EXCEEDED = "daily_limit_exceeded"
+    const val NOTIFICATION_TYPE_DAILY_LIMIT_MONITOR = "daily_limit_monitor"
+
+    // entry_source values for screens
+    const val ENTRY_SOURCE_MAIN_BUTTON = "main_button"
+    const val ENTRY_SOURCE_NOTIFICATION = "notification"
+    const val ENTRY_SOURCE_FEATURE_LOCK = "feature_lock"
+    const val ENTRY_SOURCE_QUOTA_EXHAUSTED = "quota_exhausted_dialog"
+    const val ENTRY_SOURCE_SETTINGS = "settings"
+    const val ENTRY_SOURCE_REPORT = "report"
+    const val ENTRY_SOURCE_DIRECT = "direct"
 }

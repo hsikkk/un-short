@@ -368,6 +368,57 @@ class PreferencesManager(context: Context) {
         lastSeenVersionCode = currentVersionCode
     }
 
+    // ========== Analytics Lifetime / Onboarding ==========
+
+    /**
+     * 누적 즉시해제 횟수 (코호트 분석용)
+     */
+    var totalUnblocksLifetime: Long
+        get() = prefs.getLong(AppConstants.PREF_TOTAL_UNBLOCKS_LIFETIME, 0L)
+        set(value) = prefs.edit().putLong(AppConstants.PREF_TOTAL_UNBLOCKS_LIFETIME, value).apply()
+
+    fun incrementTotalUnblocksLifetime() {
+        totalUnblocksLifetime = totalUnblocksLifetime + 1
+    }
+
+    /**
+     * 모든 권한이 충족되어 온보딩이 완료된 상태인지
+     */
+    var hasCompletedOnboarding: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_HAS_COMPLETED_ONBOARDING, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_HAS_COMPLETED_ONBOARDING, value).apply()
+
+    /**
+     * 마지막으로 first_launch가 트래킹된 날짜 (LocalDate.toString())
+     * 일자별 is_first_launch_today 계산용
+     */
+    var lastFirstLaunchDate: String
+        get() = prefs.getString(AppConstants.PREF_LAST_FIRST_LAUNCH_DATE, "") ?: ""
+        set(value) = prefs.edit().putString(AppConstants.PREF_LAST_FIRST_LAUNCH_DATE, value).apply()
+
+    /**
+     * Daily Limit 모니터링 알림을 마지막으로 발화한 날짜 (LocalDate.toString())
+     * 일자별 중복 방지용
+     */
+    var dailyLimitMonitorNotifiedDate: String
+        get() = prefs.getString(AppConstants.PREF_DAILY_LIMIT_MONITOR_NOTIFIED_DATE, "") ?: ""
+        set(value) = prefs.edit().putString(AppConstants.PREF_DAILY_LIMIT_MONITOR_NOTIFIED_DATE, value).apply()
+
+    /**
+     * 마지막으로 관찰된 권한 상태 (전환 감지용)
+     */
+    var lastKnownAccessibilityPermission: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_LAST_KNOWN_ACCESSIBILITY, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_LAST_KNOWN_ACCESSIBILITY, value).apply()
+
+    var lastKnownOverlayPermission: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_LAST_KNOWN_OVERLAY, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_LAST_KNOWN_OVERLAY, value).apply()
+
+    var lastKnownNotificationPermission: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_LAST_KNOWN_NOTIFICATION, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_LAST_KNOWN_NOTIFICATION, value).apply()
+
     // ========== Batch Operations ==========
 
     /**

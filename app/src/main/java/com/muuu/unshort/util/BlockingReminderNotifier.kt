@@ -8,6 +8,9 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.muuu.unshort.analytics.AnalyticsEvent
+import com.muuu.unshort.analytics.AnalyticsManager
+import com.muuu.unshort.config.AppConstants
 import com.muuu.unshort.prefs.PreferencesManager
 import com.muuu.unshort.util.BlockingReminderNotifier
 import com.muuu.unshort.ui.activity.MainActivity
@@ -46,13 +49,15 @@ class BlockingReminderNotifier(private val context: Context) {
         // 알림 채널 생성
         createNotificationChannel()
 
-        // 메인 화면으로 이동하는 PendingIntent
+        // 메인 화면으로 이동하는 PendingIntent (analytics 추적용 extras 포함)
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra(AppConstants.EXTRA_LAUNCH_SOURCE, AppConstants.LAUNCH_SOURCE_NOTIFICATION)
+            putExtra(AppConstants.EXTRA_NOTIFICATION_TYPE, AppConstants.NOTIFICATION_TYPE_BLOCKING_REMINDER)
         }
         val pendingIntent = PendingIntent.getActivity(
             context,
-            0,
+            NOTIFICATION_ID,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
@@ -77,6 +82,12 @@ class BlockingReminderNotifier(private val context: Context) {
 
         // 마지막 알림 시각 기록
         prefsManager.lastReminderTimestamp = System.currentTimeMillis()
+
+        AnalyticsManager.trackEvent(
+            context,
+            AnalyticsEvent.NOTIFICATION_SHOWN,
+            mapOf("type" to AppConstants.NOTIFICATION_TYPE_BLOCKING_REMINDER)
+        )
 
         Log.d(TAG, "차단 권유 알림 발송 완료")
     }
