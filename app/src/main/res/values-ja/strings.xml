@@ -395,6 +395,9 @@
     <string name="changelog_title">v%s アップデート</string>
     <string name="changelog_subtitle">新機能・変更点を確認</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_8_2_item1">同じ動画の再生中に再ブロックされる誤検知を修正</string>
+    <string name="changelog_v1_8_2_item2">YouTubeチャンネルプロフィールの\'Shorts\'タブの誤検知を修正</string>
+    <string name="changelog_v1_8_2_item3">タイマー完了後の「すぐ見る」ボタン表示を復元</string>
     <string name="changelog_v1_8_1_item1">プレミアム: ブロック画面でカウントダウンなしですぐ閉じる/見る</string>
     <string name="changelog_v1_8_0_item1">リンクから開いたショート動画のクイックビュー機能を追加</string>
     <string name="changelog_v1_8_0_item2">フィードブロックの安定性を改善</string>

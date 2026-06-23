@@ -395,6 +395,9 @@
     <string name="changelog_title">v%s 更新</string>
     <string name="changelog_subtitle">查看最新變更</string>
     <string name="changelog_confirm">確定</string>
+    <string name="changelog_v1_8_2_item1">修復同一影片播放時被重複封鎖的誤判</string>
+    <string name="changelog_v1_8_2_item2">修復 YouTube 頻道個人檔案 \'Shorts\' 分頁的誤判</string>
+    <string name="changelog_v1_8_2_item3">修復計時器結束後「立即觀看」按鈕未顯示的問題</string>
     <string name="changelog_v1_8_1_item1">高級版：封鎖畫面無需倒數即可關閉或觀看</string>
     <string name="changelog_v1_8_0_item1">新增從連結開啟的短影片快速檢視功能</string>
     <string name="changelog_v1_8_0_item2">改善動態消息攔截穩定性</string>

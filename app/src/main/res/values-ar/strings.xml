@@ -395,6 +395,9 @@
     <string name="changelog_title">تحديث v%s</string>
     <string name="changelog_subtitle">اكتشف ما الجديد</string>
     <string name="changelog_confirm">حسناً</string>
+    <string name="changelog_v1_8_2_item1">إصلاح الحجب الخاطئ المتكرر أثناء تشغيل نفس الفيديو</string>
+    <string name="changelog_v1_8_2_item2">إصلاح الحجب الخاطئ في علامة تبويب \'Shorts\' بملف قناة YouTube</string>
+    <string name="changelog_v1_8_2_item3">استعادة زر \"المشاهدة الآن\" بعد انتهاء المؤقت</string>
     <string name="changelog_v1_8_1_item1">Premium: أغلق أو شاهد فورًا في شاشات الحظر بدون عد تنازلي</string>
     <string name="changelog_v1_8_0_item1">إضافة ميزة العرض السريع للمقاطع القصيرة المفتوحة من الروابط</string>
     <string name="changelog_v1_8_0_item2">تحسين استقرار حظر الخلاصة</string>

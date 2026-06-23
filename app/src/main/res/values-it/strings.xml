@@ -395,6 +395,9 @@
     <string name="changelog_title">Aggiornamento v%s</string>
     <string name="changelog_subtitle">Scopri le novità</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_8_2_item1">Risolto il blocco errato durante la riproduzione dello stesso video</string>
+    <string name="changelog_v1_8_2_item2">Risolto il blocco errato nella scheda \'Shorts\' del profilo del canale YouTube</string>
+    <string name="changelog_v1_8_2_item3">Ripristinato il pulsante \"Guarda ora\" al termine del timer</string>
     <string name="changelog_v1_8_1_item1">Premium: Chiudi o guarda istantaneamente sulle schermate di blocco, senza conto alla rovescia</string>
     <string name="changelog_v1_8_0_item1">Aggiunta visualizzazione rapida per shorts aperti da link</string>
     <string name="changelog_v1_8_0_item2">Migliorata la stabilità del blocco del feed</string>

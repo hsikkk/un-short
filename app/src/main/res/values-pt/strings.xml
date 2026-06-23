@@ -395,6 +395,9 @@
     <string name="changelog_title">Atualização v%s</string>
     <string name="changelog_subtitle">Confira as novidades</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_8_2_item1">Corrigido bloqueio falso ao reproduzir o mesmo vídeo</string>
+    <string name="changelog_v1_8_2_item2">Corrigido bloqueio falso na aba \'Shorts\' do perfil do canal do YouTube</string>
+    <string name="changelog_v1_8_2_item3">Restaurado o botão \"Ver agora\" após o término do temporizador</string>
     <string name="changelog_v1_8_1_item1">Premium: Feche ou assista instantaneamente nas telas de bloqueio, sem contagem regressiva</string>
     <string name="changelog_v1_8_0_item1">Adicionada visualização rápida para shorts abertos por links</string>
     <string name="changelog_v1_8_0_item2">Estabilidade do bloqueio de feed melhorada</string>

@@ -396,6 +396,9 @@
     <string name="changelog_title">v%s Update</string>
     <string name="changelog_subtitle">Check out what\'s new</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_8_2_item1">Fixed false re-blocking while replaying the same video</string>
+    <string name="changelog_v1_8_2_item2">Fixed false blocking on YouTube channel profile \'Shorts\' tab</string>
+    <string name="changelog_v1_8_2_item3">Restored \"Watch now\" button after timer completes</string>
     <string name="changelog_v1_8_1_item1">Premium: Instantly close or watch on block screens, no countdown</string>
     <string name="changelog_v1_8_0_item1">Added quick view for shorts opened from links</string>
     <string name="changelog_v1_8_0_item2">Improved feed block stability</string>

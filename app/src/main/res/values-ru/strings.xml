@@ -395,6 +395,9 @@
     <string name="changelog_title">Обновление v%s</string>
     <string name="changelog_subtitle">Посмотрите, что нового</string>
     <string name="changelog_confirm">ОК</string>
+    <string name="changelog_v1_8_2_item1">Исправлено ложное повторное блокирование при воспроизведении того же видео</string>
+    <string name="changelog_v1_8_2_item2">Исправлено ложное блокирование на вкладке \'Shorts\' профиля канала YouTube</string>
+    <string name="changelog_v1_8_2_item3">Восстановлена кнопка «Смотреть сейчас» после завершения таймера</string>
     <string name="changelog_v1_8_1_item1">Premium: Мгновенно закрывайте или смотрите на экранах блокировки, без обратного отсчёта</string>
     <string name="changelog_v1_8_0_item1">Добавлен быстрый просмотр коротких видео, открытых по ссылкам</string>
     <string name="changelog_v1_8_0_item2">Улучшена стабильность блокировки ленты</string>

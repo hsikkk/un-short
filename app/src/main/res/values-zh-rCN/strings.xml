@@ -395,6 +395,9 @@
     <string name="changelog_title">v%s 更新</string>
     <string name="changelog_subtitle">查看最新变化</string>
     <string name="changelog_confirm">好的</string>
+    <string name="changelog_v1_8_2_item1">修复同一视频播放时被重复屏蔽的误判</string>
+    <string name="changelog_v1_8_2_item2">修复 YouTube 频道资料 \'Shorts\' 标签的误判</string>
+    <string name="changelog_v1_8_2_item3">修复计时器结束后\"立即观看\"按钮不显示的问题</string>
     <string name="changelog_v1_8_1_item1">高级版：屏蔽画面无需倒计时即可关闭或观看</string>
     <string name="changelog_v1_8_0_item1">新增从链接打开的短视频快速查看功能</string>
     <string name="changelog_v1_8_0_item2">改进信息流拦截稳定性</string>
