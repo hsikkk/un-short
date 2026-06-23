@@ -330,7 +330,11 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             startTimerButton.visibility = View.GONE
             watchButton.visibility = View.VISIBLE
 
-            // 순서: skipButton(메인 액션) → bottomAction → watchButton(가벼운 옵션)
+            // 타이머 완료 후에는 "바로 보기" 비표시 (타이머 우회 의미 없음)
+            instantUnblockButton.visibility = View.GONE
+            handler.removeCallbacksAndMessages(null)
+
+            // 순서: skipButton(메인 액션) → watchButton(가벼운 옵션)
             buttonContainer.removeAllViews()
 
             // Add skip button first (top position)
@@ -342,15 +346,6 @@ class ShortsBlockOverlayActivity : BaseActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
             buttonContainer.addView(skipButton, skipParams)
-
-            // Add bottom action container (즉시 해제 / 광고 충전, skipButton 바로 아래)
-            // instantUnblockButton (마진 포함)
-            val instantParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            instantParams.topMargin = resources.displayMetrics.density.toInt() * 12
-            buttonContainer.addView(instantUnblockButton, instantParams)
 
             // Add watch button last
             watchButton.setTextColor(0xFF8A8A8A.toInt())
@@ -463,7 +458,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
      * 잔여 횟수 텍스트는 노출하지 않음. 한도 도달 시점도 별도 표기 X (클릭 시 다이얼로그로 처리).
      */
     private fun setupBottomActionUi() {
-        if (isFromScroll) {
+        if (isFromScroll || overlayType == OverlayType.CONFIRMATION) {
             instantUnblockButton.visibility = View.GONE
             return
         }
