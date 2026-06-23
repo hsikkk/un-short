@@ -23,8 +23,8 @@ android {
         applicationId = "com.muuu.unshort"
         minSdk = 26
         targetSdk = 35
-        versionCode = 31
-        versionName = "1.8.1"
+        versionCode = 32
+        versionName = "1.8.2"
     }
 
     buildTypes {
