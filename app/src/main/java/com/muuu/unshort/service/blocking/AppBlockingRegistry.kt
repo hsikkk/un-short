@@ -93,13 +93,11 @@ object AppBlockingRegistry {
         viewIdDetectors = listOf(
             ViewIdDetector("com.google.android.youtube:id/reel_player_page_container")
         ),
-        textDetectors = listOf(
-            TextDetector(
-                text = "Shorts",
-                requiresSelection = true,
-                searchType = SearchType.TEXT
-            )
-        ),
+        // Text 기반 감지 제거 (2026-06-24):
+        // "Shorts" + requiresSelection=true는 채널 프로필의 Shorts 서브탭,
+        // 검색/구독 페이지의 Shorts 필터 등에서 오탐지를 발생시킴.
+        // reel_player_page_container View ID만으로 충분히 신뢰성 있게 감지 가능.
+        textDetectors = emptyList(),
         hashConfig = HashConfig(
             containerViewId = "com.google.android.youtube:id/reel_player_page_container",
             includedViewIdPatterns = listOf(
