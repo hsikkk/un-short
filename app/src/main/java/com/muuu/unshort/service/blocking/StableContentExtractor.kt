@@ -28,9 +28,11 @@ data class ContentFingerprint(
     }
 
     /**
-     * 다른 핑거프린트와의 유사도 계산
+     * 다른 핑거프린트와의 유사도 계산 (디버깅용)
      *
-     * @return 0.0 ~ 1.0 (0: 완전히 다름, 1.0: 완전히 같음)
+     * 단순 3등분 비율. 실제 동일 콘텐츠 판별은 isSimilarTo() 사용.
+     *
+     * @return 0.0 ~ 1.0
      */
     fun similarityWith(other: ContentFingerprint): Float {
         var matches = 0
@@ -41,10 +43,35 @@ data class ContentFingerprint(
     }
 
     /**
-     * 2/3 이상 일치하는지 확인 (동일 콘텐츠 판별 기준)
+     * 동일 콘텐츠인지 판단 (동적 분모 기반)
+     *
+     * 두 핑거프린트 모두 추출에 성공한 필드(non-zero)만 분모에 포함.
+     * 같은 영상이라도 title이 비결정적으로 변하는 케이스(YouTube ViewPager가
+     * 인접 영상 metadata를 같이 트리에 둠)를 견디기 위해 임계값을 과반으로 완화.
+     *
+     * 규칙:
+     * - 유효 필드 0개: 비교 불가 → false
+     * - 유효 필드 1개: 그 한 필드라도 일치하면 동일 (보수적이지만 채널만이라도 같으면 같은 채널 영상 일부 허용)
+     * - 유효 필드 2개: 1개 이상 일치 (50% 이상)
+     * - 유효 필드 3개: 2개 이상 일치 (67% 이상)
      */
     fun isSimilarTo(other: ContentFingerprint): Boolean {
-        return similarityWith(other) >= 0.67f  // 2/3 이상
+        val results = mutableListOf<Boolean>()
+        if (titleHash != 0 && other.titleHash != 0) {
+            results.add(titleHash == other.titleHash)
+        }
+        if (channelHash != 0 && other.channelHash != 0) {
+            results.add(channelHash == other.channelHash)
+        }
+        if (descriptionHash != 0 && other.descriptionHash != 0) {
+            results.add(descriptionHash == other.descriptionHash)
+        }
+        if (results.isEmpty()) return false
+
+        val matches = results.count { it }
+        // 과반 일치 기준: ceil(size/2)
+        val required = (results.size + 1) / 2
+        return matches >= required
     }
 }
 
@@ -84,12 +111,13 @@ class StableContentExtractor {
         // 2차: View ID로 못 찾으면 contentDescription 패턴 기반 추출
         if (title.isEmpty() && channel.isEmpty()) {
             Log.d(TAG, "View ID extraction failed, falling back to contentDescription")
-            val allDescs = mutableListOf<String>()
-            collectContentDescriptions(container, allDescs, depth = 0, maxDepth = 8)
-            Log.d(TAG, "Collected ${allDescs.size} contentDescriptions: $allDescs")
+            val allDescs = mutableListOf<DescWithBounds>()
+            collectContentDescriptionsWithBounds(container, allDescs, depth = 0, maxDepth = 8)
+            Log.d(TAG, "Collected ${allDescs.size} contentDescriptions")
 
-            // 채널: "구독합니다" 패턴에서 @채널명 추출
-            for (desc in allDescs) {
+            // 채널: "구독합니다" 패턴에서 @채널명 추출 (탐색 순서 무관)
+            for (entry in allDescs) {
+                val desc = entry.desc
                 if (desc.contains("구독합니다") && desc.contains("@")) {
                     channel = extractChannelFromDesc(desc)
                     if (channel.isNotEmpty()) {
@@ -99,13 +127,16 @@ class StableContentExtractor {
                 }
             }
 
-            // 제목: UI 요소를 제외한 contentDescription 중 제목 후보 탐색
-            for (desc in allDescs) {
-                if (isContentTitle(desc)) {
-                    title = desc
-                    Log.d(TAG, "  [DESC] Title: '$title'")
-                    break
-                }
+            // 제목: YouTube ViewPager가 인접 영상 metadata를 같이 트리에 두는 경우가 있어
+            // 트리 순회 순서가 비결정적. bounds.top 기준으로 정렬 후 첫 번째 유효 후보 채택.
+            // 추가 정렬키로 left, desc 자체를 사용하여 동률 시에도 결정론 보장.
+            val titleCandidates = allDescs
+                .filter { isContentTitle(it.desc) }
+                .sortedWith(compareBy({ it.boundsTop }, { it.boundsLeft }, { it.desc }))
+
+            if (titleCandidates.isNotEmpty()) {
+                title = titleCandidates.first().desc
+                Log.d(TAG, "  [DESC] Title (top-anchored): '$title' from ${titleCandidates.size} candidates")
             }
         }
 
@@ -121,11 +152,22 @@ class StableContentExtractor {
     }
 
     /**
-     * 노드 트리에서 모든 contentDescription을 수집
+     * contentDescription + 화면 좌표를 함께 보관 (정렬용)
      */
-    private fun collectContentDescriptions(
+    private data class DescWithBounds(
+        val desc: String,
+        val boundsTop: Int,
+        val boundsLeft: Int
+    )
+
+    /**
+     * 노드 트리에서 모든 contentDescription을 bounds와 함께 수집
+     *
+     * 정렬을 통한 결정론적 title 추출을 위해 bounds.top / left를 함께 저장.
+     */
+    private fun collectContentDescriptionsWithBounds(
         node: AccessibilityNodeInfo,
-        result: MutableList<String>,
+        result: MutableList<DescWithBounds>,
         depth: Int,
         maxDepth: Int
     ) {
@@ -133,13 +175,15 @@ class StableContentExtractor {
 
         node.contentDescription?.toString()?.let { desc ->
             if (desc.isNotEmpty()) {
-                result.add(desc)
+                val bounds = android.graphics.Rect()
+                node.getBoundsInScreen(bounds)
+                result.add(DescWithBounds(desc, bounds.top, bounds.left))
             }
         }
 
         for (i in 0 until node.childCount) {
             node.getChild(i)?.let { child ->
-                collectContentDescriptions(child, result, depth + 1, maxDepth)
+                collectContentDescriptionsWithBounds(child, result, depth + 1, maxDepth)
                 child.recycle()
             }
         }
@@ -248,6 +292,73 @@ class StableContentExtractor {
         val result = contentBuilder.toString()
         Log.d(TAG, "Final stable content (length=${result.length}): $result")
         return result
+    }
+
+    /**
+     * 디버깅용 view tree dump
+     *
+     * 핑거프린트 오인식으로 같은 영상이 재차단되는 케이스 추적용.
+     * 너무 깊으면 logcat 한도(4KB/line)에 잘리므로 청크 단위로 출력.
+     *
+     * @param rootNode 덤프할 루트
+     * @param tag 로그 태그 prefix (예: "REBLOCK_DUMP")
+     * @param maxDepth 최대 탐색 깊이 (기본 12)
+     */
+    fun dumpNodeTree(rootNode: AccessibilityNodeInfo, tag: String, maxDepth: Int = 12) {
+        val builder = StringBuilder()
+        builder.append("\n===== $tag START =====\n")
+        appendNode(rootNode, builder, 0, maxDepth)
+        builder.append("===== $tag END =====")
+
+        // logcat 4KB 한도 회피용 청크 분할
+        val chunkSize = 3500
+        val text = builder.toString()
+        var i = 0
+        var chunkIdx = 0
+        while (i < text.length) {
+            val end = (i + chunkSize).coerceAtMost(text.length)
+            Log.w(TAG, "[$tag #${chunkIdx}] ${text.substring(i, end)}")
+            i = end
+            chunkIdx++
+        }
+    }
+
+    private fun appendNode(
+        node: AccessibilityNodeInfo,
+        builder: StringBuilder,
+        depth: Int,
+        maxDepth: Int
+    ) {
+        if (depth > maxDepth) return
+
+        val indent = "  ".repeat(depth)
+        val viewId = node.viewIdResourceName ?: ""
+        val text = node.text?.toString() ?: ""
+        val desc = node.contentDescription?.toString() ?: ""
+        val bounds = android.graphics.Rect().also { node.getBoundsInScreen(it) }
+        val selected = node.isSelected
+        val visible = node.isVisibleToUser
+        val cls = node.className?.toString()?.substringAfterLast('.') ?: ""
+
+        // 의미 있는 노드만 로그 (빈 노드는 구조만 짧게)
+        if (text.isNotEmpty() || desc.isNotEmpty() || viewId.isNotEmpty()) {
+            builder.append(indent)
+                .append("[$cls]")
+            if (viewId.isNotEmpty()) builder.append(" id=").append(viewId.substringAfter(":id/"))
+            if (text.isNotEmpty()) builder.append(" txt=\"").append(text).append("\"")
+            if (desc.isNotEmpty()) builder.append(" desc=\"").append(desc).append("\"")
+            builder.append(" b=").append(bounds.toShortString())
+            if (selected) builder.append(" SEL")
+            if (!visible) builder.append(" HIDDEN")
+            builder.append("\n")
+        }
+
+        for (i in 0 until node.childCount) {
+            node.getChild(i)?.let { child ->
+                appendNode(child, builder, depth + 1, maxDepth)
+                child.recycle()
+            }
+        }
     }
 
     /**

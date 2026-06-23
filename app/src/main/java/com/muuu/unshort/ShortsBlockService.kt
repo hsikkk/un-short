@@ -78,6 +78,9 @@ class ShortsBlockService : AccessibilityService() {
     // 현재 처리 중인 패키지
     private var currentPackage: String = ""
 
+    // 디버깅: 패키지별 직전 핑거프린트 (재차단 발생 시 비교/로깅용)
+    private val lastFingerprintByPackage = mutableMapOf<String, com.muuu.unshort.service.blocking.ContentFingerprint>()
+
     private val handler = Handler(Looper.getMainLooper())
     private var pendingOverlayJob: Runnable? = null
 
@@ -457,6 +460,7 @@ class ShortsBlockService : AccessibilityService() {
                             }
 
                             Log.d(TAG, "Sending ContentHashChanged event with fingerprint: $fingerprint")
+                            val prevFingerprint = fingerprint?.let { lastFingerprintByPackage[packageName] }
                             sessionState.handleEvent(SessionEvent.ContentHashChanged(hash, fingerprint), packageName)
 
                             // 상태가 변경되었으면 스크롤 발생
@@ -467,11 +471,30 @@ class ShortsBlockService : AccessibilityService() {
                             if (newState.blockingStage == BlockingStage.NEED_TIMER) {
                                 Log.d(TAG, "Scroll detected - clearing state")
 
+                                // [DEBUG] 같은 영상에서 재차단 추적용 뷰 덤프
+                                // 핑거프린트 차이를 비교 분석하기 위해 트리거 직전 상태를 통째로 로그에 남김
+                                Log.w(TAG, "===== REBLOCK TRIGGERED =====")
+                                Log.w(TAG, "[REBLOCK] pkg=$packageName hash=$hash")
+                                Log.w(TAG, "[REBLOCK] prevFingerprint=$prevFingerprint")
+                                Log.w(TAG, "[REBLOCK] newFingerprint=$fingerprint")
+                                if (prevFingerprint != null && fingerprint != null) {
+                                    Log.w(TAG, "[REBLOCK] similarity=${fingerprint.similarityWith(prevFingerprint)} " +
+                                        "(title=${fingerprint.titleHash == prevFingerprint.titleHash}, " +
+                                        "channel=${fingerprint.channelHash == prevFingerprint.channelHash}, " +
+                                        "desc=${fingerprint.descriptionHash == prevFingerprint.descriptionHash})")
+                                }
+                                hashGenerator.dumpForDebug(rootNode, "REBLOCK_DUMP_${packageName.substringAfterLast('.')}")
+
                                 prefsManager.clearCompletedSessionId()
                                 prefsManager.clearAllowedUntilScroll()
 
                                 // 스크롤로 인한 차단 (UI 분기용)
                                 lastBlockOriginScroll = true
+                            }
+
+                            // 다음 비교를 위해 현재 핑거프린트 보관
+                            if (fingerprint != null) {
+                                lastFingerprintByPackage[packageName] = fingerprint
                             }
                         } else {
                             Log.w(TAG, "Hash is 0 - skipping")

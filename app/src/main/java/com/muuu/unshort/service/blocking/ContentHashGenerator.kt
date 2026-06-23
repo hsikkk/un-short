@@ -24,6 +24,13 @@ class ContentHashGenerator {
     }
 
     /**
+     * 디버깅용 view tree dump (오탐지 분석용)
+     */
+    fun dumpForDebug(rootNode: AccessibilityNodeInfo, tag: String) {
+        stableExtractor.dumpNodeTree(rootNode, tag)
+    }
+
+    /**
      * 주어진 노드에서 콘텐츠 해시 생성
      */
     fun generateContentHash(
