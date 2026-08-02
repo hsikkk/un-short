@@ -158,7 +158,8 @@ class GooglePlayBillingProvider(
                     .setProductList(productList)
                     .build()
 
-                billingClient?.queryProductDetailsAsync(params) { billingResult, productDetailsList ->
+                billingClient?.queryProductDetailsAsync(params) { billingResult, queryResult ->
+                    val productDetailsList = queryResult.productDetailsList
                     if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && productDetailsList.isNotEmpty()) {
                         val productDetails = productDetailsList.first()
                         val offers = productDetails.subscriptionOfferDetails
@@ -578,7 +579,8 @@ class GooglePlayBillingProvider(
                     .setProductList(productList)
                     .build()
 
-                billingClient?.queryProductDetailsAsync(params) { billingResult, productDetailsList ->
+                billingClient?.queryProductDetailsAsync(params) { billingResult, queryResult ->
+                    val productDetailsList = queryResult.productDetailsList
                     if (billingResult.responseCode == BillingClient.BillingResponseCode.OK &&
                         productDetailsList.isNotEmpty()) {
 
