@@ -395,6 +395,7 @@
     <string name="changelog_title">Actualización v%s</string>
     <string name="changelog_subtitle">Descubre las novedades</string>
     <string name="changelog_confirm">Aceptar</string>
+    <string name="changelog_v1_9_0_item1">Correcciones de errores y mejoras de estabilidad</string>
     <string name="changelog_v1_8_2_item1">Corregido el bloqueo erróneo al reproducir el mismo video</string>
     <string name="changelog_v1_8_2_item2">Corregido el bloqueo erróneo en la pestaña \'Shorts\' del perfil de canal de YouTube</string>
     <string name="changelog_v1_8_2_item3">Restaurado el botón \"Ver ahora\" tras finalizar el temporizador</string>

@@ -396,6 +396,7 @@
     <string name="changelog_title">v%s Update</string>
     <string name="changelog_subtitle">Check out what\'s new</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_9_0_item1">Bug fixes and stability improvements</string>
     <string name="changelog_v1_8_2_item1">Fixed false re-blocking while replaying the same video</string>
     <string name="changelog_v1_8_2_item2">Fixed false blocking on YouTube channel profile \'Shorts\' tab</string>
     <string name="changelog_v1_8_2_item3">Restored \"Watch now\" button after timer completes</string>

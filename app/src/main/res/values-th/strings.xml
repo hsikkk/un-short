@@ -395,6 +395,7 @@
     <string name="changelog_title">อัปเดต v%s</string>
     <string name="changelog_subtitle">ดูสิ่งใหม่ที่เพิ่มเข้ามา</string>
     <string name="changelog_confirm">ตกลง</string>
+    <string name="changelog_v1_9_0_item1">แก้ไขข้อบกพร่องและปรับปรุงความเสถียร</string>
     <string name="changelog_v1_8_2_item1">แก้ไขการบล็อกซ้ำผิดพลาดขณะเล่นวิดีโอเดียวกัน</string>
     <string name="changelog_v1_8_2_item2">แก้ไขการบล็อกผิดพลาดในแท็บ \'Shorts\' ของโปรไฟล์ช่อง YouTube</string>
     <string name="changelog_v1_8_2_item3">คืนค่าปุ่ม \"ดูเลย\" หลังจากตัวจับเวลาเสร็จสิ้น</string>

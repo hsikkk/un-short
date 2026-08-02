@@ -395,6 +395,7 @@
     <string name="changelog_title">Mise à jour v%s</string>
     <string name="changelog_subtitle">Découvrez les nouveautés</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_9_0_item1">Corrections de bugs et améliorations de la stabilité</string>
     <string name="changelog_v1_8_2_item1">Correction du blocage erroné lors de la relecture de la même vidéo</string>
     <string name="changelog_v1_8_2_item2">Correction du blocage erroné dans l\'onglet \'Shorts\' du profil de chaîne YouTube</string>
     <string name="changelog_v1_8_2_item3">Restauration du bouton « Regarder maintenant » après la fin du minuteur</string>

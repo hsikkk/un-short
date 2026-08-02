@@ -395,6 +395,7 @@
     <string name="changelog_title">v%s 更新</string>
     <string name="changelog_subtitle">查看最新变化</string>
     <string name="changelog_confirm">好的</string>
+    <string name="changelog_v1_9_0_item1">错误修复和稳定性改进</string>
     <string name="changelog_v1_8_2_item1">修复同一视频播放时被重复屏蔽的误判</string>
     <string name="changelog_v1_8_2_item2">修复 YouTube 频道资料 \'Shorts\' 标签的误判</string>
     <string name="changelog_v1_8_2_item3">修复计时器结束后\"立即观看\"按钮不显示的问题</string>

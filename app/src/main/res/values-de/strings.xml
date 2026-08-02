@@ -395,6 +395,7 @@
     <string name="changelog_title">v%s Update</string>
     <string name="changelog_subtitle">Entdecke, was neu ist</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_9_0_item1">Fehlerbehebungen und Stabilitätsverbesserungen</string>
     <string name="changelog_v1_8_2_item1">Erneute Falschblockierung beim Abspielen desselben Videos behoben</string>
     <string name="changelog_v1_8_2_item2">Falschblockierung im \'Shorts\'-Tab des YouTube-Kanalprofils behoben</string>
     <string name="changelog_v1_8_2_item3">„Jetzt ansehen\"-Button nach Ablauf des Timers wiederhergestellt</string>

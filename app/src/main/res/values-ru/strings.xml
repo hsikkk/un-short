@@ -395,6 +395,7 @@
     <string name="changelog_title">Обновление v%s</string>
     <string name="changelog_subtitle">Посмотрите, что нового</string>
     <string name="changelog_confirm">ОК</string>
+    <string name="changelog_v1_9_0_item1">Исправления ошибок и улучшение стабильности</string>
     <string name="changelog_v1_8_2_item1">Исправлено ложное повторное блокирование при воспроизведении того же видео</string>
     <string name="changelog_v1_8_2_item2">Исправлено ложное блокирование на вкладке \'Shorts\' профиля канала YouTube</string>
     <string name="changelog_v1_8_2_item3">Восстановлена кнопка «Смотреть сейчас» после завершения таймера</string>
