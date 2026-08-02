@@ -1,197 +1,58 @@
-# un:short Design System
-## 미니멀 블랙 & 화이트 디자인 가이드라인
+# un:short 디자인 시스템
 
-### 핵심 디자인 원칙
-1. **극단적 미니멀리즘**: 필수 요소만 남기고 모든 장식적 요소 제거
-2. **흑백 대비**: 검은색과 흰색만을 사용한 강렬한 대비
-3. **공간의 활용**: 넉넉한 여백으로 숨 쉬는 디자인
-4. **타이포그래피 중심**: 가늘고 섬세한 폰트로 우아함 표현
+- 상태: Active
+- 구현 기준: `app/src/main/res/values/colors.xml`, `themes.xml`, `styles.xml` 및 각 화면 layout
+- 마지막 코드 대조: 2026-08-02
 
----
+이 문서는 디자인 의도를 설명합니다. 색상·폰트·컴포넌트의 정확한 값은 Android resource가 단일 기준이며, 값이 충돌하면 resource를 따릅니다.
 
-## 컬러 팔레트
+## 원칙
 
-### Primary Colors
-- **Pure Black**: `#000000` - 헤더, 활성화 버튼
-- **Pure White**: `#FFFFFF` - 배경, 비활성화 버튼
-- **Transparent Black 30%**: `#4D000000` - 비활성화 아이콘
+1. 흑백과 그레이스케일을 중심으로 콘텐츠와 행동을 명확히 구분한다.
+2. 성공·경고·오류 색상은 상태 전달에만 제한적으로 쓴다.
+3. 장식보다 타이포그래피, 여백, 명확한 행동 순서를 우선한다.
+4. 차단 화면의 마찰은 제품 동작이므로 시각 개선 과정에서 임의로 제거하지 않는다.
 
-### Secondary Colors
-- **Active Green**: `#00C853` - 활성 상태 표시 (작은 dot만)
-- **Inactive Gray**: `#BDBDBD` - 비활성 상태 표시
+## 토큰
 
-### Text Opacity
-- **Primary Text**: `1.0` (활성화), `0.4` (비활성화)
-- **Secondary Text**: `0.8` (활성화), `0.3-0.4` (비활성화)
-- **Hint Text**: `0.5`
+| 용도 | Resource | 현재 값 |
+|---|---|---|
+| Primary | `primary_dark` | `#000000` |
+| Secondary dark | `primary_medium` | `#2D2D2D` |
+| Surface | `white` / `gray_50` | `#FFFFFF` / `#FAFAFA` |
+| Main text | `gray_900` | `#171717` |
+| Secondary text | `gray_600` | `#525252` |
+| Success | `success` | `#10B981` |
+| Warning | `warning` | `#F59E0B` |
+| Error | `error` | `#EF4444` |
+| Overlay | `overlay_background` | `#F0000000` |
 
----
+기본 글꼴은 `@font/spoqa_sans_neo`입니다. 텍스트 크기와 굵기는 화면의 정보 계층에 맞추되, 공통 값이 반복되면 먼저 style/resource로 승격합니다.
 
-## 타이포그래피
+## 컴포넌트 기준
 
-### Font Family
-- **Primary**: `sans-serif-thin` - 메인 타이틀, 브랜드
-- **Secondary**: `sans-serif` - 일반 텍스트
-- **Labels**: `sans-serif-medium` - 상태 라벨
+- 버튼: `Widget.App.Button`을 기본으로 사용하며 최소 48dp 터치 영역을 확보한다.
+- 스위치: `Widget.App.Switch` 또는 동일한 공통 tint를 사용한다.
+- 카드: 흰색 surface, 충분한 내부 여백, 최소한의 elevation/stroke를 사용한다.
+- 상태 표시: 색상만으로 의미를 전달하지 않고 텍스트 또는 아이콘을 병행한다.
+- 오버레이: 어두운 전면 배경, 높은 텍스트 대비, 한 화면에 하나의 명확한 주 행동을 유지한다.
 
-### Text Sizes
-- **Brand Logo**: `26sp`
-- **Main Status**: `14sp`
-- **Description**: `12sp`
-- **Small Label**: `11sp`
-- **Large Number** (타이머): `88sp`
+## 화면별 의도
 
-### Letter Spacing
-- **Brand**: `-0.02`
-- **Labels**: `0.08`
-- **Regular**: `0.01`
+- 메인: 차단 상태, 핵심 통계, 앱별 설정 진입을 우선한다.
+- 권한 설정: 필요한 권한과 완료 상태, 다음 행동을 한 단계씩 보여준다.
+- 차단 오버레이: 현재 선택지와 남은 시간을 가장 높은 우선순위로 보여준다.
+- 설정/리포트: 긴 콘텐츠를 스캔하기 쉽도록 섹션과 간격을 일관되게 유지한다.
+- 프리미엄: 무료 기능을 모호하게 만들지 않으며 추가 혜택과 결제 상태를 분명히 구분한다.
 
----
+## 접근성 체크리스트
 
-## 레이아웃 구조
+- 본문과 핵심 컨트롤은 WCAG AA 수준의 대비를 목표로 한다.
+- 모든 터치 대상은 최소 48dp × 48dp로 만든다.
+- 비활성 상태를 낮은 투명도만으로 표현하지 않는다.
+- 동적 카운트다운과 상태 변경은 TalkBack에서도 이해 가능한 라벨을 제공한다.
+- 문자열을 layout/code에 직접 넣지 않고 string resource를 사용한다.
 
-### 기본 화면 구성
-```
-┌─────────────────────────┐
-│                         │
-│    Black Header Zone    │ (브랜드, 설명)
-│                         │
-├─────────────────────────┤
-│                         │
-│                         │
-│    White Content Zone   │ (주요 인터랙션)
-│         (Center)        │
-│                         │
-│                         │
-└─────────────────────────┘
-```
+## 변경 절차
 
-### 패딩 & 마진
-- **Header Padding**: `32dp` (좌우상하)
-- **Content Padding**: `28dp`
-- **Element Spacing**: `8dp`, `12dp`, `28dp` (계층별)
-
----
-
-## 컴포넌트 스타일
-
-### 1. Power Button (메인 토글)
-```xml
-- Size: 120dp x 120dp
-- Shape: Perfect circle
-- Active: Black background, 24dp elevation, white icon
-- Inactive: White background, 8dp elevation, 30% black icon
-- Animation: Scale 0.95 on press
-```
-
-### 2. Status Indicator
-```xml
-- Dot: 6dp circle (green/gray)
-- Label: 11sp, sans-serif-medium, letterSpacing 0.08
-- Format: "• ACTIVE" / "• INACTIVE"
-```
-
-### 3. Cards (온보딩, 설정 등)
-```xml
-- Background: Pure white
-- Corner Radius: 16dp
-- Elevation: 0dp (flat design)
-- Border: None or 1dp light gray
-- Padding: 24dp
-```
-
-### 4. Overlay (차단 화면)
-```xml
-- Background: 95% black (#F0000000)
-- Card: White, centered, 40dp padding
-- Timer: 88sp, bold, centered
-- Message: 16sp, centered
-```
-
-### 5. Buttons
-```xml
-- Primary: Black background, white text
-- Secondary: White background, black border, black text
-- Disabled: 30% opacity
-- Ripple: Light gray
-```
-
----
-
-## 애니메이션 & 인터랙션
-
-### Transitions
-- **Duration**: 150-300ms
-- **Easing**: Material standard curve
-- **Scale Press**: 0.95 scale down
-
-### State Changes
-- **Toggle**: Instant color swap with elevation change
-- **Fade**: 200ms for text opacity changes
-
----
-
-## 아이콘 가이드라인
-
-### Style
-- **Line Weight**: 1.5-2dp
-- **Style**: Outline only, no filled icons
-- **Size**: 24dp (standard), 36dp (power button)
-
-### Colors
-- **Active**: Pure white on black, or pure black on white
-- **Inactive**: 30% opacity
-
----
-
-## 화면별 적용 가이드
-
-### MainActivity (메인 화면)
-- 검은 헤더 + 흰 콘텐츠 영역
-- 중앙 정렬 파워 버튼
-- 상태 텍스트 + 인디케이터
-
-### OnboardingActivity (온보딩)
-- 전체 흰 배경
-- 검은 텍스트
-- 단계별 프로그레스: 검은 점/회색 점
-- 버튼: 검은 배경 또는 검은 테두리
-
-### BlockOverlay (차단 화면)
-- 95% 검은 배경
-- 흰색 중앙 카드
-- 거대한 타이머 숫자
-- 미니멀한 메시지
-
-### Settings/Permissions (설정)
-- 흰 배경
-- 검은 섹션 헤더
-- 토글: iOS 스타일 미니멀 스위치
-- 리스트: 구분선 없이 패딩으로만 구분
-
----
-
-## 접근성 고려사항
-
-### Contrast Ratios
-- Black on White: 21:1 (AAA)
-- 30% Black on White: 2.7:1 (최소 사용)
-
-### Touch Targets
-- Minimum: 48dp x 48dp
-- Power Button: 120dp (충분한 크기)
-
-### Visual Feedback
-- 모든 인터랙티브 요소에 ripple 효과
-- 상태 변화 시 명확한 시각적 피드백
-
----
-
-## 구현 체크리스트
-
-- [ ] 모든 화면 흑백 컬러 스킴 적용
-- [ ] sans-serif-thin 폰트 일관성 있게 사용
-- [ ] 불필요한 장식 요소 제거
-- [ ] 여백과 정렬 통일
-- [ ] 애니메이션 최소화
-- [ ] 그림자 효과 절제 (CardView elevation만 사용)
+토큰 또는 공통 컴포넌트를 바꿀 때 resource와 이 문서를 같은 PR에서 수정합니다. 화면별 일회성 수치는 이 문서에 복제하지 않고 해당 layout을 기준으로 삼습니다. 문서 검증 절차는 [문서 운영 가이드](documents/README.md)를 따릅니다.

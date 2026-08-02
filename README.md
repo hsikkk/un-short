@@ -1,118 +1,73 @@
-# un:short - 쇼츠 폼 차단 앱
+# un:short
 
-YouTube Shorts, Instagram Reels 등 중독성 있는 쇼츠 콘텐츠를 볼 때 **폰을 뒤집어서 30초 기다리게** 만드는 안드로이드 앱입니다.
+un:short는 짧은 영상과 무한 피드 소비에 의도적인 마찰을 추가하는 Android 앱입니다. 접근성 서비스를 이용해 대상 화면을 감지하고, 타이머·폰 뒤집기·즉시 해제 한도로 충동적인 진입을 끊습니다.
 
-## 핵심 기능
+## 현재 제공 기능
 
-- **폰 뒤집기 챌린지**: 쇼츠 앱 실행 시 폰을 뒤집어서 30초 대기해야 함
-- **실시간 감지**: Accessibility Service로 쇼츠/릴스 화면 자동 감지
-- **가속도계 활용**: 센서로 폰이 뒤집어졌는지 실시간 확인
-- **차단 대상 앱**:
-  - YouTube Shorts
-  - Instagram Reels
+- Shorts/Reels 및 홈 피드 화면 감지·차단
+- 사용자가 설정한 대기 시간과 폰 뒤집기 기반 해제 흐름
+- 앱별 차단 설정, 일시 해제, 수면 모드, 일일 사용 제한
+- 일별·시간대별 이용 통계와 리포트 알림
+- 무료 사용자 즉시 해제 한도 및 리워드 광고 충전
+- Google Play 구독과 Lifetime Premium 프로모션 코드
 
-## 작동 방식
+대상 앱의 실제 목록은 `AppBlockingRegistry`와 `FeedTargetRegistry`가 단일 기준입니다. 외부 앱 UI 변경 시 접근성 View ID 기반 감지가 영향을 받을 수 있습니다.
 
-1. 사용자가 YouTube, Instagram 앱 실행
-2. 쇼츠/릴스 화면 진입 시 앱이 자동 감지
-3. 전체 화면 오버레이 표시
-4. **폰을 뒤집어야** 30초 타이머 시작
-5. 폰을 다시 세우면 타이머 일시정지
-6. 30초 완료 시 오버레이 해제
+## 개발 환경
 
-## 기술 스택
+<!-- docs-sync:start -->
+- Application ID: `com.muuu.unshort`
+- 버전: `1.9.0` (`versionCode 33`)
+- Android SDK: `minSdk 26`, `targetSdk 35`, `compileSdk 35`
+- JVM: Java 17
+- 모듈: `:app`, `:affiliate`
+- Shorts/Reels 대상: `YouTube Shorts`, `Instagram Reels`, `Facebook Reels`, `Naver Shorts`, `TikTok Shorts`
+- 홈 피드 대상(Beta): `Instagram`, `YouTube`, `Threads`, `Facebook`
+<!-- docs-sync:end -->
 
-- **Kotlin** - 메인 언어
-- **Accessibility Service** - 앱 화면 감지
-- **SensorManager** - 가속도계로 폰 방향 감지
-- **WindowManager** - 시스템 오버레이
-- **Material Design** - UI
-
-## 설치 및 실행
-
-### 1. 프로젝트 빌드
+Android Studio 또는 JDK 17이 필요합니다. Firebase 설정과 사설 Maven 저장소 인증 정보는 저장소의 Gradle 설정을 따릅니다.
 
 ```bash
 ./gradlew assembleDebug
+./gradlew testDebugUnitTest
+python3 scripts/check_docs.py
 ```
 
-### 2. APK 설치
+디버그 APK는 `app/build/outputs/apk/debug/app-debug.apk`에 생성됩니다. 설치 후 앱의 안내에 따라 접근성 서비스와 다른 앱 위에 표시 권한을 허용해야 합니다. Android 13 이상에서는 알림 기능 사용 시 알림 권한도 필요합니다.
 
-```bash
-adb install app/build/outputs/apk/debug/app-debug.apk
+## 구조
+
+```text
+app/src/main/java/com/muuu/unshort/
+├── service/blocking/   # Shorts/Reels 감지, 세션 상태, 오버레이 제어
+├── feedblock/          # 홈 피드 감지와 차단
+├── timer/              # 폰 뒤집기와 대기 타이머 화면
+├── data/statistics/    # Room 기반 사용 통계
+├── premium/            # 구독 및 Lifetime Premium
+├── ad/                 # 광고 및 일일 즉시 해제 한도
+├── receiver/           # 리셋, 알림, 수면 모드 수신기
+└── ui/                 # 메인, 설정, 리포트, 다이얼로그
+affiliate/              # 제휴 배너 Android library 모듈
+documents/prd/          # 기능별 요구사항과 의사결정 기록
+scripts/                # 문서 검사와 운영 도구
 ```
 
-### 3. 권한 설정
+## 문서 안내
 
-앱 실행 후 다음 권한 활성화 필요:
+- [현재 제품 스펙](documents/SPEC.md): 현재 구현·출시 동작의 단일 진입점
+- [문서 운영 가이드](documents/README.md): 소유권, 업데이트 트리거, 리뷰 주기
+- [디자인 시스템](DESIGN_SYSTEM.md): 현재 UI 토큰과 구현 기준
+- [PRD](documents/prd/): 기능 요구사항. 구현 완료 여부는 각 문서 상태를 확인
+- [운영 스크립트](scripts/README.md): 프로모션 코드 도구
 
-1. **접근성 서비스**: 설정 > 접근성 > ShortBlock 활성화
-2. **다른 앱 위에 그리기**: 설정 > 특수 앱 액세스 > ShortBlock 허용
-
-## 프로젝트 구조
-
-```
-app/src/main/
-├── java/com/shortblock/
-│   ├── MainActivity.kt              # 메인 액티비티 (설정 화면)
-│   ├── ShortsBlockService.kt        # Accessibility Service (앱 감지)
-│   ├── BlockOverlay.kt              # 차단 오버레이 UI + 타이머
-│   └── FlipDetector.kt              # 가속도계 센서 처리
-├── res/
-│   ├── layout/
-│   │   ├── activity_main.xml        # 메인 화면 레이아웃
-│   │   └── overlay_flip_phone.xml   # 오버레이 레이아웃
-│   ├── values/
-│   │   └── strings.xml              # 문자열 리소스
-│   └── xml/
-│       └── accessibility_service_config.xml  # 접근성 서비스 설정
-└── AndroidManifest.xml
-```
-
-## 주요 클래스 설명
-
-### FlipDetector.kt
-- 가속도계 센서로 폰 방향 감지
-- Z축 가속도 < -8.0 = 폰이 뒤집힌 상태
-- 리스너 패턴으로 상태 변화 전달
-
-### BlockOverlay.kt
-- WindowManager로 시스템 레벨 오버레이 생성
-- CountDownTimer로 30초 카운트다운
-- FlipDetector와 연동하여 폰이 뒤집혔을 때만 타이머 진행
-
-### ShortsBlockService.kt
-- AccessibilityService 상속
-- YouTube/Instagram 앱 모니터링
-- View ID와 텍스트 기반으로 쇼츠 화면 감지
-- 감지 시 BlockOverlay 표시
-
-## 개선 아이디어
-
-### 차단 강화
-- [ ] 동기부여 영상 강제 시청
-- [ ] 팔굽혀펴기/스쿼트 동작 인식
-- [ ] 친구에게 알림 (공개 처형)
-- [ ] 목표 실패 시 기부금 차감
-
-### 동기부여
-- [ ] 절약한 시간 통계
-- [ ] 스트릭(연속 달성) 시스템
-- [ ] 뱃지 및 레벨 시스템
-- [ ] 친구와 경쟁 모드
-
-### UX 개선
-- [ ] 차단 강도 선택 (Soft/Medium/Hard)
-- [ ] 시간대별 차단 설정
-- [ ] 앱별 개별 설정
-- [ ] 다크 모드
+기능 개발 시 현재 동작은 제품 스펙에 반영하고, 결정 배경은 PRD에 남깁니다. 문서와 코드를 함께 바꾸는 규칙 및 자동 검사는 [문서 운영 가이드](documents/README.md)에 정의되어 있습니다.
 
 ## 주의사항
 
-- **접근성 권한**은 민감한 권한이므로 사용자 동의 필수
-- 앱 업데이트 시 View ID가 변경될 수 있어 지속적인 유지보수 필요
-- 완벽한 차단은 불가능 (사용자가 서비스 비활성화 가능)
+- 접근성 서비스는 민감한 권한이므로 수집 범위와 사용자 안내를 함께 검토합니다.
+- 외부 앱의 화면 구조가 바뀌면 감지 레지스트리와 관련 문서를 같은 PR에서 갱신합니다.
+- 릴리스 빌드와 배포에는 별도 서명·서비스 인증 정보가 필요합니다. 비밀값을 문서나 새 소스 파일에 추가하지 않습니다.
 
 ## 라이선스
 
-MIT License
+저장소에 별도 라이선스 파일이 추가되기 전까지 라이선스가 명시적으로 부여된 것으로 간주하지 않습니다.

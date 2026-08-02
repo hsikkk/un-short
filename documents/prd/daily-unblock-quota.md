@@ -1,17 +1,19 @@
 # PRD: 일일 즉시 해제 한도 + 광고 충전 시스템
 
+> 이 문서는 기능 개발 당시의 요구사항과 결정 기록입니다. 현재 동작은 [현재 제품 스펙](../SPEC.md)을 기준으로 합니다.
+
 | 항목 | 값 |
 |---|---|
 | **문서 버전** | v1.2 |
 | **작성일** | 2026-05-06 |
-| **최종 수정일** | 2026-05-07 |
+| **최종 수정일** | 2026-08-02 |
 | **작성자** | hsikkk |
-| **상태** | Draft |
-| **타겟 릴리스** | un:short v2.1 |
+| **상태** | Implemented |
+| **릴리스 상태** | 현재 앱에 포함 |
 | **선행 의존성** | Muuu Ad SDK 0.2.0 (`MuuuRewardedAdLoader` 지원 확인됨) |
 | **통합 대상 기능** | 기존 프리미엄 "스크롤한 쇼츠만 차단" (`PREF_BLOCK_SCROLLED_ONLY`) |
 | **저장소** | SharedPreferences (`PreferencesManager`) — DataStore 미사용 |
-| **구현 plan** | `~/.claude/plans/1-2-floating-salamander.md` v3 |
+| **관련 구현** | `DailyUnblockQuotaManager`, `ShortsBlockOverlayActivity` |
 
 ---
 

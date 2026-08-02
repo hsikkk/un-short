@@ -1,53 +1,28 @@
-# Screenshot HTML Templates - Translation Status
+# Play Store 스크린샷 템플릿
 
-## Overview
-Screenshot HTML templates have been created for 14 languages plus Korean (original).
+- 상태: Active
+- 마지막 확인: 2026-08-02
+- 언어: 17개
+- 템플릿: 언어별 4개, 총 68개 HTML
 
-## Languages (15 total directories)
+`ko/`가 원본 템플릿이며 나머지 디렉터리는 번역본입니다. 각 언어에는 다음 화면이 있습니다.
 
-### Original
-- **ko** (Korean) - Source templates
+1. `01-problem.html`: 문제 제시
+2. `02-solution.html`: 타이머 기반 해결 방식
+3. `03-feature.html`: 핵심 기능
+4. `04-result.html`: 기대 효과
 
-### Translated (14 languages)
-1. **ar** (Arabic - ar) - 4 files
-2. **de** (German - de-DE) - 4 files
-3. **es** (Spanish - es-ES) - 4 files
-4. **fr** (French - fr-FR) - 4 files
-5. **hi** (Hindi - hi-IN) - 4 files
-6. **in** (Indonesian - in) - 4 files
-7. **it** (Italian - it-IT) - 4 files
-8. **ja** (Japanese - ja-JP) - 4 files
-9. **pt** (Portuguese - pt-BR) - 4 files
-10. **ru** (Russian - ru-RU) - 4 files
-11. **th** (Thai - th) - 4 files
-12. **tr** (Turkish - tr-TR) - 4 files
-13. **vi** (Vietnamese - vi) - 4 files
-14. **zh-cn** (Chinese Simplified - zh-CN) - 4 files
-15. **zh-tw** (Chinese Traditional - zh-TW) - 4 files
+## 지원 디렉터리
 
-## File Structure
-Each language directory contains 4 HTML files:
-- `01-problem.html` - Problem/pain point presentation
-- `02-solution.html` - Solution with 30-second timer
-- `03-feature.html` - Feature highlight with key question
-- `04-result.html` - Result/benefit showcase
+`ar`, `de`, `en`, `es`, `fr`, `hi`, `in`, `it`, `ja`, `ko`, `pt`, `ru`, `th`, `tr`, `vi`, `zh-cn`, `zh-tw`
 
-## Total Files Created
-- **68 HTML files** (17 directories × 4 files each, includes en directory)
-- **56 newly translated files** (14 languages × 4 files)
+## 생성
 
-## Translation Notes
-- All HTML structure and CSS kept identical to Korean source
-- Only text content translated (titles, messages, labels)
-- Brand name "un:short" unchanged across all languages
-- Emoji, numbers (2.5, 50+, 30, 1) unchanged
-- Color schemes and animations preserved
+Node.js 의존성을 설치한 뒤 `fastlane/design`에서 실행합니다.
 
-## Usage
-These templates are designed for:
-1. Google Play Store screenshot generation
-2. Automated localization testing
-3. Marketing material creation
-4. Multi-language A/B testing
+```bash
+npm ci
+node capture-screenshots-multilang.js
+```
 
-Generated: 2025-11-18
+번역이나 레이아웃을 바꾸면 17개 언어의 파일 수와 렌더링 결과를 함께 확인합니다. 생성된 이미지를 Play Store 메타데이터에 반영할 때는 locale 디렉터리 매핑도 확인합니다.

@@ -1,8 +1,10 @@
 # PRD: 프리미엄 — 차단 화면 즉시 닫기/즉시 보기
 
-> **Status:** Draft
+> 이 문서는 기능 개발 당시의 요구사항과 결정 기록입니다. 현재 동작은 [현재 제품 스펙](../SPEC.md)을 기준으로 합니다.
+
+> **Status:** Implemented
 > **Owner:** Product
-> **Last Updated:** 2026-05-17
+> **Last Updated:** 2026-08-02
 > **Related:** [feed-block.md](./feed-block.md), [daily-unblock-quota.md](./daily-unblock-quota.md)
 
 ---
@@ -51,9 +53,9 @@
 
 | 버튼 | 위치 | 파일:라인 | 현재 딜레이 |
 |------|------|-----------|-------------|
-| `"그만 볼래요"` (skip) | INITIAL 상태 | `app/src/main/java/com/muuu/unshort/ui/activity/ShortsBlockOverlayActivity.kt:242-265` | **2초** (`skipButtonCountdown = 2`) |
-| `"바로 보기"` (instant unblock) | INITIAL 상태 | 같은 파일 `:432-449` | **2초** (`instantUnblockCountdown = 2`) |
-| `"안볼래요" / "볼래요"` | CONFIRMATION 상태 (타이머 완료 후) | `:283-318` | 딜레이 없음 |
+| `"그만 볼래요"` (skip) | INITIAL 상태 | `ShortsBlockOverlayActivity.kt` | **2초** (`skipButtonCountdown = 2`) |
+| `"바로 보기"` (instant unblock) | INITIAL 상태 | 같은 파일 | **2초** (`instantUnblockCountdown = 2`) |
+| `"안볼래요" / "볼래요"` | CONFIRMATION 상태 (타이머 완료 후) | 같은 파일 | 딜레이 없음 |
 
 문자열 리소스:
 - `R.string.block_button_close_countdown` — `"Close (available in %1$ds)"`
@@ -63,8 +65,8 @@
 
 | 버튼 | 파일:라인 | 현재 딜레이 |
 |------|-----------|-------------|
-| `"계속 볼래요(OK)"` (continue) | `app/src/main/java/com/muuu/unshort/feedblock/overlay/FeedBlockOverlayActivity.kt:48-65, 191` | **5초** (`CONTINUE_DELAY_SECONDS = 5`) |
-| `"그만 볼래요(stop)"` | 같은 파일 `:142-153` | 딜레이 없음 |
+| `"계속 볼래요(OK)"` (continue) | `FeedBlockOverlayActivity.kt` | **5초** (`CONTINUE_DELAY_SECONDS = 5`) |
+| `"그만 볼래요(stop)"` | 같은 파일 | 딜레이 없음 |
 
 문자열 리소스:
 - `R.string.feed_block_overlay_continue_countdown` — `"Continue (%1$d)"`
@@ -107,11 +109,11 @@
 ### 6.1 영향 범위 (최소 diff)
 
 **파일 1: `ShortsBlockOverlayActivity.kt`**
-- `startSkipButtonCountdown()` (`:242`) 진입부에서 `PremiumManager.isPremium()` 체크 → true면 카운트다운 스킵하고 버튼을 즉시 활성화 상태로 세팅 후 return.
-- `startInstantUnblockCountdown()` (`:432`) 동일 패턴.
+- `startSkipButtonCountdown()` 진입부에서 프리미엄 여부를 확인해 카운트다운을 건너뛴다.
+- `startInstantUnblockCountdown()`도 동일한 정책을 사용한다.
 
 **파일 2: `FeedBlockOverlayActivity.kt`**
-- `renderUi()` (`:122-158`) 내 카운트다운 시작부에서 `PremiumManager.isPremium()` 체크 → true면 `continueButton.isEnabled = true`, `alpha = 1f`, 텍스트 = `R.string.feed_block_overlay_continue`, `countdownHandler.post(...)` **호출하지 않음**.
+- `renderUi()`의 카운트다운 시작부에서 정책을 확인하고, 0초이면 버튼을 즉시 활성화한다.
 
 ### 6.2 헬퍼 함수 (권장)
 
@@ -129,7 +131,7 @@ object OverlayCountdownPolicy {
 
 ### 6.3 프리미엄 상태 캐싱
 
-`PremiumManager.isPremium()` (`app/src/main/java/com/muuu/unshort/premium/PremiumManager.kt:101`)은 `isPremiumCache` 메모리 값을 반환하므로 **오버레이 onCreate 시점 1회 호출로 충분**. 별도 비동기 처리 불필요.
+`PremiumManager.isPremium()`은 메모리 캐시 값을 반환하므로 **오버레이 onCreate 시점 1회 호출로 충분**하다. 별도 비동기 처리는 필요하지 않다.
 
 ### 6.4 프리미엄 상태 변경 중 화면이 떠있는 경우 (Edge)
 
@@ -145,7 +147,7 @@ object OverlayCountdownPolicy {
 |---|--------|------|
 | E1 | 프리미엄 활성 + 첫 진입 | 카운트다운 텍스트 없이 즉시 정상 라벨 노출 |
 | E2 | 프리미엄 해지 직후 첫 차단 | `isPremiumCache` 갱신 후 다음 진입부터 무료 정책 |
-| E3 | 타이머 완료 후 INITIAL로 돌아옴 (`onResume` `:632-635`) | INITIAL 재진입 시에도 프리미엄이면 즉시 활성화 |
+| E3 | 타이머 완료 후 `onResume`에서 INITIAL로 돌아옴 | INITIAL 재진입 시에도 프리미엄이면 즉시 활성화 |
 | E4 | 프로모 코드로 Lifetime Premium 활성화 | `PremiumManager.activatePromoCode` 가 캐시 갱신 → 다음 차단부터 적용 |
 | E5 | 디버그 빌드(`DummyPremiumProvider`) | 디버그 토글에 따라 정책 적용 — QA 시 활용 가능 |
 | E6 | `setupBottomActionUi()`의 `isFromScroll = true` 분기 | `instantUnblockButton`이 GONE 처리되는 기존 분기는 **유지**. 프리미엄이라도 스크롤 진입이면 노출하지 않는다 (별도 논의 전까지 현행 유지) |

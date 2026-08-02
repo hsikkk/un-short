@@ -1,14 +1,16 @@
 # PRD: 피드 기반 앱 스크롤 차단 (Feed Block)
 
+> 이 문서는 기능 개발 당시의 요구사항과 결정 기록입니다. 현재 동작은 [현재 제품 스펙](../SPEC.md)을 기준으로 합니다.
+
 | 항목 | 값 |
 |---|---|
 | **문서 버전** | v1.3 |
 | **작성일** | 2026-04-28 |
-| **최종 수정일** | 2026-05-03 |
+| **최종 수정일** | 2026-08-02 |
 | **작성자** | hsikkk |
-| **상태** | Draft |
-| **관련 PoC** | `~/Development/feedblock-poc/` (Instagram 홈피드 검증 완료) |
-| **타겟 릴리스** | un:short v2.0 (Beta 채널) |
+| **상태** | Implemented (Beta) |
+| **관련 구현** | `app/src/main/java/com/muuu/unshort/feedblock/` |
+| **릴리스 상태** | 현재 앱에 Beta 기능으로 포함 |
 
 ---
 
@@ -657,8 +659,7 @@ YouTube 홈피드는 `LifecyclePolicy.YouTubeGracePeriod(5분)` 정책 적용.
 
 ## 13. 참고 자료
 
-- PoC 프로젝트: `~/Development/feedblock-poc/`
-- PoC 검증 로그: 2026-04-28 Instagram 홈피드 누적 14,775px 도달 → BlockOverlayActivity 자동 호출 확인
+- PoC 검증 기록: 2026-04-28 Instagram 홈피드 누적 14,775px 도달 후 오버레이 자동 호출 확인
 - 기존 쇼츠 차단 구현: `app/src/main/java/com/muuu/unshort/ShortsBlockService.kt`
 - AppBlockingRegistry: `app/src/main/java/com/muuu/unshort/service/blocking/AppBlockingRegistry.kt`
 - un:short 디자인 시스템: `CLAUDE.md`, `DESIGN_SYSTEM.md`
