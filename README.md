@@ -17,7 +17,7 @@ un:short는 짧은 영상과 무한 피드 소비에 의도적인 마찰을 추�
 
 <!-- docs-sync:start -->
 - Application ID: `com.muuu.unshort`
-- 버전: `1.9.0` (`versionCode 33`)
+- 버전: `1.10.0` (`versionCode 34`)
 - Android SDK: `minSdk 26`, `targetSdk 35`, `compileSdk 35`
 - JVM: Java 17
 - 모듈: `:app`, `:affiliate`
