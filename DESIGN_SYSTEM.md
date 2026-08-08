@@ -29,6 +29,8 @@
 
 기본 글꼴은 `@font/spoqa_sans_neo`입니다. 텍스트 크기와 굵기는 화면의 정보 계층에 맞추되, 공통 값이 반복되면 먼저 style/resource로 승격합니다.
 
+pen.dev 기준 디자인은 로컬 Spoqa Sans Neo를 직접 렌더링하지 못하므로 `Inter`를 시각적 대체 폰트로 사용합니다. Android 구현에서는 항상 `@font/spoqa_sans_neo`를 유지하며, 폰트 차이로 생기는 줄바꿈과 높이는 실제 앱에서 최종 확인합니다.
+
 ## 컴포넌트 기준
 
 - 버튼: `Widget.App.Button`을 기본으로 사용하며 최소 48dp 터치 영역을 확보한다.

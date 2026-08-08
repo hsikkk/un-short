@@ -17,6 +17,7 @@
 | 피드 차단 대상 앱 | `FeedTargetRegistry.kt` | `SPEC.md`, `README.md`, 관련 PRD |
 | 권한과 Android component | `AndroidManifest.xml` | `SPEC.md`, 관련 PRD |
 | 색상, 폰트, 공통 style | `app/src/main/res/values/` | `DESIGN_SYSTEM.md` |
+| 주요 화면의 시각적 기준 | `design/unshort.pen` | `design/SCREEN_INVENTORY.md` |
 | 출시 변경 사항 | `ChangelogData.kt`와 string resource | README의 현재 버전 |
 | 제품 정책과 배경 | `documents/prd/` | 구현 코드와 테스트 |
 
@@ -25,7 +26,7 @@
 ## 변경 워크플로
 
 1. 코드 변경 전에 위 표에서 영향을 받는 문서를 찾습니다.
-2. 사용자 동작이 바뀌면 구현과 `SPEC.md`를 같은 PR에서 수정합니다. 결정 배경이 필요하면 PRD도 수정하고, 아직 구현되지 않은 내용은 `Draft` 또는 `Proposed`로 표시합니다.
+2. 사용자 동작이 바뀌면 구현과 `SPEC.md`를 같은 PR에서 수정합니다. 화면이 바뀌면 `design/unshort.pen` 또는 관련 프로토타입도 검토합니다. 결정 배경이 필요하면 PRD도 수정하고, 아직 구현되지 않은 내용은 `Draft` 또는 `Proposed`로 표시합니다.
 3. `python3 scripts/check_docs.py`를 실행해 링크, 로컬 경로, SPEC/README의 코드 기반 정보를 검사합니다.
 4. PR 템플릿의 문서 영향 항목을 작성합니다. 영향이 없다면 이유를 한 줄 남깁니다.
 5. 리뷰어는 코드의 단일 기준과 문서 설명을 함께 비교합니다.

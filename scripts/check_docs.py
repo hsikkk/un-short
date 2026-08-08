@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -143,12 +144,61 @@ def check_document_structure(errors: list[str]) -> None:
             errors.append(f"{prd.relative_to(ROOT)}: recognized document status is missing")
 
 
+def check_design_baseline(errors: list[str]) -> None:
+    design_path = ROOT / "design/unshort.pen"
+    if not design_path.exists():
+        errors.append("required canonical design is missing: design/unshort.pen")
+        return
+    try:
+        design = json.loads(read(design_path))
+    except json.JSONDecodeError as error:
+        errors.append(f"design/unshort.pen: invalid JSON: {error}")
+        return
+
+    top_level = {node.get("name"): node for node in design.get("children", [])}
+    required_boards = ["Foundations / Current", "Components / Current"]
+    required_screens = [
+        "Main / Blocking On",
+        "Permission Setup",
+        "Shorts Block / Initial",
+        "Settings",
+        "Report / Daily",
+        "Premium Upgrade",
+    ]
+    required_full_scroll_screens = [
+        "Settings / Full Scroll",
+        "Report / Full Scroll",
+        "Premium Upgrade / Full Scroll",
+    ]
+    for name in required_boards + required_screens + required_full_scroll_screens:
+        if name not in top_level:
+            errors.append(f"design/unshort.pen: required top-level frame is missing: {name}")
+    for name in required_screens:
+        screen = top_level.get(name, {})
+        if screen and (screen.get("width"), screen.get("height")) != (412, 915):
+            errors.append(f"design/unshort.pen: {name} must remain 412x915")
+    for name in required_full_scroll_screens:
+        screen = top_level.get(name, {})
+        if screen and (screen.get("width") != 412 or screen.get("height", 0) <= 915):
+            errors.append(f"design/unshort.pen: {name} must remain 412px wide and taller than 915px")
+    def walk(node: object):
+        if isinstance(node, dict):
+            yield node
+            for child in node.get("children", []):
+                yield from walk(child)
+
+    reusable_count = sum(1 for node in walk(design) if node.get("reusable") is True)
+    if reusable_count < 8:
+        errors.append("design/unshort.pen: reusable component library is unexpectedly incomplete")
+
+
 def main() -> int:
     errors: list[str] = []
     check_current_facts(errors)
     check_links(errors)
     check_portability(errors)
     check_document_structure(errors)
+    check_design_baseline(errors)
     if errors:
         print("Documentation checks failed:")
         for error in errors:

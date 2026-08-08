@@ -57,6 +57,7 @@ scripts/                # 문서 검사와 운영 도구
 - [현재 제품 스펙](documents/SPEC.md): 현재 구현·출시 동작의 단일 진입점
 - [문서 운영 가이드](documents/README.md): 소유권, 업데이트 트리거, 리뷰 주기
 - [디자인 시스템](DESIGN_SYSTEM.md): 현재 UI 토큰과 구현 기준
+- [pen.dev 디자인 워크플로](design/README.md): 기준 디자인과 프로토타이핑 절차
 - [PRD](documents/prd/): 기능 요구사항. 구현 완료 여부는 각 문서 상태를 확인
 - [운영 스크립트](scripts/README.md): 프로모션 코드 도구
 
