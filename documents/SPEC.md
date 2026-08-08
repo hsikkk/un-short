@@ -1,7 +1,7 @@
 # un:short 현재 제품 스펙
 
 - 상태: Current
-- 대상 버전: `1.10.0` (`versionCode 34`)
+- 대상 버전: `1.10.1` (`versionCode 35`)
 - 마지막 코드 대조: 2026-08-02
 - 범위: 현재 저장소에 구현된 Android 앱 동작
 
@@ -13,7 +13,7 @@ un:short는 짧은 영상과 무한 피드 진입을 감지하고 의도적인 �
 
 ## 2. 지원 환경과 대상
 
-- 플랫폼: Android `minSdk 26`, `targetSdk 35`
+- 플랫폼: Android `minSdk 26`, `targetSdk 36`
 - Shorts/Reels 대상: `YouTube Shorts`, `Instagram Reels`, `Facebook Reels`, `Naver Shorts`, `TikTok Shorts`
 - 홈 피드 대상(Beta): `Instagram`, `YouTube`, `Threads`, `Facebook`
 - 홈 피드 Beta 기본 상태: `OFF`

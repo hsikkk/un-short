@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.muuu.unshort"
-    compileSdk = 35
+    compileSdk = 36
 
     signingConfigs {
         create("release") {
@@ -22,9 +22,9 @@ android {
     defaultConfig {
         applicationId = "com.muuu.unshort"
         minSdk = 26
-        targetSdk = 35
-        versionCode = 34
-        versionName = "1.10.0"
+        targetSdk = 36
+        versionCode = 35
+        versionName = "1.10.1"
     }
 
     buildTypes {

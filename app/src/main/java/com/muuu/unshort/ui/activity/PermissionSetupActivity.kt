@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
 import com.muuu.unshort.prefs.PreferencesManager
@@ -82,6 +83,13 @@ class PermissionSetupActivity : BaseActivity() {
             }
         }
 
+        // Android 16 predictive back 지원: 구식 onBackPressed() 대신 dispatcher 사용
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (!fromOnboarding) finish()
+            }
+        })
+
         // 접근성 Enable Permission 버튼 - 다이얼로그 → 동의 → 설정 이동
         settingsButton?.setOnClickListener {
             showAccessibilityConsentDialog()
@@ -118,15 +126,6 @@ class PermissionSetupActivity : BaseActivity() {
         super.onResume()
         detectPermissionTransitions()
         updatePermissionUI()
-    }
-
-    override fun onBackPressed() {
-        if (fromOnboarding) {
-            // 온보딩에서 진입한 경우 뒤로가기 무시
-            // 사용자가 권한 설정을 건너뛰려면 완료 버튼을 사용해야 함
-        } else {
-            super.onBackPressed()
-        }
     }
 
     private fun updatePermissionUI() {
