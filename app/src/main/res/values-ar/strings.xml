@@ -397,6 +397,7 @@
     <string name="changelog_title">تحديث v%s</string>
     <string name="changelog_subtitle">اكتشف ما الجديد</string>
     <string name="changelog_confirm">حسناً</string>
+    <string name="changelog_v1_10_0_item1">تمت إضافة إعداد لإظهار زر «المشاهدة الآن» أو إخفائه</string>
     <string name="changelog_v1_9_0_item1">إصلاح الأخطاء وتحسين الاستقرار</string>
     <string name="changelog_v1_8_2_item1">إصلاح الحجب الخاطئ المتكرر أثناء تشغيل نفس الفيديو</string>
     <string name="changelog_v1_8_2_item2">إصلاح الحجب الخاطئ في علامة تبويب \'Shorts\' بملف قناة YouTube</string>

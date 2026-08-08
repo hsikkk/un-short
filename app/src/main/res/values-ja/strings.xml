@@ -397,6 +397,7 @@
     <string name="changelog_title">v%s アップデート</string>
     <string name="changelog_subtitle">新機能・変更点を確認</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_10_0_item1">「今すぐ見る」ボタンの表示・非表示設定を追加</string>
     <string name="changelog_v1_9_0_item1">バグ修正と安定性の向上</string>
     <string name="changelog_v1_8_2_item1">同じ動画の再生中に再ブロックされる誤検知を修正</string>
     <string name="changelog_v1_8_2_item2">YouTubeチャンネルプロフィールの\'Shorts\'タブの誤検知を修正</string>

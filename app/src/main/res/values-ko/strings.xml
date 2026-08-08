@@ -398,6 +398,7 @@
     <string name="changelog_title">v%s 업데이트</string>
     <string name="changelog_subtitle">새로운 변경사항을 확인해보세요</string>
     <string name="changelog_confirm">확인</string>
+    <string name="changelog_v1_10_0_item1">\"바로 보기\" 버튼 표시 여부 설정 추가</string>
     <string name="changelog_v1_9_0_item1">버그 수정 및 안정성 개선</string>
     <string name="changelog_v1_8_2_item1">같은 영상 재생 중 재차단되는 오탐지 해결</string>
     <string name="changelog_v1_8_2_item2">YouTube 채널 프로필 \'Shorts\' 탭 오탐지 해결</string>

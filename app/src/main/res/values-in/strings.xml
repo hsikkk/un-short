@@ -398,6 +398,7 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="changelog_title">Pembaruan v%s</string>
     <string name="changelog_subtitle">Lihat apa yang baru</string>
     <string name="changelog_confirm">Oke</string>
+    <string name="changelog_v1_10_0_item1">Menambahkan pengaturan untuk menampilkan atau menyembunyikan tombol “Tonton sekarang”</string>
     <string name="changelog_v1_9_0_item1">Perbaikan bug dan peningkatan stabilitas</string>
     <string name="changelog_v1_8_2_item1">Memperbaiki pemblokiran palsu saat memutar ulang video yang sama</string>
     <string name="changelog_v1_8_2_item2">Memperbaiki pemblokiran palsu di tab \'Shorts\' profil channel YouTube</string>

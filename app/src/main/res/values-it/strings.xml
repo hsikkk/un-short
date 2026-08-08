@@ -397,6 +397,7 @@
     <string name="changelog_title">Aggiornamento v%s</string>
     <string name="changelog_subtitle">Scopri le novità</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_10_0_item1">Aggiunta un’impostazione per mostrare o nascondere il pulsante “Guarda ora”</string>
     <string name="changelog_v1_9_0_item1">Correzioni di bug e miglioramenti della stabilità</string>
     <string name="changelog_v1_8_2_item1">Risolto il blocco errato durante la riproduzione dello stesso video</string>
     <string name="changelog_v1_8_2_item2">Risolto il blocco errato nella scheda \'Shorts\' del profilo del canale YouTube</string>

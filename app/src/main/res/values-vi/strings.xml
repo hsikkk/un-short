@@ -397,6 +397,7 @@
     <string name="changelog_title">Cập nhật v%s</string>
     <string name="changelog_subtitle">Xem những điểm mới</string>
     <string name="changelog_confirm">Đồng ý</string>
+    <string name="changelog_v1_10_0_item1">Đã thêm tùy chọn hiển thị hoặc ẩn nút “Xem ngay”</string>
     <string name="changelog_v1_9_0_item1">Sửa lỗi và cải thiện độ ổn định</string>
     <string name="changelog_v1_8_2_item1">Sửa lỗi chặn lại sai khi phát cùng một video</string>
     <string name="changelog_v1_8_2_item2">Sửa lỗi chặn sai ở tab \'Shorts\' trong hồ sơ kênh YouTube</string>

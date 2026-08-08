@@ -396,6 +396,7 @@
     <string name="changelog_title">v%s अपडेट</string>
     <string name="changelog_subtitle">नया क्या है देखें</string>
     <string name="changelog_confirm">ठीक है</string>
+    <string name="changelog_v1_10_0_item1">“अभी देखें” बटन दिखाने या छिपाने की सेटिंग जोड़ी गई</string>
     <string name="changelog_v1_9_0_item1">बग सुधार और स्थिरता में सुधार</string>
     <string name="changelog_v1_8_2_item1">एक ही वीडियो दोबारा चलाने पर गलत ब्लॉकिंग ठीक की</string>
     <string name="changelog_v1_8_2_item2">YouTube चैनल प्रोफ़ाइल के \'Shorts\' टैब पर गलत ब्लॉकिंग ठीक की</string>
