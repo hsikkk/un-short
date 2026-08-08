@@ -81,6 +81,8 @@
     <string name="settings_notification_time_desc">Imposta l\'orario di ricezione del rapporto</string>
     <string name="settings_block_scrolled_title">Blocca solo gli Shorts scorsi</string>
     <string name="settings_block_scrolled_desc">Consenti il primo shorts, blocca allo scorrimento</string>
+    <string name="settings_instant_unblock_title">Attiva Guarda ora</string>
+    <string name="settings_instant_unblock_desc">Guarda gli Shorts necessari direttamente dalla schermata di blocco</string>
     <string name="settings_prevent_disable_title">Previeni disattivazione impulsiva</string>
     <string name="settings_prevent_disable_desc">Previeni disattivazione involontaria</string>
     <string name="settings_feedback">Invia feedback</string>

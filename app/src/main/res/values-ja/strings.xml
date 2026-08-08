@@ -81,6 +81,8 @@
     <string name="settings_notification_time_desc">レポートを受け取る時刻を設定</string>
     <string name="settings_block_scrolled_title">スクロールしたShortsのみブロック</string>
     <string name="settings_block_scrolled_desc">最初のショート動画は許可し、スクロール時にブロック</string>
+    <string name="settings_instant_unblock_title">すぐに見るを有効化</string>
+    <string name="settings_instant_unblock_desc">ブロック画面から必要なShortsをすぐに視聴</string>
     <string name="settings_prevent_disable_title">衝動的な無効化を防止</string>
     <string name="settings_prevent_disable_desc">意図しない無効化を防止</string>
     <string name="settings_feedback">フィードバックを送信</string>

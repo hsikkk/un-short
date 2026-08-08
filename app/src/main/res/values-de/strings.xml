@@ -81,6 +81,8 @@
     <string name="settings_notification_time_desc">Zeit für den Erhalt des Berichts festlegen</string>
     <string name="settings_block_scrolled_title">Nur gescrollte Shorts blockieren</string>
     <string name="settings_block_scrolled_desc">Erstes Short erlauben, beim Scrollen blockieren</string>
+    <string name="settings_instant_unblock_title">Sofort ansehen aktivieren</string>
+    <string name="settings_instant_unblock_desc">Benötigte Shorts direkt vom Sperrbildschirm ansehen</string>
     <string name="settings_prevent_disable_title">Impulsives Deaktivieren verhindern</string>
     <string name="settings_prevent_disable_desc">Unbeabsichtigtes Deaktivieren verhindern</string>
     <string name="settings_feedback">Feedback senden</string>

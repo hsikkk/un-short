@@ -88,6 +88,11 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(AppConstants.PREF_BLOCK_SCROLLED_ONLY, false)
         set(value) = prefs.edit().putBoolean(AppConstants.PREF_BLOCK_SCROLLED_ONLY, value).apply()
 
+    /** 차단 화면의 "바로 보기" 버튼 노출 여부. 기존 동작 보존을 위해 기본값은 ON. */
+    var isInstantUnblockEnabled: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_INSTANT_UNBLOCK_ENABLED, true)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_INSTANT_UNBLOCK_ENABLED, value).apply()
+
     var isPreventImpulsiveDisable: Boolean
         get() = prefs.getBoolean(AppConstants.PREF_PREVENT_IMPULSIVE_DISABLE, false)
         set(value) = prefs.edit().putBoolean(AppConstants.PREF_PREVENT_IMPULSIVE_DISABLE, value).apply()

@@ -69,6 +69,8 @@
     <string name="settings_notification_time_desc">Set the time to receive daily report</string>
     <string name="settings_block_scrolled_title">Block Scrolled Shorts Only</string>
     <string name="settings_block_scrolled_desc">Allow first shorts, block on scroll</string>
+    <string name="settings_instant_unblock_title">Enable Watch Now</string>
+    <string name="settings_instant_unblock_desc">Watch needed Shorts directly from the block screen</string>
     <string name="settings_prevent_disable_title">Prevent Impulsive Disable</string>
     <string name="settings_prevent_disable_desc">Prevent unintended disable</string>
     <string name="settings_feedback">Send Feedback</string>

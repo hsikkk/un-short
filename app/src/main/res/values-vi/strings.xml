@@ -81,6 +81,8 @@
     <string name="settings_notification_time_desc">Đặt thời gian nhận báo cáo</string>
     <string name="settings_block_scrolled_title">Chỉ chặn Shorts đã cuộn</string>
     <string name="settings_block_scrolled_desc">Cho phép shorts đầu tiên, chặn khi cuộn</string>
+    <string name="settings_instant_unblock_title">Bật Xem ngay</string>
+    <string name="settings_instant_unblock_desc">Xem Shorts cần thiết trực tiếp từ màn hình chặn</string>
     <string name="settings_prevent_disable_title">Ngăn tắt bốc đồng</string>
     <string name="settings_prevent_disable_desc">Ngăn tắt không chủ ý</string>
     <string name="settings_feedback">Gửi phản hồi</string>

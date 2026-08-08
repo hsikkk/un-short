@@ -81,6 +81,8 @@
     <string name="settings_notification_time_desc">리포트 수신 시간 설정</string>
     <string name="settings_block_scrolled_title">스크롤한 쇼츠만 차단</string>
     <string name="settings_block_scrolled_desc">첫 번째 쇼츠는 허용, 스크롤 시 차단</string>
+    <string name="settings_instant_unblock_title">바로 보기 활성화</string>
+    <string name="settings_instant_unblock_desc">차단 화면에서 필요한 쇼츠를 바로 시청</string>
     <string name="settings_prevent_disable_title">충동적 차단 비활성화 방지</string>
     <string name="settings_prevent_disable_desc">차단 해제 시 확인 문구 입력 필요</string>
     <string name="settings_feedback">피드백 보내기</string>

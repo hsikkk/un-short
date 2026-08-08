@@ -454,11 +454,12 @@ class ShortsBlockOverlayActivity : BaseActivity() {
      * 차단 화면 하단 "바로 보기" 노출 결정
      *
      * - 스크롤 진입: GONE
-     * - 클릭 진입: 노출 + N초 카운트다운
+     * - 클릭 진입 + 설정 ON: 노출 + N초 카운트다운
+     * - 설정 OFF: 버튼 숨김 (일일 한도는 보존)
      * 잔여 횟수 텍스트는 노출하지 않음. 한도 도달 시점도 별도 표기 X (클릭 시 다이얼로그로 처리).
      */
     private fun setupBottomActionUi() {
-        if (isFromScroll || overlayType == OverlayType.CONFIRMATION) {
+        if (isFromScroll || overlayType == OverlayType.CONFIRMATION || !prefsManager.isInstantUnblockEnabled) {
             instantUnblockButton.visibility = View.GONE
             return
         }

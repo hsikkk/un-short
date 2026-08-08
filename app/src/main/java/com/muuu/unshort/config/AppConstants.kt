@@ -40,6 +40,7 @@ object AppConstants {
     const val PREF_WAIT_TIME = "wait_time"
     const val PREF_HAPTIC_ENABLED = "haptic_enabled"
     const val PREF_BLOCK_SCROLLED_ONLY = "block_scrolled_only"
+    const val PREF_INSTANT_UNBLOCK_ENABLED = "instant_unblock_enabled"
     const val PREF_PREVENT_IMPULSIVE_DISABLE = "prevent_impulsive_disable"
     const val PREF_CUSTOM_MESSAGE_BEFORE_TIMER = "custom_message_before_timer"
     const val PREF_CUSTOM_MESSAGE_AFTER_TIMER = "custom_message_after_timer"

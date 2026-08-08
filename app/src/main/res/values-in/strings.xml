@@ -83,6 +83,8 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="settings_notification_time_desc">Atur waktu penerimaan laporan</string>
     <string name="settings_block_scrolled_title">Blokir Hanya Shorts yang Digulir</string>
     <string name="settings_block_scrolled_desc">Izinkan shorts pertama, blokir saat digulir</string>
+    <string name="settings_instant_unblock_title">Aktifkan Tonton Sekarang</string>
+    <string name="settings_instant_unblock_desc">Tonton Shorts yang diperlukan langsung dari layar pemblokiran</string>
     <string name="settings_prevent_disable_title">Cegah Penonaktifan Impulsif</string>
     <string name="settings_prevent_disable_desc">Cegah penonaktifan yang tidak disengaja</string>
     <string name="settings_feedback">Kirim Masukan</string>

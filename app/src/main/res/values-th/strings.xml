@@ -81,6 +81,8 @@
     <string name="settings_notification_time_desc">ตั้งเวลารับรายงาน</string>
     <string name="settings_block_scrolled_title">บล็อกเฉพาะ Shorts ที่เลื่อนแล้ว</string>
     <string name="settings_block_scrolled_desc">อนุญาตวิดีโอสั้นแรก บล็อกเมื่อเลื่อน</string>
+    <string name="settings_instant_unblock_title">เปิดใช้ดูทันที</string>
+    <string name="settings_instant_unblock_desc">ดู Shorts ที่ต้องการได้โดยตรงจากหน้าจอบล็อก</string>
     <string name="settings_prevent_disable_title">ป้องกันการปิดโดยไม่ตั้งใจ</string>
     <string name="settings_prevent_disable_desc">ป้องกันการปิดโดยไม่ได้ตั้งใจ</string>
     <string name="settings_feedback">ส่งความคิดเห็น</string>

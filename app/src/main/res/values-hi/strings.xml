@@ -81,6 +81,8 @@
     <string name="settings_notification_time_desc">रिपोर्ट प्राप्त करने का समय सेट करें</string>
     <string name="settings_block_scrolled_title">केवल स्क्रॉल किए गए Shorts को ब्लॉक करें</string>
     <string name="settings_block_scrolled_desc">पहले Shorts की अनुमति दें, स्क्रॉल पर ब्लॉक करें</string>
+    <string name="settings_instant_unblock_title">अभी देखें चालू करें</string>
+    <string name="settings_instant_unblock_desc">ब्लॉक स्क्रीन से ज़रूरी Shorts सीधे देखें</string>
     <string name="settings_prevent_disable_title">आवेगपूर्ण अक्षम करने को रोकें</string>
     <string name="settings_prevent_disable_desc">अनजाने में अक्षम होने से रोकें</string>
     <string name="settings_feedback">फीडबैक भेजें</string>

@@ -42,8 +42,8 @@ class SettingsActivity : BaseActivity() {
     private lateinit var waitTimeItem: LinearLayout
     private lateinit var hapticSwitch: Switch
     private lateinit var hapticItem: LinearLayout
-    private lateinit var allowFirstSwitch: Switch
-    private lateinit var allowFirstItem: LinearLayout
+    private lateinit var instantUnblockSwitch: Switch
+    private lateinit var instantUnblockItem: LinearLayout
     private lateinit var preventDisableSwitch: Switch
     private lateinit var preventDisableItem: LinearLayout
     private lateinit var deviceAdminSwitch: Switch
@@ -55,7 +55,6 @@ class SettingsActivity : BaseActivity() {
     private lateinit var versionItem: LinearLayout
     private lateinit var versionText: TextView
     private lateinit var waitTimeProBadge: TextView
-    private lateinit var allowFirstProBadge: TextView
     private lateinit var preventDisableProBadge: TextView
     private lateinit var deviceAdminProBadge: TextView
     private lateinit var customMessageItem: LinearLayout
@@ -144,8 +143,8 @@ class SettingsActivity : BaseActivity() {
         waitTimeItem = findViewById(R.id.waitTimeItem)
         hapticSwitch = findViewById(R.id.hapticSwitch)
         hapticItem = findViewById(R.id.hapticItem)
-        allowFirstSwitch = findViewById(R.id.allowFirstSwitch)
-        allowFirstItem = findViewById(R.id.allowFirstItem)
+        instantUnblockSwitch = findViewById(R.id.instantUnblockSwitch)
+        instantUnblockItem = findViewById(R.id.instantUnblockItem)
         preventDisableSwitch = findViewById(R.id.preventDisableSwitch)
         preventDisableItem = findViewById(R.id.preventDisableItem)
         deviceAdminSwitch = findViewById(R.id.deviceAdminSwitch)
@@ -157,7 +156,6 @@ class SettingsActivity : BaseActivity() {
         versionItem = findViewById(R.id.versionItem)
         versionText = findViewById(R.id.versionText)
         waitTimeProBadge = findViewById(R.id.waitTimeProBadge)
-        allowFirstProBadge = findViewById(R.id.allowFirstProBadge)
         preventDisableProBadge = findViewById(R.id.preventDisableProBadge)
         deviceAdminProBadge = findViewById(R.id.deviceAdminProBadge)
         customMessageItem = findViewById(R.id.customMessageItem)
@@ -212,10 +210,14 @@ class SettingsActivity : BaseActivity() {
             hapticSwitch.isChecked = !hapticSwitch.isChecked
         }
 
-        // "스크롤한 쇼츠만 차단" 토글은 deprecate.
-        // 일일 즉시 해제 한도 시스템이 등가 효과(클릭 진입 시 "바로 보기"로 즉시 해제)를 자동 제공.
-        // 기존 사용자 데이터(prefsManager.isBlockScrolledOnly)는 SessionStateManager에서 그대로 사용.
-        allowFirstItem.visibility = View.GONE
+        // 바로 보기 토글
+        instantUnblockSwitch.isChecked = prefsManager.isInstantUnblockEnabled
+        instantUnblockSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prefsManager.isInstantUnblockEnabled = isChecked
+        }
+        instantUnblockItem.setOnClickListener {
+            instantUnblockSwitch.isChecked = !instantUnblockSwitch.isChecked
+        }
 
         // 충동적 해제 방지 설정 초기화
         preventDisableSwitch.isChecked = prefsManager.isPreventImpulsiveDisable
@@ -479,10 +481,9 @@ class SettingsActivity : BaseActivity() {
         customMessageProBadge.visibility = if (isPremium) android.view.View.GONE else android.view.View.VISIBLE
         customMessageItem.alpha = premiumAlpha
 
-        // 스크롤한 쇼츠만 차단
-        allowFirstSwitch.visibility = if (isPremium) android.view.View.VISIBLE else android.view.View.GONE
-        allowFirstProBadge.visibility = if (isPremium) android.view.View.GONE else android.view.View.VISIBLE
-        allowFirstItem.alpha = premiumAlpha
+        // 바로 보기 토글은 무료/프리미엄 공통 설정
+        instantUnblockSwitch.visibility = android.view.View.VISIBLE
+        instantUnblockItem.alpha = 1.0f
 
         // 충동적 해제 방지
         preventDisableSwitch.visibility = if (isPremium) android.view.View.VISIBLE else android.view.View.GONE

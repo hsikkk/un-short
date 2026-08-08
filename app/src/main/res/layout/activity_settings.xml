@@ -256,9 +256,9 @@
 
             </LinearLayout>
 
-            <!-- 스크롤한 쇼츠만 차단 -->
+            <!-- 바로 보기 -->
             <LinearLayout
-                android:id="@+id/allowFirstItem"
+                android:id="@+id/instantUnblockItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -278,7 +278,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/settings_block_scrolled_title"
+                        android:text="@string/settings_instant_unblock_title"
                         android:textSize="@dimen/text_body"
                         android:textColor="#000000"
                         android:fontFamily="@font/spoqa_sans_neo" />
@@ -286,7 +286,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/settings_block_scrolled_desc"
+                        android:text="@string/settings_instant_unblock_desc"
                         android:textSize="@dimen/text_caption"
                         android:textColor="#000000"
                         android:alpha="0.5"
@@ -295,24 +295,10 @@
                 </LinearLayout>
 
                 <Switch
-                    android:id="@+id/allowFirstSwitch"
+                    android:id="@+id/instantUnblockSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="false" />
-
-                <TextView
-                    android:id="@+id/allowFirstProBadge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PRO"
-                    android:textSize="10sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/spoqa_sans_neo_bold"
-                    android:textColor="@color/white"
-                    android:background="@drawable/bg_pro_badge"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="4dp"
-                    android:visibility="gone" />
+                    android:checked="true" />
 
             </LinearLayout>
 

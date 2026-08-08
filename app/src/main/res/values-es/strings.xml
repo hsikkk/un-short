@@ -81,6 +81,8 @@
     <string name="settings_notification_time_desc">Establecer hora para recibir informe</string>
     <string name="settings_block_scrolled_title">Bloquear solo Shorts desplazados</string>
     <string name="settings_block_scrolled_desc">Permitir primer shorts, bloquear al desplazar</string>
+    <string name="settings_instant_unblock_title">Activar ver ahora</string>
+    <string name="settings_instant_unblock_desc">Ver los Shorts necesarios directamente desde la pantalla de bloqueo</string>
     <string name="settings_prevent_disable_title">Prevenir desactivación impulsiva</string>
     <string name="settings_prevent_disable_desc">Prevenir desactivación no intencional</string>
     <string name="settings_feedback">Enviar comentarios</string>
