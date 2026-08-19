@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:layout_marginBottom="8dp"
+    android:background="#FAFAFA"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="12dp">
+
+    <CheckBox
+        android:id="@+id/taskLockCheck"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:buttonTint="#222222" />
+
+    <TextView
+        android:id="@+id/taskLockTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/spoqa_sans_neo_regular"
+        android:textColor="#222222"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/taskLockBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_sans_neo_medium"
+        android:padding="6dp"
+        android:text="@string/task_lock_badge"
+        android:textColor="#777777"
+        android:textSize="10sp" />
+
+    <ImageButton
+        android:id="@+id/taskLockDelete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/task_lock_delete"
+        android:padding="11dp"
+        android:src="@drawable/ic_close"
+        android:tint="#999999" />
+</LinearLayout>

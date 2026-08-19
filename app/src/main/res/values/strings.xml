@@ -518,4 +518,69 @@
     <string name="report_unblock_count_today">Unblocked today: %1$d</string>
     <string name="report_ads_watched_today">Ads watched today: %1$d</string>
 
+    <!-- Task Lock -->
+    <string name="task_lock_title">Tasks</string>
+    <string name="task_lock_today">Today</string>
+    <string name="task_lock_empty">No tasks yet.\nAdd one thing you want to finish first.</string>
+    <plurals name="task_lock_pending_summary">
+        <item quantity="one">%d locking task left</item>
+        <item quantity="other">%d locking tasks left</item>
+    </plurals>
+    <string name="task_lock_badge">LOCK</string>
+    <string name="task_lock_add_title">Add task</string>
+    <string name="task_lock_title_hint">e.g. Read 10 pages</string>
+    <string name="task_lock_until_complete">Block Shorts until complete</string>
+    <string name="task_lock_save">Save</string>
+    <string name="task_lock_title_required">Enter a task</string>
+    <string name="task_lock_delete_title">Delete this task?</string>
+    <string name="task_lock_delete">Delete</string>
+    <string name="task_lock_overlay_title">Finish your tasks first</string>
+    <plurals name="task_lock_overlay_summary">
+        <item quantity="one">%d task left</item>
+        <item quantity="other">%d tasks left</item>
+    </plurals>
+    <string name="task_lock_overlay_close">Close Shorts and do tasks</string>
+    <string name="task_lock_postpone">Watch an ad to postpone 30 min · %d left</string>
+    <string name="task_lock_postpone_premium">Postpone 30 min · %d left</string>
+    <string name="task_lock_postpone_started">Task lock postponed for 30 minutes</string>
+    <string name="task_lock_postpone_unavailable">No postpones left today</string>
+    <string name="task_lock_complete_title">Mark complete?</string>
+    <string name="task_lock_all_complete">All tasks complete. Returning to the regular block screen.</string>
+    <string name="task_lock_repeat_label">Repeat</string>
+    <string-array name="task_lock_repeat_options"><item>Once</item><item>Daily</item><item>Weekdays</item></string-array>
+    <string name="task_lock_verification_label">Completion check</string>
+    <string-array name="task_lock_verification_options"><item>Check myself</item><item>Take a photo</item><item>On-device AI photo check (Beta)</item></string-array>
+    <string name="task_verification_heading">Show what you completed</string>
+    <string name="task_verification_photo_description">Task completion photo</string>
+    <string name="task_verification_photo_ready">Photo captured. Confirm it yourself to complete the task.</string>
+    <string name="task_verification_ai_checking">Checking this photo on your device…</string>
+    <string name="task_verification_ai_verified">This looks relevant to the task.</string>
+    <string name="task_verification_ai_not_verified">This photo does not clearly show the task. Try another photo.</string>
+    <string name="task_verification_ai_fallback">AI checking is unavailable or uncertain. Confirm this photo yourself.</string>
+    <string name="task_verification_capture_cancelled">No photo was captured.</string>
+    <string name="task_verification_retry">Retake</string>
+    <string name="task_verification_complete">Complete</string>
+    <string name="task_lock_repeat_daily">DAILY</string>
+    <string name="task_lock_repeat_weekdays">WEEKDAYS</string>
+    <string name="task_lock_open_report">View the last 7 days →</string>
+    <string name="task_lock_report_title">Task Lock report</string>
+    <string name="task_lock_report_period">Last 7 days</string>
+    <string name="task_lock_report_completed">Done</string>
+    <string name="task_lock_report_blocked">Blocked</string>
+    <string name="task_lock_report_postponed">Postponed</string>
+    <string name="task_lock_report_ai">AI checks</string>
+    <string name="task_lock_report_history">Daily history</string>
+    <string name="task_lock_report_day_row">%1$s  ·  %2$d done  ·  %3$d blocked</string>
+    <string name="task_lock_report_privacy">Photos are processed on device and discarded after confirmation. Task titles and photos are not included in analytics.</string>
+    <string name="task_lock_delete_friction">This unfinished task is keeping Shorts locked. Deletion will be available in 5 seconds.</string>
+    <string name="task_lock_delete_normal">This cannot be undone.</string>
+    <string name="task_lock_delete_countdown">Delete (%d)</string>
+    <string name="task_lock_add_subtitle">Choose what must be done before Shorts.</string>
+    <string name="task_lock_start_label">Start blocking</string>
+    <string name="task_lock_start_now">Now</string>
+    <string name="task_lock_start_scheduled">At a set time</string>
+    <string name="task_lock_starts_at">STARTS %s</string>
+    <string name="task_lock_edit_title">Edit task</string>
+    <string name="task_lock_update">Update</string>
+
 </resources>

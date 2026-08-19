@@ -519,4 +519,62 @@
     <string name="report_unblock_count_today">오늘 차단 해제: %1$d회</string>
     <string name="report_ads_watched_today">오늘 광고 시청: %1$d편</string>
 
+    <!-- Task Lock -->
+    <string name="task_lock_title">할 일</string>
+    <string name="task_lock_today">오늘 할 일</string>
+    <string name="task_lock_empty">아직 할 일이 없어요.\n먼저 끝내고 싶은 일을 추가해보세요.</string>
+    <plurals name="task_lock_pending_summary"><item quantity="other">잠금 할 일 %d개 남음</item></plurals>
+    <string name="task_lock_badge">잠금</string>
+    <string name="task_lock_add_title">할 일 추가</string>
+    <string name="task_lock_title_hint">예: 책 10쪽 읽기</string>
+    <string name="task_lock_until_complete">완료 전까지 쇼츠 잠금</string>
+    <string name="task_lock_save">저장</string>
+    <string name="task_lock_title_required">할 일을 입력해주세요</string>
+    <string name="task_lock_delete_title">이 할 일을 삭제할까요?</string>
+    <string name="task_lock_delete">삭제</string>
+    <string name="task_lock_overlay_title">먼저 할 일을 완료해주세요</string>
+    <plurals name="task_lock_overlay_summary"><item quantity="other">할 일 %d개 남음</item></plurals>
+    <string name="task_lock_overlay_close">쇼츠 닫고 할 일 하러 가기</string>
+    <string name="task_lock_postpone">광고 보고 30분 미루기 · %d회 남음</string>
+    <string name="task_lock_postpone_premium">30분 미루기 · %d회 남음</string>
+    <string name="task_lock_postpone_started">할 일 잠금을 30분 미뤘어요</string>
+    <string name="task_lock_postpone_unavailable">오늘 미루기를 모두 사용했어요</string>
+    <string name="task_lock_complete_title">완료로 표시할까요?</string>
+    <string name="task_lock_all_complete">할 일을 모두 완료했어요. 기존 차단 화면으로 돌아갑니다.</string>
+    <string name="task_lock_repeat_label">반복</string>
+    <string-array name="task_lock_repeat_options"><item>한 번</item><item>매일</item><item>평일</item></string-array>
+    <string name="task_lock_verification_label">완료 확인</string>
+    <string-array name="task_lock_verification_options"><item>직접 체크</item><item>사진 촬영</item><item>온디바이스 AI 사진 확인 (Beta)</item></string-array>
+    <string name="task_verification_heading">완료한 일을 보여주세요</string>
+    <string name="task_verification_photo_description">할 일 완료 사진</string>
+    <string name="task_verification_photo_ready">사진을 촬영했어요. 직접 확인하면 완료됩니다.</string>
+    <string name="task_verification_ai_checking">기기 안에서 사진을 확인하고 있어요…</string>
+    <string name="task_verification_ai_verified">할 일과 관련된 사진으로 보여요.</string>
+    <string name="task_verification_ai_not_verified">완료 여부가 잘 보이지 않아요. 다른 사진을 찍어주세요.</string>
+    <string name="task_verification_ai_fallback">AI를 사용할 수 없거나 판단이 어려워요. 직접 확인해주세요.</string>
+    <string name="task_verification_capture_cancelled">촬영된 사진이 없어요.</string>
+    <string name="task_verification_retry">다시 찍기</string>
+    <string name="task_verification_complete">완료하기</string>
+    <string name="task_lock_repeat_daily">매일</string>
+    <string name="task_lock_repeat_weekdays">평일</string>
+    <string name="task_lock_open_report">최근 7일 리포트 보기 →</string>
+    <string name="task_lock_report_title">할 일 잠금 리포트</string>
+    <string name="task_lock_report_period">최근 7일</string>
+    <string name="task_lock_report_completed">완료</string>
+    <string name="task_lock_report_blocked">차단</string>
+    <string name="task_lock_report_postponed">미룸</string>
+    <string name="task_lock_report_ai">AI 확인</string>
+    <string name="task_lock_report_history">일별 기록</string>
+    <string name="task_lock_report_day_row">%1$s  ·  완료 %2$d  ·  차단 %3$d</string>
+    <string name="task_lock_report_privacy">사진은 기기 안에서 처리되고 확인 후 삭제됩니다. 할 일 제목과 사진은 분석 데이터에 포함하지 않습니다.</string>
+    <string name="task_lock_delete_friction">이 할 일이 쇼츠를 잠그고 있어요. 5초 후 삭제할 수 있습니다.</string>
+    <string name="task_lock_delete_normal">삭제하면 되돌릴 수 없습니다.</string>
+    <string name="task_lock_delete_countdown">삭제 (%d)</string>
+    <string name="task_lock_add_subtitle">쇼츠보다 먼저 끝낼 일을 정해보세요.</string>
+    <string name="task_lock_start_label">차단 시작</string>
+    <string name="task_lock_start_now">지금부터</string>
+    <string name="task_lock_start_scheduled">시간 지정</string>
+    <string name="task_lock_starts_at">%s 시작</string>
+    <string name="task_lock_edit_title">할 일 수정</string>
+    <string name="task_lock_update">수정 완료</string>
 </resources>

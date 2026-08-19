@@ -108,6 +108,10 @@ dependencies {
     implementation("com.google.android.play:review:2.0.1")
     implementation("com.google.android.play:review-ktx:2.0.1")
 
+    // On-device Gemini Nano multimodal verification (supported devices only)
+    // Runtime-isolated because this beta is built with Kotlin 2.2 while the app currently uses 2.0.
+    runtimeOnly("com.google.mlkit:genai-prompt:1.0.0-beta2")
+
     // Firebase BoM (Bill of Materials) - 버전 관리 간소화
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
 

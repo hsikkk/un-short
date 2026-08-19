@@ -1,5 +1,5 @@
 {
-  "version": "2.15",
+  "version": "2.17",
   "children": [
     {
       "type": "frame",
@@ -7234,6 +7234,4133 @@
           "fontFamily": "Inter",
           "fontSize": 8,
           "fontWeight": "normal"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "zPc3z",
+      "x": 0,
+      "y": 4173,
+      "name": "Task Lock Flow / Current",
+      "clip": true,
+      "width": 2440,
+      "height": 2800,
+      "fill": "#FFFFFF",
+      "layout": "vertical",
+      "gap": 32,
+      "padding": [
+        56,
+        64
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "ht2AY",
+          "name": "Flow Board Title",
+          "fill": "#000000",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "Task Lock Flow",
+          "lineHeight": 1.35,
+          "fontFamily": "Inter",
+          "fontSize": 34,
+          "fontWeight": "300"
+        },
+        {
+          "type": "text",
+          "id": "pQC8q",
+          "name": "Flow Board Subtitle",
+          "fill": "#777777",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "Existing un:short components, spacing, monochrome palette, and Android chrome applied.",
+          "lineHeight": 1.35,
+          "fontFamily": "Inter",
+          "fontSize": 13
+        },
+        {
+          "type": "frame",
+          "id": "G1rLmR",
+          "name": "Policy Line",
+          "width": "fill_container",
+          "stroke": "#EEEEEE",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "gap": 28,
+          "padding": [
+            12,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "UwwMo",
+              "name": "Policy 1  TASK LOCK FIRST",
+              "fill": "#666666",
+              "content": "1  TASK LOCK FIRST",
+              "fontFamily": "Inter",
+              "fontSize": 11,
+              "fontWeight": "500",
+              "letterSpacing": 1
+            },
+            {
+              "type": "text",
+              "id": "Q5vsq",
+              "name": "Policy 2  COMPLETE OR POSTPONE",
+              "fill": "#666666",
+              "content": "2  COMPLETE OR POSTPONE",
+              "fontFamily": "Inter",
+              "fontSize": 11,
+              "fontWeight": "500",
+              "letterSpacing": 1
+            },
+            {
+              "type": "text",
+              "id": "jSpiQ",
+              "name": "Policy 3  RETURN TO 30s TIMER",
+              "fill": "#666666",
+              "content": "3  RETURN TO 30s TIMER",
+              "fontFamily": "Inter",
+              "fontSize": 11,
+              "fontWeight": "500",
+              "letterSpacing": 1
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "PmAmm",
+          "name": "Flow Screens 1",
+          "width": "fill_container",
+          "gap": 42,
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "MFjeJ",
+              "name": "Tasks / Current Column",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "f55my",
+                  "name": "Tasks / Current Flow Label",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "W0yVea",
+                      "name": "Tasks / Current Number",
+                      "fill": "#000000",
+                      "cornerRadius": 2,
+                      "padding": [
+                        5,
+                        8
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Qj1fc",
+                          "name": "Tasks / Current Number Text",
+                          "fill": "#FFFFFF",
+                          "content": "01",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "iLA6l",
+                      "name": "Tasks / Current Caption",
+                      "fill": "#222222",
+                      "content": "할 일 메뉴",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nNqJA",
+                  "name": "Tasks / Current",
+                  "clip": true,
+                  "width": 360,
+                  "height": 800,
+                  "fill": "#FFFFFF",
+                  "stroke": "#DADADA",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "pjGdl",
+                      "name": "Tasks / Current Status Bar",
+                      "width": "fill_container",
+                      "height": 32,
+                      "fill": "#FFFFFF",
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "QpnEw",
+                          "name": "Tasks / Current Time",
+                          "fill": "#222222",
+                          "content": "3:02",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Di5lx",
+                          "name": "Tasks / Current System",
+                          "fill": "#222222",
+                          "content": "▮▮  Wi-Fi  ▰",
+                          "fontFamily": "Inter",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "RdSZq",
+                      "name": "Tasks / Current Body",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "fill": "#FFFFFF",
+                      "layout": "vertical",
+                      "gap": 18,
+                      "padding": [
+                        0,
+                        20,
+                        18,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "JjNy1",
+                          "name": "Tasks Header",
+                          "width": "fill_container",
+                          "height": 48,
+                          "stroke": "#EEEEEE",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "LAYDG",
+                              "name": "Tasks Back",
+                              "fill": "#333333",
+                              "content": "‹",
+                              "fontFamily": "Inter",
+                              "fontSize": 25,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "lP0P8",
+                              "name": "Tasks Header Title",
+                              "fill": "#111111",
+                              "content": "할 일",
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "ZOCyH",
+                              "name": "Tasks Add",
+                              "fill": "#333333",
+                              "content": "+",
+                              "fontFamily": "Inter",
+                              "fontSize": 22,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Bohna",
+                          "name": "Today Summary",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "sUVV9",
+                              "name": "Today Label",
+                              "fill": "#111111",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "쇼츠 잠금 할 일",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "j9WhP2",
+                              "name": "Today Count",
+                              "fill": "#777777",
+                              "content": "2개 남음",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "mfZd4",
+                          "name": "Task List",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "dvNvO",
+                              "name": "Reading Task",
+                              "width": "fill_container",
+                              "height": 50,
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 2,
+                              "stroke": "#E8E8E8",
+                              "strokeWidth": 1,
+                              "gap": 12,
+                              "padding": [
+                                0,
+                                14
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "LGcDB",
+                                  "name": "Reading Task Check",
+                                  "fill": "#202020",
+                                  "content": "○",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 16,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "W1Wbl",
+                                  "name": "Reading Task Text",
+                                  "fill": "#202020",
+                                  "content": "책 10쪽 읽기",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 14
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "UmRrG",
+                                  "name": "Reading Task Lock",
+                                  "fill": "#999999",
+                                  "content": "잠금",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 10
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "b6zDVM",
+                              "name": "Stretch Task",
+                              "width": "fill_container",
+                              "height": 50,
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 2,
+                              "stroke": "#E8E8E8",
+                              "strokeWidth": 1,
+                              "gap": 12,
+                              "padding": [
+                                0,
+                                14
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "W6guS",
+                                  "name": "Stretch Task Check",
+                                  "fill": "#202020",
+                                  "content": "○",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 16,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "ZssuW",
+                                  "name": "Stretch Task Text",
+                                  "fill": "#202020",
+                                  "content": "스트레칭 15분",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 14
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "YUXYl",
+                                  "name": "Stretch Task Lock",
+                                  "fill": "#999999",
+                                  "content": "잠금",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 10
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "kY7hB",
+                              "name": "Normal Task",
+                              "width": "fill_container",
+                              "height": 50,
+                              "stroke": "#E8E8E8",
+                              "strokeWidth": 1,
+                              "gap": 12,
+                              "padding": [
+                                0,
+                                14
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "POtsi",
+                                  "name": "Normal Check",
+                                  "fill": "#202020",
+                                  "content": "○",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 16,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "c9lrk3",
+                                  "name": "Normal Text",
+                                  "fill": "#202020",
+                                  "content": "우유 사기",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 14,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "iwGvN",
+                          "name": "Task Lock Status",
+                          "width": "fill_container",
+                          "fill": "#F6F6F6",
+                          "stroke": "#E8E8E8",
+                          "strokeWidth": 1,
+                          "layout": "vertical",
+                          "gap": 5,
+                          "padding": 14,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Jpp87",
+                              "name": "Task Lock Status Title",
+                              "fill": "#00A968",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "●  쇼츠 잠금 켜짐",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 11,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "T9uYs",
+                              "name": "Task Lock Status Body",
+                              "fill": "#555555",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "위 2개를 완료하면 기존 차단 방식으로 돌아갑니다.",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 12
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "u8udqv",
+                          "name": "Add Task",
+                          "width": "fill_container",
+                          "height": 48,
+                          "fill": "#000000",
+                          "cornerRadius": 4,
+                          "stroke": "#000000",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "u44m0k",
+                              "name": "Add Task Label",
+                              "fill": "#FFFFFF",
+                              "content": "할 일 추가",
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "msMCg",
+                      "name": "Tasks / Current Android Navigation",
+                      "width": "fill_container",
+                      "height": 42,
+                      "fill": "#F2F2F2",
+                      "justifyContent": "space_around",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Z2olh",
+                          "name": "Tasks / Current Nav 0",
+                          "fill": "#555555",
+                          "content": "◀",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "XzNh1",
+                          "name": "Tasks / Current Nav 1",
+                          "fill": "#555555",
+                          "content": "●",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "P9y2G",
+                          "name": "Tasks / Current Nav 2",
+                          "fill": "#555555",
+                          "content": "■",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "N77JV",
+              "name": "Add Task / Current Column",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "CgWAd",
+                  "name": "Add Task / Current Flow Label",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "IQ5tw",
+                      "name": "Add Task / Current Number",
+                      "fill": "#000000",
+                      "cornerRadius": 2,
+                      "padding": [
+                        5,
+                        8
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "jneim",
+                          "name": "Add Task / Current Number Text",
+                          "fill": "#FFFFFF",
+                          "content": "02",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "mn8kf",
+                      "name": "Add Task / Current Caption",
+                      "fill": "#222222",
+                      "content": "잠금 할 일 등록",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "fUOvS",
+                  "name": "Add Task / Current",
+                  "clip": true,
+                  "width": 360,
+                  "height": 800,
+                  "fill": "#FFFFFF",
+                  "stroke": "#DADADA",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Tz4nO",
+                      "name": "Add Task / Current Status Bar",
+                      "width": "fill_container",
+                      "height": 32,
+                      "fill": "#FFFFFF",
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "NT2SB",
+                          "name": "Add Task / Current Time",
+                          "fill": "#222222",
+                          "content": "3:02",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "c2Pq6",
+                          "name": "Add Task / Current System",
+                          "fill": "#222222",
+                          "content": "▮▮  Wi-Fi  ▰",
+                          "fontFamily": "Inter",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nhvhE",
+                      "name": "Add Task / Current Body",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "fill": "#FFFFFF",
+                      "layout": "vertical",
+                      "gap": 18,
+                      "padding": [
+                        0,
+                        20,
+                        18,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "d5Cce",
+                          "name": "Add Header",
+                          "width": "fill_container",
+                          "height": 48,
+                          "stroke": "#EEEEEE",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "skU1A",
+                              "name": "Add Back",
+                              "fill": "#333333",
+                              "content": "‹",
+                              "fontFamily": "Inter",
+                              "fontSize": 25,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "ql8nW",
+                              "name": "Add Header Title",
+                              "fill": "#111111",
+                              "content": "할 일 추가",
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "qlhQ3",
+                              "name": "Add Header Empty",
+                              "fill": "#111111",
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "fjhzo",
+                          "name": "Task Name Label",
+                          "fill": "#999999",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "할 일",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 11
+                        },
+                        {
+                          "type": "frame",
+                          "id": "tfZJT",
+                          "name": "Task Name Field",
+                          "width": "fill_container",
+                          "height": 48,
+                          "cornerRadius": 2,
+                          "stroke": "#DADADA",
+                          "strokeWidth": 1,
+                          "padding": [
+                            0,
+                            12
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "hDavD",
+                              "name": "Task Name Value",
+                              "fill": "#222222",
+                              "content": "영어 단어 20개",
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "uzXr1",
+                          "name": "Repeat Label",
+                          "fill": "#999999",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "반복",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 11
+                        },
+                        {
+                          "type": "frame",
+                          "id": "g8giJ",
+                          "name": "Repeat Options",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "mgyI6",
+                              "name": "Repeat 오늘",
+                              "fill": "#000000",
+                              "cornerRadius": 2,
+                              "padding": [
+                                8,
+                                12
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "hRj00",
+                                  "name": "Repeat 오늘 Label",
+                                  "fill": "#FFFFFF",
+                                  "content": "오늘",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "MFdsk",
+                              "name": "Repeat 매일",
+                              "fill": "#F2F2F2",
+                              "cornerRadius": 2,
+                              "padding": [
+                                8,
+                                12
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "LGyQl",
+                                  "name": "Repeat 매일 Label",
+                                  "fill": "#555555",
+                                  "content": "매일",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "y4Uga",
+                              "name": "Repeat 평일",
+                              "fill": "#F2F2F2",
+                              "cornerRadius": 2,
+                              "padding": [
+                                8,
+                                12
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "DPmv7",
+                                  "name": "Repeat 평일 Label",
+                                  "fill": "#555555",
+                                  "content": "평일",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "hXxwv",
+                          "name": "Lock Setting",
+                          "width": "fill_container",
+                          "stroke": "#EEEEEE",
+                          "strokeWidth": {
+                            "top": 1,
+                            "bottom": 1
+                          },
+                          "padding": [
+                            14,
+                            0
+                          ],
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "DG2o7",
+                              "name": "Lock Setting Copy",
+                              "width": 240,
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "C9SDMa",
+                                  "name": "Lock Setting Title",
+                                  "fill": "#111111",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "완료 전까지 쇼츠 잠금",
+                                  "lineHeight": 1.35,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 14
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "GRO1o",
+                                  "name": "Lock Setting Help",
+                                  "fill": "#888888",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "해제 버튼과 30초 타이머를 숨깁니다.",
+                                  "lineHeight": 1.35,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 11
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "w2NP3R",
+                              "name": "Lock Switch",
+                              "width": 42,
+                              "height": 24,
+                              "fill": "#202020",
+                              "cornerRadius": 12,
+                              "padding": 3,
+                              "justifyContent": "end",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "ellipse",
+                                  "id": "HsJ2H",
+                                  "name": "Lock Switch Thumb",
+                                  "fill": "#FFFFFF",
+                                  "width": 18,
+                                  "height": 18
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "e113Qj",
+                          "name": "Save Task",
+                          "width": "fill_container",
+                          "height": 48,
+                          "fill": "#000000",
+                          "cornerRadius": 4,
+                          "stroke": "#000000",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "B5ajx",
+                              "name": "Save Task Label",
+                              "fill": "#FFFFFF",
+                              "content": "저장",
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "mWIWY",
+                      "name": "Add Task / Current Android Navigation",
+                      "width": "fill_container",
+                      "height": 42,
+                      "fill": "#F2F2F2",
+                      "justifyContent": "space_around",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "NYJ5L",
+                          "name": "Add Task / Current Nav 0",
+                          "fill": "#555555",
+                          "content": "◀",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "E9Wufn",
+                          "name": "Add Task / Current Nav 1",
+                          "fill": "#555555",
+                          "content": "●",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "V2gdr6",
+                          "name": "Add Task / Current Nav 2",
+                          "fill": "#555555",
+                          "content": "■",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "gnptm",
+              "name": "Task Block / Current Column",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "o4C7dQ",
+                  "name": "Task Block / Current Flow Label",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "m457T2",
+                      "name": "Task Block / Current Number",
+                      "fill": "#000000",
+                      "cornerRadius": 2,
+                      "padding": [
+                        5,
+                        8
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "F9I1o",
+                          "name": "Task Block / Current Number Text",
+                          "fill": "#FFFFFF",
+                          "content": "03",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "oB5eS",
+                      "name": "Task Block / Current Caption",
+                      "fill": "#222222",
+                      "content": "쇼츠 진입 · 미완료",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "n2I2j6",
+                  "name": "Task Block / Current",
+                  "clip": true,
+                  "width": 360,
+                  "height": 800,
+                  "fill": "#000000",
+                  "stroke": "#DADADA",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "E6MkuP",
+                      "name": "Task Block / Current Status Bar",
+                      "width": "fill_container",
+                      "height": 32,
+                      "fill": "#000000",
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "T67Hh",
+                          "name": "Task Block / Current Time",
+                          "fill": "#FFFFFF",
+                          "content": "3:02",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "DOQ88",
+                          "name": "Task Block / Current System",
+                          "fill": "#FFFFFF",
+                          "content": "▮▮  Wi-Fi  ▰",
+                          "fontFamily": "Inter",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "AnYVz",
+                      "name": "Task Block / Current Body",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "fill": "#000000",
+                      "layout": "vertical",
+                      "gap": 18,
+                      "padding": [
+                        0,
+                        20,
+                        18,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "NrwcS",
+                          "name": "Task Block Content",
+                          "width": "fill_container",
+                          "height": "fill_container",
+                          "layout": "vertical",
+                          "padding": [
+                            72,
+                            0,
+                            8,
+                            0
+                          ],
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "oiMOY",
+                              "name": "Task Block Heading",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 10,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "QiSv3",
+                                  "name": "Task Block Title",
+                                  "fill": "#FFFFFF",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "할 일이\n2개 남았어요",
+                                  "lineHeight": 1.35,
+                                  "textAlign": "center",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 24,
+                                  "fontWeight": "500"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "LcL5p",
+                                  "name": "Task Block Desc",
+                                  "fill": "#888888",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "먼저 약속한 일을 완료해주세요.\n항목을 누르면 완료할 수 있어요.",
+                                  "lineHeight": 1.35,
+                                  "textAlign": "center",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "300"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "PBy2s",
+                              "name": "Overlay Checklist",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "x7OyO",
+                                  "name": "Overlay Reading",
+                                  "width": "fill_container",
+                                  "height": 56,
+                                  "fill": "#111111",
+                                  "cornerRadius": 4,
+                                  "stroke": "#282828",
+                                  "strokeWidth": 1,
+                                  "gap": 12,
+                                  "padding": [
+                                    0,
+                                    14
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "o1FXw",
+                                      "name": "Overlay Reading Check",
+                                      "fill": "#FFFFFF",
+                                      "content": "○",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 16,
+                                      "fontWeight": "normal"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "u1yVM",
+                                      "name": "Overlay Reading Text",
+                                      "fill": "#FFFFFF",
+                                      "content": "책 10쪽 읽기",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "GndkU",
+                                      "name": "Overlay Reading Lock",
+                                      "fill": "#777777",
+                                      "content": "›",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 20,
+                                      "fontWeight": "300"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "Ni9JC",
+                                  "name": "Overlay Stretch",
+                                  "width": "fill_container",
+                                  "height": 56,
+                                  "fill": "#111111",
+                                  "cornerRadius": 4,
+                                  "stroke": "#282828",
+                                  "strokeWidth": 1,
+                                  "gap": 12,
+                                  "padding": [
+                                    0,
+                                    14
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "fSch0",
+                                      "name": "Overlay Stretch Check",
+                                      "fill": "#FFFFFF",
+                                      "content": "○",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 16,
+                                      "fontWeight": "normal"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "X0AnWQ",
+                                      "name": "Overlay Stretch Text",
+                                      "fill": "#FFFFFF",
+                                      "content": "스트레칭 15분",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "ofF8S",
+                                      "name": "Overlay Stretch Lock",
+                                      "fill": "#777777",
+                                      "content": "›",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 20,
+                                      "fontWeight": "300"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "IrhCD",
+                              "name": "Task Block Actions",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 10,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "q4ECye",
+                                  "name": "Return To Tasks",
+                                  "width": "fill_container",
+                                  "height": 48,
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 4,
+                                  "stroke": "#E5E5E5",
+                                  "strokeWidth": 1,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "m6njN",
+                                      "name": "Return To Tasks Label",
+                                      "fill": "#000000",
+                                      "content": "쇼츠 닫고 할 일 하러 가기",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "500"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "awMrg",
+                                  "name": "Postpone Link",
+                                  "width": "fill_container",
+                                  "height": 48,
+                                  "fill": "#000000",
+                                  "cornerRadius": 4,
+                                  "stroke": "#000000",
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "HaPzU",
+                                      "name": "Postpone Link Label",
+                                      "fill": "#777777",
+                                      "content": "지금 어려워요  ·  광고 보고 30분 미루기",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "300"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "i40eO",
+                                  "name": "Task Block Brand",
+                                  "fill": "#444444",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "un:short",
+                                  "textAlign": "center",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 10,
+                                  "fontWeight": "300"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "zmTMB",
+                      "name": "Task Block / Current Android Navigation",
+                      "width": "fill_container",
+                      "height": 42,
+                      "fill": "#000000",
+                      "justifyContent": "space_around",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "mVNkD",
+                          "name": "Task Block / Current Nav 0",
+                          "fill": "#777777",
+                          "content": "◀",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "r4dXC",
+                          "name": "Task Block / Current Nav 1",
+                          "fill": "#777777",
+                          "content": "●",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "qCPN4",
+                          "name": "Task Block / Current Nav 2",
+                          "fill": "#777777",
+                          "content": "■",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "gmA7r",
+          "name": "Flow Screens 2",
+          "width": "fill_container",
+          "gap": 42,
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "mgytr",
+              "name": "Complete Task / Current Column",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ZCzVF",
+                  "name": "Complete Task / Current Flow Label",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "T4C3Vu",
+                      "name": "Complete Task / Current Number",
+                      "fill": "#000000",
+                      "cornerRadius": 2,
+                      "padding": [
+                        5,
+                        8
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Rvu4E",
+                          "name": "Complete Task / Current Number Text",
+                          "fill": "#FFFFFF",
+                          "content": "04",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "nVo8h",
+                      "name": "Complete Task / Current Caption",
+                      "fill": "#222222",
+                      "content": "오버레이 완료 체크",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "N9BlAI",
+                  "name": "Complete Task / Current",
+                  "clip": true,
+                  "width": 360,
+                  "height": 800,
+                  "fill": "#000000",
+                  "stroke": "#DADADA",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "RuOH8",
+                      "name": "Complete Task / Current Status Bar",
+                      "width": "fill_container",
+                      "height": 32,
+                      "fill": "#000000",
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "VmZiY",
+                          "name": "Complete Task / Current Time",
+                          "fill": "#FFFFFF",
+                          "content": "3:02",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "cM6Ie",
+                          "name": "Complete Task / Current System",
+                          "fill": "#FFFFFF",
+                          "content": "▮▮  Wi-Fi  ▰",
+                          "fontFamily": "Inter",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vw9sE",
+                      "name": "Complete Task / Current Body",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "fill": "#000000",
+                      "layout": "vertical",
+                      "gap": 18,
+                      "padding": [
+                        0,
+                        20,
+                        18,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "u5z9nj",
+                          "name": "Complete Content",
+                          "width": "fill_container",
+                          "height": "fill_container",
+                          "layout": "vertical",
+                          "padding": [
+                            92,
+                            0,
+                            8,
+                            0
+                          ],
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "dXdye",
+                              "name": "Complete Heading",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 10,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "ZU2VB",
+                                  "name": "Complete Title",
+                                  "fill": "#FFFFFF",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "완료로 표시할까요?",
+                                  "lineHeight": 1.35,
+                                  "textAlign": "center",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 24,
+                                  "fontWeight": "500"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "Cdch8",
+                                  "name": "Complete Desc",
+                                  "fill": "#888888",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "인증은 필요하지 않아요.\n본인의 판단으로 체크해주세요.",
+                                  "lineHeight": 1.35,
+                                  "textAlign": "center",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "300"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "O6mKJ",
+                              "x": 0,
+                              "y": 321,
+                              "name": "Complete Focus",
+                              "enabled": false,
+                              "width": "fill_container(320)",
+                              "stroke": "#292929",
+                              "strokeWidth": 1,
+                              "layout": "vertical",
+                              "gap": 8,
+                              "padding": [
+                                18,
+                                14
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "E7WtKx",
+                                  "name": "Complete Focus Label",
+                                  "fill": "#777777",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "할 일",
+                                  "lineHeight": 1.35,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 10,
+                                  "fontWeight": "500"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "DqV0N",
+                                  "name": "Complete Focus Value",
+                                  "fill": "#FFFFFF",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "책 10쪽 읽기",
+                                  "lineHeight": 1.35,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 17,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "YBsiU",
+                              "x": 0,
+                              "y": 572,
+                              "name": "Complete Actions",
+                              "enabled": false,
+                              "width": "fill_container(320)",
+                              "layout": "vertical",
+                              "gap": 10,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "NZ2n9",
+                                  "name": "Confirm Complete",
+                                  "width": "fill_container",
+                                  "height": 48,
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 4,
+                                  "stroke": "#E5E5E5",
+                                  "strokeWidth": 1,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "t4H0Ql",
+                                      "name": "Confirm Complete Label",
+                                      "fill": "#000000",
+                                      "content": "완료했어요",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "500"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "ZNpay",
+                                  "name": "Cancel Complete",
+                                  "width": "fill_container",
+                                  "height": 48,
+                                  "fill": "#000000",
+                                  "cornerRadius": 4,
+                                  "stroke": "#000000",
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "BLsG4",
+                                      "name": "Cancel Complete Label",
+                                      "fill": "#777777",
+                                      "content": "아직이에요",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "300"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "KY7Xw",
+                                  "name": "Complete Brand",
+                                  "fill": "#444444",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "un:short",
+                                  "textAlign": "center",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 10,
+                                  "fontWeight": "300"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "g2br0",
+                              "name": "Complete Bottom Sheet",
+                              "width": "fill_container",
+                              "fill": "#FFFFFF",
+                              "cornerRadius": [
+                                10,
+                                10,
+                                0,
+                                0
+                              ],
+                              "layout": "vertical",
+                              "gap": 14,
+                              "padding": [
+                                20,
+                                18
+                              ],
+                              "children": [
+                                {
+                                  "type": "rectangle",
+                                  "cornerRadius": 2,
+                                  "id": "rHSol",
+                                  "name": "Complete Sheet Handle",
+                                  "fill": "#D6D6D6",
+                                  "width": 38,
+                                  "height": 3
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "gA7cY",
+                                  "name": "Complete Sheet Label",
+                                  "fill": "#888888",
+                                  "content": "선택한 할 일",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 11,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "c6ceD6",
+                                  "name": "Complete Sheet Task",
+                                  "fill": "#111111",
+                                  "content": "책 10쪽 읽기",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 18,
+                                  "fontWeight": "500"
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "OVlUi",
+                                  "name": "Complete Sheet Guide",
+                                  "width": "fill_container",
+                                  "fill": "#F6F6F6",
+                                  "gap": 8,
+                                  "padding": 12,
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "UMLNI",
+                                      "name": "Complete Guide Icon",
+                                      "fill": "#777777",
+                                      "content": "i",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 11,
+                                      "fontWeight": "700"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "JxY3T",
+                                      "name": "Complete Guide Text",
+                                      "fill": "#666666",
+                                      "content": "완료하면 잠금 할 일이 1개 남습니다.",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 11,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "N28BH",
+                                  "name": "Complete Sheet Actions",
+                                  "width": "fill_container",
+                                  "gap": 8,
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "dVM9p",
+                                      "name": "Complete Sheet Cancel",
+                                      "width": "fill_container",
+                                      "height": 46,
+                                      "fill": "#F2F2F2",
+                                      "cornerRadius": 3,
+                                      "justifyContent": "center",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "tPKGr",
+                                          "name": "Complete Sheet Cancel Label",
+                                          "fill": "#555555",
+                                          "content": "취소",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 13,
+                                          "fontWeight": "500"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "bNv21",
+                                      "name": "Complete Sheet Confirm",
+                                      "width": "fill_container",
+                                      "height": 46,
+                                      "fill": "#000000",
+                                      "cornerRadius": 3,
+                                      "justifyContent": "center",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "dktqp",
+                                          "name": "Complete Sheet Confirm Label",
+                                          "fill": "#FFFFFF",
+                                          "content": "완료",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 13,
+                                          "fontWeight": "500"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "InTGg",
+                      "name": "Complete Task / Current Android Navigation",
+                      "width": "fill_container",
+                      "height": 42,
+                      "fill": "#000000",
+                      "justifyContent": "space_around",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "C2sAy",
+                          "name": "Complete Task / Current Nav 0",
+                          "fill": "#777777",
+                          "content": "◀",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "D4TRi",
+                          "name": "Complete Task / Current Nav 1",
+                          "fill": "#777777",
+                          "content": "●",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "EuEru",
+                          "name": "Complete Task / Current Nav 2",
+                          "fill": "#777777",
+                          "content": "■",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ZZV3C",
+              "name": "Postpone / Current Column",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "r9VWL",
+                  "name": "Postpone / Current Flow Label",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "p1QX8h",
+                      "name": "Postpone / Current Number",
+                      "fill": "#000000",
+                      "cornerRadius": 2,
+                      "padding": [
+                        5,
+                        8
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "YhsFL",
+                          "name": "Postpone / Current Number Text",
+                          "fill": "#FFFFFF",
+                          "content": "05",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "OQltF",
+                      "name": "Postpone / Current Caption",
+                      "fill": "#222222",
+                      "content": "광고로 잠금 유예",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "OgTIG",
+                  "name": "Postpone / Current",
+                  "clip": true,
+                  "width": 360,
+                  "height": 800,
+                  "fill": "#000000",
+                  "stroke": "#DADADA",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "e1TFkd",
+                      "name": "Postpone / Current Status Bar",
+                      "width": "fill_container",
+                      "height": 32,
+                      "fill": "#000000",
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "DsLnq",
+                          "name": "Postpone / Current Time",
+                          "fill": "#FFFFFF",
+                          "content": "3:02",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "LDfrV",
+                          "name": "Postpone / Current System",
+                          "fill": "#FFFFFF",
+                          "content": "▮▮  Wi-Fi  ▰",
+                          "fontFamily": "Inter",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "N5cBnq",
+                      "name": "Postpone / Current Body",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "fill": "#000000",
+                      "layout": "vertical",
+                      "gap": 18,
+                      "padding": [
+                        0,
+                        20,
+                        18,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "o7nHM",
+                          "name": "Postpone Content",
+                          "width": "fill_container",
+                          "height": "fill_container",
+                          "layout": "vertical",
+                          "padding": [
+                            72,
+                            0,
+                            8,
+                            0
+                          ],
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "Ycxmu",
+                              "name": "Postpone Heading",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 10,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "krR6G",
+                                  "name": "Postpone Title",
+                                  "fill": "#FFFFFF",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "잠금을 잠시 미룰까요?",
+                                  "lineHeight": 1.35,
+                                  "textAlign": "center",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 24,
+                                  "fontWeight": "500"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "QC6S4",
+                                  "name": "Postpone Desc",
+                                  "fill": "#888888",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "할 일은 그대로 남고, 30분 뒤\n잠금이 자동으로 다시 시작됩니다.",
+                                  "lineHeight": 1.35,
+                                  "textAlign": "center",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "300"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "OIelm",
+                              "type": "ref",
+                              "ref": "yo9V1",
+                              "name": "Postpone Timer / Existing Component",
+                              "width": 176,
+                              "height": 176,
+                              "enabled": false
+                            },
+                            {
+                              "type": "frame",
+                              "id": "tkpEH",
+                              "x": 0,
+                              "y": 438.33333333333337,
+                              "name": "Postpone Timer Copy",
+                              "enabled": false,
+                              "width": 176,
+                              "height": 40,
+                              "layout": "vertical",
+                              "gap": 3,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Z3C0gR",
+                                  "name": "Postpone Time",
+                                  "fill": "#FFFFFF",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "30",
+                                  "lineHeight": 1.35,
+                                  "textAlign": "center",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 40,
+                                  "fontWeight": "300"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "pDxk3",
+                                  "name": "Postpone Unit",
+                                  "fill": "#F59E0B",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "MINUTES  ·  2 LEFT TODAY",
+                                  "lineHeight": 1.35,
+                                  "textAlign": "center",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 9,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "jW46r",
+                              "x": 0,
+                              "y": 572,
+                              "name": "Postpone Actions",
+                              "enabled": false,
+                              "width": "fill_container(320)",
+                              "layout": "vertical",
+                              "gap": 10,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "ywJ1D",
+                                  "name": "Watch Ad",
+                                  "width": "fill_container",
+                                  "height": 48,
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 4,
+                                  "stroke": "#E5E5E5",
+                                  "strokeWidth": 1,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "dOBDG",
+                                      "name": "Watch Ad Label",
+                                      "fill": "#000000",
+                                      "content": "광고 보고 미루기",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "500"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "fatvY",
+                                  "name": "Cancel Postpone",
+                                  "width": "fill_container",
+                                  "height": 48,
+                                  "fill": "#000000",
+                                  "cornerRadius": 4,
+                                  "stroke": "#000000",
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "C6ZX7",
+                                      "name": "Cancel Postpone Label",
+                                      "fill": "#777777",
+                                      "content": "할 일로 돌아가기",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "300"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "XOYN8",
+                                  "name": "Postpone Brand",
+                                  "fill": "#444444",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "un:short",
+                                  "textAlign": "center",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 10,
+                                  "fontWeight": "300"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "KQyhd",
+                              "name": "Postpone Bottom Sheet",
+                              "width": "fill_container",
+                              "fill": "#FFFFFF",
+                              "cornerRadius": [
+                                10,
+                                10,
+                                0,
+                                0
+                              ],
+                              "layout": "vertical",
+                              "gap": 14,
+                              "padding": [
+                                20,
+                                18
+                              ],
+                              "children": [
+                                {
+                                  "type": "rectangle",
+                                  "cornerRadius": 2,
+                                  "id": "EdEEa",
+                                  "name": "Postpone Sheet Handle",
+                                  "fill": "#D6D6D6",
+                                  "width": 38,
+                                  "height": 3
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "i6WWcD",
+                                  "name": "Postpone Sheet Summary",
+                                  "width": "fill_container",
+                                  "justifyContent": "space_between",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "mSQQB",
+                                      "name": "Postpone Sheet Copy",
+                                      "layout": "vertical",
+                                      "gap": 3,
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "vE6bM",
+                                          "name": "Postpone Sheet Title",
+                                          "fill": "#111111",
+                                          "content": "30분 미루기",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 18,
+                                          "fontWeight": "500"
+                                        },
+                                        {
+                                          "type": "text",
+                                          "id": "OIaLP",
+                                          "name": "Postpone Sheet Remaining",
+                                          "fill": "#F59E0B",
+                                          "content": "오늘 2회 남음",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 11,
+                                          "fontWeight": "normal"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "jcz5e",
+                                      "name": "Postpone Sheet Time",
+                                      "fill": "#111111",
+                                      "content": "30",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 34,
+                                      "fontWeight": "300"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "OahwI",
+                                  "name": "Postpone Sheet Rules",
+                                  "width": "fill_container",
+                                  "fill": "#F6F6F6",
+                                  "layout": "vertical",
+                                  "gap": 7,
+                                  "padding": 12,
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "rQo59",
+                                      "name": "Postpone Rule 할 일은 완료 처리되지 않아요",
+                                      "gap": 8,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "yfc6o",
+                                          "name": "Postpone Rule Dot 할 일은 완료 처리되지 않아요",
+                                          "fill": "#777777",
+                                          "content": "·",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 14,
+                                          "fontWeight": "700"
+                                        },
+                                        {
+                                          "type": "text",
+                                          "id": "Xd8Lx",
+                                          "name": "Postpone Rule Text 할 일은 완료 처리되지 않아요",
+                                          "fill": "#666666",
+                                          "content": "할 일은 완료 처리되지 않아요",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 11,
+                                          "fontWeight": "normal"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "hOfO8",
+                                      "name": "Postpone Rule 유예 중에도 기존 30초 차단은 유지돼요",
+                                      "gap": 8,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "EThAI",
+                                          "name": "Postpone Rule Dot 유예 중에도 기존 30초 차단은 유지돼요",
+                                          "fill": "#777777",
+                                          "content": "·",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 14,
+                                          "fontWeight": "700"
+                                        },
+                                        {
+                                          "type": "text",
+                                          "id": "BawbX",
+                                          "name": "Postpone Rule Text 유예 중에도 기존 30초 차단은 유지돼요",
+                                          "fill": "#666666",
+                                          "content": "유예 중에도 기존 30초 차단은 유지돼요",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 11,
+                                          "fontWeight": "normal"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "iZsw2",
+                                      "name": "Postpone Rule 유예 중에는 다시 미룰 수 없어요",
+                                      "gap": 8,
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "xArNo",
+                                          "name": "Postpone Rule Dot 유예 중에는 다시 미룰 수 없어요",
+                                          "fill": "#777777",
+                                          "content": "·",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 14,
+                                          "fontWeight": "700"
+                                        },
+                                        {
+                                          "type": "text",
+                                          "id": "y8QlgU",
+                                          "name": "Postpone Rule Text 유예 중에는 다시 미룰 수 없어요",
+                                          "fill": "#666666",
+                                          "content": "유예 중에는 다시 미룰 수 없어요",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 11,
+                                          "fontWeight": "normal"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "yKtYo",
+                                  "name": "Postpone Ad CTA",
+                                  "width": "fill_container",
+                                  "height": 48,
+                                  "fill": "#000000",
+                                  "cornerRadius": 3,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "feETc",
+                                      "name": "Postpone Ad CTA Label",
+                                      "fill": "#FFFFFF",
+                                      "content": "광고 보고 30분 미루기",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 13,
+                                      "fontWeight": "500"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "Fbw2X",
+                                  "name": "Postpone Sheet Cancel",
+                                  "width": "fill_container",
+                                  "height": 34,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "OEHdm",
+                                      "name": "Postpone Sheet Cancel Label",
+                                      "fill": "#777777",
+                                      "content": "취소",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "TrH7E",
+                      "name": "Postpone / Current Android Navigation",
+                      "width": "fill_container",
+                      "height": 42,
+                      "fill": "#000000",
+                      "justifyContent": "space_around",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "v1nKqs",
+                          "name": "Postpone / Current Nav 0",
+                          "fill": "#777777",
+                          "content": "◀",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "YZ7fR",
+                          "name": "Postpone / Current Nav 1",
+                          "fill": "#777777",
+                          "content": "●",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "mOGsV",
+                          "name": "Postpone / Current Nav 2",
+                          "fill": "#777777",
+                          "content": "■",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "jNdEg",
+              "name": "Unlocked / Current Column",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "rCDf0",
+                  "name": "Unlocked / Current Flow Label",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "V7vk2",
+                      "name": "Unlocked / Current Number",
+                      "fill": "#000000",
+                      "cornerRadius": 2,
+                      "padding": [
+                        5,
+                        8
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "p9HLU",
+                          "name": "Unlocked / Current Number Text",
+                          "fill": "#FFFFFF",
+                          "content": "06",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "BV13G",
+                      "name": "Unlocked / Current Caption",
+                      "fill": "#222222",
+                      "content": "모두 완료 · 기존 정책",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "zFn0A",
+                  "name": "Unlocked / Current",
+                  "clip": true,
+                  "width": 360,
+                  "height": 800,
+                  "fill": "#000000",
+                  "stroke": "#DADADA",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "uAgXV",
+                      "name": "Unlocked / Current Status Bar",
+                      "width": "fill_container",
+                      "height": 32,
+                      "fill": "#000000",
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "n8eJ3x",
+                          "name": "Unlocked / Current Time",
+                          "fill": "#FFFFFF",
+                          "content": "3:02",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "W2UIn6",
+                          "name": "Unlocked / Current System",
+                          "fill": "#FFFFFF",
+                          "content": "▮▮  Wi-Fi  ▰",
+                          "fontFamily": "Inter",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "x4AB8",
+                      "name": "Unlocked / Current Body",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "fill": "#000000",
+                      "layout": "vertical",
+                      "gap": 18,
+                      "padding": [
+                        0,
+                        20,
+                        18,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "E2G22N",
+                          "name": "Unlocked Content",
+                          "width": "fill_container",
+                          "height": "fill_container",
+                          "layout": "vertical",
+                          "padding": [
+                            72,
+                            0,
+                            8,
+                            0
+                          ],
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "lRURk",
+                              "name": "Unlocked Heading",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 10,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Lumm9",
+                                  "name": "Unlocked Check",
+                                  "fill": "#00C878",
+                                  "content": "●",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 28,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "UXuX4",
+                                  "name": "Unlocked Title",
+                                  "fill": "#FFFFFF",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "오늘 할 일을\n모두 마쳤어요",
+                                  "lineHeight": 1.35,
+                                  "textAlign": "center",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 24,
+                                  "fontWeight": "500"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "PPpf7",
+                                  "name": "Unlocked Desc",
+                                  "fill": "#888888",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "수고했어요. 쇼츠를 바로 여는 대신\n한 번 더 생각한 뒤 선택할 수 있어요.",
+                                  "lineHeight": 1.35,
+                                  "textAlign": "center",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "300"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "FM9Pq",
+                              "name": "Completed Tasks",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "unVHu",
+                                  "name": "Done Reading",
+                                  "width": "fill_container",
+                                  "height": 50,
+                                  "fill": "#111111",
+                                  "cornerRadius": 2,
+                                  "stroke": "#282828",
+                                  "strokeWidth": 1,
+                                  "gap": 12,
+                                  "padding": [
+                                    0,
+                                    14
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "BmMXI",
+                                      "name": "Done Reading Check",
+                                      "fill": "#00C878",
+                                      "content": "●",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 16,
+                                      "fontWeight": "normal"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "pqjii",
+                                      "name": "Done Reading Text",
+                                      "fill": "#888888",
+                                      "content": "책 10쪽 읽기",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "zDq71",
+                                      "name": "Done Reading Lock",
+                                      "fill": "#00C878",
+                                      "content": "완료",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 10,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "w3cSP3",
+                                  "name": "Done Stretch",
+                                  "width": "fill_container",
+                                  "height": 50,
+                                  "fill": "#111111",
+                                  "cornerRadius": 2,
+                                  "stroke": "#282828",
+                                  "strokeWidth": 1,
+                                  "gap": 12,
+                                  "padding": [
+                                    0,
+                                    14
+                                  ],
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "CmDfq",
+                                      "name": "Done Stretch Check",
+                                      "fill": "#00C878",
+                                      "content": "●",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 16,
+                                      "fontWeight": "normal"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "QwqQB",
+                                      "name": "Done Stretch Text",
+                                      "fill": "#888888",
+                                      "content": "스트레칭 15분",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "ORFtD",
+                                      "name": "Done Stretch Lock",
+                                      "fill": "#00C878",
+                                      "content": "완료",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 10,
+                                      "fontWeight": "600"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "aIPEo",
+                              "name": "Unlocked Actions",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 10,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "y39eUZ",
+                                  "name": "Start Existing Timer",
+                                  "width": "fill_container",
+                                  "height": 48,
+                                  "fill": "#FFFFFF",
+                                  "cornerRadius": 4,
+                                  "stroke": "#E5E5E5",
+                                  "strokeWidth": 1,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "piCLv",
+                                      "name": "Start Existing Timer Label",
+                                      "fill": "#000000",
+                                      "content": "30초 생각하고 결정하기",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "500"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "A6Bw9",
+                                  "name": "Close Shorts",
+                                  "width": "fill_container",
+                                  "height": 48,
+                                  "fill": "#000000",
+                                  "cornerRadius": 4,
+                                  "stroke": "#000000",
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "w8XoT",
+                                      "name": "Close Shorts Label",
+                                      "fill": "#777777",
+                                      "content": "그냥 닫기",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 14,
+                                      "fontWeight": "300"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "WOofP",
+                                  "name": "Unlocked Brand",
+                                  "fill": "#444444",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "un:short",
+                                  "textAlign": "center",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 10,
+                                  "fontWeight": "300"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "xo6vF",
+                      "name": "Unlocked / Current Android Navigation",
+                      "width": "fill_container",
+                      "height": 42,
+                      "fill": "#000000",
+                      "justifyContent": "space_around",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "vvJRq",
+                          "name": "Unlocked / Current Nav 0",
+                          "fill": "#777777",
+                          "content": "◀",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "o4uAMa",
+                          "name": "Unlocked / Current Nav 1",
+                          "fill": "#777777",
+                          "content": "●",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "zxmd3",
+                          "name": "Unlocked / Current Nav 2",
+                          "fill": "#777777",
+                          "content": "■",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "gbn2x",
+          "name": "Flow Screens 3",
+          "width": "fill_container",
+          "gap": 42,
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "ciyjC",
+              "name": "Postpone Active / Current Column",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "dUczK",
+                  "name": "Postpone Active / Current Flow Label",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "xS4fX",
+                      "name": "Postpone Active / Current Number",
+                      "fill": "#000000",
+                      "cornerRadius": 2,
+                      "padding": [
+                        5,
+                        8
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "hRgAG",
+                          "name": "Postpone Active / Current Number Text",
+                          "fill": "#FFFFFF",
+                          "content": "07",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "kQJAC",
+                      "name": "Postpone Active / Current Caption",
+                      "fill": "#222222",
+                      "content": "30분 유예 진행 상태",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Qirol",
+                  "name": "Postpone Active / Current",
+                  "clip": true,
+                  "width": 360,
+                  "height": 800,
+                  "fill": "#FFFFFF",
+                  "stroke": "#DADADA",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "DYNBg",
+                      "name": "Postpone Active / Current Status Bar",
+                      "width": "fill_container",
+                      "height": 32,
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "UsOf3",
+                          "name": "Postpone Active / Current Time",
+                          "fill": "#222222",
+                          "content": "3:02",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "SUUkx",
+                          "name": "Postpone Active / Current System",
+                          "fill": "#222222",
+                          "content": "▮▮  Wi-Fi  ▰",
+                          "fontFamily": "Inter",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "p6Xdx",
+                      "name": "Postpone Active / Current Body",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "layout": "vertical",
+                      "gap": 18,
+                      "padding": [
+                        0,
+                        20,
+                        18,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "piU9A",
+                          "name": "Postpone Active Header",
+                          "width": "fill_container",
+                          "height": 48,
+                          "stroke": "#EEEEEE",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "CJDqZ",
+                              "name": "Postpone Active Back",
+                              "fill": "#333333",
+                              "content": "‹",
+                              "fontFamily": "Inter",
+                              "fontSize": 25,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "KW13i",
+                              "name": "Postpone Active Title",
+                              "fill": "#111111",
+                              "content": "할 일",
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "A5ceE",
+                              "name": "Postpone Active More",
+                              "fill": "#333333",
+                              "content": "⋮",
+                              "fontFamily": "Inter",
+                              "fontSize": 20,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "e8buC",
+                          "name": "Postpone Active Banner",
+                          "width": "fill_container",
+                          "fill": "#000000",
+                          "layout": "vertical",
+                          "gap": 7,
+                          "padding": 16,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "w1hOVR",
+                              "name": "Postpone Active Banner Top",
+                              "width": "fill_container",
+                              "justifyContent": "space_between",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "G4wR3m",
+                                  "name": "Postpone Active Banner Label",
+                                  "fill": "#F59E0B",
+                                  "content": "TASK LOCK POSTPONED",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 10,
+                                  "fontWeight": "600",
+                                  "letterSpacing": 1
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "VgN68",
+                                  "name": "Postpone Active Remaining",
+                                  "fill": "#FFFFFF",
+                                  "content": "24:18",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 20,
+                                  "fontWeight": "300"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "abDf4",
+                              "name": "Postpone Active Banner Desc",
+                              "fill": "#999999",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "유예가 끝나면 미완료 할 일 잠금이 다시 시작됩니다.",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 11
+                            },
+                            {
+                              "type": "frame",
+                              "id": "TlLH0",
+                              "name": "Postpone Progress Track",
+                              "width": "fill_container",
+                              "height": 2,
+                              "fill": "#333333",
+                              "children": [
+                                {
+                                  "type": "rectangle",
+                                  "id": "m3D6Z",
+                                  "name": "Postpone Progress Value",
+                                  "fill": "#F59E0B",
+                                  "width": 190,
+                                  "height": 2
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "jqkew",
+                          "name": "Postpone Task Summary",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Tpnzk",
+                              "name": "Postpone Today",
+                              "fill": "#111111",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "오늘 할 일",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "Jz3YP",
+                              "name": "Postpone Task Count",
+                              "fill": "#777777",
+                              "content": "0 / 2 완료",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "uPbBl",
+                          "name": "Postpone Active Task List",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "frozG",
+                              "name": "Postpone Reading",
+                              "width": "fill_container",
+                              "height": 50,
+                              "stroke": "#E8E8E8",
+                              "strokeWidth": 1,
+                              "gap": 12,
+                              "padding": [
+                                0,
+                                14
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "NEqNn",
+                                  "name": "Postpone Reading Check",
+                                  "fill": "#202020",
+                                  "content": "○",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 16,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "gy9oF",
+                                  "name": "Postpone Reading Text",
+                                  "fill": "#202020",
+                                  "content": "책 10쪽 읽기",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 14,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "nLrD9",
+                                  "name": "Postpone Reading State",
+                                  "fill": "#999999",
+                                  "content": "PAUSED",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 9,
+                                  "fontWeight": "600",
+                                  "letterSpacing": 1
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "SJHOX",
+                              "name": "Postpone Stretch",
+                              "width": "fill_container",
+                              "height": 50,
+                              "stroke": "#E8E8E8",
+                              "strokeWidth": 1,
+                              "gap": 12,
+                              "padding": [
+                                0,
+                                14
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "rMpmd",
+                                  "name": "Postpone Stretch Check",
+                                  "fill": "#202020",
+                                  "content": "○",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 16,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "C5c7DC",
+                                  "name": "Postpone Stretch Text",
+                                  "fill": "#202020",
+                                  "content": "스트레칭 15분",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 14,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "pZAET",
+                                  "name": "Postpone Stretch State",
+                                  "fill": "#999999",
+                                  "content": "PAUSED",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 9,
+                                  "fontWeight": "600",
+                                  "letterSpacing": 1
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "u0IGtf",
+                          "name": "Postpone Existing Policy Notice",
+                          "width": "fill_container",
+                          "stroke": "#EEEEEE",
+                          "strokeWidth": {
+                            "top": 1,
+                            "bottom": 1
+                          },
+                          "layout": "vertical",
+                          "gap": 4,
+                          "padding": [
+                            13,
+                            0
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "ATIaS",
+                              "name": "Postpone Existing Policy Title",
+                              "fill": "#111111",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "쇼츠 차단은 계속 활성화됩니다.",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "P1YxP",
+                              "name": "Postpone Existing Policy Body",
+                              "fill": "#888888",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "쇼츠 진입 시 기존 30초 생각하기 화면이 표시됩니다.",
+                              "lineHeight": 1.35,
+                              "fontFamily": "Inter",
+                              "fontSize": 11
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "PqDQP",
+                          "name": "End Postpone Button",
+                          "width": "fill_container",
+                          "height": 46,
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 2,
+                          "stroke": "#DADADA",
+                          "strokeWidth": 1,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "F5mVQ",
+                              "name": "End Postpone Button Label",
+                              "fill": "#111111",
+                              "content": "미루기 종료하고 할 일 잠금 시작",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "KAyD9",
+                      "name": "Postpone Active / Current Android Navigation",
+                      "width": "fill_container",
+                      "height": 42,
+                      "fill": "#F2F2F2",
+                      "justifyContent": "space_around",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Ym5yk",
+                          "name": "Postpone Active / Current Nav 0",
+                          "fill": "#555555",
+                          "content": "◀",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "KSdo7",
+                          "name": "Postpone Active / Current Nav 1",
+                          "fill": "#555555",
+                          "content": "●",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Gd8Ai",
+                          "name": "Postpone Active / Current Nav 2",
+                          "fill": "#555555",
+                          "content": "■",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "IQ9YW",
+              "name": "Report / Task Lock Column",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "LgU3M",
+                  "name": "Report / Task Lock Flow Label",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Z7b315",
+                      "name": "Report / Task Lock Number",
+                      "fill": "#000000",
+                      "cornerRadius": 2,
+                      "padding": [
+                        5,
+                        8
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Y6WpB",
+                          "name": "Report / Task Lock Number Text",
+                          "fill": "#FFFFFF",
+                          "content": "08",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "mPXXm",
+                      "name": "Report / Task Lock Caption",
+                      "fill": "#222222",
+                      "content": "주간 할 일 잠금 리포트",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "hH65H",
+                  "name": "Report / Task Lock",
+                  "clip": true,
+                  "width": 360,
+                  "height": 800,
+                  "fill": "#FFFFFF",
+                  "stroke": "#DADADA",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "lZy98",
+                      "name": "Report / Task Lock Status Bar",
+                      "width": "fill_container",
+                      "height": 32,
+                      "padding": [
+                        0,
+                        12
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "JRbj0",
+                          "name": "Report / Task Lock Time",
+                          "fill": "#222222",
+                          "content": "3:02",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "lOMX1",
+                          "name": "Report / Task Lock System",
+                          "fill": "#222222",
+                          "content": "▮▮  Wi-Fi  ▰",
+                          "fontFamily": "Inter",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vwUZc",
+                      "name": "Report / Task Lock Body",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "layout": "vertical",
+                      "gap": 18,
+                      "padding": [
+                        0,
+                        20,
+                        18,
+                        20
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "EsyIF",
+                          "name": "Task Report Header",
+                          "width": "fill_container",
+                          "height": 48,
+                          "stroke": "#EEEEEE",
+                          "strokeWidth": {
+                            "bottom": 1
+                          },
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "OTpBB",
+                              "name": "Task Report Back",
+                              "fill": "#333333",
+                              "content": "‹",
+                              "fontFamily": "Inter",
+                              "fontSize": 25,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "wWj4P",
+                              "name": "Task Report Title",
+                              "fill": "#111111",
+                              "content": "리포트",
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "500"
+                            },
+                            {
+                              "type": "text",
+                              "id": "k7h6M",
+                              "name": "Task Report Help",
+                              "fill": "#333333",
+                              "content": "?",
+                              "fontFamily": "Inter",
+                              "fontSize": 14,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "Hj5qZ",
+                          "name": "Task Report Section",
+                          "fill": "#111111",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "이번 주 할 일 잠금",
+                          "lineHeight": 1.35,
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "500"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "QcmU2",
+                          "name": "Task Report Tabs",
+                          "width": "fill_container",
+                          "height": 36,
+                          "fill": "#F5F5F5",
+                          "cornerRadius": 3,
+                          "gap": 3,
+                          "padding": 3,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "zG4ws",
+                              "name": "Task Report Tab 완료",
+                              "width": "fill_container",
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 2,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "KITsb",
+                                  "name": "Task Report Tab 완료 Label",
+                                  "fill": "#111111",
+                                  "content": "완료",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 11,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "bmpQX",
+                              "name": "Task Report Tab 차단",
+                              "width": "fill_container",
+                              "fill": "#F5F5F5",
+                              "cornerRadius": 2,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Wk7Fa",
+                                  "name": "Task Report Tab 차단 Label",
+                                  "fill": "#777777",
+                                  "content": "차단",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 11
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "MsDpg",
+                              "name": "Task Report Tab 미루기",
+                              "width": "fill_container",
+                              "fill": "#F5F5F5",
+                              "cornerRadius": 2,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "k3gUg",
+                                  "name": "Task Report Tab 미루기 Label",
+                                  "fill": "#777777",
+                                  "content": "미루기",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 11
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "s2VCRL",
+                          "name": "Task Report Hero Metric",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 3,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "A2S1Cy",
+                              "name": "Task Report Metric Value",
+                              "fill": "#000000",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "12",
+                              "lineHeight": 1.35,
+                              "textAlign": "center",
+                              "fontFamily": "Inter",
+                              "fontSize": 36,
+                              "fontWeight": "300"
+                            },
+                            {
+                              "type": "text",
+                              "id": "wmJ1X",
+                              "name": "Task Report Metric Label",
+                              "fill": "#777777",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "완료한 잠금 할 일",
+                              "lineHeight": 1.35,
+                              "textAlign": "center",
+                              "fontFamily": "Inter",
+                              "fontSize": 11
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "PWIRm",
+                          "name": "Task Report Chart",
+                          "width": "fill_container",
+                          "height": 160,
+                          "gap": 19,
+                          "justifyContent": "center",
+                          "alignItems": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "ihDaZ",
+                              "name": "Chart 월",
+                              "width": 24,
+                              "height": 150,
+                              "layout": "vertical",
+                              "gap": 7,
+                              "justifyContent": "end",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "rectangle",
+                                  "cornerRadius": [
+                                    2,
+                                    2,
+                                    0,
+                                    0
+                                  ],
+                                  "id": "flBXL",
+                                  "name": "Chart 월 Bar",
+                                  "fill": "#A7A7A7",
+                                  "width": 14,
+                                  "height": 60
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "vHWYd",
+                                  "name": "Chart 월 Label",
+                                  "fill": "#777777",
+                                  "content": "월",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 9,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "D5ECzT",
+                              "name": "Chart 화",
+                              "width": 24,
+                              "height": 150,
+                              "layout": "vertical",
+                              "gap": 7,
+                              "justifyContent": "end",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "rectangle",
+                                  "cornerRadius": [
+                                    2,
+                                    2,
+                                    0,
+                                    0
+                                  ],
+                                  "id": "cFP22",
+                                  "name": "Chart 화 Bar",
+                                  "fill": "#A7A7A7",
+                                  "width": 14,
+                                  "height": 104
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "kmL0d",
+                                  "name": "Chart 화 Label",
+                                  "fill": "#777777",
+                                  "content": "화",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 9,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "Y3px2",
+                              "name": "Chart 수",
+                              "width": 24,
+                              "height": 150,
+                              "layout": "vertical",
+                              "gap": 7,
+                              "justifyContent": "end",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "rectangle",
+                                  "cornerRadius": [
+                                    2,
+                                    2,
+                                    0,
+                                    0
+                                  ],
+                                  "id": "S9QwKH",
+                                  "name": "Chart 수 Bar",
+                                  "fill": "#A7A7A7",
+                                  "width": 14,
+                                  "height": 82
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "DHjv5",
+                                  "name": "Chart 수 Label",
+                                  "fill": "#777777",
+                                  "content": "수",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 9,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "J4g8T",
+                              "name": "Chart 목",
+                              "width": 24,
+                              "height": 150,
+                              "layout": "vertical",
+                              "gap": 7,
+                              "justifyContent": "end",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "rectangle",
+                                  "cornerRadius": [
+                                    2,
+                                    2,
+                                    0,
+                                    0
+                                  ],
+                                  "id": "vaFvH",
+                                  "name": "Chart 목 Bar",
+                                  "fill": "#A7A7A7",
+                                  "width": 14,
+                                  "height": 132
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "geBXE",
+                                  "name": "Chart 목 Label",
+                                  "fill": "#777777",
+                                  "content": "목",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 9,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "PUqHg",
+                              "name": "Chart 금",
+                              "width": 24,
+                              "height": 150,
+                              "layout": "vertical",
+                              "gap": 7,
+                              "justifyContent": "end",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "rectangle",
+                                  "cornerRadius": [
+                                    2,
+                                    2,
+                                    0,
+                                    0
+                                  ],
+                                  "id": "NPDmc",
+                                  "name": "Chart 금 Bar",
+                                  "fill": "#A7A7A7",
+                                  "width": 14,
+                                  "height": 110
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "rG4zt",
+                                  "name": "Chart 금 Label",
+                                  "fill": "#777777",
+                                  "content": "금",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 9,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "Y5SJ3",
+                              "name": "Chart 토",
+                              "width": 24,
+                              "height": 150,
+                              "layout": "vertical",
+                              "gap": 7,
+                              "justifyContent": "end",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "rectangle",
+                                  "cornerRadius": [
+                                    2,
+                                    2,
+                                    0,
+                                    0
+                                  ],
+                                  "id": "sGQkw",
+                                  "name": "Chart 토 Bar",
+                                  "fill": "#A7A7A7",
+                                  "width": 14,
+                                  "height": 76
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "poltS",
+                                  "name": "Chart 토 Label",
+                                  "fill": "#777777",
+                                  "content": "토",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 9,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "Zl9PN",
+                              "name": "Chart 일",
+                              "width": 24,
+                              "height": 150,
+                              "layout": "vertical",
+                              "gap": 7,
+                              "justifyContent": "end",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "rectangle",
+                                  "cornerRadius": [
+                                    2,
+                                    2,
+                                    0,
+                                    0
+                                  ],
+                                  "id": "ycqjT",
+                                  "name": "Chart 일 Bar",
+                                  "fill": "#A7A7A7",
+                                  "width": 14,
+                                  "height": 124
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "wh5AL",
+                                  "name": "Chart 일 Label",
+                                  "fill": "#777777",
+                                  "content": "일",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 9,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "JxH2z",
+                          "name": "Task Report Stats",
+                          "width": "fill_container",
+                          "stroke": "#EEEEEE",
+                          "strokeWidth": {
+                            "top": 1
+                          },
+                          "layout": "vertical",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "HrEcf",
+                              "name": "Stat 약속을 모두 지킨 날",
+                              "width": "fill_container",
+                              "stroke": "#EEEEEE",
+                              "strokeWidth": {
+                                "bottom": 1
+                              },
+                              "padding": [
+                                13,
+                                0
+                              ],
+                              "justifyContent": "space_between",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "xs4Mn",
+                                  "name": "Stat 약속을 모두 지킨 날 Label",
+                                  "fill": "#555555",
+                                  "content": "약속을 모두 지킨 날",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "n8xhP",
+                                  "name": "Stat 약속을 모두 지킨 날 Value",
+                                  "fill": "#111111",
+                                  "content": "5일",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "o1oNLq",
+                              "name": "Stat 잠금 중 막은 쇼츠 진입",
+                              "width": "fill_container",
+                              "stroke": "#EEEEEE",
+                              "strokeWidth": {
+                                "bottom": 1
+                              },
+                              "padding": [
+                                13,
+                                0
+                              ],
+                              "justifyContent": "space_between",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "jV2iK",
+                                  "name": "Stat 잠금 중 막은 쇼츠 진입 Label",
+                                  "fill": "#555555",
+                                  "content": "잠금 중 막은 쇼츠 진입",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "Jfynh",
+                                  "name": "Stat 잠금 중 막은 쇼츠 진입 Value",
+                                  "fill": "#111111",
+                                  "content": "27회",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "jIpUP",
+                              "name": "Stat 미루기 사용",
+                              "width": "fill_container",
+                              "stroke": "#EEEEEE",
+                              "strokeWidth": {
+                                "bottom": 1
+                              },
+                              "padding": [
+                                13,
+                                0
+                              ],
+                              "justifyContent": "space_between",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "KBI6y",
+                                  "name": "Stat 미루기 사용 Label",
+                                  "fill": "#555555",
+                                  "content": "미루기 사용",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "BWKVo",
+                                  "name": "Stat 미루기 사용 Value",
+                                  "fill": "#F59E0B",
+                                  "content": "3회",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "C06EP2",
+                              "name": "Stat 미룬 뒤 당일 완료",
+                              "width": "fill_container",
+                              "stroke": "#EEEEEE",
+                              "strokeWidth": {
+                                "bottom": 1
+                              },
+                              "padding": [
+                                13,
+                                0
+                              ],
+                              "justifyContent": "space_between",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "KbuhY",
+                                  "name": "Stat 미룬 뒤 당일 완료 Label",
+                                  "fill": "#555555",
+                                  "content": "미룬 뒤 당일 완료",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "bZel0",
+                                  "name": "Stat 미룬 뒤 당일 완료 Value",
+                                  "fill": "#00A968",
+                                  "content": "2회",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "PeFCu",
+                      "name": "Report / Task Lock Android Navigation",
+                      "width": "fill_container",
+                      "height": 42,
+                      "fill": "#F2F2F2",
+                      "justifyContent": "space_around",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "PMtCE",
+                          "name": "Report / Task Lock Nav 0",
+                          "fill": "#555555",
+                          "content": "◀",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "m7wS6S",
+                          "name": "Report / Task Lock Nav 1",
+                          "fill": "#555555",
+                          "content": "●",
+                          "fontFamily": "Inter",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "e04rW",
+                          "name": "Report / Task Lock Nav 2",
+                          "fill": "#555555",
+                          "content": "■",
+                          "fontFamily": "Inter",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "OHbOf",
+          "name": "Flow Footnote / Developed",
+          "width": "fill_container",
+          "stroke": "#EEEEEE",
+          "strokeWidth": {
+            "top": 1
+          },
+          "padding": [
+            14,
+            0
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "B91I2E",
+              "name": "Flow Footnote Developed Copy",
+              "fill": "#666666",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "유예 중에도 기존 쇼츠 차단은 유지됩니다. 리포트는 완료율보다 ‘잠금이 실제 행동으로 이어졌는지’를 보여줍니다.",
+              "lineHeight": 1.35,
+              "fontFamily": "Inter",
+              "fontSize": 12
+            }
+          ]
         }
       ]
     }

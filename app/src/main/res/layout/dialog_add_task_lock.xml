@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/taskLockSheetTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
+            android:text="@string/task_lock_add_title"
+            android:textColor="@color/gray_900"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/spoqa_sans_neo_regular"
+            android:text="@string/task_lock_add_subtitle"
+            android:textColor="@color/gray_500"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/taskLockTitleInput"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/gray_300"
+            android:hint="@string/task_lock_title_hint"
+            android:imeOptions="actionDone"
+            android:inputType="textCapSentences"
+            android:maxLength="80"
+            android:singleLine="true" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/taskLockEnabledInput"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:checked="true"
+            android:fontFamily="@font/spoqa_sans_neo_regular"
+            android:gravity="center_vertical"
+            android:text="@string/task_lock_until_complete" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/spoqa_sans_neo_medium"
+            android:text="@string/task_lock_start_label"
+            android:textColor="@color/gray_700"
+            android:textSize="14sp" />
+
+        <RadioGroup
+            android:id="@+id/taskLockStartModeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+            <RadioButton android:id="@+id/taskLockStartNow" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:checked="true" android:text="@string/task_lock_start_now" />
+            <RadioButton android:id="@+id/taskLockStartScheduled" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:text="@string/task_lock_start_scheduled" />
+        </RadioGroup>
+
+        <TimePicker
+            android:id="@+id/taskLockStartTimeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginEnd="8dp" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/task_lock_repeat_label" android:textColor="@color/gray_500" android:textSize="12sp" />
+                <Spinner android:id="@+id/taskLockRepeatInput" android:layout_width="match_parent" android:layout_height="48dp" android:entries="@array/task_lock_repeat_options" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/task_lock_verification_label" android:textColor="@color/gray_500" android:textSize="12sp" />
+                <Spinner android:id="@+id/taskLockVerificationInput" android:layout_width="match_parent" android:layout_height="48dp" android:entries="@array/task_lock_verification_options" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/taskLockSaveButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/spoqa_sans_neo_bold"
+            android:text="@string/task_lock_save"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:backgroundTint="@color/primary_dark" />
+    </LinearLayout>
+</ScrollView>

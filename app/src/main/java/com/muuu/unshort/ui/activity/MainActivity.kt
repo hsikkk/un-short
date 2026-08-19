@@ -301,6 +301,10 @@ class MainActivity : BaseActivity() {
             startActivity(intent)
         }
 
+        findViewById<ImageView>(R.id.taskLockButton).setOnClickListener {
+            startActivity(Intent(this, TaskLockActivity::class.java))
+        }
+
         // 차단 앱 설정 버튼 클릭 리스너
         blockedAppsSettingsButton.setOnClickListener {
             showAppBlockingSettingsDialog()

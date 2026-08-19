@@ -41,6 +41,10 @@ import com.muuu.unshort.ui.activity.BaseActivity
 import com.muuu.unshort.config.AppConstants
 import com.muuu.unshort.R
 import com.muuu.unshort.ShortsBlockService
+import com.muuu.unshort.tasklock.TaskLockItem
+import com.muuu.unshort.tasklock.TaskLockManager
+import com.muuu.unshort.tasklock.VERIFY_DIRECT
+import androidx.appcompat.app.AlertDialog
 
 /**
  * 쇼츠 차단 오버레이 Activity
@@ -70,6 +74,11 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     private lateinit var startTimerButton: TextView
     private lateinit var mainMessage: TextView
     private lateinit var buttonContainer: LinearLayout
+    private lateinit var taskLockOverlayContent: LinearLayout
+    private lateinit var taskLockOverlayList: LinearLayout
+    private lateinit var taskLockOverlaySummary: TextView
+    private lateinit var taskLockOverlayClose: TextView
+    private lateinit var taskLockPostpone: TextView
     private var bannerAdView: com.muuu.ad.view.MuuuBannerAdView? = null
     private var nativeAdView: com.muuu.ad.view.MuuuNativeAdView? = null
 
@@ -78,6 +87,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     private var isFromScroll: Boolean = false
     private var rewardedAdInProgress: Boolean = false
     private var instantUnblockCountdown: Int = 2
+    private var taskLockOverlayRecorded = false
 
     // Utils
     private lateinit var prefsManager: PreferencesManager
@@ -237,6 +247,11 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         buttonContainer = findViewById(R.id.buttonContainer)
 
         instantUnblockButton = findViewById(R.id.instantUnblockButton)
+        taskLockOverlayContent = findViewById(R.id.taskLockOverlayContent)
+        taskLockOverlayList = findViewById(R.id.taskLockOverlayList)
+        taskLockOverlaySummary = findViewById(R.id.taskLockOverlaySummary)
+        taskLockOverlayClose = findViewById(R.id.taskLockOverlayClose)
+        taskLockPostpone = findViewById(R.id.taskLockPostpone)
 
         // Setup button listeners
         skipButton.setOnClickListener {
@@ -273,6 +288,8 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             Log.d(TAG, "Instant unblock button clicked")
             onInstantUnblockClicked()
         }
+        taskLockOverlayClose.setOnClickListener { handleSkip() }
+        taskLockPostpone.setOnClickListener { postponeTaskLock() }
     }
 
     private fun startSkipButtonCountdown() {
@@ -321,6 +338,14 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     }
 
     private fun updateUI() {
+        if (TaskLockManager.isLockActive(this)) {
+            renderTaskLockOverlay()
+            return
+        }
+        taskLockOverlayContent.visibility = View.GONE
+        mainMessage.visibility = View.VISIBLE
+        buttonContainer.visibility = View.VISIBLE
+
         val isTimerCompleted = overlayType == OverlayType.CONFIRMATION
 
         Log.d(TAG, "updateUI: isTimerCompleted=$isTimerCompleted")
@@ -459,6 +484,10 @@ class ShortsBlockOverlayActivity : BaseActivity() {
      * 잔여 횟수 텍스트는 노출하지 않음. 한도 도달 시점도 별도 표기 X (클릭 시 다이얼로그로 처리).
      */
     private fun setupBottomActionUi() {
+        if (TaskLockManager.isLockActive(this)) {
+            instantUnblockButton.visibility = View.GONE
+            return
+        }
         if (isFromScroll || overlayType == OverlayType.CONFIRMATION || !prefsManager.isInstantUnblockEnabled) {
             instantUnblockButton.visibility = View.GONE
             return
@@ -466,6 +495,127 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         instantUnblockButton.visibility = View.VISIBLE
         startInstantUnblockCountdown()
     }
+
+    private fun renderTaskLockOverlay() {
+        val tasks = TaskLockManager.getPendingLockTasks(this)
+        if (!taskLockOverlayRecorded) {
+            taskLockOverlayRecorded = true
+            TaskLockManager.recordOverlayShown(this)
+            AnalyticsManager.trackEvent(
+                this,
+                AnalyticsEvent.TASK_LOCK_OVERLAY_SHOWN,
+                overlayContextProperties(mapOf("pending_count" to tasks.size))
+            )
+        }
+        mainMessage.visibility = View.GONE
+        buttonContainer.visibility = View.GONE
+        taskLockOverlayContent.visibility = View.VISIBLE
+        taskLockOverlaySummary.text = resources.getQuantityString(
+            R.plurals.task_lock_overlay_summary,
+            tasks.size,
+            tasks.size
+        )
+        taskLockOverlayList.removeAllViews()
+        tasks.forEach { task -> taskLockOverlayList.addView(createTaskLockRow(task)) }
+
+        val remaining = TaskLockManager.getRemainingPostpones(this)
+        taskLockPostpone.isEnabled = remaining > 0
+        taskLockPostpone.alpha = if (remaining > 0) 1f else 0.45f
+        taskLockPostpone.text = if (PremiumManager.isPremium()) {
+            getString(R.string.task_lock_postpone_premium, remaining)
+        } else {
+            getString(R.string.task_lock_postpone, remaining)
+        }
+    }
+
+    private fun createTaskLockRow(task: TaskLockItem): TextView {
+        return TextView(this).apply {
+            text = "○  ${task.title}    ›"
+            textSize = 15f
+            setTextColor(0xFFFFFFFF.toInt())
+            setBackgroundColor(0xFF141414.toInt())
+            setPadding(dp(16), dp(18), dp(16), dp(18))
+            val params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            params.bottomMargin = dp(8)
+            layoutParams = params
+            setOnClickListener { confirmTaskCompletion(task) }
+        }
+    }
+
+    private fun confirmTaskCompletion(task: TaskLockItem) {
+        if (task.verificationMode != VERIFY_DIRECT) {
+            startActivity(Intent(this, TaskVerificationActivity::class.java).apply {
+                putExtra(TaskVerificationActivity.EXTRA_TASK_ID, task.id)
+            })
+            return
+        }
+        AlertDialog.Builder(this)
+            .setTitle(R.string.task_lock_complete_title)
+            .setMessage(task.title)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                TaskLockManager.setCompleted(this, task.id, true)
+                if (TaskLockManager.getPendingLockTasks(this).isEmpty()) {
+                    Toast.makeText(this, R.string.task_lock_all_complete, Toast.LENGTH_SHORT).show()
+                    updateUI()
+                    setupBottomActionUi()
+                } else {
+                    renderTaskLockOverlay()
+                }
+            }
+            .show()
+    }
+
+    private fun postponeTaskLock() {
+        if (TaskLockManager.getRemainingPostpones(this) <= 0) {
+            Toast.makeText(this, R.string.task_lock_postpone_unavailable, Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (PremiumManager.isPremium()) {
+            applyTaskLockPostpone()
+            return
+        }
+        if (rewardedAdInProgress) return
+        rewardedAdInProgress = true
+        AdManager.setupRewardedAd(
+            activity = this,
+            adUnit = MuuuRewardedAdUnit(
+                key = AdConfig.REWARDED_UNBLOCK_QUOTA_RECHARGE,
+                placement = "rewarded_task_lock_postpone"
+            )
+        ) { result ->
+            rewardedAdInProgress = false
+            when (result) {
+                RewardResult.Earned, RewardResult.NotApplicable -> applyTaskLockPostpone()
+                is RewardResult.Failed -> Toast.makeText(
+                    this,
+                    R.string.ad_recharge_load_failed,
+                    Toast.LENGTH_SHORT
+                ).show()
+                RewardResult.Cancelled -> Unit
+            }
+        }
+    }
+
+    private fun applyTaskLockPostpone() {
+        if (!TaskLockManager.postpone(this)) {
+            Toast.makeText(this, R.string.task_lock_postpone_unavailable, Toast.LENGTH_SHORT).show()
+            return
+        }
+        Toast.makeText(this, R.string.task_lock_postpone_started, Toast.LENGTH_SHORT).show()
+        AnalyticsManager.trackEvent(
+            this,
+            AnalyticsEvent.TASK_LOCK_POSTPONED,
+            overlayContextProperties(mapOf("remaining" to TaskLockManager.getRemainingPostpones(this)))
+        )
+        updateUI()
+        setupBottomActionUi()
+    }
+
+    private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 
     /**
      * "바로 보기" N초 후 활성화 (skipButton과 동일 패턴)

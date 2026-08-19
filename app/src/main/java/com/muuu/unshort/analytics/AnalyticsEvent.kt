@@ -103,4 +103,12 @@ object AnalyticsEvent {
     const val NOTIFICATION_PERMISSION_REQUESTED = "notification_permission_requested"
     const val NOTIFICATION_PERMISSION_GRANTED = "notification_permission_granted"
     const val NOTIFICATION_PERMISSION_DENIED = "notification_permission_denied"
+
+    // Task Lock (never attach task titles or photo data)
+    const val TASK_LOCK_TASK_CREATED = "task_lock_task_created"
+    const val TASK_LOCK_TASK_COMPLETED = "task_lock_task_completed"
+    const val TASK_LOCK_OVERLAY_SHOWN = "task_lock_overlay_shown"
+    const val TASK_LOCK_POSTPONED = "task_lock_postponed"
+    const val TASK_LOCK_AI_RESULT = "task_lock_ai_result"
+    const val TASK_LOCK_CANCELLED = "task_lock_cancelled"
 }
