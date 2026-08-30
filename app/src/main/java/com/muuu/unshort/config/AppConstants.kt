@@ -91,7 +91,6 @@ object AppConstants {
     const val PREF_LAST_SEEN_VERSION_CODE = "last_seen_version_code"
 
     // Remote Config Keys
-    const val RC_SHOW_AFFILIATE_BANNER = "show_affiliate_banner"
     const val RC_UNBLOCK_QUOTA_DAILY_LIMIT = "unblock_quota_daily_limit"
     const val RC_UNBLOCK_QUOTA_AD_RECHARGE_AMOUNT = "unblock_quota_ad_recharge_amount"
 

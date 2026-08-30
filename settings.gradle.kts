@@ -25,4 +25,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "ShortBlock"
 include(":app")
-include(":affiliate")

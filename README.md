@@ -20,7 +20,7 @@ un:short는 짧은 영상과 무한 피드 소비에 의도적인 마찰을 추�
 - 버전: `1.10.1` (`versionCode 35`)
 - Android SDK: `minSdk 26`, `targetSdk 36`, `compileSdk 36`
 - JVM: Java 17
-- 모듈: `:app`, `:affiliate`
+- 모듈: `:app`
 - Shorts/Reels 대상: `YouTube Shorts`, `Instagram Reels`, `Facebook Reels`, `Naver Shorts`, `TikTok Shorts`
 - 홈 피드 대상(Beta): `Instagram`, `YouTube`, `Threads`, `Facebook`
 <!-- docs-sync:end -->
@@ -47,7 +47,6 @@ app/src/main/java/com/muuu/unshort/
 ├── ad/                 # 광고 및 일일 즉시 해제 한도
 ├── receiver/           # 리셋, 알림, 수면 모드 수신기
 └── ui/                 # 메인, 설정, 리포트, 다이얼로그
-affiliate/              # 제휴 배너 Android library 모듈
 documents/prd/          # 기능별 요구사항과 의사결정 기록
 scripts/                # 문서 검사와 운영 도구
 ```

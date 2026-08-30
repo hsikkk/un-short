@@ -12,7 +12,7 @@
 | 정보 | 단일 기준 | 함께 확인할 문서 |
 |---|---|---|
 | 현재 제품 동작 | `documents/SPEC.md` | 구현 코드와 테스트 |
-| 버전, SDK, JVM, 모듈 | `app/build.gradle.kts`, `affiliate/build.gradle.kts`, `settings.gradle.kts` | `SPEC.md`, `README.md` |
+| 버전, SDK, JVM, 모듈 | `app/build.gradle.kts`, `settings.gradle.kts` | `SPEC.md`, `README.md` |
 | Shorts/Reels 대상 앱 | `AppBlockingRegistry.kt` | `SPEC.md`, `README.md` |
 | 피드 차단 대상 앱 | `FeedTargetRegistry.kt` | `SPEC.md`, `README.md`, 관련 PRD |
 | 권한과 Android component | `AndroidManifest.xml` | `SPEC.md`, 관련 PRD |
