@@ -12,7 +12,7 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("/Users/muuu/key/key-store.jks")
+            storeFile = file("key-store.jks")
             storePassword = "akffod02!!"
             keyAlias = "key0"
             keyPassword = "akffod02!!"
