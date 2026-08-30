@@ -23,8 +23,8 @@ android {
         applicationId = "com.muuu.unshort"
         minSdk = 26
         targetSdk = 36
-        versionCode = 35
-        versionName = "1.10.1"
+        versionCode = 36
+        versionName = "1.11.0"
     }
 
     buildTypes {
@@ -102,7 +102,7 @@ dependencies {
     implementation("com.muuu:ad:0.2.0")
 
     // Google Play Billing Library
-    implementation("com.android.billingclient:billing-ktx:9.1.0")
+    implementation("com.android.billingclient:billing:9.1.0")
 
     // Google Play In-App Review
     implementation("com.google.android.play:review:2.0.1")

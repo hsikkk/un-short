@@ -398,6 +398,7 @@
     <string name="changelog_title">v%s 업데이트</string>
     <string name="changelog_subtitle">새로운 변경사항을 확인해보세요</string>
     <string name="changelog_confirm">확인</string>
+    <string name="changelog_v1_11_0_item1">쇼츠를 의도적으로 시청할 수 있도록 할 일 잠금 기능 추가</string>
     <string name="changelog_v1_10_1_item1">최신 Google Play 요구사항에 맞게 Android 호환성 업데이트</string>
     <string name="changelog_v1_10_0_item1">\"바로 보기\" 버튼 표시 여부 설정 추가</string>
     <string name="changelog_v1_9_0_item1">버그 수정 및 안정성 개선</string>

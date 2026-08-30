@@ -398,6 +398,7 @@
     <string name="changelog_title">v%s Update</string>
     <string name="changelog_subtitle">Check out what\'s new</string>
     <string name="changelog_confirm">OK</string>
+    <string name="changelog_v1_11_0_item1">Added task-based locking to help you watch Shorts with intention</string>
     <string name="changelog_v1_10_1_item1">Updated Android compatibility for the latest Google Play requirements</string>
     <string name="changelog_v1_10_0_item1">Added a setting to show or hide the \"Watch now\" button</string>
     <string name="changelog_v1_9_0_item1">Bug fixes and stability improvements</string>
