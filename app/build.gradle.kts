@@ -102,7 +102,7 @@ dependencies {
     implementation("com.muuu:ad:0.2.0")
 
     // Google Play Billing Library
-    implementation("com.android.billingclient:billing-ktx:8.0.0")
+    implementation("com.android.billingclient:billing-ktx:9.1.0")
 
     // Google Play In-App Review
     implementation("com.google.android.play:review:2.0.1")
