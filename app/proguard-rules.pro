@@ -34,6 +34,17 @@
 -keep class com.muuu.unshort.SessionManager { *; }
 -keep class com.muuu.unshort.AppUtils { *; }
 
+# Task verification loads the optional ML Kit Prompt API through reflection.
+-keep class com.google.mlkit.genai.prompt.Generation { *; }
+-keep class com.google.mlkit.genai.prompt.GenerativeModel { *; }
+-keep class com.google.mlkit.genai.prompt.GenerateContentRequest { *; }
+-keep class com.google.mlkit.genai.prompt.GenerateContentRequest$Builder { *; }
+-keep class com.google.mlkit.genai.prompt.GenerateContentResponse { *; }
+-keep class com.google.mlkit.genai.prompt.Candidate { *; }
+-keep class com.google.mlkit.genai.prompt.ImagePart { *; }
+-keep class com.google.mlkit.genai.prompt.TextPart { *; }
+-keep class com.google.mlkit.genai.prompt.java.GenerativeModelFutures { *; }
+
 # AndroidX
 -keep class androidx.** { *; }
 -dontwarn androidx.**
