@@ -10,6 +10,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.view.Gravity
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
@@ -531,11 +532,14 @@ class ShortsBlockOverlayActivity : BaseActivity() {
 
     private fun createTaskLockRow(task: TaskLockItem): TextView {
         return TextView(this).apply {
-            text = "○  ${task.title}    ›"
+            text = "□  ${task.title}"
             textSize = 15f
             setTextColor(0xFFFFFFFF.toInt())
-            setBackgroundColor(0xFF141414.toInt())
+            background = getDrawable(R.drawable.task_lock_overlay_row)
+            minHeight = dp(56)
+            gravity = Gravity.CENTER_VERTICAL
             setPadding(dp(16), dp(18), dp(16), dp(18))
+            contentDescription = getString(R.string.task_lock_overlay_task_action, task.title)
             val params = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -558,7 +562,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             .setTitle(R.string.task_lock_complete_title)
             .setMessage(task.title)
             .setNegativeButton(android.R.string.cancel, null)
-            .setPositiveButton(android.R.string.ok) { _, _ ->
+            .setPositiveButton(R.string.task_lock_complete) { _, _ ->
                 TaskLockManager.setCompleted(this, task.id, true)
                 if (TaskLockManager.getPendingLockTasks(this).isEmpty()) {
                     Toast.makeText(this, R.string.task_lock_all_complete, Toast.LENGTH_SHORT).show()

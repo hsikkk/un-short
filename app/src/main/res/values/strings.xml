@@ -546,6 +546,8 @@
     <string name="task_lock_postpone_started">Task lock postponed for 30 minutes</string>
     <string name="task_lock_postpone_unavailable">No postpones left today</string>
     <string name="task_lock_complete_title">Mark complete?</string>
+    <string name="task_lock_complete">Complete</string>
+    <string name="task_lock_overlay_task_action">Complete task: %s</string>
     <string name="task_lock_all_complete">All tasks complete. Returning to the regular block screen.</string>
     <string name="task_lock_repeat_label">Repeat</string>
     <string-array name="task_lock_repeat_options"><item>Once</item><item>Daily</item><item>Weekdays</item></string-array>
