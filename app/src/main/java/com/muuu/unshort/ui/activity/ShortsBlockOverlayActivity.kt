@@ -44,7 +44,6 @@ import com.muuu.unshort.R
 import com.muuu.unshort.ShortsBlockService
 import com.muuu.unshort.tasklock.TaskLockItem
 import com.muuu.unshort.tasklock.TaskLockManager
-import androidx.appcompat.app.AlertDialog
 
 /**
  * 쇼츠 차단 오버레이 Activity
@@ -288,7 +287,7 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             Log.d(TAG, "Instant unblock button clicked")
             onInstantUnblockClicked()
         }
-        taskLockOverlayClose.setOnClickListener { handleSkip() }
+        taskLockOverlayClose.setOnClickListener { openTaskLockApp() }
         taskLockPostpone.setOnClickListener { postponeTaskLock() }
     }
 
@@ -544,26 +543,12 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             )
             params.bottomMargin = dp(8)
             layoutParams = params
-            setOnClickListener { confirmTaskCompletion(task) }
+            setOnClickListener { openTaskLockApp() }
         }
     }
 
-    private fun confirmTaskCompletion(task: TaskLockItem) {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.task_lock_complete_title)
-            .setMessage(task.title)
-            .setNegativeButton(android.R.string.cancel, null)
-            .setPositiveButton(R.string.task_lock_complete) { _, _ ->
-                TaskLockManager.setCompleted(this, task.id, true)
-                if (TaskLockManager.getPendingLockTasks(this).isEmpty()) {
-                    Toast.makeText(this, R.string.task_lock_all_complete, Toast.LENGTH_SHORT).show()
-                    updateUI()
-                    setupBottomActionUi()
-                } else {
-                    renderTaskLockOverlay()
-                }
-            }
-            .show()
+    private fun openTaskLockApp() {
+        startActivity(Intent(this, TaskLockActivity::class.java))
     }
 
     private fun postponeTaskLock() {

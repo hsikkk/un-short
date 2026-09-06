@@ -535,14 +535,14 @@
     <string name="task_lock_delete">삭제</string>
     <string name="task_lock_overlay_title">먼저 할 일을 완료해주세요</string>
     <plurals name="task_lock_overlay_summary"><item quantity="other">할 일 %d개 남음</item></plurals>
-    <string name="task_lock_overlay_close">쇼츠 닫고 할 일 하러 가기</string>
+    <string name="task_lock_overlay_close">할 일 앱 열기</string>
     <string name="task_lock_postpone">광고 보고 30분 미루기 · %d회 남음</string>
     <string name="task_lock_postpone_premium">30분 미루기 · %d회 남음</string>
     <string name="task_lock_postpone_started">할 일 잠금을 30분 미뤘어요</string>
     <string name="task_lock_postpone_unavailable">오늘 미루기를 모두 사용했어요</string>
     <string name="task_lock_complete_title">완료로 표시할까요?</string>
     <string name="task_lock_complete">완료하기</string>
-    <string name="task_lock_overlay_task_action">%s 할 일 완료하기</string>
+    <string name="task_lock_overlay_task_action">앱에서 %s 할 일 완료하기</string>
     <string name="task_lock_all_complete">할 일을 모두 완료했어요. 기존 차단 화면으로 돌아갑니다.</string>
     <string name="task_lock_repeat_label">반복</string>
     <string-array name="task_lock_repeat_options"><item>한 번</item><item>매일</item><item>평일</item></string-array>
