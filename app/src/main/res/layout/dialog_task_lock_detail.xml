@@ -20,15 +20,16 @@
             android:fontFamily="@font/spoqa_sans_neo_bold"
             android:textColor="@color/gray_900"
             android:textSize="20sp" />
-        <TextView
+        <ImageView
             android:id="@+id/taskLockDetailEdit"
-            android:layout_width="72dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/task_lock_edit"
             android:gravity="center"
-            android:text="@string/task_lock_edit"
-            android:textColor="@color/gray_900"
-            android:textSize="14sp"
+            android:padding="12dp"
+            android:src="@drawable/ic_edit"
+            android:tint="@color/gray_900"
             android:clickable="true"
             android:focusable="true" />
     </LinearLayout>

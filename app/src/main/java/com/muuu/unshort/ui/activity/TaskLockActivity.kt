@@ -161,7 +161,10 @@ class TaskLockActivity : BaseActivity() {
             configureTaskEditor(editor, task, dialog)
             dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
-        content.findViewById<MaterialButton>(R.id.taskLockDetailComplete).setOnClickListener {
+        val complete = content.findViewById<MaterialButton>(R.id.taskLockDetailComplete)
+        complete.isEnabled = !task.isCompleted
+        if (task.isCompleted) complete.setText(R.string.task_lock_detail_completed)
+        complete.setOnClickListener {
             confirmTaskCompletion(task) { dialog.dismiss() }
         }
         dialog.show()
