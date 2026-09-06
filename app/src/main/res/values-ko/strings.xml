@@ -565,4 +565,5 @@
     <string name="task_lock_detail_not_locking">쇼츠를 잠그지 않는 할 일이에요</string>
     <string name="task_lock_detail_schedule">시작: %s</string>
     <string name="task_lock_detail_repeat">반복: %s</string>
+    <string name="task_lock_detail_completed">완료됨</string>
 </resources>

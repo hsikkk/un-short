@@ -155,9 +155,14 @@ class TaskLockActivity : BaseActivity() {
             }
         )
         val dialog = BottomSheetDialog(this).apply { setContentView(content) }
-        content.findViewById<MaterialButton>(R.id.taskLockDetailEdit).setOnClickListener {
-            dialog.dismiss()
-            showTaskSheet(task)
+        content.findViewById<View>(R.id.taskLockDetailEdit).setOnClickListener {
+            val editor = layoutInflater.inflate(R.layout.dialog_add_task_lock, null)
+            dialog.setContentView(editor)
+            configureTaskEditor(editor, task, dialog)
+            dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+        content.findViewById<MaterialButton>(R.id.taskLockDetailComplete).setOnClickListener {
+            confirmTaskCompletion(task) { dialog.dismiss() }
         }
         dialog.show()
         dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -166,6 +171,14 @@ class TaskLockActivity : BaseActivity() {
 
     private fun showTaskSheet(task: TaskLockItem? = null) {
         val content = layoutInflater.inflate(R.layout.dialog_add_task_lock, null)
+        val dialog = BottomSheetDialog(this).apply { setContentView(content) }
+        configureTaskEditor(content, task, dialog)
+        dialog.show()
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.behavior.skipCollapsed = true
+    }
+
+    private fun configureTaskEditor(content: View, task: TaskLockItem?, dialog: BottomSheetDialog) {
         val sheetTitle = content.findViewById<TextView>(R.id.taskLockSheetTitle)
         val titleInput = content.findViewById<EditText>(R.id.taskLockTitleInput)
         val lockingCheck = content.findViewById<SwitchMaterial>(R.id.taskLockEnabledInput)
@@ -175,7 +188,6 @@ class TaskLockActivity : BaseActivity() {
             setIs24HourView(android.text.format.DateFormat.is24HourFormat(this@TaskLockActivity))
         }
         val save = content.findViewById<MaterialButton>(R.id.taskLockSaveButton)
-        val dialog = BottomSheetDialog(this).apply { setContentView(content) }
         if (task != null) {
             sheetTitle.setText(R.string.task_lock_edit_title)
             save.setText(R.string.task_lock_update)
@@ -240,9 +252,20 @@ class TaskLockActivity : BaseActivity() {
                     renderTasks()
                 }
         }
-        dialog.show()
-        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        dialog.behavior.skipCollapsed = true
+    }
+
+    private fun confirmTaskCompletion(task: TaskLockItem, onCompleted: () -> Unit = {}) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.task_lock_complete_title)
+            .setMessage(task.title)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(R.string.task_lock_complete) { _, _ ->
+                TaskLockManager.setCompleted(this, task.id, true)
+                AnalyticsManager.trackEvent(this, AnalyticsEvent.TASK_LOCK_TASK_COMPLETED)
+                renderTasks()
+                onCompleted()
+            }
+            .show()
     }
 
     private fun formatTime(minutes: Int): String {

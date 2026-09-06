@@ -20,13 +20,17 @@
             android:fontFamily="@font/spoqa_sans_neo_bold"
             android:textColor="@color/gray_900"
             android:textSize="20sp" />
-        <com.google.android.material.button.MaterialButton
+        <TextView
             android:id="@+id/taskLockDetailEdit"
-            android:layout_width="wrap_content"
+            android:layout_width="72dp"
             android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:gravity="center"
             android:text="@string/task_lock_edit"
+            android:textColor="@color/gray_900"
             android:textSize="14sp"
-            style="@style/Widget.App.Button" />
+            android:clickable="true"
+            android:focusable="true" />
     </LinearLayout>
 
     <TextView
@@ -52,4 +56,12 @@
         android:layout_marginTop="8dp"
         android:textColor="@color/gray_600"
         android:textSize="15sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/taskLockDetailComplete"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/task_lock_complete"
+        style="@style/Widget.App.Button" />
 </LinearLayout>

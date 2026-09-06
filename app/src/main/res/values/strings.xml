@@ -570,5 +570,6 @@
     <string name="task_lock_detail_not_locking">This task does not lock Shorts</string>
     <string name="task_lock_detail_schedule">Starts: %s</string>
     <string name="task_lock_detail_repeat">Repeats: %s</string>
+    <string name="task_lock_detail_completed">Completed</string>
 
 </resources>
