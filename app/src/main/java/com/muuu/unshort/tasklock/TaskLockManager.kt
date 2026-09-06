@@ -31,8 +31,6 @@ const val REPEAT_ONCE = "once"
 const val REPEAT_DAILY = "daily"
 const val REPEAT_WEEKDAYS = "weekdays"
 const val VERIFY_DIRECT = "direct"
-const val VERIFY_PHOTO = "photo"
-const val VERIFY_AI_PHOTO = "ai_photo"
 const val EVENT_CREATED = "created"
 const val EVENT_COMPLETED = "completed"
 const val EVENT_OVERLAY_SHOWN = "overlay_shown"
@@ -86,7 +84,6 @@ object TaskLockManager {
         title: String,
         isLocking: Boolean,
         repeatMode: String = REPEAT_ONCE,
-        verificationMode: String = VERIFY_DIRECT,
         startMinutes: Int? = null
     ): TaskLockItem {
         val item = TaskLockItem(
@@ -96,11 +93,11 @@ object TaskLockManager {
             isCompleted = false,
             date = LocalDate.now().toString(),
             repeatMode = repeatMode,
-            verificationMode = verificationMode,
+            verificationMode = VERIFY_DIRECT,
             startMinutes = startMinutes
         )
         writeTasks(context, readTasks(context) + item)
-        recordEvent(context, EVENT_CREATED, verificationMode)
+        recordEvent(context, EVENT_CREATED, VERIFY_DIRECT)
         return item
     }
 
@@ -125,7 +122,6 @@ object TaskLockManager {
         title: String,
         isLocking: Boolean,
         repeatMode: String,
-        verificationMode: String,
         startMinutes: Int?
     ) {
         writeTasks(context, readTasks(context).map { task ->
@@ -133,23 +129,10 @@ object TaskLockManager {
                 title = title.trim(),
                 isLocking = isLocking,
                 repeatMode = repeatMode,
-                verificationMode = verificationMode,
+                verificationMode = VERIFY_DIRECT,
                 startMinutes = startMinutes
             ) else task
         })
-    }
-
-    fun setCompletedWithPhoto(context: Context, id: String, photoUri: String) {
-        val now = System.currentTimeMillis()
-        writeTasks(context, readTasks(context).map {
-            if (it.id == id) it.copy(
-                isCompleted = true,
-                completedAt = now,
-                lastPhotoUri = photoUri.takeIf(String::isNotBlank)
-            )
-            else it
-        })
-        getTask(context, id)?.let { recordEvent(context, EVENT_COMPLETED, it.verificationMode) }
     }
 
     fun getTask(context: Context, id: String): TaskLockItem? =
@@ -182,9 +165,6 @@ object TaskLockManager {
     }
 
     fun recordOverlayShown(context: Context) = recordEvent(context, EVENT_OVERLAY_SHOWN)
-
-    fun recordAiResult(context: Context, result: String) =
-        recordEvent(context, EVENT_AI_RESULT, VERIFY_AI_PHOTO, result)
 
     fun getEventsSince(context: Context, sinceMillis: Long): List<TaskLockEvent> =
         readEvents(context).filter { it.timestamp >= sinceMillis }
@@ -270,7 +250,8 @@ object TaskLockManager {
                             date = json.getString("date"),
                             completedAt = json.optLong("completedAt").takeIf { it > 0L },
                             repeatMode = json.optString("repeatMode", REPEAT_ONCE),
-                            verificationMode = json.optString("verificationMode", VERIFY_DIRECT),
+                            // Photo verification was removed; old tasks use direct confirmation.
+                            verificationMode = VERIFY_DIRECT,
                             lastPhotoUri = json.optString("lastPhotoUri").takeIf { it.isNotEmpty() },
                             startMinutes = json.optInt("startMinutes", -1).takeIf { it >= 0 }
                         )

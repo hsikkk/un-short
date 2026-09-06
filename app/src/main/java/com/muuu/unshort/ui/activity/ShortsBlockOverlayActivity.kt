@@ -44,7 +44,6 @@ import com.muuu.unshort.R
 import com.muuu.unshort.ShortsBlockService
 import com.muuu.unshort.tasklock.TaskLockItem
 import com.muuu.unshort.tasklock.TaskLockManager
-import com.muuu.unshort.tasklock.VERIFY_DIRECT
 import androidx.appcompat.app.AlertDialog
 
 /**
@@ -89,7 +88,6 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     private var rewardedAdInProgress: Boolean = false
     private var instantUnblockCountdown: Int = 2
     private var taskLockOverlayRecorded = false
-    private var isTaskVerificationLaunched = false
 
     // Utils
     private lateinit var prefsManager: PreferencesManager
@@ -551,13 +549,6 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     }
 
     private fun confirmTaskCompletion(task: TaskLockItem) {
-        if (task.verificationMode != VERIFY_DIRECT) {
-            isTaskVerificationLaunched = true
-            startActivity(Intent(this, TaskVerificationActivity::class.java).apply {
-                putExtra(TaskVerificationActivity.EXTRA_TASK_ID, task.id)
-            })
-            return
-        }
         AlertDialog.Builder(this)
             .setTitle(R.string.task_lock_complete_title)
             .setMessage(task.title)
@@ -856,9 +847,6 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        val returnedFromTaskVerification = isTaskVerificationLaunched
-        isTaskVerificationLaunched = false
-
         // Sync from SessionState
         val currentState = sessionStateManager.getCurrentState(sourcePackageName)
         Log.d(TAG, "onResume: syncing from SessionState: $currentState")
@@ -885,13 +873,6 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             }
         }
 
-        // Photo verification changes task state without changing the blocking stage.
-        // Refresh explicitly so completed tasks disappear as soon as the user returns.
-        if (returnedFromTaskVerification) {
-            updateUI()
-            setupBottomActionUi()
-        }
-
         // Resume skip button countdown if in INITIAL state (e.g., returning from timer)
         if (overlayType == OverlayType.INITIAL && skipButtonCountdown != 0) {
             startSkipButtonCountdown()
@@ -901,13 +882,13 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     override fun onStop() {
         super.onStop()
 
-        // 타이머/할 일 확인 Activity가 실행 중이 아니면 Activity를 종료
+        // 타이머 Activity가 실행 중이 아니면 Activity를 종료
         // (홈키, 다른 앱으로 전환 등의 경우)
-        if (!isTimerActivityLaunched && !isTaskVerificationLaunched) {
-            Log.d(TAG, "onStop: no child activity launched - finishing activity")
+        if (!isTimerActivityLaunched) {
+            Log.d(TAG, "onStop: timer not launched - finishing activity")
             finish()
         } else {
-            Log.d(TAG, "onStop: child activity launched - keeping activity alive")
+            Log.d(TAG, "onStop: timer launched - keeping activity alive")
         }
     }
 

@@ -19,10 +19,6 @@ import com.muuu.unshort.tasklock.TaskLockManager
 import com.muuu.unshort.tasklock.REPEAT_DAILY
 import com.muuu.unshort.tasklock.REPEAT_ONCE
 import com.muuu.unshort.tasklock.REPEAT_WEEKDAYS
-import com.muuu.unshort.tasklock.VERIFY_AI_PHOTO
-import com.muuu.unshort.tasklock.VERIFY_DIRECT
-import com.muuu.unshort.tasklock.VERIFY_PHOTO
-import android.content.Intent
 import android.os.CountDownTimer
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
@@ -53,9 +49,6 @@ class TaskLockActivity : BaseActivity() {
             setImageResource(R.drawable.ic_add)
             contentDescription = getString(R.string.task_lock_add_title)
             setOnClickListener { showTaskSheet() }
-        }
-        findViewById<View>(R.id.taskLockReportLink).setOnClickListener {
-            startActivity(Intent(this, TaskLockReportActivity::class.java))
         }
     }
 
@@ -101,20 +94,17 @@ class TaskLockActivity : BaseActivity() {
             row.alpha = 0.62f
         }
         checkbox.setOnClickListener {
-            if (checkbox.isChecked && task.verificationMode != VERIFY_DIRECT) {
-                checkbox.isChecked = false
-                startActivity(Intent(this, TaskVerificationActivity::class.java).apply {
-                    putExtra(TaskVerificationActivity.EXTRA_TASK_ID, task.id)
-                })
-            } else {
-                TaskLockManager.setCompleted(this, task.id, checkbox.isChecked)
-                if (checkbox.isChecked) AnalyticsManager.trackEvent(
-                    this,
-                    AnalyticsEvent.TASK_LOCK_TASK_COMPLETED,
-                    mapOf("verification_mode" to task.verificationMode)
-                )
-                renderTasks()
-            }
+            checkbox.isChecked = false
+            AlertDialog.Builder(this)
+                .setTitle(R.string.task_lock_complete_title)
+                .setMessage(task.title)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(R.string.task_lock_complete) { _, _ ->
+                    TaskLockManager.setCompleted(this, task.id, true)
+                    AnalyticsManager.trackEvent(this, AnalyticsEvent.TASK_LOCK_TASK_COMPLETED)
+                    renderTasks()
+                }
+                .show()
         }
         row.setOnClickListener { showTaskSheet(task) }
         delete.setOnClickListener {
@@ -151,7 +141,6 @@ class TaskLockActivity : BaseActivity() {
         val titleInput = content.findViewById<EditText>(R.id.taskLockTitleInput)
         val lockingCheck = content.findViewById<SwitchMaterial>(R.id.taskLockEnabledInput)
         val repeatInput = content.findViewById<Spinner>(R.id.taskLockRepeatInput)
-        val verificationInput = content.findViewById<Spinner>(R.id.taskLockVerificationInput)
         val startMode = content.findViewById<RadioGroup>(R.id.taskLockStartModeInput)
         val startTime = content.findViewById<TimePicker>(R.id.taskLockStartTimeInput).apply {
             setIs24HourView(android.text.format.DateFormat.is24HourFormat(this@TaskLockActivity))
@@ -166,11 +155,6 @@ class TaskLockActivity : BaseActivity() {
             repeatInput.setSelection(when (task.repeatMode) {
                 REPEAT_DAILY -> 1
                 REPEAT_WEEKDAYS -> 2
-                else -> 0
-            })
-            verificationInput.setSelection(when (task.verificationMode) {
-                VERIFY_PHOTO -> 1
-                VERIFY_AI_PHOTO -> 2
                 else -> 0
             })
             task.startMinutes?.let { minutes ->
@@ -193,11 +177,6 @@ class TaskLockActivity : BaseActivity() {
                         2 -> REPEAT_WEEKDAYS
                         else -> REPEAT_ONCE
                     }
-                    val verificationMode = when (verificationInput.selectedItemPosition) {
-                        1 -> VERIFY_PHOTO
-                        2 -> VERIFY_AI_PHOTO
-                        else -> VERIFY_DIRECT
-                    }
                     val startMinutes = if (startMode.checkedRadioButtonId == R.id.taskLockStartScheduled) {
                         startTime.hour * 60 + startTime.minute
                     } else null
@@ -207,7 +186,6 @@ class TaskLockActivity : BaseActivity() {
                             title,
                             lockingCheck.isChecked,
                             repeatMode,
-                            verificationMode,
                             startMinutes
                         )
                         AnalyticsManager.trackEvent(
@@ -215,7 +193,6 @@ class TaskLockActivity : BaseActivity() {
                             AnalyticsEvent.TASK_LOCK_TASK_CREATED,
                             mapOf(
                                 "repeat_mode" to repeatMode,
-                                "verification_mode" to verificationMode,
                                 "has_scheduled_start" to (startMinutes != null),
                                 "is_locking" to lockingCheck.isChecked
                             )
@@ -227,7 +204,6 @@ class TaskLockActivity : BaseActivity() {
                             title,
                             lockingCheck.isChecked,
                             repeatMode,
-                            verificationMode,
                             startMinutes
                         )
                     }
