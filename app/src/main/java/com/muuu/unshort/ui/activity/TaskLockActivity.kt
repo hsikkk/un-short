@@ -107,7 +107,7 @@ class TaskLockActivity : BaseActivity() {
                 }
                 .show()
         }
-        row.setOnClickListener { showTaskSheet(task) }
+        row.setOnClickListener { showTaskDetail(task) }
         delete.setOnClickListener {
             val dialog = AlertDialog.Builder(this)
                 .setTitle(R.string.task_lock_delete_title)
@@ -134,6 +134,34 @@ class TaskLockActivity : BaseActivity() {
             }
         }
         return row
+    }
+
+    private fun showTaskDetail(task: TaskLockItem) {
+        val content = layoutInflater.inflate(R.layout.dialog_task_lock_detail, null)
+        content.findViewById<TextView>(R.id.taskLockDetailTitle).text = task.title
+        content.findViewById<TextView>(R.id.taskLockDetailLocking).text = getString(
+            if (task.isLocking) R.string.task_lock_detail_locking else R.string.task_lock_detail_not_locking
+        )
+        content.findViewById<TextView>(R.id.taskLockDetailSchedule).text = getString(
+            R.string.task_lock_detail_schedule,
+            task.startMinutes?.let { formatTime(it) } ?: getString(R.string.task_lock_start_now)
+        )
+        content.findViewById<TextView>(R.id.taskLockDetailRepeat).text = getString(
+            R.string.task_lock_detail_repeat,
+            when (task.repeatMode) {
+                REPEAT_DAILY -> getString(R.string.task_lock_repeat_daily)
+                REPEAT_WEEKDAYS -> getString(R.string.task_lock_repeat_weekdays)
+                else -> getString(R.string.task_lock_repeat_once)
+            }
+        )
+        val dialog = BottomSheetDialog(this).apply { setContentView(content) }
+        content.findViewById<MaterialButton>(R.id.taskLockDetailEdit).setOnClickListener {
+            dialog.dismiss()
+            showTaskSheet(task)
+        }
+        dialog.show()
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.behavior.skipCollapsed = true
     }
 
     private fun showTaskSheet(task: TaskLockItem? = null) {
