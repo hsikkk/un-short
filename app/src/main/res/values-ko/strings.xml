@@ -526,6 +526,7 @@
     <string name="task_lock_empty">아직 할 일이 없어요.\n먼저 끝내고 싶은 일을 추가해보세요.</string>
     <plurals name="task_lock_pending_summary"><item quantity="other">잠금 할 일 %d개 남음</item></plurals>
     <string name="task_lock_badge">잠금</string>
+    <string name="task_lock_checklist_badge">체크리스트</string>
     <string name="task_lock_add_title">할 일 추가</string>
     <string name="task_lock_title_hint">예: 책 10쪽 읽기</string>
     <string name="task_lock_until_complete">완료 전까지 쇼츠 잠금</string>
@@ -534,7 +535,7 @@
     <string name="task_lock_delete_title">이 할 일을 삭제할까요?</string>
     <string name="task_lock_delete">삭제</string>
     <string name="task_lock_overlay_title">먼저 할 일을 완료해주세요</string>
-    <plurals name="task_lock_overlay_summary"><item quantity="other">할 일 %d개 남음</item></plurals>
+    <plurals name="task_lock_overlay_summary"><item quantity="other">잠금 할 일 %d개 남음</item></plurals>
     <string name="task_lock_overlay_close">할 일 앱 열기</string>
     <string name="task_lock_postpone">광고 보고 30분 미루기 · %d회 남음</string>
     <string name="task_lock_postpone_premium">30분 미루기 · %d회 남음</string>

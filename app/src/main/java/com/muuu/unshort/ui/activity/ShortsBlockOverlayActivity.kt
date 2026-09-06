@@ -496,14 +496,15 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     }
 
     private fun renderTaskLockOverlay() {
-        val tasks = TaskLockManager.getPendingLockTasks(this)
+        val tasks = TaskLockManager.getTodayTasks(this)
+        val pendingLockCount = tasks.count { it.isLocking && !it.isCompleted && TaskLockManager.isTaskActive(it) }
         if (!taskLockOverlayRecorded) {
             taskLockOverlayRecorded = true
             TaskLockManager.recordOverlayShown(this)
             AnalyticsManager.trackEvent(
                 this,
                 AnalyticsEvent.TASK_LOCK_OVERLAY_SHOWN,
-                overlayContextProperties(mapOf("pending_count" to tasks.size))
+                overlayContextProperties(mapOf("pending_count" to pendingLockCount))
             )
         }
         mainMessage.visibility = View.GONE
@@ -511,8 +512,8 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         taskLockOverlayContent.visibility = View.VISIBLE
         taskLockOverlaySummary.text = resources.getQuantityString(
             R.plurals.task_lock_overlay_summary,
-            tasks.size,
-            tasks.size
+            pendingLockCount,
+            pendingLockCount
         )
         taskLockOverlayList.removeAllViews()
         tasks.forEach { task -> taskLockOverlayList.addView(createTaskLockRow(task)) }
@@ -529,13 +530,16 @@ class ShortsBlockOverlayActivity : BaseActivity() {
 
     private fun createTaskLockRow(task: TaskLockItem): TextView {
         return TextView(this).apply {
-            text = "□  ${task.title}"
+            val badge = if (task.isLocking) getString(R.string.task_lock_badge) else getString(R.string.task_lock_checklist_badge)
+            val marker = if (task.isCompleted) "✓" else "□"
+            text = "$marker  $badge  ${task.title}"
             textSize = 15f
             setTextColor(0xFFFFFFFF.toInt())
             background = getDrawable(R.drawable.task_lock_overlay_row)
             minHeight = dp(56)
             gravity = Gravity.CENTER_VERTICAL
             setPadding(dp(16), dp(18), dp(16), dp(18))
+            alpha = if (task.isCompleted) 0.6f else 1f
             contentDescription = getString(R.string.task_lock_overlay_task_action, task.title)
             val params = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,

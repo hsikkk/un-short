@@ -528,6 +528,7 @@
         <item quantity="other">%d locking tasks left</item>
     </plurals>
     <string name="task_lock_badge">LOCK</string>
+    <string name="task_lock_checklist_badge">CHECKLIST</string>
     <string name="task_lock_add_title">Add task</string>
     <string name="task_lock_title_hint">e.g. Read 10 pages</string>
     <string name="task_lock_until_complete">Block Shorts until complete</string>
@@ -537,8 +538,8 @@
     <string name="task_lock_delete">Delete</string>
     <string name="task_lock_overlay_title">Finish your tasks first</string>
     <plurals name="task_lock_overlay_summary">
-        <item quantity="one">%d task left</item>
-        <item quantity="other">%d tasks left</item>
+        <item quantity="one">%d locking task left</item>
+        <item quantity="other">%d locking tasks left</item>
     </plurals>
     <string name="task_lock_overlay_close">Open tasks</string>
     <string name="task_lock_postpone">Watch an ad to postpone 30 min · %d left</string>
