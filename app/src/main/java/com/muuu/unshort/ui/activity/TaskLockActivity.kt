@@ -23,6 +23,7 @@ import android.os.CountDownTimer
 import com.muuu.unshort.analytics.AnalyticsEvent
 import com.muuu.unshort.analytics.AnalyticsManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.switchmaterial.SwitchMaterial
 import java.text.DateFormat
@@ -212,6 +213,8 @@ class TaskLockActivity : BaseActivity() {
                 }
         }
         dialog.show()
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog.behavior.skipCollapsed = true
     }
 
     private fun formatTime(minutes: Int): String {
