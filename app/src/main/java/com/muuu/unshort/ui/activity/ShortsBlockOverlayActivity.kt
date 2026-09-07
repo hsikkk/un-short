@@ -509,6 +509,8 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         }
         mainMessage.visibility = View.GONE
         buttonContainer.visibility = View.GONE
+        findViewById<View>(R.id.nativeAdContainer).visibility = View.VISIBLE
+        findViewById<View>(R.id.adViewContainer).visibility = View.VISIBLE
         taskLockOverlayContent.visibility = View.VISIBLE
         taskLockOverlaySummary.text = resources.getQuantityString(
             R.plurals.task_lock_overlay_summary,

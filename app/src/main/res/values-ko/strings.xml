@@ -535,7 +535,7 @@
     <string name="task_lock_delete">삭제</string>
     <string name="task_lock_overlay_title">먼저 할 일을 완료해주세요</string>
     <plurals name="task_lock_overlay_summary"><item quantity="other">잠금 할 일 %d개 남음</item></plurals>
-    <string name="task_lock_overlay_close">할 일 앱 열기</string>
+    <string name="task_lock_overlay_close">할 일 확인하고 완료하기</string>
     <string name="task_lock_postpone">광고 보고 30분 미루기 · %d회 남음</string>
     <string name="task_lock_postpone_premium">30분 미루기 · %d회 남음</string>
     <string name="task_lock_postpone_started">할 일 잠금을 30분 미뤘어요</string>

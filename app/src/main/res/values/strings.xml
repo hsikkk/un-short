@@ -540,7 +540,7 @@
         <item quantity="one">%d locking task left</item>
         <item quantity="other">%d locking tasks left</item>
     </plurals>
-    <string name="task_lock_overlay_close">Open tasks</string>
+    <string name="task_lock_overlay_close">Review and complete tasks</string>
     <string name="task_lock_postpone">Watch an ad to postpone 30 min · %d left</string>
     <string name="task_lock_postpone_premium">Postpone 30 min · %d left</string>
     <string name="task_lock_postpone_started">Task lock postponed for 30 minutes</string>
