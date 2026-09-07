@@ -25,7 +25,6 @@ import com.muuu.unshort.analytics.AnalyticsManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.switchmaterial.SwitchMaterial
 import java.text.DateFormat
 import java.util.Calendar
 
@@ -139,9 +138,7 @@ class TaskLockActivity : BaseActivity() {
     private fun showTaskDetail(task: TaskLockItem) {
         val content = layoutInflater.inflate(R.layout.dialog_task_lock_detail, null)
         content.findViewById<TextView>(R.id.taskLockDetailTitle).text = task.title
-        content.findViewById<TextView>(R.id.taskLockDetailLocking).text = getString(
-            if (task.isLocking) R.string.task_lock_detail_locking else R.string.task_lock_detail_not_locking
-        )
+        content.findViewById<TextView>(R.id.taskLockDetailLocking).setText(R.string.task_lock_detail_locking)
         content.findViewById<TextView>(R.id.taskLockDetailSchedule).text = getString(
             R.string.task_lock_detail_schedule,
             task.startMinutes?.let { formatTime(it) } ?: getString(R.string.task_lock_start_now)
@@ -184,7 +181,6 @@ class TaskLockActivity : BaseActivity() {
     private fun configureTaskEditor(content: View, task: TaskLockItem?, dialog: BottomSheetDialog) {
         val sheetTitle = content.findViewById<TextView>(R.id.taskLockSheetTitle)
         val titleInput = content.findViewById<EditText>(R.id.taskLockTitleInput)
-        val lockingCheck = content.findViewById<SwitchMaterial>(R.id.taskLockEnabledInput)
         val repeatInput = content.findViewById<Spinner>(R.id.taskLockRepeatInput)
         val startMode = content.findViewById<RadioGroup>(R.id.taskLockStartModeInput)
         val startTime = content.findViewById<TimePicker>(R.id.taskLockStartTimeInput).apply {
@@ -195,7 +191,6 @@ class TaskLockActivity : BaseActivity() {
             sheetTitle.setText(R.string.task_lock_edit_title)
             save.setText(R.string.task_lock_update)
             titleInput.setText(task.title)
-            lockingCheck.isChecked = task.isLocking
             repeatInput.setSelection(when (task.repeatMode) {
                 REPEAT_DAILY -> 1
                 REPEAT_WEEKDAYS -> 2
@@ -228,7 +223,6 @@ class TaskLockActivity : BaseActivity() {
                         TaskLockManager.addTask(
                             this,
                             title,
-                            lockingCheck.isChecked,
                             repeatMode,
                             startMinutes
                         )
@@ -238,7 +232,6 @@ class TaskLockActivity : BaseActivity() {
                             mapOf(
                                 "repeat_mode" to repeatMode,
                                 "has_scheduled_start" to (startMinutes != null),
-                                "is_locking" to lockingCheck.isChecked
                             )
                         )
                     } else {
@@ -246,7 +239,6 @@ class TaskLockActivity : BaseActivity() {
                             this,
                             task.id,
                             title,
-                            lockingCheck.isChecked,
                             repeatMode,
                             startMinutes
                         )

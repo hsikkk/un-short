@@ -44,16 +44,6 @@
             android:maxLength="80"
             android:singleLine="true" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/taskLockEnabledInput"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="12dp"
-            android:checked="true"
-            android:fontFamily="@font/spoqa_sans_neo_regular"
-            android:gravity="center_vertical"
-            android:text="@string/task_lock_until_complete" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

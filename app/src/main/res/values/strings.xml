@@ -531,7 +531,6 @@
     <string name="task_lock_checklist_badge">CHECKLIST</string>
     <string name="task_lock_add_title">Add task</string>
     <string name="task_lock_title_hint">e.g. Read 10 pages</string>
-    <string name="task_lock_until_complete">Block Shorts until complete</string>
     <string name="task_lock_save">Save</string>
     <string name="task_lock_title_required">Enter a task</string>
     <string name="task_lock_delete_title">Delete this task?</string>
@@ -568,7 +567,6 @@
     <string name="task_lock_edit">Edit task</string>
     <string name="task_lock_repeat_once">Once</string>
     <string name="task_lock_detail_locking">Shorts stay locked until this task is complete</string>
-    <string name="task_lock_detail_not_locking">Checklist only · does not lock Shorts</string>
     <string name="task_lock_detail_schedule">Starts: %s</string>
     <string name="task_lock_detail_repeat">Repeats: %s</string>
     <string name="task_lock_detail_completed">Completed</string>

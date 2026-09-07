@@ -529,7 +529,6 @@
     <string name="task_lock_checklist_badge">체크리스트</string>
     <string name="task_lock_add_title">할 일 추가</string>
     <string name="task_lock_title_hint">예: 책 10쪽 읽기</string>
-    <string name="task_lock_until_complete">완료 전까지 쇼츠 잠금</string>
     <string name="task_lock_save">저장</string>
     <string name="task_lock_title_required">할 일을 입력해주세요</string>
     <string name="task_lock_delete_title">이 할 일을 삭제할까요?</string>
@@ -563,7 +562,6 @@
     <string name="task_lock_edit">할 일 수정</string>
     <string name="task_lock_repeat_once">한 번</string>
     <string name="task_lock_detail_locking">이 할 일을 완료할 때까지 쇼츠를 잠가요</string>
-    <string name="task_lock_detail_not_locking">체크리스트로만 사용 · 쇼츠를 잠그지 않아요</string>
     <string name="task_lock_detail_schedule">시작: %s</string>
     <string name="task_lock_detail_repeat">반복: %s</string>
     <string name="task_lock_detail_completed">완료됨</string>

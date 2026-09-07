@@ -54,9 +54,10 @@ object TaskLockManager {
         val dayOfWeek = LocalDate.now().dayOfWeek.value
         val tasks = readTasks(context)
         val refreshed = tasks.map { task ->
-            if (task.repeatMode != REPEAT_ONCE && task.date != today) {
+            val refreshedTask = if (task.repeatMode != REPEAT_ONCE && task.date != today) {
                 task.copy(date = today, isCompleted = false, completedAt = null, lastPhotoUri = null)
             } else task
+            if (!refreshedTask.isLocking) refreshedTask.copy(isLocking = true) else refreshedTask
         }
         if (refreshed != tasks) writeTasks(context, refreshed)
         return refreshed.filter {
@@ -82,14 +83,13 @@ object TaskLockManager {
     fun addTask(
         context: Context,
         title: String,
-        isLocking: Boolean,
         repeatMode: String = REPEAT_ONCE,
         startMinutes: Int? = null
     ): TaskLockItem {
         val item = TaskLockItem(
             id = UUID.randomUUID().toString(),
             title = title.trim(),
-            isLocking = isLocking,
+            isLocking = true,
             isCompleted = false,
             date = LocalDate.now().toString(),
             repeatMode = repeatMode,
@@ -120,14 +120,13 @@ object TaskLockManager {
         context: Context,
         id: String,
         title: String,
-        isLocking: Boolean,
         repeatMode: String,
         startMinutes: Int?
     ) {
         writeTasks(context, readTasks(context).map { task ->
             if (task.id == id) task.copy(
                 title = title.trim(),
-                isLocking = isLocking,
+                isLocking = true,
                 repeatMode = repeatMode,
                 verificationMode = VERIFY_DIRECT,
                 startMinutes = startMinutes
