@@ -864,9 +864,12 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             }
         }
 
-        // Resume skip button countdown if in INITIAL state (e.g., returning from timer)
-        if (overlayType == OverlayType.INITIAL && skipButtonCountdown != 0) {
-            startSkipButtonCountdown()
+        // 타이머 진입 때 취소한 두 버튼의 콜백을 함께 복구한다.
+        // 기존 콜백을 제거해 반복 resume에서 카운트다운이 중복 실행되지 않게 한다.
+        if (overlayType == OverlayType.INITIAL) {
+            handler.removeCallbacksAndMessages(null)
+            if (skipButtonCountdown != 0) startSkipButtonCountdown()
+            if (instantUnblockCountdown != 0) setupBottomActionUi()
         }
     }
 

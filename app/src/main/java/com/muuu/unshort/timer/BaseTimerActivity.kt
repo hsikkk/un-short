@@ -11,6 +11,7 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.SystemClock
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
@@ -79,6 +80,8 @@ abstract class BaseTimerActivity : BaseActivity() {
     protected var timerDuration = 30
     private var remainingMillis = 0L
     private var isTimerRunning = false
+    private var timerCompleted = false
+    private var timerDeadline = 0L
     protected var isFlipped = false
     private var accumulatedRotation = 0f
 
@@ -110,7 +113,7 @@ abstract class BaseTimerActivity : BaseActivity() {
 
         setupAds()
         initViews()
-        initFlipDetector()
+        flipDetector = FlipDetector(this)
         registerForceCloseReceiver()
     }
 
@@ -191,7 +194,6 @@ abstract class BaseTimerActivity : BaseActivity() {
     }
 
     private fun initFlipDetector() {
-        flipDetector = FlipDetector(this)
         flipDetector.start(object : FlipDetector.FlipListener {
             override fun onFlipDetected(flipped: Boolean) {
                 isFlipped = flipped
@@ -320,9 +322,10 @@ abstract class BaseTimerActivity : BaseActivity() {
     }
 
     protected fun startTimer() {
-        if (isTimerRunning) return
+        if (isTimerRunning || timerCompleted || isFinishing) return
 
         isTimerRunning = true
+        timerDeadline = SystemClock.elapsedRealtime() + remainingMillis
         Log.d(TAG, "Starting timer with ${remainingMillis}ms remaining")
 
         countDownTimer = object : CountDownTimer(remainingMillis, 10) {
@@ -337,6 +340,8 @@ abstract class BaseTimerActivity : BaseActivity() {
 
             override fun onFinish() {
                 isTimerRunning = false
+                timerCompleted = true
+                remainingMillis = 0L
                 timerText.text = "0"
                 progressBar.progress = 0
 
@@ -353,9 +358,38 @@ abstract class BaseTimerActivity : BaseActivity() {
     private fun pauseTimer() {
         if (!isTimerRunning) return
 
+        remainingMillis = (timerDeadline - SystemClock.elapsedRealtime()).coerceAtLeast(0L)
         isTimerRunning = false
         countDownTimer?.cancel()
         Log.d(TAG, "Timer paused with ${remainingMillis}ms remaining")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!timerCompleted) initFlipDetector()
+    }
+
+    override fun onPause() {
+        pauseTimer()
+        flipDetector.stop()
+        phoneIcon.animate().cancel()
+        super.onPause()
+    }
+
+    /** singleTask로 재사용되는 화면에 새 세션이 들어오면 이전 타이머를 버린다. */
+    protected fun resetTimerForNewSession() {
+        pauseTimer()
+        flipDetector.stop()
+        timerCompleted = false
+        isFlipped = false
+        timerDuration = provideTimerDuration()
+        remainingSeconds = timerDuration
+        remainingMillis = timerDuration * 1000L
+        setResult(RESULT_CANCELED)
+        successScreen.visibility = View.GONE
+        mainContent.visibility = View.VISIBLE
+        initViews()
+        // onNewIntent 이후의 onResume에서 센서를 재등록하고 현재 자세를 읽는다.
     }
 
     protected fun triggerHapticFeedback() {

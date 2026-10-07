@@ -5,7 +5,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import kotlin.math.abs
+import android.util.Log
 import com.muuu.unshort.util.FlipDetector
 
 class FlipDetector(context: Context) : SensorEventListener {
@@ -13,7 +13,7 @@ class FlipDetector(context: Context) : SensorEventListener {
     private val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     private val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
-    private var isFlipped = false
+    private var isFlipped: Boolean? = null
     private var listener: FlipListener? = null
 
     interface FlipListener {
@@ -21,12 +21,15 @@ class FlipDetector(context: Context) : SensorEventListener {
     }
 
     fun start(listener: FlipListener) {
+        sensorManager.unregisterListener(this)
         this.listener = listener
-        sensorManager.registerListener(
+        isFlipped = null // 첫 샘플로 현재 자세를 다시 전달한다.
+        val registered = sensorManager.registerListener(
             this,
             accelerometer,
             SensorManager.SENSOR_DELAY_NORMAL
         )
+        if (!registered) Log.w("FlipDetector", "Accelerometer listener registration failed")
     }
 
     fun stop() {
@@ -41,11 +44,12 @@ class FlipDetector(context: Context) : SensorEventListener {
             // Z축 가속도가 -9.8 근처면 폰이 뒤집어진 상태
             // (화면이 아래를 향함)
             val wasFlipped = isFlipped
-            isFlipped = z < -8.0f
+            // 진입/이탈 임계치를 분리해 경계에서의 작은 흔들림으로 멈추지 않게 한다.
+            isFlipped = if (wasFlipped == true) z < -6.5f else z < -8.0f
 
             // 상태가 변경되었을 때만 알림
             if (wasFlipped != isFlipped) {
-                listener?.onFlipDetected(isFlipped)
+                listener?.onFlipDetected(isFlipped == true)
             }
         }
     }

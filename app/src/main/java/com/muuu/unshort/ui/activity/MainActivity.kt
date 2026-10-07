@@ -1,6 +1,8 @@
 package com.muuu.unshort.ui.activity
 
 import android.animation.ValueAnimator
+import android.database.ContentObserver
+import android.provider.Settings
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -117,6 +119,13 @@ class MainActivity : BaseActivity() {
         if (key == AppConstants.PREF_BLOCKING_ENABLED) {
             checkPermissionsAndUpdateUI()
             updateSleepModeLabel()
+        }
+    }
+
+    // 화면에 머무르는 동안에도 접근성 설정 변경을 반영한다.
+    private val permissionObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
+        override fun onChange(selfChange: Boolean) {
+            checkPermissionsAndUpdateUI()
         }
     }
 
@@ -382,6 +391,11 @@ class MainActivity : BaseActivity() {
         // 일시 해제 만료 체크
         checkTempDisableExpiration()
 
+        contentResolver.registerContentObserver(
+            Settings.Secure.getUriFor(Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES),
+            false,
+            permissionObserver
+        )
         checkPermissionsAndUpdateUI()
         updateSettingsBadgeVisibility()
         updateStatisticsBadgeVisibility()
@@ -406,6 +420,7 @@ class MainActivity : BaseActivity() {
 
     override fun onPause() {
         super.onPause()
+        contentResolver.unregisterContentObserver(permissionObserver)
         // 일시 해제 상태 업데이트 중지
         tempDisableHandler.removeCallbacks(tempDisableUpdateRunnable)
 

@@ -61,6 +61,29 @@ class ShortsBlockTimerActivity : BaseTimerActivity() {
         }
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        val sessionId = intent.getStringExtra("session_id") ?: ""
+        val sourcePackage = intent.getStringExtra("source_package") ?: ""
+        if (sessionId == currentSessionId && sourcePackage == sourcePackageName) return
+
+        setIntent(intent)
+        currentSessionId = sessionId
+        sourcePackageName = sourcePackage
+        resetTimerForNewSession()
+        findViewById<View>(R.id.sleepModeBadge)?.visibility =
+            if (prefsManager.isSleepTime()) View.VISIBLE else View.GONE
+        ShortsBlockService.instance?.getSessionStateManager()?.handleEvent(
+            SessionEvent.ActivityStarted(ActivityType.TIMER, currentSessionId),
+            sourcePackageName
+        )
+        AnalyticsManager.trackEvent(
+            this,
+            AnalyticsEvent.TIMER_ACTIVITY_OPENED,
+            timerContextProperties()
+        )
+    }
+
     override fun onTimerCompleted() {
         // Mark timer as completed for this session
         if (currentSessionId.isNotEmpty()) {

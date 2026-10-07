@@ -1,5 +1,6 @@
 package com.muuu.unshort.util
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -81,21 +82,14 @@ object PermissionUtils {
      * 접근성 서비스 활성화 여부 확인
      */
     fun isAccessibilityServiceEnabled(context: Context): Boolean {
-        val accessibilityEnabled = Settings.Secure.getInt(
+        val expected = ComponentName(context, ShortsBlockService::class.java)
+        val services = Settings.Secure.getString(
             context.contentResolver,
-            Settings.Secure.ACCESSIBILITY_ENABLED,
-            0
-        )
-
-        if (accessibilityEnabled == 1) {
-            val services = Settings.Secure.getString(
-                context.contentResolver,
-                Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
-            )
-            return services?.contains("${context.packageName}/${ShortsBlockService::class.java.name}") == true
+            Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+        ) ?: return false
+        return services.split(':').any {
+            ComponentName.unflattenFromString(it) == expected
         }
-
-        return false
     }
 
     /**
