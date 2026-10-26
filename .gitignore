@@ -17,6 +17,7 @@ bin/
 gen/
 out/
 .gradle/
+.kotlin/
 build/
 .navigation/
 captures/
