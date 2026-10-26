@@ -395,6 +395,8 @@
     <string name="sleep_mode_confirm_activate_positive">Activate</string>
 
     <!-- Changelog -->
+    <string name="changelog_v1_13_0_item1">Added browser YouTube blocking (Beta)</string>
+    <string name="changelog_v1_13_0_item2">Bug fixes and stability improvements</string>
     <string name="changelog_title">v%s Update</string>
     <string name="changelog_subtitle">Check out what\'s new</string>
     <string name="changelog_confirm">OK</string>

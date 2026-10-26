@@ -395,6 +395,8 @@ apakah Anda benar-benar perlu shorts?</string>
     <string name="timer_required_confirm">Mulai timer</string>
 
     <!-- Changelog -->
+    <string name="changelog_v1_13_0_item1">Menambahkan pemblokiran YouTube di browser (Beta)</string>
+    <string name="changelog_v1_13_0_item2">Perbaikan bug dan peningkatan stabilitas</string>
     <string name="changelog_title">Pembaruan v%s</string>
     <string name="changelog_subtitle">Lihat apa yang baru</string>
     <string name="changelog_confirm">Oke</string>

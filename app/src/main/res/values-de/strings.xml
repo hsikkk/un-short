@@ -394,6 +394,8 @@
     <string name="report_daily_analysis">TAGESANALYSE</string>
 
     <!-- Changelog -->
+    <string name="changelog_v1_13_0_item1">YouTube-Sperre im Browser hinzugefügt (Beta)</string>
+    <string name="changelog_v1_13_0_item2">Fehlerbehebungen und Stabilitätsverbesserungen</string>
     <string name="changelog_title">v%s Update</string>
     <string name="changelog_subtitle">Entdecke, was neu ist</string>
     <string name="changelog_confirm">OK</string>

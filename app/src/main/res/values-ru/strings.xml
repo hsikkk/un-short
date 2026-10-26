@@ -394,6 +394,8 @@
     <string name="report_daily_analysis">ЕЖЕДНЕВНЫЙ АНАЛИЗ</string>
 
     <!-- Changelog -->
+    <string name="changelog_v1_13_0_item1">Добавлена блокировка YouTube в браузере (бета)</string>
+    <string name="changelog_v1_13_0_item2">Исправлены ошибки и улучшена стабильность</string>
     <string name="changelog_title">Обновление v%s</string>
     <string name="changelog_subtitle">Посмотрите, что нового</string>
     <string name="changelog_confirm">ОК</string>

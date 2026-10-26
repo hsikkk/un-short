@@ -394,6 +394,8 @@
     <string name="report_daily_analysis">每日分析</string>
 
     <!-- Changelog -->
+    <string name="changelog_v1_13_0_item1">新增瀏覽器 YouTube 封鎖功能（Beta）</string>
+    <string name="changelog_v1_13_0_item2">修正錯誤並提升穩定性</string>
     <string name="changelog_title">v%s 更新</string>
     <string name="changelog_subtitle">查看最新變更</string>
     <string name="changelog_confirm">確定</string>

@@ -393,6 +393,8 @@
     <string name="timer_required_confirm">Zamanlayıcıyı başlat</string>
 
     <!-- Changelog -->
+    <string name="changelog_v1_13_0_item1">Tarayıcıda YouTube engelleme eklendi (Beta)</string>
+    <string name="changelog_v1_13_0_item2">Hata düzeltmeleri ve kararlılık iyileştirmeleri</string>
     <string name="changelog_title">v%s Güncellemesi</string>
     <string name="changelog_subtitle">Yeniliklere göz atın</string>
     <string name="changelog_confirm">Tamam</string>

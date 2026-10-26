@@ -394,6 +394,8 @@
     <string name="report_daily_analysis">ANÁLISIS DIARIO</string>
 
     <!-- Changelog -->
+    <string name="changelog_v1_13_0_item1">Bloqueo de YouTube en el navegador añadido (Beta)</string>
+    <string name="changelog_v1_13_0_item2">Corrección de errores y mejoras de estabilidad</string>
     <string name="changelog_title">Actualización v%s</string>
     <string name="changelog_subtitle">Descubre las novedades</string>
     <string name="changelog_confirm">Aceptar</string>

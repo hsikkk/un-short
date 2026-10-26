@@ -394,6 +394,8 @@
     <string name="report_daily_analysis">التحليل اليومي</string>
 
     <!-- Changelog -->
+    <string name="changelog_v1_13_0_item1">إضافة حظر YouTube في المتصفح (تجريبي)</string>
+    <string name="changelog_v1_13_0_item2">إصلاح الأخطاء وتحسين الاستقرار</string>
     <string name="changelog_title">تحديث v%s</string>
     <string name="changelog_subtitle">اكتشف ما الجديد</string>
     <string name="changelog_confirm">حسناً</string>

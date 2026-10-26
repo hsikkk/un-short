@@ -394,6 +394,8 @@
     <string name="report_daily_analysis">วิเคราะห์รายวัน</string>
 
     <!-- Changelog -->
+    <string name="changelog_v1_13_0_item1">เพิ่มการบล็อก YouTube ในเบราว์เซอร์ (เบต้า)</string>
+    <string name="changelog_v1_13_0_item2">แก้ไขข้อบกพร่องและปรับปรุงความเสถียร</string>
     <string name="changelog_title">อัปเดต v%s</string>
     <string name="changelog_subtitle">ดูสิ่งใหม่ที่เพิ่มเข้ามา</string>
     <string name="changelog_confirm">ตกลง</string>
