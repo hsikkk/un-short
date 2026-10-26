@@ -198,6 +198,16 @@ class SettingsActivity : BaseActivity() {
         updatePremiumUI()
 
         // 햅틱 피드백 설정 초기화
+        val browserYoutubeSwitch = findViewById<Switch>(R.id.browserYoutubeSwitch)
+        browserYoutubeSwitch.isChecked = prefsManager.isBrowserYoutubeBlockingEnabled
+        browserYoutubeSwitch.setOnCheckedChangeListener { _, enabled ->
+            prefsManager.isBrowserYoutubeBlockingEnabled = enabled
+            com.muuu.unshort.ShortsBlockService.instance?.resetBrowserYoutubeSessions()
+        }
+        findViewById<android.view.View>(R.id.browserYoutubeItem).setOnClickListener {
+            browserYoutubeSwitch.isChecked = !browserYoutubeSwitch.isChecked
+        }
+
         hapticSwitch.isChecked = prefsManager.isHapticEnabled
 
         // 햅틱 스위치 리스너

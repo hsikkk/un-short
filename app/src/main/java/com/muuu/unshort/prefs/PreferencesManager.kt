@@ -31,6 +31,10 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(AppConstants.PREF_BLOCKING_ENABLED, true)
         set(value) = prefs.edit().putBoolean(AppConstants.PREF_BLOCKING_ENABLED, value).apply()
 
+    var isBrowserYoutubeBlockingEnabled: Boolean
+        get() = prefs.getBoolean(AppConstants.PREF_BROWSER_YOUTUBE_BLOCKING_ENABLED, false)
+        set(value) = prefs.edit().putBoolean(AppConstants.PREF_BROWSER_YOUTUBE_BLOCKING_ENABLED, value).apply()
+
     var isAllowedUntilScroll: Boolean
         get() = prefs.getBoolean(AppConstants.PREF_ALLOWED_UNTIL_SCROLL, false)
         set(value) = prefs.edit().putBoolean(AppConstants.PREF_ALLOWED_UNTIL_SCROLL, value).apply()

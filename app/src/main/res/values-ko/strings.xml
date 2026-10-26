@@ -566,4 +566,10 @@
     <string name="task_lock_detail_schedule">시작: %s</string>
     <string name="task_lock_detail_repeat">반복: %s</string>
     <string name="task_lock_detail_completed">완료됨</string>
+    <string name="settings_browser_youtube_title">브라우저 YouTube 차단</string>
+    <string name="settings_browser_youtube_desc">삼성 인터넷·Chrome에서 YouTube 재생을 차단합니다.</string>
+    <string name="browser_youtube_before_timer">지금,\n정말 YouTube가 필요한가요?</string>
+    <string name="browser_youtube_allow">5분 동안 볼래요</string>
+    <string name="browser_youtube_instant">바로 5분 보기</string>
+    <string name="browser_youtube_instant_countdown">바로 5분 보기 (%1$d)</string>
 </resources>

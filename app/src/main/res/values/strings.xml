@@ -572,4 +572,10 @@
     <string name="task_lock_detail_repeat">Repeats: %s</string>
     <string name="task_lock_detail_completed">Completed</string>
 
+    <string name="settings_browser_youtube_title">YouTube in browsers</string>
+    <string name="settings_browser_youtube_desc">Blocks YouTube playback in Samsung Internet and Chrome.</string>
+    <string name="browser_youtube_before_timer">Right now,\ndo you truly need YouTube?</string>
+    <string name="browser_youtube_allow">Allow for 5 minutes</string>
+    <string name="browser_youtube_instant">Allow 5 minutes now</string>
+    <string name="browser_youtube_instant_countdown">Allow 5 minutes now (%1$d)</string>
 </resources>

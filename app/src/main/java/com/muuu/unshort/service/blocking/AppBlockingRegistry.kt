@@ -463,6 +463,7 @@ object AppBlockingRegistry {
      */
     fun getConfigByPackageName(packageName: String): AppBlockingConfig? {
         return ALL_CONFIGS.find { it.packageName == packageName }
+            ?: BrowserYoutubeDetector.configFor(packageName)
     }
 
     /**

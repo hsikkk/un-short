@@ -141,7 +141,7 @@ class SessionStateManager(
                 val blockScrolledOnly = prefsManager.isBlockScrolledOnly
 
                 // IDLE에서 진입 + 기능 활성화 → 첫 영상 허용
-                if (blockScrolledOnly && current.shortsLocation == ShortsLocation.OUTSIDE) {
+                if (blockScrolledOnly && packageName !in BrowserYoutubeDetector.addressIds && current.shortsLocation == ShortsLocation.OUTSIDE) {
                     Log.d(TAG, "[$packageName] First shorts allowed (blockScrolledOnly)")
                     return current.copy(
                         blockingStage = BlockingStage.WATCHING,

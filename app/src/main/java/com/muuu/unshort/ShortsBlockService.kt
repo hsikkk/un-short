@@ -18,6 +18,8 @@ import android.provider.Settings
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import com.muuu.unshort.service.blocking.BrowserYoutubeAllowance
+import com.muuu.unshort.service.blocking.BrowserYoutubeDetector
 import com.muuu.unshort.service.blocking.AppBlockingConfig
 import com.muuu.unshort.service.blocking.AppBlockingRegistry
 import com.muuu.unshort.service.blocking.BlockingStage
@@ -68,6 +70,7 @@ class ShortsBlockService : AccessibilityService() {
     private val hashGenerator = ContentHashGenerator()
     private lateinit var sessionState: SessionStateManager
     private lateinit var overlayManager: OverlayManager
+    private lateinit var browserAllowance: BrowserYoutubeAllowance
     private lateinit var prefsManager: PreferencesManager
     private lateinit var statisticsRepository: StatisticsRepository
     private lateinit var usageMonitor: ShortsUsageMonitor
@@ -153,6 +156,7 @@ class ShortsBlockService : AccessibilityService() {
 
         // Managers 초기화
         prefsManager = PreferencesManager(this)
+        browserAllowance = BrowserYoutubeAllowance(this)
         statisticsRepository = StatisticsRepository(this)
 
         // ReminderNotifier 초기화
@@ -221,6 +225,7 @@ class ShortsBlockService : AccessibilityService() {
         // Receivers 등록
         registerScreenStateReceiver()
         registerOverlayActionReceiver()
+        if (browserAllowance.remainingMs() > 0) scheduleBrowserAllowanceCheck()
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
@@ -257,6 +262,11 @@ class ShortsBlockService : AccessibilityService() {
         eventType: Int,
         eventTimestamp: Long
     ) {
+        if (packageName in BrowserYoutubeDetector.addressIds) {
+            processBrowserYoutube(packageName)
+            return
+        }
+
         // Skip 후 반복 back press 진행 중: 쇼츠 이탈 감지만 수행 (오버레이/상태 전이는 스킵)
         if (isAutoExitingShorts) {
             if (packageName !in AppBlockingRegistry.TARGET_PACKAGES) return
@@ -325,6 +335,89 @@ class ShortsBlockService : AccessibilityService() {
         Log.d(TAG, ">>> isShorts=$isInShortsScreen, currentState=$currentState")
 
         handleStateTransitions(isInShortsScreen, packageName, rootNode, appConfig)
+        handleStateActions(packageName)
+    }
+
+    fun resetBrowserYoutubeSessions() {
+        processingHandler?.post {
+            browserAllowance.clear()
+            processingHandler?.removeCallbacks(browserAllowanceCheck)
+            BrowserYoutubeDetector.addressIds.keys.forEach {
+                sessionState.handleEvent(SessionEvent.Reset, it)
+            }
+        }
+    }
+
+    private val browserAllowanceCheck = object : Runnable {
+        override fun run() {
+            if (!prefsManager.isBrowserYoutubeBlockingEnabled) {
+                browserAllowance.clear()
+                return
+            }
+            val remaining = browserAllowance.remainingMs()
+            if (remaining > 0) {
+                processingHandler?.postDelayed(this, minOf(remaining, 1000L))
+                return
+            }
+            browserAllowance.clear()
+            BrowserYoutubeDetector.addressIds.keys.forEach { browser ->
+                if (sessionState.getCurrentState(browser).blockingStage == BlockingStage.WATCHING) {
+                    sessionState.handleEvent(SessionEvent.Reset, browser)
+                }
+            }
+            // Expiry does not depend on scrolling or a new accessibility event.
+            val root = rootInActiveWindow ?: return
+            val foreground = try { root.packageName?.toString() } finally { root.recycle() }
+            if (foreground in BrowserYoutubeDetector.addressIds) processBrowserYoutube(foreground!!)
+        }
+    }
+
+    private fun scheduleBrowserAllowanceCheck() {
+        processingHandler?.removeCallbacks(browserAllowanceCheck)
+        processingHandler?.post(browserAllowanceCheck)
+    }
+
+    private fun grantBrowserYoutubeTime(packageName: String) {
+        if (packageName !in BrowserYoutubeDetector.addressIds) return
+        browserAllowance.grant()
+        scheduleBrowserAllowanceCheck()
+    }
+
+    /** Browser viewing uses the existing timer flow with a fixed five-minute allowance. */
+    private fun processBrowserYoutube(packageName: String) {
+        if (!prefsManager.isBrowserYoutubeBlockingEnabled || !prefsManager.isBlockingEnabled ||
+            prefsManager.isTemporarilyDisabled()) {
+            sessionState.handleEvent(SessionEvent.Reset, packageName)
+            return
+        }
+        if (System.currentTimeMillis() < autoExitCooldownUntil) return
+        val root = rootInActiveWindow ?: return
+        val page = try { BrowserYoutubeDetector.classifyPage(root, packageName) }
+            finally { root.recycle() }
+        // Missing/hidden/editing address is unknown, not proof of leaving YouTube.
+        if (page == BrowserYoutubeDetector.Page.UNKNOWN) return
+        var state = sessionState.getCurrentState(packageName)
+        if (state.activityState != com.muuu.unshort.service.blocking.ActivityState.NONE) return
+        if (page == BrowserYoutubeDetector.Page.OTHER) {
+            sessionState.handleEvent(SessionEvent.ExitShorts, packageName)
+            cancelPendingOverlay()
+            return
+        }
+        val allowed = browserAllowance.remainingMs() > 0
+        if (!allowed && state.blockingStage == BlockingStage.WATCHING) {
+            sessionState.handleEvent(SessionEvent.Reset, packageName)
+            state = sessionState.getCurrentState(packageName)
+        }
+        if (state.shortsLocation == ShortsLocation.OUTSIDE) {
+            lastBlockOriginScroll = false
+            sessionState.handleEvent(SessionEvent.EnterShorts, packageName)
+            appStartTime = System.currentTimeMillis()
+        }
+        if (allowed) {
+            sessionState.handleEvent(SessionEvent.WatchConfirmed, packageName)
+            scheduleBrowserAllowanceCheck()
+            return
+        }
         handleStateActions(packageName)
     }
 
@@ -549,6 +642,23 @@ class ShortsBlockService : AccessibilityService() {
         pendingOverlayJob = Runnable {
             try {
                 Log.d(TAG, "Executing pending overlay job for $packageName")
+
+                if (packageName in BrowserYoutubeDetector.addressIds) {
+                    val root = rootInActiveWindow
+                    val validPage = root?.let {
+                        try { BrowserYoutubeDetector.isYoutubePage(it, packageName) }
+                        finally { it.recycle() }
+                    } ?: false
+                    if (!validPage || browserAllowance.remainingMs() > 0 || !prefsManager.isBrowserYoutubeBlockingEnabled ||
+                        !prefsManager.isBlockingEnabled || prefsManager.isTemporarilyDisabled()) {
+                        pendingOverlayJob = null
+                        return@Runnable
+                    }
+                    // Browser UI does not expose reliable player coordinates. Never tap blindly.
+                    val audio = getSystemService(AUDIO_SERVICE) as AudioManager
+                    audio.dispatchMediaKeyEvent(android.view.KeyEvent(android.view.KeyEvent.ACTION_DOWN, android.view.KeyEvent.KEYCODE_MEDIA_PAUSE))
+                    audio.dispatchMediaKeyEvent(android.view.KeyEvent(android.view.KeyEvent.ACTION_UP, android.view.KeyEvent.KEYCODE_MEDIA_PAUSE))
+                }
 
                 isCurrentSessionFromScroll = prefsManager.isAllowedUntilScroll
                 Log.d(TAG, "Session from scroll: $isCurrentSessionFromScroll")
@@ -1114,6 +1224,12 @@ class ShortsBlockService : AccessibilityService() {
             // Pending overlay job 취소
             cancelPendingOverlay()
 
+            for (browser in BrowserYoutubeDetector.addressIds.keys) {
+                if (sessionState.getCurrentState(browser).activityState == com.muuu.unshort.service.blocking.ActivityState.NONE) {
+                    sessionState.handleEvent(SessionEvent.Reset, browser)
+                }
+            }
+
             // Note: EnterBackground is deprecated, Activity lifecycle events handle state now
             @Suppress("DEPRECATION")
             sessionState.handleEvent(SessionEvent.EnterBackground, currentPackage)
@@ -1176,9 +1292,10 @@ class ShortsBlockService : AccessibilityService() {
                     Log.d(TAG, "Watch button pressed - allowing watch (session=$sessionId)")
 
                     // WatchConfirmed 이벤트 전송 (상태 전이 + scrollData 초기화)
+                    grantBrowserYoutubeTime(sourcePackage)
                     sessionState.handleEvent(SessionEvent.WatchConfirmed, sourcePackage)
 
-                    prefsManager.isAllowedUntilScroll = true
+                    prefsManager.isAllowedUntilScroll = sourcePackage !in BrowserYoutubeDetector.addressIds
 
                     // 미디어 재생 재개 (앱 설정에 따라)
                     val appConfig = AppBlockingRegistry.getConfigByPackageName(sourcePackage)
@@ -1196,9 +1313,10 @@ class ShortsBlockService : AccessibilityService() {
                     Log.d(TAG, "Instant unblock pressed - allowing watch immediately (session=$sessionId)")
 
                     // ACTION_WATCH_CONFIRMED와 동일 처리. 한도 차감은 Activity가 이미 수행.
+                    grantBrowserYoutubeTime(sourcePackage)
                     sessionState.handleEvent(SessionEvent.WatchConfirmed, sourcePackage)
 
-                    prefsManager.isAllowedUntilScroll = true
+                    prefsManager.isAllowedUntilScroll = sourcePackage !in BrowserYoutubeDetector.addressIds
 
                     val appConfig = AppBlockingRegistry.getConfigByPackageName(sourcePackage)
                     if (appConfig?.controlsMedia == true) {

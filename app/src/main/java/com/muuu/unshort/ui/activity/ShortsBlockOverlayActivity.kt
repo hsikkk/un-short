@@ -345,6 +345,8 @@ class ShortsBlockOverlayActivity : BaseActivity() {
         mainMessage.visibility = View.VISIBLE
         buttonContainer.visibility = View.VISIBLE
 
+        watchButton.setText(if (sourcePackageName in com.muuu.unshort.service.blocking.BrowserYoutubeDetector.addressIds)
+            R.string.browser_youtube_allow else R.string.block_button_yes)
         val isTimerCompleted = overlayType == OverlayType.CONFIRMATION
 
         Log.d(TAG, "updateUI: isTimerCompleted=$isTimerCompleted")
@@ -420,7 +422,8 @@ class ShortsBlockOverlayActivity : BaseActivity() {
             buttonContainer.addView(skipButton, skipParams)
 
             mainMessage.text = prefsManager.customMessageBeforeTimer.ifEmpty {
-                getString(R.string.block_message_before_timer)
+                getString(if (sourcePackageName in com.muuu.unshort.service.blocking.BrowserYoutubeDetector.addressIds)
+                    R.string.browser_youtube_before_timer else R.string.block_message_before_timer)
             }
         }
     }
@@ -638,10 +641,12 @@ class ShortsBlockOverlayActivity : BaseActivity() {
     }
 
     private fun updateInstantUnblockButtonText() {
+        val browser = sourcePackageName in com.muuu.unshort.service.blocking.BrowserYoutubeDetector.addressIds
         instantUnblockButton.text = if (instantUnblockCountdown > 0) {
-            getString(R.string.instant_unblock_countdown, instantUnblockCountdown)
+            getString(if (browser) R.string.browser_youtube_instant_countdown else R.string.instant_unblock_countdown,
+                instantUnblockCountdown)
         } else {
-            getString(R.string.instant_unblock_label)
+            getString(if (browser) R.string.browser_youtube_instant else R.string.instant_unblock_label)
         }
     }
 
