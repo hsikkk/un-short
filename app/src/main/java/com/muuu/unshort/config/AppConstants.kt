@@ -91,6 +91,8 @@ object AppConstants {
     const val PREF_LAST_SEEN_VERSION_CODE = "last_seen_version_code"
 
     // Remote Config Keys
+    const val RC_OVERLAY_NATIVE_AD_ENABLED = "overlay_native_ad_enabled"
+    const val RC_OVERLAY_BANNER_AD_ENABLED = "overlay_banner_ad_enabled"
     const val RC_UNBLOCK_QUOTA_DAILY_LIMIT = "unblock_quota_daily_limit"
     const val RC_UNBLOCK_QUOTA_AD_RECHARGE_AMOUNT = "unblock_quota_ad_recharge_amount"
 

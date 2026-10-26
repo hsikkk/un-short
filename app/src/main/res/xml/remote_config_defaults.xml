@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <defaultsMap>
     <!-- Firebase Remote Config 기본값 -->
+    <!-- 쇼츠·피드 차단 화면 광고: 정책 검토 중 기본 비활성화 -->
+    <entry>
+        <key>overlay_native_ad_enabled</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>overlay_banner_ad_enabled</key>
+        <value>false</value>
+    </entry>
 
     <!-- 일일 즉시 해제 한도 (무조건 10회) -->
     <entry>

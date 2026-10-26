@@ -21,6 +21,9 @@ import com.muuu.ad.core.model.MuuuRewardedAd
 import com.muuu.ad.core.model.nativetemplate.MuuuNativeAdTemplate
 import com.muuu.ad.loader.MuuuRewardedAdLoader
 import com.muuu.unshort.premium.PremiumManager
+import com.muuu.unshort.UnshortApplication
+import com.muuu.unshort.config.AdConfig
+import com.muuu.unshort.config.AppConstants
 
 /**
  * 광고 관리자
@@ -48,6 +51,15 @@ object AdManager {
         adUnit: MuuuBannerAdUnit,
         keepContainerSpace: Boolean = true
     ): MuuuBannerAdView? {
+        // 쇼츠·피드에서 공유하는 차단 화면 광고만 제어한다.
+        // 공간을 유지해 설정에 따라 버튼 위치가 바뀌지 않도록 한다.
+        if (adUnit.key == AdConfig.BANNER_OVERLAY_BOTTOM &&
+            !UnshortApplication.remoteConfig.getBoolean(AppConstants.RC_OVERLAY_BANNER_AD_ENABLED)
+        ) {
+            container.visibility = View.INVISIBLE
+            return null
+        }
+
         // 이미 프리미엄이면 광고 표시 안함
         if (PremiumManager.isPremium()) {
             if (keepContainerSpace) {
@@ -110,6 +122,13 @@ object AdManager {
         template: MuuuNativeAdTemplate? = null,
         keepContainerSpace: Boolean = true
     ): MuuuNativeAdView? {
+        if (adUnit.key == AdConfig.NATIVE_OVERLAY_TOP &&
+            !UnshortApplication.remoteConfig.getBoolean(AppConstants.RC_OVERLAY_NATIVE_AD_ENABLED)
+        ) {
+            container.visibility = View.INVISIBLE
+            return null
+        }
+
         // 이미 프리미엄이면 광고 표시 안함
         if (PremiumManager.isPremium()) {
             if (keepContainerSpace) {
