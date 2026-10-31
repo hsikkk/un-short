@@ -1,0 +1,7 @@
+.git
+.openai
+.vercel
+.vercel-static
+.env
+.env.*
+README.md
