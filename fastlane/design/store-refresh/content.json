@@ -1,0 +1,514 @@
+{
+  "en-US": {
+    "title": "un:short - Block Shorts",
+    "short_description": "Keep your apps. Pause Shorts and Reels with a phone flip and task locks.",
+    "full_description": "Opened an app to reply to a message, then found yourself scrolling through short videos?\n\nKeep the apps you need. un:short detects Shorts and Reels and adds a pause before you watch, so you can decide whether to continue.\n\n• Choose what to block: YouTube Shorts, Instagram Reels, Facebook Reels, Naver short videos and TikTok. Set blocking for each app separately.\n• Flip your phone to pause: the timer runs while your phone is face down and pauses when you pick it up. The default wait is 30 seconds and can be adjusted.\n• Tasks first, Shorts later: add tasks to complete before watching. Once all active tasks are done, the normal waiting step resumes. Daily and weekday repeats are supported. Task locking is in Beta.\n• Set your own limits: use sleep mode to strengthen blocking at bedtime and a daily viewing limit to manage your time. You can also hide the instant-view button.\n• Pause home feeds: optional Beta blocking for Instagram, YouTube, Threads and Facebook.\n• See your habits: check daily and hourly viewing statistics and receive report notifications.\n\nGetting started\nAllow accessibility and display-over-other-apps permissions, choose the apps to block, and set your waiting time.\n\nFree use includes ads and a daily limit on instant viewing. In-app purchases are available; Premium includes unlimited instant viewing. Detection may vary with Android and target-app versions.\n\nAccessibility\nun:short uses Android's AccessibilityService API to detect selected Shorts, Reels and home-feed screens and scrolling, and to control the blocking flow. This permission is required for these features and can be revoked in Android settings.\n\nPrivacy\nViewing statistics and tasks are stored on your device. Ads, purchases, usage analytics, crash reporting and feature configuration may use network services. See the privacy policy for details.",
+    "screenshots": [
+      {
+        "kicker": "SHORTS & REELS BLOCKING",
+        "title": "Keep your apps.\nPause Shorts.",
+        "subtitle": "A pause before you watch, without deleting your apps."
+      },
+      {
+        "kicker": "FLIP-TO-PAUSE TIMER",
+        "title": "Phone face down.\nScrolling on pause.",
+        "subtitle": "Take a moment. Choose whether to keep watching."
+      },
+      {
+        "kicker": "TASK LOCK · BETA",
+        "title": "Tasks first.\nShorts later.",
+        "subtitle": "Keep Shorts locked until your tasks are done."
+      },
+      {
+        "kicker": "SLEEP MODE & DAILY LIMITS",
+        "title": "Your time.\nYour limits.",
+        "subtitle": "Set your bedtime and daily viewing allowance."
+      }
+    ],
+    "feature": {
+      "title": "Take back time\nfrom endless scrolling.",
+      "subtitle": "A moment to pause before Shorts and Reels."
+    },
+    "playLocale": "en-US"
+  },
+  "ja-JP": {
+    "title": "un:short - ショート動画ブロック",
+    "short_description": "アプリはそのまま、ショート動画はひと休み。スマホを裏返すタイマーとタスクロックで、つい見てしまう時間を減らしましょう。",
+    "full_description": "返信するために開いたはずが、いつの間にかショート動画を見続けていませんか？\n\nun:shortは必要なアプリを削除せず、ショート動画やリールの画面を検知してブロックします。見る前に少し立ち止まり、続けるかを自分で選びましょう。\n\n• アプリごとに選択：YouTube Shorts、Instagramリール、Facebookリール、Naverのショート動画、TikTokに対応。\n• スマホを裏返してひと休み：画面を下にしている間だけタイマーが進み、起こすと止まります。待ち時間は初期設定で30秒。設定で変更できます。\n• やることを先に：視聴前に終わらせたいタスクを登録。対象のタスクをすべて完了すると、通常の待機ステップに戻ります。毎日・平日の繰り返しにも対応。タスクロックはBeta機能です。\n• 自分に合った制限：睡眠モードで就寝時間帯のブロックを強化し、1日の視聴時間を設定できます。「すぐ見る」ボタンを非表示にすることもできます。\n• ホームフィードもひと休み：Instagram、YouTube、Threads、Facebookのフィードを個別にブロックできるBeta機能です。\n• 習慣を見える化：日別・時間帯別の視聴統計とレポート通知で使い方を振り返れます。\n\n使い方\nユーザー補助と他のアプリの上に表示する権限を許可し、対象アプリと待ち時間を設定してください。\n\n無料版には広告が含まれ、すぐに視聴できる回数には1日の上限があります。アプリ内購入に対応し、Premiumでは即時視聴の回数が無制限になります。Androidや対象アプリのバージョンによって検知動作が異なる場合があります。\n\nユーザー補助について\nAndroidのAccessibilityService APIを使用し、選択したショート動画・リール・ホームフィードの画面やスクロールを検知してブロックを制御します。この機能には権限が必要です。Androidの設定からいつでも解除できます。\n\nプライバシー\n視聴統計とタスクは端末に保存されます。広告、購入、利用状況の分析、エラー診断、機能設定の取得には通信を使用する場合があります。詳しくはプライバシーポリシーをご覧ください。",
+    "screenshots": [
+      {
+        "kicker": "ショート動画・リールをブロック",
+        "title": "アプリはそのまま。\nショート動画はひと休み。",
+        "subtitle": "アプリを消さずに、つい見てしまう瞬間をブロック。"
+      },
+      {
+        "kicker": "スマホを裏返すタイマー",
+        "title": "スマホを裏返して、\nスクロールもひと休み。",
+        "subtitle": "少し手放して、見るかどうかを自分で選ぼう。"
+      },
+      {
+        "kicker": "タスクロック · BETA",
+        "title": "やることを先に。\nショート動画はその後で。",
+        "subtitle": "タスクが終わるまで、ショート動画をロック。"
+      },
+      {
+        "kicker": "睡眠モード・1日の視聴制限",
+        "title": "寝る前も、\n決めた時間だけ。",
+        "subtitle": "就寝時間と1日の視聴時間を設定。"
+      }
+    ],
+    "feature": {
+      "title": "スクロールの時間を、\n自分の時間に。",
+      "subtitle": "ショート動画やリールを見る前に、ひと呼吸。"
+    },
+    "playLocale": "ja-JP"
+  },
+  "zh-CN": {
+    "title": "un:short - 短视频拦截",
+    "short_description": "保留常用应用，暂停无意识刷视频。翻转手机计时和任务锁定，帮你自主决定何时观看。",
+    "full_description": "本来只是想回复消息，却不知不觉刷起了短视频？\n\nun:short 无需卸载常用应用，就能检测并拦截 Shorts 和 Reels 界面。观看前先暂停片刻，再决定是否继续。\n\n• 按应用选择：支持 YouTube Shorts、Instagram Reels、Facebook Reels、Naver 短视频和 TikTok，可分别设置。\n• 翻转手机，暂停刷屏：手机屏幕朝下时计时，拿起后暂停。默认等待30秒，可在设置中调整。\n• 先完成任务，再看短视频：添加观看前要完成的任务。完成所有当前生效的任务后，返回正常等待步骤。支持每天或工作日重复。任务锁定为 Beta 功能。\n• 按自己的节奏设限：睡眠模式加强睡前时段的拦截，每日观看限额帮助管理时间。还可隐藏立即观看按钮。\n• 首页信息流也能暂停：可单独开启 Instagram、YouTube、Threads 和 Facebook 的首页信息流拦截，功能处于 Beta 阶段。\n• 查看使用习惯：按天、按时段查看观看统计，并接收报告通知。\n\n开始使用\n允许无障碍服务和显示在其他应用上层的权限，选择要拦截的应用并设置等待时间。\n\n免费版含广告，立即观看次数有每日上限。支持应用内购买，Premium 提供不限次数的立即观看等功能。检测效果可能因 Android 和目标应用版本而异。\n\n无障碍服务说明\nun:short 使用 Android AccessibilityService API 检测所选应用的短视频、Reels 和首页信息流界面及滚动，并控制拦截流程。相关功能需要此权限，可随时在 Android 设置中关闭。\n\n隐私说明\n观看统计和任务保存在设备上。广告、购买、使用分析、错误诊断及功能配置可能使用网络服务。详情请查看隐私政策。",
+    "screenshots": [
+      {
+        "kicker": "拦截 SHORTS 和 REELS",
+        "title": "常用应用照常用。\n短视频先暂停。",
+        "subtitle": "无需卸载应用，打断无意识刷视频的瞬间。"
+      },
+      {
+        "kicker": "翻转手机计时",
+        "title": "翻转手机，\n让刷屏也休息一下。",
+        "subtitle": "放下片刻，再决定是否继续观看。"
+      },
+      {
+        "kicker": "任务锁定 · BETA",
+        "title": "先完成任务，\n再看短视频。",
+        "subtitle": "完成任务前，保持短视频锁定。"
+      },
+      {
+        "kicker": "睡眠模式 · 每日限额",
+        "title": "睡前也好，\n只看自己定好的时间。",
+        "subtitle": "设置睡眠时段和每日观看限额。"
+      }
+    ],
+    "feature": {
+      "title": "把刷走的时间，\n还给自己。",
+      "subtitle": "看 Shorts 和 Reels 前，先暂停片刻。"
+    },
+    "playLocale": "zh-CN"
+  },
+  "zh-TW": {
+    "title": "un:short - 短影片封鎖",
+    "short_description": "保留常用 App，暫停不自覺滑影片。翻轉手機計時與待辦鎖定，讓你自己決定何時觀看。",
+    "full_description": "原本只是想回覆訊息，卻不知不覺開始滑短影片？\n\nun:short 不用刪除常用 App，就能偵測並封鎖 Shorts 和 Reels 畫面。觀看前先停一下，再決定是否繼續。\n\n• 依 App 選擇：支援 YouTube Shorts、Instagram Reels、Facebook Reels、Naver 短影片和 TikTok，可分別設定。\n• 翻轉手機，暫停滑動：手機螢幕朝下時才計時，拿起後暫停。預設等待30秒，可在設定中調整。\n• 先完成待辦，再看短影片：新增觀看前要完成的事項。完成所有目前生效的待辦後，回到一般等待步驟。支援每天或平日重複。待辦鎖定為 Beta 功能。\n• 依自己的節奏設限：睡眠模式加強就寢時段的封鎖，每日觀看上限協助管理時間。也能隱藏立即觀看按鈕。\n• 首頁動態也能暫停：可個別開啟 Instagram、YouTube、Threads 和 Facebook 的首頁動態封鎖，此功能為 Beta 版本。\n• 查看使用習慣：透過每日、各時段的觀看統計與報告通知，了解自己的使用情況。\n\n開始使用\n允許無障礙服務及顯示在其他應用程式上層的權限，選擇要封鎖的 App 並設定等待時間。\n\n免費版含廣告，立即觀看次數設有每日上限。提供 App 內購買，Premium 包含不限次數的立即觀看等功能。偵測結果可能因 Android 與目標 App 版本而異。\n\n無障礙服務說明\nun:short 使用 Android AccessibilityService API 偵測所選 App 的短影片、Reels、首頁動態畫面及捲動，並控制封鎖流程。相關功能需要此權限，可隨時在 Android 設定中關閉。\n\n隱私說明\n觀看統計與待辦事項儲存在裝置上。廣告、購買、使用分析、錯誤診斷與功能設定可能使用網路服務。詳情請參閱隱私權政策。",
+    "screenshots": [
+      {
+        "kicker": "封鎖 SHORTS 與 REELS",
+        "title": "常用 App 照常用。\n短影片先暫停。",
+        "subtitle": "不用刪除 App，打斷不自覺滑影片的瞬間。"
+      },
+      {
+        "kicker": "翻轉手機計時",
+        "title": "翻轉手機，\n讓滑動也休息一下。",
+        "subtitle": "放下片刻，再決定是否繼續觀看。"
+      },
+      {
+        "kicker": "待辦鎖定 · BETA",
+        "title": "先完成待辦，\n再看短影片。",
+        "subtitle": "完成待辦事項前，保持短影片鎖定。"
+      },
+      {
+        "kicker": "睡眠模式 · 每日上限",
+        "title": "睡前也好，\n只看自己訂好的時間。",
+        "subtitle": "設定就寢時段與每日觀看上限。"
+      }
+    ],
+    "feature": {
+      "title": "把滑走的時間，\n留給自己。",
+      "subtitle": "看 Shorts 與 Reels 前，先暫停片刻。"
+    },
+    "playLocale": "zh-TW"
+  },
+  "es-ES": {
+    "title": "un:short - Bloquea Shorts",
+    "short_description": "Conserva tus apps. Pausa Shorts y Reels al girar el móvil y terminar tus tareas.",
+    "full_description": "¿Entras para responder un mensaje y acabas viendo vídeos cortos sin parar?\n\nun:short detecta Shorts y Reels y los bloquea sin que tengas que borrar tus aplicaciones. Haz una pausa antes de decidir si quieres seguir viendo.\n\n• Elige qué bloquear: YouTube Shorts, Instagram Reels, Facebook Reels, vídeos cortos de Naver y TikTok. Configura cada app por separado.\n• Pon el móvil boca abajo: el temporizador avanza mientras está boca abajo y se detiene al levantarlo. La espera predeterminada es de 30 segundos y se puede ajustar.\n• Primero tus tareas: registra lo que quieres terminar antes de ver vídeos. Al completar todas las tareas activas, vuelves a la espera habitual. Permite repetir a diario o entre semana. Función en Beta.\n• Marca tus límites: refuerza el bloqueo a la hora de dormir y establece un límite diario de visualización. También puedes ocultar el botón para ver al instante.\n• Pausa el feed de inicio: bloqueo opcional en Beta para Instagram, YouTube, Threads y Facebook.\n• Consulta tus hábitos: estadísticas por día y hora y notificaciones de informes.\n\nPara empezar, permite el servicio de accesibilidad y la superposición sobre otras apps. Elige las apps y el tiempo de espera.\n\nLa versión gratuita incluye anuncios y un límite diario para ver al instante. Hay compras en la app; Premium permite ver al instante sin límite de veces. La detección puede variar según la versión de Android y de las apps.\n\nAccesibilidad\nUsamos la API AccessibilityService de Android para detectar pantallas de Shorts, Reels y feeds seleccionados, así como su desplazamiento, y controlar el bloqueo. Estas funciones necesitan el permiso, que puedes revocar en los ajustes de Android.\n\nPrivacidad\nLas estadísticas y tareas se guardan en el dispositivo. Los anuncios, las compras, el análisis de uso, los informes de errores y la configuración de funciones pueden usar servicios de red. Consulta la política de privacidad.",
+    "screenshots": [
+      {
+        "kicker": "BLOQUEO DE SHORTS Y REELS",
+        "title": "Conserva tus apps.\nPon los Shorts en pausa.",
+        "subtitle": "Interrumpe el impulso de mirar sin borrar tus apps."
+      },
+      {
+        "kicker": "TEMPORIZADOR AL GIRAR EL MÓVIL",
+        "title": "Móvil boca abajo.\nDesplazamiento en pausa.",
+        "subtitle": "Tómate un momento y decide si quieres seguir."
+      },
+      {
+        "kicker": "BLOQUEO POR TAREAS · BETA",
+        "title": "Primero tus tareas.\nDespués, los Shorts.",
+        "subtitle": "Mantén los Shorts bloqueados hasta terminar."
+      },
+      {
+        "kicker": "MODO SUEÑO Y LÍMITE DIARIO",
+        "title": "Tu tiempo.\nTus límites.",
+        "subtitle": "Elige tu horario de sueño y tu límite diario."
+      }
+    ],
+    "feature": {
+      "title": "Recupera tu tiempo.\nFrena el scroll infinito.",
+      "subtitle": "Una pausa antes de Shorts y Reels."
+    },
+    "playLocale": "es-ES"
+  },
+  "fr-FR": {
+    "title": "un:short - Bloquez les Shorts",
+    "short_description": "Gardez vos apps. Mettez Shorts et Reels en pause et terminez vos tâches.",
+    "full_description": "Vous ouvrez une app pour répondre à un message, puis vous vous retrouvez à faire défiler des vidéos ?\n\nun:short détecte et bloque les Shorts et les Reels sans supprimer vos apps. Faites une pause avant de choisir de continuer.\n\n• Choisissez les apps : YouTube Shorts, Instagram Reels, Facebook Reels, vidéos courtes Naver et TikTok. Le blocage se règle pour chaque app.\n• Retournez le téléphone : le minuteur avance quand l’écran est tourné vers le bas et s’arrête quand vous relevez le téléphone. L’attente par défaut est de 30 secondes, réglable dans les paramètres.\n• Vos tâches d’abord : ajoutez ce que vous voulez terminer avant de regarder. Une fois toutes les tâches actives finies, l’attente habituelle reprend. Répétition quotidienne ou en semaine. Fonction en Beta.\n• Fixez vos limites : renforcez le blocage au coucher avec le mode sommeil et réglez une durée de visionnage quotidienne. Vous pouvez aussi masquer le bouton d’accès immédiat.\n• Mettez les fils d’accueil en pause : blocage optionnel en Beta pour Instagram, YouTube, Threads et Facebook.\n• Suivez vos habitudes : statistiques par jour et par heure, avec notifications de rapports.\n\nPour commencer, autorisez le service d’accessibilité et l’affichage par-dessus les autres apps. Choisissez ensuite vos apps et votre temps d’attente.\n\nLa version gratuite contient des publicités et limite le nombre d’accès immédiats par jour. Des achats intégrés sont proposés ; Premium inclut les accès immédiats illimités. La détection dépend des versions d’Android et des apps ciblées.\n\nAccessibilité\nL’API AccessibilityService d’Android détecte les écrans Shorts, Reels et fils d’accueil sélectionnés, ainsi que le défilement, pour gérer le blocage. Ce droit est nécessaire et peut être retiré dans les paramètres Android.\n\nConfidentialité\nLes statistiques et tâches sont stockées sur l’appareil. Les publicités, achats, analyses d’utilisation, diagnostics et configurations de fonctions peuvent utiliser le réseau. Consultez la politique de confidentialité.",
+    "screenshots": [
+      {
+        "kicker": "BLOCAGE DES SHORTS ET REELS",
+        "title": "Gardez vos apps.\nMettez les Shorts en pause.",
+        "subtitle": "Une pause avant de regarder, sans supprimer vos apps."
+      },
+      {
+        "kicker": "MINUTEUR EN RETOURNANT LE TÉLÉPHONE",
+        "title": "Téléphone retourné.\nDéfilement en pause.",
+        "subtitle": "Prenez un instant pour choisir de continuer ou non."
+      },
+      {
+        "kicker": "BLOCAGE PAR TÂCHES · BETA",
+        "title": "Vos tâches d’abord.\nLes Shorts ensuite.",
+        "subtitle": "Gardez les Shorts bloqués jusqu’à la fin de vos tâches."
+      },
+      {
+        "kicker": "MODE SOMMEIL ET LIMITE QUOTIDIENNE",
+        "title": "Votre temps.\nVos limites.",
+        "subtitle": "Réglez vos horaires de sommeil et votre durée quotidienne."
+      }
+    ],
+    "feature": {
+      "title": "Retrouvez du temps\npour vous.",
+      "subtitle": "Une pause avant les Shorts et les Reels."
+    },
+    "playLocale": "fr-FR"
+  },
+  "de-DE": {
+    "title": "un:short - Shorts blockieren",
+    "short_description": "Apps behalten, Shorts pausieren. Mit Umdrehen des Handys und Aufgabensperre.",
+    "full_description": "Nur kurz eine Nachricht beantworten – und plötzlich scrollst du durch Kurzvideos?\n\nun:short erkennt und blockiert Shorts und Reels, ohne dass du deine Apps löschen musst. Halte kurz inne und entscheide selbst, ob du weiterschauen möchtest.\n\n• Apps einzeln auswählen: YouTube Shorts, Instagram Reels, Facebook Reels, Naver-Kurzvideos und TikTok.\n• Handy umdrehen: Der Timer läuft, solange das Display nach unten zeigt. Hebst du das Handy an, pausiert er. Die voreingestellte Wartezeit von 30 Sekunden lässt sich ändern.\n• Erst die Aufgaben: Trage ein, was du vor dem Anschauen erledigen möchtest. Sind alle aktiven Aufgaben fertig, beginnt wieder der normale Warteschritt. Wiederholung täglich oder montags bis freitags möglich. Aufgabensperre in Beta.\n• Eigene Grenzen setzen: Der Schlafmodus verstärkt die Sperre zur Schlafenszeit. Ein tägliches Zeitlimit hilft dir, deine Sehzeit zu steuern. Auch die Schaltfläche zum sofortigen Anschauen lässt sich ausblenden.\n• Startseiten-Feeds pausieren: optionale Beta-Sperre für Instagram, YouTube, Threads und Facebook.\n• Gewohnheiten erkennen: tägliche und stündliche Statistiken sowie Berichtbenachrichtigungen.\n\nZum Start Bedienungshilfen und die Anzeige über anderen Apps erlauben. Dann Apps und Wartezeit wählen.\n\nDie kostenlose Nutzung enthält Werbung und eine tägliche Begrenzung für sofortiges Anschauen. In-App-Käufe sind verfügbar; Premium erlaubt unbegrenzt viele Sofortzugriffe. Die Erkennung kann je nach Android- und App-Version variieren.\n\nBedienungshilfen\nDie Android-API AccessibilityService erkennt ausgewählte Shorts-, Reels- und Feed-Bildschirme sowie Scrollvorgänge und steuert die Sperre. Die nötige Berechtigung lässt sich jederzeit in den Android-Einstellungen entziehen.\n\nDatenschutz\nStatistiken und Aufgaben bleiben auf dem Gerät gespeichert. Werbung, Käufe, Nutzungsanalysen, Fehlerdiagnosen und Funktionskonfiguration können Netzwerkdienste verwenden. Details stehen in der Datenschutzerklärung.",
+    "screenshots": [
+      {
+        "kicker": "SHORTS UND REELS BLOCKIEREN",
+        "title": "Apps behalten.\nShorts pausieren.",
+        "subtitle": "Eine Pause vor dem Anschauen, ohne Apps zu löschen."
+      },
+      {
+        "kicker": "TIMER DURCH UMDREHEN",
+        "title": "Handy umdrehen.\nScrollen pausieren.",
+        "subtitle": "Kurz ablegen und bewusst entscheiden, ob du weiterschaust."
+      },
+      {
+        "kicker": "AUFGABENSPERRE · BETA",
+        "title": "Erst die Aufgaben.\nDann die Shorts.",
+        "subtitle": "Shorts bleiben gesperrt, bis deine Aufgaben erledigt sind."
+      },
+      {
+        "kicker": "SCHLAFMODUS UND TAGESLIMIT",
+        "title": "Deine Zeit.\nDeine Grenzen.",
+        "subtitle": "Lege Schlafenszeiten und deine tägliche Sehzeit fest."
+      }
+    ],
+    "feature": {
+      "title": "Weniger endlos scrollen.\nMehr Zeit für dich.",
+      "subtitle": "Kurz innehalten vor Shorts und Reels."
+    },
+    "playLocale": "de-DE"
+  },
+  "pt-BR": {
+    "title": "un:short - Bloqueie Shorts",
+    "short_description": "Mantenha seus apps. Pause Shorts e Reels virando o celular e concluindo tarefas.",
+    "full_description": "Abriu um app para responder uma mensagem e acabou rolando vídeos sem parar?\n\nO un:short detecta e bloqueia Shorts e Reels sem apagar seus apps. Faça uma pausa antes de decidir se quer continuar assistindo.\n\n• Escolha os apps: YouTube Shorts, Instagram Reels, Facebook Reels, vídeos curtos do Naver e TikTok. Configure cada um separadamente.\n• Vire o celular: o timer avança enquanto a tela está virada para baixo e pausa quando você levanta o aparelho. A espera padrão é de 30 segundos e pode ser ajustada.\n• Tarefas primeiro: cadastre o que deseja concluir antes de assistir. Após concluir todas as tarefas ativas, você volta à etapa normal de espera. Há repetição diária ou em dias úteis. Bloqueio por tarefas em Beta.\n• Defina seus limites: o modo sono reforça o bloqueio na hora de dormir, e o limite diário ajuda a controlar o tempo assistido. Você também pode ocultar o botão de acesso imediato.\n• Pause os feeds iniciais: bloqueio opcional em Beta para Instagram, YouTube, Threads e Facebook.\n• Veja seus hábitos: estatísticas por dia e horário e notificações de relatórios.\n\nPara começar, permita o serviço de acessibilidade e a exibição sobre outros apps. Escolha os apps e o tempo de espera.\n\nA versão gratuita contém anúncios e um limite diário de acessos imediatos. Há compras no app; Premium inclui acessos imediatos ilimitados. A detecção pode variar conforme as versões do Android e dos apps.\n\nAcessibilidade\nUsamos a API AccessibilityService do Android para detectar telas de Shorts, Reels e feeds selecionados, além da rolagem, e controlar o bloqueio. Essa permissão é necessária e pode ser revogada nas configurações do Android.\n\nPrivacidade\nEstatísticas e tarefas são salvas no aparelho. Anúncios, compras, análise de uso, diagnóstico de erros e configuração de recursos podem usar serviços de rede. Consulte a política de privacidade.",
+    "screenshots": [
+      {
+        "kicker": "BLOQUEIO DE SHORTS E REELS",
+        "title": "Mantenha seus apps.\nPause os Shorts.",
+        "subtitle": "Interrompa o impulso de assistir sem apagar seus apps."
+      },
+      {
+        "kicker": "TIMER AO VIRAR O CELULAR",
+        "title": "Celular virado.\nRolagem em pausa.",
+        "subtitle": "Pare um instante e decida se quer continuar assistindo."
+      },
+      {
+        "kicker": "BLOQUEIO POR TAREFAS · BETA",
+        "title": "Tarefas primeiro.\nShorts depois.",
+        "subtitle": "Mantenha os Shorts bloqueados até concluir suas tarefas."
+      },
+      {
+        "kicker": "MODO SONO E LIMITE DIÁRIO",
+        "title": "Seu tempo.\nSeus limites.",
+        "subtitle": "Defina a hora de dormir e seu tempo diário de vídeos."
+      }
+    ],
+    "feature": {
+      "title": "Recupere seu tempo.\nDê uma pausa na rolagem.",
+      "subtitle": "Uma pausa antes dos Shorts e Reels."
+    },
+    "playLocale": "pt-BR"
+  },
+  "ru-RU": {
+    "title": "un:short - Блокировка Shorts",
+    "short_description": "Сохраните приложения. Пауза перед Shorts и Reels, чтобы завершить свои задачи.",
+    "full_description": "Открыли приложение, чтобы ответить на сообщение, и незаметно увлеклись короткими видео?\n\nun:short распознаёт и блокирует Shorts и Reels без удаления нужных приложений. Сделайте паузу и решите, хотите ли смотреть дальше.\n\n• Выберите приложения: YouTube Shorts, Instagram Reels, Facebook Reels, короткие видео Naver и TikTok. Блокировка настраивается отдельно.\n• Переверните телефон: таймер идёт, пока экран направлен вниз, и останавливается, когда вы поднимаете телефон. По умолчанию ожидание длится 30 секунд; время можно изменить.\n• Сначала дела: добавьте задачи, которые хотите выполнить перед просмотром. После завершения всех активных задач возвращается обычный этап ожидания. Есть ежедневный повтор и повтор по будням. Блокировка по задачам работает в режиме Beta.\n• Задайте ограничения: режим сна усиливает блокировку перед сном, а дневной лимит помогает управлять временем просмотра. Кнопку мгновенного просмотра можно скрыть.\n• Приостановите ленты: дополнительная Beta-блокировка главных лент Instagram, YouTube, Threads и Facebook.\n• Узнайте свои привычки: статистика по дням и часам, уведомления с отчётами.\n\nДля начала разрешите службу специальных возможностей и показ поверх других приложений. Выберите приложения и время ожидания.\n\nБесплатная версия содержит рекламу и дневной лимит мгновенных просмотров. Доступны встроенные покупки; Premium включает неограниченное число мгновенных просмотров. Распознавание зависит от версий Android и целевых приложений.\n\nСпециальные возможности\nAPI AccessibilityService Android распознаёт выбранные экраны Shorts, Reels и лент, а также прокрутку, и управляет блокировкой. Для этих функций нужно разрешение, которое можно отозвать в настройках Android.\n\nКонфиденциальность\nСтатистика и задачи хранятся на устройстве. Реклама, покупки, анализ использования, диагностика ошибок и настройка функций могут использовать сеть. Подробнее — в политике конфиденциальности.",
+    "screenshots": [
+      {
+        "kicker": "БЛОКИРОВКА SHORTS И REELS",
+        "title": "Приложения остаются.\nShorts — на паузе.",
+        "subtitle": "Пауза перед просмотром без удаления приложений."
+      },
+      {
+        "kicker": "ТАЙМЕР ПРИ ПЕРЕВОРОТЕ",
+        "title": "Телефон экраном вниз.\nПрокрутка на паузе.",
+        "subtitle": "Остановитесь и решите, хотите ли смотреть дальше."
+      },
+      {
+        "kicker": "БЛОКИРОВКА ПО ЗАДАЧАМ · BETA",
+        "title": "Сначала дела.\nПотом Shorts.",
+        "subtitle": "Shorts остаются заблокированы до выполнения задач."
+      },
+      {
+        "kicker": "РЕЖИМ СНА И ДНЕВНОЙ ЛИМИТ",
+        "title": "Ваше время.\nВаши границы.",
+        "subtitle": "Настройте время сна и дневной лимит просмотра."
+      }
+    ],
+    "feature": {
+      "title": "Меньше прокрутки.\nБольше времени себе.",
+      "subtitle": "Пауза перед Shorts и Reels."
+    },
+    "playLocale": "ru-RU"
+  },
+  "it-IT": {
+    "title": "un:short - Blocca Shorts",
+    "short_description": "Tieni le tue app. Metti in pausa Shorts e Reels e completa prima le attività.",
+    "full_description": "Apri un’app per rispondere a un messaggio e finisci a scorrere video senza fermarti?\n\nun:short rileva e blocca Shorts e Reels senza eliminare le tue app. Fermati un momento prima di decidere se continuare a guardare.\n\n• Scegli le app: YouTube Shorts, Instagram Reels, Facebook Reels, video brevi di Naver e TikTok. Il blocco si imposta per ogni app.\n• Capovolgi il telefono: il timer avanza quando lo schermo è rivolto verso il basso e si ferma quando sollevi il telefono. L’attesa predefinita è di 30 secondi e si può modificare.\n• Prima le attività: aggiungi ciò che vuoi completare prima di guardare. Una volta concluse tutte le attività attive, riprende la normale fase di attesa. Puoi ripeterle ogni giorno o nei giorni feriali. Funzione in Beta.\n• Decidi i tuoi limiti: la modalità sonno rafforza il blocco prima di dormire; il limite giornaliero ti aiuta a gestire il tempo di visione. Puoi anche nascondere il pulsante di accesso immediato.\n• Metti in pausa i feed: blocco opzionale in Beta dei feed iniziali di Instagram, YouTube, Threads e Facebook.\n• Scopri le tue abitudini: statistiche giornaliere e orarie e notifiche dei report.\n\nPer iniziare, autorizza il servizio di accessibilità e la visualizzazione sopra altre app. Scegli le app e il tempo di attesa.\n\nLa versione gratuita include annunci e un limite giornaliero agli accessi immediati. Sono disponibili acquisti in-app; Premium include accessi immediati illimitati. Il rilevamento può variare con le versioni di Android e delle app.\n\nAccessibilità\nL’API AccessibilityService di Android rileva schermate Shorts, Reels e feed selezionati, oltre allo scorrimento, e gestisce il blocco. L’autorizzazione è necessaria e può essere revocata nelle impostazioni Android.\n\nPrivacy\nStatistiche e attività sono salvate sul dispositivo. Annunci, acquisti, analisi di utilizzo, diagnosi degli errori e configurazione delle funzioni possono usare la rete. Consulta l’informativa sulla privacy.",
+    "screenshots": [
+      {
+        "kicker": "BLOCCO DI SHORTS E REELS",
+        "title": "Tieni le tue app.\nMetti in pausa gli Shorts.",
+        "subtitle": "Una pausa prima di guardare, senza eliminare le app."
+      },
+      {
+        "kicker": "TIMER CAPOVOLGENDO IL TELEFONO",
+        "title": "Capovolgi il telefono.\nFerma lo scorrimento.",
+        "subtitle": "Prenditi un momento e scegli se continuare."
+      },
+      {
+        "kicker": "BLOCCO PER ATTIVITÀ · BETA",
+        "title": "Prima i tuoi impegni.\nPoi gli Shorts.",
+        "subtitle": "Gli Shorts restano bloccati finché non hai finito."
+      },
+      {
+        "kicker": "MODALITÀ SONNO E LIMITE GIORNALIERO",
+        "title": "Il tuo tempo.\nI tuoi limiti.",
+        "subtitle": "Imposta l’orario di sonno e il tempo di visione al giorno."
+      }
+    ],
+    "feature": {
+      "title": "Meno video senza fine.\nPiù tempo per te.",
+      "subtitle": "Una pausa prima di Shorts e Reels."
+    },
+    "playLocale": "it-IT"
+  },
+  "hi-IN": {
+    "title": "un:short - शॉर्ट्स रोकें",
+    "short_description": "ऐप रखें, शॉर्ट्स और रील्स रोकें। फ़ोन पलटें और देखने से पहले अपने काम पूरे करें।",
+    "full_description": "मैसेज का जवाब देने के लिए ऐप खोला था, लेकिन फिर छोटे वीडियो देखते रह गए?\n\nun:short आपके ज़रूरी ऐप हटाए बिना Shorts और Reels की स्क्रीन पहचानकर उन्हें रोकता है। देखने से पहले थोड़ा रुकें और खुद तय करें कि आगे देखना है या नहीं।\n\n• ऐप चुनें: YouTube Shorts, Instagram Reels, Facebook Reels, Naver के छोटे वीडियो और TikTok। हर ऐप के लिए अलग सेटिंग रखें।\n• फ़ोन पलटकर रखें: स्क्रीन नीचे होने पर टाइमर चलता है और फ़ोन उठाने पर रुक जाता है। डिफ़ॉल्ट इंतज़ार 30 सेकंड है, जिसे बदल सकते हैं।\n• पहले काम पूरे करें: देखने से पहले पूरे करने वाले काम जोड़ें। सभी सक्रिय काम पूरे होने पर सामान्य इंतज़ार का चरण वापस आता है। रोज़ या सोमवार से शुक्रवार तक दोहराने का विकल्प है। टास्क लॉक Beta में है।\n• अपनी सीमा तय करें: स्लीप मोड सोने के समय रोक को मज़बूत करता है। रोज़ की देखने की समय-सीमा रखें और चाहें तो तुरंत देखने वाला बटन छिपाएँ।\n• होम फ़ीड भी रोकें: Instagram, YouTube, Threads और Facebook के लिए वैकल्पिक Beta सुविधा।\n• आदतें समझें: दिन और घंटे के अनुसार देखने के आँकड़े और रिपोर्ट सूचनाएँ पाएँ।\n\nशुरू करने के लिए सुलभता सेवा और दूसरे ऐप के ऊपर दिखाने की अनुमति दें। फिर ऐप और इंतज़ार का समय चुनें।\n\nमुफ़्त संस्करण में विज्ञापन हैं और तुरंत देखने की दैनिक सीमा है। इन-ऐप खरीदारी उपलब्ध है; Premium में तुरंत देखने की संख्या असीमित है। पहचान Android और लक्ष्य ऐप के संस्करण पर निर्भर कर सकती है।\n\nसुलभता सेवा\nAndroid AccessibilityService API चुनी गई Shorts, Reels और होम फ़ीड स्क्रीन तथा स्क्रॉल को पहचानकर रोकने की प्रक्रिया चलाती है। इन सुविधाओं के लिए अनुमति ज़रूरी है। Android सेटिंग में इसे कभी भी हटा सकते हैं।\n\nनिजता\nदेखने के आँकड़े और काम डिवाइस पर सेव होते हैं। विज्ञापन, खरीदारी, उपयोग विश्लेषण, त्रुटि रिपोर्ट और सुविधा सेटिंग के लिए नेटवर्क सेवाएँ इस्तेमाल हो सकती हैं। विवरण के लिए निजता नीति देखें।",
+    "screenshots": [
+      {
+        "kicker": "शॉर्ट्स और रील्स पर रोक",
+        "title": "ऐप रहने दें।\nशॉर्ट्स को विराम दें।",
+        "subtitle": "ऐप हटाए बिना, देखने से पहले थोड़ा रुकें।"
+      },
+      {
+        "kicker": "फ़ोन पलटने वाला टाइमर",
+        "title": "फ़ोन पलटें।\nस्क्रॉल रोकें।",
+        "subtitle": "थोड़ा रुककर तय करें कि आगे देखना है या नहीं।"
+      },
+      {
+        "kicker": "टास्क लॉक · BETA",
+        "title": "पहले अपने काम।\nफिर शॉर्ट्स।",
+        "subtitle": "काम पूरे होने तक शॉर्ट्स लॉक रखें।"
+      },
+      {
+        "kicker": "स्लीप मोड और दैनिक सीमा",
+        "title": "आपका समय।\nआपकी सीमा।",
+        "subtitle": "सोने का समय और रोज़ देखने की सीमा तय करें।"
+      }
+    ],
+    "feature": {
+      "title": "स्क्रॉल से समय बचाएँ।\nखुद को समय दें।",
+      "subtitle": "शॉर्ट्स और रील्स से पहले थोड़ा विराम।"
+    },
+    "playLocale": "hi-IN"
+  },
+  "ar": {
+    "title": "un:short - حظر المقاطع",
+    "short_description": "احتفظ بتطبيقاتك. أوقف Shorts وReels مؤقتًا، واقلب هاتفك وأنجز مهامك أولًا.",
+    "full_description": "فتحت تطبيقًا للرد على رسالة، ثم وجدت نفسك تتصفح المقاطع القصيرة بلا توقف؟\n\nيتعرّف un:short على Shorts وReels ويحظرهما دون حذف التطبيقات التي تحتاجها. توقّف قليلًا قبل أن تختار مواصلة المشاهدة.\n\n• اختر التطبيقات: YouTube Shorts وInstagram Reels وFacebook Reels ومقاطع Naver القصيرة وTikTok. اضبط الحظر لكل تطبيق على حدة.\n• اقلب الهاتف: يعمل المؤقّت عندما تكون الشاشة لأسفل، ويتوقف عند رفع الهاتف. مدة الانتظار الافتراضية 30 ثانية ويمكن تعديلها.\n• المهام أولًا: أضف ما تريد إنجازه قبل المشاهدة. بعد إكمال جميع المهام النشطة، تعود خطوة الانتظار المعتادة. يمكن تكرار المهام يوميًا أو في أيام الأسبوع من الاثنين إلى الجمعة. قفل المهام ميزة تجريبية Beta.\n• حدّد وقتك: يعزّز وضع النوم الحظر عند موعد النوم، ويساعدك الحد اليومي على إدارة وقت المشاهدة. يمكنك أيضًا إخفاء زر المشاهدة الفورية.\n• أوقف تصفح الصفحة الرئيسية: حظر اختياري تجريبي Beta لخلاصات Instagram وYouTube وThreads وFacebook.\n• تعرّف على عاداتك: إحصاءات يومية وبحسب الساعة وإشعارات بالتقارير.\n\nللبدء، اسمح بخدمة تسهيل الاستخدام والظهور فوق التطبيقات الأخرى. ثم اختر التطبيقات ومدة الانتظار.\n\nتتضمن النسخة المجانية إعلانات وحدًا يوميًا لمرات المشاهدة الفورية. تتوفر مشتريات داخل التطبيق؛ وتشمل Premium مشاهدات فورية غير محدودة. قد يختلف الاكتشاف حسب إصدار Android والتطبيق المستهدف.\n\nتسهيل الاستخدام\nنستخدم واجهة AccessibilityService في Android لاكتشاف شاشات Shorts وReels والخلاصات المحددة والتمرير، والتحكم في الحظر. تحتاج هذه الميزات إلى الإذن، ويمكن إلغاؤه من إعدادات Android.\n\nالخصوصية\nتُحفظ إحصاءات المشاهدة والمهام على الجهاز. قد تستخدم الإعلانات والمشتريات وتحليلات الاستخدام وتشخيص الأخطاء وإعدادات الميزات خدمات الشبكة. راجع سياسة الخصوصية للتفاصيل.",
+    "screenshots": [
+      {
+        "kicker": "حظر SHORTS وREELS",
+        "title": "تطبيقاتك تبقى.\nوالمقاطع تنتظر.",
+        "subtitle": "توقّف قبل المشاهدة دون حذف تطبيقاتك."
+      },
+      {
+        "kicker": "مؤقّت عند قلب الهاتف",
+        "title": "اقلب هاتفك.\nوأوقف التمرير قليلًا.",
+        "subtitle": "خذ لحظة لتختار إن كنت تريد متابعة المشاهدة."
+      },
+      {
+        "kicker": "قفل المهام · BETA",
+        "title": "مهامك أولًا.\nوالمقاطع بعد ذلك.",
+        "subtitle": "تبقى المقاطع مقفلة حتى تُكمل مهامك."
+      },
+      {
+        "kicker": "وضع النوم والحد اليومي",
+        "title": "وقتك ملكك.\nوأنت تحدّد حدوده.",
+        "subtitle": "اضبط موعد النوم ووقت المشاهدة اليومي."
+      }
+    ],
+    "feature": {
+      "title": "استعد وقتك\nمن التمرير المستمر.",
+      "subtitle": "لحظة توقف قبل Shorts وReels."
+    },
+    "playLocale": "ar"
+  },
+  "th": {
+    "title": "un:short - บล็อกวิดีโอสั้น",
+    "short_description": "ใช้แอปเดิมต่อ พัก Shorts และ Reels ด้วยการคว่ำมือถือและทำงานให้เสร็จก่อนดู",
+    "full_description": "เปิดแอปเพื่อตอบข้อความ แต่เผลอเลื่อนดูวิดีโอสั้นไปเรื่อย ๆ ใช่ไหม?\n\nun:short ตรวจจับและบล็อก Shorts กับ Reels โดยไม่ต้องลบแอปที่จำเป็น หยุดสักครู่ก่อนตัดสินใจว่าจะดูต่อหรือไม่\n\n• เลือกแอปที่จะบล็อก: YouTube Shorts, Instagram Reels, Facebook Reels, วิดีโอสั้นของ Naver และ TikTok ตั้งค่าแยกแต่ละแอปได้\n• คว่ำมือถือเพื่อพัก: ตัวจับเวลาจะเดินเมื่อหน้าจอคว่ำลง และหยุดเมื่อยกมือถือขึ้น ค่าเริ่มต้นคือ 30 วินาทีและปรับได้\n• ทำงานก่อน แล้วค่อยดู: เพิ่มสิ่งที่ต้องทำก่อนดูวิดีโอ เมื่อทำงานที่มีผลอยู่ครบแล้ว จะกลับสู่ขั้นตอนรอตามปกติ ตั้งซ้ำทุกวันหรือวันจันทร์ถึงศุกร์ได้ การล็อกตามงานเป็นฟีเจอร์ Beta\n• กำหนดขอบเขตของตัวเอง: โหมดนอนช่วยเพิ่มความเข้มงวดของการบล็อกในช่วงเข้านอน และจำกัดเวลาดูต่อวันได้ รวมถึงซ่อนปุ่มดูทันทีได้\n• พักฟีดหน้าหลัก: เลือกเปิดการบล็อกฟีดของ Instagram, YouTube, Threads และ Facebook ได้ เป็นฟีเจอร์ Beta\n• เข้าใจพฤติกรรมของตัวเอง: ดูสถิติรายวันและรายชั่วโมง พร้อมการแจ้งเตือนรายงาน\n\nเริ่มต้นด้วยการอนุญาตบริการการช่วยเหลือพิเศษและการแสดงทับแอปอื่น จากนั้นเลือกแอปและเวลารอ\n\nเวอร์ชันฟรีมีโฆษณาและจำกัดจำนวนครั้งที่ดูทันทีต่อวัน มีการซื้อในแอป โดย Premium รวมการดูทันทีแบบไม่จำกัดจำนวนครั้ง การตรวจจับอาจแตกต่างตามเวอร์ชัน Android และแอปเป้าหมาย\n\nการช่วยเหลือพิเศษ\nใช้ Android AccessibilityService API เพื่อตรวจจับหน้าจอ Shorts, Reels และฟีดที่เลือก รวมถึงการเลื่อน และควบคุมการบล็อก ฟีเจอร์เหล่านี้ต้องได้รับสิทธิ์ ซึ่งยกเลิกได้ในการตั้งค่า Android\n\nความเป็นส่วนตัว\nสถิติการดูและรายการงานจัดเก็บในอุปกรณ์ โฆษณา การซื้อ การวิเคราะห์การใช้งาน การรายงานข้อผิดพลาด และการตั้งค่าฟีเจอร์อาจใช้เครือข่าย ดูรายละเอียดในนโยบายความเป็นส่วนตัว",
+    "screenshots": [
+      {
+        "kicker": "บล็อก SHORTS และ REELS",
+        "title": "ใช้แอปเดิมต่อ\nพักวิดีโอสั้นไว้ก่อน",
+        "subtitle": "หยุดก่อนเผลอดู โดยไม่ต้องลบแอป"
+      },
+      {
+        "kicker": "จับเวลาเมื่อคว่ำมือถือ",
+        "title": "คว่ำมือถือ\nพักการเลื่อนดู",
+        "subtitle": "หยุดสักครู่ แล้วเลือกว่าจะดูต่อหรือไม่"
+      },
+      {
+        "kicker": "ล็อกตามงาน · BETA",
+        "title": "ทำงานก่อน\nแล้วค่อยดูวิดีโอ",
+        "subtitle": "ล็อกวิดีโอสั้นไว้จนกว่าจะทำงานเสร็จ"
+      },
+      {
+        "kicker": "โหมดนอนและขีดจำกัดรายวัน",
+        "title": "เวลาของคุณ\nคุณเป็นคนกำหนด",
+        "subtitle": "ตั้งเวลาเข้านอนและเวลาดูต่อวัน"
+      }
+    ],
+    "feature": {
+      "title": "พักการเลื่อนดู\nคืนเวลาให้ตัวเอง",
+      "subtitle": "หยุดสักครู่ก่อนดู Shorts และ Reels"
+    },
+    "playLocale": "th"
+  },
+  "tr-TR": {
+    "title": "un:short - Shorts Engelle",
+    "short_description": "Uygulamaların kalsın. Telefonu çevir, görevlerini bitir, kısa videolara ara ver.",
+    "full_description": "Bir mesaja yanıt vermek için uygulamayı açıp kendini kısa videolar izlerken mi buluyorsun?\n\nun:short, ihtiyaç duyduğun uygulamaları silmeden Shorts ve Reels ekranlarını algılar ve engeller. Devam edip etmemeye karar vermeden önce kısa bir ara ver.\n\n• Uygulamaları seç: YouTube Shorts, Instagram Reels, Facebook Reels, Naver kısa videoları ve TikTok. Her uygulama için ayrı ayar yap.\n• Telefonunu ters çevir: sayaç ekran aşağı bakarken ilerler, telefonu kaldırınca durur. Varsayılan bekleme süresi 30 saniyedir ve değiştirilebilir.\n• Önce görevler: izlemeden önce bitirmek istediğin işleri ekle. Tüm etkin görevler tamamlandığında normal bekleme adımına dönülür. Her gün veya hafta içi tekrar edebilir. Görev kilidi Beta aşamasındadır.\n• Sınırlarını belirle: uyku modu yatma saatinde engellemeyi güçlendirir. Günlük izleme sınırıyla zamanını yönet; istersen anında izleme düğmesini gizle.\n• Ana akışa da ara ver: Instagram, YouTube, Threads ve Facebook için isteğe bağlı Beta engelleme.\n• Alışkanlıklarını gör: günlük ve saatlik izleme istatistikleri ile rapor bildirimleri.\n\nBaşlamak için erişilebilirlik hizmetine ve diğer uygulamaların üzerinde görüntülemeye izin ver. Uygulamaları ve bekleme süresini seç.\n\nÜcretsiz sürüm reklam içerir ve anında izleme için günlük sınır uygular. Uygulama içi satın alımlar vardır; Premium sınırsız sayıda anında izleme sunar. Algılama, Android ve hedef uygulama sürümüne göre değişebilir.\n\nErişilebilirlik\nAndroid AccessibilityService API, seçilen Shorts, Reels ve ana akış ekranlarını ve kaydırmayı algılayarak engellemeyi yönetir. Bu özellikler için izin gereklidir ve Android ayarlarından geri alınabilir.\n\nGizlilik\nİzleme istatistikleri ve görevler cihazda saklanır. Reklamlar, satın alımlar, kullanım analizi, hata tanılama ve özellik ayarları ağ hizmetlerini kullanabilir. Ayrıntılar için gizlilik politikasına bak.",
+    "screenshots": [
+      {
+        "kicker": "SHORTS VE REELS ENGELLEME",
+        "title": "Uygulamaların kalsın.\nShorts’a ara ver.",
+        "subtitle": "Uygulamaları silmeden, izlemeden önce durakla."
+      },
+      {
+        "kicker": "TELEFONU ÇEVİREREK BEKLE",
+        "title": "Telefonu ters çevir.\nKaydırmaya ara ver.",
+        "subtitle": "Bir an dur ve izlemeye devam edip etmeyeceğini seç."
+      },
+      {
+        "kicker": "GÖREV KİLİDİ · BETA",
+        "title": "Önce görevler.\nSonra Shorts.",
+        "subtitle": "Görevlerin bitene kadar Shorts kilitli kalsın."
+      },
+      {
+        "kicker": "UYKU MODU VE GÜNLÜK SINIR",
+        "title": "Senin zamanın.\nSenin sınırların.",
+        "subtitle": "Uyku saatini ve günlük izleme süreni belirle."
+      }
+    ],
+    "feature": {
+      "title": "Kaydırmaya ara ver.\nZamanını geri al.",
+      "subtitle": "Shorts ve Reels’ten önce kısa bir duraklama."
+    },
+    "playLocale": "tr-TR"
+  },
+  "vi": {
+    "title": "un:short - Chặn video ngắn",
+    "short_description": "Giữ ứng dụng, tạm dừng Shorts và Reels. Úp điện thoại, làm xong việc rồi xem.",
+    "full_description": "Mở ứng dụng để trả lời tin nhắn nhưng rồi lại cuốn vào những video ngắn?\n\nun:short phát hiện và chặn Shorts cùng Reels mà không cần xóa ứng dụng. Dừng lại một chút trước khi tự quyết định có xem tiếp hay không.\n\n• Chọn ứng dụng cần chặn: YouTube Shorts, Instagram Reels, Facebook Reels, video ngắn Naver và TikTok. Thiết lập riêng cho từng ứng dụng.\n• Úp điện thoại để nghỉ: bộ đếm chạy khi màn hình hướng xuống và tạm dừng khi bạn nhấc máy lên. Thời gian chờ mặc định là 30 giây và có thể điều chỉnh.\n• Làm việc trước, xem sau: thêm việc muốn hoàn thành trước khi xem. Khi tất cả việc đang áp dụng đã xong, bạn trở lại bước chờ thông thường. Hỗ trợ lặp mỗi ngày hoặc từ thứ Hai đến thứ Sáu. Khóa theo công việc đang ở giai đoạn Beta.\n• Tự đặt giới hạn: chế độ ngủ tăng cường chặn vào giờ ngủ, còn giới hạn hằng ngày giúp quản lý thời gian xem. Bạn cũng có thể ẩn nút xem ngay.\n• Tạm dừng bảng tin: tùy chọn chặn Beta cho trang chủ Instagram, YouTube, Threads và Facebook.\n• Hiểu thói quen của mình: thống kê theo ngày, theo giờ và thông báo báo cáo.\n\nĐể bắt đầu, cho phép dịch vụ trợ năng và hiển thị trên ứng dụng khác. Sau đó chọn ứng dụng và thời gian chờ.\n\nBản miễn phí có quảng cáo và giới hạn số lần xem ngay mỗi ngày. Có mua hàng trong ứng dụng; Premium cho phép xem ngay không giới hạn số lần. Khả năng phát hiện có thể khác nhau theo phiên bản Android và ứng dụng.\n\nTrợ năng\nAPI AccessibilityService của Android phát hiện các màn hình Shorts, Reels, bảng tin đã chọn và thao tác cuộn để điều khiển việc chặn. Các chức năng này cần quyền trợ năng, có thể thu hồi trong cài đặt Android.\n\nQuyền riêng tư\nThống kê xem và công việc được lưu trên thiết bị. Quảng cáo, giao dịch mua, phân tích sử dụng, chẩn đoán lỗi và cấu hình tính năng có thể dùng dịch vụ mạng. Xem chính sách quyền riêng tư để biết thêm.",
+    "screenshots": [
+      {
+        "kicker": "CHẶN SHORTS VÀ REELS",
+        "title": "Giữ ứng dụng.\nTạm dừng video ngắn.",
+        "subtitle": "Dừng một nhịp trước khi xem, không cần xóa ứng dụng."
+      },
+      {
+        "kicker": "BỘ ĐẾM KHI ÚP ĐIỆN THOẠI",
+        "title": "Úp điện thoại.\nTạm ngừng lướt.",
+        "subtitle": "Dừng một chút rồi tự chọn có xem tiếp hay không."
+      },
+      {
+        "kicker": "KHÓA THEO CÔNG VIỆC · BETA",
+        "title": "Làm xong việc.\nRồi hãy xem Shorts.",
+        "subtitle": "Giữ video ngắn bị khóa đến khi hoàn thành công việc."
+      },
+      {
+        "kicker": "CHẾ ĐỘ NGỦ VÀ GIỚI HẠN MỖI NGÀY",
+        "title": "Thời gian của bạn.\nGiới hạn do bạn chọn.",
+        "subtitle": "Đặt giờ ngủ và thời lượng xem mỗi ngày."
+      }
+    ],
+    "feature": {
+      "title": "Bớt lướt không ngừng.\nThêm thời gian cho mình.",
+      "subtitle": "Một nhịp dừng trước Shorts và Reels."
+    },
+    "playLocale": "vi"
+  },
+  "in": {
+    "title": "un:short - Blokir Shorts",
+    "short_description": "Tetap pakai aplikasimu. Jeda Shorts dan Reels, balik ponsel, selesaikan tugas.",
+    "full_description": "Buka aplikasi untuk membalas pesan, lalu malah terus menonton video pendek?\n\nun:short mendeteksi dan memblokir Shorts serta Reels tanpa menghapus aplikasi yang kamu perlukan. Berhenti sejenak sebelum memilih untuk lanjut menonton.\n\n• Pilih aplikasi: YouTube Shorts, Instagram Reels, Facebook Reels, video pendek Naver, dan TikTok. Atur pemblokiran tiap aplikasi secara terpisah.\n• Balik ponsel: timer berjalan saat layar menghadap ke bawah dan berhenti saat ponsel diangkat. Waktu tunggu awal adalah 30 detik dan bisa diubah.\n• Tugas dulu, video nanti: tambahkan hal yang ingin diselesaikan sebelum menonton. Setelah semua tugas aktif selesai, langkah menunggu biasa akan kembali. Mendukung pengulangan harian atau Senin–Jumat. Kunci tugas masih dalam tahap Beta.\n• Tentukan batasmu: mode tidur memperkuat pemblokiran menjelang tidur, dan batas harian membantu mengatur waktu menonton. Tombol tonton langsung juga bisa disembunyikan.\n• Jeda beranda: pemblokiran Beta opsional untuk beranda Instagram, YouTube, Threads, dan Facebook.\n• Kenali kebiasaanmu: statistik harian dan per jam serta notifikasi laporan.\n\nUntuk memulai, izinkan layanan aksesibilitas dan tampilan di atas aplikasi lain. Pilih aplikasi serta waktu tunggu.\n\nVersi gratis berisi iklan dan batas harian untuk tonton langsung. Pembelian dalam aplikasi tersedia; Premium mencakup tonton langsung tanpa batas jumlah. Deteksi dapat berbeda menurut versi Android dan aplikasi tujuan.\n\nAksesibilitas\nAPI AccessibilityService Android mendeteksi layar Shorts, Reels, beranda yang dipilih, dan guliran untuk mengendalikan pemblokiran. Fitur ini memerlukan izin yang bisa dicabut melalui setelan Android.\n\nPrivasi\nStatistik menonton dan tugas disimpan di perangkat. Iklan, pembelian, analisis penggunaan, diagnosis error, dan konfigurasi fitur dapat menggunakan jaringan. Lihat kebijakan privasi untuk detailnya.",
+    "screenshots": [
+      {
+        "kicker": "BLOKIR SHORTS DAN REELS",
+        "title": "Aplikasinya tetap.\nShorts-nya dijeda.",
+        "subtitle": "Berhenti sebelum menonton, tanpa menghapus aplikasi."
+      },
+      {
+        "kicker": "TIMER SAAT PONSEL DIBALIK",
+        "title": "Balik ponsel.\nJeda guliran.",
+        "subtitle": "Ambil jeda, lalu pilih apakah ingin terus menonton."
+      },
+      {
+        "kicker": "KUNCI TUGAS · BETA",
+        "title": "Tugas dulu.\nShorts nanti.",
+        "subtitle": "Shorts tetap terkunci sampai tugasmu selesai."
+      },
+      {
+        "kicker": "MODE TIDUR DAN BATAS HARIAN",
+        "title": "Waktumu.\nBatas pilihanmu.",
+        "subtitle": "Atur jam tidur dan waktu menonton setiap hari."
+      }
+    ],
+    "feature": {
+      "title": "Jeda guliran tanpa akhir.\nAmbil kembali waktumu.",
+      "subtitle": "Berhenti sejenak sebelum Shorts dan Reels."
+    },
+    "playLocale": "id"
+  }
+}

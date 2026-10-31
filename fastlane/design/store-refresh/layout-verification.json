@@ -1,0 +1,594 @@
+[
+  {
+    "locale": "en-US",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 319787,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "en-US",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1934762,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "en-US",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 11988,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "en-US",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 39022,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "en-US",
+    "asset": "featureGraphic",
+    "headingSize": 58
+  },
+  {
+    "locale": "ja-JP",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 329204,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "ja-JP",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1935894,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "ja-JP",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 12570,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "ja-JP",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 47521,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "ja-JP",
+    "asset": "featureGraphic",
+    "headingSize": 58
+  },
+  {
+    "locale": "zh-CN",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 328752,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "zh-CN",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1935821,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "zh-CN",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 11641,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "zh-CN",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 42241,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "zh-CN",
+    "asset": "featureGraphic",
+    "headingSize": 58
+  },
+  {
+    "locale": "zh-TW",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 329649,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "zh-TW",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1934682,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "zh-TW",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 12486,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "zh-TW",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 46769,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "zh-TW",
+    "asset": "featureGraphic",
+    "headingSize": 58
+  },
+  {
+    "locale": "es-ES",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 321552,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "es-ES",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1934040,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "es-ES",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 12516,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "es-ES",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 48880,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "es-ES",
+    "asset": "featureGraphic",
+    "headingSize": 58
+  },
+  {
+    "locale": "fr-FR",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 322063,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "fr-FR",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1933585,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "fr-FR",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 12188,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "fr-FR",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 63639,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "fr-FR",
+    "asset": "featureGraphic",
+    "headingSize": 58
+  },
+  {
+    "locale": "de-DE",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 321815,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "de-DE",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1932482,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "de-DE",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 12579,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "de-DE",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 55251,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "de-DE",
+    "asset": "featureGraphic",
+    "headingSize": 53
+  },
+  {
+    "locale": "pt-BR",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 321788,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "pt-BR",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1934529,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "pt-BR",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 12749,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "pt-BR",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 56439,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "pt-BR",
+    "asset": "featureGraphic",
+    "headingSize": 50
+  },
+  {
+    "locale": "ru-RU",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 324279,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "ru-RU",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1933623,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "ru-RU",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 12925,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "ru-RU",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 66236,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "ru-RU",
+    "asset": "featureGraphic",
+    "headingSize": 55
+  },
+  {
+    "locale": "it-IT",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 321321,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "it-IT",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1934095,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "it-IT",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 12595,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "it-IT",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 54497,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "it-IT",
+    "asset": "featureGraphic",
+    "headingSize": 58
+  },
+  {
+    "locale": "hi-IN",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 324724,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "hi-IN",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1935266,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "hi-IN",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 11260,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "hi-IN",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 45166,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "hi-IN",
+    "asset": "featureGraphic",
+    "headingSize": 58
+  },
+  {
+    "locale": "ar",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 322733,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "ar",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1935925,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "ar",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 10134,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "ar",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 26875,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "ar",
+    "asset": "featureGraphic",
+    "headingSize": 58
+  },
+  {
+    "locale": "th",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 323637,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "th",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1936037,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "th",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 11447,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "th",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 42931,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "th",
+    "asset": "featureGraphic",
+    "headingSize": 58
+  },
+  {
+    "locale": "tr-TR",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 321230,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "tr-TR",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1935347,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "tr-TR",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 13187,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "tr-TR",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 50777,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "tr-TR",
+    "asset": "featureGraphic",
+    "headingSize": 58
+  },
+  {
+    "locale": "vi",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 321914,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "vi",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1933409,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "vi",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 11753,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "vi",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 50267,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "vi",
+    "asset": "featureGraphic",
+    "headingSize": 52
+  },
+  {
+    "locale": "in",
+    "asset": "1_01-main",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 320652,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "in",
+    "asset": "2_02-timer",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 1933455,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "in",
+    "asset": "3_03-tasks",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 13365,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "in",
+    "asset": "4_04-limits",
+    "headingSize": 76,
+    "subtitleSize": 29,
+    "sourceDarkPixels": 55002,
+    "copyBottom": 341.03125
+  },
+  {
+    "locale": "in",
+    "asset": "featureGraphic",
+    "headingSize": 54
+  }
+]

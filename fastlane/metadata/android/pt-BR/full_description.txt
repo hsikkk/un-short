@@ -1,51 +1,20 @@
-🚫 Liberte-se do Vício em Vídeos Curtos
+Abriu um app para responder uma mensagem e acabou rolando vídeos sem parar?
 
-un:short ajuda você a construir hábitos de consumo consciente de conteúdo ao bloquear a rolagem infinita no YouTube Shorts, Instagram Reels e outras plataformas de vídeos curtos.
+O un:short detecta e bloqueia Shorts e Reels sem apagar seus apps. Faça uma pausa antes de decidir se quer continuar assistindo.
 
-✨ Recursos Principais
+• Escolha os apps: YouTube Shorts, Instagram Reels, Facebook Reels, vídeos curtos do Naver e TikTok. Configure cada um separadamente.
+• Vire o celular: o timer avança enquanto a tela está virada para baixo e pausa quando você levanta o aparelho. A espera padrão é de 30 segundos e pode ser ajustada.
+• Tarefas primeiro: cadastre o que deseja concluir antes de assistir. Após concluir todas as tarefas ativas, você volta à etapa normal de espera. Há repetição diária ou em dias úteis. Bloqueio por tarefas em Beta.
+• Defina seus limites: o modo sono reforça o bloqueio na hora de dormir, e o limite diário ajuda a controlar o tempo assistido. Você também pode ocultar o botão de acesso imediato.
+• Pause os feeds iniciais: bloqueio opcional em Beta para Instagram, YouTube, Threads e Facebook.
+• Veja seus hábitos: estatísticas por dia e horário e notificações de relatórios.
 
-• 🎬 Bloqueio Automático: Detecta e bloqueia automaticamente YouTube Shorts, Instagram Reels e mais
-• ⏱️ Espera de 30 Segundos: Temporizador de resfriamento previne consumo impulsivo
-• 🤔 Pergunte a Si Mesmo: "Você realmente precisa assistir agora?" Questione-se
-• 📊 Estatísticas de Uso: Rastreie frequência de bloqueio e tempo economizado
+Para começar, permita o serviço de acessibilidade e a exibição sobre outros apps. Escolha os apps e o tempo de espera.
 
-🔍 Uso do Serviço de Acessibilidade
+A versão gratuita contém anúncios e um limite diário de acessos imediatos. Há compras no app; Premium inclui acessos imediatos ilimitados. A detecção pode variar conforme as versões do Android e dos apps.
 
-Este aplicativo usa a API AccessibilityService do Android para detectar automaticamente quando você acessa conteúdo de vídeo curto como YouTube Shorts e Instagram Reels. Esta permissão é essencial para os seguintes recursos principais:
+Acessibilidade
+Usamos a API AccessibilityService do Android para detectar telas de Shorts, Reels e feeds selecionados, além da rolagem, e controlar o bloqueio. Essa permissão é necessária e pode ser revogada nas configurações do Android.
 
-• Detecção automática de telas de conteúdo curto
-• Exibição de tela de bloqueio para prevenir consumo inconsciente
-• Fornecer 30 segundos para pensar antes de assistir
-
-Este serviço é usado exclusivamente para bloquear conteúdo curto e não acessa nenhuma outra informação pessoal ou dados.
-
-🎯 Por Que un:short?
-
-Vídeos curtos são altamente viciantes. Abrimos aplicativos inconscientemente e rolamos infinitamente, perdendo a noção do tempo. un:short adiciona fricção intencional a esse comportamento inconsciente ao:
-
-• Fornecer 30 segundos para pensar
-• Fazer perguntas para promover escolhas intencionais
-• Quebrar padrões habituais
-
-💡 Como Usar
-
-1. Instale e conceda as permissões necessárias
-2. Executa automaticamente em segundo plano
-3. Tela de bloqueio aparece ao acessar shorts
-4. Reserve 30 segundos para pensar antes de prosseguir
-
-🔒 Privacidade
-
-• Todos os dados armazenados localmente no seu dispositivo
-• Nenhuma informação enviada para servidores externos
-• Permissões mínimas solicitadas
-
-📱 Aplicativos Suportados
-
-• YouTube (Shorts)
-• Instagram (Reels)
-• Outras plataformas de vídeos curtos
-
----
-
-Liberte-se do vício em shorts e construa hábitos de consumo consciente. 🌟
+Privacidade
+Estatísticas e tarefas são salvas no aparelho. Anúncios, compras, análise de uso, diagnóstico de erros e configuração de recursos podem usar serviços de rede. Consulte a política de privacidade.

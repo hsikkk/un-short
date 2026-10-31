@@ -1,51 +1,20 @@
-🚫 Kısa Video Bağımlılığından Kurtulun
+Bir mesaja yanıt vermek için uygulamayı açıp kendini kısa videolar izlerken mi buluyorsun?
 
-un:short, YouTube Shorts, Instagram Reels ve diğer kısa video platformlarında sonsuz kaydırmayı engelleyerek bilinçli içerik tüketim alışkanlıkları oluşturmanıza yardımcı olur.
+un:short, ihtiyaç duyduğun uygulamaları silmeden Shorts ve Reels ekranlarını algılar ve engeller. Devam edip etmemeye karar vermeden önce kısa bir ara ver.
 
-✨ Temel Özellikler
+• Uygulamaları seç: YouTube Shorts, Instagram Reels, Facebook Reels, Naver kısa videoları ve TikTok. Her uygulama için ayrı ayar yap.
+• Telefonunu ters çevir: sayaç ekran aşağı bakarken ilerler, telefonu kaldırınca durur. Varsayılan bekleme süresi 30 saniyedir ve değiştirilebilir.
+• Önce görevler: izlemeden önce bitirmek istediğin işleri ekle. Tüm etkin görevler tamamlandığında normal bekleme adımına dönülür. Her gün veya hafta içi tekrar edebilir. Görev kilidi Beta aşamasındadır.
+• Sınırlarını belirle: uyku modu yatma saatinde engellemeyi güçlendirir. Günlük izleme sınırıyla zamanını yönet; istersen anında izleme düğmesini gizle.
+• Ana akışa da ara ver: Instagram, YouTube, Threads ve Facebook için isteğe bağlı Beta engelleme.
+• Alışkanlıklarını gör: günlük ve saatlik izleme istatistikleri ile rapor bildirimleri.
 
-• 🎬 Otomatik Engelleme: YouTube Shorts, Instagram Reels ve daha fazlasını otomatik olarak algıla ve engelle
-• ⏱️ 30 Saniyelik Bekleme: Soğuma zamanlayıcısı dürtüsel tüketimi önler
-• 🤔 Kendinize Sorun: "Şimdi gerçekten izlemeye ihtiyacınız var mı?" Kendinize sorun
-• 📊 Kullanım İstatistikleri: Engelleme sıklığını ve tasarruf edilen zamanı takip edin
+Başlamak için erişilebilirlik hizmetine ve diğer uygulamaların üzerinde görüntülemeye izin ver. Uygulamaları ve bekleme süresini seç.
 
-🔍 Erişilebilirlik Hizmeti Kullanımı
+Ücretsiz sürüm reklam içerir ve anında izleme için günlük sınır uygular. Uygulama içi satın alımlar vardır; Premium sınırsız sayıda anında izleme sunar. Algılama, Android ve hedef uygulama sürümüne göre değişebilir.
 
-Bu uygulama, YouTube Shorts ve Instagram Reels gibi kısa video içeriğine eriştiğinizde otomatik olarak algılamak için Android'in AccessibilityService API'sini kullanır. Bu izin aşağıdaki temel özellikler için gereklidir:
+Erişilebilirlik
+Android AccessibilityService API, seçilen Shorts, Reels ve ana akış ekranlarını ve kaydırmayı algılayarak engellemeyi yönetir. Bu özellikler için izin gereklidir ve Android ayarlarından geri alınabilir.
 
-• Kısa içerik ekranlarının otomatik algılanması
-• Bilinçsiz tüketimi önlemek için engelleme ekranının görüntülenmesi
-• İzlemeden önce düşünmek için 30 saniye sağlanması
-
-Bu hizmet yalnızca kısa içeriği engellemek için kullanılır ve başka hiçbir kişisel bilgi veya veriye erişmez.
-
-🎯 Neden un:short?
-
-Kısa videolar son derece bağımlılık yapıcıdır. Farkında olmadan uygulamaları açar ve sürekli kaydırırız, zaman kavramını kaybederiz. un:short bu bilinçsiz davranışa kasıtlı bir sürtünme ekler:
-
-• Düşünmek için 30 saniye sağlayarak
-• Bilinçli seçimi teşvik etmek için sorular sorarak
-• Alışkanlık kalıplarını kırarak
-
-💡 Nasıl Kullanılır
-
-1. Yükleyin ve gerekli izinleri verin
-2. Arka planda otomatik olarak çalışır
-3. Kısa videolara erişirken engelleme ekranı görünür
-4. Devam etmeden önce 30 saniye düşünün
-
-🔒 Gizlilik
-
-• Tüm veriler cihazınızda yerel olarak saklanır
-• Harici sunuculara hiçbir bilgi gönderilmez
-• Minimum izin talep edilir
-
-📱 Desteklenen Uygulamalar
-
-• YouTube (Shorts)
-• Instagram (Reels)
-• Diğer kısa video platformları
-
----
-
-Kısa video bağımlılığından kurtulun ve bilinçli tüketim alışkanlıkları edinin. 🌟
+Gizlilik
+İzleme istatistikleri ve görevler cihazda saklanır. Reklamlar, satın alımlar, kullanım analizi, hata tanılama ve özellik ayarları ağ hizmetlerini kullanabilir. Ayrıntılar için gizlilik politikasına bak.

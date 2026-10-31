@@ -1,51 +1,21 @@
-🚫 Break Free from Short-Form Video Addiction
+Opened an app to reply to a message, then found yourself scrolling through short videos?
 
-un:short helps you build mindful content consumption habits by blocking infinite scrolling on YouTube Shorts, Instagram Reels, and other short-form video platforms.
+Keep the apps you need. un:short detects Shorts and Reels and adds a pause before you watch, so you can decide whether to continue.
 
-✨ Key Features
+• Choose what to block: YouTube Shorts, Instagram Reels, Facebook Reels, Naver short videos and TikTok. Set blocking for each app separately.
+• Flip your phone to pause: the timer runs while your phone is face down and pauses when you pick it up. The default wait is 30 seconds and can be adjusted.
+• Tasks first, Shorts later: add tasks to complete before watching. Once all active tasks are done, the normal waiting step resumes. Daily and weekday repeats are supported. Task locking is in Beta.
+• Set your own limits: use sleep mode to strengthen blocking at bedtime and a daily viewing limit to manage your time. You can also hide the instant-view button.
+• Pause home feeds: optional Beta blocking for Instagram, YouTube, Threads and Facebook.
+• See your habits: check daily and hourly viewing statistics and receive report notifications.
 
-• 🎬 Auto-Block: Automatically detect and block YouTube Shorts, Instagram Reels, and more
-• ⏱️ 30-Second Wait: Cooldown timer prevents impulsive consumption
-• 🤔 Ask Question: "Do you really need to watch now?" Ask yourself
-• 📊 Usage Stats: Track blocking frequency and time saved
+Getting started
+Allow accessibility and display-over-other-apps permissions, choose the apps to block, and set your waiting time.
 
-🔍 Accessibility Service Usage
+Free use includes ads and a daily limit on instant viewing. In-app purchases are available; Premium includes unlimited instant viewing. Detection may vary with Android and target-app versions.
 
-This app uses Android's AccessibilityService API to automatically detect when you access short-form video content like YouTube Shorts and Instagram Reels. This permission is essential for the following core features:
+Accessibility
+un:short uses Android's AccessibilityService API to detect selected Shorts, Reels and home-feed screens and scrolling, and to control the blocking flow. This permission is required for these features and can be revoked in Android settings.
 
-• Automatic detection of shorts content screens
-• Displaying blocking screen to prevent unconscious consumption
-• Providing 30 seconds to think before watching
-
-This service is used solely for blocking shorts content and does not access any other personal information or data.
-
-🎯 Why un:short?
-
-Short-form videos are highly addictive. We unconsciously open apps and scroll endlessly, losing track of time. un:short adds intentional friction to this unconscious behavior by:
-
-• Providing 30 seconds to think
-• Asking questions to prompt intentional choice
-• Breaking habitual patterns
-
-💡 How to Use
-
-1. Install and grant necessary permissions
-2. Runs automatically in the background
-3. Blocking screen appears when accessing shorts
-4. Take 30 seconds to think before proceeding
-
-🔒 Privacy
-
-• All data stored locally on your device
-• No information sent to external servers
-• Minimal permissions requested
-
-📱 Supported Apps
-
-• YouTube (Shorts)
-• Instagram (Reels)
-• Other short-form video platforms
-
----
-
-Break free from shorts addiction and build mindful consumption habits. 🌟
+Privacy
+Viewing statistics and tasks are stored on your device. Ads, purchases, usage analytics, crash reporting and feature configuration may use network services. See the privacy policy for details.

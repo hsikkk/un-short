@@ -1,1 +1,1 @@
-un:short - 短视频成瘾拦截器
+un:short - 短视频拦截

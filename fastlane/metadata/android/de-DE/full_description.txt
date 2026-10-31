@@ -1,51 +1,20 @@
-🚫 Befreie Dich von Kurzvideo-Sucht
+Nur kurz eine Nachricht beantworten – und plötzlich scrollst du durch Kurzvideos?
 
-un:short hilft dir, bewusste Gewohnheiten beim Konsum von Inhalten aufzubauen, indem es endloses Scrollen auf YouTube Shorts, Instagram Reels und anderen Kurzvideo-Plattformen blockiert.
+un:short erkennt und blockiert Shorts und Reels, ohne dass du deine Apps löschen musst. Halte kurz inne und entscheide selbst, ob du weiterschauen möchtest.
 
-✨ Hauptfunktionen
+• Apps einzeln auswählen: YouTube Shorts, Instagram Reels, Facebook Reels, Naver-Kurzvideos und TikTok.
+• Handy umdrehen: Der Timer läuft, solange das Display nach unten zeigt. Hebst du das Handy an, pausiert er. Die voreingestellte Wartezeit von 30 Sekunden lässt sich ändern.
+• Erst die Aufgaben: Trage ein, was du vor dem Anschauen erledigen möchtest. Sind alle aktiven Aufgaben fertig, beginnt wieder der normale Warteschritt. Wiederholung täglich oder montags bis freitags möglich. Aufgabensperre in Beta.
+• Eigene Grenzen setzen: Der Schlafmodus verstärkt die Sperre zur Schlafenszeit. Ein tägliches Zeitlimit hilft dir, deine Sehzeit zu steuern. Auch die Schaltfläche zum sofortigen Anschauen lässt sich ausblenden.
+• Startseiten-Feeds pausieren: optionale Beta-Sperre für Instagram, YouTube, Threads und Facebook.
+• Gewohnheiten erkennen: tägliche und stündliche Statistiken sowie Berichtbenachrichtigungen.
 
-• 🎬 Auto-Block: Erkennt und blockiert automatisch YouTube Shorts, Instagram Reels und mehr
-• ⏱️ 30-Sekunden-Wartezeit: Abkühlungs-Timer verhindert impulsiven Konsum
-• 🤔 Frage Dich: "Musst du das jetzt wirklich ansehen?" Frage dich selbst
-• 📊 Nutzungsstatistiken: Verfolge Blockierungshäufigkeit und eingesparte Zeit
+Zum Start Bedienungshilfen und die Anzeige über anderen Apps erlauben. Dann Apps und Wartezeit wählen.
 
-🔍 Verwendung des Barrierefreiheitsdienstes
+Die kostenlose Nutzung enthält Werbung und eine tägliche Begrenzung für sofortiges Anschauen. In-App-Käufe sind verfügbar; Premium erlaubt unbegrenzt viele Sofortzugriffe. Die Erkennung kann je nach Android- und App-Version variieren.
 
-Diese App verwendet die AccessibilityService-API von Android, um automatisch zu erkennen, wenn du auf Kurzvideo-Inhalte wie YouTube Shorts und Instagram Reels zugreifst. Diese Berechtigung ist für folgende Kernfunktionen unerlässlich:
+Bedienungshilfen
+Die Android-API AccessibilityService erkennt ausgewählte Shorts-, Reels- und Feed-Bildschirme sowie Scrollvorgänge und steuert die Sperre. Die nötige Berechtigung lässt sich jederzeit in den Android-Einstellungen entziehen.
 
-• Automatische Erkennung von Kurzvideo-Bildschirmen
-• Anzeige eines Blockierungsbildschirms zur Verhinderung unbewussten Konsums
-• Bereitstellung von 30 Sekunden zum Nachdenken vor dem Ansehen
-
-Dieser Dienst wird ausschließlich zum Blockieren von Kurzvideo-Inhalten verwendet und greift nicht auf andere persönliche Informationen oder Daten zu.
-
-🎯 Warum un:short?
-
-Kurzvideos sind hochgradig süchtig machend. Wir öffnen unbewusst Apps und scrollen endlos, verlieren das Zeitgefühl. un:short fügt diesem unbewussten Verhalten bewusste Reibung hinzu, indem es:
-
-• 30 Sekunden zum Nachdenken bereitstellt
-• Fragen stellt, um bewusste Entscheidungen zu fördern
-• Gewohnheitsmuster durchbricht
-
-💡 So Verwendest Du die App
-
-1. Installiere und erteile die erforderlichen Berechtigungen
-2. Läuft automatisch im Hintergrund
-3. Blockierungsbildschirm erscheint beim Zugriff auf Shorts
-4. Nimm dir 30 Sekunden zum Nachdenken, bevor du fortfährst
-
-🔒 Datenschutz
-
-• Alle Daten werden lokal auf deinem Gerät gespeichert
-• Keine Informationen werden an externe Server gesendet
-• Minimale Berechtigungen angefordert
-
-📱 Unterstützte Apps
-
-• YouTube (Shorts)
-• Instagram (Reels)
-• Andere Kurzvideo-Plattformen
-
----
-
-Befreie dich von Shorts-Sucht und baue bewusste Konsumgewohnheiten auf. 🌟
+Datenschutz
+Statistiken und Aufgaben bleiben auf dem Gerät gespeichert. Werbung, Käufe, Nutzungsanalysen, Fehlerdiagnosen und Funktionskonfiguration können Netzwerkdienste verwenden. Details stehen in der Datenschutzerklärung.

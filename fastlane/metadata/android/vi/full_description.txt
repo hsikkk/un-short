@@ -1,51 +1,20 @@
-🚫 Thoát Khỏi Nghiện Video Ngắn
+Mở ứng dụng để trả lời tin nhắn nhưng rồi lại cuốn vào những video ngắn?
 
-un:short giúp bạn xây dựng thói quen tiêu thụ nội dung có ý thức bằng cách chặn cuộn vô tận trên YouTube Shorts, Instagram Reels và các nền tảng video ngắn khác.
+un:short phát hiện và chặn Shorts cùng Reels mà không cần xóa ứng dụng. Dừng lại một chút trước khi tự quyết định có xem tiếp hay không.
 
-✨ Tính Năng Chính
+• Chọn ứng dụng cần chặn: YouTube Shorts, Instagram Reels, Facebook Reels, video ngắn Naver và TikTok. Thiết lập riêng cho từng ứng dụng.
+• Úp điện thoại để nghỉ: bộ đếm chạy khi màn hình hướng xuống và tạm dừng khi bạn nhấc máy lên. Thời gian chờ mặc định là 30 giây và có thể điều chỉnh.
+• Làm việc trước, xem sau: thêm việc muốn hoàn thành trước khi xem. Khi tất cả việc đang áp dụng đã xong, bạn trở lại bước chờ thông thường. Hỗ trợ lặp mỗi ngày hoặc từ thứ Hai đến thứ Sáu. Khóa theo công việc đang ở giai đoạn Beta.
+• Tự đặt giới hạn: chế độ ngủ tăng cường chặn vào giờ ngủ, còn giới hạn hằng ngày giúp quản lý thời gian xem. Bạn cũng có thể ẩn nút xem ngay.
+• Tạm dừng bảng tin: tùy chọn chặn Beta cho trang chủ Instagram, YouTube, Threads và Facebook.
+• Hiểu thói quen của mình: thống kê theo ngày, theo giờ và thông báo báo cáo.
 
-• 🎬 Tự Động Chặn: Tự động phát hiện và chặn YouTube Shorts, Instagram Reels và nhiều hơn nữa
-• ⏱️ Chờ 30 Giây: Bộ đếm thời gian ngăn việc xem theo cảm tính
-• 🤔 Đặt Câu Hỏi: "Bạn có thực sự cần xem bây giờ không?" Hỏi bản thân
-• 📊 Thống Kê Sử Dụng: Theo dõi tần suất chặn và thời gian tiết kiệm
+Để bắt đầu, cho phép dịch vụ trợ năng và hiển thị trên ứng dụng khác. Sau đó chọn ứng dụng và thời gian chờ.
 
-🔍 Sử Dụng Dịch Vụ Hỗ Trợ Tiếp Cận
+Bản miễn phí có quảng cáo và giới hạn số lần xem ngay mỗi ngày. Có mua hàng trong ứng dụng; Premium cho phép xem ngay không giới hạn số lần. Khả năng phát hiện có thể khác nhau theo phiên bản Android và ứng dụng.
 
-Ứng dụng này sử dụng API AccessibilityService của Android để tự động phát hiện khi bạn truy cập nội dung video ngắn như YouTube Shorts và Instagram Reels. Quyền này cần thiết cho các tính năng cốt lõi sau:
+Trợ năng
+API AccessibilityService của Android phát hiện các màn hình Shorts, Reels, bảng tin đã chọn và thao tác cuộn để điều khiển việc chặn. Các chức năng này cần quyền trợ năng, có thể thu hồi trong cài đặt Android.
 
-• Tự động phát hiện màn hình nội dung video ngắn
-• Hiển thị màn hình chặn để ngăn việc tiêu thụ vô thức
-• Cung cấp 30 giây để suy nghĩ trước khi xem
-
-Dịch vụ này chỉ được sử dụng để chặn nội dung video ngắn và không truy cập bất kỳ thông tin cá nhân hoặc dữ liệu nào khác.
-
-🎯 Tại Sao Chọn un:short?
-
-Video ngắn cực kỳ gây nghiện. Chúng ta vô thức mở ứng dụng và cuộn không ngừng, mất cảm giác về thời gian. un:short thêm ma sát có chủ ý vào hành vi vô thức này bằng cách:
-
-• Cung cấp 30 giây để suy nghĩ
-• Đặt câu hỏi để thúc đẩy lựa chọn có ý thức
-• Phá vỡ các mô hình thói quen
-
-💡 Cách Sử Dụng
-
-1. Cài đặt và cấp các quyền cần thiết
-2. Tự động chạy trong nền
-3. Màn hình chặn xuất hiện khi truy cập video ngắn
-4. Dành 30 giây suy nghĩ trước khi tiếp tục
-
-🔒 Quyền Riêng Tư
-
-• Tất cả dữ liệu được lưu trữ cục bộ trên thiết bị của bạn
-• Không gửi thông tin đến máy chủ bên ngoài
-• Chỉ yêu cầu quyền tối thiểu
-
-📱 Ứng Dụng Được Hỗ Trợ
-
-• YouTube (Shorts)
-• Instagram (Reels)
-• Các nền tảng video ngắn khác
-
----
-
-Thoát khỏi nghiện video ngắn và xây dựng thói quen tiêu thụ có ý thức. 🌟
+Quyền riêng tư
+Thống kê xem và công việc được lưu trên thiết bị. Quảng cáo, giao dịch mua, phân tích sử dụng, chẩn đoán lỗi và cấu hình tính năng có thể dùng dịch vụ mạng. Xem chính sách quyền riêng tư để biết thêm.

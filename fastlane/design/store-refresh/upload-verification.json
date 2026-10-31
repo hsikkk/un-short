@@ -1,0 +1,155 @@
+{
+  "status": "committed and verified",
+  "public_visibility": "not confirmed",
+  "text_fields": 48,
+  "screenshots": 64,
+  "feature_graphics": 16,
+  "korean_unchanged": true,
+  "release_tracks_unchanged": true,
+  "locales": {
+    "en-US": {
+      "screenshots": {
+        "1_01-main.png": "a2ae35844e66964410ff353c698dbff217a66b97b8c8d6fc0312a10de6d66ead",
+        "2_02-timer.png": "ee101634ce3a08279ce23bb8396edda76fe1ed93a736757f4b12b27eafee436c",
+        "3_03-tasks.png": "c194d1aa7fcb81f92fe0cd769f30a494fd973d0fb08c00c67cbf4926bc274459",
+        "4_04-limits.png": "0a894e11c2a7b94597b5a047bab65fde7e815e9596d4ac7bd1a3d028f9bb4f61"
+      },
+      "featureGraphic": "c36a01e62f7916ff5be8e62eeb1de93f2f40daea5c1497a9ea0b0efbbbf73f1d"
+    },
+    "ja-JP": {
+      "screenshots": {
+        "1_01-main.png": "802dbe29afcca305df2737f4f151db0b74e506f7f4189f9abdba41611dadbcbd",
+        "2_02-timer.png": "5b5cd917c30299eaf26cf3563d0b88a0e4f5d6db3b7a4d3f59a312402b681808",
+        "3_03-tasks.png": "aa832ae01f158d4f33ca2dea50c5e591f28230b38b7a2a85790a129bb2f89fb0",
+        "4_04-limits.png": "842419ca3aa425768f5f7192f4f956dbd40d10cf46c14e6bf64ceb891246458f"
+      },
+      "featureGraphic": "434dadce4cf265203d7dd03e9815fc08cafbec9f519de7d53f39afcf116b51e6"
+    },
+    "zh-CN": {
+      "screenshots": {
+        "1_01-main.png": "e512d72e99e8837c401ef48a70784dc434b69aeaa5f25580b8a9c67c64806eb5",
+        "2_02-timer.png": "9038426786796851de1faa757e7a249911a74091ab80d5f5c4b31f62b61954bc",
+        "3_03-tasks.png": "e883a13af183f7f7c1e81c07dd445156b19d23445d89c09cc7dd4dbfe8397788",
+        "4_04-limits.png": "c7f1e1477b4b08b7b95a47d034f8f82c43010fbe787e437b3832877302582504"
+      },
+      "featureGraphic": "18edffa19cf2c6c91096d284e330c0094435ccf0fda8314ca64d747bbd03e297"
+    },
+    "zh-TW": {
+      "screenshots": {
+        "1_01-main.png": "75422e27c0d03a937d01904d2e356f1b1346b9ef3f8b63ea1994022c0afb42dd",
+        "2_02-timer.png": "b4e2c1cf751d4191208c3162185d9604125bfd4582ac0f1e6cdf1c795bd01c68",
+        "3_03-tasks.png": "b931ce28e7df45d9a17efbaa7a87cbe0da02d893fdf63eb317e9c7b0e979703a",
+        "4_04-limits.png": "a6284a1e3083dde9ea7a3ddbd16cea03627df836489337f6c051c5483a8557dc"
+      },
+      "featureGraphic": "7e180acac644aa68d49aae03cdf4cc66da6f637f6fb43daa61ac7fedf4a5c7b2"
+    },
+    "es-ES": {
+      "screenshots": {
+        "1_01-main.png": "5331d9870277d2a17612270f6196e72f3b466c6615b2ed316effa0049773a83a",
+        "2_02-timer.png": "6d6cb7ef29733f7da8ed233f103f731aa60d17c59cb2dbd903d3fca24fc59402",
+        "3_03-tasks.png": "93e8d94ae5c5573fb659fe0b5fa91d99d8e14c580c031a136d2baee78c39d2fd",
+        "4_04-limits.png": "193d9d490d79d3dbf2fc1953f0edeba5c7a1fdf0c869e267f4c39624ec7ff80d"
+      },
+      "featureGraphic": "ab2bd091741541b7da8a84fc5bd2dce08975fc8b296d462d296f06cb969cb0e1"
+    },
+    "fr-FR": {
+      "screenshots": {
+        "1_01-main.png": "cb9887c6adc5fecc9133e4592d53d0bd4aedfc21aac18ca105c041e91a9d09f7",
+        "2_02-timer.png": "68041e5007302885b27e08861fcdcd0aa166343f52b9b771dfa6e182ef932ac9",
+        "3_03-tasks.png": "f4abd46cd01ff9e1ad4777dbc4e73abea6f1b6276c7267f1925e4bd9c4ccefc6",
+        "4_04-limits.png": "efdad68f89273d06da07d781ca66ea3bd08f8f02686092bc1eb64c45a46fa581"
+      },
+      "featureGraphic": "35a311c1fa45aa32bcdb8aa1b151ccfc49df1bbfca77c4beeb257151975eb92a"
+    },
+    "de-DE": {
+      "screenshots": {
+        "1_01-main.png": "4fd720cc932be54f960667acf8d3879bafe193766a238d42228801a3343f9d01",
+        "2_02-timer.png": "b4a360993978e44caa959f415cb4c64f3763337244c62164fc7ecd00272db1ec",
+        "3_03-tasks.png": "aa36110e5abada88d2f107c9abf8ae7ac4eb8946201c019cf0f0da715614ec50",
+        "4_04-limits.png": "77a076f88c125a8da88028f6d19bf04e97f34fcff0b87d3e33ea890a0f25280c"
+      },
+      "featureGraphic": "bae5cb4cc2ca7715c927772de5c91383e5bf35baa0fd6aa240e8370010980cc8"
+    },
+    "pt-BR": {
+      "screenshots": {
+        "1_01-main.png": "9578de28a9436d07875074a74fe1da03289df0f8fb526182c6b6486d5988ad98",
+        "2_02-timer.png": "fa33417b5cdb7d53d0fd27d342e1d0c285becd976592996dc4710bf3631f5497",
+        "3_03-tasks.png": "8faa65088034b6f63953d47918ebd7074e5d0280992bfb1b88f4bb7225e89797",
+        "4_04-limits.png": "bfea2e61113cc0c6412226f17f70be4ae1a6343943759b399123230725063d83"
+      },
+      "featureGraphic": "5b74af5e9b42b2e0cd24d3ce03a5aa62ea1217ab256226e28981a529a2feb282"
+    },
+    "ru-RU": {
+      "screenshots": {
+        "1_01-main.png": "4e77393fca919e12a51baced034c813479f46372f8224873014500a381f32297",
+        "2_02-timer.png": "3445279e88fd3d6b20f6757402917a9c9c5ffe2a6ccb366dfd2dccc101d025e9",
+        "3_03-tasks.png": "8396f80dbffc73a351a2516798cb199811104feb1168c87bc2d38a21a7f2ecb0",
+        "4_04-limits.png": "7d5f335e7b8ce0a668b21921071f508304e7a184c5813e8e3bd3430caa426254"
+      },
+      "featureGraphic": "be9d3a0f7e6eb4195b6a7d57beef0a3960dff07873372171830885e48a50f504"
+    },
+    "it-IT": {
+      "screenshots": {
+        "1_01-main.png": "ae9c5dff2ae13a6d1eab76c09d39299ce58b38e380eae499125480d3c85d489b",
+        "2_02-timer.png": "5e1ec152d86ae040df351be3b06bd1538a860337990d3b9649e5946e3fec2ae8",
+        "3_03-tasks.png": "789d5ef3b762352c06369c01de2606c2c529b89cacda8704cc8f29cb9a90948b",
+        "4_04-limits.png": "bf974f6a057722416e63c3e3b472ceaaf78bc8824c2b42c34e5773561977e458"
+      },
+      "featureGraphic": "6c8c1d43b4621129158216f074daad8c232c6dec6716a391189d425d13848320"
+    },
+    "hi-IN": {
+      "screenshots": {
+        "1_01-main.png": "7311805a0a36e010cf1d5830ed847d0c07bce92863fff0289d33377e427ea353",
+        "2_02-timer.png": "80ae0cf246c7c0a8daa928cc3e509a9b61207951a1d1d582bb2825960bea2d60",
+        "3_03-tasks.png": "f6f883b663cd3b2e9a51fe95a4fcb2f1739e3777f22a8b067ed37d5f75cb6e7d",
+        "4_04-limits.png": "ffb7a171686be7ac0983f95fb19de6a5c9f546afb63176bda245bef177de9be1"
+      },
+      "featureGraphic": "55d95a49f05652d1cd8d9c660ceee97a98f91486e27c20df298df5515adcefd8"
+    },
+    "ar": {
+      "screenshots": {
+        "1_01-main.png": "313f3a76d60d62f9c6d1146388ecd991d75d7de66a3857c9a3ec3c97657131c0",
+        "2_02-timer.png": "f6bc52aca5cc588180370a44a5a8c8bbcab1612ac298d1045afb2892720f07fb",
+        "3_03-tasks.png": "79ac5ca58c9d1d59dafde9b68cf4fdcdc4b84c20c27edd02664bb128c7465383",
+        "4_04-limits.png": "6b3b9d7d2fab929432da479aaba7ad4d97a20734a29a0a061c071b5e23d14ada"
+      },
+      "featureGraphic": "b1d9f25d38692df55007d06010dc90c0675262d1c966467e4dc74af49b8e2827"
+    },
+    "th": {
+      "screenshots": {
+        "1_01-main.png": "4b9840358a77f1ed936d9b8e9964b19eead297ff5ef8cd0e3b352098ad158ba9",
+        "2_02-timer.png": "b3c03a58675c4def61399526b11a58a241db114979f34a5428acda65e0550115",
+        "3_03-tasks.png": "7eb3ae61d3c5049530136a94813c880c073300e306bf96bd6478770ee7ba4a43",
+        "4_04-limits.png": "45b8dec9ba4b046e3631f0d795ee82a4c3703d4316aea2ca27538c57009166fd"
+      },
+      "featureGraphic": "6686c3e515eaa7dbfc65d5b1648918fd30b5c2f5e81c38bcad3c5aebc0d3d445"
+    },
+    "tr-TR": {
+      "screenshots": {
+        "1_01-main.png": "5d0208508cc10afc1322725db234744aa7cf5d42a68edac9297dadebfe9972af",
+        "2_02-timer.png": "f32e8c1e88fecee056675592282df83032cbafb8e228b4aed25c8aaf7da6812a",
+        "3_03-tasks.png": "1f0b01c626e40149260f3d94193cd7e2ed8a274476ef7154ebf4a4d06a61a8aa",
+        "4_04-limits.png": "e698552a7c613f5e941ec48fdf7f1a0c030d3fc7b4a69cf411f1506228e231e7"
+      },
+      "featureGraphic": "ba1b98adb813d9a79dd8d859b47e544cd3f9b9a8ef475028efca93addc24e793"
+    },
+    "vi": {
+      "screenshots": {
+        "1_01-main.png": "21383ff689e1de4c5dc7d5cb20b9f4ddfc8a11355207bf7ce71beae0695a1c33",
+        "2_02-timer.png": "b667fd155daab3652d1c48b19a2414c3c3648355bb96e549156080b9b636313f",
+        "3_03-tasks.png": "e9934958a81138eb98104bed425bbbcf3394d00cab8262c90247f66d975ba154",
+        "4_04-limits.png": "aaa2dbd2e4dbda9cda5039741a6e1c41bc41fa99416614d46866f5800f6fcf5a"
+      },
+      "featureGraphic": "58f71adb0b81f2345fa216e7201a783bacf75906be10052cc3e4cd8e8fb4f9cc"
+    },
+    "id": {
+      "screenshots": {
+        "1_01-main.png": "449522eea3e508ef91ee3c60095b284f66a0caeabd5f37362c0a53aed4bc77bc",
+        "2_02-timer.png": "ce50b6e2d342d5ef60eece1a5628d6f1affd38039a4f12bcbcb83c2c5a3fa74b",
+        "3_03-tasks.png": "faacb2f44e424582208d8d19f948fd51775d5bfec8ad0d1c3c6ab61571094aa3",
+        "4_04-limits.png": "a3a0467901a7d5a755caf7c7ef42eae5e22a8e17ca9e69bbfc2f20200002a78b"
+      },
+      "featureGraphic": "fda84c2a97a6d92f297d6c3787aebe0573b8297ebd40b5ff958afcc0dc60f340"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "locale": "ko-KR",
+  "app_version": "1.13.0 (39)",
+  "upload": "committed",
+  "public_visibility": "not confirmed; review/propagation may still be pending",
+  "verified_text_fields": [
+    "title",
+    "short_description",
+    "full_description"
+  ],
+  "screenshots": [
+    {
+      "file": "1_01-main.png",
+      "sha256": "b3c4180851057553a35a838e256a9ce056956587986779e649ae2a18dee8201c"
+    },
+    {
+      "file": "2_02-timer.png",
+      "sha256": "fb6144e287e3f305e7ead1e301c64a9ae19aaa25551094c674b432a4bc06d495"
+    },
+    {
+      "file": "3_03-tasks.png",
+      "sha256": "31352980175c8e634fede4f9e545784499f8cd087b666447b1bcbf7c32cac022"
+    },
+    {
+      "file": "4_04-limits.png",
+      "sha256": "001b6d21a48bbb2ae59b3d0803b03cd0a3d01710c5e591a19250a3db8723d70b"
+    }
+  ],
+  "feature_graphic_sha256": "ea449563c62f7c515d56a5021cacadc55240e10e5c89f8970c5736cf4484736c",
+  "release_tracks_unchanged": true
+}

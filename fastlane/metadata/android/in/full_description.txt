@@ -1,51 +1,20 @@
-🚫 Lepas dari Kecanduan Video Pendek
+Buka aplikasi untuk membalas pesan, lalu malah terus menonton video pendek?
 
-un:short membantu Anda membangun kebiasaan konsumsi konten yang sadar dengan memblokir scrolling tak terbatas di YouTube Shorts, Instagram Reels, dan platform video pendek lainnya.
+un:short mendeteksi dan memblokir Shorts serta Reels tanpa menghapus aplikasi yang kamu perlukan. Berhenti sejenak sebelum memilih untuk lanjut menonton.
 
-✨ Fitur Utama
+• Pilih aplikasi: YouTube Shorts, Instagram Reels, Facebook Reels, video pendek Naver, dan TikTok. Atur pemblokiran tiap aplikasi secara terpisah.
+• Balik ponsel: timer berjalan saat layar menghadap ke bawah dan berhenti saat ponsel diangkat. Waktu tunggu awal adalah 30 detik dan bisa diubah.
+• Tugas dulu, video nanti: tambahkan hal yang ingin diselesaikan sebelum menonton. Setelah semua tugas aktif selesai, langkah menunggu biasa akan kembali. Mendukung pengulangan harian atau Senin–Jumat. Kunci tugas masih dalam tahap Beta.
+• Tentukan batasmu: mode tidur memperkuat pemblokiran menjelang tidur, dan batas harian membantu mengatur waktu menonton. Tombol tonton langsung juga bisa disembunyikan.
+• Jeda beranda: pemblokiran Beta opsional untuk beranda Instagram, YouTube, Threads, dan Facebook.
+• Kenali kebiasaanmu: statistik harian dan per jam serta notifikasi laporan.
 
-• 🎬 Blokir Otomatis: Secara otomatis mendeteksi dan memblokir YouTube Shorts, Instagram Reels, dan lainnya
-• ⏱️ Tunggu 30 Detik: Timer cooldown mencegah konsumsi impulsif
-• 🤔 Tanya Diri Sendiri: "Apakah Anda benar-benar perlu menonton sekarang?" Tanya pada diri sendiri
-• 📊 Statistik Penggunaan: Lacak frekuensi pemblokiran dan waktu yang dihemat
+Untuk memulai, izinkan layanan aksesibilitas dan tampilan di atas aplikasi lain. Pilih aplikasi serta waktu tunggu.
 
-🔍 Penggunaan Layanan Aksesibilitas
+Versi gratis berisi iklan dan batas harian untuk tonton langsung. Pembelian dalam aplikasi tersedia; Premium mencakup tonton langsung tanpa batas jumlah. Deteksi dapat berbeda menurut versi Android dan aplikasi tujuan.
 
-Aplikasi ini menggunakan AccessibilityService API Android untuk secara otomatis mendeteksi saat Anda mengakses konten video pendek seperti YouTube Shorts dan Instagram Reels. Izin ini penting untuk fitur inti berikut:
+Aksesibilitas
+API AccessibilityService Android mendeteksi layar Shorts, Reels, beranda yang dipilih, dan guliran untuk mengendalikan pemblokiran. Fitur ini memerlukan izin yang bisa dicabut melalui setelan Android.
 
-• Deteksi otomatis layar konten video pendek
-• Menampilkan layar pemblokiran untuk mencegah konsumsi tidak sadar
-• Memberikan 30 detik untuk berpikir sebelum menonton
-
-Layanan ini hanya digunakan untuk memblokir konten video pendek dan tidak mengakses informasi pribadi atau data lainnya.
-
-🎯 Mengapa un:short?
-
-Video pendek sangat adiktif. Kita secara tidak sadar membuka aplikasi dan scroll tanpa henti, kehilangan jejak waktu. un:short menambahkan gesekan yang disengaja pada perilaku tidak sadar ini dengan:
-
-• Memberikan 30 detik untuk berpikir
-• Mengajukan pertanyaan untuk mendorong pilihan yang disengaja
-• Memutus pola kebiasaan
-
-💡 Cara Menggunakan
-
-1. Instal dan berikan izin yang diperlukan
-2. Berjalan otomatis di latar belakang
-3. Layar pemblokiran muncul saat mengakses video pendek
-4. Luangkan 30 detik untuk berpikir sebelum melanjutkan
-
-🔒 Privasi
-
-• Semua data disimpan secara lokal di perangkat Anda
-• Tidak ada informasi yang dikirim ke server eksternal
-• Izin minimal yang diminta
-
-📱 Aplikasi yang Didukung
-
-• YouTube (Shorts)
-• Instagram (Reels)
-• Platform video pendek lainnya
-
----
-
-Lepas dari kecanduan video pendek dan bangun kebiasaan konsumsi yang sadar. 🌟
+Privasi
+Statistik menonton dan tugas disimpan di perangkat. Iklan, pembelian, analisis penggunaan, diagnosis error, dan konfigurasi fitur dapat menggunakan jaringan. Lihat kebijakan privasi untuk detailnya.

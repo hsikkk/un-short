@@ -1,51 +1,20 @@
-🚫 Liberati dalla Dipendenza da Video Brevi
+Apri un’app per rispondere a un messaggio e finisci a scorrere video senza fermarti?
 
-un:short ti aiuta a costruire abitudini di consumo consapevole dei contenuti bloccando lo scrolling infinito su YouTube Shorts, Instagram Reels e altre piattaforme di video brevi.
+un:short rileva e blocca Shorts e Reels senza eliminare le tue app. Fermati un momento prima di decidere se continuare a guardare.
 
-✨ Funzionalità Principali
+• Scegli le app: YouTube Shorts, Instagram Reels, Facebook Reels, video brevi di Naver e TikTok. Il blocco si imposta per ogni app.
+• Capovolgi il telefono: il timer avanza quando lo schermo è rivolto verso il basso e si ferma quando sollevi il telefono. L’attesa predefinita è di 30 secondi e si può modificare.
+• Prima le attività: aggiungi ciò che vuoi completare prima di guardare. Una volta concluse tutte le attività attive, riprende la normale fase di attesa. Puoi ripeterle ogni giorno o nei giorni feriali. Funzione in Beta.
+• Decidi i tuoi limiti: la modalità sonno rafforza il blocco prima di dormire; il limite giornaliero ti aiuta a gestire il tempo di visione. Puoi anche nascondere il pulsante di accesso immediato.
+• Metti in pausa i feed: blocco opzionale in Beta dei feed iniziali di Instagram, YouTube, Threads e Facebook.
+• Scopri le tue abitudini: statistiche giornaliere e orarie e notifiche dei report.
 
-• 🎬 Blocco Automatico: Rileva e blocca automaticamente YouTube Shorts, Instagram Reels e altro
-• ⏱️ Attesa di 30 Secondi: Il timer di raffreddamento previene il consumo impulsivo
-• 🤔 Chiediti: "Hai davvero bisogno di guardare ora?" Domandati
-• 📊 Statistiche di Utilizzo: Traccia la frequenza di blocco e il tempo risparmiato
+Per iniziare, autorizza il servizio di accessibilità e la visualizzazione sopra altre app. Scegli le app e il tempo di attesa.
 
-🔍 Utilizzo del Servizio di Accessibilità
+La versione gratuita include annunci e un limite giornaliero agli accessi immediati. Sono disponibili acquisti in-app; Premium include accessi immediati illimitati. Il rilevamento può variare con le versioni di Android e delle app.
 
-Questa app utilizza l'API AccessibilityService di Android per rilevare automaticamente quando accedi a contenuti video brevi come YouTube Shorts e Instagram Reels. Questa autorizzazione è essenziale per le seguenti funzionalità principali:
+Accessibilità
+L’API AccessibilityService di Android rileva schermate Shorts, Reels e feed selezionati, oltre allo scorrimento, e gestisce il blocco. L’autorizzazione è necessaria e può essere revocata nelle impostazioni Android.
 
-• Rilevamento automatico degli schermi di contenuti brevi
-• Visualizzazione dello schermo di blocco per prevenire il consumo inconsapevole
-• Fornire 30 secondi per riflettere prima di guardare
-
-Questo servizio è utilizzato esclusivamente per bloccare i contenuti brevi e non accede ad altre informazioni personali o dati.
-
-🎯 Perché un:short?
-
-I video brevi creano forte dipendenza. Apriamo inconsciamente le app e scrolliamo all'infinito, perdendo la cognizione del tempo. un:short aggiunge un attrito intenzionale a questo comportamento inconsapevole:
-
-• Fornendo 30 secondi per riflettere
-• Ponendo domande per promuovere scelte intenzionali
-• Spezzando i modelli abituali
-
-💡 Come Usare
-
-1. Installa e concedi le autorizzazioni necessarie
-2. Funziona automaticamente in background
-3. Lo schermo di blocco appare quando accedi agli shorts
-4. Prenditi 30 secondi per riflettere prima di procedere
-
-🔒 Privacy
-
-• Tutti i dati memorizzati localmente sul tuo dispositivo
-• Nessuna informazione inviata a server esterni
-• Autorizzazioni minime richieste
-
-📱 App Supportate
-
-• YouTube (Shorts)
-• Instagram (Reels)
-• Altre piattaforme di video brevi
-
----
-
-Liberati dalla dipendenza da shorts e costruisci abitudini di consumo consapevole. 🌟
+Privacy
+Statistiche e attività sono salvate sul dispositivo. Annunci, acquisti, analisi di utilizzo, diagnosi degli errori e configurazione delle funzioni possono usare la rete. Consulta l’informativa sulla privacy.
