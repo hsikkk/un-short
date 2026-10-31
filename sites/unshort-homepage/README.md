@@ -1,6 +1,6 @@
 # un:short homepage
 
-Korean, buildless responsive product homepage. Serve `dist/` with a static server.
+Korean/English responsive product homepage. Source: `dist/` with an English translation catalog in `locales/en.json`. The dependency-free Node build generates the English HTML and Vercel output.
 
 - Content follows the app's existing Play listing and source behavior.
 - Interactive web demonstration: block → timer → choice. The demo uses a button instead of a device sensor and compresses 30 seconds into six; this is disclosed next to the demo.
@@ -15,7 +15,7 @@ Validation: JavaScript syntax; desktop and 390px/320px layouts; timer start/paus
 
 Vercel용 정적 배포 설정이 포함되어 있다. 의존성 설치 없이 Node.js의 기본 모듈만 사용한다.
 `dist/`는 홈페이지 소스이고, 빌드 시 `.vercel-static/`에 배포 파일을 생성한다.
-기존 Sites용 `.openai/hosting.json`과 `dist/`는 변경하지 않는다.
+기존 Sites용 `.openai/hosting.json`은 보존한다. 빌드는 `dist/index.html`과 번역 사전에서 `dist/en.html`을 생성한다.
 
 ### CLI로 배포
 
@@ -83,5 +83,25 @@ Vercel 계정 연결이나 배포 자체는 아직 실행하지 않았다.
 
 ## 홈페이지 언어
 
-현재 홈페이지는 한국어만 제공한다. 앱의 17개 언어 번역은 홈페이지에 자동 적용되지 않는다.
-브라우저 언어 감지 및 언어 선택 메뉴는 아직 구현하지 않았다.
+- 한국어: `/`, 영어: `/en`. 헤더의 언어 링크로 전환한다. JavaScript가 없어도 본문과 링크를 사용할 수 있다.
+- 언어별 URL을 유지하며 브라우저 언어에 따른 강제 리다이렉트는 하지 않는다.
+- 영어 본문·접근성 문구는 `locales/en.json`, 체험 동작 문구는 `dist/app.js`에서 관리한다.
+- 한국어 원본은 `dist/index.html`이다. 번역 키는 원문과 정확히 일치해야 하며, 수정 후 `node scripts/check-seo.mjs`로 누락을 확인한다.
+- `node scripts/build-locales.mjs`로 영어 HTML만 재생성할 수 있다. `dist/en.html`은 직접 편집하지 않는다.
+- 앱 화면 이미지는 한국어 캡처를 유지하며 영어 페이지에 명시한다. 앱의 17개 언어는 홈페이지에 자동 적용되지 않는다.
+
+## SEO
+
+각 언어 페이지에 독립적인 title/description, canonical, 상호 hreflang(`ko`, `en`, `x-default`), Open Graph/Twitter 공유 정보와 SoftwareApplication JSON-LD를 생성한다. 구조화 데이터에는 확인되지 않은 평점이나 가격을 넣지 않는다.
+
+Production 빌드의 sitemap.xml에는 `/`와 `/en`이 포함된다. Preview 및 로컬 빌드는 두 언어 모두 noindex이며 sitemap을 생성하지 않는다. `cleanUrls`와 `trailingSlash: false` 설정에 맞춰 영어 canonical은 `/en`이다.
+
+```sh
+node scripts/check-seo.mjs
+```
+
+이 검증은 production/preview/로컬 빌드, 언어별 canonical/hreflang, 영어 번역 누락, 구조화 데이터, sitemap 및 잘못된 도메인 입력을 확인한다. 마지막에는 로컬 noindex 결과물을 남긴다. 일반 Python 정적 서버에서는 영어를 `/en.html`로 열 수 있고, 실제 Vercel에서는 `/en`으로 제공된다.
+
+커스텀 도메인 확정 후 `SITE_URL`을 해당 HTTPS 도메인으로 지정하고 production 배포한다. 검색 콘솔 소유권 확인과 sitemap 제출은 별도이며, 아직 수행하지 않았다. 검색 순위나 리치 결과 노출은 보장되지 않는다.
+
+설정 기준: [Google 다국어 페이지 안내](https://developers.google.com/search/docs/specialty/international/localized-versions), [SoftwareApplication](https://schema.org/SoftwareApplication).
